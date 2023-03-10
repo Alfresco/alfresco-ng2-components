@@ -49,7 +49,7 @@ export class AlfrescoApiService {
         this.currentAppConfig = config;
 
         if (config.authType === 'OAUTH') {
-                this.mapAlfrescoApiOpenIdConfig();
+                await this.mapAlfrescoApiOpenIdConfig();
         }
 
         this.initAlfrescoApiWithConfig();
@@ -59,7 +59,7 @@ export class AlfrescoApiService {
     async reset() {
         this.getCurrentAppConfig();
         if (this.currentAppConfig.authType === 'OAUTH') {
-            this.mapAlfrescoApiOpenIdConfig();
+            await this.mapAlfrescoApiOpenIdConfig();
         }
         this.initAlfrescoApiWithConfig();
     }
