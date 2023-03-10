@@ -32,7 +32,9 @@ import { DateColumnHeaderComponent } from './data-column-header.component';
         DateColumnHeaderComponent
     ],
     exports: [
-
+        DataColumnComponent,
+        DataColumnListComponent,
+        DateColumnHeaderComponent
     ]
 })
 export class DataColumnModule {}
