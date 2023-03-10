@@ -18,7 +18,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 10px 15px;
-        border: 1px solid var(--theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-color-007);
     }
 
     &-inherit-container {
@@ -89,6 +89,6 @@
     .adf-pop-over-card {
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 8px 9px -5px var(--theme-foreground-divider-color), 0 15px 22px 2px var(--theme-foreground-divider-color);
+        box-shadow: 0 8px 9px -5px var(--adf-theme-foreground-divider-color), 0 15px 22px 2px var(--adf-theme-foreground-divider-color);
     }
 }

@@ -60,7 +60,7 @@ adf-content-node-selector {
         font-stretch: normal;
         line-height: 1.6;
         letter-spacing: -0.5px;
-        color: var(--theme-foreground-text-color-087);
+        color: var(--adf-theme-foreground-text-color-087);
 
         h2 {
             margin: unset;
@@ -85,7 +85,7 @@ adf-content-node-selector {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        color: var(--theme-foreground-text-color);
+        color: var(--adf-theme-foreground-text-color);
 
         button {
             text-transform: uppercase;
@@ -94,7 +94,7 @@ adf-content-node-selector {
 
         .adf-choose-action {
             &[disabled] {
-                color: var(--theme-foreground-secondary-text-color);
+                color: var(--adf-theme-foreground-secondary-text-color);
             }
 
             &:enabled {

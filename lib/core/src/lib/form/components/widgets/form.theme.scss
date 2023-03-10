@@ -6,7 +6,7 @@ ul > li > form-field > .adf-focus {
 }
 
 .mat-form-field-label {
-    color: var(--theme-mat-grey-color-a200-dark) !important;
+    color: var(--adf-theme-mat-grey-color-a200-dark) !important;
 }
 
 .adf {
@@ -29,7 +29,7 @@ ul > li > form-field > .adf-focus {
     }
 
     &-label {
-        color: var(--theme-foreground-secondary-text-color);
+        color: var(--adf-theme-foreground-secondary-text-color);
     }
 
     &-asterisk {
@@ -48,7 +48,7 @@ ul > li > form-field > .adf-focus {
 
         .mat-select {
             &-arrow {
-                color: var(--theme-foreground-secondary-text-color) !important;
+                color: var(--adf-theme-foreground-secondary-text-color) !important;
             }
         }
 
@@ -57,7 +57,7 @@ ul > li > form-field > .adf-focus {
         }
 
         .mat-form-field-prefix {
-            color: var(--theme-foreground-secondary-text-color);
+            color: var(--adf-theme-foreground-secondary-text-color);
         }
 
         .adf-input {
@@ -66,7 +66,7 @@ ul > li > form-field > .adf-focus {
     }
 
     &-left-label {
-        color: var(--theme-foreground-secondary-text-color);
+        color: var(--adf-theme-foreground-secondary-text-color);
     }
 }
 

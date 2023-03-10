@@ -34,7 +34,7 @@
             line-height: 1.6;
             margin: 0;
             letter-spacing: -0.5px;
-            color: var(--theme-foreground-text-color-087);
+            color: var(--adf-theme-foreground-text-color-087);
         }
 
         &-content {
@@ -51,7 +51,7 @@
             padding: 8px 8px 24px 8px;
             display: flex;
             justify-content: flex-end;
-            color: var(--theme-foreground-text-color-054);
+            color: var(--adf-theme-foreground-text-color-054);
 
             button {
                 text-transform: uppercase;
