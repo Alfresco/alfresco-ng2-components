@@ -113,20 +113,20 @@ jobs:
       - name: ci:force flag parser
         shell: bash
         run: |
-        if [ "${{ github.event_name }}" == "schedule" ]; then
-            echo -e "\033[32mSchedule event\033[0m"
-            exit 0
-        else
-          git fetch --all
-          message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
-          echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
-          export COMMIT_MESSAGE=$message
-          if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-            echo "Forcing CI to run with commit flag [ci:force]."
-            echo CI_FORCE_RUN=true >> $GITHUB_ENV
-            echo "BREAK_ACTION=true" >> $GITHUB_ENV
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+              echo -e "\033[32mSchedule event\033[0m"
+              exit 0
+          else
+            git fetch --all
+            message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+            echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
+            export COMMIT_MESSAGE=$message
+            if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+              echo "Forcing CI to run with commit flag [ci:force]."
+              echo CI_FORCE_RUN=true >> $GITHUB_ENV
+              echo "BREAK_ACTION=true" >> $GITHUB_ENV
+            fi
           fi
-        fi
 
       - name: Get PR number
         id: action
