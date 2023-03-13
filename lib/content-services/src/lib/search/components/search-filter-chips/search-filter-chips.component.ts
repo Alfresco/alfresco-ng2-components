@@ -36,4 +36,11 @@ export class SearchFilterChipsComponent {
         public queryBuilder: SearchQueryBuilderService,
         public facetFiltersService: SearchFacetFiltersService) {}
 
+    ngAfterViewInit() {
+        setTimeout(() => {
+            console.log(1234);
+            console.log(this.facetFiltersService.responseFacets);
+        }, 3000);
+    }
+
 }

@@ -40,4 +40,11 @@ export interface FacetFieldSettings {
     allowUpdateOnChange?: boolean;
     /* allow the user show/hide default search actions */
     hideDefaultAction?: boolean;
+    displayAfterField?: string;
+    sorting?: FacetBucketOrder;
+}
+
+export enum FacetBucketOrder {
+    ASCENDING = 'ASCENDING',
+    DESCENDING = 'DESCENDING'
 }

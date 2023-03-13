@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { FacetField } from '../models/facet-field.interface';
+import { FacetBucketOrder, FacetField } from '../models/facet-field.interface';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
@@ -91,6 +91,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         this.parseFacetFields(context);
         this.parseFacetIntervals(context);
         this.parseFacetQueries(context);
+        this.reorderFacets();
     }
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
@@ -98,6 +99,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, itemType, field.label);
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
+            this.sortFacetBuckets(responseBuckets, field.settings?.sorting);
             const alreadyExistingField = this.findResponseFacet(itemType, field.label);
 
             if (alreadyExistingField) {
@@ -155,6 +157,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, 'query', group);
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
                 .filter(mincountFilter);
+            this.sortFacetBuckets(responseBuckets, facetQuerySetting.sorting);
             const alreadyExistingField = this.findResponseFacet('query', group);
 
             if (alreadyExistingField) {
@@ -184,6 +187,18 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     }
 
+    private reorderFacets() {
+        this.responseFacets.sort((facet1, facet2) => {
+            if (facet1.settings?.displayAfterField) {
+                return facet1.settings.displayAfterField === facet2.field ? 1 : 0;
+            }
+            if (facet2.settings?.displayAfterField) {
+                return facet2.settings.displayAfterField === facet1.field ? -1 : 0;
+            }
+            return 0;
+        });
+    }
+
     private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
@@ -211,6 +226,15 @@ export class SearchFacetFiltersService implements OnDestroy {
                 label: respBucket.label
             };
         });
+    }
+
+    private sortFacetBuckets(buckets: FacetFieldBucket[], sorting: FacetBucketOrder) {
+        if (sorting) {
+            buckets.sort((bucket1, bucket2) =>
+                sorting === FacetBucketOrder.ASCENDING ? bucket1.label.localeCompare(bucket2.label) :
+                    bucket2.label.localeCompare(bucket1.label)
+            );
+        }
     }
 
     private getCountValue(bucket: GenericBucket): number {
