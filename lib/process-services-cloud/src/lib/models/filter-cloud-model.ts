@@ -21,6 +21,7 @@ export class TaskQueryCloudRequestModel {
     appName: string;
     appVersion?: string;
     assignee?: string;
+    environmentId?: string;
     claimedDate?: string;
     createdDate?: Date;
     createdFrom?: string;
@@ -56,6 +57,7 @@ export class TaskQueryCloudRequestModel {
             this.appName = obj.appName;
             this.appVersion = obj.appVersion;
             this.assignee = obj.assignee;
+            this.environmentId = obj.environmentId;
             this.claimedDate = obj.claimedDate;
             this.createdDate = obj.createdDate;
             this.createdFrom = obj.createdFrom;

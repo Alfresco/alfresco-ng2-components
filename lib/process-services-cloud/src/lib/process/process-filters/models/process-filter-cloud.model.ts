@@ -46,6 +46,7 @@ export class ProcessFilterCloudModel {
     startedDateType: DateCloudFilterType;
     suspendedDateType: DateCloudFilterType;
     completedDate: Date;
+    environmentId?: string;
 
     private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
@@ -60,6 +61,7 @@ export class ProcessFilterCloudModel {
             this.id = obj.id || Math.random().toString(36).substring(2, 9);
             this.name = obj.name || null;
             this.key = obj.key || null;
+            this.environmentId = obj.environmentId;
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || obj.appName === '' ? obj.appName : null;

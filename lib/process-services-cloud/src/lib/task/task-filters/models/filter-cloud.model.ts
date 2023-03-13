@@ -29,6 +29,7 @@ export class TaskFilterCloudModel  {
     id: string;
     name: string;
     key: string;
+    environmentId?: string;
     icon: string;
     index: number;
     appName: string;
@@ -72,6 +73,7 @@ export class TaskFilterCloudModel  {
             this.id = obj.id || Math.random().toString(36).substr(2, 9);
             this.name = obj.name || null;
             this.key = obj.key || null;
+            this.environmentId = obj.environmentId || null;
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
@@ -191,6 +193,7 @@ export class TaskFilterCloudModel  {
 export interface ServiceTaskFilterCloudModel {
     id?: string;
     name?: string;
+    environmentId?: string;
     key?: string;
     icon?: string;
     index?: number;

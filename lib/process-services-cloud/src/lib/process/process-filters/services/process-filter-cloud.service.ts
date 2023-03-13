@@ -61,7 +61,12 @@ export class ProcessFilterCloudService {
         value = value || {};
         const result = {
             appName: appName || value['appName'],
-            id: id || value['id']
+            id: id || value['id'],
+            ...(
+                value['environmentId'] && {
+                    environmentId: value['environmentId']
+                }
+            )
         };
 
         for (const prop of filterProperties) {

@@ -67,6 +67,12 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     id: string;
 
+    @Input()
+    environmentId: string;
+
+    @Input()
+    environmentList: any[] = [];
+
     /** processInstanceId of the task filter. */
     @Input()
     processInstanceId: string;
@@ -244,10 +250,18 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        this.applicationNames.push({ label: application.name, value: application.name });
+                        if (application.environmentId) {
+                            this.applicationNames.push({ label: `${application.name} (${this.getEnvironmentName(application.environmentId)})`, value: application.name });
+                        } else {
+                            this.applicationNames.push({ label: application.name, value: application.name });
+                        }
                     });
                 }
             });
+    }
+
+    private getEnvironmentName(environmentId: string) {
+        return this.environmentList.find((env: any) => env['id'] === environmentId).name;
     }
 
     getProcessDefinitions() {

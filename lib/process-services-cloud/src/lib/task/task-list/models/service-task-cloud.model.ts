@@ -20,6 +20,7 @@ import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.mod
 export interface ServiceTaskQueryCloudRequestModel {
     appName: string;
     appVersion?: string;
+    environmentId?: string;
     id?: string;
     status?: string;
     maxItems: number;

@@ -67,6 +67,10 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     @Input()
     id: string = '';
 
+    /** Filter the processes to display only the ones with this environment ID. */
+    @Input()
+    environmentId: string = '';
+
     /** Filter the processes to display only the ones with this name. */
     @Input()
     name: string = '';
@@ -455,6 +459,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             skipCount: this.skipCount,
             initiator: this.initiator,
             id: this.id,
+            environmentId: this.environmentId,
             name: this.name,
             processDefinitionId: this.processDefinitionId,
             processDefinitionName: this.processDefinitionName,

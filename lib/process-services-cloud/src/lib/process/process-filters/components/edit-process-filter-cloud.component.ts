@@ -64,6 +64,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     id: string;
 
+    @Input()
+    environmentId: string;
+
     /** List of process filter properties to display */
     @Input()
     filterProperties = DEFAULT_PROCESS_FILTER_PROPERTIES;
@@ -75,6 +78,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     /** List of sort actions. */
     @Input()
     actions = DEFAULT_ACTIONS;
+
+    @Input()
+    environmentList: any[] = [];
 
     /** Toggles editing of process filter actions. */
     @Input()
@@ -116,6 +122,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (value?.id) {
             this.id = value.id;
+        }
+
+        if (value?.environmentId) {
+            this.environmentId = value.environmentId;
         }
 
         this.processFilterProperties = this.createAndFilterProperties();
@@ -400,10 +410,19 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        this.applicationNames.push({ label: application.name, value: application.name });
+                        if (application.environmentId) {
+                            this.applicationNames.push({ label: `${application.name} (${this.getEnvironmentName(application.environmentId)})`, value: application.name });
+                        } else {
+                            this.applicationNames.push({ label: application.name, value: application.name });
+                        }
+
                     });
                 }
             });
+    }
+
+    private getEnvironmentName(environmentId: string) {
+        return this.environmentList.find((env: any) => env['id'] === environmentId).name;
     }
 
     getProcessDefinitions() {
@@ -624,6 +643,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID',
                 key: 'id',
                 value: 'id'
+            },
+            {
+                label: 'EnvironmentId',
+                key: 'environmentId',
+                value: 'environmentId'
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
