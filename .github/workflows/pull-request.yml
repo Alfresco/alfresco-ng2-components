@@ -116,7 +116,7 @@ jobs:
               exit 0
           else
             git fetch --all
-            message=$(git log --format=%B -n 1 origin/${{ github.ref_name }})
+            message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
             echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
             export COMMIT_MESSAGE=$message
             if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
