@@ -13,9 +13,6 @@ on:
         required: false
         type: string
         default: false
-  push:
-    branches:
-      - fix-ci-force
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
