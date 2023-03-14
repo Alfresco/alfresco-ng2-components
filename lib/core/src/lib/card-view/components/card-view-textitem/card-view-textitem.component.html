@@ -52,14 +52,6 @@
         </mat-form-field>
     </div>
 
-    <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"
-        class="adf-textitem-editable-error"
-        *ngIf="isEditable && hasErrors">
-        <ul>
-            <li *ngFor="let error of errors">{{ error.message | translate: error }}</li>
-        </ul>
-    </mat-error>
-
     <div *ngSwitchCase="'chipsTemplate'"
          class="adf-property-field adf-textitem-chip-list-container">
         <mat-chip-list #chipList
@@ -131,6 +123,14 @@
         <ng-container *ngTemplateOutlet="label"></ng-container>
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </div>
+
+    <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"
+               class="adf-textitem-editable-error"
+               *ngIf="isEditable && hasErrors">
+        <ul>
+            <li *ngFor="let error of errors">{{ error.message | translate: error }}</li>
+        </ul>
+    </mat-error>
 </div>
 
 <ng-template #label>
