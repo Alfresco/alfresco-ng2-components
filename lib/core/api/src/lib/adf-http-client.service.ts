@@ -29,15 +29,15 @@ import { Constructor } from '../types';
 @Injectable({
     providedIn: 'root'
 })
-export class AlfrescoApiHttpClient implements JsApiHttpClient {
+export class AdfHttpClient implements JsApiHttpClient {
 
     constructor(private httpClient: HttpClient) {}
 
     request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
-        const body = AlfrescoApiHttpClient.getBody(options);
+        const body = AdfHttpClient.getBody(options);
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
-        const headers = AlfrescoApiHttpClient.getHeaders(options);
-        const responseType = AlfrescoApiHttpClient.getResponseType(options);
+        const headers = AdfHttpClient.getHeaders(options);
+        const responseType = AdfHttpClient.getResponseType(options);
         const context = new HttpContext().set(SHOULD_ADD_AUTH_TOKEN, true);
 
         const request = this.httpClient.request(
@@ -88,7 +88,7 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
 
                 if (isHttpResponseEvent(res)) {
                     eventEmitter.emit('success', res.body);
-                    return AlfrescoApiHttpClient.deserialize(res, returnType);
+                    return AdfHttpClient.deserialize(res, returnType);
                 }
             }),
             catchError((err: HttpErrorResponse): Observable<AlfrescoApiResponseError> => {
@@ -200,7 +200,7 @@ export class AlfrescoApiHttpClient implements JsApiHttpClient {
         }
 
         if (isBlobResponse(response, returnType)) {
-            return AlfrescoApiHttpClient.deserializeBlobResponse(response);
+            return AdfHttpClient.deserializeBlobResponse(response);
         }
 
         if (!isConstructor(returnType)) {

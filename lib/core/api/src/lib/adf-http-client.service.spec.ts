@@ -19,8 +19,8 @@ import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentatio
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiHttpClient } from './alfresco-api.http-client';
-import { AlfrescoApiResponseError } from './alfresco-api.response-error';
+import { AdfHttpClient } from './alfresco-api.http-client';
+import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 
 const securityOptions: SecurityOptions = {
     authentications: {},
@@ -52,8 +52,8 @@ const mockResponse =  {
     ]
 };
 
-describe('AlfrescoApiHttpClient', () => {
-    let angularHttpClient: AlfrescoApiHttpClient;
+describe('AdfHttpClient', () => {
+    let angularHttpClient: AdfHttpClient;
     let controller: HttpTestingController;
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ describe('AlfrescoApiHttpClient', () => {
                 HttpClientTestingModule
             ]
         });
-        angularHttpClient = TestBed.inject(AlfrescoApiHttpClient);
+        angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);
     });
 
