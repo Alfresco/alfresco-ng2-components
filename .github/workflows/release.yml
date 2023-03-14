@@ -201,7 +201,7 @@ jobs:
           scope: '@alfresco'
       - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@v3
         name: release libraries Npm registry
         with:
