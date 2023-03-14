@@ -90,8 +90,6 @@ env:
   PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
-
-
 jobs:
   check-package-lock:
     runs-on: ubuntu-22.04
@@ -116,8 +114,8 @@ jobs:
       - name: ci:force flag parser
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" == "schedule" ]; then
-              echo -e "\033[32mSchedule event\033[0m"
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+              echo -e "\033[32mci:force check can be skipped\033[0m"
               exit 0
           else
             git fetch --all
