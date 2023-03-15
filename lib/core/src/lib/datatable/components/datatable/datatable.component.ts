@@ -286,7 +286,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     ngOnChanges(changes: SimpleChanges) {
         this.initAndSubscribeClickStream();
-        this.setRowAsContextSource();
+        if(this.selectedRowId) {
+            this.setRowAsContextSource();
+        }
 
         const dataChanges = changes['data'];
         const rowChanges = changes['rows'];
@@ -788,7 +790,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     setRowAsContextSource(): void {
-        this.data.getRows().forEach((row) => row.isContextMenuSource = this.selectedRowId === row.id ? true : false);
+        this.data.getRows().find((row) => this.selectedRowId === row.id).isContextMenuSource = true;
     }
 
     getSortingKey(): string | null {
