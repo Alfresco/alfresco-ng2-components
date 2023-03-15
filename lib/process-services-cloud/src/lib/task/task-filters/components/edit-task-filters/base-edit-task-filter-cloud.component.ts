@@ -31,6 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { MatSelectChange } from '@angular/material/select';
+import { Environment } from '../../../../common/interface/environment.interface';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -71,7 +72,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     environmentId: string;
 
     @Input()
-    environmentList: any[] = [];
+    environmentList: Environment[] = [];
 
     /** processInstanceId of the task filter. */
     @Input()

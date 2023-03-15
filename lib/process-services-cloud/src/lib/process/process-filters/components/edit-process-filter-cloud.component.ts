@@ -30,6 +30,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
+import { Environment } from '../../../common/interface/environment.interface';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -80,7 +81,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     actions = DEFAULT_ACTIONS;
 
     @Input()
-    environmentList: any[] = [];
+    environmentList: Environment[] = [];
 
     /** Toggles editing of process filter actions. */
     @Input()
