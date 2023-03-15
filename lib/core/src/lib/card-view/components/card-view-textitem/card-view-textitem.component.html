@@ -134,12 +134,7 @@
 </div>
 
 <ng-template #label>
-    <mat-label>
-        <div class="adf-property-label"
-            [attr.data-automation-id]="'card-textitem-label-' + property.key"
-            *ngIf="showProperty || isEditable"
-        >
+    <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="mat-small">
         {{ property.label | translate }}
-        </div>
     </mat-label>
 </ng-template>
