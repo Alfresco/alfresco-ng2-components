@@ -19,7 +19,7 @@ jobs:
             };
 
             await github.repos.createDispatchEvent({
-              owner: context.repo.owner,
+              owner: 'Alfresco',
               repo: 'alfresco-apps',
               event_type: 'package-published',
               client_payload: payload
