@@ -191,6 +191,10 @@ export class TagService {
         );
     }
 
+    /*assignTags(nodeId: string, tags: TagBody[]): Observable<TagPaging> {
+
+    }*/
+
     private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');

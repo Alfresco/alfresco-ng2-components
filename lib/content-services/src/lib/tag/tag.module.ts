@@ -24,6 +24,7 @@ import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { CoreModule } from '@alfresco/adf-core';
+import { TagsDialogComponent } from './tags-dialog/tags-dialog.smart-component';
 
 @NgModule({
     imports: [
@@ -36,12 +37,14 @@ import { CoreModule } from '@alfresco/adf-core';
     exports: [
         TagActionsComponent,
         TagListComponent,
-        TagNodeListComponent
+        TagNodeListComponent,
+        TagsDialogComponent
     ],
     declarations: [
         TagActionsComponent,
         TagListComponent,
-        TagNodeListComponent
+        TagNodeListComponent,
+        TagsDialogComponent
     ]
 })
 export class TagModule {}

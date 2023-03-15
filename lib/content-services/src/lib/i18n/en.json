@@ -131,6 +131,29 @@
     },
     "BUTTON": {
       "ADD": "Add Tag"
+    },
+    "TAGS_DIALOG": {
+      "EXISTING_TAGS": "Existing tags:",
+      "NO_TAGS_CREATED": "No Tags Created",
+      "NO_EXISTING_TAGS": "No Existing Tags",
+      "TITLE": "Create Tags",
+      "CREATE_TAG": "Create: {{tag}}",
+      "NAME": "Name",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag already exists",
+        "ALREADY_ADDED_TAG": "Tag is already added",
+        "EMPTY_TAG": "Tag name can't contain only spaces",
+        "REQUIRED": "Tag name is required",
+        "FETCH_TAGS": "Error while fetching the tags",
+        "CREATE_TAGS": "Error while creating the tags"
+      },
+      "TOOLTIPS": {
+        "ADD_TAG": "Add tag",
+        "DELETE_TAG": "Delete tag",
+        "HIDE_INPUT": "Hide input"
+      },
+      "TAGS_LOADING": "Tags loading",
+      "CREATE_TAGS_SUCCESS": "Tags created successfully"
     }
   },
   "ADF_FILE_UPLOAD": {

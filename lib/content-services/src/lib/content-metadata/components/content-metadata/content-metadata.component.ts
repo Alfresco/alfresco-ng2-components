@@ -24,13 +24,14 @@ import {
     TranslationService,
     AppConfigService,
     CardViewBaseItemModel,
-    UpdateNotification
+    UpdateNotification, CardViewTextItemModel
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
+import { TagService } from '../../../tag';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -89,9 +90,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
+    tags$: Observable<CardViewItem[]>;
 
     changedProperties = {};
     hasMetadataChanged = false;
+    tagNameControlVisible = false;
     private targetProperty: CardViewBaseItemModel;
 
     constructor(
@@ -100,7 +103,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private logService: LogService,
         private translationService: TranslationService,
-        private appConfig: AppConfigService
+        private appConfig: AppConfigService,
+        private tagService: TagService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -160,6 +164,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (node) {
             this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            this.tags$ = this.loadTagsForNode(node.id);
         }
     }
 
@@ -194,6 +199,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.updateNode();
         }
+    }
+
+    storeAddedTags(tags: string[]) {
+        this.tagService.addTag(this.node.id, tags[0]).subscribe(() => {});
     }
 
     private updateNode() {
@@ -256,5 +265,17 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private isEmpty(value: any): boolean {
         return value === undefined || value === null || value === '';
+    }
+
+    private loadTagsForNode(id: string): Observable<CardViewItem[]> {
+        return this.tagService.getTagsByNodeId(id).pipe(map((tagPaging) => {
+            return tagPaging.list.entries.map((tagEntry) => {
+                return new CardViewTextItemModel({
+                    label: '',
+                    value: tagEntry.entry.tag,
+                    key: tagEntry.entry.id
+                });
+            })
+        }));
     }
 }

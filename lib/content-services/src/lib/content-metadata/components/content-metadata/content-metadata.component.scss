@@ -17,6 +17,20 @@
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
         }
+
+        &-tags {
+            padding: 0 10px 16px 27px;
+
+            &-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            acc-tags-dialog.acc-dialog-with-existing-tags-panel {
+                background: var(--adf-theme-background-dialog-color);
+            }
+        }
     }
 
     &-metadata-action-buttons {

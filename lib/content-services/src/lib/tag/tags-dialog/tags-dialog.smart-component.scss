@@ -1,0 +1,161 @@
+acc-tags-dialog {
+    display: block;
+    // margin-top: -24px;
+    margin-left: -24px;
+
+    &.acc-dialog-with-existing-tags-panel {
+        background-color: var(--theme-background-color);
+    }
+
+    /*.mat-dialog-title {
+        font-size: 16px;
+        margin-bottom: -2px;
+        font-weight: bold;
+        background-color: inherit;
+        width: calc(100% - 24px);
+        margin-left: 26px;
+        padding-top: 12px;
+        padding-right: 22px;
+    }*/
+
+    .acc-label-with-icon-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .mat-dialog-content {
+        padding: 0;
+        margin: 0 -24px 0 0;
+        background-color: inherit;
+        overflow: hidden;
+
+        .acc-no-tags-message {
+            margin-left: 9px;
+            margin-top: 27px;
+            margin-bottom: 0;
+            height: 30px;
+        }
+
+        .acc-tag-name-field {
+            display: flex;
+            align-items: center;
+            min-height: 57px;
+
+            mat-form-field {
+                width: 100%;
+                box-sizing: border-box;
+                padding-right: 3px;
+                font-size: 14px;
+            }
+        }
+
+        .acc-create-tag-label {
+            color: var(--theme-primary-color);
+            cursor: pointer;
+            margin-top: -1px;
+            padding-left: 27px;
+            overflow-wrap: anywhere;
+            display: inline-block;
+            padding-right: 12px;
+            overflow: auto;
+            max-height: 7vh;
+        }
+
+        .acc-existing-tags-panel {
+            background-color: var(--adf-theme-background-dialog-color);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            padding-top: 12px;
+            // position: absolute;
+            position: relative;
+            width: 100%;
+            z-index: 100;
+
+            .acc-existing-tags-label {
+                font-size: 10px;
+                color: var(--theme-secondary-text-color);
+                padding-left: 12px;
+                margin-bottom: 2px;
+            }
+
+            .acc-tags-list {
+                padding-left: 27px;
+                margin-top: -2px;
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                max-height: 22vh;
+                min-height: 75px;
+
+                .acc-tag {
+                    margin-bottom: 18px;
+                    margin-top: 0;
+                    padding-right: 12px;
+
+                    & + .acc-tag {
+                        margin-top: -10px;
+                    }
+                }
+
+                mat-spinner {
+                    margin: auto;
+                    overflow: unset;
+                    min-height: 25px;
+                }
+            }
+        }
+
+        .acc-tags-list {
+            padding-left: 10px;
+            padding-right: 0;
+            overflow: auto;
+
+            &.acc-tags-list-with-scrollbar {
+                padding-right: 7px;
+                margin-right: -22px;
+            }
+        }
+
+        .acc-tags-creation {
+            padding-left: 27px;
+            padding-right: 22px;
+
+            .acc-tags-list {
+                &:not(:empty) {
+                    height: 22vh;
+                }
+
+                .acc-tag {
+                    & + .acc-tag {
+                        margin-top: -14px;
+                    }
+                }
+            }
+        }
+
+        .acc-tag {
+            margin-top: 0;
+            overflow-wrap: anywhere;
+        }
+    }
+
+    mat-dialog-actions {
+        margin-right: -24px;
+        background-color: inherit;
+
+        .acc-save-button {
+            margin-right: 24px;
+        }
+    }
+
+    [hidden] {
+        visibility: hidden;
+        display: unset;
+    }
+}
+
+.mat-dialog-container {
+    position: relative;
+    overflow: visible;
+}

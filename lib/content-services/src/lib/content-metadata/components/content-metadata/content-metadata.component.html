@@ -19,6 +19,40 @@
                 [multiValueSeparator]="multiValueSeparator">
             </adf-card-view>
         </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="!editable">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Tags
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <adf-card-view
+                (keydown)="keyDown($event)"
+                [properties]="tags$ | async"
+                [editable]="editable"
+                [displayEmpty]="displayEmpty"
+                [copyToClipboardAction]="copyToClipboardAction"
+                [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+                [multiValueSeparator]="multiValueSeparator">
+            </adf-card-view>
+        </mat-expansion-panel>
+        <div *ngIf="editable" class="adf-metadata-properties-tags">
+            <div class="adf-metadata-properties-tags-title">
+                <mat-panel-title>
+                    Tags
+                </mat-panel-title>
+                <button
+                    data-automation-id="tags-dialog-add-button"
+                    mat-icon-button
+                    [attr.title]="'TAG.TAGS_DIALOG.TOOLTIPS.ADD_TAG' | translate"
+                    (click)="tagNameControlVisible = true">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <acc-tags-dialog
+                [(tagNameControlVisible)]="tagNameControlVisible"
+                (tagsAddition)="storeAddedTags($event)">
+            </acc-tags-dialog>
+        </div>
 
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
