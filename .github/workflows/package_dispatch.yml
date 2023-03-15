@@ -12,10 +12,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            echo ${{ toJSON(github.event) }}
             const payload = {
-              package_name: context.payload.package.name,
-              package_version: context.payload.package.version
+              package_name: github.event.package.name,
+              package_version: github.event.package.version
             };
+
             const octokit = new Octokit();
             await octokit.repos.createDispatchEvent({
               owner: 'Alfresco',
