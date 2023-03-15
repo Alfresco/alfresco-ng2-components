@@ -14,12 +14,12 @@ jobs:
           script: |
             const payload = {
               package_name: github.event.registry_package.name,
-              package_version: github.event.package_version.name
+              package_version: github.event.package_version.name,
               package_commit_sha: github.event.package_version.target_oid
             };
 
             github.repos.createDispatchEvent({
-              owner: 'Alfresco',
+              owner: context.repo.owner,
               repo: 'alfresco-apps',
               event_type: 'package-published',
               client_payload: payload
