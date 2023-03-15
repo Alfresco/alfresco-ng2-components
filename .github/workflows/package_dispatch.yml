@@ -1,6 +1,6 @@
 name: Package published
 on:
-  package:
+  registry_package:
     types: [published]
 
 jobs:
