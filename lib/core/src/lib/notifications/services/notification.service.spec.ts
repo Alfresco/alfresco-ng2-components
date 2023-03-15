@@ -17,7 +17,7 @@
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -28,10 +28,15 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    template: '',
+    template: `<ng-template #customTemplate let-message>
+           <p class="custom-template-class">Custom content {{message}}</p>
+        </ng-template>`,
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
+
+    @ViewChild('customTemplate', { read: TemplateRef }) customTemplate: TemplateRef<any>;
+
     constructor(public notificationService: NotificationService) {
 
     }
@@ -68,6 +73,22 @@ class ProvidesNotificationServiceComponent {
         matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
+    }
+
+    sendMessageWithTemplateRef() {
+        const notificationConfig = new MatSnackBarConfig();
+        notificationConfig.duration = 1000;
+        notificationConfig.data = {templateRef: this.customTemplate};
+
+        return this.notificationService.openSnackMessage('with templateRef', notificationConfig);
+    }
+
+    sendMessageWithTemplateRefWithAction() {
+        const notificationConfig = new MatSnackBarConfig();
+        notificationConfig.duration = 1000;
+        notificationConfig.data = { templateRef: this.customTemplate };
+
+        return this.notificationService.openSnackMessageAction('with templateRef', 'TestWarn', notificationConfig);
     }
 
 }
@@ -197,4 +218,29 @@ describe('NotificationService', () => {
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
+
+    it('should open a message notification bar with a custom templateRef configuration', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithTemplateRef();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('.custom-template-class')).not.toBeNull();
+        expect(document.querySelector('.custom-template-class').innerHTML).toEqual('Custom content with templateRef');
+    });
+
+    it('should open a message notification bar with action and custom templateRef configuration', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithTemplateRefWithAction();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('.custom-template-class')).not.toBeNull();
+        expect(document.querySelector('.custom-template-class').innerHTML).toEqual('Custom content with templateRef');
+    });
+
 });
