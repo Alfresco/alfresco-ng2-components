@@ -13,9 +13,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const payload = {
-              package_name: github.event.registry_package.name,
-              package_version: github.event.package_version.name,
-              package_commit_sha: github.event.package_version.target_oid
+              package_name: ${{ github.event.registry_package.name }},
+              package_version: ${{ github.event.registry_package.package_version.name }},
+              package_commit_sha: ${{ github.event.registry_package.package_version.target_oid }}
             };
 
             github.repos.createDispatchEvent({
