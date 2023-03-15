@@ -1,4 +1,12 @@
-<p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content" aria-hidden="true">{{ data.message }}</p>
+<p class="adf-snackbar-message-content" data-automation-id="adf-snackbar-message-content" aria-hidden="true">
+<ng-container *ngIf="!data.templateRef else customTemplate">{{ data.message }}</ng-container>
+    <ng-template #customTemplate>
+        <ng-container
+            [ngTemplateOutlet]="data.templateRef"
+            [ngTemplateOutletContext]="{ $implicit: data.message}">
+        </ng-container>
+    </ng-template>
+</p>
 <div *ngIf="data.showAction" class="adf-snackbar-message-content-action" aria-hidden="true">
     <button mat-button (click)="snackBarRef.dismissWithAction()" *ngIf="data.actionLabel" class="adf-snackbar-message-content-action-button"
             data-automation-id="adf-snackbar-message-content-action-button">
