@@ -18,11 +18,11 @@ jobs:
               package_commit_sha: github.event.package_version.target_oid
             };
 
-            const octokit = new Octokit();
-            await octokit.repos.createDispatchEvent({
+            await github.repos.createDispatchEvent({
               owner: 'Alfresco',
               repo: 'alfresco-apps',
               event_type: 'package-published',
               client_payload: payload
             });
 
+            console.log(`Trigger a dispatch event for the monorepo`);
