@@ -15,10 +15,10 @@ jobs:
           script: |
             const payload = {
               package_name: "${{ github.event.registry_package.name }}",
-              package_version: "${{ github.event.registry_package.package_version.name }}""
+              package_version: "${{ github.event.registry_package.package_version.name }}"
             };
 
-            await github.repos.createDispatchEvent({
+            await github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
               repo: "alfresco-apps",
               event_type: "package-published",
