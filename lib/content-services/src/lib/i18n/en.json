@@ -132,7 +132,7 @@
     "BUTTON": {
       "ADD": "Add Tag"
     },
-    "TAGS_DIALOG": {
+    "TAGS_CREATOR": {
       "EXISTING_TAGS": "Existing tags:",
       "NO_TAGS_CREATED": "No Tags Created",
       "NO_EXISTING_TAGS": "No Existing Tags",

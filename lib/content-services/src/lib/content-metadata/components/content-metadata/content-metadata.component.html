@@ -48,10 +48,10 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <acc-tags-dialog
+            <acc-tags-creator
                 [(tagNameControlVisible)]="tagNameControlVisible"
                 (tagsAddition)="storeAddedTags($event)">
-            </acc-tags-dialog>
+            </acc-tags-creator>
         </div>
 
         <ng-container *ngIf="expanded">

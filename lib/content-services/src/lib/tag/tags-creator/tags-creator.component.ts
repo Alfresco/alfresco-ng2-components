@@ -6,7 +6,7 @@
  * agreement is prohibited.
  */
 
-import { TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import { TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import {
     Component,
     ElementRef,
@@ -23,7 +23,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { debounce, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { TagService } from '@alfresco/adf-content-services';
 
 interface TagNameControlErrors {
@@ -34,12 +33,12 @@ interface TagNameControlErrors {
 }
 
 @Component({
-    selector: 'acc-tags-dialog',
-    templateUrl: './tags-dialog.smart-component.html',
-    styleUrls: ['./tags-dialog.smart-component.scss'],
+    selector: 'acc-tags-creator',
+    templateUrl: './tags-creator.component.html',
+    styleUrls: ['./tags-creator.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class TagsDialogComponent implements OnInit, OnDestroy {
+export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
@@ -127,7 +126,7 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
         this.cancelExistingTagsLoading$.complete();
     }
 
-    @HostBinding('class.acc-dialog-with-existing-tags-panel')
+    @HostBinding('class.acc-creator-with-existing-tags-panel')
     get hostClass(): boolean {
         return this.existingTagsPanelVisible;
     }
@@ -206,7 +205,7 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
         });
     }
 
-    saveTags(): void {
+    /*saveTags(): void {
         this._saving = true;
 
         this.hideNameInput();
@@ -223,19 +222,19 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     // this.dialog.close(true);
-                    this.notificationService.showInfo('TAG.TAGS_DIALOG.CREATE_TAGS_SUCCESS');
+                    this.notificationService.showInfo('TAG.TAGS_CREATOR.CREATE_TAGS_SUCCESS');
                 },
                 (error: HttpErrorResponse) => this.handleCreateTagError(error)
             );
-    }
+    }*/
 
-    private handleCreateTagError(error: HttpErrorResponse) {
+    /*private handleCreateTagError(error: HttpErrorResponse) {
         const message = error.status === HttpStatusCode.Conflict
-            ? 'TAG.TAGS_DIALOG.ERRORS.EXISTING_TAGS'
-            : 'TAG.TAGS_DIALOG.ERRORS.CREATE_TAGS';
+            ? 'TAG.TAGS_CREATOR.ERRORS.EXISTING_TAGS'
+            : 'TAG.TAGS_CREATOR.ERRORS.CREATE_TAGS';
 
         this.notificationService.showError(message);
-    }
+    }*/
 
     loadMoreTags(event: Event): void {
         const existingTagsListElement = event.target as HTMLElement;
@@ -281,7 +280,7 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
                     this._existingTagsLoading = false;
                 },
                 () => {
-                    this.notificationService.showError('TAG.TAGS_DIALOG.ERRORS.FETCH_TAGS');
+                    this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
                     this._existingTagsLoading = false;
                 }
             );
@@ -329,7 +328,7 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
 
     private setTagNameControlErrorMessageKey(): void {
         this._tagNameErrorMessageKey = this.tagNameControl.invalid
-            ? `TAG.TAGS_DIALOG.ERRORS.${this.nameErrorMessagesByErrors.get(
+            ? `TAG.TAGS_CREATOR.ERRORS.${this.nameErrorMessagesByErrors.get(
                   Object.keys(this.tagNameControl.errors)[0] as keyof TagNameControlErrors
               )}`
             : '';
@@ -357,7 +356,7 @@ export class TagsDialogComponent implements OnInit, OnDestroy {
                     this._existingTagsLoading = false;
                 },
                 () => {
-                    this.notificationService.showError('TAG.TAGS_DIALOG.ERRORS.FETCH_TAGS');
+                    this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
                     this._existingTagsLoading = false;
                 }
             );

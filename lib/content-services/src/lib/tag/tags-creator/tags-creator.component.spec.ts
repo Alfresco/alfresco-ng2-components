@@ -7,7 +7,7 @@
  */
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { TagsDialogComponent } from './tags-dialog.smart-component';
+import { TagsCreatorComponent } from './tags-dialog.smart-component';
 import { NotificationService } from '@alfresco/adf-core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
@@ -26,10 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TagEntry } from '@alfresco/js-api';
 
 describe('TagsDialogComponent', () => {
-    let fixture: ComponentFixture<TagsDialogComponent>;
+    let fixture: ComponentFixture<TagsCreatorComponent>;
     let tagService: TagService;
     let notificationService: NotificationService;
-    let dialog: MatDialogRef<TagsDialogComponent>;
+    let dialog: MatDialogRef<TagsCreatorComponent>;
 
     let addTagButton: HTMLButtonElement;
 
@@ -37,7 +37,7 @@ describe('TagsDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [TagsDialogComponent],
+            declarations: [TagsCreatorComponent],
             imports: [
                 HttpClientModule,
                 ContentDirectiveModule,
@@ -82,9 +82,9 @@ describe('TagsDialogComponent', () => {
             teardown: { destroyAfterEach: true },
         });
 
-        fixture = TestBed.createComponent(TagsDialogComponent);
+        fixture = TestBed.createComponent(TagsCreatorComponent);
         tagService = TestBed.inject(TagService);
-        dialog = TestBed.inject(MatDialogRef<TagsDialogComponent>);
+        dialog = TestBed.inject(MatDialogRef<TagsCreatorComponent>);
         notificationService = TestBed.inject(NotificationService);
 
         fixture.detectChanges();

@@ -191,9 +191,9 @@ export class TagService {
         );
     }
 
-    /*assignTags(nodeId: string, tags: TagBody[]): Observable<TagPaging> {
-
-    }*/
+    assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging> {
+        return from(this.tagsApi.assignTagsToNode(nodeId, tags));
+    }
 
     private handleError(error: any) {
         this.logService.error(error);

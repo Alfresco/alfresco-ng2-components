@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Node } from '@alfresco/js-api';
+import { Node, TagBody } from '@alfresco/js-api';
 import { Observable, Subject, of, zip } from 'rxjs';
 import {
     CardViewItem,
@@ -96,6 +96,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     hasMetadataChanged = false;
     tagNameControlVisible = false;
     private targetProperty: CardViewBaseItemModel;
+    private addedTags: string[];
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -199,10 +200,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.updateNode();
         }
+        this.tagService.assignTagsToNode(this.node.id, this.addedTags.map((tag) => {
+            const tagBody = new TagBody();
+            tagBody.tag = tag;
+            return tagBody;
+        }))
     }
 
     storeAddedTags(tags: string[]) {
-        this.tagService.addTag(this.node.id, tags[0]).subscribe(() => {});
+        this.addedTags = tags;
+        this.hasMetadataChanged = true;
     }
 
     private updateNode() {
