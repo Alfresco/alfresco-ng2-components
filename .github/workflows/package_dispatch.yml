@@ -18,7 +18,7 @@ jobs:
               package_commit_sha: github.event.package_version.target_oid
             };
 
-            await github.repos.createDispatchEvent({
+            github.repos.createDispatchEvent({
               owner: 'Alfresco',
               repo: 'alfresco-apps',
               event_type: 'package-published',
