@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch event to monorepo
-        uses: actions/github-script@v4
+        uses: actions/github-script@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -19,7 +19,7 @@ jobs:
             };
 
             await github.repos.createDispatchEvent({
-              owner: 'Alfresco',
+              owner: context.repo.owner,
               repo: 'alfresco-apps',
               event_type: 'package-published',
               client_payload: payload
