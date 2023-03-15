@@ -1,0 +1,26 @@
+name: Package published
+on:
+  package:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch event to monorepo
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const payload = {
+              package_name: context.payload.package.name,
+              package_version: context.payload.package.version
+            };
+            const octokit = new Octokit();
+            await octokit.repos.createDispatchEvent({
+              owner: '@alfresco',
+              repo: 'alfresco-apps',
+              event_type: 'package-published',
+              client_payload: payload
+            });
+
