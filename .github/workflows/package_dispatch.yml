@@ -12,10 +12,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            echo ${{ toJSON(github.event) }}
             const payload = {
-              package_name: github.event.package.name,
-              package_version: github.event.package.version
+              package_name: github.event.registry_package.name,
+              package_version: github.event.package_version.name
+              package_commit_sha: github.event.package_version.target_oid
             };
 
             const octokit = new Octokit();
