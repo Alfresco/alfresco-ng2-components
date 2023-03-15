@@ -18,7 +18,7 @@ jobs:
             };
             const octokit = new Octokit();
             await octokit.repos.createDispatchEvent({
-              owner: '@alfresco',
+              owner: 'Alfresco',
               repo: 'alfresco-apps',
               event_type: 'package-published',
               client_payload: payload
