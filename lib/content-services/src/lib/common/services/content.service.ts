@@ -83,7 +83,7 @@ export class ContentService {
      */
     hasPermissions(node: Node, permission: PermissionsEnum | string, userId?: string): boolean {
         let hasPermissions = false;
-        userId = userId ?? this.authService.getEcmUsername();
+        userId = userId ?? this.apiService.getInstance().getEcmUsername();
 
         const permissions = [...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || [])].filter(
             (currentPermission) => currentPermission.authorityId === userId
