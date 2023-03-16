@@ -18,9 +18,10 @@ Manages tags in Content Services.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tagName:_ `string`  - Name of the tag to add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>` - TagEntry object (defined in JS-API) with details of the new tag
--   **getAllTheTags**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
+-   **getAllTheTags**(opts?: `any`, includedCounts?: `boolean`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
     Gets a list of all the tags already defined in the repository.
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   _includedCounts:_ `boolean`  - (Optional) True if count field should be included in response object for each tag, false otherwise.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - TagPaging object (defined in JS-API) containing the tags
 -   **getTagsByNodeId**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
     Gets a list of tags added to a node.
@@ -44,11 +45,13 @@ Manages tags in Content Services.
     -   _tagId:_ `string`  - The identifier of a tag.
     -   _tagBody:_ `TagBody`  - The updated tag.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>` - Updated tag.
--   **searchTags**(name: `string`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>`<br/>
+-   **searchTags**(name: `string`, sorting?: `{ orderBy: string, direction: string }`, includedCounts?: `boolean`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>`<br/>
     Find tags which name contains searched name.
-    -   _name:_ `string`  - Value for name which should be used during searching tags.
-    -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
-    -   _maxItems:_ `number`  - Specify max number of returned tags. Default is specified by UserPreferencesService.
+    -   _name:_ `string` - Value for name which should be used during searching tags.
+    -   _sorting:_ `{ orderBy: string, direction: string }` - Object which configures sorting. OrderBy field specifies field used for sorting, direction specified ascending or descending direction. Default sorting is ascending by tag field.
+    -   _includedCounts:_ `boolean` - True if count field should be included in response object for each tag, false otherwise.
+    -   _skipCount:_ `number` - Specify how many first results should be skipped. Default 0.
+    -   _maxItems:_ `number` - Specify max number of returned tags. Default is specified by UserPreferencesService.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetPaging>` - Found tags which name contains searched name.
 -   **getCountersForTags**(tags: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<ResultSetContextFacetQueries[]>`<br/>
     Get usage counters for passed tags.

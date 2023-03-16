@@ -21,28 +21,25 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
-import {
-    Pagination,
-    RequestQuery,
-    RequestSortDefinitionInner,
-    ResultNode,
-    ResultSetContext,
-    ResultSetContextFacetQueries,
-    ResultSetPaging,
-    ResultSetPagingList,
-    ResultSetRowEntry,
-    Tag,
-    TagBody,
-    TagEntry,
-    TagPaging,
-    TagPagingList
-} from '@alfresco/js-api';
+import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 
 describe('TagService', () => {
 
     let service: TagService;
     let logService: LogService;
     let userPreferencesService: UserPreferencesService;
+
+    const mockTagPaging = (): TagPaging => {
+        const tagPaging = new TagPaging();
+        tagPaging.list = new TagPagingList();
+        const tag = new TagEntry();
+        tag.entry = new Tag();
+        tag.entry.id = 'some id';
+        tag.entry.tag = 'some name';
+        tagPaging.list.entries = [tag];
+        tagPaging.list.pagination = new Pagination();
+        return tagPaging;
+    };
 
     setupTestBed({
         imports: [
@@ -135,58 +132,44 @@ describe('TagService', () => {
             }));
         });
 
-        describe('searchTags', () => {
-            let result: ResultSetPaging;
+        describe('getAllTheTags', () => {
+            let result: TagPaging;
 
             beforeEach(() => {
-                result = new ResultSetPaging();
-                result.list = new ResultSetPagingList();
-                const tag = new ResultSetRowEntry();
-                tag.entry = new ResultNode();
-                tag.entry.id = 'some id';
-                tag.entry.name = 'some name';
-                result.list.entries = [tag];
-                result.list.pagination = new Pagination();
+                result = mockTagPaging();
             });
 
-            it('should call search on searchApi with correct parameters', () => {
-                const searchSpy = spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
-                const name = 'test';
-                const maxItems = 25;
-                spyOnProperty(userPreferencesService, 'paginationSize').and.returnValue(maxItems);
+            it('should call listTags on TagsApi with correct parameters when includedCounts is true', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
+                const skipCount =  10;
 
-                const sortingByName = new RequestSortDefinitionInner();
-                sortingByName.field = 'cm:name';
-                sortingByName.ascending = true;
-                sortingByName.type = RequestSortDefinitionInner.TypeEnum.FIELD;
+                service.getAllTheTags({
+                    skipCount
+                }, true);
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    include: ['count'],
+                    skipCount
+                });
+            });
 
-                service.searchTags(name);
-                expect(searchSpy).toHaveBeenCalledWith({
-                    query: {
-                        language: RequestQuery.LanguageEnum.Afts,
-                        query: `PATH:"/cm:categoryRoot/cm:taggable/*" AND cm:name:"*${name}*"`
-                    },
-                    paging: {
-                        skipCount: 0,
-                        maxItems
-                    },
-                    sort: [sortingByName]
+            it('should call listTags on TagsApi with correct parameters when includedCounts is false', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
+                const skipCount =  10;
+
+                service.getAllTheTags({
+                    skipCount
+                }, false);
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    include: undefined,
+                    skipCount
                 });
             });
 
             it('should return observable which emits paging object for tags', fakeAsync(() => {
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
 
-                service.searchTags('test').subscribe((tagsResult) => {
-                    const tagPaging = new TagPaging();
-                    tagPaging.list = new TagPagingList();
-                    const tagEntry = new TagEntry();
-                    tagEntry.entry = new Tag();
-                    tagEntry.entry.id = 'some id';
-                    tagEntry.entry.tag = 'some name';
-                    tagPaging.list.entries = [tagEntry];
-                    tagPaging.list.pagination = new Pagination();
-                    expect(tagsResult).toEqual(tagPaging);
+                service.getAllTheTags().subscribe((tagsResult) => {
+                    expect(tagsResult).toEqual(result);
                 });
                 tick();
             }));
@@ -194,7 +177,78 @@ describe('TagService', () => {
             it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
                 spyOn(logService, 'error');
                 const error: string = 'Some error';
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
+                service.getAllTheTags().subscribe({
+                    error: () => {
+                        expect(logService.error).toHaveBeenCalledWith(error);
+                    }
+                });
+                tick();
+            }));
+        });
+
+        describe('searchTags', () => {
+            let result: TagPaging;
+
+            beforeEach(() => {
+                result = mockTagPaging();
+            });
+
+            it('should call listTags on TagsApi with correct default parameters', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
+                const name = 'test';
+                const maxItems = 25;
+                spyOnProperty(userPreferencesService, 'paginationSize').and.returnValue(maxItems);
+
+                service.searchTags(name);
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    tag: `*${name}*`,
+                    skipCount: 0,
+                    maxItems,
+                    sorting: {
+                        orderBy: 'tag',
+                        direction: 'asc'
+                    },
+                    matching: true,
+                    include: undefined
+                });
+            });
+
+            it('should call listTags on TagsApi with correct specified parameters', () => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
+                const name = 'test';
+                spyOnProperty(userPreferencesService, 'paginationSize').and.returnValue(25);
+                const maxItems = 100;
+                const skipCount = 200;
+                const sorting = {
+                    orderBy: 'id',
+                    direction: 'asc'
+                };
+
+                service.searchTags(name, sorting, true, skipCount, maxItems);
+                expect(service.tagsApi.listTags).toHaveBeenCalledWith({
+                    tag: `*${name}*`,
+                    skipCount,
+                    maxItems,
+                    sorting,
+                    matching: true,
+                    include: ['count']
+                });
+            });
+
+            it('should return observable which emits paging object for tags', fakeAsync(() => {
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
+
+                service.searchTags('test').subscribe((tagsResult) => {
+                    expect(tagsResult).toEqual(result);
+                });
+                tick();
+            }));
+
+            it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
+                spyOn(logService, 'error');
+                const error: string = 'Some error';
+                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
                 service.searchTags('test').subscribe({
                     error: () => {
                         expect(logService.error).toHaveBeenCalledWith(error);
@@ -244,83 +298,6 @@ describe('TagService', () => {
             }));
         });
 
-        describe('getCountersForTags', () => {
-            let result: ResultSetPaging;
-            const tag1 = 'tag 1';
-
-            beforeEach(() => {
-                result = new ResultSetPaging();
-                result.list = new ResultSetPagingList();
-                result.list.context = new ResultSetContext();
-                const facetQuery = new ResultSetContextFacetQueries();
-                facetQuery.count = 2;
-                facetQuery.label = tag1;
-                facetQuery.filterQuery = `TAG:"${tag1}"`;
-                result.list.context.facetQueries = [facetQuery];
-            });
-
-            it('should call search on searchApi with correct parameters', () => {
-                const tag2 = 'tag 2';
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
-
-                service.getCountersForTags([tag1, tag2]);
-                expect(service.searchApi.search).toHaveBeenCalledWith({
-                    query: {
-                        language: RequestQuery.LanguageEnum.Afts,
-                        query: `*`
-                    },
-                    facetQueries: [{
-                        query: `TAG:"${tag1}"`,
-                        label: tag1
-                    }, {
-                        query: `TAG:"${tag2}"`,
-                        label: tag2
-                    }]
-                });
-            });
-
-            it('should return observable which emits facet queries with counters for tags', (done) => {
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
-                service.getCountersForTags([tag1]).subscribe((counters) => {
-                    expect(counters).toBe(result.list.context.facetQueries);
-                    done();
-                });
-            });
-
-            it('should return observable which emits undefined if context is not present', (done) => {
-                result.list.context = undefined;
-
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
-                service.getCountersForTags([tag1]).subscribe((counters) => {
-                    expect(counters).toBeUndefined();
-                    done();
-                });
-            });
-
-            it('should return observable which emits undefined if list is not present', (done) => {
-                result.list = undefined;
-
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve(result));
-                service.getCountersForTags([tag1]).subscribe((counters) => {
-                    expect(counters).toBeUndefined();
-                    done();
-                });
-            });
-
-            it('should call error on logService when error occurs during fetching counters for tags', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error = 'Some error';
-                spyOn(service.searchApi, 'search').and.returnValue(Promise.reject(error));
-
-                service.getCountersForTags([tag1]).subscribe({
-                    error: () => {
-                        expect(logService.error).toHaveBeenCalledWith(error);
-                    }
-                });
-                tick();
-            }));
-        });
-
         describe('findTagByName', () => {
             let tagPaging: TagPaging;
             const tagName = 'some tag';
@@ -335,7 +312,8 @@ describe('TagService', () => {
                 service.findTagByName(tagName);
 
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    name: tagName
+                    tag: tagName,
+                    include: undefined
                 });
             });
 
