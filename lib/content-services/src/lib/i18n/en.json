@@ -134,6 +134,7 @@
     },
     "TAGS_CREATOR": {
       "EXISTING_TAGS": "Existing tags:",
+      "EXISTING_TAGS_SELECTION": "Select an existing tag:",
       "NO_TAGS_CREATED": "No Tags Created",
       "NO_EXISTING_TAGS": "No Existing Tags",
       "TITLE": "Create Tags",

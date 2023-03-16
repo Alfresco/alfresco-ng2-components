@@ -50,7 +50,8 @@
             </div>
             <acc-tags-creator
                 [(tagNameControlVisible)]="tagNameControlVisible"
-                (tagsAddition)="storeAddedTags($event)">
+                (tagsAddition)="storeAddedTags($event)"
+                [mode]="tagsCreatorMode">
             </acc-tags-creator>
         </div>
 

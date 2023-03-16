@@ -31,7 +31,7 @@ import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.i
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { TagService } from '../../../tag';
+import { TagsCreatorMode, TagService } from '../../../tag';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -95,8 +95,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     changedProperties = {};
     hasMetadataChanged = false;
     tagNameControlVisible = false;
-    private targetProperty: CardViewBaseItemModel;
+
     private addedTags: string[];
+    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private targetProperty: CardViewBaseItemModel;
+
+    get tagsCreatorMode(): TagsCreatorMode {
+        return this._tagsCreatorMode;
+    }
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -204,7 +210,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             const tagBody = new TagBody();
             tagBody.tag = tag;
             return tagBody;
-        }))
+        }));
     }
 
     storeAddedTags(tags: string[]) {

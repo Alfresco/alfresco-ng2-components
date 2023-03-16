@@ -24,6 +24,7 @@ import { debounce, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { TagService } from '@alfresco/adf-content-services';
+import { TagsCreatorMode } from './tags-creator-mode';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -45,6 +46,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
         }
+    }
+    @Input()
+    set mode(mode: TagsCreatorMode) {
+        this._existingTagsLabelKey = mode === TagsCreatorMode.CREATE ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' :
+            'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION';
     }
 
     @Output()
@@ -82,6 +88,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private cancelExistingTagsLoading$ = new Subject<void>();
     private nameOfExistingExactTag: string;
     private _existingTagsPanelVisible: boolean;
+    private _existingTagsLabelKey: string;
 
     @ViewChild('tagsList')
     private tagsListElement: ElementRef;
@@ -173,6 +180,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     get existingTagsPanelVisible(): boolean {
         return this._existingTagsPanelVisible;
+    }
+
+    get existingTagsLabelKey(): string {
+        return this._existingTagsLabelKey;
     }
 
     /*showNameInput(): void {

@@ -22,3 +22,6 @@ export * from './tag-node-list.component';
 export * from './services/tag.service';
 
 export * from './tag.module';
+
+export * from './tags-creator/tags-creator-mode';
+
