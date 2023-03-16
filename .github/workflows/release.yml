@@ -8,7 +8,7 @@ on:
         required: false
         type: boolean
         default: true
-    push:
+  push:
     branches:
       - develop
   pull_request:
