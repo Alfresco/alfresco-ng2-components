@@ -228,7 +228,7 @@ describe('NotificationService', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('.custom-template-class')).not.toBeNull();
-        expect(document.querySelector('.custom-template-class').innerHTML).toEqual('Custom content with templateRef');
+        expect(document.querySelector('.custom-template-class')?.innerHTML).toEqual('Custom content with templateRef');
     });
 
     it('should open a message notification bar with action and custom templateRef configuration', (done) => {
@@ -240,7 +240,7 @@ describe('NotificationService', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('.custom-template-class')).not.toBeNull();
-        expect(document.querySelector('.custom-template-class').innerHTML).toEqual('Custom content with templateRef');
+        expect(document.querySelector('.custom-template-class')?.innerHTML).toEqual('Custom content with templateRef');
     });
 
 });
