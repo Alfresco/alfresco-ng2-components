@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-12-03
 ---
 
-# [Search service](lib/content-services/src/lib/search/services/search.service.ts "Defined in search.service.ts")
+# [Search service](../../../lib/content-services/src/lib/search/services/search.service.ts "Defined in search.service.ts")
 
 Accesses the Content Services Search API.
 
@@ -13,13 +13,12 @@ Accesses the Content Services Search API.
 
 ### Methods
 
--   **getNodeQueryResults**(term: `string`, options?: [`SearchOptions`](lib/content-services/src/lib/search/services/search.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **getNodeQueryResults**(term: `string`, options?: [`SearchOptions`](../../../lib/content-services/src/lib/search/services/search.service.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets a list of nodes that match the given search criteria.
     -   _term:_ `string`  - Term to search for
-    -   _options:_ [`SearchOptions`](lib/content-services/src/lib/search/services/search.service.ts)  - (Optional) Options for delivery of the search results
+    -   _options:_ [`SearchOptions`](../../../lib/content-services/src/lib/search/services/search.service.ts)  - (Optional) Options for delivery of the search results
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of nodes resulting from the search
--   **search**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`]
-- `>`<br/>
+-   **search**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
     Performs a search.
     -   _searchTerm:_ `string`  - Term to search for
     -   _maxResults:_ `number`  - Maximum number of items in the list of results
@@ -37,7 +36,7 @@ See the
 in the Alfresco JS-API for the format of the query and returned data.
 The [Search Configuration service](../services/search-configuration.service.md)
 has a method to generate the QueryBody object used by `searchByQueryBody`. The properties of the
-[`SearchOptions`](lib/content-services/src/lib/search/services/search.service.ts)
+[`SearchOptions`](../../../lib/content-services/src/lib/search/services/search.service.ts)
 interface are documented in source file comments.
 
 ## See also

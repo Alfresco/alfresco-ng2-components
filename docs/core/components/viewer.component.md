@@ -9,7 +9,6 @@ Last reviewed: 2023-01-30
 
 Displays content from blob file or url file.
 
-
 ## Contents
 
 -   [Basic usage](#basic-usage)
@@ -19,7 +18,6 @@ Displays content from blob file or url file.
     -   [Events](#events)
 -   [Keyboard shortcuts](#keyboard-shortcuts)
 -   [Details](#details)
-    -   [Integrating with the Document List component](#integrating-with-the-document-list-component)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
@@ -61,7 +59,6 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| allowDownload | `boolean` | true | Toggles downloading. |
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
@@ -70,15 +67,18 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| fileName | `string` |  | Content filename. |
-| mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
+| fileName | `string` |  | Override Content filename. |
+| mimeType | `string` |  | Overload mimeType |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
+| readOnly | `boolean` | true | Enable when where is possible the editing functionalities |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
 | showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
-| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded data. |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded data. |
+| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
+| sidebarLeftTemplateContext |  | null | Context object available for binding by the local sidebarLeftTemplate with let declarations. |
+| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
+| sidebarRightTemplateContext |  | null | Context object available for binding by the local sidebarRightTemplate with let declarations. |
 | tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 
@@ -88,7 +88,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | ---- | ---- | ----------- |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
+| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
 | submitFile | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer. |
 
 ## Keyboard shortcuts

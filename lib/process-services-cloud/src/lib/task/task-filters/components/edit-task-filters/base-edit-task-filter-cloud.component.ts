@@ -99,6 +99,14 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     sortProperties: string[] = [];
 
+    /** Task Filter to use*/
+    @Input()
+    taskFilter: T;
+
+    /** Emitted when a task filter property changes. */
+    @Output()
+    filterChange = new EventEmitter<T>();
+
     /** Emitted when a filter action occurs (i.e Save, Save As, Delete). */
     @Output()
     action = new EventEmitter<TaskFilterAction>();
@@ -121,14 +129,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
-    @Input()
-    taskFilter: T;
-
     changedTaskFilter: T;
-
-    /** Emitted when a task filter property changes. */
-    @Output()
-    filterChange = new EventEmitter<T>();
 
     protected onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;

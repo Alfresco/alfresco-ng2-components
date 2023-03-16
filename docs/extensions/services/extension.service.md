@@ -40,10 +40,10 @@ Manages and runs basic extension functionality.
     Retrieves a [RuleEvaluator](../../../lib/extensions/src/lib/config/rule.extensions.ts) function using its key name.
     -   _key:_ `string`  - Key name to look for
     -   **Returns** [`RuleEvaluator`](../../../lib/extensions/src/lib/config/rule.extensions.ts) - [RuleEvaluator](../../../lib/extensions/src/lib/config/rule.extensions.ts) or null if not found
--   **getFeature**(key: `string`): `any[]`<br/>
+-   **getFeature**(key: `string|string[]`, defaultValue: `any` = `[]`)<br/>
     Gets features by key.
-    -   _key:_ `string`  - Key string, using dot notation
-    -   **Returns** `any[]` - Features array found by key
+    -   _key:_ `string|string[]`  - Key string using dot notation or array of strings
+    -   _defaultValue:_ `any`  - Default value returned if feature is not found, default is empty array
 -   **getRouteById**(id: `string`): [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts)<br/>
     Retrieves a route using its ID value.
     -   _id:_ `string`  - The ID value to look for

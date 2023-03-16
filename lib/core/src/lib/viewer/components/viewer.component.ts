@@ -144,6 +144,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     tracks: Track[] = [];
 
+    /** Overload mimeType*/
     @Input()
     mimeType: string;
 

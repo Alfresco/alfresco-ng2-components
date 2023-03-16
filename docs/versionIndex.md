@@ -46,9 +46,14 @@ backend services have been tested with each released version of ADF.
 <!--v600 start-->
 
 -   [Card view content update service](content-services/services/card-view-content-update.service.md)
+-   [Content comment list service](content-services/services/content-comment-list.service.md)
+-   [Content user info component](content-services/components/content-user-info.component.md)
 -   [Datatable service](core/services/datatable.service.md)
+-   [Identity user info component](core/components/identity-user-info.component.md)
 -   [Node comments service](content-services/services/node-comments.service.md)
+-   [Process user info component](process-services/components/process-user-info.component.md)
 -   [Task comments service](content-services/services/task-comments.service.md)
+-   [Viewer render component](core/components/viewer-render.component.md)
 
 <!--v600 end-->
 
@@ -538,6 +543,7 @@ backend services have been tested with each released version of ADF.
 -   [Search control component](content-services/components/search-control.component.md)
 -   [Search component](content-services/components/search.component.md)
 -   [Search service](core/services/search.service.md)
+-   [Security controls service](content-services/services/security-controls.service.md)
 -   [Select apps dialog component](process-services/components/select-apps-dialog.component.md)
 -   [Shared links api service](core/services/shared-links-api.service.md)
 -   [Sites dropdown component](content-services/components/sites-dropdown.component.md)
@@ -573,7 +579,6 @@ backend services have been tested with each released version of ADF.
 -   [Upload drag area component](content-services/components/upload-drag-area.component.md)
 -   [Upload directive](core/directives/upload.directive.md)
 -   [Upload service](core/services/upload.service.md)
--   [User info component](core/components/user-info.component.md)
 -   [User initial pipe](core/pipes/user-initial.pipe.md)
 -   [User preferences service](core/services/user-preferences.service.md)
 -   [User process model](core/models/user-process.model.md)

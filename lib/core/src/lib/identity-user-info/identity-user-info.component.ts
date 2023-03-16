@@ -30,9 +30,11 @@ export class IdentityUserInfoComponent implements OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
+    /** Is the user logged in */
     @Input()
     isLoggedIn: boolean;
 
+    /** User */
     @Input()
     identityUser: IdentityUserModel;
 

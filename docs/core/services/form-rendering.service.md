@@ -13,24 +13,24 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ### Methods
 
--   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<any>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)<br/>
-    Gets the currently active [DynamicComponentResolveFunction](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) for a field type.
+-   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<any>` = `this.defaultValue`): [`DynamicComponentResolveFunction`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)<br/>
+    Gets the currently active [DynamicComponentResolveFunction](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<any>`  - Default type returned for types that are not yet mapped
-    -   **Returns** [`DynamicComponentResolveFunction`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) - Resolver function
+    -   **Returns** [`DynamicComponentResolveFunction`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) - Resolver function
 -   **register**(components: `Function`, override: `boolean` = `false`)<br/>
     Register multiple components
     -   _components:_ `Function`  - 
     -   _override:_ `boolean`  - 
--   **resolveComponentType**(model: [`DynamicComponentModel`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts), defaultValue: `Type<any>` = `this.defaultValue`): `Type<any>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts), defaultValue: `Type<any>` = `this.defaultValue`): `Type<any>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
+    -   _model:_ [`DynamicComponentModel`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<any>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<any>` - Component type
--   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
-    Sets or optionally replaces a [DynamicComponentResolveFunction](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) for a field type.
+-   **setComponentTypeResolver**(type: `string`, resolver: [`DynamicComponentResolveFunction`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts), override: `boolean` = `true`)<br/>
+    Sets or optionally replaces a [DynamicComponentResolveFunction](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts) for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
-    -   _resolver:_ [`DynamicComponentResolveFunction`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)  - The new resolver function
+    -   _resolver:_ [`DynamicComponentResolveFunction`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts)  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
@@ -38,7 +38,7 @@ Maps a form field type string onto the corresponding form [widget component](../
 The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field component uses this service to choose which [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) to use to render an instance of a
 form field. The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
 The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
-a corresponding [`DynamicComponentResolveFunction`](lib/core/src/lib/common/services/dynamic-component-mapper.service.ts). The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
+a corresponding [`DynamicComponentResolveFunction`](../../../lib/core/src/lib/common/services/dynamic-component-mapper.service.ts). The function takes a [`FormFieldModel`](../../core/models/form-field.model.md) object as its argument and
 uses the data from the object to determine which [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be used to render the field.
 
 In some cases, the field type string alone is enough to determine the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) type and so the function
@@ -73,7 +73,7 @@ The [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.t
 | Checkbox | "boolean" | [`CheckboxWidgetComponent`](../../../lib/core/src/lib/form/components/widgets/checkbox/checkbox.widget.ts) |
 | Date | "date" | [`DateWidgetComponent`](../../../lib/core/src/lib/form/components/widgets/date/date.widget.ts) |
 | Display text | "readonly-text" | [`DisplayTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
-| Display Rich text | "display-rich-text" | [`DisplayRichTextWidgetComponent`](lib/process-services-cloud/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
+| Display Rich text | "display-rich-text" | [`DisplayRichTextWidgetComponent`](../../../lib/process-services-cloud/src/lib/form/components/widgets/display-rich-text/display-rich-text.widget.ts) |
 | Display value | "readonly" | DisplayValueWidgetComponent |
 | Dropdown | "dropdown" | [`DropdownWidgetComponent`](../../../lib/process-services/src/lib/form/widgets/dropdown/dropdown.widget.ts) |
 | Dynamic table | "dynamic-table" | [`DynamicTableWidgetComponent`](../../../lib/process-services/src/lib/form/widgets/dynamic-table/dynamic-table.widget.ts) |

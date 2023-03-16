@@ -23,18 +23,22 @@ project.
 
 -   [Library updates](#library-updates)
 -   [Breaking changes](#breaking-changes)
+-   [Library to update](#library-to-update)
 -   [Deprecated items](#deprecated-items)
     -   [DataColumnModule](#datacolumnmodule)
     -   [PaginationModel](#paginationmodel)
 -   [Relocated classes](#relocated-classes)
-    -   [Update Data-table or Document List after a node change](#update-data-table-or-document-list-after-a-node-change)
+    -   [Update Data-table a data change](#update-data-table-a-data-change)
     -   [NodeNameTooltipPipe](#nodenametooltippipe)
     -   [nodeUpdated Subject](#nodeupdated-subject)
+    -   [Comments component](#comments-component)
+    -   [ViewerComponent](#viewercomponent)
+    -   [UserInfoComponent](#userinfocomponent)
 -   [Renamed items](#renamed-items)
     -   [New Classes or Services](#new-classes-or-services)
     -   [Properties and methods](#properties-and-methods)
     -   [Component selectors](#component-selectors)
--   [Theme changes](#theme-changes) 
+-   [Theme changes](#theme-changes)
 
 ## Library updates
 
@@ -83,20 +87,20 @@ Description
 How to fix it:
 
 ## Library to update
-| Name | Version |
-| --- | -- |
-| `pdfjs-dist` | `3.3.122`|
 
+| Name | Version |
+| ---- | ------- |
+| `pdfjs-dist` | `3.3.122` |
 
 ## Deprecated items
 
 | Class | Before | Description |
-| --- | -- | --- |
-| `LoginDialogService` | `@alfresco/adf-core`||
-| `DeletedNodesApiService` | `@alfresco/adf-core`||
-| `BpmUserService` | `@alfresco/adf-core`| you can use instead the PeopleProcessService|
-| `UserContentAccessService` | `@alfresco/adf-core`| you can use instead the PeopleContentService|
-| `EcmUserService` | `@alfresco/adf-core`| you can use instead the PeopleContentService|
+| ----- | ------ | ----------- |
+| [`LoginDialogService`](../core/services/login-dialog.service.md) | `@alfresco/adf-core` |  |
+| [`DeletedNodesApiService`](../core/services/deleted-nodes-api.service.md) | `@alfresco/adf-core` |  |
+| [`BpmUserService`](../core/services/bpm-user.service.md) | `@alfresco/adf-core` | you can use instead the [`PeopleProcessService`](../core/services/people-process.service.md) |
+| [`UserContentAccessService`](../../lib/core/src/lib/services/user-content-access.service.ts) | `@alfresco/adf-core` | you can use instead the [`PeopleContentService`](../core/services/people-content.service.md) |
+| [`EcmUserService`](../core/services/ecm-user.service.md) | `@alfresco/adf-core` | you can use instead the [`PeopleContentService`](../core/services/people-content.service.md) |
 
 ### DataColumnModule
 
@@ -128,50 +132,49 @@ v6.0.0 and after:
 ## Relocated classes
 
 | Class | Before | After |
-| --- | -- | --- |
-| `VersionCompatibilityService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `VersionCompatibilityDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `SitesService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `SearchService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `AppsProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md)| `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `NodeDownloadDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| ----- | ------ | ----- |
+| [`VersionCompatibilityService`](../../lib/content-services/src/lib/version-compatibility/version-compatibility.service.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`VersionCompatibilityDirective`](../content-services/directives/version-compatibility.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`SitesService`](../content-services/services/sites.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`SearchService`](../core/services/search.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`AppsProcessService`](../core/services/apps-process.service.md) | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`CheckAllowableOperationDirective`](../content-services/directives/check-allowable-operation.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`LibraryFavoriteDirective`](../../lib/content-services/src/lib/directives/library-favorite.directive.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`LibraryMembershipDirective`](../../lib/content-services/src/lib/directives/library-membership.directive.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeDeleteDirective`](../content-services/directives/node-delete.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeFavoriteDirective`](../content-services/directives/node-favorite.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeRestoreDirective`](../content-services/directives/node-restore.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeDownloadDirective`](../core/directives/node-download.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | [`AppsProcessService`] | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| `SharedLinksApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| `LockService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| `FavoritesApiService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| `SearchConfigurationInterface` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `NodeDownloadDirective` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `DownloadZipDialogComponent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `RenditionService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `UploadService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `NodesApiService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `ContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `ContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `PeopleContentService` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `PeopleProcessService` | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
-| `PermissionsEnum` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `AllowableOperationsEnum` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileModel` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`SharedLinksApiService`](../core/services/shared-links-api.service.md) | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`LockService`](../../lib/content-services/src/lib/document-list/services/lock.service.ts) | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`FavoritesApiService`](../core/services/favorites-api.service.md) | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`SearchConfigurationInterface`](../core/interfaces/search-configuration.interface.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeDownloadDirective`](../core/directives/node-download.directive.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`DownloadZipDialogComponent`](../../lib/content-services/src/lib/dialogs/download-zip/download-zip.dialog.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`RenditionService`](../../lib/content-services/src/lib/common/services/rendition.service.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`UploadService`](../core/services/upload.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodesApiService`](../core/services/nodes-api.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`ContentService`](../core/services/content.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`ContentService`](../core/services/content.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`PeopleContentService`](../core/services/people-content.service.md) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`PeopleProcessService`](../core/services/people-process.service.md) | `@alfresco/adf-core` | `@alfresco/adf-process-services` |
+| [`PermissionsEnum`](../../lib/content-services/src/lib/common/models/permissions.enum.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`AllowableOperationsEnum`](../../lib/content-services/src/lib/common/models/allowable-operations.enum.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileModel`](../../lib/content-services/src/lib/common/models/file.model.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
 | `FileUploadStatus` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadProgress` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadOptions` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadCompleteEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadDeleteEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `FileUploadErrorEvent` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `NodeMetadata` | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
-| `RichTextEditorComponent` | `@alfresco/adf-core` | `@alfresco/adf-process-services-cloud` |
+| [`FileUploadProgress`](../../lib/content-services/src/lib/common/models/file.model.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileUploadOptions`](../../lib/content-services/src/lib/common/models/file.model.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileUploadEvent`](../../lib/content-services/src/lib/common/events/file.event.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileUploadCompleteEvent`](../../lib/content-services/src/lib/common/events/file.event.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileUploadDeleteEvent`](../../lib/content-services/src/lib/common/events/file.event.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`FileUploadErrorEvent`](../../lib/content-services/src/lib/common/events/file.event.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`NodeMetadata`](../../lib/content-services/src/lib/common/models/node-metadata.model.ts) | `@alfresco/adf-core` | `@alfresco/adf-content-services` |
+| [`RichTextEditorComponent`](../../lib/process-services-cloud/src/lib/rich-text-editor/rich-text-editor.component.ts) | `@alfresco/adf-core` | `@alfresco/adf-process-services-cloud` |
 
-   
 ### Update Data-table a data change
 
-v6.0.0 and after You will need to provide a ```DataTableService``` to update a row of your table.
+v6.0.0 and after You will need to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) to update a row of your table.
 The model to update the DataTable require the ID of the row you want change and the new data Object of the row
 
 ```typescript
@@ -187,7 +190,7 @@ For example if your table use entry nodes you can pass:
 this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
 ```
 
-As good practice is better to provide a DataTableService in the component where you are going to deliver the new object
+As good practice is better to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) in the component where you are going to deliver the new object
 
 ```typescript
 @Component({
@@ -210,7 +213,6 @@ export class FilesComponent implements OnInit {
             this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
         });
     }
-
 ```
 
 ### NodeNameTooltipPipe
@@ -249,31 +251,35 @@ v6.0.0 and after:
 
 ### Comments component
 
-```adf-comments``` component is now a real presentational components. The `taskId` and `nodeId` has now renamed to `id`
-The ```adf-comments``` has now two specialization in :
+`adf-comments` component is now a real presentational components. The `taskId` and `nodeId` has now renamed to `id`
+The `adf-comments` has now two specialization in :
 
-- ```adf-node-comments``` [Node Comments Componen](../content-services/components/node-comments.component.md)
-- ```adf-task-comments``` [Task Comments Component](../process-services/components/task-comments.component.md)
+-   `adf-node-comments` [Node Comments Componen](../content-services/components/node-comments.component.md)
+-   `adf-task-comments` [Task Comments Component](../process-services/components/task-comments.component.md)
 
 ### ViewerComponent
-From v.6.0.0 and after [`ViewerComponent`](../../docs/core/components/viewer.component.md) no longer show content from ACS, so instead of taking `nodeId` as `@Input`, it takes `blobFile` and `urlFile`. For more details check the [`PR`](https://github.com/Alfresco/alfresco-ng2-components/pull/7992).
-If you need to display content from ACS you can use instead the new [`AlfrescoViewerComponent`](../../docs/content-services/components/alfresco-viewer.component.md)
+
+From v.6.0.0 and after [`ViewerComponent`](../core/components/viewer.component.md) no longer show content from ACS, so instead of taking `nodeId` as `@Input`, it takes `blobFile` and `urlFile`. For more details check the [`PR`](https://github.com/Alfresco/alfresco-ng2-components/pull/7992).
+If you need to display content from ACS you can use instead the new [`AlfrescoViewerComponent`](../content-services/components/alfresco-viewer.component.md)
 
 ### UserInfoComponent
-From v.6.0.0 and after ```UserInfoComponent``` is no longer active.
+
+From v.6.0.0 and after [`UserInfoComponent`](../../lib/core/src/lib/userinfo/components/user-info.component.ts) is no longer active.
 
 In its place there are now 3 presentational components:
-- [`IdentityUserInfoComponent`](../../docs/core/components/identity-user-info.component.md) present in core
-- [`ContentUserInfoComponent`](../../docs/content-services/components/content-user-info.component.md) present in content-services
-- [`ProcessUserInfoComponent`](../../docs/process-services/components/process-user-info.component.md) present in process-services
 
-To build a similar logic to the one in ```UserInfoComponent``` check implementation on [`demo-shell`](../../demo-shell/src/app/components/app-layout/user-info/user-info.component.ts)
+-   [`IdentityUserInfoComponent`](../core/components/identity-user-info.component.md) present in core
+-   [`ContentUserInfoComponent`](../content-services/components/content-user-info.component.md) present in content-services
+-   [`ProcessUserInfoComponent`](../process-services/components/process-user-info.component.md) present in process-services
+
+To build a similar logic to the one in [`UserInfoComponent`](../../lib/core/src/lib/userinfo/components/user-info.component.ts) check implementation on [`demo-shell`](../../demo-shell/src/app/components/app-layout/user-info/user-info.component.ts)
 
 ## Renamed items
 
 ### New Classes or Services
-- [`AlfrescoViewerComponent`](../../docs/content-services/components/alfresco-viewer.component.md)
-- [`ViewerRenderComponent`](../..docs/core/components/viewer-render.component.md) 
+
+-   [`AlfrescoViewerComponent`](../content-services/components/alfresco-viewer.component.md)
+-   [`ViewerRenderComponent`](../core/components/viewer-render.component.md) 
 
 ### Properties and methods
 
@@ -284,33 +290,31 @@ To build a similar logic to the one in ```UserInfoComponent``` check implementat
 v6.0.0 has improved the way that typography is injected into the ADF theme. Now the typography of ADF is taken from the material theme following the material design specifications : 
 
 before v6.0.0
-```
-@include mat-core($typography);
-$primary: mat.define-palette($primary);
-$accent: mat.define-palette($accent);
-$warn: mat.define-palette($warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
 
-```
+    @include mat-core($typography);
+    $primary: mat.define-palette($primary);
+    $accent: mat.define-palette($accent);
+    $warn: mat.define-palette($warn);
+    $theme:   mat-light-theme($primary, $accent, $warn);
+
 typography was already predefined inside ADF theme but this will prevent to inject different typography.
 
 v6.0.0 and after 
-```
-$typography: mat.define-typography-config(
-   ...define your typography following material specifications
-);
 
-$primary: mat.define-palette($primary);
-$accent: mat.define-palette($accent);
-$warn: mat.define-palette($warn);
-$theme: mat.define-light-theme(
-    (
-        color: (
-            primary: $primary,
-            accent: $accent,
-            warn: $warn
-        ),
-        typography: $typography
-    )
-);
-```
+    $typography: mat.define-typography-config(
+       ...define your typography following material specifications
+    );
+
+    $primary: mat.define-palette($primary);
+    $accent: mat.define-palette($accent);
+    $warn: mat.define-palette($warn);
+    $theme: mat.define-light-theme(
+        (
+            color: (
+                primary: $primary,
+                accent: $accent,
+                warn: $warn
+            ),
+            typography: $typography
+        )
+    );

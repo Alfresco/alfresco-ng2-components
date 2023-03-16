@@ -66,6 +66,7 @@ when the task list is empty:
 | dueDateFrom | `string` | "" | Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. |
 | dueDateTo | `string` | "" | Filter the tasks. Display only tasks with dueDate less or equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
+| isResizingEnabled | `boolean` | false | Toggles main datatable column resizing feature. |
 | lastModifiedFrom | `string` | "" | Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date. |
 | lastModifiedTo | `string` | "" | Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date. |
 | multiselect | `boolean` | false | Toggles multiple row selection, rendering a checkbox at the beginning of each row. |
