@@ -16,11 +16,11 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { AppConfigValues } from '../../app-config/app-config.service';
 import { OAuthEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, filter, map } from 'rxjs/operators';
-import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { AppConfigValues } from '../../app-config/app-config.service';
+import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
 import { AuthService } from './auth.service';
