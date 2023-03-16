@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationCloudService } from './notification-cloud.service';
@@ -27,7 +27,7 @@ describe('NotificationCloudService', () => {
     let apollo: Apollo;
     let apolloCreateSpy: jasmine.Spy;
     let apolloSubscribeSpy: jasmine.Spy;
-    let apiService: AlfrescoApiService;
+
     const useMock: any = {
         subscribe: () => {}
     };
@@ -43,14 +43,6 @@ describe('NotificationCloudService', () => {
         }
     `;
 
-    const apiServiceMock: any = {
-        oauth2Auth: {
-            token: '1234567'
-        },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
-    };
-
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -61,9 +53,7 @@ describe('NotificationCloudService', () => {
     beforeEach(() => {
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);
-        apiService = TestBed.inject(AlfrescoApiService);
 
-        spyOn(apiService, 'getInstance').and.returnValue(apiServiceMock);
         service.appsListening = [];
         apolloCreateSpy = spyOn(apollo, 'createNamed');
         apolloSubscribeSpy = spyOn(apollo, 'use').and.returnValue(useMock);

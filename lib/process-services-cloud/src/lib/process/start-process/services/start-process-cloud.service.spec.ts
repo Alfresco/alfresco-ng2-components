@@ -17,16 +17,17 @@
 
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('StartProcessCloudService', () => {
 
     let service: StartProcessCloudService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
 
     setupTestBed({
         imports: [HttpClientModule]
@@ -34,7 +35,7 @@ describe('StartProcessCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(StartProcessCloudService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
     });
 
     it('should be able to create a new process', (done) => {
@@ -105,11 +106,8 @@ describe('StartProcessCloudService', () => {
     it('should transform the response into task variables', (done) => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
-        const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
-        oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue({
-            oauth2Auth
-        } as any);
+        const requestSpy = spyOn(adfHttpClient, 'request');
+        requestSpy.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
 
         service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).subscribe((result) => {
             expect(result.length).toEqual(3);
@@ -122,8 +120,8 @@ describe('StartProcessCloudService', () => {
             expect(result[2].name).toEqual('static3');
             expect(result[2].id).toEqual('static3');
             expect(result[2].value).toEqual(true);
-            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`)).toBeTruthy();
-            expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
             done();
         });
     });

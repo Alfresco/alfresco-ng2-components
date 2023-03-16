@@ -18,34 +18,26 @@
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Injectable, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { RequestOptions } from '@alfresco/js-api';
 
-export interface CallApiParams {
-    path: string;
-    httpMethod: string;
-    pathParams?: any;
-    queryParams?: any;
-    headerParams?: any;
-    formParams?: any;
-    bodyParam?: any;
-    contentTypes?: string[];
-    accepts?: string[];
-    returnType?: any;
-    contextRoot?: string;
-    responseType?: string;
-}
 
 @Injectable()
+
 export class BaseCloudService {
     protected apiService = inject(AlfrescoApiService);
     protected appConfigService = inject(AppConfigService);
     protected logService = inject(LogService);
 
-    protected defaultParams: CallApiParams = {
+    protected defaultParams: RequestOptions = {
         path: '',
         httpMethod: '',
         contentTypes: ['application/json'],
         accepts: ['application/json']
     };
+
+    constructor(
+        protected adfHttpClient: AdfHttpClient) {}
 
     getBasePath(appName: string): string {
         return appName
@@ -55,63 +47,64 @@ export class BaseCloudService {
 
     protected post<T, R>(url: string, data?: T, queryParams?: any): Observable<R> {
         return from(
-            this.callApi<R>({
-                ...this.defaultParams,
-                path: url,
-                httpMethod: 'POST',
-                bodyParam: data,
-                queryParams
-            })
+            this.callApi<R>(
+                url,
+                {
+                    ...this.defaultParams,
+                    path: url,
+                    httpMethod: 'POST',
+                    bodyParam: data,
+                    queryParams
+                }
+            )
         );
     }
 
     protected put<T, R>(url: string, data?: T): Observable<R> {
         return from(
-            this.callApi<R>({
-                ...this.defaultParams,
-                path: url,
-                httpMethod: 'PUT',
-                bodyParam: data
-            })
+            this.callApi<R>(
+                url,
+                {
+                    ...this.defaultParams,
+                    path: url,
+                    httpMethod: 'PUT',
+                    bodyParam: data
+                }
+            )
         );
     }
 
     protected delete(url: string): Observable<void> {
         return from(
-            this.callApi<void>({
-                ...this.defaultParams,
-                path: url,
-                httpMethod: 'DELETE'
-            })
+            this.callApi<void>(
+                url,
+                {
+                    ...this.defaultParams,
+                    path: url,
+                    httpMethod: 'DELETE'
+                }
+            )
         );
     }
 
     protected get<T>(url: string, queryParams?: any): Observable<T> {
         return from(
-            this.callApi<T>({
-                ...this.defaultParams,
-                path: url,
-                httpMethod: 'GET',
-                queryParams
-            })
+            this.callApi<T>(
+                url,
+                {
+                    ...this.defaultParams,
+                    path: url,
+                    httpMethod: 'GET',
+                    queryParams
+                }
+            )
         );
     }
 
-    protected callApi<T>(params: CallApiParams): Promise<T> {
-        return this.apiService.getInstance()
-            .oauth2Auth.callCustomApi(
-                params.path,
-                params.httpMethod,
-                params.pathParams,
-                params.queryParams,
-                params.headerParams,
-                params.formParams,
-                params.bodyParam,
-                params.contentTypes,
-                params.accepts,
-                params.returnType,
-                params.contextRoot,
-                params.responseType
+    protected callApi<T>(url: string, params: RequestOptions): Promise<T> {
+        return this.adfHttpClient.request(
+                url,
+                params
             );
     }
 

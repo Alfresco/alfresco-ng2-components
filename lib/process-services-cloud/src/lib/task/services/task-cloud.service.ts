@@ -33,6 +33,7 @@ import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.mo
 import { DEFAULT_TASK_PRIORITIES, TaskPriorityOption } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -43,9 +44,10 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     constructor(
         private translateService: TranslationService,
-        private identityUserService: IdentityUserService
+        private identityUserService: IdentityUserService,
+        adfHttpClient: AdfHttpClient
     ) {
-        super();
+        super(adfHttpClient);
     }
 
     /**
