@@ -789,8 +789,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         selectedRow.isContextMenuSource = true;
     }
 
-    setRowAsContextSource(): void {
-        this.data.getRows().find((row) => this.selectedRowId === row.id).isContextMenuSource = true;
+    private setRowAsContextSource(): void {
+        const selectedRow = this.data.getRows().find((row) => this.selectedRowId === row.id);
+        if(selectedRow) {
+            selectedRow.isContextMenuSource = true;
+        }
     }
 
     getSortingKey(): string | null {

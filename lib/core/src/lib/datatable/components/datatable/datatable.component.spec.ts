@@ -1345,6 +1345,34 @@ describe('DataTable', () => {
         expect(idColumn.innerText).toContain('ID');
         expect(nameColumn.innerText).toContain('CUSTOM HEADER');
     });
+
+    it('should set isContextMenuSource to true for row whose id matches selectedRowId', () => {
+        const rows = [{
+            id: '1234',
+            isContextMenuSource: false
+        }, {
+            id: '2345',
+            isContextMenuSource: false
+        }, {
+            id: '3456',
+            isContextMenuSource: false
+        }] as DataRow[];
+        const row = {
+            id: '2345',
+            isContextMenuSource: false
+        } as DataRow;
+        dataTable.data = new ObjectDataTableAdapter(
+            rows,
+            [new ObjectDataColumn({ key: 'id' }),
+            new ObjectDataColumn({ key: 'isContextMenuSource' })]
+        );
+
+        dataTable.markRowAsContextMenuSource(row);
+        fixture.detectChanges();
+
+        expect(dataTable.selectedRowId).toEqual('2345');
+        expect(row.isContextMenuSource).toBeTrue();
+    });
 });
 
 describe('Accesibility', () => {
