@@ -17,24 +17,24 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FormCloudService } from './form-cloud.service';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
-declare let jasmine: any;
-
-const responseBody = {
+const mockTaskResponseBody = {
     entry:
         { id: 'id', name: 'name', formKey: 'form-key' }
 };
 
-const oauth2Auth = jasmine.createSpyObj('oauth2Auth', ['callCustomApi']);
+const mockFormResponseBody = { formRepresentation: { id: 'form-id', name: 'task-form', taskId: 'task-id' } };
 
 describe('Form Cloud service', () => {
 
     let service: FormCloudService;
-    let apiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
     const appName = 'app-name';
     const taskId = 'task-id';
     const processInstanceId = 'process-instance-id';
@@ -48,26 +48,21 @@ describe('Form Cloud service', () => {
 
     beforeEach(() => {
         service = TestBed.inject(FormCloudService);
-        apiService = TestBed.inject(AlfrescoApiService);
-
-        spyOn(apiService, 'getInstance').and.returnValue({
-            oauth2Auth,
-            isEcmLoggedIn: () => false,
-            reply: jasmine.createSpy('reply')
-        } as any);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     describe('Form tests', () => {
         it('should fetch and parse form', (done) => {
             const formId = 'form-id';
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({ formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id' } }));
+            requestSpy.and.returnValue(Promise.resolve(mockFormResponseBody));
 
             service.getForm(appName, formId).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.formRepresentation.id).toBe(formId);
                 expect(result.formRepresentation.name).toBe('task-form');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}`)).toBeTruthy();
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}`);
+                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
                 done();
             });
         });
@@ -85,101 +80,101 @@ describe('Form Cloud service', () => {
 
     describe('Task tests', () => {
         it('should fetch and parse task', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
 
             service.getTask(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
-                expect(result.id).toBe(responseBody.entry.id);
-                expect(result.name).toBe(responseBody.entry.name);
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/query/v1/tasks/${taskId}`)).toBeTruthy();
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                expect(result.id).toBe('id');
+                expect(result.name).toBe('name');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}`);
+                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
                 done();
             });
 
         });
 
         it('should fetch task variables', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+            requestSpy.and.returnValue(Promise.resolve({
                 list: {
-                  entries: [
-                    {
-                      entry: {
-                        serviceName: 'fake-rb',
-                        serviceFullName: 'fake-rb',
-                        serviceVersion: '',
-                        appName: 'fake',
-                        appVersion: '',
-                        serviceType: null,
-                        id: 25,
-                        type: 'string',
-                        name: 'fakeProperty',
-                        createTime: 1556112661342,
-                        lastUpdatedTime: 1556112661342,
-                        executionId: null,
-                        value: 'fakeValue',
-                        markedAsDeleted: false,
-                        processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                        taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
-                        taskVariable: true
-                      }
+                    entries: [
+                        {
+                            entry: {
+                                serviceName: 'fake-rb',
+                                serviceFullName: 'fake-rb',
+                                serviceVersion: '',
+                                appName: 'fake',
+                                appVersion: '',
+                                serviceType: null,
+                                id: 25,
+                                type: 'string',
+                                name: 'fakeProperty',
+                                createTime: 1556112661342,
+                                lastUpdatedTime: 1556112661342,
+                                executionId: null,
+                                value: 'fakeValue',
+                                markedAsDeleted: false,
+                                processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                                taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                                taskVariable: true
+                            }
+                        }
+                    ],
+                    pagination: {
+                        skipCount: 0,
+                        maxItems: 100,
+                        count: 1,
+                        hasMoreItems: false,
+                        totalItems: 1
                     }
-                  ],
-                  pagination: {
-                    skipCount: 0,
-                    maxItems: 100,
-                    count: 1,
-                    hasMoreItems: false,
-                    totalItems: 1
-                  }
                 }
-              }));
+            }));
 
             service.getTaskVariables(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.length).toBe(1);
                 expect(result[0].name).toBe('fakeProperty');
                 expect(result[0].value).toBe('fakeValue');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/query/v1/tasks/${taskId}/variables`)).toBeTruthy();
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('GET');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/query/v1/tasks/${taskId}/variables`);
+                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
                 done();
             });
         });
 
         it('should fetch result if the variable value is 0', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve({
+            requestSpy.and.returnValue(Promise.resolve({
                 list: {
-                  entries: [
-                    {
-                      entry: {
-                        serviceName: 'fake-rb',
-                        serviceFullName: 'fake-rb',
-                        serviceVersion: '',
-                        appName: 'fake',
-                        appVersion: '',
-                        serviceType: null,
-                        id: 25,
-                        type: 'string',
-                        name: 'fakeProperty',
-                        createTime: 1556112661342,
-                        lastUpdatedTime: 1556112661342,
-                        executionId: null,
-                        value: 0,
-                        markedAsDeleted: false,
-                        processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
-                        taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
-                        taskVariable: true
-                      }
+                    entries: [
+                        {
+                            entry: {
+                                serviceName: 'fake-rb',
+                                serviceFullName: 'fake-rb',
+                                serviceVersion: '',
+                                appName: 'fake',
+                                appVersion: '',
+                                serviceType: null,
+                                id: 25,
+                                type: 'string',
+                                name: 'fakeProperty',
+                                createTime: 1556112661342,
+                                lastUpdatedTime: 1556112661342,
+                                executionId: null,
+                                value: 0,
+                                markedAsDeleted: false,
+                                processInstanceId: '18e16bc7-6694-11e9-9c1b-0a586460028a',
+                                taskId: '18e192da-6694-11e9-9c1b-0a586460028a',
+                                taskVariable: true
+                            }
+                        }
+                    ],
+                    pagination: {
+                        skipCount: 0,
+                        maxItems: 100,
+                        count: 1,
+                        hasMoreItems: false,
+                        totalItems: 1
                     }
-                  ],
-                  pagination: {
-                    skipCount: 0,
-                    maxItems: 100,
-                    count: 1,
-                    hasMoreItems: false,
-                    totalItems: 1
-                  }
                 }
-              }));
+            }));
 
             service.getTaskVariables(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
@@ -191,7 +186,7 @@ describe('Form Cloud service', () => {
         });
 
         it('should fetch task form flattened', (done) => {
-            spyOn(service, 'getTask').and.returnValue(of(responseBody.entry));
+            spyOn(service, 'getTask').and.returnValue(of(mockTaskResponseBody.entry));
             spyOn(service, 'getForm').and.returnValue(of({
                 formRepresentation: {
                     name: 'task-form',
@@ -202,40 +197,40 @@ describe('Form Cloud service', () => {
             service.getTaskForm(appName, taskId).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.name).toBe('task-form');
-                expect(result.taskId).toBe(responseBody.entry.id);
-                expect(result.taskName).toBe(responseBody.entry.name);
+                expect(result.taskId).toBe('id');
+                expect(result.taskName).toBe('name');
                 done();
             });
 
         });
 
         it('should save task form', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
             service.saveTaskForm(appName, taskId, processInstanceId, formId, {}).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/save`)).toBeTruthy();
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/save`);
+                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
                 done();
             });
 
         });
 
         it('should complete task form', (done) => {
-            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
             service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '', 1).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/submit/versions/1`)).toBeTruthy();
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
+                expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/form/v1/forms/${formId}/submit/versions/1`);
+                expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('POST');
                 done();
             });
         });
-   });
+    });
 });

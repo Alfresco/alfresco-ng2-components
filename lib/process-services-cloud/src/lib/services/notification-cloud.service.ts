@@ -24,6 +24,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '@alfresco/adf-core';
 import { BaseCloudService } from './base-cloud.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -31,8 +32,12 @@ import { BaseCloudService } from './base-cloud.service';
 export class NotificationCloudService extends BaseCloudService {
     appsListening = [];
 
-    constructor(public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService) {
-        super();
+    constructor(
+        public apollo: Apollo,
+        private http: HttpLink,
+        private authService: AuthenticationService,
+        protected adfHttpClient: AdfHttpClient) {
+        super(adfHttpClient);
     }
 
     private get webSocketHost() {

@@ -26,6 +26,7 @@ import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -54,8 +55,9 @@ export class TaskFilterCloudService extends BaseCloudService {
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface,
-        private notificationCloudService: NotificationCloudService) {
-        super();
+        private notificationCloudService: NotificationCloudService,
+        adfHttpClient: AdfHttpClient) {
+        super(adfHttpClient);
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }

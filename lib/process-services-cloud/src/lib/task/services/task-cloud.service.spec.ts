@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, TranslationService, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, TranslationService } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTaskDetailsCloudMock } from '../task-header/mocks/task-details-cloud.mock';
@@ -25,53 +25,25 @@ import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('Task Cloud Service', () => {
 
     let service: TaskCloudService;
-    let alfrescoApiMock: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
     let identityUserService: IdentityUserService;
     let translateService: TranslationService;
+    let requestSpy: jasmine.Spy;
 
-    const returnFakeTaskCompleteResults = (): any => ({
-        reply: () => {},
-        oauth2Auth: {
-            callCustomApi : () => Promise.resolve(taskCompleteCloudMock)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnFakeTaskCompleteResults = () => Promise.resolve(taskCompleteCloudMock);
 
-    const returnFakeTaskCompleteResultsError = (): any => ({
-        reply: () => {},
-        oauth2Auth: {
-            callCustomApi : () => Promise.reject(taskCompleteCloudMock)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnFakeTaskCompleteResultsError = () => Promise.reject(taskCompleteCloudMock);
 
-    const returnFakeTaskDetailsResults = (): any => ({
-        reply: () => {},
-        oauth2Auth: {
-            callCustomApi : () => Promise.resolve(fakeTaskDetailsCloud)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnFakeTaskDetailsResults = () => Promise.resolve(fakeTaskDetailsCloud);
 
-    const returnFakeCandidateUsersResults = (): any => ({
-        reply: () => {},
-        oauth2Auth: {
-            callCustomApi : () => Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3'])
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnFakeCandidateUsersResults = () => Promise.resolve(['mockuser1', 'mockuser2', 'mockuser3']);
 
-    const returnFakeCandidateGroupResults = (): any => ({
-        reply: () => {},
-        oauth2Auth: {
-            callCustomApi : () => Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3'])
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnFakeCandidateGroupResults = () => Promise.resolve(['mockgroup1', 'mockgroup2', 'mockgroup3']);
 
     setupTestBed({
         imports: [
@@ -81,18 +53,19 @@ describe('Task Cloud Service', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiMock = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
         translateService = TestBed.inject(TranslationService);
         service = TestBed.inject(TaskCloudService);
         spyOn(translateService, 'instant').and.callFake((key) => key ? `${key}_translated` : null);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     it('should complete a task', (done) => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResults);
+        requestSpy.and.callFake(returnFakeTaskCompleteResults);
         service.completeTask(appName, taskId).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -103,7 +76,7 @@ describe('Task Cloud Service', () => {
     });
 
     it('should not complete a task', (done) => {
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResultsError);
+        requestSpy.and.callFake(returnFakeTaskCompleteResultsError);
         const appName = 'simple-app';
         const taskId = '68d54a8f';
 
@@ -140,7 +113,7 @@ describe('Task Cloud Service', () => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';
         const canCompleteTaskResult = service.canCompleteTask(emptyOwnerTaskDetailsCloudMock);
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResults);
+        requestSpy.and.callFake(returnFakeTaskCompleteResults);
 
         service.completeTask(appName, taskId).subscribe((res: any) => {
             expect(canCompleteTaskResult).toEqual(true);
@@ -156,7 +129,7 @@ describe('Task Cloud Service', () => {
         const appName = 'taskp-app';
         const assignee = 'user12';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -170,7 +143,7 @@ describe('Task Cloud Service', () => {
         const appName = null;
         const taskId = '68d54a8f';
         const assignee = 'user12';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
             () => { },
             (error) => {
@@ -183,7 +156,7 @@ describe('Task Cloud Service', () => {
         const appName = 'task-app';
         const taskId = null;
         const assignee = 'user12';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
             () => { },
             (error) => {
@@ -195,7 +168,7 @@ describe('Task Cloud Service', () => {
     it('should return the task details when unclaiming a task', (done) => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -208,7 +181,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if appName is not defined when unclaiming a task', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
             () => { },
             (error) => {
@@ -220,7 +193,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if taskId is not defined when unclaiming a task', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
             () => { },
             (error) => {
@@ -232,7 +205,7 @@ describe('Task Cloud Service', () => {
     it('should return the task details when querying by id', (done) => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -245,7 +218,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if appName is not defined when querying by id', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
             () => { },
             (error) => {
@@ -257,7 +230,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if taskId is not defined when querying by id', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
             () => { },
             (error) => {
@@ -270,7 +243,7 @@ describe('Task Cloud Service', () => {
         const appName = null;
         const taskId = '68d54a8f';
         const updatePayload = { description: 'New description' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => { },
             (error) => {
@@ -283,7 +256,7 @@ describe('Task Cloud Service', () => {
         const appName = 'task-app';
         const taskId = null;
         const updatePayload = { description: 'New description' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => { },
             (error) => {
@@ -296,7 +269,7 @@ describe('Task Cloud Service', () => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
         const updatePayload = { description: 'New description' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe((res: any) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -310,7 +283,7 @@ describe('Task Cloud Service', () => {
         const appName = null;
         const taskId = '68d54a8f';
         const updatePayload = { description: 'New description' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => { },
             (error) => {
@@ -323,7 +296,7 @@ describe('Task Cloud Service', () => {
         const appName = 'task-app';
         const taskId = null;
         const updatePayload = { description: 'New description' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => { },
             (error) => {
@@ -335,7 +308,7 @@ describe('Task Cloud Service', () => {
     it('should return the candidate users by appName and taskId', (done) => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
+        requestSpy.and.callFake(returnFakeCandidateUsersResults);
         service.getCandidateUsers(appName, taskId).subscribe((res: string[]) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -349,7 +322,7 @@ describe('Task Cloud Service', () => {
     it('should log message and return empty array if appName is not defined when fetching candidate users', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
+        requestSpy.and.callFake(returnFakeCandidateUsersResults);
         service.getCandidateUsers(appName, taskId).subscribe(
             (res: any[]) => {
                 expect(res.length).toBe(0);
@@ -360,7 +333,7 @@ describe('Task Cloud Service', () => {
     it('should log message and return empty array if taskId is not defined when fetching candidate users', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateUsersResults);
+        requestSpy.and.callFake(returnFakeCandidateUsersResults);
         service.getCandidateUsers(appName, taskId).subscribe(
             (res: any[]) => {
                 expect(res.length).toBe(0);
@@ -371,7 +344,7 @@ describe('Task Cloud Service', () => {
     it('should return the candidate groups by appName and taskId', (done) => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
+        requestSpy.and.callFake(returnFakeCandidateGroupResults);
         service.getCandidateGroups(appName, taskId).subscribe((res: string[]) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -385,7 +358,7 @@ describe('Task Cloud Service', () => {
     it('should log message and return empty array if appName is not defined when fetching candidate groups', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
+        requestSpy.and.callFake(returnFakeCandidateGroupResults);
         service.getCandidateGroups(appName, taskId).subscribe(
             (res: any[]) => {
                 expect(res.length).toBe(0);
@@ -396,7 +369,7 @@ describe('Task Cloud Service', () => {
     it('should log message and return empty array if taskId is not defined when fetching candidate groups', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeCandidateGroupResults);
+        requestSpy.and.callFake(returnFakeCandidateGroupResults);
         service.getCandidateGroups(appName, taskId).subscribe(
             (res: any[]) => {
                 expect(res.length).toBe(0);
@@ -407,7 +380,7 @@ describe('Task Cloud Service', () => {
     it('should call assign api and return updated task details', (done) => {
         const appName = 'task-app';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'Phil Woods').subscribe(
             (res) => {
                 expect(res.assignee).toBe('Phil Woods');
@@ -418,7 +391,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if appName is not defined when changing task assignee', (done) => {
         const appName = '';
         const taskId = '68d54a8f';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
             () => { },
             (error) => {
@@ -430,7 +403,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if taskId is not defined when changing task assignee', (done) => {
         const appName = 'task-app';
         const taskId = '';
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
             () => { },
             (error) => {

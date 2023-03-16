@@ -25,6 +25,7 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -37,8 +38,10 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this._uploadApi;
     }
 
-    constructor() {
-        super();
+    constructor(
+        adfHttpClient: AdfHttpClient
+    ) {
+        super(adfHttpClient);
     }
 
     /**
