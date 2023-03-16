@@ -1,4 +1,4 @@
-/*!
+s/*!
  * @license
  * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
