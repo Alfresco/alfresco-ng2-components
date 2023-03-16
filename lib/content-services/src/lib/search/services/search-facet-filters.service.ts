@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { FacetBucketOrder, FacetField } from '../models/facet-field.interface';
+import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
@@ -91,7 +91,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         this.parseFacetFields(context);
         this.parseFacetIntervals(context);
         this.parseFacetQueries(context);
-        this.reorderFacets();
+        this.sortFacets();
     }
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
@@ -99,7 +99,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, itemType, field.label);
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
-            this.sortFacetBuckets(responseBuckets, field.settings?.sorting);
+            this.sortFacetBuckets(responseBuckets, field.settings?.bucketSortBy, field.settings?.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
             const alreadyExistingField = this.findResponseFacet(itemType, field.label);
 
             if (alreadyExistingField) {
@@ -157,7 +157,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, 'query', group);
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
                 .filter(mincountFilter);
-            this.sortFacetBuckets(responseBuckets, facetQuerySetting.sorting);
+            this.sortFacetBuckets(responseBuckets, facetQuerySetting?.bucketSortBy, facetQuerySetting.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
             const alreadyExistingField = this.findResponseFacet('query', group);
 
             if (alreadyExistingField) {
@@ -187,16 +187,8 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     }
 
-    private reorderFacets() {
-        this.responseFacets.sort((facet1, facet2) => {
-            if (facet1.settings?.displayAfterField) {
-                return facet1.settings.displayAfterField === facet2.field ? 1 : 0;
-            }
-            if (facet2.settings?.displayAfterField) {
-                return facet2.settings.displayAfterField === facet1.field ? -1 : 0;
-            }
-            return 0;
-        });
+    private sortFacets() {
+        this.responseFacets?.sort((facet1, facet2) => (facet1.settings?.facetOrder ?? 0) - (facet2.settings?.facetOrder ?? 0));
     }
 
     private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
@@ -228,12 +220,20 @@ export class SearchFacetFiltersService implements OnDestroy {
         });
     }
 
-    private sortFacetBuckets(buckets: FacetFieldBucket[], sorting: FacetBucketOrder) {
-        if (sorting) {
-            buckets.sort((bucket1, bucket2) =>
-                sorting === FacetBucketOrder.ASCENDING ? bucket1.label.localeCompare(bucket2.label) :
-                    bucket2.label.localeCompare(bucket1.label)
-            );
+    private sortFacetBuckets(buckets: FacetFieldBucket[], sortBy: FacetBucketSortBy, sortDirection: FacetBucketSortDirection) {
+        switch (sortBy) {
+            case FacetBucketSortBy.LABEL:
+                buckets.sort((bucket1, bucket2) =>
+                    sortDirection === FacetBucketSortDirection.ASCENDING ? bucket1.label.localeCompare(bucket2.label) : bucket2.label.localeCompare(bucket1.label)
+                );
+                break;
+            case FacetBucketSortBy.COUNT:
+                buckets.sort((bucket1, bucket2) =>
+                    sortDirection === FacetBucketSortDirection.ASCENDING ? bucket1.count - bucket2.count : bucket2.count - bucket1.count
+                );
+                break;
+            default:
+                return;
         }
     }
 
