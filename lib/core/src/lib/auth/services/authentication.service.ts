@@ -24,8 +24,7 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
-import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { BaseAuthenticationService } from './base-authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -158,33 +157,6 @@ export class AuthenticationService extends BaseAuthenticationService {
             }
             return this.alfrescoApi.getInstance().isBpmLoggedIn();
         }
-        return false;
-    }
-
-    /**
-     * Gets the ECM username.
-     *
-     * @returns The ECM username
-     */
-    getEcmUsername(): string {
-        return this.alfrescoApi.getInstance().getEcmUsername();
-    }
-
-    /**
-     * Gets the BPM username
-     *
-     * @returns The BPM username
-     */
-    getBpmUsername(): string {
-        return this.alfrescoApi.getInstance().getBpmUsername();
-    }
-
-    isImplicitFlow(): boolean {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
-    }
-
-    isAuthCodeFlow(): boolean {
         return false;
     }
 
