@@ -120,6 +120,40 @@ export class MyComponent implements OnInit {
 }
 ```
 
+By providing a `templateRef` property in the `SnackBarData`, it is possible to render a custom [`TemplateRef`]( https://angular.io/api/core/TemplateRef) in place of the text message.
+The message is made available within the template through a context property (eg: `let-message`).
+
+```ts
+import { NotificationService } from '@alfresco/adf-core';
+import { MatSnackBarConfig } from '@angular/material/snackbar';
+
+@Component({
+    template: `<ng-template #customTemplate let-message >
+                 <span><i>Custom content:</i> {{ message }}</span>
+               </ng-template>`,
+    providers: [NotificationService]
+})
+export class MyComponent implements OnInit {
+
+    snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
+    
+    @ViewChild('customTemplate', { read: TemplateRef }) customTemplate: TemplateRef<any>;
+    
+    constructor(private notificationService: NotificationService) {
+    }
+
+    ngOnInit() {
+        this.snackBarConfig.data = { templateRef: this.customTemplate };
+        this.notificationService
+            .openSnackMessageAction('Do you want to report this issue?', 'send', snackBarConfig)
+            .afterDismissed()
+            .subscribe(() => {
+                console.log('The snack-bar was dismissed');
+            });
+    }
+}
+```
+
 The default message duration is 5000 ms that is used only if you don't pass a custom duration in the parameters of openSnackMessageAction/openSnackMessage methods.
 You can also change the default 5000 ms adding the following configuration in the app.config.json:
 
