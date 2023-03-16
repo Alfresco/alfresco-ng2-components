@@ -16,9 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Observable, from } from 'rxjs';
-import { AlfrescoApi } from '@alfresco/js-api';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 export const JSON_TYPE = ['application/json'];
 
@@ -32,25 +31,25 @@ export interface OAuth2RequestParams {
 
 @Injectable({ providedIn: 'root' })
 export class OAuth2Service {
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
-
-    get apiClient(): AlfrescoApi {
-        return this.alfrescoApiService.getInstance();
-    }
+    constructor(private adfHttpClient: AdfHttpClient) {}
 
     request<T>(opts: OAuth2RequestParams): Observable<T> {
+        const { httpMethod, url, bodyParam, pathParams, queryParams } = opts;
         return from(
-            this.apiClient.callCustomApiWithoutAuth(
-                opts.url,
-                opts.httpMethod,
-                opts.pathParams,
-                opts.queryParams,
-                {},
-                {},
-                opts.bodyParam,
-                JSON_TYPE,
-                JSON_TYPE,
-                Object
+            this.adfHttpClient.request(
+                url,
+                {
+                    path: url,
+                    httpMethod,
+                    pathParams,
+                    queryParams,
+                    headerParams: {},
+                    formParams: {},
+                    bodyParam,
+                    contentTypes: JSON_TYPE,
+                    accepts: JSON_TYPE,
+                    returnType: Object
+                }
             )
         );
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,16 +24,17 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class StartProcessCloudService extends BaseCloudService {
 
-    constructor(apiService: AlfrescoApiService,
+    constructor(adfHttpClient: AdfHttpClient,
         private logService: LogService,
         appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
     /**

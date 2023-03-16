@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, AppConfigService } from '@alfresco/adf-core';
+import { LogService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -24,6 +24,7 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 import { ApplicationVersionModel, ApplicationVersionResponseModel } from '../../models/application-version.model';
 import { ProcessCloudInterface } from './process-cloud.interface';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -32,10 +33,10 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
-    constructor(apiService: AlfrescoApiService,
+    constructor(adfHttpClient: AdfHttpClient,
                 appConfigService: AppConfigService,
                 private logService: LogService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
     /**

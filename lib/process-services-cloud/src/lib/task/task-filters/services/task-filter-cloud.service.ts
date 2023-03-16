@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
@@ -27,6 +27,7 @@ import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 const TASK_EVENT_SUBSCRIPTION_QUERY = `
     subscription {
@@ -55,10 +56,10 @@ export class TaskFilterCloudService extends BaseCloudService {
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface,
-        apiService: AlfrescoApiService,
+        adfHttpClient: AdfHttpClient,
         appConfigService: AppConfigService,
         private notificationCloudService: NotificationCloudService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }

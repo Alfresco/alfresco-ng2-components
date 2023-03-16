@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
+import { LogService, AppConfigService, CardViewArrayItem, TranslationService } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -36,6 +36,7 @@ import {
 } from '../models/task.model';
 import { TaskCloudServiceInterface } from './task-cloud.service.interface';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -45,13 +46,13 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
     dataChangesDetected$ = new Subject();
 
     constructor(
-        apiService: AlfrescoApiService,
+        adfHttpClient: AdfHttpClient,
         appConfigService: AppConfigService,
         private logService: LogService,
         private translateService: TranslationService,
         private identityUserService: IdentityUserService
     ) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
     /**

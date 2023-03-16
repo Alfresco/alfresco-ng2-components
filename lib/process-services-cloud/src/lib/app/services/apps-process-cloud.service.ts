@@ -18,9 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { AlfrescoApi } from '@alfresco/js-api';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { RequestOptions } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AppsProcessCloudService {
@@ -28,7 +29,7 @@ export class AppsProcessCloudService {
     deployedApps: ApplicationInstanceModel[];
 
     constructor(
-        private apiService: AlfrescoApiService,
+        private adfHttpClient: AdfHttpClient,
         private logService: LogService,
         private appConfigService: AppConfigService) {
         this.loadApps();
@@ -62,18 +63,28 @@ export class AppsProcessCloudService {
         if (status === '') {
             return of([]);
         }
-        const api: AlfrescoApi = this.apiService.getInstance();
         const path = this.getApplicationUrl();
         const pathParams = {};
         const queryParams = { status, roles : role, sort: 'name' };
+        const httpMethod = 'GET';
         const headerParams = {};
         const formParams = {};
         const bodyParam = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
+        const requestOptions: RequestOptions = {
+            path,
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts,
+            httpMethod
+        };
 
-        return from(api.callCustomApiWithoutAuth(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts))
+        return from(this.adfHttpClient.request(path, requestOptions))
             .pipe(
                 map((applications: any) => applications.list.entries.map((application) => application.entry)),
                 catchError((err) => this.handleError(err))
