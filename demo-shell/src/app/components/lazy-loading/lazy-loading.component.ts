@@ -27,7 +27,6 @@ import { ObjectDataTableAdapter, AuthenticationService } from '@alfresco/adf-cor
             <li>Global i18n: {{ 'APP_LAYOUT.DATATABLE_LAZY' | translate }}</li>
             <li>Local i18n (work in progress): {{ 'LAZY.TEXT' | translate }}</li>
             <li>isLoggedIn: {{ isLoggedIn }}</li>
-            <li>ECM username: {{ username }}
         </ul>
     `
 })
@@ -37,10 +36,6 @@ export class LazyLoadingComponent {
 
     get isLoggedIn(): boolean {
         return this.auth.isLoggedIn();
-    }
-
-    get username(): string {
-        return this.auth.getEcmUsername();
     }
 
     constructor(private auth: AuthenticationService) {

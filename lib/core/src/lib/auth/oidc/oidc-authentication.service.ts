@@ -22,7 +22,7 @@ import { catchError, filter, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { LogService } from '../../common/services/log.service';
