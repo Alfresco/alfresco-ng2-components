@@ -16,31 +16,22 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('TaskListCloudService', () => {
 
     let service: TaskListCloudService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
-    const returnCallQueryParameters = (): any => ({
-        oauth2Auth: {
-            callCustomApi : (_queryUrl, _operation, _context, queryParams) => Promise.resolve(queryParams)
-        },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
-    });
+    const returnCallQueryParameters = (_queryUrl, options) => Promise.resolve(options.queryParams);
 
-    const returnCallUrl = (): any => ({
-        oauth2Auth: {
-            callCustomApi : (queryUrl) => Promise.resolve(queryUrl)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnCallUrl = (queryUrl) => Promise.resolve(queryUrl);
 
     setupTestBed({
         imports: [
@@ -50,13 +41,14 @@ describe('TaskListCloudService', () => {
     });
 
     beforeEach(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(TaskListCloudService);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     it('should append to the call all the parameters', (done) => {
         const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as TaskQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+        requestSpy.and.callFake(returnCallQueryParameters);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -69,7 +61,7 @@ describe('TaskListCloudService', () => {
 
     it('should concat the app name to the request url', (done) => {
         const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as TaskQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+        requestSpy.and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
@@ -81,7 +73,7 @@ describe('TaskListCloudService', () => {
     it('should concat the sorting to append as parameters', (done) => {
         const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
             sorting: [{ orderBy: 'NAME', direction: 'DESC'}, { orderBy: 'TITLE', direction: 'ASC'}] } as TaskQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+        requestSpy.and.callFake(returnCallQueryParameters);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -92,7 +84,7 @@ describe('TaskListCloudService', () => {
 
     it('should return an error when app name is not specified', (done) => {
         const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+        requestSpy.and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe(
             () => { },
             (error) => {

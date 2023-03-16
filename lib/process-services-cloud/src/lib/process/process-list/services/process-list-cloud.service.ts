@@ -16,20 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
 
-    constructor(apiService: AlfrescoApiService,
+    constructor(adfHttpClient: AdfHttpClient,
                 appConfigService: AppConfigService,
                 private logService: LogService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
     private getProcess(

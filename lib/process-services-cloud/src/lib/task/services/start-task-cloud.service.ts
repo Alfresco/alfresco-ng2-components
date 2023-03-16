@@ -16,20 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({ providedIn: 'root' })
 export class StartTaskCloudService extends BaseCloudService {
 
     constructor(
-        apiService: AlfrescoApiService,
+        adfHttpClient: AdfHttpClient,
         appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
      /**

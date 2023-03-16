@@ -21,19 +21,22 @@ import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, Htt
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
-import { convertObjectToFormData, getQueryParamsWithCustomEncoder, isBlobResponse, isConstructor, isHttpResponseEvent, isHttpUploadProgressEvent, removeNilValues } from './alfresco-api.utils';
-import { AlfrescoApiParamEncoder } from './alfresco-api.param-encoder';
-import { AlfrescoApiResponseError } from './alfresco-api.response-error';
-import { Constructor } from '../types';
+import { convertObjectToFormData, getQueryParamsWithCustomEncoder, isBlobResponse, isConstructor, isHttpResponseEvent, isHttpUploadProgressEvent, removeNilValues } from './alfresco-api/alfresco-api.utils';
+import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encoder';
+import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
+import { Constructor } from './types';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AdfHttpClient implements JsApiHttpClient {
 
+    private readonly defaultSecurityOptions = { withCredentials: true, isBpmRequest: false, authentications: {}, defaultHeaders: {} };
+
     constructor(private httpClient: HttpClient) {}
 
-    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
+
+    request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         const body = AdfHttpClient.getBody(options);
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
         const headers = AdfHttpClient.getHeaders(options);
@@ -55,22 +58,25 @@ export class AdfHttpClient implements JsApiHttpClient {
             }
         );
 
-        return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
+        if(emitters){
+            return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
+        }
+        return request.toPromise<T>();
     }
 
-    post<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
+    post<T = any>(url: string, options: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         return this.request<T>(url, { ...options, httpMethod: 'POST' }, sc, emitters);
     }
 
-    put<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
+    put<T = any>(url: string, options: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         return this.request<T>(url, { ...options, httpMethod: 'PUT' }, sc, emitters);
     }
 
-    get<T = any>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
+    get<T = any>(url: string, options: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         return this.request<T>(url, { ...options, httpMethod: 'GET' }, sc, emitters);
     }
 
-    delete<T = void>(url: string, options: RequestOptions, sc: SecurityOptions, emitters: JsApiEmitters): Promise<T> {
+    delete<T = void>(url: string, options: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         return this.request<T>(url, { ...options, httpMethod: 'DELETE' }, sc, emitters);
     }
 

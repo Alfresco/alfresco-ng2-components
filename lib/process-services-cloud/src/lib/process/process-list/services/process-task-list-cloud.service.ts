@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { Observable, throwError } from 'rxjs';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
@@ -24,14 +24,15 @@ import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({ providedIn: 'root' })
 export class ProcessTaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
 
-    constructor(apiService: AlfrescoApiService,
+    constructor(adfHttpClient: AdfHttpClient,
                 appConfigService: AppConfigService,
                 protected logService: LogService) {
-        super(apiService, appConfigService);
+        super(adfHttpClient, appConfigService);
     }
 
     /**
