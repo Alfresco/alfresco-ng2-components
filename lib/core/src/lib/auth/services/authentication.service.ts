@@ -21,7 +21,7 @@ import { AppConfigValues } from '../../app-config/app-config.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
-import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { BaseAuthenticationService } from './base-authentication.service';
 
 @Injectable({
     providedIn: 'root'
