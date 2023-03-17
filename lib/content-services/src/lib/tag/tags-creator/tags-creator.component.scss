@@ -80,7 +80,7 @@ acc-tags-creator {
         }
 
         .acc-tags-list {
-            padding-left: 27px;
+            padding-left: 18px;
             margin-top: -2px;
             padding-right: 0;
             display: flex;
@@ -92,10 +92,22 @@ acc-tags-creator {
                 margin-bottom: 18px;
                 margin-top: 0;
                 padding-right: 12px;
+                font-size: 14px;
+                height: auto;
+                width: initial;
 
                 & + .acc-tag {
                     margin-top: -10px;
                 }
+
+                .mat-list-item-content-reverse {
+                    padding: 0 6px;
+
+                    .mat-pseudo-checkbox {
+                        display: none;
+                    }
+                }
+
             }
 
             mat-spinner {

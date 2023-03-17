@@ -25,6 +25,7 @@ import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { TagService } from '@alfresco/adf-content-services';
 import { TagsCreatorMode } from './tags-creator-mode';
+import { MatSelectionListChange } from '@angular/material/list';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -82,6 +83,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.validateIfNotExistingTag.bind(this)
     );
     private _tagNameControlVisible = false;
+    private _existingTags: TagEntry[];
     private _existingTagsPagination: TagPagingList;
     private onDestroy$ = new Subject<void>();
     private _tagNameErrorMessageKey = '';
@@ -91,7 +93,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _saving = false;
     private _spinnerDiameter = 50;
     private cancelExistingTagsLoading$ = new Subject<void>();
-    private nameOfExistingExactTag: string;
+    private existingExactTag: TagEntry;
     private _existingTagsPanelVisible: boolean;
     private _existingTagsLabelKey: string;
 
@@ -155,8 +157,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tags;
     }
 
-    get existingTagsPagination(): TagPagingList {
-        return this._existingTagsPagination;
+    get existingTags(): TagEntry[] {
+        return this._existingTags;
     }
 
     get tagNameErrorMessageKey(): string {
@@ -214,7 +216,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     removeTag(tag: string): void {
-        this.tags.splice(this.tags.indexOf(tag), 1);
+        this.removeTagFromArray(this.tags, tag);
+        this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.checkScrollbarVisibility();
         this.tagNameControl.updateValueAndValidity({
             emitEvent: false,
@@ -256,7 +259,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         const existingTagsListElement = event.target as HTMLElement;
 
         if (
-            this.existingTagsPagination?.pagination.hasMoreItems &&
+            this._existingTagsPagination?.pagination.hasMoreItems &&
             existingTagsListElement.scrollTop +
                 existingTagsListElement.clientHeight >=
                 existingTagsListElement.scrollHeight - 80 &&
@@ -264,6 +267,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         ) {
             this.searchExistingTags(this.tagNameControl.value);
         }
+    }
+
+    addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
+        const selectedTag: TagEntry = change.options[0].value;
+        this.tags.push(selectedTag.entry.tag);
+        this.removeTagFromArray(this.existingTags, selectedTag);
+        this.tagsAddition.emit(this.tags);
     }
 
     private onTagNameControlValueChange(name: string): void {
@@ -284,14 +294,15 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     searchedResult: TagPaging;
                 }) => {
                     if (exactResult) {
-                        this.nameOfExistingExactTag = exactResult.entry.tag.toUpperCase();
+                        this.existingExactTag = exactResult;
                         this.removeExactTagFromSearchedResult(searchedResult);
                         searchedResult.list.entries.unshift(exactResult);
                     } else {
-                        this.nameOfExistingExactTag = null;
+                        this.existingExactTag = null;
                     }
 
                     this._existingTagsPagination = searchedResult.list;
+                    this._existingTags = [...searchedResult.list.entries];
                     this.exactTagLoaded$.next();
                     this._existingTagsLoading = false;
                 },
@@ -301,13 +312,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                 }
             );
         } else {
-            this.nameOfExistingExactTag = null;
+            this.existingExactTag = null;
         }
     }
 
     private removeExactTagFromSearchedResult(searchedResult: TagPaging): void {
         const exactTagIndex = searchedResult.list.entries.findIndex(
-            (row) => row.entry.tag.toUpperCase() === this.nameOfExistingExactTag
+            (row) => this.compareTags(row.entry.tag, this.existingExactTag.entry.tag)
         );
 
         if (exactTagIndex > -1) {
@@ -318,7 +329,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private validateIfNotExistingTag(tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
         return this.exactTagLoaded$.pipe(
             map<void, TagNameControlErrors | null>(() => {
-                return this.compareTags(tagNameControl.value, this.nameOfExistingExactTag)
+                return this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag)
                     ? { duplicatedExistingTag: true }
                     : null;
             }),
@@ -351,7 +362,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private getSkipCount(): number {
-        const pagination = this.existingTagsPagination?.pagination;
+        const pagination = this._existingTagsPagination?.pagination;
         return pagination ? pagination.skipCount + pagination.maxItems : 0;
     }
 
@@ -364,7 +375,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.cancelExistingTagsLoading$))
             .subscribe(
                 (result) => {
-                    if (this.nameOfExistingExactTag) {
+                    if (this.existingExactTag) {
                         this.removeExactTagFromSearchedResult(result);
                     }
                     result.list.entries = this._existingTagsPagination.entries.concat(result.list.entries);
@@ -384,5 +395,19 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                 this.tagsListElement.nativeElement.scrollHeight >
                 this.tagsListElement.nativeElement.clientHeight;
         });
+    }
+
+    private removeTagFromArray<T>(tags: T[], tag: T) {
+        tags.splice(tags.indexOf(tag), 1);
+    }
+
+    private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
+        this.existingTags.unshift(this._existingTagsPagination.entries.find((tagEntry) => tagEntry.entry.tag === tag));
+        if (tag !== this.existingExactTag?.entry?.tag) {
+            this.removeTagFromArray(this.existingTags, this.existingExactTag);
+            this.existingTags.sort((tagEntry1, tagEntry2) =>
+                tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
+            this.existingTags.unshift(this.existingExactTag);
+        }
     }
 }

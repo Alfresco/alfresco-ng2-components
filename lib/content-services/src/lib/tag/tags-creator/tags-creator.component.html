@@ -66,7 +66,7 @@
     </div>
 </div>
 <div class="acc-existing-tags-panel" *ngIf="existingTagsPanelVisible">
-    <ng-container *ngIf="!existingTagsLoading || existingTagsPagination">
+    <ng-container *ngIf="!existingTagsLoading || existingTags">
         <span
             class="acc-create-tag-label"
             (click)="addTag()"
@@ -80,13 +80,16 @@
     <div
         class="acc-tags-list"
         (scroll)="loadMoreTags($event)">
-        <mat-selection-list *ngIf="!existingTagsLoading || existingTagsPagination">
+        <mat-selection-list
+            *ngIf="!existingTagsLoading || existingTags"
+            (selectionChange)="addExistingTagToTagsToAssign($event)">
             <mat-list-option
-                *ngFor="let tagRow of existingTagsPagination.entries"
-                class="acc-tag">
+                *ngFor="let tagRow of existingTags"
+                class="acc-tag"
+                [value]="tagRow">
                 {{ tagRow.entry.tag }}
             </mat-list-option>
-            <p *ngIf="!existingTagsPagination.entries.length">
+            <p *ngIf="!existingTags.length">
                 {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}
             </p>
         </mat-selection-list>
