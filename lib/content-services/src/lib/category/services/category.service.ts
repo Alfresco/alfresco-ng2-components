@@ -65,7 +65,7 @@ export class CategoryService {
      * @return Observable<CategoryPaging | CategoryEntry>
      */
     createSubcategories(parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
-        return from(this.categoriesApi.createSubcategory(parentCategoryId, payload, {}));
+        return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, {}));
     }
 
     /**
