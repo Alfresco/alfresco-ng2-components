@@ -161,6 +161,24 @@ export class AuthenticationService extends BaseAuthenticationService {
     }
 
     /**
+     * Gets the ECM username.
+     *
+     * @returns The ECM username
+     */
+    getEcmUsername(): string {
+        return this.alfrescoApi.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Gets the BPM username
+     *
+     * @returns The BPM username
+     */
+    getBpmUsername(): string {
+        return this.alfrescoApi.getInstance().getBpmUsername();
+    }
+
+    /**
      * Gets the auth token.
      *
      * @returns Auth token string
