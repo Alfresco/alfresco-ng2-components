@@ -47,11 +47,13 @@ Edits task filter details.
 | appName | `string` | "" | (required) Name of the app. |
 | filterProperties | `string[]` | \[] | List of task filter properties to display. |
 | id | `string` |  | (required) ID of the task filter. |
+| processInstanceId | `string` |  | processInstanceId of the task filter. |
 | role | `string` | "" | user role. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |
 | showTaskFilterName | `boolean` | true | Toggles display of task filter name |
 | showTitle | `boolean` | true | Toggles the title. |
 | sortProperties | `string[]` | \[] | List of sort properties to display. |
+| taskFilter | [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts) |  | Task Filter to use |
 
 ### Events
 

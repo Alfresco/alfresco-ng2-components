@@ -29,9 +29,12 @@ import { NodeCommentsService } from './services/node-comments.service';
     }]
 })
 export class NodeCommentsComponent {
+
+    /** nodeId of the document that has comments */
     @Input()
     nodeId: string;
 
+    /** make the comments component readOnly */
     @Input()
     readOnly: boolean;
 }

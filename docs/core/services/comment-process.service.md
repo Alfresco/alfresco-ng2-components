@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Comment Process service](../../../lib/core/src/lib/services/comment-process.service.ts "Defined in comment-process.service.ts")
+# [Comment Process service](../../../lib/process-services/src/lib/process-comments/services/comment-process.service.ts "Defined in comment-process.service.ts")
 
 Adds and retrieves comments for task and process instances in Process Services.
 
@@ -13,24 +13,19 @@ Adds and retrieves comments for task and process instances in Process Services.
 
 ### Methods
 
--   **addProcessInstanceComment**(processInstanceId: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
+-   **add**(id: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
     Adds a comment to a process instance.
-    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   _id:_ `string`  - 
     -   _message:_ `string`  - Text for the comment
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>` - Details of the comment added
--   **addTaskComment**(taskId: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>`<br/>
-    Adds a comment to a task.
-    -   _taskId:_ `string`  - ID of the target task
-    -   _message:_ `string`  - Text for the comment
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`>` - Details about the comment
--   **getProcessInstanceComments**(processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>`<br/>
+-   **get**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>`<br/>
     Gets all comments that have been added to a process instance.
-    -   _processInstanceId:_ `string`  - ID of the target process instance
+    -   _id:_ `string`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
--   **getTaskComments**(taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>`<br/>
-    Gets all comments that have been added to a task.
-    -   _taskId:_ `string`  - ID of the target task
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
+-   **getUserImage**(user: `any`): `string`<br/>
+
+    -   _user:_ `any`  - 
+    -   **Returns** `string` -
 
 ## Details
 

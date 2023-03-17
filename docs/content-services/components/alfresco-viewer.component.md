@@ -66,6 +66,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Toggles downloading. |
+| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
@@ -89,10 +90,10 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| close | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
 | invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
+| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
 
 ## Keyboard shortcuts
 

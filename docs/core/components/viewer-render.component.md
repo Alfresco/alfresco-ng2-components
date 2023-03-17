@@ -62,7 +62,6 @@ Using with file [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob):
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
-| viewerType | `string` | "unknown" | Override Content view type. Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). |
 
 ### Events
 

@@ -106,6 +106,9 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
+
+    /** Emitted when a task is loaded`.
+     */
     @Output()
     onTaskLoaded = new EventEmitter<TaskDetailsCloudModel>(); /* eslint-disable-line */
 

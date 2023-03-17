@@ -374,6 +374,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | data | [`DataTableAdapter`](../../../lib/core/src/lib/datatable/data/datatable-adapter.ts) |  | Data source for the table |
 | display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
+| isResizingEnabled | `boolean` | false | Flag that indicates if the datatable allows column resizing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
 | mainTableAction | `boolean` | true | Toggles main data table action column. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row. |
@@ -388,14 +389,13 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | showMainDatatableActions | `boolean` | false | Toggles the main datatable action. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
-| isResizingEnabled | `boolean` | false | Toggles column resizing feature. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| columnsWidthChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted after a column width gets changed due to resizing. |
-| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted after dragging and dropping column header. |
+| columnOrderChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted when the column order is changed. |
+| columnsWidthChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>` | Emitted when the column width is changed. |
 | executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/src/lib/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
 | rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |

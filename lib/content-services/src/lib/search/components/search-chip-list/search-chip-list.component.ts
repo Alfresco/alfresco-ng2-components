@@ -29,7 +29,7 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
 export class SearchChipListComponent {
 
     @Input()
-    /** @deprecated This is not required since ADF 4.5.0 */
+    /** This is not required since ADF 4.5.0  @deprecated*/
     searchFilter: SearchFilterComponent;
 
     /** Flag used to enable the display of a clear-all-filters button. */

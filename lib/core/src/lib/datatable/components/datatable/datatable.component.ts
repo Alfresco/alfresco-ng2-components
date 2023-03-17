@@ -173,9 +173,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Output()
     executeRowAction = new EventEmitter<DataRowActionEvent>();
 
+    /** Emitted when the column order is changed. */
     @Output()
     columnOrderChanged = new EventEmitter<DataColumn[]>();
 
+    /** Emitted when the column width is changed. */
     @Output()
     columnsWidthChanged = new EventEmitter<DataColumn[]>();
 

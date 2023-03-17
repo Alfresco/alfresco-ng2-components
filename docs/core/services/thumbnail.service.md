@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-03-20
 ---
 
-# [Thumbnail service](lib/core/src/lib/common/services/thumbnail.service.ts "Defined in thumbnail.service.ts")
+# [Thumbnail service](../../../lib/core/src/lib/common/services/thumbnail.service.ts "Defined in thumbnail.service.ts")
 
 Retrieves an SVG thumbnail image to represent a document type.
 
@@ -15,12 +15,6 @@ Retrieves an SVG thumbnail image to represent a document type.
 
 -   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a "miscellaneous" thumbnail URL for types with no other icon defined.
-    -   **Returns** `string` - URL string
--   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
-    Gets a thumbnail URL for the given document node.
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`|string`  - Node or Node ID to get URL for.
-    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
-    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
 -   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
     Gets a thumbnail URL for a MIME type.

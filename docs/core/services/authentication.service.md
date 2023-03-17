@@ -17,9 +17,11 @@ Provides authentication to ACS and APS.
     Adds the auth token to an HTTP header using the 'bearer' scheme.
     -   _headersArg:_ `HttpHeaders`  - (Optional) Header that will receive the token
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<HttpHeaders>` - The new header with the token added
--   **getBearerExcludedUrls**(): `string[]`<br/>
+-   **getBearerExcludedUrls**()<br/>
     Gets the set of URLs that the token bearer is excluded from.
-    -   **Returns** `string[]` - Array of URL strings
+-   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
+    Gets information about the user currently logged into APS.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/UserRepresentation.md)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
@@ -48,6 +50,10 @@ Provides authentication to ACS and APS.
 -   **isALLProvider**(): `boolean`<br/>
     Does the provider support both ECM and BPM?
     -   **Returns** `boolean` - True if both are supported, false otherwise
+-   **isAuthCodeFlow**(): `boolean`<br/>
+
+    -   **Returns** `boolean` - 
+
 -   **isBPMProvider**(): `boolean`<br/>
     Does the provider support BPM?
     -   **Returns** `boolean` - True if supported, false otherwise
@@ -60,6 +66,10 @@ Provides authentication to ACS and APS.
 -   **isEcmLoggedIn**(): `boolean`<br/>
     Checks if the user is logged in on an ECM provider.
     -   **Returns** `boolean` - True if logged in, false otherwise
+-   **isImplicitFlow**(): `boolean`<br/>
+
+    -   **Returns** `boolean` - 
+
 -   **isKerberosEnabled**(): `boolean`<br/>
     Does kerberos enabled?
     -   **Returns** `boolean` - True if enabled, false otherwise
@@ -90,9 +100,14 @@ Provides authentication to ACS and APS.
 -   **logout**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Logs the user out.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Response event called when logout is complete
--   **setRedirect**(url: [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts))<br/>
+-   **reset**()<br/>
+
+-   **saveRememberMeCookie**(rememberMe: `boolean`)<br/>
+    Saves the "remember me" cookie as either a long-life cookie or a session cookie.
+    -   _rememberMe:_ `boolean`  - Enables a long-life cookie
+-   **setRedirect**(url?: [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
-    -   _url:_ [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts)  - URL to redirect to
+    -   _url:_ [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts)  - (Optional) URL to redirect to
 -   **ssoImplicitLogin**()<br/>
     Logs the user in with SSO
 

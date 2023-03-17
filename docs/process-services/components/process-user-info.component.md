@@ -21,14 +21,14 @@ Shows user information for `PROCESS` and `ALL` mode.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| isLoggedIn | `boolean` | Is user logged in |
-| bpmUser | `BpmUserModel` | Bpm user model. |
-| ecmUser | `EpmUserModel` | Ecm user model. |
-| mode | `UserInfoMode` | `UserInfoMode.PROCESS` | current mode. |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
-| BpmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
+| bpmUser | [`BpmUserModel`](../../core/models/bpm-user.model.md) |  |  |
+| ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
+| ecmUser | [`EcmUserModel`](../../core/models/ecm-user.model.md) |  |  |
+| isLoggedIn | `boolean` |  |  |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
+| mode | `UserInfoMode` |  | current mode. |
 | namePosition | `string` | "right" | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |
 | showName | `boolean` | true | Shows/hides the username next to the user info button. |
 

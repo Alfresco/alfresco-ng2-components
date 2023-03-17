@@ -38,13 +38,13 @@ var PropInfo = /** @class */ (function () {
                         }
                     }
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Warning: Input \"".concat(sourceData.name, "\" has no doc text."));
+                        _this.errorMessages.push("Error: Input \"".concat(sourceData.name, "\" has no doc text."));
                     }
                 }
                 if (dec.name === 'Output') {
                     _this.isOutput = true;
                     if (!_this.docText && !_this.isDeprecated) {
-                        _this.errorMessages.push("Warning: Output \"".concat(sourceData.name, "\" has no doc text."));
+                        _this.errorMessages.push("Error: Output \"".concat(sourceData.name, "\" has no doc text."));
                     }
                 }
             });

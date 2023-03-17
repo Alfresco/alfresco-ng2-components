@@ -25,6 +25,7 @@ import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/co
 })
 export class DataColumnComponent implements OnInit {
 
+    /** Id of the Column */
     @Input()
     id: string = '';
 
@@ -52,11 +53,11 @@ export class DataColumnComponent implements OnInit {
     @Input()
     sortable: boolean = true;
 
-    /* Enable drag and drop for header column */
+    /** Enable drag and drop for header column */
     @Input()
     draggable: boolean = false;
 
-    /* Hide column */
+    /** Hide column */
     @Input()
     isHidden: boolean = false;
 

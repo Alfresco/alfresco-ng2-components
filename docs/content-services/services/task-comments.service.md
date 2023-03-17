@@ -22,6 +22,10 @@ Adds and retrieves comments for task and process instances in Process Services.
     Gets all comments that have been added to a task.
     -   _id:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/src/lib/models/comment.model.ts)`[]>` - Details for each comment
+-   **getUserImage**(user: [`UserProcessModel`](../../core/models/user-process.model.md)): `string`<br/>
+
+    -   _user:_ [`UserProcessModel`](../../core/models/user-process.model.md)  - 
+    -   **Returns** `string` -
 
 ## See also
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-05
 ---
 
-# [People Process service](lib/process-services/src/lib/common/services/people-process.service.ts "Defined in people-process.service.ts")
+# [People Process service](../../../lib/process-services/src/lib/common/services/people-process.service.ts "Defined in people-process.service.ts")
 
 Gets information about Process Services users.
 
@@ -13,6 +13,12 @@ Gets information about Process Services users.
 
 ### Methods
 
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>`<br/>
+    Gets information about the current user.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmUserModel`](../../core/models/bpm-user.model.md)`>` - User information object
+-   **getCurrentUserProfileImage**(): `string`<br/>
+    Gets the current user's profile image as a URL.
+    -   **Returns** `string` - URL string
 -   **getUserImage**(user: [`UserProcessModel`](../../core/models/user-process.model.md)): `string`<br/>
     Gets the profile picture URL for the specified user.
     -   _user:_ [`UserProcessModel`](../../core/models/user-process.model.md)  - The target user

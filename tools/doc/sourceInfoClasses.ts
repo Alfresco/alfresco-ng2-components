@@ -55,7 +55,7 @@ export class PropInfo {
                     }
 
                     if (!this.docText && !this.isDeprecated) {
-                        this.errorMessages.push(`Warning: Input "${sourceData.name}" has no doc text.`);
+                        this.errorMessages.push(`Error: Input "${sourceData.name}" has no doc text.`);
                     }
                 }
 
@@ -63,7 +63,7 @@ export class PropInfo {
                     this.isOutput = true;
 
                     if (!this.docText && !this.isDeprecated) {
-                        this.errorMessages.push(`Warning: Output "${sourceData.name}" has no doc text.`);
+                        this.errorMessages.push(`Error: Output "${sourceData.name}" has no doc text.`);
                     }
                 }
             });

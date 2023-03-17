@@ -103,6 +103,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this._filter;
     }
 
+    /** Process filter */
     @Input()
     set processFilter(value: ProcessFilterCloudModel) {
         const isChanged = this.isFilterChanged(this._filter, value);

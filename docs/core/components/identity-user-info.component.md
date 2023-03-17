@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-01-24
 ---
 
-# [Identity User Info component](../../../lib/core/src/lib/identity-user-info/identity-user-info.component.ts "Defined in identityuser-info.component.ts")
+# [Identity User Info component](../../../lib/core/src/lib/identity-user-info/identity-user-info.component.ts "Defined in identity-user-info.component.ts")
 
 Shows user information for SSO mode.
 
@@ -21,10 +21,9 @@ Shows user information for SSO mode.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| isLoggedIn | `boolean` | Is user logged in |
-| identityUser | `IdentityUserModel` | Identity user model. |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
-| ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
+| identityUser | [`IdentityUserModel`](../../../lib/process-services-cloud/src/lib/people/models/identity-user.model.ts) |  |  |
+| isLoggedIn | `boolean` |  |  |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
 | namePosition | `string` | "right" | When the username is shown, this defines its position relative to the user info button. Can be `right` or `left`. |

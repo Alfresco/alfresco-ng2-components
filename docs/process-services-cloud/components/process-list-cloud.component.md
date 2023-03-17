@@ -59,6 +59,7 @@ when the process list is empty:
 | completedTo | `string` | "" | Filter the processes. Display only process with completedTo equal to the supplied date. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
+| isResizingEnabled | `boolean` | false | Toggles main datatable column resizing feature. |
 | lastModifiedFrom | `Date` |  | Filter the processes. Display only process with lastModifiedTo equal to the supplied date. |
 | lastModifiedTo | `Date` |  | Filter the processes. Display only process with lastModifiedTo equal to the supplied date. |
 | multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |

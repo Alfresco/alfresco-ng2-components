@@ -27,25 +27,24 @@ Shows the nodes in tree structure, each node containing children is collapsible/
 
 ### Properties
 
-| Name | Type          | Default value | Description |
-| ---- |---------------| --------- | ----------- |
-| emptyContentTemplate | `TemplateRef` | | Template that will be rendered when no nodes are loaded. |
-| nodeActionsMenuTemplate | `TemplateRef` | | Template that will be rendered when context menu for given node is opened. |
-| stickyHeader | `boolean`     | false | If set to true header will be sticky. |
-| selectableNodes | `boolean`     | false | If set to true nodes will be selectable. |
-| displayName | `string`      | | Display name for tree title. |
-| loadMoreSuffix | `string`      | | Suffix added to `Load more` string inside load more node. |
-| expandIcon | `string`      | `chevron_right` | Icon shown when node is collapsed. |
-| collapseIcon | `string`      | `expand_more` | Icon showed when node is expanded. |
-| contextMenuOptions | `any[]`       | | Array of context menu options which should be displayed for each row. |
-
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| collapseIcon | `string` | "expand_more" | Icon shown when node is expanded. By default set to expand_more |
+| displayName | `string` |  | Tree display name |
+| emptyContentTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  | [TemplateRef](https://angular.io/api/core/TemplateRef) to provide empty template when no nodes are loaded |
+| expandIcon | `string` | "chevron_right" | Icon shown when node has children and is collapsed. By default set to chevron_right |
+| loadMoreSuffix | `string` |  | Load more suffix for load more button |
+| nodeActionsMenuTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` |  | [TemplateRef](https://angular.io/api/core/TemplateRef) to provide context menu items for context menu displayed on each row |
+| selectableNodes | `boolean` | false | Variable defining if tree nodes should be selectable. By default set to false |
+| stickyHeader | `boolean` | false | Variable defining if tree header should be sticky. By default set to false |
+| contextMenuOptions | `any[]` |  | Array of context menu options which should be displayed for each row. |
 
 ### Events
 
-| Name | Type                                                                                   | Description                                                      |
-| ---- |----------------------------------------------------------------------------------------|------------------------------------------------------------------|
-| paginationChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PaginationModel>`          | Emitted when during loading additional nodes pagination changes. |
-| contextMenuOptionSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<TreeContextMenuResult<T>>` | Emitted when any context menu option is selected.                |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| contextMenuOptionSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TreeContextMenuResult`](../../../lib/content-services/src/lib/tree/models/tree-context-menu-result.interface.ts)`<>>` | Emitted when any context menu option is selected |
+| paginationChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts)`>` | Emitted when pagination has been changed |
 
 ## Details
 
@@ -68,7 +67,7 @@ export class CustomTreeDatasourceService extends TreeService<TreeNode> {
 }
 ```
 
-Final step is to provide your custom datasource service as tree service in component using `TreeComponent`.
+Final step is to provide your custom datasource service as [tree service](../../../lib/content-services/src/lib/tree/services/tree.service.ts) in component using [`TreeComponent`](../../content-services/components/tree.component.md).
 
 ```ts
 providers: [
@@ -82,6 +81,7 @@ providers: [
 ### Enabling nodes selection and listening to selection changes
 
 First step is to provide necessary input value.
+
 ```html
 <adf-tree
     [displayName]="'Tree display name'"
@@ -93,7 +93,7 @@ First step is to provide necessary input value.
 </adf-tree>
 ```
 
-Next inside your component get the `TreeComponent`
+Next inside your component get the [`TreeComponent`](../../content-services/components/tree.component.md)
 
 ```ts
 @ViewChild(TreeComponent)
