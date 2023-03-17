@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { FacetField } from '../models/facet-field.interface';
+import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
 import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
@@ -91,6 +91,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         this.parseFacetFields(context);
         this.parseFacetIntervals(context);
         this.parseFacetQueries(context);
+        this.sortFacets();
     }
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
@@ -98,6 +99,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, itemType, field.label);
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
+            this.sortFacetBuckets(responseBuckets, field.settings?.bucketSortBy, field.settings?.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
             const alreadyExistingField = this.findResponseFacet(itemType, field.label);
 
             if (alreadyExistingField) {
@@ -155,6 +157,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const responseField = this.findFacet(context, 'query', group);
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
                 .filter(mincountFilter);
+            this.sortFacetBuckets(responseBuckets, facetQuerySetting?.bucketSortBy, facetQuerySetting.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
             const alreadyExistingField = this.findResponseFacet('query', group);
 
             if (alreadyExistingField) {
@@ -184,6 +187,10 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     }
 
+    private sortFacets() {
+        this.responseFacets?.sort((facet1, facet2) => (facet1.settings?.facetOrder ?? 0) - (facet2.settings?.facetOrder ?? 0));
+    }
+
     private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
@@ -211,6 +218,23 @@ export class SearchFacetFiltersService implements OnDestroy {
                 label: respBucket.label
             };
         });
+    }
+
+    private sortFacetBuckets(buckets: FacetFieldBucket[], sortBy: FacetBucketSortBy, sortDirection: FacetBucketSortDirection) {
+        switch (sortBy) {
+            case FacetBucketSortBy.LABEL:
+                buckets.sort((bucket1, bucket2) =>
+                    sortDirection === FacetBucketSortDirection.ASCENDING ? bucket1.label.localeCompare(bucket2.label) : bucket2.label.localeCompare(bucket1.label)
+                );
+                break;
+            case FacetBucketSortBy.COUNT:
+                buckets.sort((bucket1, bucket2) =>
+                    sortDirection === FacetBucketSortDirection.ASCENDING ? bucket1.count - bucket2.count : bucket2.count - bucket1.count
+                );
+                break;
+            default:
+                return;
+        }
     }
 
     private getCountValue(bucket: GenericBucket): number {

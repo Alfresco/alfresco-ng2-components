@@ -40,4 +40,22 @@ export interface FacetFieldSettings {
     allowUpdateOnChange?: boolean;
     /* allow the user show/hide default search actions */
     hideDefaultAction?: boolean;
+    /* a number to compare to other facets to determine the order in which they will appear */
+    facetOrder?: number;
+    /* the field used to sort the buckets */
+    bucketSortBy?: FacetBucketSortBy;
+    /* the direction in which the buckets are ordered */
+    bucketSortDirection?: FacetBucketSortDirection;
+}
+
+// eslint-disable-next-line no-shadow
+export enum FacetBucketSortBy {
+    LABEL = 'LABEL',
+    COUNT = 'COUNT'
+}
+
+// eslint-disable-next-line no-shadow
+export enum FacetBucketSortDirection {
+    ASCENDING = 'ASCENDING',
+    DESCENDING = 'DESCENDING'
 }

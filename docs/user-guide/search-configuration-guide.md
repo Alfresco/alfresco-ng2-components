@@ -444,7 +444,10 @@ Note: `settings` property used to control UI actions and interaction. i.e
             ],
             "settings" : {
                 "allowUpdateOnChange": false,
-                "hideDefaultAction": true
+                "hideDefaultAction": true,
+                "facetOrder": 100,
+                "bucketSortBy": "LABEL",
+                "bucketSortDirection": "ASCENDING"
             }
         }
     }

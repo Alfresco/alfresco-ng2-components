@@ -23,5 +23,4 @@ export interface FacetFieldBucket {
 
     checked?: boolean;
     field?: string;
-
 }

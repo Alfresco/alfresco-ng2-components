@@ -20,6 +20,7 @@ import { TestBed } from '@angular/core/testing';
 import { SearchFacetFiltersService } from './search-facet-filters.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchQueryBuilderService } from './search-query-builder.service';
+import { FacetBucketSortBy, FacetBucketSortDirection } from '@alfresco/adf-content-services';
 
 describe('SearchFacetFiltersService', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
@@ -416,4 +417,103 @@ describe('SearchFacetFiltersService', () => {
         expect(searchFacetFiltersService.responseFacets[0].buckets.length).toEqual(1);
     });
 
+    it('should sort the facets based on the order set in the settings', () => {
+        searchFacetFiltersService.responseFacets = null;
+        queryBuilder.config = {
+            categories: [],
+            facetQueries: {
+                label: 'Query 1',
+                queries: [
+                    { label: 'q1', query: 'query1' },
+                    { label: 'q2', query: 'query2' }
+                ],
+                settings: {
+                    facetOrder: 300
+                }
+            },
+            facetFields: {
+                fields: [
+                    { field: 'field1', label: 'Field 1', settings: { facetOrder: 200 }},
+                    { field: 'field2', label: 'Field 2', settings: { facetOrder: 400 }},
+                    { field: 'field3', label: 'Field 3', settings: { facetOrder: 500 }},
+                    { field: 'field4', label: 'Field 4', settings: { facetOrder: 100 }}
+                ]
+            }
+        };
+        const queryBucketsMock = [{ label: 'q1', filterQuery: 'query1', metrics: [{value: {count: 1} }] }];
+        const fieldBucketsMock = [{ label: 'b1', metrics: [{ value: { count: 10 } }] }];
+        const data = {
+            list: {
+                context: {
+                    facets: [
+                        { type: 'query', label: 'Query 1', buckets: queryBucketsMock },
+                        { type: 'field', label: 'Field 1', buckets: fieldBucketsMock },
+                        { type: 'field', label: 'Field 2', buckets: fieldBucketsMock },
+                        { type: 'field', label: 'Field 3', buckets: fieldBucketsMock },
+                        { type: 'field', label: 'Field 4', buckets: fieldBucketsMock }
+                    ]
+                }
+            }
+        };
+
+        searchFacetFiltersService.onDataLoaded(data);
+        expect(searchFacetFiltersService.responseFacets.map(f => f.field)).toEqual(['field4', 'field1', 'Query 1', 'field2', 'field3']);
+    });
+
+    describe('Bucket sorting', () => {
+        let data;
+
+        beforeEach(() => {
+            searchFacetFiltersService.responseFacets = null;
+            data = {
+                list: {
+                    context: {
+                        facets: [
+                            {
+                                type: 'field',
+                                label: 'Field',
+                                buckets: [
+                                    { label: 'foo', metrics: [{ value: { count: 8 } }] },
+                                    { label: 'bar', metrics: [{ value: { count: 30 } }] },
+                                    { label: 'xyzzy', metrics: [{ value: { count: 14 } }] },
+                                    { label: 'qux', metrics: [{ value: { count: 28 } }] },
+                                    { label: 'baz', metrics: [{ value: { count: 1 } }] }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            };
+        });
+
+        it('should sort the buckets by label', () => {
+            queryBuilder.config = {
+                categories: [],
+                facetQueries: { queries: [] },
+                facetFields: {
+                    fields: [
+                        { field: 'field', label: 'Field', settings: { bucketSortBy: FacetBucketSortBy.LABEL, bucketSortDirection: FacetBucketSortDirection.DESCENDING }}
+                    ]
+                }
+            };
+            searchFacetFiltersService.onDataLoaded(data);
+
+            expect(searchFacetFiltersService.responseFacets[0].buckets.items.map(b => b.label)).toEqual(['xyzzy', 'qux', 'foo', 'baz', 'bar']);
+        });
+
+        it('should sort the buckets by count', () => {
+            queryBuilder.config = {
+                categories: [],
+                facetQueries: { queries: [] },
+                facetFields: {
+                    fields: [
+                        { field: 'field', label: 'Field', settings: { bucketSortBy: FacetBucketSortBy.COUNT, bucketSortDirection: FacetBucketSortDirection.ASCENDING }}
+                    ]
+                }
+            };
+            searchFacetFiltersService.onDataLoaded(data);
+
+            expect(searchFacetFiltersService.responseFacets[0].buckets.items.map(b => b.label)).toEqual(['baz', 'foo', 'xyzzy', 'qux', 'bar']);
+        });
+    });
 });
