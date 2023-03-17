@@ -554,7 +554,10 @@ describe('TagsDialogComponent', () => {
                 searchTagsSpy.calls.reset();
                 scrollTagList();
 
-                expect(searchTagsSpy).toHaveBeenCalledWith(name, 6);
+                expect(searchTagsSpy).toHaveBeenCalledWith(name, {
+                    orderBy: 'tag',
+                    direction: 'asc'
+                }, false, 6);
             }));
 
             it('should not call searchTags after scrolling if pagination has not more items', fakeAsync(() => {

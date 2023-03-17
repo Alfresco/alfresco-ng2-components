@@ -33,6 +33,11 @@ interface TagNameControlErrors {
     required?: boolean;
 }
 
+const DEFAULT_TAGS_SORTING = {
+    orderBy: 'tag',
+    direction: 'asc'
+};
+
 @Component({
     selector: 'acc-tags-creator',
     templateUrl: './tags-creator.component.html',
@@ -355,7 +360,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._spinnerDiameter = 20;
 
         this.tagService
-            .searchTags(name, this.getSkipCount())
+            .searchTags(name, DEFAULT_TAGS_SORTING, false, this.getSkipCount())
             .pipe(takeUntil(this.cancelExistingTagsLoading$))
             .subscribe(
                 (result) => {

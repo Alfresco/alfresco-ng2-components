@@ -80,16 +80,16 @@
     <div
         class="acc-tags-list"
         (scroll)="loadMoreTags($event)">
-        <ng-container *ngIf="!existingTagsLoading || existingTagsPagination">
-            <p
+        <mat-selection-list *ngIf="!existingTagsLoading || existingTagsPagination">
+            <mat-list-option
                 *ngFor="let tagRow of existingTagsPagination.entries"
                 class="acc-tag">
                 {{ tagRow.entry.tag }}
-            </p>
+            </mat-list-option>
             <p *ngIf="!existingTagsPagination.entries.length">
                 {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}
             </p>
-        </ng-container>
+        </mat-selection-list>
         <mat-spinner
             *ngIf="existingTagsLoading"
             [diameter]="spinnerDiameter"
