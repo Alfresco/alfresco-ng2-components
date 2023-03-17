@@ -39,7 +39,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
     constructor() {
         super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => {
+            this.oauthService.events.pipe(
+                filter((event)=> event.type === 'token_received')
+            ).subscribe(()=>{
                 this.onLogin.next();
             });
         });
