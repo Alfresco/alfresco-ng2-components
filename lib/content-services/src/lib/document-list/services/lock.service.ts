@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import moment, { Moment } from 'moment';
 
 @Injectable({
@@ -25,7 +25,7 @@ import moment, { Moment } from 'moment';
 })
 export class LockService {
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
+    constructor(private authService: AuthenticationService) {
     }
 
     isLocked(node: Node): boolean {
@@ -34,7 +34,7 @@ export class LockService {
             if (this.isReadOnlyLock(node)) {
                 isLocked = !this.isLockExpired(node);
             } else if (this.isLockOwnerAllowed(node)) {
-                isLocked = this.alfrescoApiService.getInstance().getEcmUsername() !== node.properties['cm:lockOwner'].id;
+                isLocked = this.authService.getEcmUsername() !== node.properties['cm:lockOwner'].id;
                 if (this.isLockExpired(node)) {
                     isLocked = false;
                 }
