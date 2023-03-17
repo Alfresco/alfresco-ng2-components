@@ -557,6 +557,13 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toEqual(component.editedValue);
         });
 
+        it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            component.textInput.setValue('UNDO TEST');
+            component.checkKeyboardEvent({ctrlKey: true, code: 'KeyZ'});
+
+            expect(component.textInput.value).toBe('');
+        });
+
         it('should trigger an update event on the CardViewUpdateService [integration]', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');

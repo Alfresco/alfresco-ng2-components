@@ -192,6 +192,14 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
+    checkKeyboardEvent(event: any) {
+        if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ') {
+            if (this.textInput.value) {
+                this.textInput.setValue('');
+            }
+        }
+    }
+
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
