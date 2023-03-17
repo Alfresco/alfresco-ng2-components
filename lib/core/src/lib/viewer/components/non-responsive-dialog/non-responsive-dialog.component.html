@@ -1,0 +1,26 @@
+<div class="adf-non-responsive-dialog-container">
+    <div class="adf-dialog-header">
+        <h3 class="adf-mat-dialog-title">{{ 'ADF_VIEWER.NON_RESPONSIVE_DIALOG.HEADER' | translate }}</h3>
+    </div>
+    <div class="adf-dialog-body">
+        {{ 'ADF_VIEWER.NON_RESPONSIVE_DIALOG.LABEL' | translate }}
+    </div>
+    <div class="adf-dialog-footer">
+        <button
+            mat-button
+            id="waitButton"
+            color="warn"
+            [attr.aria-label]="'ADF_VIEWER.ACTIONS.WAIT' | translate"
+            (click)="onWait()">
+            {{ 'ADF_VIEWER.ACTIONS.WAIT' | translate }}
+        </button>
+        <button
+            mat-button
+            id="downloadButton"
+            color="primary"
+            [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
+            (click)="onDownload()">
+            {{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}
+        </button>
+    </div>
+</div>

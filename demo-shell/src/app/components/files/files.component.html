@@ -655,6 +655,30 @@
 
         <section>
             <mat-slide-toggle
+                color="primary" [(ngModel)]="enableNonResponsiveDialog" id="enableNonResponsiveDialog" (change)="onEnableNonResponsiveDialogChange()">
+                Enable NonResponsiveDialog
+            </mat-slide-toggle>
+        </section>
+        <section *ngIf="enableNonResponsiveDialog">
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="nonResponsivePreviewInitialTimerInSeconds" (change)="onNonResponsiveInitialTimerChange()">
+            </mat-form-field>
+        </section>
+
+        <section *ngIf="enableNonResponsiveDialog">
+            <mat-slide-toggle
+                color="primary" [(ngModel)]="enableNonResponsiveDialogReminders" id="enableNonResponsiveDialogReminders" (change)="onEnableNonResponsiveDialogReminderChange()">
+                Enable NonResponsiveDialogReminder
+            </mat-slide-toggle>
+        </section>
+        <section *ngIf="enableNonResponsiveDialog && enableNonResponsiveDialogReminders">
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="nonResponsivePreviewReminderTimerInSeconds" (change)="onNonResponsiveReminderTimerChange()">
+            </mat-form-field>
+        </section>
+
+        <section>
+            <mat-slide-toggle
                 color="primary" [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
                 Enable FileAutoDownload
             </mat-slide-toggle>

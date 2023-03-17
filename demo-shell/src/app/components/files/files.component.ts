@@ -251,6 +251,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     selectedNodes = [];
 
+    enableNonResponsiveDialog: boolean = this.appConfig.get('preview-config.enableNonResponsiveDialog', false);
+    enableNonResponsiveDialogReminders: boolean = this.appConfig.get('preview-config.enableNonResponsiveDialogReminders', false);
+    nonResponsivePreviewInitialTimerInSeconds = this.appConfig.get('preview-config.nonResponsivePreviewInitialTimerInSeconds', 50);
+    nonResponsivePreviewReminderTimerInSeconds = this.appConfig.get('preview-config.nonResponsivePreviewReminderTimerInSeconds', 30);
     enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
     fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
@@ -778,6 +782,26 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onMultipleFilesUpload() {
         this.selectedNodes = [];
+    }
+
+    onEnableNonResponsiveDialogChange() {
+        const previewConfig = this.appConfig?.config['preview-config'];
+        previewConfig['enableNonResponsiveDialog'] = this.enableNonResponsiveDialog;
+    }
+
+    onNonResponsiveInitialTimerChange() {
+        const previewConfig = this.appConfig?.config['preview-config'];
+        previewConfig['nonResponsivePreviewInitialTimerInSeconds'] = this.nonResponsivePreviewInitialTimerInSeconds
+    }
+
+    onEnableNonResponsiveDialogReminderChange() {
+        const previewConfig = this.appConfig?.config['preview-config'];
+        previewConfig['enableNonResponsiveDialogReminders'] = this.enableNonResponsiveDialogReminders;
+    }
+
+    onNonResponsiveReminderTimerChange() {
+        const previewConfig = this.appConfig?.config['preview-config'];
+        previewConfig['nonResponsivePreviewReminderTimerInSeconds'] = this.nonResponsivePreviewReminderTimerInSeconds;
     }
 
     onEnableFileAutoDownloadChange() {

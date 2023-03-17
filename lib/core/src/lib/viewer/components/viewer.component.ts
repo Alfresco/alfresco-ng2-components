@@ -36,9 +36,18 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
 import { Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
+import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
+import { AppConfigService } from '../../app-config';
+
+const DEFAULT_NON_PREVIEW_CONFIG = {
+    enableNonResponsiveDialog: true,
+    enableNonResponsiveDialogReminders: true,
+    nonResponsivePreviewInitialTimerInSeconds: 50,
+    nonResponsivePreviewReminderTimerInSeconds: 30
+}
 
 @Component({
     selector: 'adf-viewer',
@@ -160,6 +169,26 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     sidebarLeftTemplateContext: T = null;
 
+    /**
+     * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
+     * */
+    enableNonResponsiveDialog: boolean = false;
+
+    /**
+     * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
+     * */
+    enableNonResponsiveDialogReminders: boolean = false;
+
+    /**
+     * Initial time in seconds to wait before giving the first prompt to user to download the file
+     * */
+    nonResponsivePreviewInitialTimerInSeconds: number = 50;
+
+    /**
+     * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
+     * */
+    nonResponsivePreviewReminderTimerInSeconds: number = 15;
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -180,10 +209,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+    private nonResponsiveInitialTimer: NodeJS.Timeout;
+    private nonResponsiveReminder: NodeJS.Timeout;
+    private isDialogVisible: boolean = false;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
-                private viewUtilsService: ViewUtilService
+                private viewUtilsService: ViewUtilService,
+                private appConfigService: AppConfigService
                ) {
     }
 
@@ -202,6 +235,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     ngOnInit(): void {
         this.closeOverlayManager();
+        this.configureAndInitNonResponsiveDialog();
     }
 
     private closeOverlayManager() {
@@ -304,8 +338,61 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     ngOnDestroy() {
+        this.clearNonResponsiveDialogTimeouts();
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
+    private configureAndInitNonResponsiveDialog() {
+        this.getNonResponsiveConfig();
+        if (this.enableNonResponsiveDialog) {
+            this.initNonResponsiveTimer();
+        }
+    }
+
+    private getNonResponsiveConfig() {
+        const nonResponsivePreviewConfig = this.appConfigService.get('preview-config', DEFAULT_NON_PREVIEW_CONFIG);
+
+        this.enableNonResponsiveDialog = nonResponsivePreviewConfig.enableNonResponsiveDialog
+        this.enableNonResponsiveDialogReminders = nonResponsivePreviewConfig.enableNonResponsiveDialogReminders;
+        this.nonResponsivePreviewInitialTimerInSeconds = nonResponsivePreviewConfig.nonResponsivePreviewInitialTimerInSeconds;
+        this.nonResponsivePreviewReminderTimerInSeconds = nonResponsivePreviewConfig.nonResponsivePreviewReminderTimerInSeconds;
+    }
+
+    private initNonResponsiveTimer() {
+        this.nonResponsiveInitialTimer = setTimeout(() => {
+            this.handleNonResponsiveFilePreview();
+        }, this.nonResponsivePreviewInitialTimerInSeconds * 1000);
+    }
+
+    private handleNonResponsiveFilePreview() {
+        if (!this.urlFile) {
+            this.showDialog();
+        } else {
+            this.clearNonResponsiveDialogTimeouts();
+        }
+    }
+
+    private clearNonResponsiveDialogTimeouts() {
+        if (this.nonResponsiveInitialTimer) {
+            clearTimeout(this.nonResponsiveInitialTimer);
+        }
+        if (this.nonResponsiveReminder) {
+            clearTimeout(this.nonResponsiveReminder);
+        }
+    }
+
+    private showDialog() {
+        if (!this.isDialogVisible) {
+            this.isDialogVisible = true;
+            this.dialog.open(NonResponsiveDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe(() => {
+                this.isDialogVisible = false;
+                if (this.enableNonResponsiveDialogReminders) {
+                    this.nonResponsiveReminder = setTimeout(() => {
+                        this.handleNonResponsiveFilePreview();
+                    }, this.nonResponsivePreviewReminderTimerInSeconds * 1000);
+                }
+            });
+        }
+    }
 }
