@@ -46,6 +46,13 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         private readonly auth: AuthService
     ) {
         super(alfrescoApi, appConfig, cookie, logService);
+        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
+            this.oauthService.events.pipe(
+                filter((event)=> event.type === 'token_received')
+            ).subscribe(()=>{
+                this.onLogin.next();
+            });
+        });
     }
 
     isEcmLoggedIn(): boolean {
