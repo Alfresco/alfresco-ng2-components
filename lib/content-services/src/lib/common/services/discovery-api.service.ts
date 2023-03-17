@@ -20,7 +20,7 @@ import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
 import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
 
-import { BpmProductVersionModel, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
 import { ApiClientsService } from '@alfresco/adf-core/api';
 
 @Injectable({
@@ -34,13 +34,12 @@ export class DiscoveryApiService {
     ecmProductInfo$ = new Subject<RepositoryInfo>();
 
     constructor(
-        private apiService: AlfrescoApiService,
         private authenticationService: AuthenticationService,
         private apiClientsService: ApiClientsService
     ) {
         this.authenticationService.onLogin
             .pipe(
-                filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
+                filter(() => this.authenticationService.isEcmLoggedIn()),
                 take(1),
                 switchMap(() => this.getEcmProductInfo())
             )
