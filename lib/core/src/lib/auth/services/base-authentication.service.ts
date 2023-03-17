@@ -62,6 +62,8 @@ export abstract class BaseAuthenticationService {
     abstract logout(): Observable<any>;
     abstract isEcmLoggedIn(): boolean;
     abstract isBpmLoggedIn(): boolean;
+    abstract getEcmUsername(): string;
+    abstract getBpmUsername(): string;
     abstract reset(): void;
     abstract once(event: string): Observable<any>;
 
