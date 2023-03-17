@@ -203,12 +203,23 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
-        infrastructure: {connectors: {restconnector: {}}, bridges: {}}
+        infrastructure: { connectors: { restconnector: {} }, bridges: {} }
+    },
+    UAT_BE_DEFAULT_APP: {
+        name: 'uat-be-default-app',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
+        processes: {
+            'script-acs-process': 'script-acs-process'
+        },
+        security: [
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
+            { role: 'ACTIVITI_USER', groups: [], users: ['hruser', 'salesuser'] }
+        ]
     }
 };
 
 export const ACTIVITI_APPS: any = {
-    apps : [
+    apps: [
         {
             name: 'e2e-Application'
         }
@@ -216,7 +227,7 @@ export const ACTIVITI_APPS: any = {
 };
 
 export const ACS_DEFAULT: any = {
-    files : [
+    files: [
         {
             name: 'e2e_share_profile_pic.png',
             destination: '-my-',
@@ -249,8 +260,7 @@ export const ACS_DEFAULT: any = {
         }
     ],
 
-    e2eFolder:
-        {
-            name: 'e2e-test-data'
-        }
+    e2eFolder: {
+        name: 'e2e-test-data'
+    }
 };
