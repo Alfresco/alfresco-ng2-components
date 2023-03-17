@@ -178,6 +178,16 @@
             display: none;
         }
 
+        .adf-textitem-edit-icon,
+        .adf-textitem-clear-icon {
+            background: transparent;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
         &:hover {
             .adf-textitem-edit-icon {
                 display: none;
@@ -185,16 +195,6 @@
 
             .adf-textitem-clear-icon {
                 display: block;
-            }
-
-            .adf-textitem-edit-icon,
-            .adf-textitem-clear-icon {
-                background: transparent;
-                border: none;
-
-                &:hover {
-                    cursor: pointer;
-                }
             }
         }
     }
