@@ -162,33 +162,40 @@
         display: block;
     }
 }
+
 .mat-form-field {
     .mat-form-field-suffix {
         .mat-icon {
             width: 30px;
             height: 30px;
         }
-        .adf-textitem-edit-icon,
+
+        .adf-textitem-edit-icon {
+            display: block;
+        }
+
         .adf-textitem-clear-icon {
-            background: transparent;
-            border: none;
-            &:hover {
-                cursor: pointer;
+            display: none;
+        }
+
+        &:hover {
+            .adf-textitem-edit-icon {
+                display: none;
             }
-        }
-        .adf-textitem-edit-icon {
-            display: block;
-        }
-        .adf-textitem-clear-icon {
-            display: none;
-        }
-    }
-    &:hover {
-        .adf-textitem-edit-icon {
-            display: none;
-        }
-        .adf-textitem-clear-icon {
-            display: block;
+
+            .adf-textitem-clear-icon {
+                display: block;
+            }
+
+            .adf-textitem-edit-icon,
+            .adf-textitem-clear-icon {
+                background: transparent;
+                border: none;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
         }
     }
 }
