@@ -161,42 +161,34 @@
     &-textitem-multiline {
         display: block;
     }
-
-    &-property-field .adf-property-clear-value {
-        display: none;
-    }
-
-    &-property-field {
-        .adf-property-clear-value,
-        .adf-textitem-edit-value {
-            justify-content: center;
-            align-items: center;
+}
+.mat-form-field {
+    .mat-form-field-suffix {
+        .mat-icon {
             width: 30px;
             height: 30px;
         }
-
-        .adf-textitem-edit-value {
-            display: flex;
+        .adf-textitem-edit-icon,
+        .adf-textitem-clear-icon {
+            background: transparent;
+            border: none;
+            &:hover {
+                cursor: pointer;
+            }
         }
-
-        .adf-property-field-content {
-            display: flex;
+        .adf-textitem-edit-icon {
+            display: block;
+        }
+        .adf-textitem-clear-icon {
+            display: none;
         }
     }
-
-    &-property-field.adf-card-textitem-field:hover {
-        .adf-textitem-edit-value,
+    &:hover {
         .adf-textitem-edit-icon {
             display: none;
         }
-
-        .adf-property-clear-value {
-            color: var(--adf-theme-foreground-text-color-025);
-            display: flex;
-        }
-
-        .adf-property-clear-value:hover {
-            color: var(--adf-theme-foreground-text-color);
+        .adf-textitem-clear-icon {
+            display: block;
         }
     }
 }

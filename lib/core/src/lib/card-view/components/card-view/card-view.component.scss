@@ -7,12 +7,6 @@
             margin-top: 6px;
         }
 
-        .adf-property-read-only {
-            .mat-form-field-underline {
-                display: none;
-            }
-        }
-
         .adf-property-field {
             width: 100%;
             margin-bottom: -25px;
@@ -24,23 +18,6 @@
             .mat-form-field-label {
                 margin-top: 6px;
             }
-
-            .adf-property-read-only {
-                .mat-form-field-underline {
-                    display: none;
-                }
-            }
-        }
-
-        .adf-property-label {
-            color: var(--adf-theme-foreground-text-color-054);
-            word-wrap: break-word;
-        }
-
-        .adf-property-value,
-        .mat-form-field-label {
-            font-size: var(--theme-body-1-font-size);
-            color: var(--adf-theme-foreground-text-color-087);
         }
     }
 }
