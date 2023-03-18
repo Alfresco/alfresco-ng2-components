@@ -24,7 +24,7 @@ export class CardTextItemPage {
     saveButton = 'button[data-automation-id*="card-textitem-update"]';
     clearButton = 'button[data-automation-id*="card-textitem-reset"]';
     field = '[data-automation-id*="card-textitem-value"]';
-    labelLocator = 'div[data-automation-id*="card-textitem-label"]';
+    labelLocator = '[data-automation-id*="card-textitem-label"]';
     errorMessage = '.adf-textitem-editable-error';
     clickableElement = '.adf-textitem-clickable';
     readOnlyField = '.adf-property-read-only';
