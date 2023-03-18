@@ -27,7 +27,7 @@
             </mat-expansion-panel-header>
             <adf-card-view
                 (keydown)="keyDown($event)"
-                [properties]="tags$ | async"
+                [properties]="tagsItems"
                 [editable]="editable"
                 [displayEmpty]="displayEmpty"
                 [copyToClipboardAction]="copyToClipboardAction"
@@ -51,7 +51,8 @@
             <acc-tags-creator
                 [(tagNameControlVisible)]="tagNameControlVisible"
                 (tagsAddition)="storeAddedTags($event)"
-                [mode]="tagsCreatorMode">
+                [mode]="tagsCreatorMode"
+                [tags]="assignedTags">
             </acc-tags-creator>
         </div>
 

@@ -90,19 +90,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
-    tags$: Observable<CardViewItem[]>;
 
     changedProperties = {};
     hasMetadataChanged = false;
     tagNameControlVisible = false;
 
     private addedTags: string[];
+    private _assignedTags: string[] = [];
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private _tagsItems: CardViewItem[];
     private targetProperty: CardViewBaseItemModel;
-
-    get tagsCreatorMode(): TagsCreatorMode {
-        return this._tagsCreatorMode;
-    }
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -139,6 +136,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
     }
 
+    get assignedTags(): string[] {
+        return this._assignedTags;
+    }
+
+    get tagsCreatorMode(): TagsCreatorMode {
+        return this._tagsCreatorMode;
+    }
+
+    get tagsItems(): CardViewItem[] {
+        return this._tagsItems;
+    }
+
     protected handleUpdateError(error: Error) {
         this.logService.error(error);
 
@@ -171,7 +180,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (node) {
             this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
-            this.tags$ = this.loadTagsForNode(node.id);
+            this.loadTagsForNode(node.id);
         }
     }
 
@@ -280,15 +289,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return value === undefined || value === null || value === '';
     }
 
-    private loadTagsForNode(id: string): Observable<CardViewItem[]> {
-        return this.tagService.getTagsByNodeId(id).pipe(map((tagPaging) => {
-            return tagPaging.list.entries.map((tagEntry) => {
+    private loadTagsForNode(id: string) {
+        this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
+            this._assignedTags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
+            this._tagsItems = tagPaging.list.entries.map((tagEntry) => {
                 return new CardViewTextItemModel({
                     label: '',
                     value: tagEntry.entry.tag,
                     key: tagEntry.entry.id
                 });
-            })
-        }));
+            });
+        });
     }
 }

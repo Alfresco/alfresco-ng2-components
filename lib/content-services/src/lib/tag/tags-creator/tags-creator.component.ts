@@ -47,6 +47,9 @@ const DEFAULT_TAGS_SORTING = {
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
+    tags: string[] = [];
+
+    @Input()
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
@@ -72,7 +75,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     ]);
 
     private exactTagLoaded$ = new Subject<void>();
-    private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
         '',
         [
@@ -120,6 +122,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     }
                     this.cancelExistingTagsLoading$.next();
                     this._existingTagsPagination = null;
+                    this._existingTags = null;
                 }),
                 debounce((name: string) => (name ? timer(300) : EMPTY)),
                 takeUntil(this.onDestroy$)
@@ -151,10 +154,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     get tagNameControlVisible(): boolean {
         return this._tagNameControlVisible;
-    }
-
-    get tags(): string[] {
-        return this._tags;
     }
 
     get existingTags(): TagEntry[] {
@@ -302,7 +301,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     }
 
                     this._existingTagsPagination = searchedResult.list;
-                    this._existingTags = [...searchedResult.list.entries];
+                    this.excludeAlreadyAddedTags(searchedResult.list.entries);
                     this.exactTagLoaded$.next();
                     this._existingTagsLoading = false;
                 },
@@ -380,6 +379,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     }
                     result.list.entries = this._existingTagsPagination.entries.concat(result.list.entries);
                     this._existingTagsPagination = result.list;
+                    this.excludeAlreadyAddedTags(result.list.entries);
                     this._existingTagsLoading = false;
                 },
                 () => {
@@ -402,12 +402,29 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
-        this.existingTags.unshift(this._existingTagsPagination.entries.find((tagEntry) => tagEntry.entry.tag === tag));
-        if (tag !== this.existingExactTag?.entry?.tag) {
-            this.removeTagFromArray(this.existingTags, this.existingExactTag);
-            this.existingTags.sort((tagEntry1, tagEntry2) =>
-                tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
-            this.existingTags.unshift(this.existingExactTag);
+        const entryForTagAddedToExistingTags = this._existingTagsPagination.entries.find(
+            (tagEntry) => tagEntry.entry.tag === tag
+        );
+        if (entryForTagAddedToExistingTags) {
+            this.existingTags.unshift(entryForTagAddedToExistingTags);
+            if (this.existingExactTag) {
+                if (tag !== this.existingExactTag.entry.tag) {
+                    this.removeTagFromArray(this.existingTags, this.existingExactTag);
+                    this.sortExistingTags();
+                    this.existingTags.unshift(this.existingExactTag);
+                }
+            } else {
+                this.sortExistingTags();
+            }
         }
+    }
+
+    private sortExistingTags() {
+        this.existingTags.sort((tagEntry1, tagEntry2) =>
+            tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
+    }
+
+    private excludeAlreadyAddedTags(tags: TagEntry[]) {
+        this._existingTags = tags.filter((tag) => !this.tags.includes(tag.entry.tag));
     }
 }
