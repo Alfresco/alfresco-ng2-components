@@ -559,7 +559,45 @@ describe('CardViewTextItemComponent', () => {
 
         it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
             component.textInput.setValue('UNDO TEST');
-            component.checkKeyboardEvent({ctrlKey: true, code: 'KeyZ'});
+            component.undoText({
+                ctrlKey: true,
+                code: 'KeyZ',
+                metaKey: false
+            });
+
+            expect(component.textInput.value).toBe('');
+        });
+
+
+        it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
+            component.textInput.setValue('DO NOT DO UNDO');
+            component.undoText({
+                ctrlKey: true,
+                code: 'KeyH',
+                metaKey: false
+            });
+
+            expect(component.textInput.value).not.toBe('');
+        });
+
+        it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
+            component.textInput.setValue('DO NOT DO UNDO');
+            component.undoText({
+                ctrlKey: false,
+                code: 'KeyZ',
+                metaKey: false
+            });
+
+            expect(component.textInput.value).not.toBe('');
+        });
+
+        it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            component.textInput.setValue('UNDO TEST FOR MACOS');
+            component.undoText({
+                ctrlKey: false,
+                code: 'KeyZ',
+                metaKey: true
+            });
 
             expect(component.textInput.value).toBe('');
         });

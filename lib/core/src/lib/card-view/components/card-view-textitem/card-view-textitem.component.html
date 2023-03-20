@@ -19,7 +19,7 @@
                     [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
                     [matTooltipDisabled]="isEditable"
                     [attr.data-automation-id]="'card-textitem-value-' + property.key"
-                    (keydown)="checkKeyboardEvent($event)">
+                    (keydown)="undoText($event)">
                 <textarea matInput
                     *ngIf="property.multiline"
                     title="{{property.label | translate }}"
