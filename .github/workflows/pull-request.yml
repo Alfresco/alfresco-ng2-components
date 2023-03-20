@@ -205,8 +205,10 @@ jobs:
             exclude: "insights,core,extensions,process-services,process-services-cloud"
           - name: core
             exclude: "insights,content-services,process-services,process-services-cloud"
-          - name: insights and process-services
-            exclude: "core,extensions,content-services,process-services-cloud"
+          - name: insights
+            exclude: "core,extensions,content-services,process-services-cloud,process-services"
+          - name: process-services
+            exclude: "core,extensions,content-services,process-services-cloud,insights"
           - name: process-cloud
             exclude: "insights,core,extensions,content-services,process-services"
     steps:
