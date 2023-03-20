@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { setupTestBed } from '@alfresco/adf-core';
+import { AuthenticationService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { getFakeSitePaging,
     getFakeSitePagingNoMoreItems,
@@ -57,6 +57,7 @@ describe('DropdownSitesComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
     let siteService: SitesService;
+    let authService: AuthenticationService;
 
     setupTestBed({
         imports: [
@@ -293,10 +294,11 @@ describe('DropdownSitesComponent', () => {
 
                 beforeEach(() => {
                     component.relations = Relations.Members;
+                    authService = TestBed.inject(AuthenticationService);
                 });
 
                 it('should show only sites which logged user is member of when member relation is set', (done) => {
-                    spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
+                    spyOn(authService, 'getEcmUsername').and.returnValue('test');
 
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
@@ -317,10 +319,11 @@ describe('DropdownSitesComponent', () => {
             describe('No relations', () => {
                 beforeEach(() => {
                     component.relations = [];
+                    authService = TestBed.inject(AuthenticationService);
                 });
 
                 it('should show all the sites if no relation is set', (done) => {
-                    spyOn(siteService, 'getEcmCurrentLoggedUserName').and.returnValue('test');
+                    spyOn(authService, 'getEcmUsername').and.returnValue('test');
 
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
