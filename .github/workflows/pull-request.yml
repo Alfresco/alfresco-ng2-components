@@ -120,7 +120,7 @@ jobs:
           else
             git fetch --all
             echo "$BRANCH_NAME"
-            message=$(git log --format=%B -n 1 origin/$BRANCH_NAME
+            message=$(git log --format=%B -n 1 origin/$BRANCH_NAME)
             echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
             export COMMIT_MESSAGE=$message
             if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
