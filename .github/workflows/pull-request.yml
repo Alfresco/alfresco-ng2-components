@@ -108,6 +108,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get branch name
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.36.0
+        
       - name: ci:force flag parser
         shell: bash
         run: |
@@ -116,7 +119,8 @@ jobs:
               exit 0
           else
             git fetch --all
-            message=$(git log --format=%B -n 1 origin/${{ github.head_ref }})
+            echo "BRANCH_NAME"
+            message=$(git log --format=%B -n 1 origin/$BRANCH_NAME
             echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
             export COMMIT_MESSAGE=$message
             if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
