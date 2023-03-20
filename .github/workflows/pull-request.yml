@@ -110,7 +110,7 @@ jobs:
 
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.36.0
-        
+
       - name: ci:force flag parser
         shell: bash
         run: |
@@ -119,7 +119,7 @@ jobs:
               exit 0
           else
             git fetch --all
-            echo "BRANCH_NAME"
+            echo "$BRANCH_NAME"
             message=$(git log --format=%B -n 1 origin/$BRANCH_NAME
             echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
             export COMMIT_MESSAGE=$message
