@@ -4,7 +4,13 @@
     justify-content: space-between;
 
     .adf-snackbar-message-content {
+        display: flex;
+        align-items: center;
         margin: 0;
+
+        mat-icon {
+            margin-right: 8px;
+        }
     }
 
     .adf-snackbar-message-content-action {

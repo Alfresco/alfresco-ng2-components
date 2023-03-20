@@ -29,6 +29,7 @@ import { takeUntil } from 'rxjs/operators';
 export class NotificationsComponent implements OnInit, OnDestroy {
 
     message = 'I ♥️ ADF';
+    decorativeIcon = 'folder';
     withAction = false;
     actionOutput = '';
     snackBarConfigObject = '';
@@ -111,6 +112,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
                                     "duration": "${this.snackBarConfig.duration}",
                                     "horizontalPosition": "${ this.snackBarConfig.horizontalPosition}",
                                     "verticalPosition": "${ this.snackBarConfig.verticalPosition}"}`;
+
+        this.snackBarConfig.data = { decorativeIcon: this.decorativeIcon };
+
         if (this.message) {
             if (this.withAction) {
                 this.notificationService
