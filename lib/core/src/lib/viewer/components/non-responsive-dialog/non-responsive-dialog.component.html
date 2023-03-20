@@ -8,19 +8,18 @@
     <div class="adf-dialog-footer">
         <button
             mat-button
-            id="waitButton"
-            color="warn"
-            [attr.aria-label]="'ADF_VIEWER.ACTIONS.WAIT' | translate"
-            (click)="onWait()">
-            {{ 'ADF_VIEWER.ACTIONS.WAIT' | translate }}
-        </button>
-        <button
-            mat-button
             id="downloadButton"
-            color="primary"
             [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
             (click)="onDownload()">
             {{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}
+        </button>
+        <button
+            mat-button
+            id="waitButton"
+            color="primary"
+            [attr.aria-label]="'ADF_VIEWER.ACTIONS.WAIT' | translate"
+            (click)="onWait()">
+            {{ 'ADF_VIEWER.ACTIONS.WAIT' | translate }}
         </button>
     </div>
 </div>
