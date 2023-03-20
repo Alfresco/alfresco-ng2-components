@@ -17,7 +17,6 @@
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { AlfrescoApiService } from './../../services/alfresco-api.service';
 import { IdentityGroupService } from './identity-group.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
@@ -25,23 +24,18 @@ import {
     mockIdentityRoles,
     clientRoles,
     mockIdentityGroup1,
-    mockIdentityGroupsCount
+    mockIdentityGroupsCount,
+    mockIdentityGroups,
+    roleMappingMock
 } from '../mock/identity-group.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-    applicationDetailsMockApi,
-    createGroupMappingApi,
-    deleteGroupMappingApi,
-    groupsMockApi,
-    noRoleMappingApi,
-    roleMappingApi,
-    updateGroupMappingApi
-} from '../mock/oauth2.service.mock';
+import { AdfHttpClient } from '../../../../api/src';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
-    let apiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -52,11 +46,12 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         service = TestBed.inject(IdentityGroupService);
-        apiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        requestSpy = spyOn(adfHttpClient, 'request');
     }));
 
     it('should be able to fetch groups based on group name', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockIdentityGroups));
         service.findGroupsByName({name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -72,7 +67,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should return true if group has client role mapping', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(roleMappingApi);
+        requestSpy.and.returnValue(Promise.resolve(roleMappingMock));
         service.checkGroupHasClientApp('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
             expect(hasRole).toBeDefined();
             expect(hasRole).toBe(true);
@@ -81,7 +76,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should return false if group does not have client role mapping', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(noRoleMappingApi);
+        requestSpy.and.returnValue(Promise.resolve([]));
         service.checkGroupHasClientApp('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
             expect(hasRole).toBeDefined();
             expect(hasRole).toBe(false);
@@ -226,7 +221,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to fetch the client id', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(applicationDetailsMockApi);
+        requestSpy.and.returnValue(Promise.resolve([{id: 'mock-app-id', name: 'mock-app-name'}]));
         service.getClientIdByApplicationName('mock-app-name').subscribe((clientId) => {
             expect(clientId).toBeDefined();
             expect(clientId).not.toBeNull();
@@ -236,7 +231,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to all fetch groups', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockIdentityGroups));
         service.getGroups().subscribe((res) => {
             expect(res.length).toBe(5);
             expect(res[0].id).toBe('mock-group-id-1');
@@ -273,7 +268,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to query groups based on first & max params', (done) => {
         spyOn(service, 'getTotalGroupsCount').and.returnValue(of(mockIdentityGroupsCount));
-        spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockIdentityGroups));
         service.queryGroups({first: 0, max: 5}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -314,7 +309,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to create group', (done) => {
-        const createCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(createGroupMappingApi);
+        const createCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.createGroup(mockIdentityGroup1).subscribe(() => {
             expect(createCustomApiSpy).toHaveBeenCalled();
             done();
@@ -344,7 +339,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to update group', (done) => {
-        const updateCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(updateGroupMappingApi);
+        const updateCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.updateGroup('mock-group-id', mockIdentityGroup1).subscribe(() => {
             expect(updateCustomApiSpy).toHaveBeenCalled();
             done();
@@ -374,7 +369,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to delete group', (done) => {
-        const deleteCustomApiSpy = spyOn(apiService, 'getInstance').and.returnValue(deleteGroupMappingApi);
+        const deleteCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.deleteGroup('mock-group-id').subscribe(() => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();
             done();
