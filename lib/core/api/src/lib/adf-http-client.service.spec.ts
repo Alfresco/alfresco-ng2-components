@@ -19,7 +19,7 @@ import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentatio
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AdfHttpClient } from './alfresco-api.http-client';
+import { AdfHttpClient } from './adf-http-client.service';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 
 const securityOptions: SecurityOptions = {
