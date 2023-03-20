@@ -213,7 +213,7 @@ export class MetadataViewPage {
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {
-        const property = $('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]');
+        const property = $('[data-automation-id="card-' + type + '-label-' + propertyName + '"]');
         await BrowserVisibility.waitUntilElementIsVisible(property);
     }
 

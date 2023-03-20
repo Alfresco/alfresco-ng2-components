@@ -1,10 +1,12 @@
 <div [ngSwitch]="templateType">
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
-            [ngClass]="{ 'adf-property-read-only': !isEditable,'adf-property-field-has-error mat-form-field-invalid': isEditable && hasErrors }"
-            [floatLabel]="'never'">
-            <ng-container *ngTemplateOutlet="label"></ng-container>
-            <div class="adf-property-field-content">
+            [ngClass]="{ 'adf-property-read-only': !isEditable, 'adf-property-field-has-error mat-form-field-invalid': isEditable && hasErrors }"
+            [floatLabel]="'never'"
+            appearance="standard">
+            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
+                {{ property.label | translate }}
+            </mat-label>
                 <input matInput
                     *ngIf="!property.multiline"
                     class="adf-property-value"
@@ -30,24 +32,21 @@
                     [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 </textarea>
 
-                <button mat-button
-                    matSuffix
-                    class="adf-property-clear-value"
+                <button
                     *ngIf="isEditable"
-                    mat-icon-button
+                    matSuffix
+                    class="adf-textitem-clear-icon"
                     [attr.aria-label]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
                     (click)="clearValue()">
                     <mat-icon>cancel</mat-icon>
                 </button>
-                <div matSuffix *ngIf="isEditable" class="adf-textitem-edit-value">
-                    <mat-icon
-                        *ngIf="isEditable"
-                        mat-icon-button
-                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                        class="adf-textitem-edit-icon"
-                    >mode_edit</mat-icon>
-                </div>
-            </div>
+                <button
+                    *ngIf="isEditable"
+                    matSuffix
+                    class="adf-textitem-edit-icon"
+                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate">
+                    <mat-icon>mode_edit</mat-icon>
+                </button>
 
         </mat-form-field>
     </div>
@@ -65,7 +64,7 @@
             </mat-chip>
         </mat-chip-list>
 
-        <mat-form-field *ngIf="isEditable"
+        <mat-form-field *ngIf="isEditable" appearance="standard"
             class="adf-property-field adf-textitem-chip-list-input"
             [ngClass]="{ 'adf-property-read-only': !isEditable }"
             [floatLabel]="'never'">
@@ -91,9 +90,11 @@
         (click)="clicked()"
         fxLayout="row"
         fxLayoutAlign="space-between center">
-        <mat-form-field class="adf-property-field adf-card-textitem-field"
+        <mat-form-field class="adf-property-field adf-card-textitem-field" appearance="standard"
             [floatLabel]="'never'">
-            <ng-container *ngTemplateOutlet="label"></ng-container>
+            <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
+                {{ property.label | translate }}
+            </mat-label>
             <input matInput
                 [type]=property.inputType
                 class="adf-property-value"
@@ -120,7 +121,6 @@
     </div>
 
     <div *ngSwitchCase="'emptyTemplate'">
-        <ng-container *ngTemplateOutlet="label"></ng-container>
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </div>
 
@@ -132,14 +132,3 @@
         </ul>
     </mat-error>
 </div>
-
-<ng-template #label>
-    <mat-label>
-        <div class="adf-property-label"
-            [attr.data-automation-id]="'card-textitem-label-' + property.key"
-            *ngIf="showProperty || isEditable"
-        >
-        {{ property.label | translate }}
-        </div>
-    </mat-label>
-</ng-template>

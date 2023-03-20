@@ -460,7 +460,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const clickEl = fixture.debugElement.query(By.css(`.adf-property-clear-value`));
+            const clickEl = fixture.debugElement.query(By.css(`.adf-textitem-clear-icon`));
             clickEl.triggerEventHandler('click', new MouseEvent('click'));
 
             fixture.detectChanges();
