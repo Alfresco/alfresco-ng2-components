@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Node, TagBody } from '@alfresco/js-api';
-import { Observable, Subject, of, zip } from 'rxjs';
+import { Node, TagBody, TagPaging } from '@alfresco/js-api';
+import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
     CardViewItem,
     LogService,
@@ -95,10 +95,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     hasMetadataChanged = false;
     tagNameControlVisible = false;
 
-    private addedTags: string[];
     private _assignedTags: string[] = [];
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tagsItems: CardViewItem[];
+    private tagsToAssign: string[];
     private targetProperty: CardViewBaseItemModel;
 
     constructor(
@@ -215,32 +215,30 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.updateNode();
         }
-        this.tagService.assignTagsToNode(this.node.id, this.addedTags.map((tag) => {
-            const tagBody = new TagBody();
-            tagBody.tag = tag;
-            return tagBody;
-        }));
     }
 
-    storeAddedTags(tags: string[]) {
-        this.addedTags = tags;
+    storeTagsToAssign(tags: string[]) {
+        this.tagsToAssign = tags;
         this.hasMetadataChanged = true;
     }
 
     private updateNode() {
-        this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
+        forkJoin({
+            updateNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
+            ...this.saveTags()
+        }).pipe(
             catchError((err) => {
                 this.cardViewContentUpdateService.updateElement(this.targetProperty);
                 this.handleUpdateError(err);
                 return of(null);
             }))
-            .subscribe((updatedNode) => {
-                if (updatedNode) {
+            .subscribe((result) => {
+                if (result) {
                     if (this.hasContentTypeChanged(this.changedProperties)) {
                         this.cardViewContentUpdateService.updateNodeAspect(this.node);
                     }
                     this.revertChanges();
-                    Object.assign(this.node, updatedNode);
+                    Object.assign(this.node, result.updatedNode);
                     this.nodesApiService.nodeUpdated.next(this.node);
                 }
             });
@@ -300,5 +298,24 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 });
             });
         });
+    }
+
+    private saveTags(): { [key: string]: Observable<TagPaging | void> } {
+        const observables: { [key: string]: Observable<TagPaging | void> } = {};
+        if (this.tagsToAssign) {
+            this.tagsItems.forEach((tagItem) => {
+                if (!this.tagsToAssign.some((tag) => tagItem.value === tag)) {
+                    observables[`${this.node.id}Removing`] = this.tagService.removeTag(this.node.id, tagItem.key);
+                }
+            });
+            if (this.tagsToAssign.length) {
+                observables.tagsAssigning = this.tagService.assignTagsToNode(this.node.id, this.tagsToAssign.map((tag) => {
+                    const tagBody = new TagBody();
+                    tagBody.tag = tag;
+                    return tagBody;
+                }));
+            }
+        }
+        return observables
     }
 }

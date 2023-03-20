@@ -96,7 +96,7 @@ export class TagService {
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes
      */
-    removeTag(nodeId: string, tag: string): Observable<any> {
+    removeTag(nodeId: string, tag: string): Observable<void> {
         const observableRemove = from(this.tagsApi.deleteTagFromNode(nodeId, tag));
 
         observableRemove.subscribe((data) => {

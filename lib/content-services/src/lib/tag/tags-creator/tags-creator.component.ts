@@ -66,7 +66,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     @Output()
-    tagsAddition = new EventEmitter<string[]>();
+    tagsChange = new EventEmitter<string[]>();
     @Output()
     tagNameControlVisibleChange = new EventEmitter<boolean>();
 
@@ -213,7 +213,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this.tagNameControl.setValue('');
             this.checkScrollbarVisibility();
             this.tagNameControl.markAsUntouched();
-            this.tagsAddition.emit(this.tags);
+            this.tagsChange.emit(this.tags);
         }
     }
 
@@ -224,6 +224,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControl.updateValueAndValidity({
             emitEvent: false,
         });
+        this.tagsChange.emit(this.tags);
     }
 
     /*saveTags(): void {
@@ -278,7 +279,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControl.updateValueAndValidity({
             emitEvent: false,
         });
-        this.tagsAddition.emit(this.tags);
+        this.tagsChange.emit(this.tags);
     }
 
     private onTagNameControlValueChange(name: string): void {
@@ -412,7 +413,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
-        const entryForTagAddedToExistingTags = this._existingTagsPagination.entries.find(
+        const entryForTagAddedToExistingTags = this._existingTagsPagination?.entries.find(
             (tagEntry) => tagEntry.entry.tag === tag
         );
         if (entryForTagAddedToExistingTags) {
