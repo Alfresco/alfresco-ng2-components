@@ -120,30 +120,22 @@ export class MyComponent implements OnInit {
 }
 ```
 
-By providing a `templateRef` property in the `SnackBarData`, it is possible to render a custom [`TemplateRef`]( https://angular.io/api/core/TemplateRef) in place of the text message.
-The message is made available within the template through a context property (eg: `let-message`).
+By providing a `decorativeIcon` property in the `SnackBarData`, it is possible to render a decorative
+[`MaterialIcon`](https://material.angular.io/components/icon/overview#interactive-icons) to the left of the message.
 
 ```ts
 import { NotificationService } from '@alfresco/adf-core';
 import { MatSnackBarConfig } from '@angular/material/snackbar';
 
-@Component({
-    template: `<ng-template #customTemplate let-message >
-                 <span><i>Custom content:</i> {{ message }}</span>
-               </ng-template>`,
-    providers: [NotificationService]
-})
 export class MyComponent implements OnInit {
 
     snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
-    
-    @ViewChild('customTemplate', { read: TemplateRef }) customTemplate: TemplateRef<any>;
     
     constructor(private notificationService: NotificationService) {
     }
 
     ngOnInit() {
-        this.snackBarConfig.data = { templateRef: this.customTemplate };
+        this.snackBarConfig.data = { decorativeIcon: 'folder' };
         this.notificationService
             .openSnackMessageAction('Do you want to report this issue?', 'send', snackBarConfig)
             .afterDismissed()

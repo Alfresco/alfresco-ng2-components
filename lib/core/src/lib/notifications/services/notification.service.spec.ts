@@ -17,7 +17,7 @@
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -28,14 +28,9 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    template: `<ng-template #customTemplate let-message>
-           <p class="custom-template-class">Custom content {{message}}</p>
-        </ng-template>`,
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
-
-    @ViewChild('customTemplate', { read: TemplateRef }) customTemplate: TemplateRef<any>;
 
     constructor(public notificationService: NotificationService) {
 
@@ -75,20 +70,20 @@ class ProvidesNotificationServiceComponent {
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
     }
 
-    sendMessageWithTemplateRef() {
+    sendMessageWithDecorativeIcon() {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
-        notificationConfig.data = {templateRef: this.customTemplate};
+        notificationConfig.data = {decorativeIcon: 'info'};
 
-        return this.notificationService.openSnackMessage('with templateRef', notificationConfig);
+        return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
     }
 
-    sendMessageWithTemplateRefWithAction() {
+    sendMessageWithDecorativeIconWithIcon() {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
-        notificationConfig.data = { templateRef: this.customTemplate };
+        notificationConfig.data = { decorativeIcon: 'folder' };
 
-        return this.notificationService.openSnackMessageAction('with templateRef', 'TestWarn', notificationConfig);
+        return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
     }
 
 }
@@ -219,28 +214,26 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    it('should open a message notification bar with a custom templateRef configuration', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithTemplateRef();
+    it('should open a message notification bar with a decorative icon', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithDecorativeIcon();
         promise.afterDismissed().subscribe(() => {
             done();
         });
 
         fixture.detectChanges();
 
-        expect(document.querySelector('.custom-template-class')).not.toBeNull();
-        expect(document.querySelector('.custom-template-class')?.innerHTML).toEqual('Custom content with templateRef');
+        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
     });
 
-    it('should open a message notification bar with action and custom templateRef configuration', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithTemplateRefWithAction();
+    it('should open a message notification bar with action and decorative icon', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithDecorativeIconWithIcon();
         promise.afterDismissed().subscribe(() => {
             done();
         });
 
         fixture.detectChanges();
 
-        expect(document.querySelector('.custom-template-class')).not.toBeNull();
-        expect(document.querySelector('.custom-template-class')?.innerHTML).toEqual('Custom content with templateRef');
-    });
+        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
+     });
 
 });

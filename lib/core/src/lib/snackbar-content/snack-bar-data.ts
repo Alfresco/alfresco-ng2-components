@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { TemplateRef } from '@angular/core';
-
 export interface SnackBarData {
     actionLabel?: string;
     actionIcon?: string;
@@ -24,5 +22,5 @@ export interface SnackBarData {
     message: string;
     showAction?: boolean;
     callActionOnIconClick?: boolean;
-    templateRef?: TemplateRef<any>;
+    decorativeIcon?: string;
 }
