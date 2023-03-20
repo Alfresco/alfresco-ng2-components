@@ -17,22 +17,23 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityGroupService } from './identity-group.service';
 import {
+    mockHttpErrorResponse,
     mockSearchGroupByApp,
     mockSearchGroupByRoles,
-    mockSearchGroupByRolesAndApp,
-    oAuthMockApiWithError,
-    oAuthMockApiWithIdentityGroups
+    mockSearchGroupByRolesAndApp
 } from '../mock/identity-group.service.mock';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('IdentityGroupService', () => {
 
     let service: IdentityGroupService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -43,13 +44,14 @@ describe('IdentityGroupService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(IdentityGroupService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     describe('Search', () => {
 
         it('should fetch groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups )as any);
+            requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake').subscribe(
@@ -65,7 +67,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
@@ -85,7 +87,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups by roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups)  as any);
+            requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByRoles).subscribe(
@@ -102,7 +104,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups by roles if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByRoles)
@@ -125,7 +127,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups within app', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups) as any);
+            requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
 
             service.search('fake', mockSearchGroupByApp).subscribe(
                 res => {
@@ -140,7 +142,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should fetch groups within app with roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityGroups(mockFoodGroups) as any);
+            requestSpy.and.returnValue(Promise.resolve(mockFoodGroups));
 
             service.search('fake', mockSearchGroupByRolesAndApp).subscribe(
                 res => {
@@ -156,7 +158,7 @@ describe('IdentityGroupService', () => {
         });
 
         it('should not fetch groups within app if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchGroupByApp)

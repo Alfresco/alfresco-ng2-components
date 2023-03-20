@@ -16,8 +16,6 @@
  */
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
 
 export const mockSearchUserEmptyFilters: IdentityUserFilterInterface = {
@@ -68,23 +66,7 @@ export const mockSearchUserByAppAndGroups: IdentityUserFilterInterface = {
     withinApplication: 'fake-app-name'
 };
 
-export function oAuthMockApiWithIdentityUsers(users: IdentityUserModel[]) {
-    return {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve(users)
-        },
-        reply: jasmine.createSpy('reply')
-    } as any;
-}
-
-const errorResponse = new HttpErrorResponse({
+export const mockHttpErrorResponse = new HttpErrorResponse({
     error: 'Mock Error',
     status: 404, statusText: 'Not Found'
 });
-
-export const oAuthMockApiWithError = {
-    oauth2Auth: {
-        callCustomApi: () => throwError(errorResponse)
-    },
-    reply: jasmine.createSpy('reply')
-} as any;
