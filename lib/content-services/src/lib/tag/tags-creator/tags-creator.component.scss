@@ -37,7 +37,7 @@ acc-tags-creator {
         height: 30px;
     }
 
-    .acc-tag-name-field {
+    .acc-tag-name-field, .acc-tag-name-field[hidden] {
         display: flex;
         align-items: center;
         min-height: 57px;

@@ -47,6 +47,9 @@ const DEFAULT_TAGS_SORTING = {
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
+    listHeight = 'initial';
+
+    @Input()
     tags: string[] = [];
 
     @Input()
@@ -272,6 +275,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         const selectedTag: TagEntry = change.options[0].value;
         this.tags.push(selectedTag.entry.tag);
         this.removeTagFromArray(this.existingTags, selectedTag);
+        this.tagNameControl.updateValueAndValidity({
+            emitEvent: false,
+        });
         this.tagsAddition.emit(this.tags);
     }
 
@@ -326,8 +332,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private validateIfNotExistingTag(tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
+        console.log(1234);
         return this.exactTagLoaded$.pipe(
             map<void, TagNameControlErrors | null>(() => {
+                console.log(1);
+                console.log(tagNameControl);
+                console.log(this.existingExactTag);
                 return this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag)
                     ? { duplicatedExistingTag: true }
                     : null;

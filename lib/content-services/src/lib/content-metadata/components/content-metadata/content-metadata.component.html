@@ -44,7 +44,8 @@
                     data-automation-id="tags-dialog-add-button"
                     mat-icon-button
                     [attr.title]="'TAG.TAGS_DIALOG.TOOLTIPS.ADD_TAG' | translate"
-                    (click)="tagNameControlVisible = true">
+                    (click)="tagNameControlVisible = true"
+                    [hidden]="tagNameControlVisible">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
