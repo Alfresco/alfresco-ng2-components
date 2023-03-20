@@ -36,12 +36,6 @@ const templateTypes = {
     defaultTemplate: 'defaultTemplate'
 };
 
-interface KeyboardEvents {
-    ctrlKey: boolean;
-    metaKey: boolean;
-    code: string;
-}
-
 @Component({
     selector: 'adf-card-view-textitem',
     templateUrl: './card-view-textitem.component.html',
@@ -198,11 +192,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    undoText(event: KeyboardEvents) {
-        if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ') {
-            if (this.textInput.value) {
+    undoText(event: KeyboardEvent) {
+        if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ' && this.textInput.value) {
                 this.textInput.setValue('');
-            }
         }
     }
 

@@ -557,51 +557,6 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toEqual(component.editedValue);
         });
 
-        it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
-            component.textInput.setValue('UNDO TEST');
-            component.undoText({
-                ctrlKey: true,
-                code: 'KeyZ',
-                metaKey: false
-            });
-
-            expect(component.textInput.value).toBe('');
-        });
-
-
-        it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
-            component.textInput.setValue('DO NOT DO UNDO');
-            component.undoText({
-                ctrlKey: true,
-                code: 'KeyH',
-                metaKey: false
-            });
-
-            expect(component.textInput.value).not.toBe('');
-        });
-
-        it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
-            component.textInput.setValue('DO NOT DO UNDO');
-            component.undoText({
-                ctrlKey: false,
-                code: 'KeyZ',
-                metaKey: false
-            });
-
-            expect(component.textInput.value).not.toBe('');
-        });
-
-        it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
-            component.textInput.setValue('UNDO TEST FOR MACOS');
-            component.undoText({
-                ctrlKey: false,
-                code: 'KeyZ',
-                metaKey: true
-            });
-
-            expect(component.textInput.value).toBe('');
-        });
-
         it('should trigger an update event on the CardViewUpdateService [integration]', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
@@ -861,6 +816,58 @@ describe('CardViewTextItemComponent', () => {
             expect(error).toBeFalsy();
             expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
+        });
+    });
+
+    describe('events', () => {
+
+        it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            component.textInput.setValue('UNDO TEST');
+            const event = new KeyboardEvent('keydown', {
+                ctrlKey: true,
+                code: 'KeyZ',
+                metaKey: false
+            } as KeyboardEventInit );
+            component.undoText(event);
+
+            expect(component.textInput.value).toBe('');
+        });
+
+
+        it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
+            component.textInput.setValue('DO NOT DO UNDO');
+            const event = new KeyboardEvent('keydown', {
+                ctrlKey: true,
+                code: 'KeyH',
+                metaKey: false
+            } as KeyboardEventInit );
+            component.undoText(event);
+
+            expect(component.textInput.value).not.toBe('');
+        });
+
+        it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
+            component.textInput.setValue('DO NOT DO UNDO');
+            const event = new KeyboardEvent('keydown', {
+                ctrlKey: false,
+                code: 'KeyZ',
+                metaKey: false
+            } as KeyboardEventInit );
+            component.undoText(event);
+
+            expect(component.textInput.value).not.toBe('');
+        });
+
+        it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            component.textInput.setValue('UNDO TEST FOR MACOS');
+            const event = new KeyboardEvent('keydown', {
+                ctrlKey: false,
+                code: 'KeyZ',
+                metaKey: true
+            } as KeyboardEventInit );
+            component.undoText(event);
+
+            expect(component.textInput.value).toBe('');
         });
     });
 });
