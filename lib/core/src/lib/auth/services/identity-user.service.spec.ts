@@ -22,31 +22,20 @@ import {
     mockIdentityUser1,
     mockIdentityUser2,
     mockIdentityRole,
-    mockIdentityUsers
+    mockIdentityUsers,
+    mockAssignedRoles,
+    mockAvailableRoles,
+    mockEffectiveRoles
 } from '../mock/identity-user.mock';
-import { mockJoinGroupRequest } from '../mock/identity-group.mock';
+import { mockGroups, mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from './identity-user.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-    assignRolesMockApi,
-    createUserMockApi,
-    deleteUserMockApi,
-    getAssignedRolesMockApi,
-    getAvailableRolesMockApi,
-    getEffectiveRolesMockApi,
-    getInvolvedGroupsMockApi,
-    joinGroupMockApi,
-    leaveGroupMockApi,
-    queryUsersMockApi,
-    removeRolesMockApi,
-    updateUserMockApi
-} from '../mock/oauth2.service.mock';
+import { AdfHttpClient } from '../../../../api/src';
 
 describe('IdentityUserService', () => {
 
@@ -59,7 +48,8 @@ describe('IdentityUserService', () => {
     ];
 
     let service: IdentityUserService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -70,7 +60,8 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(IdentityUserService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     beforeEach(() => {
@@ -297,7 +288,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to query users based on query params (first & max params)', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(queryUsersMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockIdentityUsers));
         service.queryUsers({first: 0, max: 5}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -335,7 +326,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to create user', (done) => {
-        const createCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(createUserMockApi);
+        const createCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.createUser(mockIdentityUser1).subscribe(() => {
             expect(createCustomApiSpy).toHaveBeenCalled();
             done();
@@ -365,7 +356,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to update user', (done) => {
-        const updateCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(updateUserMockApi);
+        const updateCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.updateUser('mock-id-2', mockIdentityUser2).subscribe(() => {
             expect(updateCustomApiSpy).toHaveBeenCalled();
             done();
@@ -395,7 +386,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to delete group', (done) => {
-        const deleteCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(deleteUserMockApi);
+        const deleteCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.deleteUser('mock-user-id').subscribe(() => {
             expect(deleteCustomApiSpy).toHaveBeenCalled();
             done();
@@ -425,7 +416,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to fetch involved groups based on user id', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getInvolvedGroupsMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockGroups));
         service.getInvolvedGroups('mock-user-id').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -461,7 +452,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to join the group', (done) => {
-        const joinGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(joinGroupMockApi);
+        const joinGroupCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.joinGroup(mockJoinGroupRequest).subscribe(() => {
             expect(joinGroupCustomApiSpy).toHaveBeenCalled();
             done();
@@ -491,7 +482,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to leave the group', (done) => {
-        const leaveGroupCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(leaveGroupMockApi);
+        const leaveGroupCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.leaveGroup('mock-user-id', 'mock-group-id').subscribe(() => {
             expect(leaveGroupCustomApiSpy).toHaveBeenCalled();
             done();
@@ -521,7 +512,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to fetch available roles based on user id', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getAvailableRolesMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockAvailableRoles));
         service.getAvailableRoles('mock-user-id').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -559,7 +550,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to fetch assigned roles based on user id', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getAssignedRolesMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockAssignedRoles));
         service.getAssignedRoles('mock-user-id').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -597,7 +588,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to fetch effective roles based on user id', (done) => {
-        spyOn(alfrescoApiService, 'getInstance').and.returnValue(getEffectiveRolesMockApi);
+        requestSpy.and.returnValue(Promise.resolve(mockEffectiveRoles));
         service.getEffectiveRoles('mock-user-id').subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -635,7 +626,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to assign roles to the user', (done) => {
-        const assignRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(assignRolesMockApi);
+        const assignRolesCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.assignRoles('mock-user-id', [mockIdentityRole]).subscribe(() => {
             expect(assignRolesCustomApiSpy).toHaveBeenCalled();
             done();
@@ -665,7 +656,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should be able to remove roles', (done) => {
-        const removeRolesCustomApiSpy = spyOn(alfrescoApiService, 'getInstance').and.returnValue(removeRolesMockApi);
+        const removeRolesCustomApiSpy = requestSpy.and.returnValue(Promise.resolve());
         service.removeRoles('mock-user-id', [mockIdentityRole]).subscribe(() => {
             expect(removeRolesCustomApiSpy).toHaveBeenCalled();
             done();
