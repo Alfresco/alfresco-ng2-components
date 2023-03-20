@@ -28,6 +28,7 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    template: '',
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
@@ -78,7 +79,7 @@ class ProvidesNotificationServiceComponent {
         return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
     }
 
-    sendMessageWithDecorativeIconWithIcon() {
+    sendMessageWithDecorativeIconAndAction() {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
         notificationConfig.data = { decorativeIcon: 'folder' };
@@ -225,8 +226,8 @@ describe('NotificationService', () => {
         expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
     });
 
-    it('should open a message notification bar with action and decorative icon', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithDecorativeIconWithIcon();
+    it('should open a message notification bar with action and a decorative icon', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
         promise.afterDismissed().subscribe(() => {
             done();
         });
