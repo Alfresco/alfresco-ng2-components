@@ -24,4 +24,5 @@ export * from './services/tag.service';
 export * from './tag.module';
 
 export * from './tags-creator/tags-creator-mode';
+export * from './tags-creator/tags-creator.component';
 

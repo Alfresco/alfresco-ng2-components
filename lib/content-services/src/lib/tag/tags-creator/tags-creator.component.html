@@ -1,4 +1,4 @@
-<!--<h1 mat-dialog-title class="acc-label-with-icon-button">
+<!--<h1 mat-dialog-title class="adf-label-with-icon-button">
     {{ 'TAG.TAGS_CREATOR.TITLE' | translate }}
     <button
         data-automation-id="tags-dialog-add-button"
@@ -13,20 +13,20 @@
 <!--
 <mat-dialog-content>
 -->
-<div class="acc-tags-creation">
+<div class="adf-tags-creation">
     <p
-       class="acc-no-tags-message"
+       class="adf-no-tags-message"
        *ngIf="!tags.length && !tagNameControlVisible">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div
-        class="acc-tags-list"
-        [class.acc-tags-list-with-scrollbar]="tagsListScrollbarVisible"
+        class="adf-tags-list"
+        [class.adf-tags-list-with-scrollbar]="tagsListScrollbarVisible"
         [style.height]="listHeight"
         #tagsList>
         <p
             *ngFor="let tag of tags"
-            class="acc-tag acc-label-with-icon-button">
+            class="adf-tag adf-label-with-icon-button">
             {{ tag }}
             <button
                 data-automation-id="tags-dialog-remove-tag-button"
@@ -39,12 +39,12 @@
         </p>
     </div>
     <div
-        class="acc-tag-name-field"
+        class="adf-tag-name-field"
         *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible"
         [hidden]="!tagNameControlVisible">
         <mat-form-field *ngIf="tagNameControlVisible">
             <mat-icon matPrefix>search</mat-icon>
-            <mat-label id="acc-tag-name-input-label">
+            <mat-label id="adf-tag-name-input-label">
                 {{ 'TAG.TAGS_CREATOR.NAME' | translate }}
             </mat-label>
             <input
@@ -53,7 +53,7 @@
                 autocomplete="off"
                 [formControl]="tagNameControl"
                 (keyup.enter)="addTag()"
-                aria-labelledby="acc-tag-name-input-label"
+                aria-labelledby="adf-tag-name-input-label"
                 adf-auto-focus
             />
             <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
@@ -68,28 +68,28 @@
     </div>
 </div>
 <div
-    class="acc-existing-tags-panel"
+    class="adf-existing-tags-panel"
     *ngIf="existingTagsPanelVisible">
     <ng-container *ngIf="!existingTagsLoading || existingTags">
         <span
-            class="acc-create-tag-label"
+            class="adf-create-tag-label"
             (click)="addTag()"
             [hidden]="tagNameControl.invalid || typing">
             {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
         </span>
-        <p class="acc-existing-tags-label">
+        <p class="adf-existing-tags-label">
             {{ existingTagsLabelKey | translate }}
         </p>
     </ng-container>
     <div
-        class="acc-tags-list"
+        class="adf-tags-list"
         [style.max-height]="listHeight">
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)">
             <mat-list-option
                 *ngFor="let tagRow of existingTags"
-                class="acc-tag"
+                class="adf-tag"
                 [value]="tagRow">
                 {{ tagRow.entry.tag }}
             </mat-list-option>
@@ -117,7 +117,7 @@
         mat-button color="primary"
         (click)="saveTags()"
         [disabled]="!tags.length || saving"
-        class="acc-save-button">
+        class="adf-save-button">
         {{ 'CONTENT_STRUCTURING.SAVE' | translate }}
     </button>
 </mat-dialog-actions>-->

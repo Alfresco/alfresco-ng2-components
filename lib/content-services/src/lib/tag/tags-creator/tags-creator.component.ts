@@ -40,7 +40,7 @@ const DEFAULT_TAGS_SORTING = {
 };
 
 @Component({
-    selector: 'acc-tags-creator',
+    selector: 'adf-tags-creator',
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -159,7 +159,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.cancelExistingTagsLoading$.complete();
     }
 
-    @HostBinding('class.acc-creator-with-existing-tags-panel')
+    @HostBinding('class.adf-creator-with-existing-tags-panel')
     get hostClass(): boolean {
         return this.existingTagsPanelVisible;
     }

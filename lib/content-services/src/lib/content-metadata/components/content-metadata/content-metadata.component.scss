@@ -29,13 +29,13 @@
                 height: 68px;
             }
 
-            acc-tags-creator {
-                .acc-tags-creation {
+            adf-tags-creator {
+                .adf-tags-creation {
                     padding-right: 0;
                     padding-left: 12px;
                 }
 
-                &.acc-creator-with-existing-tags-panel {
+                &.adf-creator-with-existing-tags-panel {
                     background: var(--adf-theme-background-dialog-color);
                 }
             }

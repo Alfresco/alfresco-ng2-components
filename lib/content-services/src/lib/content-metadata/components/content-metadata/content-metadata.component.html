@@ -47,12 +47,12 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <acc-tags-creator
+            <adf-tags-creator
                 [(tagNameControlVisible)]="tagNameControlVisible"
                 (tagsChange)="storeTagsToAssign($event)"
                 [mode]="tagsCreatorMode"
                 [tags]="assignedTags">
-            </acc-tags-creator>
+            </adf-tags-creator>
         </div>
 
         <ng-container *ngIf="expanded">

@@ -1,9 +1,9 @@
-acc-tags-creator {
+adf-tags-creator {
     display: block;
     // margin-top: -24px;
     margin-left: -24px;
 
-    &.acc-creator-with-existing-tags-panel {
+    &.adf-creator-with-existing-tags-panel {
         background-color: var(--theme-background-color);
     }
 
@@ -18,7 +18,7 @@ acc-tags-creator {
         padding-right: 22px;
     }*/
 
-    .acc-label-with-icon-button {
+    .adf-label-with-icon-button {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -30,14 +30,14 @@ acc-tags-creator {
         background-color: inherit;
         overflow: hidden;*/
 
-    .acc-no-tags-message {
+    .adf-no-tags-message {
         margin-left: 9px;
         margin-top: 27px;
         margin-bottom: 0;
         height: 30px;
     }
 
-    .acc-tag-name-field, .acc-tag-name-field[hidden] {
+    .adf-tag-name-field, .adf-tag-name-field[hidden] {
         display: flex;
         align-items: center;
         min-height: 57px;
@@ -50,7 +50,7 @@ acc-tags-creator {
         }
     }
 
-    .acc-create-tag-label {
+    .adf-create-tag-label {
         color: var(--theme-primary-color);
         cursor: pointer;
         margin-top: -1px;
@@ -62,7 +62,7 @@ acc-tags-creator {
         max-height: 7vh;
     }
 
-    .acc-existing-tags-panel {
+    .adf-existing-tags-panel {
         background-color: var(--adf-theme-primary-contrast-500);
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
@@ -72,14 +72,14 @@ acc-tags-creator {
         width: 100%;
         z-index: 100;
 
-        .acc-existing-tags-label {
+        .adf-existing-tags-label {
             font-size: 10px;
             color: var(--theme-secondary-text-color);
             padding-left: 12px;
             margin-bottom: 2px;
         }
 
-        .acc-tags-list {
+        .adf-tags-list {
             padding-left: 18px;
             margin-top: -2px;
             padding-right: 0;
@@ -88,7 +88,7 @@ acc-tags-creator {
             // max-height: 22vh;
             min-height: 75px;
 
-            .acc-tag {
+            .adf-tag {
                 margin-bottom: 18px;
                 margin-top: 0;
                 padding-right: 12px;
@@ -96,7 +96,7 @@ acc-tags-creator {
                 height: auto;
                 width: initial;
 
-                & + .acc-tag {
+                & + .adf-tag {
                     margin-top: -10px;
                 }
 
@@ -118,35 +118,35 @@ acc-tags-creator {
         }
     }
 
-    .acc-tags-list {
+    .adf-tags-list {
         padding-left: 10px;
         padding-right: 0;
         overflow: auto;
 
-        &.acc-tags-list-with-scrollbar {
+        &.adf-tags-list-with-scrollbar {
             padding-right: 7px;
             margin-right: -22px;
         }
     }
 
-    .acc-tags-creation {
+    .adf-tags-creation {
         padding-left: 27px;
         padding-right: 22px;
 
-        .acc-tags-list {
+        .adf-tags-list {
             /*&:not(:empty) {
                 height: 22vh;
             }*/
 
-            .acc-tag {
-                & + .acc-tag {
+            .adf-tag {
+                & + .adf-tag {
                     margin-top: -14px;
                 }
             }
         }
     }
 
-    .acc-tag {
+    .adf-tag {
         margin-top: 0;
         overflow-wrap: anywhere;
     }
@@ -156,7 +156,7 @@ acc-tags-creator {
         margin-right: -24px;
         background-color: inherit;
 
-        .acc-save-button {
+        .adf-save-button {
             margin-right: 24px;
         }
     }
