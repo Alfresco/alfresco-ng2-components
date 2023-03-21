@@ -6,7 +6,7 @@
  * agreement is prohibited.
  */
 
-import { TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
     Component,
     ElementRef,
@@ -53,7 +53,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     set tags(tags: string[]) {
         this._tags = tags;
         this._existingTagsLoading = true;
-        this._existingTagsPagination = null;
+        this._initialExistingTags = null;
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
@@ -84,6 +84,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         ['required', 'REQUIRED'],
     ]);
 
+    private readonly existingTagsListLimit = 15;
+
     private exactTagSet$ = new Subject<void>();
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
@@ -97,14 +99,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     );
     private _tagNameControlVisible = false;
     private _existingTags: TagEntry[];
-    private _existingTagsPagination: TagPagingList;
+    private _initialExistingTags: TagEntry[];
     private onDestroy$ = new Subject<void>();
     private _tagNameErrorMessageKey = '';
     private _existingTagsLoading = false;
     private _typing = false;
     private _tagsListScrollbarVisible = false;
     private _saving = false;
-    private _spinnerDiameter = 50;
     private cancelExistingTagsLoading$ = new Subject<void>();
     private existingExactTag: TagEntry;
     private _existingTagsPanelVisible: boolean;
@@ -125,7 +126,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                 distinctUntilChanged(),
                 tap((name: string) => {
                     this._typing = true;
-                    this._spinnerDiameter = 50;
                     if (name) {
                         this._existingTagsLoading = true;
                         this._existingTagsPanelVisible = true;
@@ -133,7 +133,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                         this._existingTagsPanelVisible = false;
                     }
                     this.cancelExistingTagsLoading$.next();
-                    this._existingTagsPagination = null;
+                    this._initialExistingTags = null;
                     this._existingTags = null;
                 }),
                 debounce((name: string) => (name ? timer(300) : EMPTY)),
@@ -194,10 +194,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     get saving(): boolean {
         return this._saving;
-    }
-
-    get spinnerDiameter(): number {
-        return this._spinnerDiameter;
     }
 
     get existingTagsPanelVisible(): boolean {
@@ -269,20 +265,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.notificationService.showError(message);
     }*/
 
-    loadMoreTags(event: Event): void {
-        const existingTagsListElement = event.target as HTMLElement;
-
-        if (
-            this._existingTagsPagination?.pagination.hasMoreItems &&
-            existingTagsListElement.scrollTop +
-                existingTagsListElement.clientHeight >=
-                existingTagsListElement.scrollHeight - 80 &&
-            !this.existingTagsLoading
-        ) {
-            this.searchExistingTags(this.tagNameControl.value);
-        }
-    }
-
     addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
         const selectedTag: TagEntry = change.options[0].value;
         this.tags.push(selectedTag.entry.tag);
@@ -300,7 +282,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (name) {
             forkJoin({
                 exactResult: this.tagService.findTagByName(name),
-                searchedResult: this.tagService.searchTags(name),
+                searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit),
             })
                 .pipe(
                     takeUntil(this.cancelExistingTagsLoading$),
@@ -319,8 +301,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                             this.existingExactTag = null;
                         }
 
-                        this._existingTagsPagination = searchedResult.list;
-                        this.excludeAlreadyAddedTags(searchedResult.list.entries);
+                        this._initialExistingTags = searchedResult.list.entries;
+                        this.excludeAlreadyAddedTags(this._initialExistingTags);
                         this.exactTagSet$.next();
                         this._existingTagsLoading = false;
                     },
@@ -379,35 +361,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             : '';
     }
 
-    private getSkipCount(): number {
-        const pagination = this._existingTagsPagination?.pagination;
-        return pagination ? pagination.skipCount + pagination.maxItems : 0;
-    }
-
-    private searchExistingTags(name: string): void {
-        this._existingTagsLoading = true;
-        this._spinnerDiameter = 20;
-
-        this.tagService
-            .searchTags(name, DEFAULT_TAGS_SORTING, false, this.getSkipCount())
-            .pipe(takeUntil(this.cancelExistingTagsLoading$))
-            .subscribe(
-                (result) => {
-                    if (this.existingExactTag) {
-                        this.removeExactTagFromSearchedResult(result);
-                    }
-                    result.list.entries = this._existingTagsPagination.entries.concat(result.list.entries);
-                    this._existingTagsPagination = result.list;
-                    this.excludeAlreadyAddedTags(result.list.entries);
-                    this._existingTagsLoading = false;
-                },
-                () => {
-                    this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
-                    this._existingTagsLoading = false;
-                }
-            );
-    }
-
     private checkScrollbarVisibility(): void {
         setTimeout(() => {
             this._tagsListScrollbarVisible =
@@ -421,7 +374,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
-        const entryForTagAddedToExistingTags = this._existingTagsPagination?.entries.find(
+        const entryForTagAddedToExistingTags = this._initialExistingTags?.find(
             (tagEntry) => tagEntry.entry.tag === tag
         );
         if (entryForTagAddedToExistingTags) {

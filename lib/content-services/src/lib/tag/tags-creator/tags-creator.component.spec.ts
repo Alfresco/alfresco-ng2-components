@@ -354,13 +354,6 @@ describe('TagsDialogComponent', () => {
             return fixture.debugElement.query(By.css(`.acc-existing-tags-panel`));
         }
 
-        function scrollTagList() {
-            fixture.debugElement
-                    .query(By.css(`.acc-existing-tags-panel .acc-tags-list`))
-                    .nativeElement.dispatchEvent(new Event('scroll'));
-            fixture.detectChanges();
-        }
-
         it('should be visible when input is visible and something is typed in input', fakeAsync(() => {
             typeTag('some tag');
 
@@ -458,13 +451,14 @@ describe('TagsDialogComponent', () => {
                 expect(tagService.findTagByName).toHaveBeenCalledWith(name);
             }));
 
-            it('should call searchTags on tagService using name set in input', fakeAsync(() => {
+            it('should call searchTags on tagService using name set in input and correct params', fakeAsync(() => {
                 spyOn(tagService, 'searchTags').and.returnValue(EMPTY);
 
                 const name = 'Tag';
                 typeTag(name);
 
-                expect(tagService.searchTags).toHaveBeenCalledWith(name);
+                expect(tagService.searchTags).toHaveBeenCalledWith(name, { orderBy: 'tag', direction: 'asc' },
+                    false, 0, 15 );
             }));
 
             it('should display loaded existing tags', fakeAsync(() => {
@@ -531,167 +525,6 @@ describe('TagsDialogComponent', () => {
                 const tagElements = getExistingTags();
                 expect(tagElements).toEqual([tag, tag1, tag2]);
             }));
-
-            it('should call searchTags with correct name and skipCount after scrolling if pagination has more items', fakeAsync(() => {
-                const searchTagsSpy = spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'Tag 1' }  as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                                skipCount: 1,
-                                maxItems: 5,
-                            },
-                        },
-                    }),
-                    new Subject()
-                );
-                const name = 'Tag';
-                typeTag(name);
-
-                searchTagsSpy.calls.reset();
-                scrollTagList();
-
-                expect(searchTagsSpy).toHaveBeenCalledWith(name, {
-                    orderBy: 'tag',
-                    direction: 'asc'
-                }, false, 6);
-            }));
-
-            it('should not call searchTags after scrolling if pagination has not more items', fakeAsync(() => {
-                const searchTagsSpy = spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'Tag 1' } as any},
-                            ],
-                            pagination: {
-                                hasMoreItems: false,
-                                skipCount: 1,
-                                maxItems: 5,
-                            },
-                        },
-                    }),
-                    new Subject()
-                );
-
-                typeTag('Tag');
-
-                searchTagsSpy.calls.reset();
-                scrollTagList();
-
-                expect(searchTagsSpy).not.toHaveBeenCalled();
-            }));
-
-            it('should display more existing tags after scrolling if pagination has more items ', fakeAsync(() => {
-                const tag1 = 'Tag 1';
-                const tag2 = 'Tag 2';
-                const tag3 = 'Tag 3';
-                const tag4 = 'Tag 4';
-
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                            },
-                        },
-                    }),
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: tag3 } as any },
-                                { entry: { tag: tag4 } as any },
-                            ],
-                            pagination: {}
-                        },
-                    })
-                );
-                typeTag('Tag');
-                scrollTagList();
-
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag1, tag2, tag3, tag4]);
-            }));
-
-            it('should not display more existing tags after scrolling if pagination has not more items', fakeAsync(() => {
-                const tag1 = 'Tag 1';
-                const tag2 = 'Tag 2';
-
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: false
-                            },
-                        },
-                    })
-                );
-
-                typeTag('Tag');
-                scrollTagList();
-
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag1, tag2]);
-            }));
-
-            it('should exact tag be still above others existing tags after loading more existing tags after scrolling', fakeAsync(() => {
-                const tag = 'Tag';
-                spyOn(tagService, 'findTagByName').and.returnValue(of({
-                    entry: {
-                        tag,
-                        id: 'tag-1'
-                    }
-                }));
-
-                const tag1 = 'Tag 1';
-                const tag2 = 'Tag 2';
-                const tag3 = 'Tag 3';
-                const tag4 = 'Tag 4';
-
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                {  entry: { tag: tag1 } as any },
-                                { entry: { tag: tag2 } as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                            },
-                        },
-                    }),
-                    of({
-                        list: {
-                            entries: [
-                                {
-                                    entry: { tag: tag3 } as any,
-                                },
-                                {
-                                    entry: { tag: tag4 } as any,
-                                },
-                            ],
-                            pagination: {}
-                        },
-                    })
-                );
-
-                typeTag(tag);
-                scrollTagList();
-
-                const tagElements = getExistingTags();
-                expect(tagElements).toEqual([tag, tag1, tag2, tag3, tag4]);
-            }));
         });
 
         describe('Spinner', () => {
@@ -724,98 +557,6 @@ describe('TagsDialogComponent', () => {
 
                 discardPeriodicTasks();
                 flush();
-            }));
-
-            it('should be displayed when existing tags are loading after scrolling if pagination has more items', fakeAsync(() => {
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                {
-                                    entry: { tag: 'Tag 1' } as any,
-                                },
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                            },
-                        },
-                    }),
-                    new Subject()
-                );
-                typeTag('Tag');
-                scrollTagList();
-
-                const spinner = getSpinner();
-                expect(spinner).toBeTruthy();
-            }));
-
-            it('should not be displayed when existing tags are loaded after scrolling', fakeAsync(() => {
-                spyOn(tagService,'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'Tag 1' } as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                            },
-                        },
-                    }),
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { name: 'Tag 1' } as any },
-                            ],
-                        },
-                    } as any)
-                );
-                typeTag('Tag');
-                scrollTagList();
-
-                const spinner = getSpinner();
-                expect(spinner).toBeFalsy();
-            }));
-
-            it('should not be displayed when existing tags are loading after scrolling if pagination has not more items', fakeAsync(() => {
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'Tag 1' } as any },
-                            ],
-                            pagination: {
-                                hasMoreItems: false,
-                            },
-                        },
-                    }),
-                    new Subject()
-                );
-                typeTag('Tag');
-                scrollTagList();
-
-                const spinner = getSpinner();
-                expect(spinner).toBeFalsy();
-            }));
-
-            it('should have correct diameter when loading after scrolling', fakeAsync(() => {
-                spyOn(tagService, 'searchTags').and.returnValues(
-                    of({
-                        list: {
-                            entries: [
-                                { entry: { tag: 'Tag 1' } as any},
-                            ],
-                            pagination: {
-                                hasMoreItems: true,
-                            },
-                        },
-                    }),
-                    new Subject()
-                );
-                typeTag('Tag');
-                scrollTagList();
-
-                const spinner = getSpinner();
-                expect(spinner.componentInstance.diameter).toBe(20);
             }));
         });
     });

@@ -78,9 +78,7 @@
             {{ existingTagsLabelKey | translate }}
         </p>
     </ng-container>
-    <div
-        class="acc-tags-list"
-        (scroll)="loadMoreTags($event)">
+    <div class="acc-tags-list">
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)">
@@ -96,7 +94,7 @@
         </mat-selection-list>
         <mat-spinner
             *ngIf="existingTagsLoading"
-            [diameter]="spinnerDiameter"
+            [diameter]="50"
             [attr.aria-label]="'TAG.TAGS_CREATOR.TAGS_LOADING' | translate">
         </mat-spinner>
     </div>
