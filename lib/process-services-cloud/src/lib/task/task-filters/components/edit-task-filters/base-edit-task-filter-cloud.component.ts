@@ -68,9 +68,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     id: string;
 
+    /** Environment ID of the application. */
     @Input()
     environmentId: string;
 
+    /** List of environments. */
     @Input()
     environmentList: Environment[] = [];
 
@@ -261,8 +263,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    private getEnvironmentName(environmentId: string) {
-        return this.environmentList.find((env: any) => env['id'] === environmentId).name;
+    private getEnvironmentName(environmentId: string): string {
+        return this.environmentList.find((env: any) => env['id'] === environmentId)?.name;
     }
 
     getProcessDefinitions() {

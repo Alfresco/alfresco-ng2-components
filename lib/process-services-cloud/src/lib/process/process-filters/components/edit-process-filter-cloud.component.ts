@@ -65,9 +65,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     id: string;
 
-    @Input()
-    environmentId: string;
-
     /** List of process filter properties to display */
     @Input()
     filterProperties = DEFAULT_PROCESS_FILTER_PROPERTIES;
@@ -80,6 +77,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     actions = DEFAULT_ACTIONS;
 
+    /** Environment ID of the application. */
+    @Input()
+    environmentId: string;
+
+    /** List of environments. */
     @Input()
     environmentList: Environment[] = [];
 
@@ -422,8 +424,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             });
     }
 
-    private getEnvironmentName(environmentId: string) {
-        return this.environmentList.find((env: any) => env['id'] === environmentId).name;
+    private getEnvironmentName(environmentId: string): string {
+        return this.environmentList.find((env: any) => env['id'] === environmentId)?.name;
     }
 
     getProcessDefinitions() {

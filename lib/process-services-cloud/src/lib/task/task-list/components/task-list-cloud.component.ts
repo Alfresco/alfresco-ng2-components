@@ -89,6 +89,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     name: string = '';
 
+    /** Filter the tasks to display only the ones with this environment ID. */
     @Input()
     environmentId: string;
 

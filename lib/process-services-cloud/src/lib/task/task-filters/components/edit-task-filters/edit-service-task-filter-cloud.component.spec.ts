@@ -26,7 +26,7 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.ser
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
-import { fakeApplicationInstance } from '../../../../app/mock/app-model.mock';
+import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../../../../app/mock/app-model.mock';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
@@ -36,6 +36,8 @@ import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
+import { fakeEnvironmentList } from 'lib/process-services-cloud/src/lib/common/mock/environment.mock';
+import { mockApplicationTaskFilterProperties } from '../../mock/edit-task-filter-cloud.mock';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let component: EditServiceTaskFilterCloudComponent;
@@ -749,5 +751,17 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             expect(component.action.emit).toHaveBeenCalled();
             expect(restoreDefaultFiltersSpy).not.toHaveBeenCalled();
         });
+    });
+
+    it('should add environment name to each application selector option label', () => {
+        component.appName = fakeApplicationInstance[0].name;
+        component.environmentList = fakeEnvironmentList;
+        component.environmentId = fakeEnvironmentList[0].id;
+
+        getRunningApplicationsSpy.and.returnValue(of(fakeApplicationInstanceWithEnvironment));
+        spyOn(component, 'createTaskFilterProperties').and.returnValue(mockApplicationTaskFilterProperties);
+
+        const filteredProperties = component.createAndFilterProperties();
+        expect(filteredProperties[0].options[0].label).toBe('application-new-1 (test-env-name-1)');
     });
 });

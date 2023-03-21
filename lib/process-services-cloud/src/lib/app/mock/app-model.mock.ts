@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
+import { fakeEnvironmentList } from '../../common';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 export const fakeApplicationInstance: ApplicationInstanceModel[] = [
     { name: 'application-new-1', createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' },
     { name: 'application-new-2', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' },
     { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' }
+];
+
+export const fakeApplicationInstanceWithEnvironment: ApplicationInstanceModel[] = [
+    { name: 'application-new-1', environmentId: fakeEnvironmentList[0].id, createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' },
+    { name: 'application-new-2', environmentId: fakeEnvironmentList[1].id,createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' },
+    { name: 'application-new-3', environmentId: fakeEnvironmentList[2].id,createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' }
 ];

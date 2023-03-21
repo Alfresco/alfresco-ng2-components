@@ -15,5 +15,19 @@
  * limitations under the License.
  */
 
-export * from './interface/index';
-export * from './mock/index';
+import { Environment } from '../interface/environment.interface';
+
+export const fakeEnvironmentList: Environment[] = [
+    {
+        id: 'test-env-1',
+        name: 'test-env-name-1'
+    },
+    {
+        id: 'test-env-2',
+        name: 'test-env-name-2'
+    },
+    {
+        id: 'test-env-3',
+        name: 'test-env-name-3'
+    }
+];

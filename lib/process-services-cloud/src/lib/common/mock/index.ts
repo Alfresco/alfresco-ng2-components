@@ -15,5 +15,4 @@
  * limitations under the License.
  */
 
-export * from './interface/index';
-export * from './mock/index';
+export * from './public-api';
