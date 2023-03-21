@@ -16,4 +16,3 @@
  */
 
 export * from './interface/index';
-export * from './mock/index';

@@ -68,10 +68,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     id: string;
 
-    /** Environment ID of the application. */
-    @Input()
-    environmentId: string;
-
     /** List of environments. */
     @Input()
     environmentList: Environment[] = [];
@@ -108,14 +104,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     @Input()
     sortProperties: string[] = [];
 
-    /** Task Filter to use*/
-    @Input()
-    taskFilter: T;
-
-    /** Emitted when a task filter property changes. */
-    @Output()
-    filterChange = new EventEmitter<T>();
-
     /** Emitted when a filter action occurs (i.e Save, Save As, Delete). */
     @Output()
     action = new EventEmitter<TaskFilterAction>();
@@ -138,7 +126,14 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
+    @Input()
+    taskFilter: T;
+
     changedTaskFilter: T;
+
+    /** Emitted when a task filter property changes. */
+    @Output()
+    filterChange = new EventEmitter<T>();
 
     protected onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
@@ -253,18 +248,10 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        if (application.environmentId) {
-                            this.applicationNames.push({ label: `${application.name} (${this.getEnvironmentName(application.environmentId)})`, value: application.name });
-                        } else {
-                            this.applicationNames.push({ label: application.name, value: application.name });
-                        }
+                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.name });
                     });
                 }
             });
-    }
-
-    private getEnvironmentName(environmentId: string): string {
-        return this.environmentList.find((env: any) => env['id'] === environmentId)?.name;
     }
 
     getProcessDefinitions() {

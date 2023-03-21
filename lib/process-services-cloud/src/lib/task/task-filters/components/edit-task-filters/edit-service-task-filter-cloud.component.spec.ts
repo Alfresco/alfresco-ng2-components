@@ -36,7 +36,7 @@ import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
-import { fakeEnvironmentList } from 'lib/process-services-cloud/src/lib/common/mock/environment.mock';
+import { fakeEnvironmentList } from '../../../../common/mock/environment.mock';
 import { mockApplicationTaskFilterProperties } from '../../mock/edit-task-filter-cloud.mock';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
@@ -756,7 +756,6 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     it('should add environment name to each application selector option label', () => {
         component.appName = fakeApplicationInstance[0].name;
         component.environmentList = fakeEnvironmentList;
-        component.environmentId = fakeEnvironmentList[0].id;
 
         getRunningApplicationsSpy.and.returnValue(of(fakeApplicationInstanceWithEnvironment));
         spyOn(component, 'createTaskFilterProperties').and.returnValue(mockApplicationTaskFilterProperties);

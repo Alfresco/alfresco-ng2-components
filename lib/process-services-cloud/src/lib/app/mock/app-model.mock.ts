@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeEnvironmentList } from '../../common';
+import { fakeEnvironmentList } from '../../common/mock/environment.mock';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 export const fakeApplicationInstance: ApplicationInstanceModel[] = [
