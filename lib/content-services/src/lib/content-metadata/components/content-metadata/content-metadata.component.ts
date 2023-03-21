@@ -24,7 +24,8 @@ import {
     TranslationService,
     AppConfigService,
     CardViewBaseItemModel,
-    UpdateNotification, CardViewTextItemModel
+    UpdateNotification,
+    CardViewTextItemModel
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';

@@ -21,9 +21,7 @@
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="!editable">
             <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Tags
-                </mat-panel-title>
+                <mat-panel-title>Tags</mat-panel-title>
             </mat-expansion-panel-header>
             <adf-card-view
                 (keydown)="keyDown($event)"
@@ -35,11 +33,11 @@
                 [multiValueSeparator]="multiValueSeparator">
             </adf-card-view>
         </mat-expansion-panel>
-        <div *ngIf="editable" class="adf-metadata-properties-tags">
+        <div
+            *ngIf="editable"
+            class="adf-metadata-properties-tags">
             <div class="adf-metadata-properties-tags-title">
-                <p>
-                    Tags
-                </p>
+                <p>Tags</p>
                 <button
                     data-automation-id="tags-dialog-add-button"
                     mat-icon-button

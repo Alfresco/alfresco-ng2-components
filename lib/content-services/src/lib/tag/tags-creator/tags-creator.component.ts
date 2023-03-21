@@ -23,9 +23,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
-import { TagService } from '@alfresco/adf-content-services';
 import { TagsCreatorMode } from './tags-creator-mode';
 import { MatSelectionListChange } from '@angular/material/list';
+import { TagService } from '../services/tag.service';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -58,7 +58,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
     }
-
     @Input()
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
@@ -288,34 +287,29 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             forkJoin({
                 exactResult: this.tagService.findTagByName(name),
                 searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit),
-            })
-                .pipe(
-                    takeUntil(this.cancelExistingTagsLoading$),
-                    finalize(() => (this._typing = false))
-                )
-                .subscribe(
-                    ({ exactResult, searchedResult }: {
-                        exactResult: TagEntry;
-                        searchedResult: TagPaging;
-                    }) => {
-                        if (exactResult) {
-                            this.existingExactTag = exactResult;
-                            this.removeExactTagFromSearchedResult(searchedResult);
-                            searchedResult.list.entries.unshift(exactResult);
-                        } else {
-                            this.existingExactTag = null;
-                        }
+            }).pipe(
+                takeUntil(this.cancelExistingTagsLoading$),
+                finalize(() => (this._typing = false))
+            ).subscribe(({ exactResult, searchedResult }: {
+                exactResult: TagEntry;
+                searchedResult: TagPaging;
+            }) => {
+                if (exactResult) {
+                    this.existingExactTag = exactResult;
+                    this.removeExactTagFromSearchedResult(searchedResult);
+                    searchedResult.list.entries.unshift(exactResult);
+                } else {
+                    this.existingExactTag = null;
+                }
 
-                        this._initialExistingTags = searchedResult.list.entries;
-                        this.excludeAlreadyAddedTags(this._initialExistingTags);
-                        this.exactTagSet$.next();
-                        this._existingTagsLoading = false;
-                    },
-                    () => {
-                        this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
-                        this._existingTagsLoading = false;
-                    }
-                );
+                this._initialExistingTags = searchedResult.list.entries;
+                this.excludeAlreadyAddedTags(this._initialExistingTags);
+                this.exactTagSet$.next();
+                this._existingTagsLoading = false;
+            }, () => {
+                this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
+                this._existingTagsLoading = false;
+            });
         } else {
             this.existingExactTag = null;
         }
@@ -333,12 +327,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private validateIfNotExistingTag(tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
         return this.exactTagSet$.pipe(
-            map<void, TagNameControlErrors | null>(() => {
-                return this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag)
-                    ? { duplicatedExistingTag: true }
-                    : null;
-            }),
-            first()
+            map<void, TagNameControlErrors | null>(() =>
+                this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag) ? { duplicatedExistingTag: true }
+                    : null
+            ), first()
         );
     }
 

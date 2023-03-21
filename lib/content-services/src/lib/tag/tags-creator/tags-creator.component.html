@@ -40,12 +40,12 @@
     </div>
     <div
         class="acc-tag-name-field"
-        *ngIf="(!tagNameControlVisible && tags.length) || (tagNameControlVisible)"
+        *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible"
         [hidden]="!tagNameControlVisible">
         <mat-form-field *ngIf="tagNameControlVisible">
             <mat-icon matPrefix>search</mat-icon>
             <mat-label id="acc-tag-name-input-label">
-                {{'TAG.TAGS_CREATOR.NAME' | translate}}
+                {{ 'TAG.TAGS_CREATOR.NAME' | translate }}
             </mat-label>
             <input
                 #tagNameInput
@@ -67,7 +67,9 @@
         </button>
     </div>
 </div>
-<div class="acc-existing-tags-panel" *ngIf="existingTagsPanelVisible">
+<div
+    class="acc-existing-tags-panel"
+    *ngIf="existingTagsPanelVisible">
     <ng-container *ngIf="!existingTagsLoading || existingTags">
         <span
             class="acc-create-tag-label"
@@ -79,7 +81,9 @@
             {{ existingTagsLabelKey | translate }}
         </p>
     </ng-container>
-    <div class="acc-tags-list" [style.max-height]="listHeight">
+    <div
+        class="acc-tags-list"
+        [style.max-height]="listHeight">
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)">
@@ -89,9 +93,7 @@
                 [value]="tagRow">
                 {{ tagRow.entry.tag }}
             </mat-list-option>
-            <p *ngIf="!existingTags.length">
-                {{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}
-            </p>
+            <p *ngIf="!existingTags.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
         </mat-selection-list>
         <mat-spinner
             *ngIf="existingTagsLoading"
