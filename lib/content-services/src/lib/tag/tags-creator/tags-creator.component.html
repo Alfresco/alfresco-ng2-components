@@ -48,6 +48,7 @@
                 {{'TAG.TAGS_CREATOR.NAME' | translate}}
             </mat-label>
             <input
+                #tagNameInput
                 matInput
                 autocomplete="off"
                 [formControl]="tagNameControl"
@@ -78,7 +79,7 @@
             {{ existingTagsLabelKey | translate }}
         </p>
     </ng-container>
-    <div class="acc-tags-list">
+    <div class="acc-tags-list" [style.max-height]="listHeight">
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)">

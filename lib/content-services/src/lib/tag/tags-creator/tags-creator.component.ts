@@ -64,6 +64,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
+            setTimeout(() => {
+                this.tagNameInputElement.nativeElement.scrollIntoView();
+            });
         }
     }
     @Input()
@@ -113,6 +116,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     @ViewChild('tagsList')
     private tagsListElement: ElementRef;
+    @ViewChild('tagNameInput')
+    private tagNameInputElement: ElementRef;
 
     constructor(
         private tagService: TagService,

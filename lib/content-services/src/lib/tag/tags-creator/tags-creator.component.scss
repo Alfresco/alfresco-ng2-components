@@ -85,7 +85,7 @@ acc-tags-creator {
             padding-right: 0;
             display: flex;
             flex-direction: column;
-            max-height: 22vh;
+            // max-height: 22vh;
             min-height: 75px;
 
             .acc-tag {
@@ -134,9 +134,9 @@ acc-tags-creator {
         padding-right: 22px;
 
         .acc-tags-list {
-            &:not(:empty) {
+            /*&:not(:empty) {
                 height: 22vh;
-            }
+            }*/
 
             .acc-tag {
                 & + .acc-tag {
