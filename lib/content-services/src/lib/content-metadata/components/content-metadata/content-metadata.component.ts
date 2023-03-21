@@ -98,6 +98,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private _assignedTags: string[] = [];
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tagsItems: CardViewItem[];
+    private _initialTagsItems: CardViewItem[];
     private tagsToAssign: string[];
     private targetProperty: CardViewBaseItemModel;
 
@@ -220,6 +221,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     storeTagsToAssign(tags: string[]) {
         this.tagsToAssign = tags;
         this.hasMetadataChanged = true;
+        this._tagsItems = this.tagsToAssign.map((tag) => this._initialTagsItems.find((tagItem) => tagItem.value === tag)
+            || new CardViewTextItemModel({
+                label: '',
+                value: tag,
+                key: tag
+            })
+        );
     }
 
     private updateNode() {
@@ -290,20 +298,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private loadTagsForNode(id: string) {
         this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
             this._assignedTags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
-            this._tagsItems = tagPaging.list.entries.map((tagEntry) => {
-                return new CardViewTextItemModel({
-                    label: '',
-                    value: tagEntry.entry.tag,
-                    key: tagEntry.entry.id
-                });
-            });
+            this._initialTagsItems = tagPaging.list.entries.map((tagEntry) => new CardViewTextItemModel({
+                label: '',
+                value: tagEntry.entry.tag,
+                key: tagEntry.entry.id
+            }));
+            this._tagsItems = [...this._initialTagsItems];
         });
     }
 
     private saveTags(): { [key: string]: Observable<TagPaging | void> } {
         const observables: { [key: string]: Observable<TagPaging | void> } = {};
         if (this.tagsToAssign) {
-            this.tagsItems.forEach((tagItem) => {
+            this._initialTagsItems.forEach((tagItem) => {
                 if (!this.tagsToAssign.some((tag) => tagItem.value === tag)) {
                     observables[`${this.node.id}Removing`] = this.tagService.removeTag(this.node.id, tagItem.key);
                 }

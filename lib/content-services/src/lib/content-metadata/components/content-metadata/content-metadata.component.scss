@@ -19,17 +19,20 @@
         }
 
         &-tags {
-            padding: 0 10px 16px 27px;
+            padding: 0 10px 16px 26px;
 
             &-title {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                font-size: 15px;
+                height: 68px;
             }
 
             acc-tags-creator {
                 .acc-tags-creation {
                     padding-right: 0;
+                    padding-left: 12px;
                 }
 
                 &.acc-creator-with-existing-tags-panel {
