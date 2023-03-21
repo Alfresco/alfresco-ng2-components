@@ -337,6 +337,7 @@
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "sourceMap": true,
+            "codeCoverage": true,
             "styles": [
               "demo-shell/src/assets/fonts/material-icons/material-icons.css"
             ]
@@ -484,7 +485,8 @@
             "main": "lib/content-services/src/test.ts",
             "tsConfig": "lib/content-services/tsconfig.spec.json",
             "karmaConfig": "lib/content-services/karma.conf.js",
-            "sourceMap": true
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -603,7 +605,8 @@
             "main": "lib/process-services/src/test.ts",
             "tsConfig": "lib/process-services/tsconfig.spec.json",
             "karmaConfig": "lib/process-services/karma.conf.js",
-            "sourceMap": true
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -688,7 +691,8 @@
             "main": "lib/process-services-cloud/src/test.ts",
             "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
             "karmaConfig": "lib/process-services-cloud/karma.conf.js",
-            "sourceMap": true
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -818,7 +822,8 @@
             "main": "lib/insights/src/test.ts",
             "tsConfig": "lib/insights/tsconfig.spec.json",
             "karmaConfig": "lib/insights/karma.conf.js",
-            "sourceMap": true
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -892,7 +897,8 @@
             "main": "lib/extensions/src/test.ts",
             "tsConfig": "lib/extensions/tsconfig.spec.json",
             "karmaConfig": "lib/extensions/karma.conf.js",
-            "sourceMap": true
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
