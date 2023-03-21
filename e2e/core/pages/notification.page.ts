@@ -23,6 +23,7 @@ export class NotificationDemoPage {
     snackbarPage = new SnackbarPage();
 
     messageField = $('input[data-automation-id="notification-message"]');
+    decorativeIconField = $('input[data-automation-id="notification-icon"]');
     durationField = $('input[data-automation-id="notification-duration"]');
     actionToggle = $('mat-slide-toggle[data-automation-id="notification-action-toggle"]');
     notificationSnackBar = $$('simple-snack-bar').first();
@@ -48,6 +49,10 @@ export class NotificationDemoPage {
 
     async enterMessageField(text: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.messageField, text);
+    }
+
+    async enterDecorativeIconField(icon: string): Promise<void> {
+        await BrowserActions.clearSendKeys(this.decorativeIconField, icon);
     }
 
     async enterDurationField(time: number): Promise<void> {

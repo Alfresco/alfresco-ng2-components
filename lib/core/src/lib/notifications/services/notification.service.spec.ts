@@ -32,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
+
     constructor(public notificationService: NotificationService) {
 
     }
@@ -68,6 +69,22 @@ class ProvidesNotificationServiceComponent {
         matSnackBarConfig.duration = 1000;
 
         return this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', matSnackBarConfig);
+    }
+
+    sendMessageWithDecorativeIcon() {
+        const notificationConfig = new MatSnackBarConfig();
+        notificationConfig.duration = 1000;
+        notificationConfig.data = {decorativeIcon: 'info'};
+
+        return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
+    }
+
+    sendMessageWithDecorativeIconAndAction() {
+        const notificationConfig = new MatSnackBarConfig();
+        notificationConfig.duration = 1000;
+        notificationConfig.data = { decorativeIcon: 'folder' };
+
+        return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
     }
 
 }
@@ -197,4 +214,27 @@ describe('NotificationService', () => {
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
+
+    it('should open a message notification bar with a decorative icon', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithDecorativeIcon();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
+    });
+
+    it('should open a message notification bar with action and a decorative icon', (done) => {
+        const promise = fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
+        promise.afterDismissed().subscribe(() => {
+            done();
+        });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
+     });
+
 });

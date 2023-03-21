@@ -22,4 +22,5 @@ export interface SnackBarData {
     message: string;
     showAction?: boolean;
     callActionOnIconClick?: boolean;
+    decorativeIcon?: string;
 }

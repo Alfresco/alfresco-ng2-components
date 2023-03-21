@@ -24,6 +24,7 @@ export class SnackbarPage {
     notificationSnackBar = $$(`[data-automation-id='adf-snackbar-message-content']`).first();
     snackBarAction = $(`[data-automation-id='adf-snackbar-message-content-action-button']`);
     snackBarContainerCss = $$('adf-snackbar-content');
+    decorativeIconSnackBar = $(`[data-automation-id='adf-snackbar-decorative-icon']`).first();
 
     async waitForSnackBarToAppear(timeout = 5000) {
         return BrowserVisibility.waitUntilElementIsVisible(this.snackBarContainerCss.first(), timeout,
@@ -43,6 +44,11 @@ export class SnackbarPage {
     async getSnackBarActionMessage(): Promise<string> {
         await this.waitForSnackBarToAppear();
         return this.snackBarAction.getText();
+    }
+
+    async getSnackBarDecorativeIcon(): Promise<string> {
+        await this.waitForSnackBarToAppear();
+        return this.decorativeIconSnackBar.getText();
     }
 
     async clickSnackBarAction(): Promise<void> {

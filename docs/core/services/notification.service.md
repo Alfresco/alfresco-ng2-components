@@ -120,6 +120,32 @@ export class MyComponent implements OnInit {
 }
 ```
 
+By providing a `decorativeIcon` property in the `SnackBarData`, it is possible to render a decorative
+[`MaterialIcon`](https://material.angular.io/components/icon/overview#interactive-icons) to the left of the message.
+
+```ts
+import { NotificationService } from '@alfresco/adf-core';
+import { MatSnackBarConfig } from '@angular/material/snackbar';
+
+export class MyComponent implements OnInit {
+
+    snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
+    
+    constructor(private notificationService: NotificationService) {
+    }
+
+    ngOnInit() {
+        this.snackBarConfig.data = { decorativeIcon: 'folder' };
+        this.notificationService
+            .openSnackMessageAction('Do you want to report this issue?', 'send', snackBarConfig)
+            .afterDismissed()
+            .subscribe(() => {
+                console.log('The snack-bar was dismissed');
+            });
+    }
+}
+```
+
 The default message duration is 5000 ms that is used only if you don't pass a custom duration in the parameters of openSnackMessageAction/openSnackMessage methods.
 You can also change the default 5000 ms adding the following configuration in the app.config.json:
 

@@ -67,6 +67,13 @@ describe('Notifications Component', () => {
         await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('test');
     });
 
+    it('[C694098] Should show a decorative icon when the message and the icon fields are not empty and button is clicked', async () => {
+        await notificationPage.enterMessageField('test');
+        await notificationPage.enterDecorativeIconField('folder');
+        await notificationPage.clickNotificationButton();
+        await expect(await notificationPage.snackbarPage.getSnackBarDecorativeIcon()).toEqual('folder');
+    });
+
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickActionToggle();
