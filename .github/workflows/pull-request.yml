@@ -21,6 +21,10 @@ on:
       - develop-patch*
       - master-patch*
 
+  push:
+    branches:
+      - HXOR-196-get-pr-number-change
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
