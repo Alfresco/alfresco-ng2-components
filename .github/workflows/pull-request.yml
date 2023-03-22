@@ -161,12 +161,12 @@ jobs:
           pr_number=$(echo '${{steps.get_issue_number.outputs.result}}')
           echo "pr_number=$PR_NUMBER" >> "$GITHUB_ENV"
 
-    - name: PR number
-      run: |
-        pr_number=$(echo '${{steps.get_issue_number.outputs.result}}')
-        echo "pr_number=$PR_NUMBER" >> "$GITHUB_ENV"
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: PR number
+        run: |
+          pr_number=$(echo '${{steps.get_issue_number.outputs.result}}')
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_ENV"
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
