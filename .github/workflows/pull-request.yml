@@ -135,12 +135,11 @@ jobs:
           fi
 
       - name: Get PR number
-        shell: bash
-        id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: actions/github-script@v6
         id: get_issue_number
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             if (context.issue.number) {
               // Return issue number if present
