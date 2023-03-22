@@ -226,6 +226,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isSelectAllIndeterminate: boolean = false;
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
+    selectedRowId: string = '';
 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
@@ -287,6 +288,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     ngOnChanges(changes: SimpleChanges) {
         this.initAndSubscribeClickStream();
+        if(this.selectedRowId) {
+            this.setRowAsContextSource();
+        }
 
         const dataChanges = changes['data'];
         const rowChanges = changes['rows'];
@@ -782,8 +786,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     markRowAsContextMenuSource(selectedRow: DataRow): void {
+        this.selectedRowId = selectedRow.id ? selectedRow.id : '';
         this.data.getRows().forEach((row) => row.isContextMenuSource = false);
         selectedRow.isContextMenuSource = true;
+    }
+
+    private setRowAsContextSource(): void {
+        const selectedRow = this.data.getRows().find((row) => this.selectedRowId === row.id);
+        if(selectedRow) {
+            selectedRow.isContextMenuSource = true;
+        }
     }
 
     getSortingKey(): string | null {
