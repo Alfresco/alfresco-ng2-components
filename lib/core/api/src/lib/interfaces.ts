@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-export * from './lib/api-client.factory';
-export * from './lib/api-clients.service';
-export * from './lib/clients';
-export * from './lib/types';
-export * from './lib/adf-http-client.service';
-export * from './lib/interfaces';
+export interface RequestOptions {
+    httpMethod?: string;
+    queryParams?: any;
+    headerParams?: any;
+    formParams?: any;
+    bodyParam?: any;
+    returnType?: any;
+    responseType?: string;
+    readonly accept?: string;
+    readonly contentType?: string;
+}

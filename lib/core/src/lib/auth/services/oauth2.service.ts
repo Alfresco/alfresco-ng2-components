@@ -34,20 +34,16 @@ export class OAuth2Service {
     constructor(private adfHttpClient: AdfHttpClient) {}
 
     request<T>(opts: OAuth2RequestParams): Observable<T> {
-        const { httpMethod, url, bodyParam, pathParams, queryParams } = opts;
+        const { httpMethod, url, bodyParam, queryParams } = opts;
         return from(
             this.adfHttpClient.request(
                 url,
                 {
-                    path: url,
                     httpMethod,
-                    pathParams,
                     queryParams,
                     headerParams: {},
                     formParams: {},
                     bodyParam,
-                    contentTypes: JSON_TYPE,
-                    accepts: JSON_TYPE,
                     returnType: Object
                 }
             )
