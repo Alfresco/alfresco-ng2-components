@@ -16,7 +16,7 @@
  */
 
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
-import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, RequestOptions, SecurityOptions, isBrowser } from '@alfresco/js-api';
+import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient, SecurityOptions, isBrowser } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
@@ -25,6 +25,7 @@ import { convertObjectToFormData, getQueryParamsWithCustomEncoder, isBlobRespons
 import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encoder';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
+import { RequestOptions } from './interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,6 @@ export class AdfHttpClient implements JsApiHttpClient {
     private readonly defaultSecurityOptions = { withCredentials: true, isBpmRequest: false, authentications: {}, defaultHeaders: {} };
 
     constructor(private httpClient: HttpClient) {}
-
 
     request<T = any>(url: string, options: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
         const body = AdfHttpClient.getBody(options);
@@ -61,7 +61,7 @@ export class AdfHttpClient implements JsApiHttpClient {
         if(emitters){
             return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
         }
-        return request.toPromise<T>();
+        return request.pipe(map(req => req.body)).toPromise<T>();
     }
 
     post<T = any>(url: string, options: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
