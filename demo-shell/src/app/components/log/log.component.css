@@ -19,9 +19,9 @@
 }
 
 .log-ERROR {
-    color: red;
+    color: var(--theme-warn-color);
 }
 
 .log-WARN {
-    color: yellow;
+    color: var(--theme-accent-color);
 }
