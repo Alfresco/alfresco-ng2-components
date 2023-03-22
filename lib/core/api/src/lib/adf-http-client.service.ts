@@ -132,7 +132,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         if(emitters){
             return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
         }
-        return request.toPromise<T>();
+        return request.pipe(map(req => req.body)).toPromise<T>();
     }
 
     post<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
