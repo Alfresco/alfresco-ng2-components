@@ -133,7 +133,7 @@ jobs:
       - name: Get PR number
         id: action
         if: ${{ github.event_name != 'schedule' }}
-        uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
+        uses: ./.github/actions/get-pr-number
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
@@ -165,7 +165,8 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            prNumber=${{ steps.action.outputs.number }}
+            prNumber=$PR_NUMBER
+            echo "PR: $prNumber"
             checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
