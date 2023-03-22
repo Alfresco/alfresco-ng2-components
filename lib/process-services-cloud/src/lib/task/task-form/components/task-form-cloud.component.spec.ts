@@ -296,6 +296,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(component.cancelClick,'emit').and.stub();
 
             fixture.detectChanges();
+
             const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
             cancelBtn.triggerEventHandler('click', {});
             fixture.detectChanges();
@@ -347,7 +348,7 @@ describe('TaskFormCloudComponent', () => {
             expect(component.error.emit).toHaveBeenCalled();
         });
 
-        it('should reload when task is completed', () => {
+        it('should reload when task is completed', async () => {
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
 
@@ -356,10 +357,11 @@ describe('TaskFormCloudComponent', () => {
             const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
 
             completeBtn.nativeElement.click();
+            await fixture.whenStable();
             expect(reloadSpy).toHaveBeenCalled();
         });
 
-        it('should reload when task is claimed', () => {
+        it('should reload when task is claimed', async () => {
             spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
@@ -372,10 +374,11 @@ describe('TaskFormCloudComponent', () => {
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
 
             claimBtn.nativeElement.click();
+            await fixture.whenStable();
             expect(reloadSpy).toHaveBeenCalled();
         });
 
-        it('should emit taskUnclaimed when task is unclaimed', () => {
+        it('should emit taskUnclaimed when task is unclaimed', async () => {
             spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
@@ -389,6 +392,7 @@ describe('TaskFormCloudComponent', () => {
             const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
 
             unclaimBtn.nativeElement.click();
+            await fixture.whenStable();
             expect(reloadSpy).toHaveBeenCalled();
         });
 
