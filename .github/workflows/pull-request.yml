@@ -138,7 +138,7 @@ jobs:
         shell: bash
         id: action
         if: ${{ github.event_name != 'schedule' }}
-        uses: ./.github/actions/get-pr-number
+      - uses: ./.github/actions/get-pr-number
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
