@@ -192,7 +192,9 @@ export class TagService {
     }
 
     assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging> {
-        return from(this.tagsApi.assignTagsToNode(nodeId, tags));
+        return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(
+            tap((data) => this.refresh.emit(data))
+        );
     }
 
     private handleError(error: any) {

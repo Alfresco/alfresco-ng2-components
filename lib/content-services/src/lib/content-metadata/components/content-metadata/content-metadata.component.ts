@@ -102,6 +102,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private _initialTagsItems: CardViewItem[];
     private tagsToAssign: string[];
     private targetProperty: CardViewBaseItemModel;
+    private _saving = false;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -148,6 +149,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     get tagsItems(): CardViewItem[] {
         return this._tagsItems;
+    }
+
+    get saving(): boolean {
+        return this._saving;
     }
 
     protected handleUpdateError(error: Error) {
@@ -210,6 +215,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     saveChanges() {
+        this._saving = true;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();
@@ -250,6 +256,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     Object.assign(this.node, result.updatedNode);
                     this.nodesApiService.nodeUpdated.next(this.node);
                 }
+                this._saving = false;
             });
     }
 

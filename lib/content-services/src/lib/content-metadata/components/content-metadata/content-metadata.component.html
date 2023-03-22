@@ -41,9 +41,9 @@
                 <button
                     data-automation-id="tags-dialog-add-button"
                     mat-icon-button
-                    [attr.title]="'TAG.TAGS_DIALOG.TOOLTIPS.ADD_TAG' | translate"
+                    [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.ADD_TAG' | translate"
                     (click)="tagNameControlVisible = true"
-                    [hidden]="tagNameControlVisible">
+                    [hidden]="tagNameControlVisible || saving">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
@@ -51,7 +51,8 @@
                 [(tagNameControlVisible)]="tagNameControlVisible"
                 (tagsChange)="storeTagsToAssign($event)"
                 [mode]="tagsCreatorMode"
-                [tags]="assignedTags">
+                [tags]="assignedTags"
+                [disabled]="saving">
             </adf-tags-creator>
         </div>
 

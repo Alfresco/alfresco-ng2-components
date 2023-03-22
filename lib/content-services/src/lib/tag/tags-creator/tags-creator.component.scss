@@ -32,7 +32,7 @@ adf-tags-creator {
 
     .adf-no-tags-message {
         margin-left: 9px;
-        margin-top: 27px;
+        margin-top: 28.5px;
         margin-bottom: 0;
         height: 30px;
     }
@@ -63,7 +63,7 @@ adf-tags-creator {
     }
 
     .adf-existing-tags-panel {
-        background-color: var(--adf-theme-primary-contrast-500);
+        background-color: var(--theme-card-background-color);
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         padding-top: 12px;
@@ -114,6 +114,11 @@ adf-tags-creator {
                 margin: auto;
                 overflow: unset;
                 min-height: 25px;
+            }
+
+            .mat-list-item-disabled {
+                background-color: inherit;
+                color: inherit;
             }
         }
     }

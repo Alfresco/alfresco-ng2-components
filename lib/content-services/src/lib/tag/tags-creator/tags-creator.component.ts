@@ -47,7 +47,19 @@ const DEFAULT_TAGS_SORTING = {
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
-    listHeight = 'initial';
+    mode: TagsCreatorMode;
+
+    @Input()
+    set disabled(disabled: boolean) {
+        this._disabledRemoving = disabled;
+        if (disabled) {
+            this._disabledTagSelection = disabled;
+        } else {
+            if (this.mode === TagsCreatorMode.CREATE_AND_ASSIGN) {
+                this._disabledTagSelection = disabled;
+            }
+        }
+    }
 
     @Input()
     set tags(tags: string[]) {
@@ -63,17 +75,15 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
+            this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
             setTimeout(() => {
                 this.tagNameInputElement.nativeElement.scrollIntoView();
             });
         }
     }
-    @Input()
-    set mode(mode: TagsCreatorMode) {
-        this._existingTagsLabelKey = mode === TagsCreatorMode.CREATE ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' :
-            'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION';
-    }
 
+    @Output()
+    existingTagsPanelVisibilityChange = new EventEmitter<boolean>();
     @Output()
     tagsChange = new EventEmitter<string[]>();
     @Output()
@@ -88,6 +98,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private readonly existingTagsListLimit = 15;
 
+    private _disabledRemoving = false;
+    private _disabledTagSelection = false;
     private exactTagSet$ = new Subject<void>();
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
@@ -107,7 +119,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _existingTagsLoading = false;
     private _typing = false;
     private _tagsListScrollbarVisible = false;
-    private _saving = false;
     private cancelExistingTagsLoading$ = new Subject<void>();
     private existingExactTag: TagEntry;
     private _existingTagsPanelVisible: boolean;
@@ -124,6 +135,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        if (this.mode === TagsCreatorMode.CREATE) {
+            this._existingTagsLabelKey = 'TAG.TAGS_CREATOR.EXISTING_TAGS';
+            this._disabledTagSelection = true;
+        } else {
+            this._existingTagsLabelKey = 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION';
+            this._disabledTagSelection = false;
+        }
         this.tagNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
@@ -136,6 +154,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     } else {
                         this._existingTagsPanelVisible = false;
                     }
+                    this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
                     this.cancelExistingTagsLoading$.next();
                     this._initialExistingTags = null;
                     this._existingTags = null;
@@ -162,6 +181,14 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @HostBinding('class.adf-creator-with-existing-tags-panel')
     get hostClass(): boolean {
         return this.existingTagsPanelVisible;
+    }
+
+    get disabledRemoving(): boolean {
+        return this._disabledRemoving;
+    }
+
+    get disabledTagSelection(): boolean {
+        return this._disabledTagSelection;
     }
 
     get tags(): string[] {
@@ -196,10 +223,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tagsListScrollbarVisible;
     }
 
-    get saving(): boolean {
-        return this._saving;
-    }
-
     get existingTagsPanelVisible(): boolean {
         return this._existingTagsPanelVisible;
     }
@@ -216,6 +239,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     hideNameInput(): void {
         this.tagNameControlVisible = false;
         this._existingTagsPanelVisible = false;
+        this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
         this.tagNameControlVisibleChange.emit(this.tagNameControlVisible);
     }
 

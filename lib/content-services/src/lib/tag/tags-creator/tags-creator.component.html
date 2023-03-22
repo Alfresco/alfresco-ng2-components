@@ -22,7 +22,6 @@
     <div
         class="adf-tags-list"
         [class.adf-tags-list-with-scrollbar]="tagsListScrollbarVisible"
-        [style.height]="listHeight"
         #tagsList>
         <p
             *ngFor="let tag of tags"
@@ -33,7 +32,7 @@
                 mat-icon-button
                 (click)="removeTag(tag)"
                 [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [hidden]="saving">
+                [hidden]="disabledRemoving">
                 <mat-icon>remove</mat-icon>
             </button>
         </p>
@@ -81,12 +80,11 @@
             {{ existingTagsLabelKey | translate }}
         </p>
     </ng-container>
-    <div
-        class="adf-tags-list"
-        [style.max-height]="listHeight">
+    <div class="adf-tags-list">
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
-            (selectionChange)="addExistingTagToTagsToAssign($event)">
+            (selectionChange)="addExistingTagToTagsToAssign($event)"
+            [disabled]="disabledTagSelection">
             <mat-list-option
                 *ngFor="let tagRow of existingTags"
                 class="adf-tag"
