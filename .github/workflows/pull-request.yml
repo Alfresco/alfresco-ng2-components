@@ -135,6 +135,7 @@ jobs:
           fi
 
       - name: Get PR number
+        shell: bash
         id: action
         if: ${{ github.event_name != 'schedule' }}
         uses: ./.github/actions/get-pr-number
