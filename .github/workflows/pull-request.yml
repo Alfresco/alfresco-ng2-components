@@ -135,37 +135,14 @@ jobs:
           fi
 
       - name: Get PR number
-        if: ${{ github.event_name != 'schedule' }}
-        uses: actions/github-script@v6
-        id: get_issue_number
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            if (context.issue.number) {
-              // Return issue number if present
-              return context.issue.number;
-            } else {
-              // Otherwise return issue number from commit
-              return (
-                await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  commit_sha: context.sha,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                })
-              ).data[0].number;
-            }
-          result-encoding: string
-      - name: PR number
+        id: pr
         run: |
-          pr_number=$(echo '${{steps.get_issue_number.outputs.result}}')
-          echo "pr_number=$PR_NUMBER" >> "$GITHUB_ENV"
+          echo "pull_request_number=$(gh pr view --json number -q .number || echo "")"
+          pr_number=$(echo "${{ steps.pr.outputs.pull_request_number }}")
+          echo "PR_NUMBER=$pr_number" >> "$GITHUB_ENV"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: PR number
-        run: |
-          pr_number=$(echo '${{steps.get_issue_number.outputs.result}}')
-          echo "pr_number=$PR_NUMBER" >> "$GITHUB_ENV"
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: check if pr is approved
         env:
           DEVEL_FLAG: ${{ inputs.devel }}
