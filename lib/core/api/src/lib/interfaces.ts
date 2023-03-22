@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-export * from './lib/api-client.factory';
-export * from './lib/api-clients.service';
-export * from './lib/clients';
-export * from './lib/types';
-export * from './lib/adf-http-client.service';
-export * from './lib/interfaces';
+export interface RequestOptions {
+    httpMethod?: string;
+    queryParams?: any;
+    headerParams?: any;
+    formParams?: any;
+    bodyParam?: any;
+    returnType?: any;
+    responseType?: string;
+    readonly accept?: string;
+    readonly contentType?: string;
+}
