@@ -429,7 +429,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, check-package-lock, unit-tests, build-libs, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
       - name: workflow failure
         run: exit 1
