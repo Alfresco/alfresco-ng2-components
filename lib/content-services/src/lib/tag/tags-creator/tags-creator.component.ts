@@ -59,16 +59,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     mode: TagsCreatorMode;
 
     @Input()
-    set disabled(disabled: boolean) {
-        this._disabledRemoving = disabled;
-        if (disabled) {
-            this._disabledTagSelection = disabled;
-        } else {
-            if (this.mode === TagsCreatorMode.CREATE_AND_ASSIGN) {
-                this._disabledTagSelection = disabled;
-            }
-        }
-    }
+    disabledTagsRemoving = false;
 
     @Input()
     set tags(tags: string[]) {
@@ -84,11 +75,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
-            this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
             setTimeout(() => {
                 this.tagNameInputElement.nativeElement.scrollIntoView();
             });
+        } else {
+            this._existingTagsPanelVisible = false;
         }
+        this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
     }
 
     @Output()
@@ -107,8 +100,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private readonly existingTagsListLimit = 15;
 
-    private _disabledRemoving = false;
-    private _disabledTagSelection = false;
     private exactTagSet$ = new Subject<void>();
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
@@ -144,13 +135,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        if (this.mode === TagsCreatorMode.CREATE) {
-            this._existingTagsLabelKey = 'TAG.TAGS_CREATOR.EXISTING_TAGS';
-            this._disabledTagSelection = true;
-        } else {
-            this._existingTagsLabelKey = 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION';
-            this._disabledTagSelection = false;
-        }
         this.tagNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
@@ -190,14 +174,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @HostBinding('class.adf-creator-with-existing-tags-panel')
     get hostClass(): boolean {
         return this.existingTagsPanelVisible;
-    }
-
-    get disabledRemoving(): boolean {
-        return this._disabledRemoving;
-    }
-
-    get disabledTagSelection(): boolean {
-        return this._disabledTagSelection;
     }
 
     get tags(): string[] {
@@ -273,6 +249,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControl.updateValueAndValidity();
         this.exactTagSet$.next();
         this.tagsChange.emit(this.tags);
+    }
+
+    isOnlyCreateMode(): boolean {
+        return this.mode === TagsCreatorMode.CREATE;
     }
 
     private onTagNameControlValueChange(name: string): void {

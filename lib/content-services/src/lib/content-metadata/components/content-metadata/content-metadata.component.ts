@@ -222,6 +222,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     saveChanges() {
         this._saving = true;
+        this.tagNameControlVisible = false;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();

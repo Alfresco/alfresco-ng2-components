@@ -44,7 +44,7 @@
                 (tagsChange)="storeTagsToAssign($event)"
                 [mode]="tagsCreatorMode"
                 [tags]="assignedTags"
-                [disabled]="saving">
+                [disabledTagsRemoving]="saving">
             </adf-tags-creator>
         </div>
         <ng-container *ngIf="expanded">

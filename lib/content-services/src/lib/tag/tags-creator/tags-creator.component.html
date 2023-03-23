@@ -17,7 +17,7 @@
                 mat-icon-button
                 (click)="removeTag(tag)"
                 [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [hidden]="disabledRemoving">
+                [hidden]="disabledTagsRemoving">
                 <mat-icon>remove</mat-icon>
             </button>
         </p>
@@ -69,7 +69,7 @@
         <mat-selection-list
             *ngIf="!existingTagsLoading || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)"
-            [disabled]="disabledTagSelection">
+            [disabled]="isOnlyCreateMode()">
             <mat-list-option
                 *ngFor="let tagRow of existingTags"
                 class="adf-tag"
