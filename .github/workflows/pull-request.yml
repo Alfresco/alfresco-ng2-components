@@ -133,8 +133,9 @@ jobs:
       - name: Get PR number
         shell: bash
         run: |
+          echo "$BRANCH_NAME"
           git fetch --all
-          pull_request_number=$(gh pr view --json number -q .number || echo "")
+          pull_request_number=$(gh pr view -H $BRANCH_NAME --json number -q .number || echo "")
           #pr_number=$(echo "${{ steps.pr.outputs.pull_request_number }}")
           echo "PR_NUMBER=$pull_request_number" >> $GITHUB_ENV
         env:
