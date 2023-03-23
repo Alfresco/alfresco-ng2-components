@@ -15,6 +15,6 @@
 }
 
 .app-task-list-demo-error-message {
-    color: red;
+    color: var(--theme-warn-color);
     text-align: center;
 }
