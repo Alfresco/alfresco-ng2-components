@@ -168,7 +168,7 @@ jobs:
             echo "Checking PR approval"
             prNumber=$PR_NUMBER
             echo "PR: $prNumber"
-            checkApproval=$(gh api /repos/Alfresco/alfresco-ng2-components/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
+            checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
               echo -e "\033[32mPR approved\033[0m"
             else
