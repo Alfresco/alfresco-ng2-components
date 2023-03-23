@@ -29,7 +29,7 @@ import { takeUntil } from 'rxjs/operators';
 export class NotificationsComponent implements OnInit, OnDestroy {
 
     message = 'I ♥️ ADF';
-    decorativeIcon = 'folder';
+    decorativeIcon = '';
     withAction = false;
     actionOutput = '';
     snackBarConfigObject = '';
