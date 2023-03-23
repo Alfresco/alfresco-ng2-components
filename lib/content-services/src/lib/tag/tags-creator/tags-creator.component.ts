@@ -1,9 +1,18 @@
-/*
- * Copyright © 2005 - 2021 Alfresco Software, Ltd. All rights reserved.
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
  *
- * License rights for this program may be obtained from Alfresco Software, Ltd.
- * pursuant to a written agreement and any use of this program without such an
- * agreement is prohibited.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 import { TagEntry, TagPaging } from '@alfresco/js-api';
@@ -231,11 +240,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._existingTagsLabelKey;
     }
 
-    /*showNameInput(): void {
-        this._tagNameControlVisible = true;
-        this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
-    }*/
-
     hideNameInput(): void {
         this.tagNameControlVisible = false;
         this._existingTagsPanelVisible = false;
@@ -261,37 +265,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.checkScrollbarVisibility();
         this.tagsChange.emit(this.tags);
     }
-
-    /*saveTags(): void {
-        this._saving = true;
-
-        this.hideNameInput();
-
-        const tagsToCreate = this.tags.map((name: string) => {
-            const tagBody = new TagBody();
-            tagBody.tag = name;
-            return tagBody;
-        });
-
-        this.tagService
-            .createTags(tagsToCreate)
-            .pipe(finalize(() => (this._saving = false)))
-            .subscribe(
-                () => {
-                    // this.dialog.close(true);
-                    this.notificationService.showInfo('TAG.TAGS_CREATOR.CREATE_TAGS_SUCCESS');
-                },
-                (error: HttpErrorResponse) => this.handleCreateTagError(error)
-            );
-    }*/
-
-    /*private handleCreateTagError(error: HttpErrorResponse) {
-        const message = error.status === HttpStatusCode.Conflict
-            ? 'TAG.TAGS_CREATOR.ERRORS.EXISTING_TAGS'
-            : 'TAG.TAGS_CREATOR.ERRORS.CREATE_TAGS';
-
-        this.notificationService.showError(message);
-    }*/
 
     addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
         const selectedTag: TagEntry = change.options[0].value;

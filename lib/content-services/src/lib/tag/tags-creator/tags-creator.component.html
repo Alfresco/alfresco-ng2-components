@@ -1,18 +1,3 @@
-<!--<h1 mat-dialog-title class="adf-label-with-icon-button">
-    {{ 'TAG.TAGS_CREATOR.TITLE' | translate }}
-    <button
-        data-automation-id="tags-dialog-add-button"
-        mat-icon-button
-        [hidden]="tagNameControlVisible || saving"
-        (click)="showNameInput()"
-        [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.ADD_TAG' | translate">
-        <mat-icon>add</mat-icon>
-    </button>
-</h1>-->
-
-<!--
-<mat-dialog-content>
--->
 <div class="adf-tags-creation">
     <p
        class="adf-no-tags-message"
@@ -100,22 +85,3 @@
         </mat-spinner>
     </div>
 </div>
-<!--
-</mat-dialog-content>
--->
-<!--<mat-dialog-actions align="end">
-    <button
-        data-automation-id="tags-dialog-cancel-button"
-        mat-button
-        mat-dialog-close>
-        {{ 'CONTENT_STRUCTURING.CANCEL' | translate }}
-    </button>
-    <button
-        data-automation-id="tags-dialog-save-button"
-        mat-button color="primary"
-        (click)="saveTags()"
-        [disabled]="!tags.length || saving"
-        class="adf-save-button">
-        {{ 'CONTENT_STRUCTURING.SAVE' | translate }}
-    </button>
-</mat-dialog-actions>-->

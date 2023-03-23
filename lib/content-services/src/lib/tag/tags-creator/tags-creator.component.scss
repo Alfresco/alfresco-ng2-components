@@ -1,34 +1,16 @@
 adf-tags-creator {
     display: block;
-    // margin-top: -24px;
     margin-left: -24px;
 
     &.adf-creator-with-existing-tags-panel {
         background-color: var(--theme-background-color);
     }
 
-    /*.mat-dialog-title {
-        font-size: 16px;
-        margin-bottom: -2px;
-        font-weight: bold;
-        background-color: inherit;
-        width: calc(100% - 24px);
-        margin-left: 26px;
-        padding-top: 12px;
-        padding-right: 22px;
-    }*/
-
     .adf-label-with-icon-button {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
-    /*.mat-dialog-content {
-        padding: 0;
-        margin: 0 -24px 0 0;
-        background-color: inherit;
-        overflow: hidden;*/
 
     .adf-no-tags-message {
         margin-left: 9px;
@@ -67,7 +49,6 @@ adf-tags-creator {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         padding-top: 12px;
-        // position: absolute;
         position: relative;
         width: 100%;
         z-index: 100;
@@ -85,7 +66,6 @@ adf-tags-creator {
             padding-right: 0;
             display: flex;
             flex-direction: column;
-            // max-height: 22vh;
             min-height: 75px;
 
             .adf-tag {
@@ -139,10 +119,6 @@ adf-tags-creator {
         padding-right: 22px;
 
         .adf-tags-list {
-            /*&:not(:empty) {
-                height: 22vh;
-            }*/
-
             .adf-tag {
                 & + .adf-tag {
                     margin-top: -14px;
@@ -155,7 +131,6 @@ adf-tags-creator {
         margin-top: 0;
         overflow-wrap: anywhere;
     }
-   // }
 
     mat-dialog-actions {
         margin-right: -24px;
@@ -170,9 +145,4 @@ adf-tags-creator {
         visibility: hidden;
         display: unset;
     }
-}
-
-.mat-dialog-container {
-    position: relative;
-    overflow: visible;
 }
