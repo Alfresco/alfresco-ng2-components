@@ -129,13 +129,18 @@ jobs:
             fi
           fi
 
+      # - name: Get PR number
+      #   shell: bash
+      #   run: |
+      #     pull_request_number=$(gh pr view $BRANCH_NAME --json number -q .number || echo "")
+      #     echo "PR_NUMBER=$pull_request_number" >> $GITHUB_ENV
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Get PR number
-        shell: bash
-        run: |
-          pull_request_number=$(gh pr view $BRANCH_NAME --json number -q .number || echo "")
-          echo "PR_NUMBER=$pull_request_number" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-pr-number@v1.36.0
+        with:
+          branch-name: $BRANCH_NAME
 
       - name: check if pr is approved
         env:
