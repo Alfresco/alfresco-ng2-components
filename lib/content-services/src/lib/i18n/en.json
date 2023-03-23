@@ -149,7 +149,6 @@
         "CREATE_TAGS": "Error while creating the tags"
       },
       "TOOLTIPS": {
-        "ADD_TAG": "Add tag",
         "DELETE_TAG": "Delete tag",
         "HIDE_INPUT": "Hide input"
       },
@@ -382,7 +381,9 @@
       "CREATED_DATE": "Created Date",
       "MODIFIER": "Modifier",
       "MODIFIED_DATE": "Modified Date",
-      "CONTENT_TYPE": "Content Type"
+      "CONTENT_TYPE": "Content Type",
+      "TAGS": "Tags",
+      "ADD_TAG_TOOLTIP": "Add tag"
     },
     "CONTENT_TYPE": {
       "DIALOG" :{

@@ -21,7 +21,7 @@
         </mat-expansion-panel>
         <mat-expansion-panel *ngIf="!editable">
             <mat-expansion-panel-header>
-                <mat-panel-title>Tags</mat-panel-title>
+                <mat-panel-title>{{ 'METADATA.BASIC.TAGS' | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
             <p *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</p>
         </mat-expansion-panel>
@@ -29,11 +29,11 @@
             *ngIf="editable"
             class="adf-metadata-properties-tags">
             <div class="adf-metadata-properties-tags-title">
-                <p>Tags</p>
+                <p>{{ 'METADATA.BASIC.TAGS' | translate }}</p>
                 <button
                     data-automation-id="tags-dialog-add-button"
                     mat-icon-button
-                    [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.ADD_TAG' | translate"
+                    [attr.title]="'METADATA.BASIC.ADD_TAG_TOOLTIP' | translate"
                     (click)="tagNameControlVisible = true"
                     [hidden]="tagNameControlVisible || saving">
                     <mat-icon>add</mat-icon>
