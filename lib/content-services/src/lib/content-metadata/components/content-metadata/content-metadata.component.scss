@@ -18,8 +18,16 @@
             box-shadow: none;
         }
 
+        .adf-metadata-properties-tag {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            margin-top: -14px;
+            margin-bottom: 1em;
+        }
+
         &-tags {
-            padding: 0 10px 16px 26px;
+            padding: 0 10px 0 26px;
 
             &-title {
                 display: flex;
@@ -33,6 +41,10 @@
                 .adf-tags-creation {
                     padding-right: 0;
                     padding-left: 12px;
+
+                    .adf-tag {
+                        margin-top: -14px;
+                    }
                 }
 
                 &.adf-creator-with-existing-tags-panel {

@@ -63,7 +63,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     @Input()
     set tags(tags: string[]) {
-        this._tags = tags;
+        this._tags = [...tags];
         this._existingTagsLoading = true;
         this._initialExistingTags = null;
         this._existingTags = null;
@@ -298,6 +298,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tags.push(selectedTag.entry.tag);
         this.removeTagFromArray(this.existingTags, selectedTag);
         this.tagNameControl.updateValueAndValidity();
+        this.exactTagSet$.next();
         this.tagsChange.emit(this.tags);
     }
 
@@ -405,12 +406,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     this.removeTagFromArray(this.existingTags, this.existingExactTag);
                     this.sortExistingTags();
                     this.existingTags.unshift(this.existingExactTag);
-                } else {
-                    this.exactTagSet$.next();
                 }
             } else {
                 this.sortExistingTags();
             }
+            this.exactTagSet$.next();
         }
     }
 

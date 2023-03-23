@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Node, TagBody, TagPaging } from '@alfresco/js-api';
+import { Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
     CardViewItem,
@@ -24,8 +24,7 @@ import {
     TranslationService,
     AppConfigService,
     CardViewBaseItemModel,
-    UpdateNotification,
-    CardViewTextItemModel
+    UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
@@ -52,7 +51,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Toggles whether the edit button should be shown */
     @Input()
-    editable: boolean = false;
+    set editable(editable: boolean) {
+        this._editable = editable;
+        this._assignedTags = [...this.tags];
+    }
 
     /** Toggles whether to display empty values in the card view */
     @Input()
@@ -97,10 +99,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     tagNameControlVisible = false;
 
     private _assignedTags: string[] = [];
+    private assignedTagsEntries: TagEntry[] = [];
+    private _editable = false;
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
-    private _tagsItems: CardViewItem[];
-    private _initialTagsItems: CardViewItem[];
-    private tagsToAssign: string[];
+    private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
     private _saving = false;
 
@@ -143,12 +145,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return this._assignedTags;
     }
 
-    get tagsCreatorMode(): TagsCreatorMode {
-        return this._tagsCreatorMode;
+    get editable(): boolean {
+        return this._editable;
     }
 
-    get tagsItems(): CardViewItem[] {
-        return this._tagsItems;
+    get tags(): string[] {
+        return this._tags;
+    }
+
+    get tagsCreatorMode(): TagsCreatorMode {
+        return this._tagsCreatorMode;
     }
 
     get saving(): boolean {
@@ -226,15 +232,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     storeTagsToAssign(tags: string[]) {
-        this.tagsToAssign = tags;
+        this._tags = tags;
         this.hasMetadataChanged = true;
-        this._tagsItems = this.tagsToAssign.map((tag) => this._initialTagsItems.find((tagItem) => tagItem.value === tag)
-            || new CardViewTextItemModel({
-                label: '',
-                value: tag,
-                key: tag
-            })
-        );
     }
 
     private updateNode() {
@@ -305,26 +304,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private loadTagsForNode(id: string) {
         this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
-            this._assignedTags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
-            this._initialTagsItems = tagPaging.list.entries.map((tagEntry) => new CardViewTextItemModel({
-                label: '',
-                value: tagEntry.entry.tag,
-                key: tagEntry.entry.id
-            }));
-            this._tagsItems = [...this._initialTagsItems];
+            this.assignedTagsEntries = tagPaging.list.entries;
+            this._tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
+            this._assignedTags = [...this._tags];
         });
     }
 
     private saveTags(): { [key: string]: Observable<TagPaging | void> } {
         const observables: { [key: string]: Observable<TagPaging | void> } = {};
-        if (this.tagsToAssign) {
-            this._initialTagsItems.forEach((tagItem) => {
-                if (!this.tagsToAssign.some((tag) => tagItem.value === tag)) {
-                    observables[`${this.node.id}Removing`] = this.tagService.removeTag(this.node.id, tagItem.key);
+        if (this.tags) {
+            this.assignedTagsEntries.forEach((tagEntry) => {
+                if (!this.tags.some((tag) => tagEntry.entry.tag === tag)) {
+                    observables[`${tagEntry.entry.id}Removing`] = this.tagService.removeTag(this.node.id, tagEntry.entry.id);
                 }
             });
-            if (this.tagsToAssign.length) {
-                observables.tagsAssigning = this.tagService.assignTagsToNode(this.node.id, this.tagsToAssign.map((tag) => {
+            if (this.tags.length) {
+                observables.tagsAssigning = this.tagService.assignTagsToNode(this.node.id, this.tags.map((tag) => {
                     const tagBody = new TagBody();
                     tagBody.tag = tag;
                     return tagBody;

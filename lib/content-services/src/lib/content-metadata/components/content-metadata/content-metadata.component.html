@@ -23,15 +23,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>Tags</mat-panel-title>
             </mat-expansion-panel-header>
-            <adf-card-view
-                (keydown)="keyDown($event)"
-                [properties]="tagsItems"
-                [editable]="editable"
-                [displayEmpty]="displayEmpty"
-                [copyToClipboardAction]="copyToClipboardAction"
-                [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-                [multiValueSeparator]="multiValueSeparator">
-            </adf-card-view>
+            <p *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</p>
         </mat-expansion-panel>
         <div
             *ngIf="editable"
@@ -55,7 +47,6 @@
                 [disabled]="saving">
             </adf-tags-creator>
         </div>
-
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
                 <div *ngFor="let group of groupedProperties; let first = first;"
