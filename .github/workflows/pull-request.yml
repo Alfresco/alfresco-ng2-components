@@ -21,10 +21,6 @@ on:
       - develop-patch*
       - master-patch*
 
-  push:
-    branches:
-      - HXOR-196-get-pr-number-change
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -135,14 +131,12 @@ jobs:
           fi
 
       - name: Get PR number
-        id: pr
+        shell: bash
         run: |
           git fetch --all
           pull_request_number=$(gh pr view --json number -q .number || echo "")
           #pr_number=$(echo "${{ steps.pr.outputs.pull_request_number }}")
           echo "PR_NUMBER=$pull_request_number" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: check if pr is approved
         env:
