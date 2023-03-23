@@ -380,6 +380,31 @@ In the same way you can set a default zoom scaling value for the image viewer by
 
 By default the viewer's zoom scaling is set to 100%.
 
+## Handling non responsive file preview
+
+It is possible that trying to load a large file, especially over a slow network, can cause the viewer component to get stuck in the loading state. To handle such cases, 
+the viewer can be configured to display a prompt to ask the user to either download the file locally and then close the viewer, or wait for the viewer to load the file.
+In case the user decides to wait, the viewer can further be configured to display subsequent reminder prompts asking the same options.
+
+In order to configure this feature, add the following code in `app.config.json`.
+
+```
+  "preview-config": {
+    "enableNonResponsiveDialog":  true,
+    "enableNonResponsiveDialogReminders": true,
+    "nonResponsivePreviewInitialTimerInSeconds": 50,
+    "nonResponsivePreviewReminderTimerInSeconds": 30
+  }
+```
+
+Here `enableNonResponsiveDialog: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
+`nonResponsivePreviewInitialTimerInSeconds` property. 
+
+The second boolean flag `enableNonResponsiveDialogReminders: true` can be used to configure whether the reminder prompts should be displayed or not. 
+`nonResponsivePreviewReminderTimerInSeconds` property can be used to configure the time to wait between reminder prompts.
+
+Note: All times in this configuration must be provided in seconds
+
 ## See also
 
 -   [Document List component](../../content-services/components/document-list.component.md)
