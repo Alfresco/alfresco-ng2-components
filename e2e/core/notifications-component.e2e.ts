@@ -53,6 +53,7 @@ describe('Notifications Component', () => {
     afterEach(async () => {
         await notificationPage.snackbarPage.waitForSnackBarToClose();
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
+        await notificationPage.enterDecorativeIconField('');
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
