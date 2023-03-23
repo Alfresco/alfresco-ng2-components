@@ -53,7 +53,6 @@ describe('Notifications Component', () => {
     afterEach(async () => {
         await notificationPage.snackbarPage.waitForSnackBarToClose();
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
-        await notificationPage.enterDecorativeIconField('');
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
@@ -66,13 +65,6 @@ describe('Notifications Component', () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickNotificationButton();
         await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('test');
-    });
-
-    it('[C694098] Should show a decorative icon when the message and the icon fields are not empty and button is clicked', async () => {
-        await notificationPage.enterMessageField('test');
-        await notificationPage.enterDecorativeIconField('folder');
-        await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.snackbarPage.getSnackBarDecorativeIcon()).toEqual('folder');
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
@@ -102,6 +94,13 @@ describe('Notifications Component', () => {
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
         await notificationPage.clickActionToggle();
+    });
+
+    it('[C694098] Should show a decorative icon when the message and the icon fields are not empty and button is clicked', async () => {
+        await notificationPage.enterMessageField('test');
+        await notificationPage.enterDecorativeIconField('folder');
+        await notificationPage.clickNotificationButton();
+        await expect(await notificationPage.snackbarPage.getSnackBarDecorativeIcon()).toEqual('folder');
     });
 
     it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
