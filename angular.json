@@ -303,7 +303,7 @@
     "core": {
       "projectType": "library",
       "root": "lib/core",
-      "sourceRoot": "lib/core/src",
+      "sourceRoot": "lib/core",
       "prefix": "adf",
       "architect": {
         "build": {
@@ -327,7 +327,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/core/src/test.ts",
+            "main": "lib/core/test.ts",
             "tsConfig": "lib/core/tsconfig.spec.json",
             "karmaConfig": "lib/core/karma.conf.js",
             "sourceMap": true,
