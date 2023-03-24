@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { ShellAppService, SHELL_APP_SERVICE } from '../../services/shell-app.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 class MockRouter {
   private url = 'some-url';
@@ -57,7 +58,15 @@ describe('AppLayoutComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, NoopAnimationsModule, HttpClientModule, SidenavLayoutModule, ExtensionsModule, RouterModule.forChild([])],
+      imports: [
+        CommonModule,
+        NoopAnimationsModule,
+        HttpClientModule,
+        SidenavLayoutModule,
+        ExtensionsModule,
+        RouterModule.forChild([]),
+        TranslateModule.forRoot()
+      ],
       providers: [
         {
           provide: Router,
