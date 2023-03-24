@@ -59,6 +59,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
+    @Input()
+    destinationPath: string;
+
     editedValue: string | string[];
     errors: CardViewItemValidator[];
     templateType: string;

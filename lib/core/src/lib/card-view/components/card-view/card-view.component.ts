@@ -57,4 +57,7 @@ export class CardViewComponent {
     /** String separator between multi-value property items. */
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
+
+    @Input()
+    destinationPath: string;
 }

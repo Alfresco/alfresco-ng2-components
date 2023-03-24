@@ -98,11 +98,11 @@
             <input matInput
                 [type]=property.inputType
                 class="adf-property-value"
-                title="{{property.label | translate }}"
+                title="{{destinationPath ? destinationPath : property.label | translate }}"
                 [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                 [placeholder]="property.default"
-                [attr.aria-label]="property.label | translate"
-                [(ngModel)]="editedValue"
+                [attr.aria-label]="destinationPath ? destinationPath : property.label | translate"
+                [(ngModel)]="destinationPath"
                 (blur)="update()"
                 (keydown.enter)="update()"
                 [disabled]="!isEditable"
