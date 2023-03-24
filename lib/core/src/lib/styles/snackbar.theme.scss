@@ -1,25 +1,13 @@
 @mixin adf-snackbar-theme() {
     .adf-error-snackbar {
         background-color: var(--theme-warn-color);
-
-        .mat-simple-snackbar-action {
-            color: var(--adf-theme-warn-contrast-500);
-        }
     }
 
     .adf-warning-snackbar {
         background-color: var(--theme-accent-color);
-
-        .mat-simple-snackbar-action {
-            color: var(--theme-accent-contrast-500);
-        }
     }
 
     .adf-info-snackbar {
         background-color: var(--theme-primary-color);
-
-        .mat-simple-snackbar-action {
-            color: var(--adf-theme-primary-contrast-500);
-        }
     }
 }

@@ -29,7 +29,6 @@
         // theme colors
         --theme-primary-color: mat.get-color-from-palette($primary),
         --theme-primary-color-default-contrast: mat.get-color-from-palette($primary, default-contrast),
-        --adf-theme-primary-contrast-500:mat.get-color-from-palette($primary, '500-contrast'),
         --adf-theme-primary-50:mat.get-color-from-palette($primary, 50),
         --adf-theme-primary-100:mat.get-color-from-palette($primary, 100),
         --adf-theme-primary-300:mat.get-color-from-palette($primary, 300),
@@ -37,10 +36,8 @@
 
         --theme-warn-color: mat.get-color-from-palette($warn),
         --theme-warn-color-default-contrast: mat.get-color-from-palette($warn, default-contrast),
-        --adf-theme-warn-contrast-500: mat.get-color-from-palette($warn, '500-contrast'),
 
         --theme-accent-color: mat.get-color-from-palette($accent),
-        --theme-accent-contrast-500:mat.get-color-from-palette($accent, '500-contrast'),
         --theme-accent-color-a200: mat.get-color-from-palette($accent, A200),
         --theme-accent-color-default-contrast: mat.get-color-from-palette($accent, default-contrast),
         --theme-accent-500:mat.get-color-from-palette($accent, 500),
