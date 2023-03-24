@@ -26,7 +26,7 @@ dynamic-table-widget .adf-label {
     &-dynamic-table {
         width: 100%;
         position: relative;
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
         white-space: nowrap;
         font-size: $dynamic-table-font-size;
 
@@ -82,8 +82,8 @@ dynamic-table-widget .adf-label {
             position: relative;
             vertical-align: middle;
             height: $dynamic-table-row-height;
-            border-top: 1px solid var(--adf-theme-foreground-text-color-007);
-            border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-top: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
+            border-bottom: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
             padding-top: $dynamic-table-cell-top;
             box-sizing: border-box;
 

@@ -26,6 +26,7 @@
 
     // map SCSS variables to expose as CSS variables
     $defaults: (
+        --adf-parameter-opacity-for-labels: 0,54,
         // theme colors
         --theme-primary-color: mat.get-color-from-palette($primary),
         --theme-primary-color-default-contrast: mat.get-color-from-palette($primary, default-contrast),
@@ -51,16 +52,10 @@
         --adf-theme-foreground-icon-color-054: mat.get-color-from-palette($foreground, icon, 0.54),
         --adf-theme-foreground-secondary-text-color: mat.get-color-from-palette($foreground, secondary-text),
         --adf-theme-foreground-text-color: mat.get-color-from-palette($foreground, text),
-        --adf-theme-foreground-text-color-087: mat.get-color-from-palette($foreground, text, 0.87),
-        --adf-theme-foreground-text-color-075: mat.get-color-from-palette($foreground, text, 0.75),
-        --adf-theme-foreground-text-color-064: mat.get-color-from-palette($foreground, text, 0.64),
-        --adf-theme-foreground-text-color-054: mat.get-color-from-palette($foreground, text, 0.54),
-        --adf-theme-foreground-text-color-042: mat.get-color-from-palette($foreground, text, 0.42),
-        --adf-theme-foreground-text-color-040: mat.get-color-from-palette($foreground, text, 0.4),
-        --adf-theme-foreground-text-color-027: mat.get-color-from-palette($foreground, text, 0.27),
-        --adf-theme-foreground-text-color-025: mat.get-color-from-palette($foreground, text, 0.25),
-        --adf-theme-foreground-text-color-014: mat.get-color-from-palette($foreground, text, 0.14),
-        --adf-theme-foreground-text-color-007: mat.get-color-from-palette($foreground, text, 0.07),
+
+        --adf-theme-foreground-text-dark-opacity: mat.get-color-from-palette($foreground, text, 0.64),
+        --adf-theme-foreground-text-light-opacity: mat.get-color-from-palette($foreground, text, 0.4),
+        --adf-theme-foreground-text-transparent-opacity: mat.get-color-from-palette($foreground, text, 0.07),
 
         --adf-theme-background-card-color: mat.get-color-from-palette($background, card),
         --adf-theme-background-card-color-087: mat.get-color-from-palette($background, card, 0.87),

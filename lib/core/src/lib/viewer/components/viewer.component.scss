@@ -11,7 +11,7 @@
     height: 100%;
 
     .mat-toolbar {
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--adf-theme-foreground-text-dark-opacity);
 
         .adf-toolbar-title {
             width: auto;
@@ -117,15 +117,15 @@
         display: block;
         padding: 0;
         background-color: var(--theme-background-color);
-        box-shadow: 0 2px 4px 0 var(--adf-theme-foreground-text-color-027);
+        box-shadow: 0 2px 4px 0 var(--adf-theme-foreground-text-light-opacity);
         overflow: auto;
 
         &__right {
-            border-left: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-left: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
         }
 
         &__left {
-            border-right: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-right: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
         }
     }
 }

@@ -27,7 +27,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
         &--divider {
             padding: 24px 0;
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
         }
 
         &:hover {
@@ -128,7 +128,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
                 margin-left: 10px;
                 text-align: left;
                 content: attr(title);
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-dark-opacity);
                 float: left;
                 width: 140px;
                 white-space: nowrap;
@@ -192,7 +192,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     display: flex;
     flex-direction: column;
     background-color: var(--adf-theme-background-card-color);
-    border: 1px solid var(--adf-theme-foreground-text-color-007);
+    border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
     box-sizing: border-box;
     overflow-x: auto;
 
@@ -275,7 +275,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             @include material-animation-default(0.28s);
 
             transition-property: background-color;
-            border-top: 1px solid var(--adf-theme-foreground-text-color-007);
+            border-top: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
             min-height: $data-table-row-height;
             cursor: pointer;
 
@@ -287,7 +287,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
             }
 
             &:last-child {
-                border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+                border-bottom: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
             }
         }
     }
@@ -724,8 +724,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-header {
         display: block;
         margin-right: 0;
-        border-top: 1px solid var(--adf-theme-foreground-text-color-007);
-        border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+        border-top: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
+        border-bottom: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
     }
 
     .adf-datatable-body {
@@ -775,7 +775,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
 
 .adf-datatable--empty--header-visible {
     .adf-datatable-header {
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
     }
 
     .adf-datatable-body {

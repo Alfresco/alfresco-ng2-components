@@ -81,10 +81,10 @@
             height: 40px;
 
             &-icon {
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-dark-opacity);
 
                 &:hover {
-                    color: var(--adf-theme-foreground-text-color-087);
+                    color: var(--adf-theme-foreground-text-dark-opacity);
                 }
             }
         }

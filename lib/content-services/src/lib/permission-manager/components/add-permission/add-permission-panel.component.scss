@@ -5,7 +5,7 @@ $search-result-height: calc(100% - 75px);
         display: flex;
         height: $search-result-height;
         overflow: auto;
-        border: 2px solid var(--adf-theme-foreground-text-color-007);
+        border: 2px solid var(--adf-theme-foreground-text-transparent-opacity);
 
         &-elements {
             width: 100%;
@@ -22,7 +22,7 @@ $search-result-height: calc(100% - 75px);
         justify-content: space-around;
         height: $search-result-height;
         overflow: auto;
-        border: 2px solid var(--adf-theme-foreground-text-color-007);
+        border: 2px solid var(--adf-theme-foreground-text-transparent-opacity);
     }
 
     &-permission-no-result {

@@ -6,7 +6,7 @@ adf-properties-viewer-widget {
         display: block;
         height: 100%;
         width: 100%;
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
+        border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
         border-radius: 6px;
 
         .adf-properties-viewer-wrapper-loading {

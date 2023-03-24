@@ -11,8 +11,8 @@
 
     .mat-toolbar {
         min-height: 48px;
-        border: 1px solid var(--adf-theme-foreground-text-color-007);
-        color: var(--adf-theme-foreground-text-color-054);
+        border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
+        color: var(--adf-theme-foreground-text-dark-opacity);
     }
 
     .mat-toolbar-row {

@@ -24,7 +24,7 @@ $tree-header-font-size: 12px !default;
     padding-left: 15px;
     padding-right: 15px;
     transition-property: background-color;
-    border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
+    border-bottom: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
     min-height: $tree-row-height;
     user-select: none;
 

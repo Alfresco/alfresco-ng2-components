@@ -10,7 +10,7 @@ h2.adf-search-results-label {
     font-stretch: normal;
     line-height: 1.43;
     letter-spacing: -0.2px;
-    color: var(--adf-theme-foreground-text-color-087);
+    color: var(--adf-theme-foreground-text-dark-opacity);
 }
 
 .adf-toolbar .mat-toolbar {
@@ -94,7 +94,7 @@ h2.adf-search-results-label {
         &-list {
             height: 40vh;
             overflow: auto;
-            border: 1px solid var(--adf-theme-foreground-text-color-007);
+            border: 1px solid var(--adf-theme-foreground-text-transparent-opacity);
             border-top: 0;
             position: relative;
 

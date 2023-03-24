@@ -3,14 +3,14 @@
         font-size: var(--theme-subheading-2-font-size);
         width: 16px;
         height: 16px;
-        color: var(--adf-theme-foreground-text-color-025);
+        color: var(--adf-theme-foreground-text-light-opacity);
     }
 
     &-textitem-action.mat-icon-button {
         width: 20px;
         height: 20px;
         line-height: 20px;
-        color: var(--adf-theme-foreground-text-color-025);
+        color: var(--adf-theme-foreground-text-light-opacity);
     }
 
     &-textitem-action:hover,
@@ -96,7 +96,7 @@
     }
 
     &-textitem-default-value {
-        color: var(--adf-theme-foreground-text-color-054);
+        color: var(--adf-theme-foreground-text-dark-opacity);
     }
 
     &-textitem-editable .mat-form-field-wrapper {
@@ -153,7 +153,7 @@
 
         &:hover::-webkit-scrollbar-thumb {
             display: block;
-            background-color: var(--adf-theme-foreground-text-color-025);
+            background-color: var(--adf-theme-foreground-text-light-opacity);
             border-radius: 2px;
         }
     }
@@ -193,9 +193,12 @@
                 display: none;
             }
 
-            .adf-textitem-clear-icon {
-                display: block;
-            }
+        .adf-property-clear-value {
+            display: flex;
+        }
+
+        .adf-property-clear-value:hover {
+            color: var(--adf-theme-foreground-text-color);
         }
     }
 }

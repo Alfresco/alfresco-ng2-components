@@ -50,7 +50,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 line-height: 1.6;
                 letter-spacing: -0.5px;
                 text-align: left;
-                color: var(--adf-theme-foreground-text-color-054);
+                color: var(--adf-theme-foreground-text-dark-opacity);
 
                 & > div {
                     overflow: hidden;
@@ -77,7 +77,7 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 .adf-manage-versions-no-permission {
                     margin: 0;
                     padding: $adf-info-drawer-icon-size-half;
-                    color: var(--adf-theme-foreground-text-color-054);
+                    color: var(--adf-theme-foreground-text-dark-opacity);
                     text-align: center;
                     display: flex;
                     flex-direction: column;
