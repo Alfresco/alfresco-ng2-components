@@ -58,14 +58,14 @@ export class CategoryService {
     }
 
     /**
-     * Creates subcategory under category with provided categoryId
+     * Creates subcategories under category with provided categoryId
      *
      * @param parentCategoryId The identifier of a parent category.
-     * @param payload Created category body
-     * @return Observable<CategoryEntry>
+     * @param payload List of categories to be created.
+     * @return Observable<CategoryPaging | CategoryEntry>
      */
-    createSubcategory(parentCategoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
-        return from(this.categoriesApi.createSubcategory(parentCategoryId, [payload], {}));
+    createSubcategories(parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
+        return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, {}));
     }
 
     /**

@@ -62,8 +62,8 @@ describe('CategoryService', () => {
     }));
 
     it('should create subcategory', fakeAsync(() => {
-        const createSpy = spyOn(categoryService.categoriesApi, 'createSubcategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
-        categoryService.createSubcategory(fakeParentCategoryId, fakeCategoryEntry.entry).subscribe(() => {
+        const createSpy = spyOn(categoryService.categoriesApi, 'createSubcategories').and.returnValue(Promise.resolve(fakeCategoryEntry));
+        categoryService.createSubcategories(fakeParentCategoryId, [fakeCategoryEntry.entry]).subscribe(() => {
             expect(createSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, [fakeCategoryEntry.entry], {});
         });
     }));
