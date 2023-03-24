@@ -190,8 +190,9 @@ export class AuthenticationService extends BaseAuthenticationService {
     reset() { }
 
     once(event: string): Observable<any> {
+        const alfrescoApiEvent = event === 'token_received' ? 'token_issued' : event;
         return new Observable((subscriber) => {
-            this.alfrescoApi.getInstance().once(event, () => subscriber.next());
+            this.alfrescoApi.getInstance().oauth2Auth.once(alfrescoApiEvent, () => subscriber.next());
         });
     }
 }
