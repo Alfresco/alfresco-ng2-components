@@ -7,46 +7,40 @@
  */
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { TagsCreatorComponent } from './tags-dialog.smart-component';
+import { TagsCreatorComponent } from './tags-creator.component';
 import { NotificationService } from '@alfresco/adf-core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatError, MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ContentDirectiveModule, TagService } from '@alfresco/adf-content-services';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EMPTY, of, Subject } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { TagEntry } from '@alfresco/js-api';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule } from '@angular/material/list';
 
-describe('TagsDialogComponent', () => {
+describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
+    let component: TagsCreatorComponent;
     let tagService: TagService;
-    let notificationService: NotificationService;
-    let dialog: MatDialogRef<TagsCreatorComponent>;
 
-    let addTagButton: HTMLButtonElement;
-
-    const tagNameFieldSelector = '.acc-tag-name-field';
+    const tagNameFieldSelector = '.adf-tag-name-field';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [TagsCreatorComponent],
             imports: [
-                HttpClientModule,
                 ContentDirectiveModule,
                 MatButtonModule,
-                MatDialogModule,
                 MatFormFieldModule,
                 MatIconModule,
                 MatInputModule,
                 MatProgressSpinnerModule,
+                MatListModule,
                 NoopAnimationsModule,
                 ReactiveFormsModule,
                 TranslateModule.forRoot()
@@ -62,62 +56,45 @@ describe('TagsDialogComponent', () => {
                                     entries: [],
                                 },
                             }),
-                        createTags: () => EMPTY,
-                    },
-                },
-                {
-                    provide: MatDialogRef,
-                    useValue: {
-                        close: () => {},
                     },
                 },
                 {
                     provide: NotificationService,
                     useValue: {
-                        showInfo: () => ({})
+                        showError: () => ({})
                     },
                 },
             ],
-
-            teardown: { destroyAfterEach: true },
         });
 
         fixture = TestBed.createComponent(TagsCreatorComponent);
+        component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
-        dialog = TestBed.inject(MatDialogRef<TagsCreatorComponent>);
-        notificationService = TestBed.inject(NotificationService);
 
         fixture.detectChanges();
-
-        addTagButton = fixture.debugElement.query(By.css(`[data-automation-id="tags-dialog-add-button"]`)).nativeElement;
     });
 
     function getNameInput(): HTMLInputElement {
-        return fixture.debugElement.query(By.css(`.acc-tag-name-field input`))?.nativeElement;
+        return fixture.debugElement.query(By.css(`.adf-tag-name-field input`))?.nativeElement;
     }
 
     function getCreateTagLabel(): HTMLSpanElement {
-        return fixture.debugElement.query(By.css('.acc-create-tag-label'))?.nativeElement;
+        return fixture.debugElement.query(By.css('.adf-create-tag-label'))?.nativeElement;
     }
 
     function getRemoveTagButtons(): HTMLButtonElement[] {
-        const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="tags-dialog-remove-tag-button"]`));
+        const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
         return elements.map(el => el.nativeElement);
     }
 
     function clickAtHideNameInputButton() {
-        fixture.debugElement.query(By.css(`[data-automation-id="tags-dialog-hide-name-input-button"]`)).nativeElement.click();
+        fixture.debugElement.query(By.css(`[data-automation-id="hide-tag-name-input-button"]`)).nativeElement.click();
         fixture.detectChanges();
     }
 
     function getAddedTags(): string[] {
-        const tagElements = fixture.debugElement.queryAll(By.css(`.acc-tags-creation .acc-tag`));
+        const tagElements = fixture.debugElement.queryAll(By.css(`.adf-tags-creation .adf-tag`));
         return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
-    }
-
-    function clickAtAddTagButton(): void {
-        addTagButton.click();
-        fixture.detectChanges();
     }
 
     function addTagToAddedList(tagName: string, addUsingEnter?: boolean, typingTimeout = 300): void {
@@ -134,7 +111,8 @@ describe('TagsDialogComponent', () => {
     }
 
     function typeTag(tagName: string, timeout = 300): void {
-        clickAtAddTagButton();
+        component.tagNameControlVisible = true;
+        fixture.detectChanges();
 
         const tagNameInput = getNameInput();
         tagNameInput.value = tagName;
@@ -146,8 +124,8 @@ describe('TagsDialogComponent', () => {
 
     describe('Created tags list', () => {
         it('should display no tags created message after initialization', () => {
-            const message =  fixture.debugElement.query(By.css('.acc-no-tags-message')).nativeElement.textContent.trim();
-            expect(message).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.NO_TAGS_CREATED');
+            const message =  fixture.debugElement.query(By.css('.adf-no-tags-message')).nativeElement.textContent.trim();
+            expect(message).toBe('TAG.TAGS_CREATOR.NO_TAGS_CREATED');
         });
 
         it('should display all tags which have been typed in input and accepted using enter', fakeAsync(() => {
@@ -232,32 +210,10 @@ describe('TagsDialogComponent', () => {
         }));
     });
 
-    describe('Tag creation button', () => {
-        it('should display add icon', () => {
-            expect(addTagButton.textContent.trim()).toBe('add');
-        });
-
-        it('should be visible initially', () => {
-            expect(addTagButton.hasAttribute('hidden')).toBeFalsy();
-        });
-
-        it('should not be visible after click', () => {
-            clickAtAddTagButton();
-
-            expect(addTagButton.hasAttribute('hidden')).toBeTruthy();
-        });
-
-        it('should be visible after hiding input', () => {
-            clickAtAddTagButton();
-            clickAtHideNameInputButton();
-
-            expect(addTagButton.hasAttribute('hidden')).toBeFalsy();
-        });
-    });
-
     describe('Tag name field', () => {
-        it('should be visible after clicking at add tag button', () => {
-            clickAtAddTagButton();
+        it('should be visible if tagNameControlVisible is true', () => {
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
 
             const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
             expect(tagNameField).toBeTruthy();
@@ -265,27 +221,32 @@ describe('TagsDialogComponent', () => {
             expect(tagNameField.query(By.directive(MatFormField))).toBeTruthy();
         });
 
-        it('should be hidden after clicking button for hiding input', () => {
-            clickAtAddTagButton();
+        it('should be hidden after clicking button for hiding input', fakeAsync(() => {
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
+            tick(100);
 
             clickAtHideNameInputButton();
 
             const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
             expect(tagNameField).toBeFalsy();
-        });
+        }));
 
         it('should input be autofocused', fakeAsync(() => {
-            clickAtAddTagButton();
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
             tick(100);
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
         }));
 
         it('should input be autofocused after showing input second time', fakeAsync(() => {
-            clickAtAddTagButton();
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
             tick(100);
 
             clickAtHideNameInputButton();
-            clickAtAddTagButton();
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
             tick(100);
 
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
@@ -300,13 +261,13 @@ describe('TagsDialogComponent', () => {
             it('should show error for only spaces', fakeAsync(() => {
                 typeTag('  ');
                 const error = getFirstError();
-                expect(error).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.ERRORS.EMPTY_TAG');
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
 
             it('should show error for required', fakeAsync(() => {
                 typeTag('');
                 const error = getFirstError();
-                expect(error).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.ERRORS.REQUIRED');
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
             }));
 
             it('should show error when duplicated already added tag', fakeAsync(() => {
@@ -316,7 +277,7 @@ describe('TagsDialogComponent', () => {
                 typeTag(tag);
 
                 const error = getFirstError();
-                expect(error).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.ERRORS.ALREADY_ADDED_TAG');
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
             }));
 
             it('should show error when duplicated already existing tag', fakeAsync(() => {
@@ -331,18 +292,19 @@ describe('TagsDialogComponent', () => {
                 typeTag(tag);
 
                 const error = getFirstError();
-                expect(error).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.ERRORS.EXISTING_TAG');
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
             }));
 
             it('should error for required when not typed anything and blur input', fakeAsync(() => {
-                clickAtAddTagButton();
+                component.tagNameControlVisible = true;
+                fixture.detectChanges();
                 tick(100);
 
                 getNameInput().blur();
                 fixture.detectChanges();
 
                 const error = getFirstError();
-                expect(error).toBe('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.ERRORS.REQUIRED');
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
 
                 flush();
             }));
@@ -351,7 +313,7 @@ describe('TagsDialogComponent', () => {
 
     describe('Existing tags panel', () => {
         function getPanel(): DebugElement {
-            return fixture.debugElement.query(By.css(`.acc-existing-tags-panel`));
+            return fixture.debugElement.query(By.css(`.adf-existing-tags-panel`));
         }
 
         it('should be visible when input is visible and something is typed in input', fakeAsync(() => {
@@ -371,7 +333,8 @@ describe('TagsDialogComponent', () => {
         }));
 
         it('should not be visible when input is visible and nothing has been typed', () => {
-            clickAtAddTagButton();
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
 
             expect(getPanel()).toBeFalsy();
         });
@@ -424,7 +387,8 @@ describe('TagsDialogComponent', () => {
             }));
 
             it('should not be visible if typed nothing', () => {
-                clickAtAddTagButton();
+                component.tagNameControlVisible = true;
+                fixture.detectChanges();
                 expect(getCreateTagLabel()).toBeFalsy();
             });
 
@@ -438,7 +402,7 @@ describe('TagsDialogComponent', () => {
 
         describe('Existing tags', () => {
             function getExistingTags(): string[] {
-                const tagElements = fixture.debugElement.queryAll(By.css(`.acc-existing-tags-panel .acc-tag`));
+                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag .mat-list-text`));
                 return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
             }
 
@@ -557,108 +521,6 @@ describe('TagsDialogComponent', () => {
 
                 discardPeriodicTasks();
                 flush();
-            }));
-        });
-    });
-
-    describe('Action buttons', () => {
-        describe('Close button', () => {
-            let closeButton: HTMLButtonElement;
-
-            beforeEach(() => {
-                closeButton = fixture.debugElement.query(By.css(`[data-automation-id="tags-dialog-cancel-button"]`)).nativeElement;
-            });
-
-            it('should first button have correct label', () => {
-                expect(closeButton.textContent.trim()).toBe('CONTENT_STRUCTURING.CANCEL');
-            });
-        });
-
-        describe('Save button', () => {
-            let saveButton: HTMLButtonElement;
-
-            beforeEach(() => {
-                saveButton = fixture.debugElement.query(By.css(`[data-automation-id="tags-dialog-save-button"]`)).nativeElement;
-            });
-
-            it('should have correct label', () => {
-                expect(saveButton.textContent.trim()).toBe('CONTENT_STRUCTURING.SAVE');
-            });
-
-            it('should be disabled initially', () => {
-                expect(saveButton.disabled).toBeTruthy();
-            });
-
-            it('should hide input after click', fakeAsync(() => {
-                addTagToAddedList('some tag');
-                clickAtAddTagButton();
-                saveButton.click();
-                tick(300);
-                fixture.detectChanges();
-
-                expect(getNameInput()).toBeFalsy();
-            }));
-
-            it('should hide remove buttons for created tags list', fakeAsync(() => {
-                const tag1 = 'Tag 1';
-                const tag2 = 'Tag 2';
-
-                addTagToAddedList(tag1);
-                addTagToAddedList(tag2);
-
-                spyOn(tagService, 'createTags').and.returnValue(new Subject());
-
-                saveButton.click();
-                fixture.detectChanges();
-
-                const removeButtons = getRemoveTagButtons();
-                expect(removeButtons[0].hasAttribute('hidden')).toBeTruthy();
-                expect(removeButtons[1].hasAttribute('hidden')).toBeTruthy();
-            }));
-
-            it('should call createTags on tagService', fakeAsync(() => {
-                const tagName = 'some tag';
-                addTagToAddedList(tagName);
-                spyOn(tagService, 'createTags').and.returnValue(new Subject());
-                saveButton.click();
-
-                expect(tagService.createTags).toHaveBeenCalledWith([jasmine.objectContaining({ tag: tagName })]);
-            }));
-
-            it('should close dialog after creating tags successfully', fakeAsync(() => {
-                const tagName = 'some tag';
-                addTagToAddedList(tagName);
-                spyOn(dialog, 'close');
-
-                const createTags$ = new Subject<TagEntry[]>();
-                spyOn(tagService, 'createTags').and.returnValue(createTags$);
-
-                saveButton.click();
-                createTags$.next([]);
-                expect(dialog.close).toHaveBeenCalledWith(true);
-            }));
-
-            it('should call showInfo on NotificationService after creating tags successfully', fakeAsync(() => {
-                const tagName = 'some tag';
-                addTagToAddedList(tagName);
-                spyOn(notificationService, 'showInfo');
-
-                const createTags$ = new Subject<TagEntry[]>();
-                spyOn(tagService, 'createTags').and.returnValue(createTags$);
-
-                saveButton.click();
-                createTags$.next([]);
-                expect(notificationService.showInfo).toHaveBeenCalledWith('CONTENT_STRUCTURING.TAGS.TAGS_DIALOG.CREATE_TAGS_SUCCESS');
-            }));
-
-            it('should be disabled after clicking', fakeAsync(() => {
-                addTagToAddedList('some tag');
-                spyOn(tagService, 'createTags').and.returnValue(new Subject());
-
-                saveButton.click();
-                fixture.detectChanges();
-
-                expect(saveButton.disabled).toBeTruthy();
             }));
         });
     });

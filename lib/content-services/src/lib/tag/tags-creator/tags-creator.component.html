@@ -13,7 +13,7 @@
             class="adf-tag adf-label-with-icon-button">
             {{ tag }}
             <button
-                data-automation-id="tags-dialog-remove-tag-button"
+                data-automation-id="remove-tag-button"
                 mat-icon-button
                 (click)="removeTag(tag)"
                 [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
@@ -43,7 +43,7 @@
             <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
         </mat-form-field>
         <button
-            data-automation-id="tags-dialog-hide-name-input-button"
+            data-automation-id="hide-tag-name-input-button"
             mat-icon-button
             (click)="hideNameInput()"
             [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.HIDE_INPUT' | translate">
