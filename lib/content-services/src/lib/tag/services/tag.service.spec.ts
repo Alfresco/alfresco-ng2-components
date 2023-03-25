@@ -345,5 +345,35 @@ describe('TagService', () => {
                 tick();
             }));
         });
+
+        describe('assignTagsToNode', () => {
+            let result: TagPaging;
+            let tags: TagBody[];
+
+            const nodeId = 'some node id';
+
+            beforeEach(() => {
+                result = mockTagPaging();
+                const tag = new TagBody();
+                tag.tag = 'some name';
+                tags = [tag];
+            });
+
+            it('should call assignTagsToNode on TagsApi with correct parameters', () => {
+                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(Promise.resolve(result));
+
+                service.assignTagsToNode(nodeId, tags);
+                expect(service.tagsApi.assignTagsToNode).toHaveBeenCalledWith(nodeId, tags);
+            });
+
+            it('should return observable which emits paging object for tags', fakeAsync(() => {
+                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(Promise.resolve(result));
+
+                service.assignTagsToNode(nodeId, tags).subscribe((tagsResult) => {
+                    expect(tagsResult).toEqual(result);
+                });
+                tick();
+            }));
+        });
     });
 });
