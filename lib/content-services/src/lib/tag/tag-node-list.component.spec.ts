@@ -98,7 +98,7 @@ describe('TagNodeList', () => {
         });
 
         it('Tag list click on delete button should delete the tag', async () => {
-            spyOn(tagService, 'removeTag').and.returnValue(of(true));
+            spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
 
             component.ngOnChanges();
             fixture.detectChanges();

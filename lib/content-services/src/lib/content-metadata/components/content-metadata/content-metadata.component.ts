@@ -239,7 +239,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private updateNode() {
         forkJoin({
-            updateNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
+            updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
             ...this.saveTags()
         }).pipe(
             catchError((err) => {
