@@ -16,17 +16,18 @@ import { MatError, MatFormField, MatFormFieldModule } from '@angular/material/fo
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { ContentDirectiveModule, TagService } from '@alfresco/adf-content-services';
+import { ContentDirectiveModule, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
     let component: TagsCreatorComponent;
     let tagService: TagService;
+    let notificationService: NotificationService;
 
     const tagNameFieldSelector = '.adf-tag-name-field';
 
@@ -70,6 +71,7 @@ describe('TagsCreatorComponent', () => {
         fixture = TestBed.createComponent(TagsCreatorComponent);
         component = fixture.componentInstance;
         tagService = TestBed.inject(TagService);
+        notificationService = TestBed.inject(NotificationService);
 
         fixture.detectChanges();
     });
@@ -120,6 +122,10 @@ describe('TagsCreatorComponent', () => {
 
         tick(timeout);
         fixture.detectChanges();
+    }
+
+    function findSelectionList(): MatSelectionList {
+        return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
     }
 
     describe('Created tags list', () => {
@@ -208,6 +214,32 @@ describe('TagsCreatorComponent', () => {
             const tagElements = getAddedTags();
             expect(tagElements).toEqual([tag2]);
         }));
+
+        it('should hide button for removing tag if disabledTagsRemoving is true', fakeAsync(() => {
+            const tag1 = 'Tag 1';
+            component.disabledTagsRemoving = true;
+
+            addTagToAddedList(tag1);
+            tick();
+
+            expect(getRemoveTagButtons()[0].hasAttribute('hidden')).toBeTrue();
+        }));
+
+        it('should show button for removing tag if disabledTagsRemoving is false', fakeAsync(() => {
+            const tag1 = 'Tag 1';
+            component.disabledTagsRemoving = false;
+
+            addTagToAddedList(tag1);
+            tick();
+
+            expect(getRemoveTagButtons()[0].hasAttribute('hidden')).toBeFalse();
+        }));
+
+        it('should display tags passed by tags input', () => {
+            component.tags = ['Passed tag 1', 'Passed tag 2'];
+            fixture.detectChanges();
+            expect(getAddedTags()).toEqual(component.tags);
+        });
     });
 
     describe('Tag name field', () => {
@@ -447,6 +479,38 @@ describe('TagsCreatorComponent', () => {
                 expect(tagElements).toEqual([tag1, tag2]);
             }));
 
+            it('should exclude tags passed through tags input from loaded existing tags', fakeAsync(() => {
+                const tag1 = 'Tag 1';
+                const tag2 = 'Tag 2';
+                component.tags = [tag1];
+
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [
+                                { entry: { tag: tag1 } as any },
+                                { entry: { tag: tag2 } as any },
+                            ],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+
+                expect(getExistingTags()).toEqual([tag2]);
+            }));
+
+            it('should not display existing tags if searching fails', fakeAsync(() => {
+                spyOn(notificationService, 'showError');
+                spyOn(tagService, 'searchTags').and.returnValue(throwError({}));
+
+                typeTag('Tag');
+
+                expect(getExistingTags()).toEqual([]);
+                expect(notificationService.showError).toHaveBeenCalledWith('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
+            }));
+
             it('should display exact tag', fakeAsync(() => {
                 const tag = 'Tag';
                 spyOn(tagService, 'findTagByName').and.returnValue(of({
@@ -460,6 +524,31 @@ describe('TagsCreatorComponent', () => {
 
                 const tagElements = getExistingTags();
                 expect(tagElements).toEqual([tag]);
+            }));
+
+            it('should not display exact tag if that tag was passed through tags input', fakeAsync(() => {
+                const tag = 'Tag';
+                component.tags = [tag];
+                spyOn(tagService, 'findTagByName').and.returnValue(of({
+                    entry: {
+                        tag,
+                        id: 'tag-1'
+                    }
+                }));
+
+                typeTag(tag);
+
+                expect(getExistingTags()).toEqual([]);
+            }));
+
+            it('should not display exact tag if exact tag loading fails', fakeAsync(() => {
+                spyOn(notificationService, 'showError');
+                spyOn(tagService, 'findTagByName').and.returnValue(throwError({}));
+
+                typeTag('Tag');
+
+                expect(getExistingTags()).toEqual([]);
+                expect(notificationService.showError).toHaveBeenCalledWith('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
             }));
 
             it('should exact tag be above others existing tags when there are some different existing tags than exact tag', fakeAsync(() => {
@@ -488,6 +577,70 @@ describe('TagsCreatorComponent', () => {
 
                 const tagElements = getExistingTags();
                 expect(tagElements).toEqual([tag, tag1, tag2]);
+            }));
+
+            it('should selection be disabled if mode is Create', fakeAsync(() => {
+                component.mode = TagsCreatorMode.CREATE;
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [
+                                { entry: { tag: 'tag' } as any }
+                            ],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+
+                expect(findSelectionList().disabled).toBeTrue();
+            }));
+
+            it('should selection be enabled if mode is Create And Assign', fakeAsync(() => {
+                component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [
+                                { entry: { tag: 'tag' } as any }
+                            ],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+
+                expect(findSelectionList().disabled).toBeFalse();
+            }));
+
+            it('should select existing tag when selectionChange event emits', fakeAsync(() => {
+                const selectedTag = { entry: { tag: 'tag1' } as any };
+                const leftTag = 'tag2';
+                component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
+                spyOn(tagService, 'searchTags').and.returnValue(
+                    of({
+                        list: {
+                            entries: [
+                                selectedTag,
+                                { entry: { tag: leftTag } as any }
+                            ],
+                            pagination: {}
+                        }
+                    })
+                );
+
+                typeTag('Tag');
+                findSelectionList().selectionChange.emit({
+                    options: [{
+                        value: selectedTag
+                    }]
+                } as MatSelectionListChange);
+                fixture.detectChanges();
+
+                expect(getAddedTags()).toEqual([selectedTag.entry.tag]);
+                expect(getExistingTags()).toEqual([leftTag]);
             }));
         });
 

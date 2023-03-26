@@ -76,7 +76,7 @@
                 [value]="tagRow">
                 {{ tagRow.entry.tag }}
             </mat-list-option>
-            <p *ngIf="!existingTags.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
+            <p *ngIf="!existingTags?.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
         </mat-selection-list>
         <mat-spinner
             *ngIf="existingTagsLoading"
