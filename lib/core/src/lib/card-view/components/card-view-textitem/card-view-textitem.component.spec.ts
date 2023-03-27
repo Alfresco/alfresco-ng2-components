@@ -847,7 +847,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
-            component.textInput.setValue('DO NOT DO UNDO');
+            component.textInput.setValue('DO NOT PERFORM UNDO');
             const event = new KeyboardEvent('keydown', {
                 ctrlKey: false,
                 code: 'KeyZ',
