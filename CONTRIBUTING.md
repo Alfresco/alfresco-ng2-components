@@ -54,55 +54,6 @@ The ADF-Rules are as follows:
 * Class names cannot start with Alfresco/Activiti/adf for the same reason as above
 * scss is mandatory. All the classes need to have the `adf-` prefix
 
-## Styles
-
-Avoid adding css variables with names related to components:
-```
---my-component-nr-xxx-background-color: mat.get-color-from-palette($primary, 50),  // bad
---theme-primary-color-50: mat.get-color-from-palette($primary, 50)  // good
-```
-
-Avoid adding css variables with custom values, values should come from the theme:
-```
---new-variable: yellow  // bad
---new-variable: mat.get-color-from-palette($primary, 50), // good 
-```
-
-When styling components try to use theme related variables (colors, typography):
-```
-.my-class {
-  color:darkgrey;  // bad
-  color:var(--theme-primary-color);  // good
-  font-size:23px; // bad
-  font-size:var(--theme-typography-body-1-font-size); // good
-  background:yellow; // bad
-  background:var(--my-component-nr-200-background-color);  // bad
-  background:var(--theme-primary-color-50);  // good
-}
-```
-
-When using external library like Angular Material try to follow patterns from this library. 
-It helps to style components built with this library (just apply theme instead of custom styling). 
-For example when creating input:
-```
-// bad
-<div class="my-custom-input">
-  <div class="my-custom-label"></div>
-  <mat-form-field>
-    <input type="text">
-  </mat-form-field>
-  <div class="my-custom-error"></div>
-</div>
-
-// good
-<mat-form-field>
-  <mat-label></mat-label>
-  <input type="text">
-  <mat-hint></mat-hint>
-  <mat-error></mat-error>
-</mat-form-field>
-```
-
 ## Test guide
 
 In ADF, we encourage the use of behavior-driven development (BDD).
