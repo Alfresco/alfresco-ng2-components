@@ -58,6 +58,21 @@ describe('CardViewTextItemComponent', () => {
         return textItemInputError.nativeElement.innerText;
     };
 
+    const checkCtrlZActions = (ctrlKeyValue: boolean, codeValue: string, metaKeyValue: boolean, mockTestValue: string, flag: boolean) => {
+        component.textInput.setValue(mockTestValue);
+        const event = new KeyboardEvent('keydown', {
+            ctrlKey: ctrlKeyValue,
+            code: codeValue,
+            metaKey: metaKeyValue
+        } as KeyboardEventInit );
+        component.undoText(event);
+        if (flag) {
+            expect(component.textInput.value).toBe('');
+        } else {
+            expect(component.textInput.value).not.toBe('');
+        }
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -822,52 +837,24 @@ describe('CardViewTextItemComponent', () => {
     describe('events', () => {
 
         it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
-            component.textInput.setValue('UNDO TEST');
-            const event = new KeyboardEvent('keydown', {
-                ctrlKey: true,
-                code: 'KeyZ',
-                metaKey: false
-            } as KeyboardEventInit );
-            component.undoText(event);
+            checkCtrlZActions(true, 'KeyZ', false, 'UNDO TEST', true);
 
-            expect(component.textInput.value).toBe('');
         });
 
 
         it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
-            component.textInput.setValue('DO NOT DO UNDO');
-            const event = new KeyboardEvent('keydown', {
-                ctrlKey: true,
-                code: 'KeyH',
-                metaKey: false
-            } as KeyboardEventInit );
-            component.undoText(event);
+            checkCtrlZActions(true, 'KeyH', false, 'DO NOT DO UNDO', false);
 
-            expect(component.textInput.value).not.toBe('');
         });
 
         it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
-            component.textInput.setValue('DO NOT PERFORM UNDO');
-            const event = new KeyboardEvent('keydown', {
-                ctrlKey: false,
-                code: 'KeyZ',
-                metaKey: false
-            } as KeyboardEventInit );
-            component.undoText(event);
+            checkCtrlZActions(false, 'KeyZ', false, 'DO NOT DO UNDO', false);
 
-            expect(component.textInput.value).not.toBe('');
         });
 
         it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
-            component.textInput.setValue('UNDO TEST FOR MACOS');
-            const event = new KeyboardEvent('keydown', {
-                ctrlKey: false,
-                code: 'KeyZ',
-                metaKey: true
-            } as KeyboardEventInit );
-            component.undoText(event);
+            checkCtrlZActions(false, 'KeyZ', true, 'UNDO TEST FOR MACOS', true);
 
-            expect(component.textInput.value).toBe('');
         });
     });
 });
