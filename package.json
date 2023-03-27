@@ -162,7 +162,7 @@
     "lint-staged": "^13.2.0",
     "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^1.6.0",
-    "nconf": "^0.11.1",
+    "nconf": "^0.12.0",
     "ng-mocks": "^14.7.2",
     "ng-packagr": "14.0.3",
     "nx": "14.4.2",
