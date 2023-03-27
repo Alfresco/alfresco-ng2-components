@@ -131,14 +131,14 @@ jobs:
 
       - name: Get PR number
         uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
-        id: pr-number
+        id: action
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: show pr number
         shell: bash
         run: |
-          echo "PR: ${{ steps.pr-number.outputs.number }}"
+          echo "PR: ${{ ${{ steps.action.outputs.number }}"
 
       - name: check if pr is approved
         env:
@@ -169,7 +169,7 @@ jobs:
 
           if [ "$skip_check" == "false" ]; then
             echo "Checking PR approval"
-            prNumber=$PR_NUMBER
+            prNumber=${{ steps.action.outputs.number }}
             echo "PR: $prNumber"
             checkApproval=$(gh api /repos/$GITHUB_REPOSITORY/pulls/$prNumber/reviews | jq '.[] | select(.state == "APPROVED") | .user.login')
             if [[ $checkApproval ]]; then
