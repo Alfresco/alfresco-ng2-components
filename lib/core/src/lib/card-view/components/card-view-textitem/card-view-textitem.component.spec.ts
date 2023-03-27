@@ -73,17 +73,9 @@ describe('CardViewTextItemComponent', () => {
         }
     };
 
-    const renderChipsForMultiValuedProperties = async (labelValue: string, itemValue: Array<any>, keyValue: string,
-        editableValue: boolean, multivaluedValue: boolean, flag: boolean,
-        length: number, param1: string, param2: string, param3: string, defaultValue?: Array<any>) => {
-        component.property = new CardViewTextItemModel({
-            label: labelValue,
-            value: itemValue,
-            key: keyValue,
-            default: defaultValue? defaultValue: [],
-            editable: editableValue,
-            multivalued: multivaluedValue
-        });
+    const renderChipsForMultiValuedProperties = async (cardViewTextItemObject, flag: boolean, length: number,
+        param1: string, param2: string, param3: string) => {
+        component.property = new CardViewTextItemModel(cardViewTextItemObject);
         component.useChipsForMultiValueProperty = flag;
         component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
@@ -225,20 +217,39 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render chips for multivalue properties when chips are enabled', async () => {
-            renderChipsForMultiValuedProperties('Text label', ['item1', 'item2', 'item3'], 'textkey', true, true,
-            true, 3, 'item1', 'item2', 'item3', ['FAKE-DEFAULT-KEY']);
+            const cardViewTextItemObject = {
+                label: 'Text label 1',
+                value: ['item1', 'item2', 'item3'],
+                key: 'textkey',
+                default: ['FAKE-DEFAULT-KEY'],
+                editable: true,
+                multivalued: true
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
 
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
-            renderChipsForMultiValuedProperties('Text label', [1, 2, 3], 'textkey', true, true,
-            true, 3, '1', '2', '3');
+            const cardViewTextItemObject = {
+                label: 'Text label 2',
+                value: [1, 2, 3],
+                key: 'textkey',
+                editable: true,
+                multivalued: true
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
 
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
-            renderChipsForMultiValuedProperties('Text label', [1.1, 2.2, 3.3], 'textkey', true, true,
-            true, 3, '1.1', '2.2', '3.3');
+            const cardViewTextItemObject = {
+                label: 'Text label 3',
+                value: [1.1, 2.2, 3.3],
+                key: 'textkey',
+                editable: true,
+                multivalued: true
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
 
         });
 
