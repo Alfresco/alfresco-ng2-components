@@ -43,7 +43,7 @@ describe('ContentMetadataComponent', () => {
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
-    let tagService: TagService
+    let tagService: TagService;
 
     const preset = 'custom-preset';
 
@@ -940,7 +940,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
                 changed: {}
-            } as UpdateNotification)
+            } as UpdateNotification);
             tick(500);
             fixture.detectChanges();
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));

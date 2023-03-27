@@ -19,7 +19,8 @@ adf-tags-creator {
         height: 30px;
     }
 
-    .adf-tag-name-field, .adf-tag-name-field[hidden] {
+    .adf-tag-name-field,
+    .adf-tag-name-field[hidden] {
         display: flex;
         align-items: center;
         min-height: 57px;
@@ -41,7 +42,31 @@ adf-tags-creator {
         display: inline-block;
         padding-right: 12px;
         overflow: auto;
-       // max-height: 7vh;
+    }
+
+    .adf-tags-list {
+        padding-left: 10px;
+        padding-right: 0;
+        overflow: auto;
+
+        &.adf-tags-list-with-scrollbar {
+            padding-right: 7px;
+            margin-right: -22px;
+        }
+    }
+
+    .adf-tag {
+        margin-top: 0;
+        overflow-wrap: anywhere;
+
+        & + .adf-tag {
+            margin-top: -14px;
+        }
+    }
+
+    .adf-tags-creation {
+        padding-left: 27px;
+        padding-right: 22px;
     }
 
     .adf-existing-tags-panel {
@@ -74,7 +99,7 @@ adf-tags-creator {
                 padding-right: 12px;
                 font-size: 14px;
                 height: auto;
-                width: initial;
+                width: unset;
 
                 & + .adf-tag {
                     margin-top: -10px;
@@ -87,7 +112,6 @@ adf-tags-creator {
                         display: none;
                     }
                 }
-
             }
 
             mat-spinner {
@@ -101,35 +125,6 @@ adf-tags-creator {
                 color: inherit;
             }
         }
-    }
-
-    .adf-tags-list {
-        padding-left: 10px;
-        padding-right: 0;
-        overflow: auto;
-
-        &.adf-tags-list-with-scrollbar {
-            padding-right: 7px;
-            margin-right: -22px;
-        }
-    }
-
-    .adf-tags-creation {
-        padding-left: 27px;
-        padding-right: 22px;
-
-        .adf-tags-list {
-            .adf-tag {
-                & + .adf-tag {
-                    margin-top: -14px;
-                }
-            }
-        }
-    }
-
-    .adf-tag {
-        margin-top: 0;
-        overflow-wrap: anywhere;
     }
 
     mat-dialog-actions {

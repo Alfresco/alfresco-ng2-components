@@ -52,7 +52,7 @@ const DEFAULT_TAGS_SORTING = {
     selector: 'adf-tags-creator',
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
@@ -70,6 +70,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
     }
+
+    get tags(): string[] {
+        return this._tags;
+    }
+
     @Input()
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
@@ -84,6 +89,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
     }
 
+    get tagNameControlVisible(): boolean {
+        return this._tagNameControlVisible;
+    }
+
     @Output()
     existingTagsPanelVisibilityChange = new EventEmitter<boolean>();
     @Output()
@@ -95,7 +104,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         ['duplicatedExistingTag', 'EXISTING_TAG'],
         ['duplicatedAddedTag', 'ALREADY_ADDED_TAG'],
         ['emptyTag', 'EMPTY_TAG'],
-        ['required', 'REQUIRED'],
+        ['required', 'REQUIRED']
     ]);
 
     private readonly existingTagsListLimit = 15;
@@ -107,7 +116,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         [
             this.validateIfNotAlreadyAdded.bind(this),
             Validators.required,
-            this.validateEmptyTag,
+            this.validateEmptyTag
         ],
         this.validateIfNotExistingTag.bind(this)
     );
@@ -176,16 +185,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this.existingTagsPanelVisible;
     }
 
-    get tags(): string[] {
-        return this._tags;
-    }
-
     get tagNameControl(): FormControl<string> {
         return this._tagNameControl;
-    }
-
-    get tagNameControlVisible(): boolean {
-        return this._tagNameControlVisible;
     }
 
     get existingTags(): TagEntry[] {
@@ -264,7 +265,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (name) {
             forkJoin({
                 exactResult: this.tagService.findTagByName(name),
-                searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit),
+                searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit)
             }).pipe(
                 takeUntil(this.cancelExistingTagsLoading$),
                 finalize(() => (this._typing = false))

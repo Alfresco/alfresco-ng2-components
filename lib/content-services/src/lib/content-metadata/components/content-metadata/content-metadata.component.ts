@@ -56,6 +56,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this._assignedTags = [...this.tags];
     }
 
+    get editable(): boolean {
+        return this._editable;
+    }
+
     /** Toggles whether to display empty values in the card view */
     @Input()
     displayEmpty: boolean = false;
@@ -143,10 +147,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     get assignedTags(): string[] {
         return this._assignedTags;
-    }
-
-    get editable(): boolean {
-        return this._editable;
     }
 
     get tags(): string[] {
@@ -327,6 +327,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 }));
             }
         }
-        return observables
+        return observables;
     }
 }
