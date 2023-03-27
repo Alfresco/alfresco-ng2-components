@@ -3,6 +3,11 @@
   "dest": "../../dist/libs/core",
   "assets": [
     {
+      "glob": "custom-theme/**/*",
+      "input": "./",
+      "output": "/"
+    },
+    {
       "glob": "assets/**/*",
       "input": "./src/lib",
       "output": "/bundles/"

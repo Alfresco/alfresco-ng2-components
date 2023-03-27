@@ -354,7 +354,9 @@
               "lib/core/auth/**/*.ts",
               "lib/core/auth/**/*.html",
               "lib/core/shell/**/*.ts",
-              "lib/core/shell/**/*.html"
+              "lib/core/shell/**/*.html",
+              "lib/core/custom-theme/**/*.ts",
+              "lib/core/custom-theme/**/*.html"
             ]
           }
         },
