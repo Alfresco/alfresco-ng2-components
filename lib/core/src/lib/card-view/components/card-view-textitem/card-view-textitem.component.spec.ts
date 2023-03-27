@@ -73,6 +73,30 @@ describe('CardViewTextItemComponent', () => {
         }
     };
 
+    const renderChipsForMultiValuedProperties = async (labelValue: string, itemValue: Array<any>, keyValue: string,
+        editableValue: boolean, multivaluedValue: boolean, flag: boolean,
+        length: number, param1: string, param2: string, param3: string, defaultValue?: Array<any>) => {
+        component.property = new CardViewTextItemModel({
+            label: labelValue,
+            value: itemValue,
+            key: keyValue,
+            default: defaultValue? defaultValue: [],
+            editable: editableValue,
+            multivalued: multivaluedValue
+        });
+        component.useChipsForMultiValueProperty = flag;
+        component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        expect(valueChips).not.toBeNull();
+        expect(valueChips.length).toBe(length);
+        expect(valueChips[0].nativeElement.innerText.trim()).toBe(param1);
+        expect(valueChips[1].nativeElement.innerText.trim()).toBe(param2);
+        expect(valueChips[2].nativeElement.innerText.trim()).toBe(param3);
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -201,67 +225,21 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render chips for multivalue properties when chips are enabled', async () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            renderChipsForMultiValuedProperties('Text label', ['item1', 'item2', 'item3'], 'textkey', true, true,
+            true, 3, 'item1', 'item2', 'item3', ['FAKE-DEFAULT-KEY']);
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('item1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('item2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('item3');
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
-            component.property = new CardViewIntItemModel({
-                label: 'Text label',
-                value: [1, 2, 3],
-                key: 'textkey',
-                editable: true,
-                multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            renderChipsForMultiValuedProperties('Text label', [1, 2, 3], 'textkey', true, true,
+            true, 3, '1', '2', '3');
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3');
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
-            component.property = new CardViewFloatItemModel({
-                label: 'Text label',
-                value: [1.1, 2.2, 3.3],
-                key: 'textkey',
-                editable: true,
-                multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            renderChipsForMultiValuedProperties('Text label', [1.1, 2.2, 3.3], 'textkey', true, true,
+            true, 3, '1.1', '2.2', '3.3');
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1.1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2.2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3.3');
         });
 
         it('should render string for multivalue properties when chips are disabled', async () => {
