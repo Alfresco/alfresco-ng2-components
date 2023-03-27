@@ -138,7 +138,7 @@ jobs:
       - name: show pr number
         shell: bash
         run: |
-          echo "PR: ${{ ${{ steps.action.outputs.number }}"
+          echo "PR: ${{ steps.action.outputs.number }}"
 
       - name: check if pr is approved
         env:
