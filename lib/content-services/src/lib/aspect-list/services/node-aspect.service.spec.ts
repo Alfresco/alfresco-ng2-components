@@ -25,6 +25,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeAspectService } from './node-aspect.service';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
+import { TagService } from '@alfresco/adf-content-services';
 
 describe('NodeAspectService', () => {
 
@@ -99,4 +100,12 @@ describe('NodeAspectService', () => {
         nodeAspectService.updateNodeAspects('fake-node-id');
     });
 
+    it('should call emit on refresh from TagService', () => {
+        const tagService = TestBed.inject(TagService);
+        spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
+        spyOn(nodeApiService, 'updateNode').and.returnValue(of(new MinimalNode()));
+        spyOn(tagService.refresh, 'emit');
+        nodeAspectService.updateNodeAspects('some node id', 'some-selector');
+        expect(tagService.refresh.emit).toHaveBeenCalled();
+    });
 });
