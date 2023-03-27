@@ -192,6 +192,12 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
+    undoText(event: KeyboardEvent) {
+        if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ' && this.textInput.value) {
+                this.textInput.setValue('');
+        }
+    }
+
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();

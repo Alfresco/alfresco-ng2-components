@@ -58,6 +58,37 @@ describe('CardViewTextItemComponent', () => {
         return textItemInputError.nativeElement.innerText;
     };
 
+    const checkCtrlZActions = (ctrlKeyValue: boolean, codeValue: string, metaKeyValue: boolean, mockTestValue: string, flag: boolean) => {
+        component.textInput.setValue(mockTestValue);
+        const event = new KeyboardEvent('keydown', {
+            ctrlKey: ctrlKeyValue,
+            code: codeValue,
+            metaKey: metaKeyValue
+        } as KeyboardEventInit );
+        component.undoText(event);
+        if (flag) {
+            expect(component.textInput.value).toBe('');
+        } else {
+            expect(component.textInput.value).not.toBe('');
+        }
+    };
+
+    const renderChipsForMultiValuedProperties = async (cardViewTextItemObject, flag: boolean, length: number,
+        param1: string, param2: string, param3: string) => {
+        component.property = new CardViewTextItemModel(cardViewTextItemObject);
+        component.useChipsForMultiValueProperty = flag;
+        component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        expect(valueChips).not.toBeNull();
+        expect(valueChips.length).toBe(length);
+        expect(valueChips[0].nativeElement.innerText.trim()).toBe(param1);
+        expect(valueChips[1].nativeElement.innerText.trim()).toBe(param2);
+        expect(valueChips[2].nativeElement.innerText.trim()).toBe(param3);
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -186,67 +217,40 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should render chips for multivalue properties when chips are enabled', async () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
+            const cardViewTextItemObject = {
+                label: 'Text label 1',
                 value: ['item1', 'item2', 'item3'],
                 key: 'textkey',
                 default: ['FAKE-DEFAULT-KEY'],
                 editable: true,
                 multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('item1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('item2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('item3');
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
-            component.property = new CardViewIntItemModel({
-                label: 'Text label',
+            const cardViewTextItemObject = {
+                label: 'Text label 2',
                 value: [1, 2, 3],
                 key: 'textkey',
                 editable: true,
                 multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3');
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
-            component.property = new CardViewFloatItemModel({
-                label: 'Text label',
+            const cardViewTextItemObject = {
+                label: 'Text label 3',
                 value: [1.1, 2.2, 3.3],
                 key: 'textkey',
                 editable: true,
                 multivalued: true
-            });
-            component.useChipsForMultiValueProperty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            };
+            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-            expect(valueChips).not.toBeNull();
-            expect(valueChips.length).toBe(3);
-            expect(valueChips[0].nativeElement.innerText.trim()).toBe('1.1');
-            expect(valueChips[1].nativeElement.innerText.trim()).toBe('2.2');
-            expect(valueChips[2].nativeElement.innerText.trim()).toBe('3.3');
         });
 
         it('should render string for multivalue properties when chips are disabled', async () => {
@@ -816,6 +820,30 @@ describe('CardViewTextItemComponent', () => {
             expect(error).toBeFalsy();
             expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
+        });
+    });
+
+    describe('events', () => {
+
+        it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            checkCtrlZActions(true, 'KeyZ', false, 'UNDO TEST', true);
+
+        });
+
+
+        it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
+            checkCtrlZActions(true, 'KeyH', false, 'DO NOT DO UNDO', false);
+
+        });
+
+        it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
+            checkCtrlZActions(false, 'KeyZ', false, 'DO NOT DO UNDO', false);
+
+        });
+
+        it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
+            checkCtrlZActions(false, 'KeyZ', true, 'UNDO TEST FOR MACOS', true);
+
         });
     });
 });
