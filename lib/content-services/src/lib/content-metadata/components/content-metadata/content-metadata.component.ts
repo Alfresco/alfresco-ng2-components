@@ -311,8 +311,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    private saveTags(): { [key: string]: Observable<TagPaging | void> } {
-        const observables: { [key: string]: Observable<TagPaging | void> } = {};
+    private saveTags(): { [key: string]: Observable<TagPaging | TagEntry | void> } {
+        const observables: { [key: string]: Observable<TagPaging | TagEntry | void> } = {};
         if (this.tags) {
             this.assignedTagsEntries.forEach((tagEntry) => {
                 if (!this.tags.some((tag) => tagEntry.entry.tag === tag)) {

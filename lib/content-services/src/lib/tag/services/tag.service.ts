@@ -199,7 +199,7 @@ export class TagService {
      *
      * @return Just linked tags to node.
      */
-    assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging> {
+    assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
         return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(
             tap((data) => this.refresh.emit(data))
         );
