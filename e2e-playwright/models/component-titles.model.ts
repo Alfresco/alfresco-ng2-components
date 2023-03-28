@@ -8,4 +8,5 @@
 
 export enum ComponentTitles {
     processServicesCloud = 'process-services-cloud',
+    processServices = 'process-services',
 }

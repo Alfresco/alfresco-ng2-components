@@ -34,3 +34,6 @@ licenses.txt
 .DS_Store
 
 .angular
+/test-results/
+/playwright-report/
+/playwright/.cache/

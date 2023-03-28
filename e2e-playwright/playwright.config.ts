@@ -90,6 +90,10 @@ export const getGlobalConfig = (): PlaywrightTestConfig => {
             {
                 name: 'Process Services Cloud : Groups',
                 testMatch: /.groups-cloud*\.e2e\.ts/
+            },
+            {
+                name: 'Process Services : Tasks',
+                testMatch: /.task-assignee*\.e2e\.ts/
             }
         ],
 

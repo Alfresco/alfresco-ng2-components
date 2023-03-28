@@ -33,7 +33,9 @@ export class BaseStories extends PlaywrightBase {
     async navigateTo(navigationParameters: NavigationParameters): Promise<void> {
         await this.page.goto(`/iframe.html?args=&viewMode=story&id=${this.buildStoryId(navigationParameters)}`, {
             waitUntil: 'networkidle',
-            timeout: timeouts.large
-        });
+            timeout: timeouts.globalSpec
+        })
+        await this.page.waitForTimeout(3000);
+        await this.page.screenshot({ path: 'screenshot.png', fullPage: true });
     }
 }
