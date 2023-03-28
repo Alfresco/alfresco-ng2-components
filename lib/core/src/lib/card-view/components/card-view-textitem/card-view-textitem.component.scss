@@ -163,13 +163,16 @@
     }
 }
 
+.adf-property-field {
+    .adf-property-clear-value,
+    .adf-textitem-edit-value {
+        width: 30px;
+        height: 30px;
+    }
+}
+
 .mat-form-field {
     .mat-form-field-suffix {
-        .mat-icon {
-            width: 30px;
-            height: 30px;
-        }
-
         .adf-textitem-edit-icon {
             display: block;
         }
