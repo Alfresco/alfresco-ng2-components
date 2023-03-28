@@ -55,7 +55,8 @@ describe('ContentMetadataCardComponent', () => {
             content: {},
             properties: {},
             createdByUser: {},
-            modifiedByUser: {}
+            modifiedByUser: {},
+            id: 'some-id'
         } as Node;
 
         component.node = node;
