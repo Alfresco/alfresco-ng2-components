@@ -68,28 +68,6 @@ runs:
           echo "nothing to download";
         fi
 
-    # - name: check EXTERNAL-CS is UP
-    #   shell: bash
-    #   if: ${{ inputs.check-external-cs-env == 'true' }}
-    #   run: |
-    #     set -u;
-    #     ./node_modules/@alfresco/adf-cli/bin/adf-cli \
-    #       check-cs-env \
-    #       --host "$EXTERNAL_ACS_HOST" \
-    #       -u "$E2E_USERNAME" \
-    #       -p "$E2E_PASSWORD" || exit 1
-
-    # - name: Check CS is UP
-    #   shell: bash
-    #   if: ${{ inputs.check-cs-env == 'true' }}
-    #   run: |
-    #     set -u;
-    #     ./node_modules/@alfresco/adf-cli/bin/adf-cli \
-    #       check-cs-env \
-    #       --host "$E2E_HOST" \
-    #       -u "$E2E_USERNAME" \
-    #       -p "$E2E_PASSWORD" || exit 1
-
     - name: check PS is UP
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}

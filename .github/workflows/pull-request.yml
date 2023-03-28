@@ -20,9 +20,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  push:
-    branches:
-      - fix-ecm-error
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
