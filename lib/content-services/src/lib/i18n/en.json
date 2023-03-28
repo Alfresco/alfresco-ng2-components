@@ -73,7 +73,15 @@
       "REMOVE": "Remove",
       "DOWNLOAD": "Download"
     },
-    "LOADER_LABEL": "Document list loader"
+    "LOADER_LABEL": "Document list loader",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Preview loading unresponsive",
+      "LABEL": "Download to view this document, or cancel to continue without preview.",
+      "ACTIONS": {
+        "CANCEL": "Cancel",
+        "DOWNLOAD": "Download"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {

@@ -1476,5 +1476,13 @@
       "ai:labels",
       "ai:textLines"
     ]
+  },
+  "preview-config": {
+    "enableNonResponsiveDialog":  true,
+    "enableNonResponsiveDialogReminders": true,
+    "nonResponsivePreviewInitialTimerInSeconds": 50,
+    "nonResponsivePreviewReminderTimerInSeconds": 30,
+    "enableFileAutoDownload": true,
+    "fileAutoDownloadSizeThresholdInMB": 15
   }
 }

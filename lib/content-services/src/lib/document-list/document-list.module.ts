@@ -35,6 +35,7 @@ import { LibraryRoleColumnComponent } from './components/library-role-column/lib
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
 import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
+import { FileAutoDownloadComponent } from './components/file-auto-download/file-auto-download.component';
 
 @NgModule({
     imports: [
@@ -56,7 +57,8 @@ import { FilterHeaderComponent } from './components/filter-header/filter-header.
         NameColumnComponent,
         ContentActionComponent,
         ContentActionListComponent,
-        FilterHeaderComponent
+        FilterHeaderComponent,
+        FileAutoDownloadComponent
     ],
     exports: [
         DocumentListComponent,

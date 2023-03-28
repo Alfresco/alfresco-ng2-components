@@ -64,8 +64,14 @@ import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
+import { MatDialog } from '@angular/material/dialog';
+import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
+import { NodeActionsService } from '../services/node-actions.service';
+
+const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
     selector: 'adf-document-list',
@@ -367,7 +373,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private alfrescoApiService: AlfrescoApiService,
                 private nodeService: NodesApiService,
                 private dataTableService: DataTableService,
-                private lockService: LockService) {
+                private lockService: LockService,
+                private dialog: MatDialog,
+                private nodeActionService: NodeActionsService) {
 
         this.nodeService.nodeUpdated.subscribe((node) => {
             this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
@@ -758,7 +766,20 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPreviewFile(node: NodeEntry) {
         if (node) {
-            this.preview.emit(new NodeEntityEvent(node));
+            const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
+
+            const FILE_AUTO_DOWNLOAD_FLAG: boolean = this.appConfig.get('preview-config.enableFileAutoDownload', true);
+            const SIZE_THRESHOLD: number = this.appConfig.get('preview-config.fileAutoDownloadSizeThresholdInMB', 15);
+
+            if (FILE_AUTO_DOWNLOAD_FLAG && sizeInMB && sizeInMB > SIZE_THRESHOLD) {
+                this.dialog.open(FileAutoDownloadComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: FileAutoDownloadActionsEnum) => {
+                    if (result === FileAutoDownloadActionsEnum.DOWNLOAD) {
+                        this.nodeActionService.downloadNode(node);
+                    }
+                });
+            } else {
+                this.preview.emit(new NodeEntityEvent(node));
+            }
         }
     }
 

@@ -1,0 +1,17 @@
+.adf {
+    &-dialog {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        &-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 15px;
+        }
+        &-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-self: flex-end;
+        }
+    }
+}

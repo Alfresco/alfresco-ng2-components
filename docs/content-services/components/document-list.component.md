@@ -790,6 +790,27 @@ This will give the following output:
 
 ![Custom loading](../../docassets/images/custom-loading.png)
 
+### File Auto downloading
+
+In case of files exceeding a predefined file size, the document list component can be configured to automatically download those file when trying to preview them. 
+This can help in reducing server load, and ensuring quick access to such files. After turning this feature on, whenever the user tries to preview a file with a large
+file size, the Document List component will first preview a dialog, asking for confirmation from the user on whether they want to download the file, or cancel the preview altogether.
+
+In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json - 
+
+```
+"preview-config": {
+    "enableFileAutoDownload": true,
+    "fileAutoDownloadSizeThresholdInMB": 15
+}
+```
+
+Here, `"enableFileAutoDownload": true,` would enable the file auto download feature on the Document List component. Setting this flag to false disables this feature, and always
+triggers a file preview when trying to view a file, regardless of its size.
+
+The second configuration here, `"fileAutoDownloadSizeThresholdInMB": 15` specifies the file size threshold (in MB), after which the Document List component will start downloading the file.
+In the example provided above, any file greater than 15MB in size would trigger the auto download functionality. Files lower than 15MB in size would continue to preview normally.
+
 ## See also
 
 -   [Datatable component](../../core/components/datatable.component.md)
