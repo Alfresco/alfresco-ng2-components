@@ -103,7 +103,7 @@ describe('NodeAspectService', () => {
     it('should call emit on refresh from TagService', () => {
         const tagService = TestBed.inject(TagService);
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
-        const node = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] })
+        const node = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(node));
         spyOn(tagService.refresh, 'emit');
         nodeAspectService.updateNodeAspects('some node id', 'some-selector');
