@@ -65,7 +65,7 @@ Manages tags in Content Services.
     Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
     -   _nodeId:_ `string`  - Id of node to which tags should be assigned.
     -   _tags:_ `TagBody[]`  - List of tags to create and assign or just assign if they already exist.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - Just linked tags to node.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`|`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>` - Just linked tags to node or single tag if linked only one tag.
 
 ## Details
 
