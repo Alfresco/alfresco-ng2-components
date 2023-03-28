@@ -61,7 +61,7 @@ Manages tags in Content Services.
     Find tag which name matches exactly to passed name.
     -   _name:_ `string`  - Value for name which should be used during finding exact tag.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagEntry>` - Found tag which name matches exactly to passed name.
--   **assignTagsToNode**(nodeId: `string`, tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
+-   **assignTagsToNode**(nodeId: `string`, tags: `TagBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`|`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>`<br/>
     Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
     -   _nodeId:_ `string`  - Id of node to which tags should be assigned.
     -   _tags:_ `TagBody[]`  - List of tags to create and assign or just assign if they already exist.
