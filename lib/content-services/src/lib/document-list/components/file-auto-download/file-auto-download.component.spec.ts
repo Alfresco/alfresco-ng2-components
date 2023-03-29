@@ -35,7 +35,7 @@ describe('FileAutoDownloadComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit FileAutoDownloadActionsEnum.CANCEL when clicking on the cancel button', async () => {
+    it('should emit FileAutoDownloadActionsEnum.CANCEL and close dialog when clicking on the cancel button', async () => {
         const waitButton = getButton('#cancelButton');
         waitButton.dispatchEvent(new Event('click'));
 
@@ -45,7 +45,7 @@ describe('FileAutoDownloadComponent', () => {
         expect(matDialogRef.close).toHaveBeenCalledWith(FileAutoDownloadActionsEnum.CANCEL);
     });
 
-    it('should emit FileAutoDownloadActionsEnum.DOWNLOAD when clicking on the wait button', async () => {
+    it('should emit FileAutoDownloadActionsEnum.DOWNLOAD and close dialog when clicking on the wait button', async () => {
         const waitButton = getButton('#downloadButton');
         waitButton.dispatchEvent(new Event('click'));
 

@@ -68,11 +68,10 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
 
 const mockDialog = {
-    open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(null) as any}),
-    close: jasmine.createSpy('close')
+    open: jasmine.createSpy('open'),
 };
 
-fdescribe('DocumentList', () => {
+describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
@@ -128,6 +127,8 @@ fdescribe('DocumentList', () => {
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({ list: { entries: [] } })));
+
+        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.CANCEL) as any})
     });
 
     afterEach(() => {
@@ -1608,7 +1609,7 @@ fdescribe('DocumentList', () => {
     });
 
     it('should trigger file download when clicking on Download button on FileAutoDownload dialog', async () => {
-        spyOn(mockDialog, 'open').and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any});
+        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any})
         spyOn(nodeActionService, 'downloadNode');
         appConfigService.config = {
             ...appConfigService.config,
