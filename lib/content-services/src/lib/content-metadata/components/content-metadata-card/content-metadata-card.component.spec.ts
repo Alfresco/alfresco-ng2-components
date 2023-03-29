@@ -93,9 +93,7 @@ describe('ContentMetadataCardComponent', () => {
     });
 
     it('should assign true to displayTags for ContentMetadataComponent', () => {
-        const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
-
-        expect(contentMetadataComponent.displayTags).toBeTrue();
+        expect(fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance.displayTags).toBeTrue();
     });
 
     it('should pass through the preset to the underlying component', () => {
@@ -107,7 +105,9 @@ describe('ContentMetadataCardComponent', () => {
     it('should pass through the displayEmpty to the underlying component', () => {
         component.displayEmpty = true;
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance.displayEmpty).toBeTrue();
+        const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
+
+        expect(contentMetadataComponent.displayEmpty).toBe(true);
     });
 
     it('should pass through the editable to the underlying component', () => {
