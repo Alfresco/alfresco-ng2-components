@@ -27,7 +27,7 @@ import {
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService
+    ThumbnailService, AppConfigService
 } from '@alfresco/adf-core';
 import { ContentService } from '../../common/services/content.service';
 
@@ -62,8 +62,17 @@ import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
+import { MatDialog } from '@angular/material/dialog';
+import { NodeActionsService } from '@alfresco/adf-content-services';
+import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
 
-describe('DocumentList', () => {
+const mockDialog = {
+    open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(null) as any}),
+    close: jasmine.createSpy('close')
+};
+
+fdescribe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
@@ -71,6 +80,8 @@ describe('DocumentList', () => {
     let customResourcesService: CustomResourcesService;
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
+    let appConfigService: AppConfigService;
+    let nodeActionService: NodeActionsService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -84,7 +95,10 @@ describe('DocumentList', () => {
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [
+            { provide: MatDialog, useValue: mockDialog }
+        ]
     });
 
     beforeEach(() => {
@@ -102,6 +116,8 @@ describe('DocumentList', () => {
         customResourcesService = TestBed.inject(CustomResourcesService);
         thumbnailService = TestBed.inject(ThumbnailService);
         contentService = TestBed.inject(ContentService);
+        appConfigService = TestBed.inject(AppConfigService);
+        nodeActionService = TestBed.inject(NodeActionsService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
@@ -1565,6 +1581,56 @@ describe('DocumentList', () => {
             rootFolderId: 'folder-id',
             where: undefined
         }), undefined);
+    });
+
+    it('should display fileAutoDownload dialog if node size exceeds appConfig.preview-config.fileAutoDownloadSizeThresholdInMB', async () => {
+        appConfigService.config = {
+            ...appConfigService.config,
+            'preview-config': {
+                "enableFileAutoDownload": true,
+                "fileAutoDownloadSizeThresholdInMB": 10
+            }
+        }
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        const node = { entry: {
+                ...mockNode1,
+                content: {
+                    ...mockNode1.content,
+                    sizeInBytes: 104857600
+                },
+            } };
+        documentList.onNodeClick(node);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(mockDialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true });
+    });
+
+    it('should trigger file download when clicking on Download button on FileAutoDownload dialog', async () => {
+        spyOn(mockDialog, 'open').and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any});
+        spyOn(nodeActionService, 'downloadNode');
+        appConfigService.config = {
+            ...appConfigService.config,
+            'preview-config': {
+                "enableFileAutoDownload": true,
+                "fileAutoDownloadSizeThresholdInMB": 10
+            }
+        }
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION
+        const node = { entry: {
+                ...mockNode1,
+                content: {
+                    ...mockNode1.content,
+                    sizeInBytes: 104857600
+                },
+            } };
+        documentList.onNodeClick(node);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(nodeActionService.downloadNode).toHaveBeenCalledWith(node);
     });
 
     describe('Preselect nodes', () => {
