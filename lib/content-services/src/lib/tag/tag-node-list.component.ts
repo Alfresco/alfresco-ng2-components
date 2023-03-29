@@ -72,6 +72,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     calculationsDone = false;
     columnFlexDirection = false;
     undisplayedTagsCount = 0;
+    viewMoreButtonLeftOffset: number;
 
     /** Emitted when a tag is selected. */
     @Output()
@@ -80,7 +81,6 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     private onDestroy$ = new Subject<boolean>();
     private initialLimitTagsDisplayed: boolean;
     private initialTagsEntries: TagEntry[] = [];
-    private _viewMoreButtonLeftOffset: number;
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllTags = false;
 
@@ -115,10 +115,6 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
-    }
-
-    get viewMoreButtonLeftOffset(): number {
-        return this._viewMoreButtonLeftOffset;
     }
 
     refreshTag() {
@@ -156,14 +152,14 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
             const viewMoreBtnWidth: number = this.containerView.nativeElement.children[1].offsetWidth;
             const firstTag = this.tagChips.get(0);
             const tagChipMargin = firstTag ? this.getTagChipMargin(this.tagChips.get(0)) : 0;
-            const tagChipsWidth: number = this.tagChips.reduce((tagChipsWidth, val, index) => {
-                tagChipsWidth += val._elementRef.nativeElement.offsetWidth + tagChipMargin;
-                if (containerWidth - viewMoreBtnWidth > tagChipsWidth) {
+            const tagChipsWidth: number = this.tagChips.reduce((width, val, index) => {
+                width += val._elementRef.nativeElement.offsetWidth + tagChipMargin;
+                if (containerWidth - viewMoreBtnWidth > width) {
                     tagsToDisplay = index + 1;
-                    this._viewMoreButtonLeftOffset = tagChipsWidth;
-                    this.viewMoreButtonLeftOffsetBeforeFlexDirection = tagChipsWidth;
+                    this.viewMoreButtonLeftOffset = width;
+                    this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
                 }
-                return tagChipsWidth;
+                return width;
             }, 0);
             if ((containerWidth - tagChipsWidth) <= 0) {
                 this.columnFlexDirection = tagsToDisplay === 1 && (containerWidth < (this.tagChips.get(0)._elementRef.nativeElement.offsetWidth + viewMoreBtnWidth));
@@ -171,7 +167,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
                 this.tagsEntries = this.tagsEntries.slice(0, tagsToDisplay);
             }
             this.limitTagsDisplayed = this.undisplayedTagsCount ? this.initialLimitTagsDisplayed : false;
-            this._viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+            this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
             this.calculationsDone = true;
         }
     }
