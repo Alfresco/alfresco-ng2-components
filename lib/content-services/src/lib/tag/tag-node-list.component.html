@@ -11,7 +11,7 @@
     </mat-chip-list>
     <button mat-button
         [hidden]="!limitTagsDisplayed"
-        [style.left.px]="realw"
+        [style.left.px]="viewMoreButtonLeftOffset"
         class="adf-view-more-button"
         [class.adf-hidden-btn]="!calculationsDone"
         (click)="displayAllTags($event)"

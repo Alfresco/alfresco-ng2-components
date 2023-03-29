@@ -6,6 +6,11 @@
 
     &.adf-flex-column {
         flex-direction: column;
+
+        .adf-view-more-button {
+            position: relative;
+            left: auto;
+        }
     }
 
     .adf-view-more-button {
