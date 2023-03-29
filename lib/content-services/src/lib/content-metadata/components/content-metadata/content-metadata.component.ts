@@ -95,6 +95,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     useChipsForMultiValueProperty: boolean = true;
 
+    /** True if tags should be displayed, false otherwise */
+    @Input()
+    displayTags = false;
+
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
@@ -194,7 +198,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (node) {
             this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
-            this.loadTagsForNode(node.id);
+            if (this.displayTags) {
+                this.loadTagsForNode(node.id);
+            }
         }
     }
 
@@ -249,7 +255,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private updateNode() {
         forkJoin({
             updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
-            ...this.saveTags()
+            ...(this.displayTags ? this.saveTags() : {})
         }).pipe(
             catchError((err) => {
                 this.cardViewContentUpdateService.updateElement(this.targetProperty);

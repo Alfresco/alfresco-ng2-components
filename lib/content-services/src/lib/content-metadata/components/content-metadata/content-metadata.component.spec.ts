@@ -212,6 +212,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync( () => {
             component.editable = true;
+            component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -281,6 +282,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
             component.editable = true;
+            component.displayTags = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -886,6 +888,7 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             tagPaging = mockTagPaging();
+            component.displayTags = true;
         });
 
         it('should render tags after loading tags in ngOnInit', () => {
@@ -897,6 +900,16 @@ describe('ContentMetadataComponent', () => {
             expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
             expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not render tags after loading tags in ngOnInit if displayTags is false', () => {
+            component.displayTags = false;
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
         it('should render tags after loading tags in ngOnChanges', () => {
@@ -911,6 +924,19 @@ describe('ContentMetadataComponent', () => {
             expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
             expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not render tags after loading tags in ngOnChanges if displayTags is false', () => {
+            component.displayTags = false;
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
         });
 
         it('should not render tags after loading tags in ngOnChanges if node is not changed', () => {
@@ -971,6 +997,7 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             component.editable = true;
+            component.displayTags = true;
             fixture.detectChanges();
             tagsCreator = findTagsCreator();
         });
@@ -1080,10 +1107,18 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    it('should show tags creator if editable is true', () => {
+    it('should show tags creator if editable is true and displayTags is true', () => {
         component.editable = true;
+        component.displayTags = true;
         fixture.detectChanges();
         expect(findTagsCreator()).toBeDefined();
+    });
+
+    it('should not show tags creator if editable is true and displayTags is false', () => {
+        component.editable = true;
+        component.displayTags = false;
+        fixture.detectChanges();
+        expect(findTagsCreator()).toBeUndefined();
     });
 });
 
