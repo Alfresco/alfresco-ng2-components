@@ -158,7 +158,6 @@ describe('AttachFileCloudWidgetComponent', () => {
         formService = TestBed.inject(FormService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
-        // spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
         localizedDataPipe = new LocalizedDatePipe();
     });
 
