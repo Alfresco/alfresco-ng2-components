@@ -161,11 +161,11 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(fixture.nativeElement.innerText.trim()).toContain('DROPDOWN.PLACEHOLDER_LABEL');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
             });
 
             it('should show custom placeholder label when the "placeholder" input property is given a value', async () => {
-                component.placeholder = 'NODE_SELECTOR.SELECT_LOCATION';
+                component.placeholder = 'NODE_SELECTOR.SELECT_LIBRARY';
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -175,7 +175,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.SELECT_LOCATION');
+                expect(fixture.nativeElement.innerText.trim()).toContain('NODE_SELECTOR.LOCATION');
             });
 
             it('should load custom sites when the "siteList" input property is given a value', async () => {
