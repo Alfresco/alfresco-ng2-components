@@ -443,18 +443,6 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     });
 
-    xit('should have floating labels when values are present', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const inputLabelsNodes = document.querySelectorAll('mat-form-field');
-
-        expect(inputLabelsNodes.length).toBeGreaterThan(0);
-        inputLabelsNodes.forEach(labelNode => {
-            expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('auto');
-        });
-    });
-
     it('should be able to filter filterProperties when input is defined', async () => {
         fixture.detectChanges();
         await fixture.whenStable();

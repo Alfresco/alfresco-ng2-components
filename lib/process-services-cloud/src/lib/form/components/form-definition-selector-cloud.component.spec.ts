@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 
-xdescribe('FormDefinitionCloudComponent', () => {
+describe('FormDefinitionCloudComponent', () => {
 
     let fixture: ComponentFixture<FormDefinitionSelectorCloudComponent>;
     let service: FormDefinitionSelectorCloudService;
@@ -47,31 +47,29 @@ xdescribe('FormDefinitionCloudComponent', () => {
         getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' } as any]));
     });
 
-    it('should load the forms by default', () => {
+    it('should load the forms by default', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-            clickMatSelect.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options[0].nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
-            expect(options[1].nativeElement.innerText.trim()).toBe('fakeForm');
-            expect(getFormsSpy).toHaveBeenCalled();
-        });
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        clickMatSelect.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+        expect(options[0].nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE');
+        expect(options[1].nativeElement.innerText.trim()).toBe('fakeForm');
+        expect(getFormsSpy).toHaveBeenCalled();
     });
 
-    it('should load only None option when no forms exist', () => {
+    it('should load only None option when no forms exist', async () => {
         getFormsSpy.and.returnValue(of([]));
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-            clickMatSelect.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect((options).length).toBe(1);
-        });
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        clickMatSelect.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+        expect((options).length).toBe(1);
     });
 
     it('should not preselect any form by default', () => {
@@ -81,18 +79,17 @@ xdescribe('FormDefinitionCloudComponent', () => {
         expect(formInput.nodeValue).toBeNull();
     });
 
-    it('should display the name of the form that is selected', () => {
+    it('should display the name of the form that is selected', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
-            clickMatSelect.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
-            options[1].triggerEventHandler('click', {});
-            fixture.detectChanges();
-            const selected = fixture.debugElement.query(By.css('mat-select'));
-            const selectedValue = ((selected).nativeElement.innerText);
-            expect(selectedValue.trim()).toBe('fakeForm');
-        });
+        await fixture.whenStable();
+        const clickMatSelect = fixture.debugElement.query(By.css(('.mat-select-trigger')));
+        clickMatSelect.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        const options: any = fixture.debugElement.queryAll(By.css('mat-option'));
+        options[1].triggerEventHandler('click', {});
+        fixture.detectChanges();
+        const selected = fixture.debugElement.query(By.css('mat-select'));
+        const selectedValue = ((selected).nativeElement.innerText);
+        expect(selectedValue.trim()).toBe('fakeForm');
     });
 });

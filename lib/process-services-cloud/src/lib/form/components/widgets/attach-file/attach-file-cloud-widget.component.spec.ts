@@ -57,7 +57,8 @@ import {
     allSourceParamsWithRelativePath,
     fakeLocalPhysicalRecordResponse,
     displayableCMParams,
-    fakeLocalPngHavingCMProperties
+    fakeLocalPngHavingCMProperties,
+    mockMyNodeId
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -157,6 +158,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         formService = TestBed.inject(FormService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
+        // spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
         localizedDataPipe = new LocalizedDatePipe();
     });
 
@@ -182,6 +184,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     it('should be able to attach files coming from content selector', async () => {
         createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam);
+        spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
         fixture.detectChanges();
         await fixture.whenStable();
         clickOnAttachFileWidget('attach-file-alfresco');
@@ -375,6 +378,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and single upload for Alfresco Content + Locale', async () => {
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, false);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -387,7 +391,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and multiple upload for Alfresco Content + Locale', async () => {
-
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, true);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -400,6 +404,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath does not have alias for Alfresco Content + Locale', async () => {
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithNoAliasParams, true);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -462,6 +467,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
 
             it('Should be able to set default user alias (-my-) as rootNodeId if the nodeId of the alias is not fetched from the api', async () => {
+                spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
                 createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], contentSourceParam, false);
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -543,7 +549,11 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
         });
 
-        it('should remove file when remove is clicked', (done) => {
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should remove file when remove is clicked', async () => {
             fixture.detectChanges();
             const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
             menuButton.click();
@@ -551,10 +561,8 @@ describe('AttachFileCloudWidgetComponent', () => {
             const removeOption = fixture.debugElement.query(By.css('#file-fake-properties-remove')).nativeElement as HTMLButtonElement;
             removeOption.click();
             fixture.detectChanges();
-            fixture.whenRenderingDone().then(() => {
-                expect(element.querySelector('#file-fake-properties-icon')).toBeNull();
-                done();
-            });
+            await fixture.whenRenderingDone();
+            expect(element.querySelector('#file-fake-properties-icon')).toBeNull();
         });
 
         it('should download file when download is clicked', (done) => {
@@ -612,31 +620,31 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
         });
 
-        it('should display the default menu options if no options are provided', () => {
+        it('should display the default menu options if no options are provided', async () => {
             widget.field.params = onlyLocalParams;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const inputDebugElement = fixture.debugElement.query(
-                    By.css('#attach-file-attach')
-                );
-                inputDebugElement.triggerEventHandler('change', {
-                    target: { files: [fakeLocalPngAnswer] }
-                });
-                fixture.detectChanges();
-                const menuButton = fixture.debugElement.query(By.css('#file-1155-option-menu')).nativeElement as HTMLButtonElement;
-                menuButton.click();
-                fixture.detectChanges();
-
-                const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
-                const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
-                const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata')).nativeElement as HTMLButtonElement;
-                const removeOption = fixture.debugElement.query(By.css('#file-1155-remove')).nativeElement as HTMLButtonElement;
-
-                expect(showOption).not.toBeNull();
-                expect(downloadOption).not.toBeNull();
-                expect(retrieveMetadataOption).toBeNull();
-                expect(removeOption).not.toBeNull();
+            const inputDebugElement = fixture.debugElement.query(
+                By.css('#attach-file-alfresco')
+            );
+            inputDebugElement.triggerEventHandler('change', {
+                target: { files: [fakeLocalPngAnswer] }
             });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
+            menuButton.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const showOption = fixture.debugElement.query(By.css('#file-fake-properties-show-file'));
+            const downloadOption = fixture.debugElement.query(By.css('#file-fake-properties-download-file'));
+            const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata'));
+            const removeOption = fixture.debugElement.query(By.css('#file-fake-properties-remove'));
+
+            expect(showOption).not.toBeNull();
+            expect(downloadOption).not.toBeNull();
+            expect(retrieveMetadataOption).toBeNull();
+            expect(removeOption).not.toBeNull();
         });
     });
 
@@ -711,6 +719,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should have been called on attach file when value was empty', async () => {
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
             clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
@@ -721,6 +730,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should not be called on attach file when has a file previously', async () => {
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
             widget.field.value = [fakeMinimalNode];
 
             clickOnAttachFileWidget('attach-file-alfresco');

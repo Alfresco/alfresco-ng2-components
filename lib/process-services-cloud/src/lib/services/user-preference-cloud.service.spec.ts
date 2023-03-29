@@ -22,7 +22,7 @@ import { mockPreferences, getMockPreference, createMockPreference, updateMockPre
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-xdescribe('PreferenceService', () => {
+describe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
   let alfrescoApiMock: AlfrescoApiService;
   let getInstanceSpy: jasmine.Spy;
@@ -80,7 +80,7 @@ xdescribe('PreferenceService', () => {
     });
   });
 
-  it('Should not fetch preferences if error occurred', () => {
+  it('Should not fetch preferences if error occurred', (done) => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.getPreferences('mock-app-name')
       .subscribe(
@@ -89,6 +89,7 @@ xdescribe('PreferenceService', () => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
           expect(error.error).toEqual('Mock Error');
+          done();
         }
       );
   });
@@ -107,7 +108,7 @@ xdescribe('PreferenceService', () => {
     });
   });
 
-  it('Should not fetch preference by key if error occurred', () => {
+  it('Should not fetch preference by key if error occurred', (done) => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.getPreferenceByKey('mock-app-name', 'mock-preference-key')
       .subscribe(
@@ -116,6 +117,7 @@ xdescribe('PreferenceService', () => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
           expect(error.error).toEqual('Mock Error');
+          done();
         }
       );
   });
@@ -132,7 +134,7 @@ xdescribe('PreferenceService', () => {
     });
   });
 
-  it('Should not create preference if error occurred', () => {
+  it('Should not create preference if error occurred', (done) => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.createPreference('mock-app-name', 'mock-preference-key', createMockPreference)
       .subscribe(
@@ -141,6 +143,7 @@ xdescribe('PreferenceService', () => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
           expect(error.error).toEqual('Mock Error');
+          done();
         }
       );
   });
@@ -157,7 +160,7 @@ xdescribe('PreferenceService', () => {
     });
   });
 
-  it('Should not update preference if error occurred', () => {
+  it('Should not update preference if error occurred', (done) => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.createPreference('mock-app-name', 'mock-preference-key', updateMockPreference)
       .subscribe(
@@ -166,6 +169,7 @@ xdescribe('PreferenceService', () => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
           expect(error.error).toEqual('Mock Error');
+          done();
         }
       );
   });
@@ -178,7 +182,7 @@ xdescribe('PreferenceService', () => {
     });
   });
 
-  it('Should not delete preference if error occurred', () => {
+  it('Should not delete preference if error occurred', (done) => {
     getInstanceSpy.and.returnValue(apiErrorMock);
     service.deletePreference('mock-app-name', 'mock-preference-key')
       .subscribe(
@@ -187,6 +191,7 @@ xdescribe('PreferenceService', () => {
           expect(error.state).toEqual(404);
           expect(error.stateText).toEqual('Not Found');
           expect(error.error).toEqual('Mock Error');
+          done();
         }
       );
   });
