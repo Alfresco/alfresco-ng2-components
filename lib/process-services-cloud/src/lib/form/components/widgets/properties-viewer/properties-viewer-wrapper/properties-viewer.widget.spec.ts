@@ -22,9 +22,9 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper.component';
 import { ProcessServiceCloudTestingModule } from '../../../../../testing/process-service-cloud.testing.module';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { fakeNodeWithProperties } from '../../../../mocks/attach-file-cloud-widget.mock';
-import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
+import { NodesApiService, BasicPropertiesService, TagService } from '@alfresco/adf-content-services';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let component: PropertiesViewerWrapperComponent;
@@ -38,7 +38,18 @@ describe('PropertiesViewerWidgetComponent', () => {
         ],
         providers: [
             NodesApiService,
-            { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }
+            {
+                provide: BasicPropertiesService,
+                useValue: {
+                    getProperties: () => []
+                }
+            },
+            {
+                provide: TagService,
+                useValue: {
+                    getTagsByNodeId: () => EMPTY
+                }
+            }
         ]
     });
 
