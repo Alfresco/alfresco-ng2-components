@@ -16,11 +16,13 @@
  */
 
 import { ContentLinkModel } from './content-link.model';
-
+export class UploadWidgetContentLinkModelOptions {
+    linkedWidgetType: string;
+}
 export class UploadWidgetContentLinkModel extends ContentLinkModel {
     uploadWidgetId: string;
 
-    constructor(obj?: any, uploadWidgetId?: string) {
+    constructor(obj?: any, uploadWidgetId?: string, public options?: UploadWidgetContentLinkModelOptions) {
         super(obj);
         this.uploadWidgetId = uploadWidgetId;
     }

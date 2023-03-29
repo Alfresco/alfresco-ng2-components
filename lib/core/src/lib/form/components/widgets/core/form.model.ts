@@ -91,7 +91,13 @@ export class FormModel implements ProcessFormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormValidationService, enableFixedSpace?: boolean) {
+    constructor(
+        json?: any,
+        formValues?: FormValues,
+        readOnly: boolean = false,
+        protected formService?: FormValidationService,
+        enableFixedSpace?: boolean
+    ) {
         this.readOnly = readOnly;
         this.json = json;
 
@@ -415,8 +421,10 @@ export class FormModel implements ProcessFormModel {
     }
 
     setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
+        const linkedWidgetType = linkedUploadWidgetContentSelected?.options?.linkedWidgetType ?? 'uploadWidget';
+
         const subscribedViewers = this.fieldsCache.filter(field =>
-            linkedUploadWidgetContentSelected.uploadWidgetId === field.params['uploadWidget']
+            linkedUploadWidgetContentSelected.uploadWidgetId === field.params[linkedWidgetType]
         );
 
         subscribedViewers.forEach(viewer => {
