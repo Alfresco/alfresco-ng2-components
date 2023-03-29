@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
+/**
+ * Available modes for tags creator.
+ * Create mode allows only for creating completely new tags.
+ * Create and Assign mode allows for both - creation of new tags and selection of existing tags. 
+ */
 export enum TagsCreatorMode {
     CREATE,
     CREATE_AND_ASSIGN

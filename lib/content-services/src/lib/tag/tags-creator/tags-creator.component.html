@@ -54,7 +54,7 @@
 <div
     class="adf-existing-tags-panel"
     *ngIf="existingTagsPanelVisible">
-    <ng-container *ngIf="!existingTagsLoading || existingTags">
+    <ng-container *ngIf="!spinnerVisible || existingTags">
         <span
             class="adf-create-tag-label"
             (click)="addTag()"
@@ -67,7 +67,7 @@
     </ng-container>
     <div class="adf-tags-list">
         <mat-selection-list
-            *ngIf="!existingTagsLoading || existingTags"
+            *ngIf="!spinnerVisible || existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)"
             [disabled]="isOnlyCreateMode()">
             <mat-list-option
@@ -79,7 +79,7 @@
             <p *ngIf="!existingTags?.length">{{ 'TAG.TAGS_CREATOR.NO_EXISTING_TAGS' | translate }}</p>
         </mat-selection-list>
         <mat-spinner
-            *ngIf="existingTagsLoading"
+            *ngIf="spinnerVisible || typing"
             [diameter]="50"
             [attr.aria-label]="'TAG.TAGS_CREATOR.TAGS_LOADING' | translate">
         </mat-spinner>

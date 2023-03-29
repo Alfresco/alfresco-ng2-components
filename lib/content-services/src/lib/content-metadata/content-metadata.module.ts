@@ -22,7 +22,7 @@ import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
-import { TagModule } from '../tag';
+import { TagModule } from '../tag/tag.module';
 
 @NgModule({
     imports: [

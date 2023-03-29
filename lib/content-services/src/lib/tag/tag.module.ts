@@ -25,7 +25,7 @@ import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { CoreModule } from '@alfresco/adf-core';
 import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
-import { ContentDirectiveModule } from '../directives';
+import { ContentDirectiveModule } from '../directives/content-directive.module';
 
 @NgModule({
     imports: [

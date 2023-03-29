@@ -48,6 +48,9 @@ const DEFAULT_TAGS_SORTING = {
     direction: 'asc'
 };
 
+/**
+ * Allows to create multiple tags. That component contains input and two lists. Top list is all created tags, bottom list is searched tags based on input's value.
+ */
 @Component({
     selector: 'adf-tags-creator',
     templateUrl: './tags-creator.component.html',
@@ -55,16 +58,28 @@ const DEFAULT_TAGS_SORTING = {
     encapsulation: ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
+    /**
+     * Mode for component.
+     * In Create mode we can't select existing tags, we can only create them.
+     * In Create and Assign mode we can both - create tags and select existing tags.
+     */
     @Input()
     mode: TagsCreatorMode;
 
+    /**
+     * False if tags can be removed from top list, true otherwise.
+     */
     @Input()
     disabledTagsRemoving = false;
 
+    /**
+     * Default top list.
+     * @param tags tags which should be displayed as default tags for top list.
+     */
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
-        this._existingTagsLoading = true;
+        this._spinnerVisible = true;
         this._initialExistingTags = null;
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
@@ -75,6 +90,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tags;
     }
 
+    /**
+     * Decides if input for tags creation/searching should be visible. When input is hidden then panel of existing tags is hidden as well.
+     * @param tagNameControlVisible true if input should be visible, false otherwise.
+     */
     @Input()
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
@@ -93,10 +112,19 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tagNameControlVisible;
     }
 
+    /**
+     * Emitted when bottom list is showing or hiding.
+     */
     @Output()
     existingTagsPanelVisibilityChange = new EventEmitter<boolean>();
     @Output()
+    /**
+     * Emitted when tags in top list are changed.
+     */
     tagsChange = new EventEmitter<string[]>();
+    /**
+     * Emitted when input is showing or hiding.
+     */
     @Output()
     tagNameControlVisibleChange = new EventEmitter<boolean>();
 
@@ -125,7 +153,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _initialExistingTags: TagEntry[];
     private onDestroy$ = new Subject<void>();
     private _tagNameErrorMessageKey = '';
-    private _existingTagsLoading = false;
+    private _spinnerVisible = false;
     private _typing = false;
     private _tagsListScrollbarVisible = false;
     private cancelExistingTagsLoading$ = new Subject<void>();
@@ -151,7 +179,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                 tap((name: string) => {
                     this._typing = true;
                     if (name) {
-                        this._existingTagsLoading = true;
+                        this._spinnerVisible = true;
                         this._existingTagsPanelVisible = true;
                     } else {
                         this._existingTagsPanelVisible = false;
@@ -197,8 +225,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tagNameErrorMessageKey;
     }
 
-    get existingTagsLoading(): boolean {
-        return this._existingTagsLoading;
+    get spinnerVisible(): boolean {
+        return this._spinnerVisible;
     }
 
     get typing(): boolean {
@@ -217,6 +245,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._existingTagsLabelKey;
     }
 
+    /**
+     * Hide input for typing name for new tag or for searching. When input is hidden then panel of existing tags is hidden as well.
+     */
     hideNameInput(): void {
         this.tagNameControlVisible = false;
         this._existingTagsPanelVisible = false;
@@ -224,6 +255,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControlVisibleChange.emit(this.tagNameControlVisible);
     }
 
+    /**
+     * Add tags to top list using value which is set in input. Adding tag is not allowed when value in input is invalid
+     * or if user is still typing what means that validation for input is not called yet.
+     */
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
@@ -235,6 +270,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Remove tag from top list. In case that tag was part of search result then that tag is moved to bottom list
+     * (list of existing tags) after removing so user can reselect it again later.
+     * @param tag tag's name which should be removed from top list.
+     */
     removeTag(tag: string): void {
         this.removeTagFromArray(this.tags, tag);
         this.tagNameControl.updateValueAndValidity();
@@ -243,6 +283,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagsChange.emit(this.tags);
     }
 
+    /**
+     * Called when user selects any tag from list of existing tags. It moves tag from existing tags list to top list.
+     * @param change
+     */
     addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
         const selectedTag: TagEntry = change.options[0].value;
         this.tags.push(selectedTag.entry.tag);
@@ -252,6 +296,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagsChange.emit(this.tags);
     }
 
+    /**
+     * Checks if component is in Create mode.
+     * @return true if Create mode, false otherwise.
+     */
     isOnlyCreateMode(): boolean {
         return this.mode === TagsCreatorMode.CREATE;
     }
@@ -284,10 +332,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                 this._initialExistingTags = searchedResult.list.entries;
                 this.excludeAlreadyAddedTags(this._initialExistingTags);
                 this.exactTagSet$.next();
-                this._existingTagsLoading = false;
+                this._spinnerVisible = false;
             }, () => {
                 this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
-                this._existingTagsLoading = false;
+                this._spinnerVisible = false;
             });
         } else {
             this.existingExactTag = null;

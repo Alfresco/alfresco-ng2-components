@@ -31,7 +31,8 @@ import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.i
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { TagsCreatorMode, TagService } from '../../../tag';
+import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
+import { TagService } from '../../../tag/services/tag.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -220,6 +221,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Called after clicking save button. It confirms all changes done for metadata. Before clicking on that button they are not saved.
+     */
     saveChanges() {
         this._saving = true;
         this.tagNameControlVisible = false;
@@ -232,6 +236,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Register all tags which should be assigned to node. Please note that they are just in "register" state and are not yet saved
+     * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     * @param tags array of tags to register, they are not saved yet until we click save button.
+     */
     storeTagsToAssign(tags: string[]) {
         this._tags = tags;
         this.hasMetadataChanged = true;
