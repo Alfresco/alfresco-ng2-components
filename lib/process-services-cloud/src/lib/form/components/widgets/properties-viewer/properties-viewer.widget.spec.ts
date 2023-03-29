@@ -26,8 +26,8 @@ import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
-import { NodesApiService, BasicPropertiesService, TagService } from '@alfresco/adf-content-services';
-import { EMPTY, of } from 'rxjs';
+import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
+import { of } from 'rxjs';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
@@ -58,18 +58,7 @@ describe('PropertiesViewerWidgetComponent', () => {
         declarations: [PropertiesViewerWrapperComponent],
         providers: [
             NodesApiService,
-            {
-                provide: BasicPropertiesService,
-                useValue: {
-                    getProperties: () => []
-                }
-            },
-            {
-                provide: TagService,
-                useValue: {
-                    getTagsByNodeId: () => EMPTY
-                }
-            }
+            { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }
         ]
     });
 
