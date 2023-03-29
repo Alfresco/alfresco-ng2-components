@@ -36,7 +36,7 @@ describe('NonResponsiveDialogComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should emit NonResponsivePreviewActions.WAIT when clicking on the wait button', async () => {
+    it('should emit NonResponsivePreviewActions.WAIT and close dialog when clicking on the wait button', async () => {
         const waitButton = getButton('#waitButton');
         waitButton.dispatchEvent(new Event('click'));
 
@@ -46,7 +46,7 @@ describe('NonResponsiveDialogComponent', () => {
         expect(matDialogRef.close).toHaveBeenCalledWith(NonResponsivePreviewActionsEnum.WAIT);
     });
 
-    it('should emit NonResponsivePreviewActions.DOWNLOAD when clicking on the wait button', async () => {
+    it('should emit NonResponsivePreviewActions.DOWNLOAD and close dialog when clicking on the download button', async () => {
         const waitButton = getButton('#downloadButton');
         waitButton.dispatchEvent(new Event('click'));
 
