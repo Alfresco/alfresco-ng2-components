@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,9 +27,12 @@ import {
     setupTestBed,
     EventMock,
     ViewerComponent,
-    ViewUtilService
+    ViewUtilService, AppConfigService
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
+import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
+import { of } from 'rxjs';
+import { NonResponsivePreviewActionsEnum } from '../models/non-responsive-preview-actions.enum';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -135,6 +138,7 @@ describe('ViewerComponent', () => {
     let element: HTMLElement;
     let dialog: MatDialog;
     let viewUtilService: ViewUtilService;
+    let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [
@@ -152,7 +156,8 @@ describe('ViewerComponent', () => {
             ViewerWithCustomToolbarActionsComponent
         ],
         providers: [
-            MatDialog
+            MatDialog,
+            { provide: NonResponsiveDialogComponent, useClass: DummyDialogComponent}
         ]
     });
 
@@ -163,6 +168,7 @@ describe('ViewerComponent', () => {
 
         dialog = TestBed.inject(MatDialog);
         viewUtilService = TestBed.inject(ViewUtilService);
+        appConfigService = TestBed.inject(AppConfigService);
         component.fileName = 'test-file.pdf';
     });
 
@@ -604,4 +610,58 @@ describe('ViewerComponent', () => {
             });
         });
     });
+
+    fdescribe('Non Responsive Preview', () => {
+
+        let dialogOpenSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            appConfigService.config = {
+                ...appConfigService.config,
+                'preview-config': {
+                    'enableNonResponsiveDialog':  true,
+                    'enableNonResponsiveDialogReminders': true,
+                    'nonResponsivePreviewInitialTimerInSeconds': 3,
+                    'nonResponsivePreviewReminderTimerInSeconds': 2
+                }
+            }
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
+            component.urlFile = undefined;
+        });
+
+        it('should configure initial timeout to display non responsive dialog when initialising component', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable()
+            expect(component.nonResponsiveInitialTimer).toBeDefined();
+        });
+
+        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(async () => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+            fixture.detectChanges();
+            tick(4000);
+            discardPeriodicTasks();
+
+            expect(component.nonResponsiveReminder).toBeDefined();
+        }));
+
+        it('should show initial non responsive dialog after initial timeout', fakeAsync( async () => {
+            fixture.detectChanges();
+            tick(3000);
+            await fixture.whenStable();
+            expect(dialogOpenSpy).toHaveBeenCalled();
+        }));
+
+        it('should show reminder non responsive dialog after initial dialog', fakeAsync(async () => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+            fixture.detectChanges();
+            tick(3000);
+            await fixture.whenStable();
+            expect(dialogOpenSpy).toHaveBeenCalled();
+
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            tick(2000);
+            await fixture.whenStable();
+            expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
+        }));
+    })
 });

@@ -209,9 +209,9 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
-    private nonResponsiveInitialTimer: NodeJS.Timeout;
-    private nonResponsiveReminder: NodeJS.Timeout;
     private isDialogVisible: boolean = false;
+    public nonResponsiveInitialTimer: NodeJS.Timeout;
+    public nonResponsiveReminder: NodeJS.Timeout;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
