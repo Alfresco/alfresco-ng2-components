@@ -15,7 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    ViewEncapsulation,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    ViewChildren,
+    QueryList,
+    ChangeDetectorRef,
+    HostListener
+} from '@angular/core';
 import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -63,13 +78,16 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     results = new EventEmitter();
 
     private onDestroy$ = new Subject<boolean>();
+    private initialLimitTagsDisplayed: boolean;
+    private initialTagsEntries: TagEntry[] = [];
 
     /**
      * Constructor
      *
      * @param tagService
+     * @param changeDetectorRef
      */
-    constructor(private tagService: TagService) {
+    constructor(private tagService: TagService, private changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnChanges() {
@@ -77,6 +95,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        this.initialLimitTagsDisplayed = this.limitTagsDisplayed;
         this.tagService.refresh
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.refreshTag());
@@ -99,6 +118,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging) => {
                 this.tagsEntries = tagPaging.list.entries;
+                this.initialTagsEntries = tagPaging.list.entries;
                 this.results.emit(this.tagsEntries);
             });
         }
@@ -117,25 +137,37 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         this.refreshTag();
     }
 
+    realw: number;
+    @HostListener('window:resize')
     private calculateTagsToDisplay() {
+        this.tagsEntries = this.initialTagsEntries;
+        this.changeDetectorRef.detectChanges();
+        this.undisplayedTagsCount = 0;
         let tagsToDisplay = 1;
         const containerWidth: number = this.containerView.nativeElement.clientWidth;
         const viewMoreBtnWidth: number = this.containerView.nativeElement.children[1].offsetWidth;
-        const tagChipMargin = this.getTagChipMargin(this.tagChips.get(0));
-        const tagChipsWidth: number = this.tagChips.reduce((acc, val, index) => {
-            if (containerWidth - viewMoreBtnWidth > acc + val._elementRef.nativeElement.offsetWidth) {
+        const firstTag = this.tagChips.get(0);
+        const tagChipMargin = firstTag ? this.getTagChipMargin(this.tagChips.get(0)) : 0;
+        const tagChipsWidth: number = this.tagChips.reduce((tagChipsWidth, val, index) => {
+            tagChipsWidth += val._elementRef.nativeElement.offsetWidth + tagChipMargin;
+            if (containerWidth - viewMoreBtnWidth > tagChipsWidth) {
+                console.log(val._elementRef.nativeElement.offsetWidth)
+                console.log(tagChipMargin);
                 tagsToDisplay = index + 1;
+                this.realw = tagChipsWidth;
             }
-            return acc + val._elementRef.nativeElement.offsetWidth + tagChipMargin;
+            return tagChipsWidth;
         }, 0);
+        console.log(tagsToDisplay);
+        console.log(viewMoreBtnWidth);
+        console.log(containerWidth);
         if ((containerWidth - tagChipsWidth) <= 0) {
             this.columnFlexDirection = tagsToDisplay === 1 && (containerWidth < (this.tagChips.get(0)._elementRef.nativeElement.offsetWidth + viewMoreBtnWidth));
             this.undisplayedTagsCount = this.tagsEntries.length - tagsToDisplay;
             this.tagsEntries = this.tagsEntries.slice(0, tagsToDisplay);
+            console.log(this.tagsEntries);
         }
-        if (!this.undisplayedTagsCount) {
-            this.limitTagsDisplayed = false;
-        }
+        this.limitTagsDisplayed = this.undisplayedTagsCount ? this.initialLimitTagsDisplayed : false;
         this.calculationsDone = true;
     }
 

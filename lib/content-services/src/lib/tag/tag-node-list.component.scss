@@ -11,6 +11,11 @@
     .adf-view-more-button {
         margin: 4px;
         color: var(--adf-theme-foreground-text-color-054);
+        position: absolute;
+
+        &[hidden] {
+            visibility: hidden;
+        }
     }
 
     .adf-full-width {
