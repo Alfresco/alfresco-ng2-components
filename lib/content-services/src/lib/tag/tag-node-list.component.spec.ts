@@ -56,6 +56,7 @@ describe('TagNodeList', () => {
     let fixture: ComponentFixture<TagNodeListComponent>;
     let element: HTMLElement;
     let tagService: TagService;
+    let resizeCallback: ResizeObserverCallback;
 
     function findViewMoreButton(): HTMLButtonElement {
         return element.querySelector('.adf-view-more-button');
@@ -73,6 +74,7 @@ describe('TagNodeList', () => {
     });
 
     beforeEach(() => {
+        const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(TagNodeListComponent);
 
         tagService = TestBed.inject(TagService);
@@ -82,6 +84,7 @@ describe('TagNodeList', () => {
         component = fixture.componentInstance;
         component.nodeId = 'fake-node-id';
         fixture.detectChanges();
+        resizeCallback = resizeObserverSpy.calls.mostRecent().args[0];
     });
 
     describe('Rendering tests', () => {
@@ -237,20 +240,20 @@ describe('TagNodeList', () => {
             expect(findTagChips()).toHaveSize(component.tagsEntries.length);
         });
 
-        it('should not render view more button when there is enough space after window resizing', async () => {
+        it('should not render view more button when there is enough space after resizing', async () => {
             await renderTags();
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
             element.style.maxWidth = '800px';
-            window.dispatchEvent(new Event('resize'));
+            resizeCallback([], null);
             fixture.detectChanges();
             const viewMoreButton = findViewMoreButton();
             expect(viewMoreButton.hidden).toBeTrue();
             expect(findTagChips()).toHaveSize(4);
         });
 
-        it('should render view more button when there is not enough space after window resizing', async () => {
+        it('should render view more button when there is not enough space after resizing', async () => {
             await renderTags();
             element.style.maxWidth = '800px';
 
@@ -258,14 +261,14 @@ describe('TagNodeList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             element.style.maxWidth = '309px';
-            window.dispatchEvent(new Event('resize'));
+            resizeCallback([], null);
             fixture.detectChanges();
 
             expect(findViewMoreButton().hidden).toBeFalse();
             expect(findTagChips()).toHaveSize(component.tagsEntries.length);
         });
 
-        it('should not render view more button again after resizing when there is not enough space if user requested to see all tags', async () => {
+        it('should not render view more button again resizing when there is not enough space if user requested to see all tags', async () => {
             await renderTags();
             component.ngOnChanges();
             fixture.detectChanges();
@@ -274,7 +277,7 @@ describe('TagNodeList', () => {
             viewMoreButton.click();
             fixture.detectChanges();
             element.style.maxWidth = '309px';
-            window.dispatchEvent(new Event('resize'));
+            resizeCallback([], null);
             fixture.detectChanges();
             expect(viewMoreButton.hidden).toBeTrue();
             expect(findTagChips()).toHaveSize(4);

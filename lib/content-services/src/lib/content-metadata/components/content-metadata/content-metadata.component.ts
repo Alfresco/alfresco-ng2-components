@@ -270,6 +270,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     this.revertChanges();
                     Object.assign(this.node, result.updatedNode);
                     this.nodesApiService.nodeUpdated.next(this.node);
+                    if (Object.keys(result).length > 1 && this.displayTags) {
+                        this.loadTagsForNode(this.node.id);
+                    }
                 }
                 this._saving = false;
             });

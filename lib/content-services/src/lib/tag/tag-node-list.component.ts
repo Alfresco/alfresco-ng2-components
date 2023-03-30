@@ -28,8 +28,7 @@ import {
     ElementRef,
     ViewChildren,
     QueryList,
-    ChangeDetectorRef,
-    HostListener
+    ChangeDetectorRef, AfterViewInit
 } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
@@ -48,7 +47,7 @@ import { MatChip } from '@angular/material/chips';
     styleUrls: ['./tag-node-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
+export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit, AfterViewInit {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** The identifier of a node. */
     @Input()
@@ -83,6 +82,10 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     private initialTagsEntries: TagEntry[] = [];
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllTags = false;
+    private resizeObserver = new ResizeObserver(() => {
+        this.calculateTagsToDisplay();
+        this.changeDetectorRef.detectChanges();
+    });
 
     /**
      * Constructor
@@ -112,9 +115,14 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         });
     }
 
+    ngAfterViewInit() {
+        this.resizeObserver.observe(this.containerView.nativeElement)
+    }
+
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+        this.resizeObserver.unobserve(this.containerView.nativeElement);
     }
 
     refreshTag() {
@@ -138,10 +146,10 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         event.stopPropagation();
         this.limitTagsDisplayed = false;
         this.requestedDisplayingAllTags = true;
+        this.resizeObserver.unobserve(this.containerView.nativeElement);
         this.refreshTag();
     }
 
-    @HostListener('window:resize')
     private calculateTagsToDisplay() {
         if (!this.requestedDisplayingAllTags) {
             this.tagsEntries = this.initialTagsEntries;
