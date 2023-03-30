@@ -10,7 +10,8 @@
         </mat-chip>
     </mat-chip-list>
     <button mat-button
-        *ngIf="limitTagsDisplayed"
+        [hidden]="!limitTagsDisplayed"
+        [style.left.px]="viewMoreButtonLeftOffset"
         class="adf-view-more-button"
         [class.adf-hidden-btn]="!calculationsDone"
         (click)="displayAllTags($event)"

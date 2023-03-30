@@ -239,6 +239,29 @@ describe('ContentMetadataComponent', () => {
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
         }));
 
+        it('should call getTagsByNodeId on TagService on save click', fakeAsync( () => {
+            component.editable = true;
+            component.displayTags = true;
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            const tagPaging = mockTagPaging();
+            const getTagsByNodeIdSpy = spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(of({}));
+
+            updateService.update(property, 'updated-value');
+            tick(600);
+
+            fixture.detectChanges();
+            findTagsCreator().tagsChange.emit([tagPaging.list.entries[0].entry.tag, 'New tag 3']);
+            getTagsByNodeIdSpy.calls.reset();
+            clickOnSave();
+
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        }));
+
         it('should throw error on unsuccessful save', fakeAsync((done) => {
             const logService: LogService = TestBed.inject(LogService);
             component.editable = true;

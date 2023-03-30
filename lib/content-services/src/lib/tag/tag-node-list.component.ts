@@ -15,7 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    ViewEncapsulation,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    ViewChildren,
+    QueryList,
+    ChangeDetectorRef,
+    AfterViewInit
+} from '@angular/core';
 import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -33,7 +48,7 @@ import { MatChip } from '@angular/material/chips';
     styleUrls: ['./tag-node-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
+export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit, AfterViewInit {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
     /** The identifier of a node. */
     @Input()
@@ -57,19 +72,29 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     calculationsDone = false;
     columnFlexDirection = false;
     undisplayedTagsCount = 0;
+    viewMoreButtonLeftOffset: number;
 
     /** Emitted when a tag is selected. */
     @Output()
     results = new EventEmitter();
 
     private onDestroy$ = new Subject<boolean>();
+    private initialLimitTagsDisplayed: boolean;
+    private initialTagsEntries: TagEntry[] = [];
+    private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
+    private requestedDisplayingAllTags = false;
+    private resizeObserver = new ResizeObserver(() => {
+        this.calculateTagsToDisplay();
+        this.changeDetectorRef.detectChanges();
+    });
 
     /**
      * Constructor
      *
      * @param tagService
+     * @param changeDetectorRef
      */
-    constructor(private tagService: TagService) {
+    constructor(private tagService: TagService, private changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnChanges() {
@@ -77,6 +102,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        this.initialLimitTagsDisplayed = this.limitTagsDisplayed;
         this.tagService.refresh
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.refreshTag());
@@ -90,15 +116,21 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         });
     }
 
+    ngAfterViewInit() {
+        this.resizeObserver.observe(this.containerView.nativeElement);
+    }
+
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+        this.resizeObserver.unobserve(this.containerView.nativeElement);
     }
 
     refreshTag() {
         if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging) => {
                 this.tagsEntries = tagPaging.list.entries;
+                this.initialTagsEntries = tagPaging.list.entries;
                 this.results.emit(this.tagsEntries);
             });
         }
@@ -114,29 +146,39 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         event.preventDefault();
         event.stopPropagation();
         this.limitTagsDisplayed = false;
+        this.requestedDisplayingAllTags = true;
+        this.resizeObserver.unobserve(this.containerView.nativeElement);
         this.refreshTag();
     }
 
     private calculateTagsToDisplay() {
-        let tagsToDisplay = 1;
-        const containerWidth: number = this.containerView.nativeElement.clientWidth;
-        const viewMoreBtnWidth: number = this.containerView.nativeElement.children[1].offsetWidth;
-        const tagChipMargin = this.getTagChipMargin(this.tagChips.get(0));
-        const tagChipsWidth: number = this.tagChips.reduce((acc, val, index) => {
-            if (containerWidth - viewMoreBtnWidth > acc + val._elementRef.nativeElement.offsetWidth) {
-                tagsToDisplay = index + 1;
+        if (!this.requestedDisplayingAllTags) {
+            this.tagsEntries = this.initialTagsEntries;
+            this.changeDetectorRef.detectChanges();
+            this.undisplayedTagsCount = 0;
+            let tagsToDisplay = 1;
+            const containerWidth: number = this.containerView.nativeElement.clientWidth;
+            const viewMoreBtnWidth: number = this.containerView.nativeElement.children[1].offsetWidth;
+            const firstTag = this.tagChips.get(0);
+            const tagChipMargin = firstTag ? this.getTagChipMargin(this.tagChips.get(0)) : 0;
+            const tagChipsWidth: number = this.tagChips.reduce((width, val, index) => {
+                width += val._elementRef.nativeElement.offsetWidth + tagChipMargin;
+                if (containerWidth - viewMoreBtnWidth > width) {
+                    tagsToDisplay = index + 1;
+                    this.viewMoreButtonLeftOffset = width;
+                    this.viewMoreButtonLeftOffsetBeforeFlexDirection = width;
+                }
+                return width;
+            }, 0);
+            if ((containerWidth - tagChipsWidth) <= 0) {
+                this.columnFlexDirection = tagsToDisplay === 1 && (containerWidth < (this.tagChips.get(0)._elementRef.nativeElement.offsetWidth + viewMoreBtnWidth));
+                this.undisplayedTagsCount = this.tagsEntries.length - tagsToDisplay;
+                this.tagsEntries = this.tagsEntries.slice(0, tagsToDisplay);
             }
-            return acc + val._elementRef.nativeElement.offsetWidth + tagChipMargin;
-        }, 0);
-        if ((containerWidth - tagChipsWidth) <= 0) {
-            this.columnFlexDirection = tagsToDisplay === 1 && (containerWidth < (this.tagChips.get(0)._elementRef.nativeElement.offsetWidth + viewMoreBtnWidth));
-            this.undisplayedTagsCount = this.tagsEntries.length - tagsToDisplay;
-            this.tagsEntries = this.tagsEntries.slice(0, tagsToDisplay);
+            this.limitTagsDisplayed = this.undisplayedTagsCount ? this.initialLimitTagsDisplayed : false;
+            this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+            this.calculationsDone = true;
         }
-        if (!this.undisplayedTagsCount) {
-            this.limitTagsDisplayed = false;
-        }
-        this.calculationsDone = true;
     }
 
     private getTagChipMargin(chip: MatChip): number {

@@ -4,13 +4,22 @@
     flex-direction: row;
     width: inherit;
 
-    &.adf-flex-column {
-        flex-direction: column;
-    }
-
     .adf-view-more-button {
         margin: 4px;
         color: var(--adf-theme-foreground-text-color-054);
+        position: absolute;
+
+        &[hidden] {
+            visibility: hidden;
+        }
+    }
+
+    &.adf-flex-column {
+        flex-direction: column;
+
+        .adf-view-more-button {
+            position: relative;
+        }
     }
 
     .adf-full-width {
