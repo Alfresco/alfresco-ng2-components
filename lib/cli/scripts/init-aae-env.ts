@@ -377,11 +377,17 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
         if (noError) {
             await checkDescriptorExist(currentAbsentApp.name);
             await sleep(TIME);
+
+            const appInfrastructure = {
+                connector: currentAbsentApp.infrastructure?.connector(),
+                bridges: currentAbsentApp.infrastructure?.bridges
+            };
+
             const deployPayload = {
                 name: currentAbsentApp.name,
                 releaseId: projectRelease.entry.id,
                 security: currentAbsentApp.security,
-                infrastructure: currentAbsentApp.infrastructure,
+                infrastructure: appInfrastructure,
                 variables: currentAbsentApp.variables
             };
             await deploy(deployPayload);
