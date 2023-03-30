@@ -43,9 +43,7 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import { AppConfigService, AppConfigValues } from '../../../src/lib/app-config/app-config.service';
-import ee from 'event-emitter';
-import { Emitter } from 'event-emitter';
-
+import ee, { Emitter } from 'event-emitter';
 
 export interface Emitters {
     readonly eventEmitter: Emitter;
@@ -141,20 +139,20 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any)  {
-        const eventPromise  = Object.assign(promise, {
-            on: function () {
+        const eventPromise = Object.assign(promise, {
+            on() {
                 eventEmitter.on.apply(eventEmitter, arguments);
                 return this;
             },
-            once: function () {
+            once() {
                 eventEmitter.once.apply(eventEmitter, arguments);
                 return this;
             },
-            emit: function () {
+            emit() {
                 eventEmitter.emit.apply(eventEmitter, arguments);
                 return this;
             },
-            off: function () {
+            off() {
                 eventEmitter.off.apply(eventEmitter, arguments);
                 return this;
             }
@@ -168,12 +166,12 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             on: this.on.bind(this),
             off: this.off.bind(this),
             once: this.once.bind(this),
-            emit: this.emit.bind(this),
+            emit: this.emit.bind(this)
         };
 
         return {
-            apiClientEmitter: apiClientEmitter,
-            eventEmitter: ee({}),
+            apiClientEmitter,
+            eventEmitter: ee({})
         };
     }
 
@@ -230,7 +228,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             takeUntil(abort$)
         ).toPromise();
 
-        (promise as any).abort = function () {
+        (promise as any).abort = function() {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
@@ -238,7 +236,6 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         };
 
         return this.addPromiseListeners(promise, eventEmitter);
-        // return promise;
     }
 
     private static getBody(options: RequestOptions): any {
@@ -287,7 +284,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private createCSRFToken(a?: any): string {
-        return a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
+        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
+        return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
     private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
