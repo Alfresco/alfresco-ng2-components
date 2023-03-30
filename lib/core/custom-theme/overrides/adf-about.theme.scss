@@ -1,0 +1,39 @@
+@mixin adf-about-theme($theme) {
+  adf-about {
+    /* custom ADF About Component Theme */
+
+    background-color: var(--theme-about-panel-background-color);
+    overflow: auto;
+
+    mat-accordion {
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    mat-expansion-panel {
+      box-shadow: none !important;
+      border-radius: 12px !important;
+      margin: 24px !important;
+      width: 95%;
+      border: 1px solid var(--theme-about-panel-border-color);
+      background-color: var(--theme-about-panel-background-color);
+      border-radius: 12px;
+    }
+
+    mat-expansion-panel-header {
+      display: flex;
+      height: 80px !important;
+      padding: 24px 24px;
+      line-height: 32px;
+    }
+
+    mat-panel-title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 24px;
+      color: var(--theme-about-panel-title-color);
+    }
+
+  }
+}

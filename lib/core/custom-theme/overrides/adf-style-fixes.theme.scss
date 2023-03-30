@@ -1,0 +1,18 @@
+@mixin adf-style-fixes($theme) {
+  //  add here all ADF style overrides
+  //  and create a task to move them to ADF
+
+  .adf-content-node-selector-content-list {
+    .adf-content-selector-modified-cell {
+      display: none;
+    }
+
+    .adf-content-selector-modifier-cell {
+      display: none;
+    }
+  }
+
+  adf-share-dialog .mat-form-field-label-wrapper label {
+    display: none !important;
+  }
+}

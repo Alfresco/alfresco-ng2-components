@@ -1,0 +1,47 @@
+@mixin adf-pagination-theme($theme) {
+
+  .adf-pagination__block {
+    flex: none !important;
+    padding: 0 !important;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
+  }
+
+  .adf-pagination {
+    height: 32px !important;
+    line-height: 24px !important;
+    padding: 16px 0;
+    background: var(--theme-pagination-background-color);
+  }
+
+  .adf-pagination__range-block {
+    padding: 0 24px !important;
+  }
+
+  .adf-pagination__perpage-block {
+    flex: auto !important;
+    padding-right: 24px !important;
+  }
+
+  .adf-pagination__actualinfo-block {
+    padding-right: 12px !important;
+
+    .mat-menu-trigger {
+      display: none !important;
+    }
+  }
+
+  .adf-pagination__previous-button {
+    margin: 0 12px 0 0 !important;
+  }
+
+  .adf-pagination__next-button {
+    margin: 0 !important;
+  }
+
+  .adf-pagination__controls-block {
+    padding-right: 24px !important;
+  }
+}

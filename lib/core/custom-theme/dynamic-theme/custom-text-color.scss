@@ -1,0 +1,8 @@
+@function get-custom-text-color($text-color, $theme) {
+    $foreground: map-get($custom-theme, foreground);
+
+    $foreground: map_merge($foreground, (text: $text-color));
+    $foreground: map_merge($foreground, (secondary-text: $text-color));
+
+    @return $foreground;
+}

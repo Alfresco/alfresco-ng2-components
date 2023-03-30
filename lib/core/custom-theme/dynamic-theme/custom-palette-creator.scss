@@ -1,0 +1,138 @@
+@use "sass:math";
+
+@function multiply($fore, $back) {
+    $red: red($back) * red($fore) / 255;
+    $green: green($back) * green($fore) / 255;
+    $blue: blue($back) * blue($fore) / 255;
+
+    @return rgb($red, $green, $blue);
+}
+
+@function getColorLuminance($color) {
+  $colors: (
+    'red': red($color),
+    'green': green($color),
+    'blue': blue($color)
+  );
+
+  @each $name, $value in $colors {
+    $adjusted: 0;
+    $value: $value / 255;
+
+    @if $value < 0.03928 {
+      $value: $value / 12.92;
+    } @else {
+      $value: ($value + .055) / 1.055;
+      $value: math.pow($value, 2.4);
+    }
+
+    $colors: map-merge($colors, ($name: $value));
+  }
+
+  @return (map-get($colors, 'red') * .2126) + (map-get($colors, 'green') * .7152) + (map-get($colors, 'blue') * .0722);
+}
+
+@function createTextColor($color, $colorType: 'primary') {
+    $red: red($color);
+    $green: green($color);
+    $blue: blue($color);
+
+    $lightText: $light-primary-text;
+    $darkText: $dark-primary-text;
+
+    @if ($colorType == 'accent') {
+        $lightText: $light-secondary-text;
+        $darkText: $dark-secondary-text;
+    }
+
+    $lightTextLuminance: getColorLuminance($lightText);
+    $darkTextLuminance: getColorLuminance($darkText);
+    $backgroundColorLuminance: getColorLuminance($color);
+
+    $lightTextLuminance: $lightTextLuminance + 0.5;
+    $darkTextLuminance: $darkTextLuminance + 0.5;
+    $backgroundColorLuminance: $backgroundColorLuminance + 0.5;
+
+    $luminanceContrastForLightText: $lightTextLuminance / $backgroundColorLuminance;
+    $luminanceContrastForDarkText: $backgroundColorLuminance / $darkTextLuminance;
+
+    $textColour: $lightText;
+
+    @if ($luminanceContrastForDarkText > $luminanceContrastForLightText) {
+        $textColour: $darkText;
+    }
+
+    @return $textColour;
+}
+
+@function createColorPalette($color, $colorType: 'primary') {
+    $light: #fff;
+    $dark: multiply($color, $color);
+
+    $color50:  mix($light, $color, 88%);
+    $color100:  mix($light, $color, 70%);
+    $color200:  mix($light, $color, 50%);
+    $color300:  mix($light, $color, 30%);
+    $color400:  mix($light, $color, 15%);
+    $color500:  mix($light, $color, 0%);
+    $color600:  mix($dark, $color, 13%);
+    $color700:  mix($dark, $color, 30%);
+    $color800:  mix($dark, $color, 46%);
+    $color900:  mix($dark, $color, 75%);
+
+    $colorA100: lighten(saturate(mix($dark, $color, 15%), 80%), 45.6%);
+    $colorA200: lighten(saturate(mix($dark, $color, 15%), 80%), 35.6%);
+    $colorA400: lighten(saturate(mix($dark, $color, 15%), 100%), 25.6%);
+    $colorA700: lighten(saturate(mix($dark, $color, 15%), 100%), 20.5%);
+
+    $contrast50: createTextColor($color50, $colorType);
+    $contrast100: createTextColor($color100, $colorType);
+    $contrast200: createTextColor($color200, $colorType);
+    $contrast300: createTextColor($color300, $colorType);
+    $contrast400: createTextColor($color400, $colorType);
+    $contrast500: createTextColor($color500, $colorType);
+    $contrast600: createTextColor($color600, $colorType);
+    $contrast700: createTextColor($color700, $colorType);
+    $contrast800: createTextColor($color800, $colorType);
+    $contrast900: createTextColor($color900, $colorType);
+
+    $contrastA100: createTextColor($colorA100, $colorType);
+    $contrastA200: createTextColor($colorA200, $colorType);
+    $contrastA400: createTextColor($colorA400, $colorType);
+    $contrastA700: createTextColor($colorA700, $colorType);
+
+    $palette: (
+        50: $color50,
+        100: $color50,
+        200: $color50,
+        300: $color50,
+        400: $color400,
+        500: $color500,
+        600: $color600,
+        700: $color700,
+        800: $color800,
+        900: $color900,
+        A100: $colorA100,
+        A200: $colorA200,
+        A400: $colorA400,
+        A700: $colorA700,
+        contrast: (
+            50: $contrast50,
+            100: $contrast100,
+            200: $contrast200,
+            300: $contrast300,
+            400: $contrast400,
+            500: $contrast500,
+            600: $contrast600,
+            700: $contrast700,
+            800: $contrast800,
+            900: $contrast900,
+            A100: $contrastA100,
+            A200: $contrastA200,
+            A400: $contrastA400,
+            A700: $contrastA700
+        )
+    );
+
+    @return $palette;
+}

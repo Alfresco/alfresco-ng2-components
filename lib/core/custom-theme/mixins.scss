@@ -1,0 +1,26 @@
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+}
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+@mixin rounded-outline($border-color: var(--theme-blue-button-color), $thickness: 2px, $radius: 4px) {
+  outline: $thickness solid $border-color;
+  border-radius: $radius;
+}
+
+@mixin rounded-border($border-color: var(--theme-blue-button-color), $thickness: 2px, $radius: 4px) {
+  border: $thickness solid $border-color !important;
+  border-radius: $radius;
+}

@@ -1,0 +1,57 @@
+@use '@angular/material' as mat;
+@import '@alfresco/adf-core/theming';
+
+@import 'custom-theme';
+@import 'variables/variables';
+
+@include custom-theme($custom-theme);
+
+$contrast-gray: #646569;
+
+.mat-toolbar {
+  color: var(--theme-text-color, rgba(0, 0, 0, 0.54));
+}
+
+.adf-name-location-cell-location {
+  color: $contrast-gray !important;
+}
+
+.mat-form-field-label, .mat-tab-label, .mat-checkbox-label, .mat-toolbar {
+  color: $contrast-gray !important;
+  opacity: 1 !important;
+}
+
+.mat-tab-label-active {
+  color: #212121 !important;
+}
+
+.adf-upload-dialog {
+  &__header, &__content {
+    color: $contrast-gray;
+  }
+}
+
+.adf-version-list-item {
+  &-comment, &-date {
+    color: $contrast-gray;
+    opacity: 1 !important;
+  }
+}
+
+.mat-chip.mat-standard-chip {
+  background-color: #efefef;
+  color: $contrast-gray;
+}
+
+.adf-textitem-edit-icon.mat-icon {
+  color: $contrast-gray !important;
+}
+
+.adf-property-field.adf-card-textitem-field:hover .adf-property-clear-value {
+  color: $contrast-gray !important;
+}
+
+.adf-empty-content__icon {
+  color: $contrast-gray;
+}
+

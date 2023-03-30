@@ -1,0 +1,49 @@
+@use '@angular/material' as mat;
+@import 'mixins';
+@import 'theme';
+@import 'variables/font-family';
+
+$foreground: map-get($custom-theme, foreground);
+
+html,
+body {
+  @include flex-column;
+  font-size: 14px;
+  font-family: $default-font-family;
+  color: mat.get-color-from-palette($foreground, text, 0.87);
+  margin: 0;
+
+  & > main {
+    @include flex-column;
+  }
+}
+
+.mat-icon {
+  overflow: unset !important;
+}
+
+[dir='rtl'] .mat-icon {
+  transform: scale(-1, 1);
+}
+
+// todo: move this to corresponding component theme files
+.adf-container-full-width {
+  overflow: hidden;
+}
+app-root,
+app-shell,
+app-about,
+adf-layout-container,
+aca-search-results,
+ng-component {
+  @include flex-column;
+}
+@media screen and (max-width: 600px) {
+  app-root,
+  app-about,
+  adf-layout-container,
+  aca-search-results,
+  ng-component {
+    height: 80vh;
+  }
+}

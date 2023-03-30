@@ -1,0 +1,16 @@
+@function get-custom-background-color($background-color, $theme) {
+    $background: map-get($theme, background);
+
+    $card: map-get($background, card);
+
+    $new-card-color: lighten($background-color, 10%);
+    $new-selected-button: lighten($background-color, 5%);
+
+    $background: map_merge($background, (background: $background-color));
+    $background: map_merge($background, (card: $new-card-color));
+    $background: map_merge($background, (modal: $new-card-color));
+    $background: map_merge($background, (dialog: $new-card-color));
+    $background: map_merge($background, (selected-button: $new-selected-button));
+
+    @return $background;
+}
