@@ -116,8 +116,12 @@
     .adf-login-button {
         width: 100%;
         height: 36px;
-        line-height: 38px;
+        line-height: normal;
         box-shadow: none;
+    }
+
+    .adf-login-button .mat-button-wrapper {
+        display: inline-flex;
     }
 
     .adf-login-button-label {
@@ -144,6 +148,7 @@
     .adf-interactive-login-label {
         display: flex;
         flex-direction: row;
+        line-height: 38px;
         justify-content: center;
     }
 
