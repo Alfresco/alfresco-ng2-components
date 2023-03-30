@@ -241,7 +241,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             takeUntil(abort$)
         ).toPromise();
 
-        (promise as any).abort = function () {
+        (promise as any).abort = function() {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
