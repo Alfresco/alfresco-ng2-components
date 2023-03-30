@@ -26,3 +26,11 @@ export interface RequestOptions {
     readonly accept?: string;
     readonly contentType?: string;
 }
+
+export interface SecurityOptions {
+    readonly isBpmRequest: boolean;
+    readonly enableCsrf?: boolean;
+    readonly withCredentials?: boolean;
+    readonly authentications: any;
+    readonly defaultHeaders: Record<string, string>;
+}
