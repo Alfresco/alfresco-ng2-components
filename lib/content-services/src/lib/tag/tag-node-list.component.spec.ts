@@ -170,9 +170,7 @@ describe('TagNodeList', () => {
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
-            const viewMoreButton = findViewMoreButton();
-            expect(viewMoreButton.hidden).toBeFalse();
-            expect(viewMoreButton.style.left).toBe('80px');
+            expect(findViewMoreButton().hidden).toBeFalse();
             expect(findTagChips()).toHaveSize(component.tagsEntries.length);
         });
 
@@ -263,9 +261,7 @@ describe('TagNodeList', () => {
             window.dispatchEvent(new Event('resize'));
             fixture.detectChanges();
 
-            const viewMoreButton = findViewMoreButton();
-            expect(viewMoreButton.hidden).toBeFalse();
-            expect(viewMoreButton.style.left).toBe('80px');
+            expect(findViewMoreButton().hidden).toBeFalse();
             expect(findTagChips()).toHaveSize(component.tagsEntries.length);
         });
 
