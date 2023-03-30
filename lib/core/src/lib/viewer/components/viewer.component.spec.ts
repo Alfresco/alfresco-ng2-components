@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,10 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
     CoreTestingModule,
-    setupTestBed,
     EventMock,
     ViewerComponent,
-    ViewUtilService, AppConfigService
+    ViewUtilService, AppConfigService, setupTestBed
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
 import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
@@ -170,6 +169,16 @@ describe('ViewerComponent', () => {
         viewUtilService = TestBed.inject(ViewUtilService);
         appConfigService = TestBed.inject(AppConfigService);
         component.fileName = 'test-file.pdf';
+
+        appConfigService.config = {
+            ...appConfigService.config,
+            'preview-config': {
+                'enableNonResponsiveDialog':  false,
+                'enableNonResponsiveDialogReminders': false,
+                'nonResponsivePreviewInitialTimerInSeconds': 3,
+                'nonResponsivePreviewReminderTimerInSeconds': 2
+            }
+        }
     });
 
     afterEach(() => {
@@ -611,57 +620,87 @@ describe('ViewerComponent', () => {
         });
     });
 
-    fdescribe('Non Responsive Preview', () => {
+});
 
-        let dialogOpenSpy: jasmine.Spy;
+describe('ViewerComponent - Non Responsive Preview',() => {
 
-        beforeEach(() => {
-            appConfigService.config = {
-                ...appConfigService.config,
-                'preview-config': {
-                    'enableNonResponsiveDialog':  true,
-                    'enableNonResponsiveDialogReminders': true,
-                    'nonResponsivePreviewInitialTimerInSeconds': 3,
-                    'nonResponsivePreviewReminderTimerInSeconds': 2
-                }
+    let component: ViewerComponent<any>;
+    let fixture: ComponentFixture<ViewerComponent<any>>;
+    let appConfigService: AppConfigService;
+    let dialog: MatDialog;
+    let dialogOpenSpy: jasmine.Spy;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatButtonModule,
+                MatIconModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: NonResponsiveDialogComponent, useClass: DummyDialogComponent}
+            ]
+        });
+
+        fixture = TestBed.createComponent(ViewerComponent);
+        component = fixture.componentInstance;
+
+        dialog = TestBed.inject(MatDialog);
+        appConfigService = TestBed.inject(AppConfigService);
+        appConfigService.config = {
+            ...appConfigService.config,
+            'preview-config': {
+                'enableNonResponsiveDialog':  true,
+                'enableNonResponsiveDialogReminders': true,
+                'nonResponsivePreviewInitialTimerInSeconds': 3,
+                'nonResponsivePreviewReminderTimerInSeconds': 2
             }
-            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
-            component.urlFile = undefined;
-        });
+        }
+        dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({ afterClosed: () => of(null) } as any);
+        component.urlFile = undefined;
+        component.clearNonResponsiveDialogTimeouts();
+    });
 
-        it('should configure initial timeout to display non responsive dialog when initialising component', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable()
-            expect(component.nonResponsiveInitialTimer).toBeDefined();
-        });
-
-        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync(async () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
-            fixture.detectChanges();
-            tick(4000);
-            discardPeriodicTasks();
-
-            expect(component.nonResponsiveReminder).toBeDefined();
-        }));
-
-        it('should show initial non responsive dialog after initial timeout', fakeAsync( async () => {
-            fixture.detectChanges();
-            tick(3000);
-            await fixture.whenStable();
-            expect(dialogOpenSpy).toHaveBeenCalled();
-        }));
-
-        it('should show reminder non responsive dialog after initial dialog', fakeAsync(async () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
-            fixture.detectChanges();
-            tick(3000);
-            await fixture.whenStable();
-            expect(dialogOpenSpy).toHaveBeenCalled();
-
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
-            tick(2000);
-            await fixture.whenStable();
-            expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
-        }));
+    afterEach(() => {
+        fixture.destroy();
     })
+
+    it('should configure initial timeout to display non responsive dialog when initialising component', fakeAsync(() => {
+        fixture.detectChanges();
+        expect(component.nonResponsiveInitialTimer).toBeDefined();
+    }));
+
+    it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync( () => {
+        dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+        fixture.detectChanges();
+        tick(3000);
+        expect(component.nonResponsiveReminderTimer).toBeDefined();
+        dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+        flush();
+        discardPeriodicTasks();
+    }));
+
+    it('should show initial non responsive dialog after initial timeout', fakeAsync(  () => {
+        fixture.detectChanges();
+        tick(3000);
+        fixture.detectChanges();
+        expect(dialogOpenSpy).toHaveBeenCalled();
+    }));
+
+    it('should show reminder non responsive dialog after initial dialog', fakeAsync( () => {
+        dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+        fixture.detectChanges();
+        tick(3000);
+        expect(dialogOpenSpy).toHaveBeenCalled();
+
+        dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+        tick(2000);
+        expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
+
+        flush();
+        discardPeriodicTasks();
+    }));
 });

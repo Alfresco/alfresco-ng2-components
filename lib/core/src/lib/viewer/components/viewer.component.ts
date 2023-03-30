@@ -30,7 +30,7 @@ import {
     TemplateRef,
     ViewEncapsulation
 } from '@angular/core';
-import {  fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
@@ -41,6 +41,7 @@ import { Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
 import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
 import { AppConfigService } from '../../app-config';
+import { NonResponsivePreviewActionsEnum } from '../models/non-responsive-preview-actions.enum';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableNonResponsiveDialog: true,
@@ -211,7 +212,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible: boolean = false;
     public nonResponsiveInitialTimer: NodeJS.Timeout;
-    public nonResponsiveReminder: NodeJS.Timeout;
+    public nonResponsiveReminderTimer: NodeJS.Timeout;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
@@ -373,24 +374,27 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    private clearNonResponsiveDialogTimeouts() {
+    public clearNonResponsiveDialogTimeouts() {
         if (this.nonResponsiveInitialTimer) {
             clearTimeout(this.nonResponsiveInitialTimer);
         }
-        if (this.nonResponsiveReminder) {
-            clearTimeout(this.nonResponsiveReminder);
+        if (this.nonResponsiveReminderTimer) {
+            clearTimeout(this.nonResponsiveReminderTimer);
         }
     }
 
     private showDialog() {
         if (!this.isDialogVisible) {
             this.isDialogVisible = true;
-            this.dialog.open(NonResponsiveDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe(() => {
+            this.dialog.open(NonResponsiveDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: NonResponsivePreviewActionsEnum) => {
                 this.isDialogVisible = false;
-                if (this.enableNonResponsiveDialogReminders) {
-                    this.nonResponsiveReminder = setTimeout(() => {
-                        this.handleNonResponsiveFilePreview();
-                    }, this.nonResponsivePreviewReminderTimerInSeconds * 1000);
+                if (result === NonResponsivePreviewActionsEnum.WAIT) {
+                    if (this.enableNonResponsiveDialogReminders) {
+                        this.clearNonResponsiveDialogTimeouts();
+                        this.nonResponsiveReminderTimer = setTimeout(() => {
+                            this.handleNonResponsiveFilePreview();
+                        }, this.nonResponsivePreviewReminderTimerInSeconds * 1000);
+                    }
                 }
             });
         }
