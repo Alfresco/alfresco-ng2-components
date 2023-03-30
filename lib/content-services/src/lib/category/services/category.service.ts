@@ -58,6 +58,16 @@ export class CategoryService {
     }
 
     /**
+     * Get a category by ID
+     *
+     * @param categoryId The identifier of a category.
+     * @return Observable<CategoryEntry>
+     */
+    getCategory(categoryId: string): Observable<CategoryEntry> {
+        return from(this.categoriesApi.getCategory(categoryId));
+    }
+
+    /**
      * Creates subcategories under category with provided categoryId
      *
      * @param parentCategoryId The identifier of a parent category.

@@ -21,11 +21,12 @@ import { Subject } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
-import { SearchService } from '../services/search.service';
+import { SearchService } from './search.service';
 import { takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
+import { CategoryService } from '../../category';
 
 export interface SelectedBucket {
     field: FacetField;
@@ -53,7 +54,9 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
-                private translationService: TranslationService) {
+                private translationService: TranslationService,
+                private categoryService: CategoryService
+    ) {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || DEFAULT_PAGE_SIZE;
         }
@@ -79,7 +82,6 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     onDataLoaded(data: any) {
         const context = data.list.context;
-
         if (context) {
             this.parseFacets(context);
         } else {
@@ -101,6 +103,10 @@ export class SearchFacetFiltersService implements OnDestroy {
                 .filter(this.getFilterByMinCount(field.mincount));
             this.sortFacetBuckets(responseBuckets, field.settings?.bucketSortBy, field.settings?.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
             const alreadyExistingField = this.findResponseFacet(itemType, field.label);
+
+            if (field.field === 'cm:categories'){
+                this.loadCategoryNames(responseBuckets);
+            }
 
             if (alreadyExistingField) {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
@@ -333,6 +339,25 @@ export class SearchFacetFiltersService implements OnDestroy {
             }
             return true;
         };
+    }
+
+    private loadCategoryNames(bucketList) {
+        bucketList.map((item) => {
+            const categoryId = item.label.split('/').pop();
+            this.categoryService.getCategory(categoryId)
+                .subscribe(res => {
+                    this.categoryService.searchCategories(res.entry.name).subscribe(
+                        res => {
+                            const nextAfterGeneralPathPartIndex = 3;
+                            const pathSeparator = '/';
+                            const currentCat = res.list.entries.filter(entry => entry.entry.id === categoryId)[0];
+                            const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
+
+                            path ? item.label = `${path}/${currentCat.entry.name}` : item.label = currentCat.entry.name;
+                        }
+                    );
+                });
+        });
     }
 
     unselectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
