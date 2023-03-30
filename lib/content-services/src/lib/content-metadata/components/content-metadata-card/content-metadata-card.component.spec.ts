@@ -55,7 +55,8 @@ describe('ContentMetadataCardComponent', () => {
             content: {},
             properties: {},
             createdByUser: {},
-            modifiedByUser: {}
+            modifiedByUser: {},
+            id: 'some-id'
         } as Node;
 
         component.node = node;
@@ -89,6 +90,10 @@ describe('ContentMetadataCardComponent', () => {
         const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
 
         expect(contentMetadataComponent.node).toBe(node);
+    });
+
+    it('should assign true to displayTags for ContentMetadataComponent', () => {
+        expect(fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance.displayTags).toBeTrue();
     });
 
     it('should pass through the preset to the underlying component', () => {

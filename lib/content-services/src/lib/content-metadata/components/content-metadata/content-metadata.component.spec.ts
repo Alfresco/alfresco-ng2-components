@@ -16,23 +16,24 @@
  */
 
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ClassesApi, MinimalNode, Node } from '@alfresco/js-api';
+import { ClassesApi, MinimalNode, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
     CardViewBaseItemModel, CardViewComponent,
-    LogService, setupTestBed, AppConfigService
+    LogService, setupTestBed, AppConfigService, UpdateNotification
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { throwError, of } from 'rxjs';
+import { throwError, of, EMPTY } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
+import { TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -42,14 +43,64 @@ describe('ContentMetadataComponent', () => {
     let nodesApiService: NodesApiService;
     let node: Node;
     let folderNode: Node;
+    let tagService: TagService;
+
     const preset = 'custom-preset';
+
+    const mockTagPaging = (): TagPaging => {
+        const tagPaging = new TagPaging();
+        tagPaging.list = new TagPagingList();
+        const tagEntry1 = new TagEntry();
+        tagEntry1.entry = new Tag();
+        tagEntry1.entry.tag = 'Tag 1';
+        tagEntry1.entry.id = 'some id 1';
+        const tagEntry2 = new TagEntry();
+        tagEntry2.entry = new Tag();
+        tagEntry2.entry.tag = 'Tag 2';
+        tagEntry2.entry.id = 'some id 2';
+        tagPaging.list.entries = [tagEntry1, tagEntry2];
+        return tagPaging;
+    };
+
+    const findTagElements = (): DebugElement[] => fixture.debugElement.queryAll(By.css('.adf-metadata-properties-tag'));
+
+    const findCancelButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=reset-metadata]')).nativeElement;
+
+    const clickOnCancel = () => {
+        findCancelButton().click();
+        fixture.detectChanges();
+    };
+
+    const findSaveButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-metadata]')).nativeElement;
+
+    const clickOnSave = () => {
+        findSaveButton().click();
+        fixture.detectChanges();
+    };
+
+    const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
+
+    const findShowingTagInputButton = (): HTMLButtonElement =>
+        fixture.debugElement.query(By.css('[data-automation-id=showing-tag-input-button]')).nativeElement;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
+        providers: [{
+            provide: LogService,
+            useValue: {
+                error: jasmine.createSpy('error')
+            }
+        }, {
+            provide: TagService,
+            useValue: {
+                getTagsByNodeId: () => EMPTY,
+                removeTag: () => EMPTY,
+                assignTagsToNode: () => EMPTY
+            }
+        }]
     });
 
     beforeEach(() => {
@@ -58,6 +109,7 @@ describe('ContentMetadataComponent', () => {
         contentMetadataService = TestBed.inject(ContentMetadataService);
         updateService = TestBed.inject(CardViewContentUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
+        tagService = TestBed.inject(TagService);
 
         node = {
             id: 'node-id',
@@ -151,12 +203,40 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-            saveButton.nativeElement.click();
+            clickOnSave();
 
             await fixture.whenStable();
             expect(component.node).toEqual(expectedNode);
             expect(nodesApiService.updateNode).toHaveBeenCalled();
+        }));
+
+        it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync( () => {
+            component.editable = true;
+            component.displayTags = true;
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            const tagPaging = mockTagPaging();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            spyOn(tagService, 'removeTag').and.returnValue(EMPTY);
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
+            const tagName1 = tagPaging.list.entries[0].entry.tag;
+            const tagName2 = 'New tag 3';
+
+            updateService.update(property, 'updated-value');
+            tick(600);
+
+            fixture.detectChanges();
+            findTagsCreator().tagsChange.emit([tagName1, tagName2]);
+            clickOnSave();
+
+            const tag1 = new TagBody();
+            tag1.tag = tagName1;
+            const tag2 = new TagBody();
+            tag2.tag = tagName2;
+            expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
+            expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
         }));
 
         it('should throw error on unsuccessful save', fakeAsync((done) => {
@@ -177,11 +257,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-                saveButton.nativeElement.click();
-                fixture.detectChanges();
-            });
+            fixture.whenStable().then(() => clickOnSave());
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
@@ -196,13 +272,45 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-            saveButton.nativeElement.click();
+            clickOnSave();
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
             expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
+        }));
+
+        it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
+            component.editable = true;
+            component.displayTags = true;
+            const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
+            spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            const tagPaging = mockTagPaging();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            spyOn(tagService, 'removeTag').and.returnValue(EMPTY);
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
+            const tagName1 = tagPaging.list.entries[0].entry.tag;
+            const tagName2 = 'New tag 3';
+
+            updateService.update(property, 'ft:poppoli');
+            tick(600);
+
+            fixture.detectChanges();
+            findTagsCreator().tagsChange.emit([tagName1, tagName2]);
+            tick(100);
+            fixture.detectChanges();
+            clickOnSave();
+
+            tick(100);
+            const tag1 = new TagBody();
+            tag1.tag = tagName1;
+            const tag2 = new TagBody();
+            tag2.tag = tagName2;
+            expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
+            expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
         }));
 
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
@@ -218,8 +326,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-            saveButton.nativeElement.click();
+            clickOnSave();
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
@@ -774,6 +881,244 @@ describe('ContentMetadataComponent', () => {
             element.triggerEventHandler('keydown', event);
             expect(event.stopPropagation).not.toHaveBeenCalled();
         });
+    });
+
+    describe('Tags list', () => {
+        let tagPaging: TagPaging;
+
+        beforeEach(() => {
+            tagPaging = mockTagPaging();
+            component.displayTags = true;
+        });
+
+        it('should render tags after loading tags in ngOnInit', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(2);
+            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not render tags after loading tags in ngOnInit if displayTags is false', () => {
+            component.displayTags = false;
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+        });
+
+        it('should render tags after loading tags in ngOnChanges', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(2);
+            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not render tags after loading tags in ngOnChanges if displayTags is false', () => {
+            component.displayTags = false;
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+        });
+
+        it('should not render tags after loading tags in ngOnChanges if node is not changed', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+        });
+
+        it('should not render tags after loading tags in ngOnChanges if node is changed first time', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, true)
+            });
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(0);
+            expect(tagService.getTagsByNodeId).not.toHaveBeenCalled();
+        });
+
+        it('should render tags after loading tags after clicking on Cancel button', fakeAsync(() => {
+            component.editable = true;
+            fixture.detectChanges();
+            TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
+                changed: {}
+            } as UpdateNotification);
+            tick(500);
+            fixture.detectChanges();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+
+            clickOnCancel();
+            component.editable = false;
+            fixture.detectChanges();
+            const tagElements = findTagElements();
+            expect(tagElements).toHaveSize(2);
+            expect(tagElements[0].nativeElement.textContent).toBe(tagPaging.list.entries[0].entry.tag);
+            expect(tagElements[1].nativeElement.textContent).toBe(tagPaging.list.entries[1].entry.tag);
+            expect(tagService.getTagsByNodeId).toHaveBeenCalledOnceWith(node.id);
+        }));
+
+        it('should be hidden when editable is true', () => {
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            component.editable = true;
+            fixture.detectChanges();
+            expect(findTagElements()).toHaveSize(0);
+        });
+    });
+
+    describe('Tags creator', () => {
+        let tagsCreator: TagsCreatorComponent;
+
+        beforeEach(() => {
+            component.editable = true;
+            component.displayTags = true;
+            fixture.detectChanges();
+            tagsCreator = findTagsCreator();
+        });
+
+        it('should have assigned false to tagNameControlVisible initially', () => {
+            expect(tagsCreator.tagNameControlVisible).toBeFalse();
+        });
+
+        it('should hide showing tag input button after emitting tagNameControlVisibleChange event with true', () => {
+            tagsCreator.tagNameControlVisibleChange.emit(true);
+            fixture.detectChanges();
+            expect(findShowingTagInputButton().hasAttribute('hidden')).toBeTrue();
+        });
+
+        it('should show showing tag input button after emitting tagNameControlVisibleChange event with false', fakeAsync(() => {
+            tagsCreator.tagNameControlVisibleChange.emit(true);
+            fixture.detectChanges();
+            tick();
+            tagsCreator.tagNameControlVisibleChange.emit(false);
+            fixture.detectChanges();
+            tick(100);
+            expect(findShowingTagInputButton().hasAttribute('hidden')).toBeFalse();
+        }));
+
+        it('should have assigned correct mode', () => {
+            expect(tagsCreator.mode).toBe(TagsCreatorMode.CREATE_AND_ASSIGN);
+        });
+
+        it('should enable cancel button after emitting tagsChange event', () => {
+            tagsCreator.tagsChange.emit(['New tag 1', 'New tag 2', 'New tag 3']);
+            fixture.detectChanges();
+            expect(findCancelButton().disabled).toBeFalse();
+        });
+
+        it('should enable save button after emitting tagsChange event', () => {
+            tagsCreator.tagsChange.emit(['New tag 1', 'New tag 2', 'New tag 3']);
+            fixture.detectChanges();
+            expect(findSaveButton().disabled).toBeFalse();
+        });
+
+        it('should have assigned false to disabledTagsRemoving', () => {
+            expect(tagsCreator.disabledTagsRemoving).toBeFalse();
+        });
+
+        it('should have assigned true to disabledTagsRemoving after clicking on update button', () => {
+            tagsCreator.tagsChange.emit([]);
+            fixture.detectChanges();
+
+            clickOnSave();
+            expect(tagsCreator.disabledTagsRemoving).toBeTrue();
+        });
+
+        it('should have assigned false to disabledTagsRemoving if forkJoin fails', fakeAsync( () => {
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            const tagPaging = mockTagPaging();
+            spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            component.ngOnInit();
+            spyOn(tagService, 'removeTag').and.returnValue(throwError({}));
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
+            const tagName1 = tagPaging.list.entries[0].entry.tag;
+            const tagName2 = 'New tag 3';
+
+            updateService.update(property, 'updated-value');
+            tick(600);
+
+            fixture.detectChanges();
+            tagsCreator.tagsChange.emit([tagName1, tagName2]);
+            clickOnSave();
+
+            expect(tagsCreator.disabledTagsRemoving).toBeFalse();
+        }));
+
+        it('should have assigned false to tagNameControlVisible after clicking on update button', () => {
+            tagsCreator.tagNameControlVisibleChange.emit(true);
+            tagsCreator.tagsChange.emit([]);
+            fixture.detectChanges();
+
+            clickOnSave();
+            expect(tagsCreator.tagNameControlVisible).toBeFalse();
+        });
+
+        describe('Setting tags', () => {
+            let tagPaging: TagPaging;
+
+            beforeEach(() => {
+                tagPaging = mockTagPaging();
+                spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
+            });
+
+            it('should assign correct tags after ngOnInit', () => {
+                component.ngOnInit();
+
+                fixture.detectChanges();
+                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+            });
+
+            it('should assign correct tags after ngOnChanges', () => {
+                component.ngOnInit();
+
+                fixture.detectChanges();
+                expect(tagsCreator.tags).toEqual([tagPaging.list.entries[0].entry.tag, tagPaging.list.entries[1].entry.tag]);
+                expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
+            });
+        });
+    });
+
+    it('should show tags creator if editable is true and displayTags is true', () => {
+        component.editable = true;
+        component.displayTags = true;
+        fixture.detectChanges();
+        expect(findTagsCreator()).toBeDefined();
+    });
+
+    it('should not show tags creator if editable is true and displayTags is false', () => {
+        component.editable = true;
+        component.displayTags = false;
+        fixture.detectChanges();
+        expect(findTagsCreator()).toBeUndefined();
     });
 });
 

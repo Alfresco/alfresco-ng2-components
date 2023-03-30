@@ -96,7 +96,7 @@ export class TagService {
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes
      */
-    removeTag(nodeId: string, tag: string): Observable<any> {
+    removeTag(nodeId: string, tag: string): Observable<void> {
         const observableRemove = from(this.tagsApi.deleteTagFromNode(nodeId, tag));
 
         observableRemove.subscribe((data) => {
@@ -187,6 +187,20 @@ export class TagService {
      */
     deleteTag(tagId: string): Observable<void> {
         return from(this.tagsApi.deleteTag(tagId)).pipe(
+            tap((data) => this.refresh.emit(data))
+        );
+    }
+
+    /**
+     * Assign tags to node. If tag is new then tag is also created additionally, if tag already exists then it is just assigned.
+     *
+     * @param nodeId Id of node to which tags should be assigned.
+     * @param tags List of tags to create and assign or just assign if they already exist.
+     *
+     * @return Just linked tags to node or single tag if linked only one tag.
+     */
+    assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
+        return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(
             tap((data) => this.refresh.emit(data))
         );
     }

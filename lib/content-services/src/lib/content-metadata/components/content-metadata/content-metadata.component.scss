@@ -17,6 +17,45 @@
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
         }
+
+        .adf-metadata-properties-tag {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            margin-top: -14px;
+            margin-bottom: 1em;
+        }
+
+        &-tags {
+            padding: 0 10px 0 26px;
+
+            &-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 15px;
+                height: 68px;
+            }
+
+            adf-tags-creator {
+                .adf-tags-creation {
+                    padding-right: 0;
+                    padding-left: 12px;
+
+                    .adf-tag {
+                        margin-top: -14px;
+                    }
+                }
+
+                &.adf-creator-with-existing-tags-panel {
+                    background: var(--adf-theme-background-dialog-color);
+                }
+            }
+
+            [hidden] {
+                visibility: hidden;
+            }
+        }
     }
 
     &-metadata-action-buttons {

@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-export * from './tag-actions.component';
-export * from './tag-list.component';
-export * from './tag-node-list.component';
-
-export * from './services/tag.service';
-
-export * from './tag.module';
-
-export * from './tags-creator/tags-creator-mode';
-export * from './tags-creator/tags-creator.component';
-
+/**
+ * Available modes for tags creator.
+ * Create mode allows only for creating completely new tags.
+ * Create and Assign mode allows for both - creation of new tags and selection of existing tags.
+ */
+export enum TagsCreatorMode {
+    CREATE,
+    CREATE_AND_ASSIGN
+}

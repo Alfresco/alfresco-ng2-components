@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Node } from '@alfresco/js-api';
-import { Observable, Subject, of, zip } from 'rxjs';
+import { Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
+import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
     CardViewItem,
     LogService,
@@ -31,6 +31,8 @@ import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.i
 import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
+import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
+import { TagService } from '../../../tag/services/tag.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -50,7 +52,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Toggles whether the edit button should be shown */
     @Input()
-    editable: boolean = false;
+    set editable(editable: boolean) {
+        this._editable = editable;
+        this._assignedTags = [...this.tags];
+    }
+
+    get editable(): boolean {
+        return this._editable;
+    }
 
     /** Toggles whether to display empty values in the card view */
     @Input()
@@ -86,13 +95,25 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     useChipsForMultiValueProperty: boolean = true;
 
+    /** True if tags should be displayed, false otherwise */
+    @Input()
+    displayTags = false;
+
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
     changedProperties = {};
     hasMetadataChanged = false;
+    tagNameControlVisible = false;
+
+    private _assignedTags: string[] = [];
+    private assignedTagsEntries: TagEntry[] = [];
+    private _editable = false;
+    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
+    private _saving = false;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -100,7 +121,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private logService: LogService,
         private translationService: TranslationService,
-        private appConfig: AppConfigService
+        private appConfig: AppConfigService,
+        private tagService: TagService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -126,6 +148,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
+    }
+
+    get assignedTags(): string[] {
+        return this._assignedTags;
+    }
+
+    get tags(): string[] {
+        return this._tags;
+    }
+
+    get tagsCreatorMode(): TagsCreatorMode {
+        return this._tagsCreatorMode;
+    }
+
+    get saving(): boolean {
+        return this._saving;
     }
 
     protected handleUpdateError(error: Error) {
@@ -160,6 +198,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (node) {
             this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            if (this.displayTags) {
+                this.loadTagsForNode(node.id);
+            }
         }
     }
 
@@ -186,7 +227,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Called after clicking save button. It confirms all changes done for metadata. Before clicking on that button they are not saved.
+     */
     saveChanges() {
+        this._saving = true;
+        this.tagNameControlVisible = false;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();
@@ -196,22 +242,36 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Register all tags which should be assigned to node. Please note that they are just in "register" state and are not yet saved
+     * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     * @param tags array of tags to register, they are not saved yet until we click save button.
+     */
+    storeTagsToAssign(tags: string[]) {
+        this._tags = tags;
+        this.hasMetadataChanged = true;
+    }
+
     private updateNode() {
-        this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
+        forkJoin({
+            updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
+            ...(this.displayTags ? this.saveTags() : {})
+        }).pipe(
             catchError((err) => {
                 this.cardViewContentUpdateService.updateElement(this.targetProperty);
                 this.handleUpdateError(err);
                 return of(null);
             }))
-            .subscribe((updatedNode) => {
-                if (updatedNode) {
+            .subscribe((result) => {
+                if (result) {
                     if (this.hasContentTypeChanged(this.changedProperties)) {
                         this.cardViewContentUpdateService.updateNodeAspect(this.node);
                     }
                     this.revertChanges();
-                    Object.assign(this.node, updatedNode);
+                    Object.assign(this.node, result.updatedNode);
                     this.nodesApiService.nodeUpdated.next(this.node);
                 }
+                this._saving = false;
             });
     }
 
@@ -256,5 +316,32 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private isEmpty(value: any): boolean {
         return value === undefined || value === null || value === '';
+    }
+
+    private loadTagsForNode(id: string) {
+        this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
+            this.assignedTagsEntries = tagPaging.list.entries;
+            this._tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
+            this._assignedTags = [...this._tags];
+        });
+    }
+
+    private saveTags(): { [key: string]: Observable<TagPaging | TagEntry | void> } {
+        const observables: { [key: string]: Observable<TagPaging | TagEntry | void> } = {};
+        if (this.tags) {
+            this.assignedTagsEntries.forEach((tagEntry) => {
+                if (!this.tags.some((tag) => tagEntry.entry.tag === tag)) {
+                    observables[`${tagEntry.entry.id}Removing`] = this.tagService.removeTag(this.node.id, tagEntry.entry.id);
+                }
+            });
+            if (this.tags.length) {
+                observables.tagsAssigning = this.tagService.assignTagsToNode(this.node.id, this.tags.map((tag) => {
+                    const tagBody = new TagBody();
+                    tagBody.tag = tag;
+                    return tagBody;
+                }));
+            }
+        }
+        return observables;
     }
 }

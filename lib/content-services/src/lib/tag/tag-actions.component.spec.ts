@@ -90,7 +90,7 @@ describe('TagActionsComponent', () => {
         it('Tag list click on delete button should delete the tag', async () => {
             component.nodeId = 'fake-node-id';
 
-            spyOn(tagService, 'removeTag').and.returnValue(of(true));
+            spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
 
             component.ngOnChanges();
             fixture.detectChanges();

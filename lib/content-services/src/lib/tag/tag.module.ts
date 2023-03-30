@@ -24,10 +24,13 @@ import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { CoreModule } from '@alfresco/adf-core';
+import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
+import { ContentDirectiveModule } from '../directives/content-directive.module';
 
 @NgModule({
     imports: [
         CommonModule,
+        ContentDirectiveModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
@@ -36,12 +39,14 @@ import { CoreModule } from '@alfresco/adf-core';
     exports: [
         TagActionsComponent,
         TagListComponent,
-        TagNodeListComponent
+        TagNodeListComponent,
+        TagsCreatorComponent
     ],
     declarations: [
         TagActionsComponent,
         TagListComponent,
-        TagNodeListComponent
+        TagNodeListComponent,
+        TagsCreatorComponent
     ]
 })
 export class TagModule {}

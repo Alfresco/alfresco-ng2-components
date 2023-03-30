@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { DialogAspectListService } from './dialog-aspect-list.service';
 import { CardViewContentUpdateService } from '../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
+import { TagService } from '../../tag/services/tag.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,8 @@ export class NodeAspectService {
 
     constructor(private nodesApiService: NodesApiService,
                 private dialogAspectListService: DialogAspectListService,
-                private cardViewContentUpdateService: CardViewContentUpdateService) {
+                private cardViewContentUpdateService: CardViewContentUpdateService,
+                private tagService: TagService) {
     }
 
     updateNodeAspects(nodeId: string, selectorAutoFocusedOnClose?: string) {
@@ -35,6 +37,7 @@ export class NodeAspectService {
             this.nodesApiService.updateNode(nodeId, { aspectNames: [...aspectList] }).subscribe((updatedNode) => {
                 this.nodesApiService.nodeUpdated.next(updatedNode);
                 this.cardViewContentUpdateService.updateNodeAspect(updatedNode);
+                this.tagService.refresh.emit();
             });
         });
     }
