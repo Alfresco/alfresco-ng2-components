@@ -292,6 +292,8 @@ export const mockNodeId = new Promise<string>((resolve) => {
     resolve('mock-node-id');
 });
 
+export const mockMyNodeId = Promise.resolve('-my-');
+
 export const mockNodeIdBasedOnStringVariableValue = new Promise<string>((resolve) => {
     resolve('mock-string-value-node-id');
 });

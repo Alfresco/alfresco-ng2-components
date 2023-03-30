@@ -16,13 +16,15 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
     ColumnsSelectorComponent,
+    CustomEmptyContentTemplateDirective,
     DataColumn,
     DataRowEvent,
+    DataTableModule,
     getDataColumnMock,
     ObjectDataRow,
     setupTestBed
@@ -39,6 +41,9 @@ import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     template: `
@@ -57,19 +62,6 @@ import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column
 class CustomTaskListComponent {
     @ViewChild(ProcessListCloudComponent)
     processListCloud: ProcessListCloudComponent;
-}
-
-@Component({
-    template: `
-        <adf-cloud-process-list>
-            <adf-custom-empty-content-template>
-                <p id="custom-id">TEST</p>
-            </adf-custom-empty-content-template>
-        </adf-cloud-process-list>
-    `
-})
-
-class EmptyTemplateComponent {
 }
 
 describe('ProcessListCloudComponent', () => {
@@ -558,14 +550,33 @@ describe('ProcessListCloudComponent', () => {
 
     describe('Creating an empty custom template - EmptyTemplateComponent', () => {
 
+        @Component({
+            template: `
+                 <adf-cloud-process-list #processListCloud>
+                     <adf-custom-empty-content-template>
+                         <p id="custom-id">TEST</p>
+                     </adf-custom-empty-content-template>
+                 </adf-cloud-process-list>
+            `
+        })
+
+        class EmptyTemplateComponent {
+            @ViewChild(ProcessListCloudComponent)
+            processListCloud: ProcessListCloudComponent;
+        }
+
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
             imports: [
                 TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
+                HttpClientModule,
+                NoopAnimationsModule,
+                DataTableModule,
+                MatProgressSpinnerModule
             ],
-            declarations: [EmptyTemplateComponent]
+            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: LocalPreferenceCloudService }],
+            declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
         });
 
         beforeEach(() => {
@@ -577,14 +588,16 @@ describe('ProcessListCloudComponent', () => {
             fixtureEmpty.destroy();
         });
 
-        it('should render the custom template', fakeAsync((done) => {
+        it('should render the custom template', async () => {
             const emptyList = {list: {entries: []}};
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
-            component.success.subscribe(() => {
-                expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-                expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
-                done();
-            });
-        }));
+            fixtureEmpty.componentInstance.processListCloud.isLoading = false;
+            fixtureEmpty.detectChanges();
+            await fixtureEmpty.whenStable();
+
+            expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+            expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+
+        });
     });
 });

@@ -962,10 +962,8 @@ describe('FormCloudComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeTruthy();
     });
 
-    it('should raise [executeOutcome] event for formService', (done) => {
-        formComponent.executeOutcome.subscribe(() => {
-            done();
-        });
+    it('should raise [executeOutcome] event for formService', async () => {
+        spyOn(formComponent.executeOutcome, 'emit');
 
         const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormCloudComponent.CUSTOM_OUTCOME_ID,
@@ -974,6 +972,10 @@ describe('FormCloudComponent', () => {
 
         formComponent.form = new FormModel();
         formComponent.onOutcomeClicked(outcome);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(formComponent.executeOutcome.emit).toHaveBeenCalledTimes(1);
     });
 
     it('should refresh form values when data is changed', (done) => {

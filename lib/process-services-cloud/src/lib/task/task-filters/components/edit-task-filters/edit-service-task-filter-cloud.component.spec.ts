@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../../services/local-preference-cloud.service';
@@ -35,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-cloud.component';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
+import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 
 describe('EditServiceTaskFilterCloudComponent', () => {
     let component: EditServiceTaskFilterCloudComponent;
@@ -45,6 +46,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     let getTaskFilterSpy: jasmine.Spy;
     let getRunningApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
+    const afterClosedSubject = new Subject<any>();
 
     setupTestBed({
         imports: [
@@ -66,13 +68,10 @@ describe('EditServiceTaskFilterCloudComponent', () => {
         appsService = TestBed.inject(AppsProcessCloudService);
         taskService = TestBed.inject(TaskCloudService);
         dialog = TestBed.inject(MatDialog);
-        spyOn(dialog, 'open').and.returnValue({
-            afterClosed: of({
-                action: EditServiceTaskFilterCloudComponent.ACTION_SAVE,
-                icon: 'icon',
-                name: 'fake-name'
-            })
-        } as any);
+        const dialogRefMock: any = {
+            afterClosed: () =>  afterClosedSubject
+        };
+        spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeServiceFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
@@ -80,18 +79,17 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should fetch task filter by taskId', () => {
+    it('should fetch task filter by taskId', async () => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
         component.ngOnChanges({ id: taskFilterIdChange });
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(getTaskFilterSpy).toHaveBeenCalled();
-            expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
-            expect(component.taskFilter.icon).toEqual('adjust');
-            expect(component.taskFilter.status).toEqual('CREATED');
-            expect(component.taskFilter.order).toEqual('ASC');
-            expect(component.taskFilter.sort).toEqual('id');
-        });
+        await fixture.whenStable();
+        expect(getTaskFilterSpy).toHaveBeenCalled();
+        expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
+        expect(component.taskFilter.icon).toEqual('adjust');
+        expect(component.taskFilter.status).toEqual('COMPLETED');
+        expect(component.taskFilter.order).toEqual('ASC');
+        expect(component.taskFilter.sort).toEqual('id');
     });
 
     it('should fetch process definitions when processDefinitionName filter property is set', async () => {
@@ -636,7 +634,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             spyOn(component.action, 'emit').and.callThrough();
         });
 
-        it('should emit save event and save the filter on click save button', fakeAsync(() => {
+        it('should emit save event and save the filter on click save button', async () => {
             component.toggleFilterActions = true;
             spyOn(service, 'updateFilter').and.returnValue(of(null));
             fixture.detectChanges();
@@ -650,16 +648,15 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             sortOptions[3].nativeElement.click();
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(saveButton.disabled).toBe(false);
-                saveButton.click();
-                expect(service.updateFilter).toHaveBeenCalled();
-                expect(component.action.emit).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(saveButton.disabled).toBe(false);
+            saveButton.click();
+            expect(service.updateFilter).toHaveBeenCalled();
+            expect(component.action.emit).toHaveBeenCalled();
+        });
 
-        it('should emit delete event and delete the filter on click of delete button', fakeAsync(() => {
+        it('should emit delete event and delete the filter on click of delete button', async () => {
             component.toggleFilterActions = true;
             spyOn(service, 'deleteFilter').and.returnValue(of(null));
             fixture.detectChanges();
@@ -670,40 +667,48 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             stateElement.click();
             fixture.detectChanges();
             const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(false);
-                deleteButton.click();
-                expect(service.deleteFilter).toHaveBeenCalled();
-                expect(component.action.emit).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(deleteButton.disabled).toBe(false);
+            deleteButton.click();
+            expect(service.deleteFilter).toHaveBeenCalled();
+            expect(component.action.emit).toHaveBeenCalled();
+        });
 
-        it('should emit saveAs event and add filter on click saveAs button', fakeAsync(() => {
+        it('should emit saveAs event and add filter on click saveAs button', async () => {
             component.toggleFilterActions = true;
             spyOn(service, 'addFilter').and.returnValue(of(null));
             fixture.detectChanges();
+
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
-            const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
-            sortElement.click();
-            fixture.detectChanges();
-            const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-            sortOptions[2].nativeElement.click();
-            fixture.detectChanges();
-            const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(saveAsButton.disabled).toBe(false);
-                saveAsButton.click();
-                expect(service.addFilter).toHaveBeenCalled();
-                expect(component.action.emit).toHaveBeenCalled();
-                expect(dialog.open).toHaveBeenCalled();
-            });
-        }));
 
-        it('should call restore default filters service on deletion of last filter', fakeAsync(() => {
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+
+            const sortOptions = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-edit-task-property-options-sort"] .mat-option-ripple'));
+            sortOptions[3].nativeElement.click();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+            saveButton.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            afterClosedSubject.next({
+                action: TaskFilterDialogCloudComponent.ACTION_SAVE,
+                icon: 'icon',
+                name: 'fake-name'
+            });
+            await fixture.whenStable();
+
+            expect(service.addFilter).toHaveBeenCalled();
+            expect(component.action.emit).toHaveBeenCalled();
+            expect(dialog.open).toHaveBeenCalled();
+        });
+
+        it('should call restore default filters service on deletion of last filter', async () => {
             component.toggleFilterActions = true;
             spyOn(service, 'deleteFilter').and.returnValue(of([]));
             const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
@@ -715,17 +720,16 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             stateElement.click();
             fixture.detectChanges();
             const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(false);
-                deleteButton.click();
-                expect(service.deleteFilter).toHaveBeenCalled();
-                expect(component.action.emit).toHaveBeenCalled();
-                expect(restoreDefaultFiltersSpy).toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(deleteButton.disabled).toBe(false);
+            deleteButton.click();
+            expect(service.deleteFilter).toHaveBeenCalled();
+            expect(component.action.emit).toHaveBeenCalled();
+            expect(restoreDefaultFiltersSpy).toHaveBeenCalled();
+        });
 
-        it('should not call restore default filters service on deletion of first filter', fakeAsync(() => {
+        it('should not call restore default filters service on deletion of first filter', async () => {
             component.toggleFilterActions = true;
             spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name' }]));
             const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
@@ -737,14 +741,13 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             stateElement.click();
             fixture.detectChanges();
             const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(false);
-                deleteButton.click();
-                expect(service.deleteFilter).toHaveBeenCalled();
-                expect(component.action.emit).toHaveBeenCalled();
-                expect(restoreDefaultFiltersSpy).not.toHaveBeenCalled();
-            });
-        }));
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(deleteButton.disabled).toBe(false);
+            deleteButton.click();
+            expect(service.deleteFilter).toHaveBeenCalled();
+            expect(component.action.emit).toHaveBeenCalled();
+            expect(restoreDefaultFiltersSpy).not.toHaveBeenCalled();
+        });
     });
 });

@@ -98,7 +98,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         }
     }
 
-    protected updateFilter(filterToUpdate: TaskFilterCloudModel): Observable<any> {
+    protected updateFilter(filterToUpdate: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         return this.taskFilterCloudService.updateFilter(filterToUpdate);
     }
 
