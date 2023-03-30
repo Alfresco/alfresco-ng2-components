@@ -19,7 +19,7 @@ describe('NonResponsiveDialogComponent', () => {
         return fixture.debugElement.query(By.css(buttonId)).nativeElement;
     };
 
-    beforeEach(async () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [NonResponsiveDialogComponent],
             imports: [
