@@ -117,7 +117,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit, After
     }
 
     ngAfterViewInit() {
-        this.resizeObserver.observe(this.containerView.nativeElement)
+        this.resizeObserver.observe(this.containerView.nativeElement);
     }
 
     ngOnDestroy() {
