@@ -93,6 +93,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Check package-lock.json version
         run: |
           if [[ $(jq '.lockfileVersion == 2' package-lock.json) == "true" ]] ; then
@@ -107,6 +108,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+         fetch-depth: 0
 
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.36.0
@@ -195,9 +198,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-    
+        with: 
+          fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - name: install
         run: |
