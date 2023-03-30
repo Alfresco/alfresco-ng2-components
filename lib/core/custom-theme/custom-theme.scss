@@ -5,31 +5,31 @@
 @import './overrides/adf-about.theme.scss';
 @import './colors';
 
+/* stylelint-disable value-keyword-case */
 $mat-primary-palette: mat.define-palette($aca-primary-blue, A100);
 $mat-accent-palette: mat.define-palette($aca-accent-green, A200);
 $mat-warn-palette: mat.define-palette($aca-warn, A100);
+/* stylelint-enable value-keyword-case */
+$app-typography: mat.define-typography-config($font-family: 'Open Sans');
 
-$app-typography: mat.define-typography-config($font-family: 'Open Sans'
-  );
-
-@include mat.core();
+@include mat.core;
 
 $custom-theme: mat.define-light-theme(
-      (
-          color: (
-              primary: $mat-primary-palette,
-              accent: $mat-accent-palette,
-              warn: $mat-warn-palette
-          ),
-          typography: $app-typography
-      )
+    (
+        color: (
+            primary: $mat-primary-palette,
+            accent: $mat-accent-palette,
+            warn: $mat-warn-palette,
+        ),
+        typography: $app-typography,
+    )
 );
 
 @mixin custom-theme($theme) {
-  @include mat.all-component-themes($theme);
-  @include adf-core-theme($theme);
-  @include adf-style-fixes($theme);
-  @include adf-pagination-theme($theme);
-  @include ay11-theme();
-  @include adf-about-theme($theme);
+    @include mat.all-component-themes($theme);
+    @include adf-core-theme($theme);
+    @include adf-style-fixes($theme);
+    @include adf-pagination-theme($theme);
+    @include ay11-theme;
+    @include adf-about-theme($theme);
 }
