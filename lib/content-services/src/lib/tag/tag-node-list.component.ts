@@ -28,7 +28,8 @@ import {
     ElementRef,
     ViewChildren,
     QueryList,
-    ChangeDetectorRef, AfterViewInit
+    ChangeDetectorRef,
+    AfterViewInit
 } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
