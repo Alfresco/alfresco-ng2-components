@@ -99,23 +99,13 @@ update() {
 
     update_js_dependency "@alfresco/js-api" $JS_API_INSTALLED
 
-    if [ "$NAME_REPO" = "alfresco-apps" ]; then
-        update_dependency "@alfresco/adf-extensions"
-        update_dependency "@alfresco/adf-core"
-        update_dependency "@alfresco/adf-content-services"
-        update_dependency "@alfresco/adf-process-services-cloud"
-        update_dependency "@alfresco/adf-cli"
-        update_dependency "@alfresco/adf-testing"
-    else
-        update_dependency "@alfresco/adf-extensions"
-        update_dependency "@alfresco/adf-core"
-        update_dependency "@alfresco/adf-content-services"
-        update_dependency "@alfresco/adf-process-services"
-        update_dependency "@alfresco/adf-process-services-cloud"
-        update_dependency "@alfresco/adf-cli"
-        update_dependency "@alfresco/adf-testing"
-    fi
-
+    update_dependency "@alfresco/adf-extensions"
+    update_dependency "@alfresco/adf-core"
+    update_dependency "@alfresco/adf-content-services"
+    update_dependency "@alfresco/adf-process-services"
+    update_dependency "@alfresco/adf-process-services-cloud"
+    update_dependency "@alfresco/adf-cli"
+    update_dependency "@alfresco/adf-testing"
 
     if [ "$BRANCH_CREATED" = true ]; then
         git push origin $BRANCH_TO_CREATE
