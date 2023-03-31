@@ -47,7 +47,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.passwordResetStatus = true;
 
         this.peopleApiInstance.requestPasswordReset(
-            this.forgotPasswordForm.controls.userName.value, { 'client': 'adw' } as ClientBody);
+            this.forgotPasswordForm.controls.userName.value, { 'client': 'workspace' } as ClientBody);
     }
 
     isButtonDisabled(): boolean {
