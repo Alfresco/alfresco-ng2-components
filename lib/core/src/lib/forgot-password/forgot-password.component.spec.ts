@@ -28,7 +28,7 @@ describe('ResetPasswordComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule],
-            declarations: [ForgotPasswordComponent],
+            declarations: [ForgotPasswordComponent]
         });
 
         fixture = TestBed.createComponent(ForgotPasswordComponent);
