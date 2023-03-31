@@ -1584,10 +1584,10 @@ describe('DocumentList', () => {
         }), undefined);
     });
 
-    it('should display fileAutoDownload dialog if node size exceeds appConfig.preview-config.fileAutoDownloadSizeThresholdInMB', async () => {
+    it('should display fileAutoDownload dialog if node size exceeds appConfig.viewer.fileAutoDownloadSizeThresholdInMB', async () => {
         appConfigService.config = {
             ...appConfigService.config,
-            'preview-config': {
+            'viewer': {
                 "enableFileAutoDownload": true,
                 "fileAutoDownloadSizeThresholdInMB": 10
             }
@@ -1613,7 +1613,7 @@ describe('DocumentList', () => {
         spyOn(nodeActionService, 'downloadNode');
         appConfigService.config = {
             ...appConfigService.config,
-            'preview-config': {
+            'viewer': {
                 "enableFileAutoDownload": true,
                 "fileAutoDownloadSizeThresholdInMB": 10
             }

@@ -768,8 +768,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
 
-            const fileAutoDownloadFlag: boolean = this.appConfig.get('preview-config.enableFileAutoDownload', true);
-            const sizeThreshold: number = this.appConfig.get('preview-config.fileAutoDownloadSizeThresholdInMB', 15);
+            const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
+            const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
                 this.dialog.open(FileAutoDownloadComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: FileAutoDownloadActionsEnum) => {

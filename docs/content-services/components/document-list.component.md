@@ -799,7 +799,7 @@ file size, the Document List component will first preview a dialog, asking for c
 In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json - 
 
 ```
-"preview-config": {
+"viewer": {
     "enableFileAutoDownload": true,
     "fileAutoDownloadSizeThresholdInMB": 15
 }

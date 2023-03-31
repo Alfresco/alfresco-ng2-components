@@ -1477,7 +1477,7 @@
       "ai:textLines"
     ]
   },
-  "preview-config": {
+  "viewer": {
     "enableFileAutoDownload": true,
     "fileAutoDownloadSizeThresholdInMB": 15
   }
