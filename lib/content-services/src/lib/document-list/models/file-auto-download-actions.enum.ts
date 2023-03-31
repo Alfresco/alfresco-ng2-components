@@ -17,6 +17,6 @@
 
 /* Enum listing the allowed actions that can be emitted from the FileAutoDownload dialog component */
 export enum FileAutoDownloadActionsEnum {
-    CANCEL = "CANCEL",
-    DOWNLOAD = "DOWNLOAD"
+    CANCEL = 'CANCEL',
+    DOWNLOAD = 'DOWNLOAD'
 }

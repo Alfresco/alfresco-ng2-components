@@ -20,7 +20,7 @@ import { FileAutoDownloadActionsEnum } from '../../models/file-auto-download-act
 
 @Component({
   selector: 'adf-file-auto-download',
-  templateUrl: './file-auto-download.component.html',
+  templateUrl: './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {
     FileAutoDownloadActionsEnum = FileAutoDownloadActionsEnum;

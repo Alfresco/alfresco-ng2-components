@@ -68,7 +68,7 @@ import { FileAutoDownloadComponent } from './file-auto-download/file-auto-downlo
 import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
 
 const mockDialog = {
-    open: jasmine.createSpy('open'),
+    open: jasmine.createSpy('open')
 };
 
 describe('DocumentList', () => {
@@ -128,7 +128,7 @@ describe('DocumentList', () => {
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({ list: { entries: [] } })));
 
-        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.CANCEL) as any})
+        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.CANCEL) as any});
     });
 
     afterEach(() => {
@@ -1588,17 +1588,17 @@ describe('DocumentList', () => {
         appConfigService.config = {
             ...appConfigService.config,
             'viewer': {
-                "enableFileAutoDownload": true,
-                "fileAutoDownloadSizeThresholdInMB": 10
+                'enableFileAutoDownload': true,
+                'fileAutoDownloadSizeThresholdInMB': 10
             }
-        }
+        };
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         const node = { entry: {
                 ...mockNode1,
                 content: {
                     ...mockNode1.content,
                     sizeInBytes: 104857600
-                },
+                }
             } };
         documentList.onNodeClick(node);
 
@@ -1609,22 +1609,22 @@ describe('DocumentList', () => {
     });
 
     it('should trigger file download when clicking on Download button on FileAutoDownload dialog', async () => {
-        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any})
+        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any});
         spyOn(nodeActionService, 'downloadNode');
         appConfigService.config = {
             ...appConfigService.config,
             'viewer': {
-                "enableFileAutoDownload": true,
-                "fileAutoDownloadSizeThresholdInMB": 10
+                'enableFileAutoDownload': true,
+                'fileAutoDownloadSizeThresholdInMB': 10
             }
-        }
-        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION
+        };
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         const node = { entry: {
                 ...mockNode1,
                 content: {
                     ...mockNode1.content,
                     sizeInBytes: 104857600
-                },
+                }
             } };
         documentList.onNodeClick(node);
 
