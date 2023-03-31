@@ -258,7 +258,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
+          fetch-depth: 0 # Fetch all history for all tags and branches 
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: nx affected:build $NX_CALCULATION_FLAGS --prod
