@@ -379,7 +379,7 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
             await sleep(TIME);
 
             const appInfrastructure = {
-                connector: currentAbsentApp.infrastructure?.connectors(),
+                restconnector: currentAbsentApp.infrastructure?.connectors(),
                 bridges: currentAbsentApp.infrastructure?.bridges
             };
 
