@@ -24,5 +24,4 @@ import { FileAutoDownloadActionsEnum } from '../../models/file-auto-download-act
 })
 export class FileAutoDownloadComponent {
     FileAutoDownloadActionsEnum = FileAutoDownloadActionsEnum;
-    constructor() {}
 }
