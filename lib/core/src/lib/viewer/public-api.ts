@@ -39,3 +39,4 @@ export * from './directives/viewer-extension.directive';
 export * from './viewer.module';
 
 export * from './models/viewer.model';
+export * from './models/non-responsive-preview-actions.enum'

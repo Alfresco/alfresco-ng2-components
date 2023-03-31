@@ -1478,13 +1478,11 @@
     ]
   },
   "viewer": {
-    "enableFileAutoDownload": true,
-    "fileAutoDownloadSizeThresholdInMB": 15
-  },
-  "preview-config": {
     "enableNonResponsiveDialog":  true,
     "enableNonResponsiveDialogReminders": true,
     "nonResponsivePreviewInitialTimerInSeconds": 50,
-    "nonResponsivePreviewReminderTimerInSeconds": 30
+    "nonResponsivePreviewReminderTimerInSeconds": 30,
+    "enableFileAutoDownload": true,
+    "fileAutoDownloadSizeThresholdInMB": 15
   }
 }

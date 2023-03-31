@@ -31,7 +31,7 @@ import {
 import { Component } from '@angular/core';
 import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
 import { of } from 'rxjs';
-import { NonResponsivePreviewActionsEnum } from '../models/non-responsive-preview-actions.enum';
+import { NonResponsivePreviewActionsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -172,7 +172,7 @@ describe('ViewerComponent', () => {
 
         appConfigService.config = {
             ...appConfigService.config,
-            'preview-config': {
+            'viewer': {
                 'enableNonResponsiveDialog':  false,
                 'enableNonResponsiveDialogReminders': false,
                 'nonResponsivePreviewInitialTimerInSeconds': 3,
@@ -627,7 +627,7 @@ describe('ViewerComponent', () => {
         beforeEach(() => {
             appConfigService.config = {
                 ...appConfigService.config,
-                'preview-config': {
+                'viewer': {
                     'enableNonResponsiveDialog':  true,
                     'enableNonResponsiveDialogReminders': true,
                     'nonResponsivePreviewInitialTimerInSeconds': 3,

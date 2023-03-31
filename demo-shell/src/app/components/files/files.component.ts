@@ -251,10 +251,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     selectedNodes = [];
 
-    enableNonResponsiveDialog: boolean = this.appConfig.get('preview-config.enableNonResponsiveDialog', false);
-    enableNonResponsiveDialogReminders: boolean = this.appConfig.get('preview-config.enableNonResponsiveDialogReminders', false);
-    nonResponsivePreviewInitialTimerInSeconds = this.appConfig.get('preview-config.nonResponsivePreviewInitialTimerInSeconds', 50);
-    nonResponsivePreviewReminderTimerInSeconds = this.appConfig.get('preview-config.nonResponsivePreviewReminderTimerInSeconds', 30);
+    enableNonResponsiveDialog: boolean = this.appConfig.get('viewer.enableNonResponsiveDialog', false);
+    enableNonResponsiveDialogReminders: boolean = this.appConfig.get('viewer.enableNonResponsiveDialogReminders', false);
+    nonResponsivePreviewInitialTimerInSeconds = this.appConfig.get('viewer.nonResponsivePreviewInitialTimerInSeconds', 50);
+    nonResponsivePreviewReminderTimerInSeconds = this.appConfig.get('viewer.nonResponsivePreviewReminderTimerInSeconds', 30);
     enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
     fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
@@ -785,22 +785,22 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onEnableNonResponsiveDialogChange() {
-        const previewConfig = this.appConfig?.config['preview-config'];
+        const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['enableNonResponsiveDialog'] = this.enableNonResponsiveDialog;
     }
 
     onNonResponsiveInitialTimerChange() {
-        const previewConfig = this.appConfig?.config['preview-config'];
+        const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['nonResponsivePreviewInitialTimerInSeconds'] = this.nonResponsivePreviewInitialTimerInSeconds
     }
 
     onEnableNonResponsiveDialogReminderChange() {
-        const previewConfig = this.appConfig?.config['preview-config'];
+        const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['enableNonResponsiveDialogReminders'] = this.enableNonResponsiveDialogReminders;
     }
 
     onNonResponsiveReminderTimerChange() {
-        const previewConfig = this.appConfig?.config['preview-config'];
+        const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['nonResponsivePreviewReminderTimerInSeconds'] = this.nonResponsivePreviewReminderTimerInSeconds;
     }
 

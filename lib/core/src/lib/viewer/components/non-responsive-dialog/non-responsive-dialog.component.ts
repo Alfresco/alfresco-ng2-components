@@ -24,5 +24,4 @@ import { NonResponsivePreviewActionsEnum } from '../../models/non-responsive-pre
 })
 export class NonResponsiveDialogComponent {
     NonResponsivePreviewActionsEnum = NonResponsivePreviewActionsEnum;
-    constructor() {}
 }

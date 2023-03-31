@@ -389,7 +389,7 @@ In case the user decides to wait, the viewer can further be configured to displa
 In order to configure this feature, add the following code in `app.config.json`.
 
 ```
-  "preview-config": {
+  "viewer": {
     "enableNonResponsiveDialog":  true,
     "enableNonResponsiveDialogReminders": true,
     "nonResponsivePreviewInitialTimerInSeconds": 50,
