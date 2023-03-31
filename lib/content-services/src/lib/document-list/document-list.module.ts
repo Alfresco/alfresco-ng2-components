@@ -36,7 +36,7 @@ import { LibraryNameColumnComponent } from './components/library-name-column/lib
 import { NameColumnComponent } from './components/name-column/name-column.component';
 import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
 import { FileAutoDownloadComponent } from './components/file-auto-download/file-auto-download.component';
-import { ContentDirectiveModule } from '../directives';
+import { ContentDirectiveModule } from '../directives/content-directive.module';
 
 @NgModule({
     imports: [

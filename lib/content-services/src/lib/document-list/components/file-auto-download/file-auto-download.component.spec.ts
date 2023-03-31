@@ -35,7 +35,7 @@ describe('FileAutoDownloadComponent', () => {
         return fixture.debugElement.query(By.css(buttonId)).nativeElement;
     };
 
-    beforeEach(async () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [FileAutoDownloadComponent],
             imports: [
