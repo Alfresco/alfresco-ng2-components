@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* Enum listing the allowed actions that can be emitted from the FileAutoDownload dialog component */
 export enum FileAutoDownloadActionsEnum {
     CANCEL = "CANCEL",
     DOWNLOAD = "DOWNLOAD"
