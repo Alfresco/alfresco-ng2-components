@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import '../colors';
+@import '../../colors';
 @import './custom-palette-creator.scss';
 
 @function get-mat-palettes($primary-color, $accent-color) {
