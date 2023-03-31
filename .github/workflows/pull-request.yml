@@ -121,18 +121,11 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
-              echo -e "\033[32mci:force check can be skipped\033[0m"
-              exit 0
-          else
-            git fetch --all
-            message=$(git log --format=%B -n 1 origin/$BRANCH_NAME)
-            echo "COMMIT_MESSAGE=$message" >> $GITHUB_ENV
-            export COMMIT_MESSAGE=$message
-            if [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
-              echo "Forcing CI to run with commit flag [ci:force]."
-              echo CI_FORCE_RUN=true >> $GITHUB_ENV
-              echo "BREAK_ACTION=true" >> $GITHUB_ENV
-            fi
+            echo -e "\033[32mci:force check can be skipped\033[0m"
+            skip_check="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+              skip_check="true"
           fi
 
       - name: Get PR number
