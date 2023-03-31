@@ -110,7 +110,7 @@ jobs:
         uses: actions/checkout@v3
         with:
          fetch-depth: 0
-
+         
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.36.0
 
