@@ -93,6 +93,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Check package-lock.json version
         run: |
           if [[ $(jq '.lockfileVersion == 2' package-lock.json) == "true" ]] ; then
@@ -107,9 +108,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+         fetch-depth: 0
 
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.36.0
+
+      - name: Save commit message
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.36.0
 
       - name: ci:force flag parser
         shell: bash
@@ -134,7 +140,7 @@ jobs:
         uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
         id: action
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: show pr number
         shell: bash
@@ -147,10 +153,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
         run: |
-          echo "ci force run: $CI_FORCE_RUN"
-          if [ "${CI_FORCE_RUN}" == "true" ]; then
-              echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
-              skip_check="true"
+          if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
+            echo -e "\033[32mci:force check can be skipped\033[0m"
+            skip_check="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[ci:force]"* ]]; then
+            echo -e "\033[32m[ci:force] flag detected. No need for approval.\033[0m"
+            skip_check="true"
           fi
 
           if [ "${{ github.actor }}" == "dependabot[bot]" ] || [ "${{ github.actor }}" == "alfresco-build" ]; then
@@ -190,7 +198,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
+        with: 
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - name: install
