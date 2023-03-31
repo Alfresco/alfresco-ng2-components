@@ -64,12 +64,10 @@ import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { LockService } from '../services/lock.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
-import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
-import { NodeActionsService } from '../services/node-actions.service';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
@@ -374,8 +372,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private nodeService: NodesApiService,
                 private dataTableService: DataTableService,
                 private lockService: LockService,
-                private dialog: MatDialog,
-                private nodeActionService: NodeActionsService) {
+                private dialog: MatDialog) {
 
         this.nodeService.nodeUpdated.subscribe((node) => {
             this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
@@ -772,11 +769,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
-                this.dialog.open(FileAutoDownloadComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: FileAutoDownloadActionsEnum) => {
-                    if (result === FileAutoDownloadActionsEnum.DOWNLOAD) {
-                        this.nodeActionService.downloadNode(node);
-                    }
-                });
+                this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });
             } else {
                 this.preview.emit(new NodeEntityEvent(node));
             }

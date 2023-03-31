@@ -63,9 +63,7 @@ import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { MatDialog } from '@angular/material/dialog';
-import { NodeActionsService } from '@alfresco/adf-content-services';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
-import { FileAutoDownloadActionsEnum } from '../models/file-auto-download-actions.enum';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
@@ -80,7 +78,6 @@ describe('DocumentList', () => {
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
     let appConfigService: AppConfigService;
-    let nodeActionService: NodeActionsService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -116,7 +113,6 @@ describe('DocumentList', () => {
         thumbnailService = TestBed.inject(ThumbnailService);
         contentService = TestBed.inject(ContentService);
         appConfigService = TestBed.inject(AppConfigService);
-        nodeActionService = TestBed.inject(NodeActionsService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
@@ -127,8 +123,6 @@ describe('DocumentList', () => {
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({ list: { entries: [] } })));
-
-        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.CANCEL) as any});
     });
 
     afterEach(() => {
@@ -1605,33 +1599,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(mockDialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true });
-    });
-
-    it('should trigger file download when clicking on Download button on FileAutoDownload dialog', async () => {
-        mockDialog.open.and.returnValue({ afterClosed: () => of(FileAutoDownloadActionsEnum.DOWNLOAD) as any});
-        spyOn(nodeActionService, 'downloadNode');
-        appConfigService.config = {
-            ...appConfigService.config,
-            'viewer': {
-                'enableFileAutoDownload': true,
-                'fileAutoDownloadSizeThresholdInMB': 10
-            }
-        };
-        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        const node = { entry: {
-                ...mockNode1,
-                content: {
-                    ...mockNode1.content,
-                    sizeInBytes: 104857600
-                }
-            } };
-        documentList.onNodeClick(node);
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(nodeActionService.downloadNode).toHaveBeenCalledWith(node);
+        expect(mockDialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
     });
 
     describe('Preselect nodes', () => {

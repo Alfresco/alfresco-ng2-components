@@ -7,17 +7,18 @@
 <mat-dialog-actions align="end">
     <button
         mat-button
+        mat-dialog-close
         id="cancelButton"
-        [attr.aria-label]="'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.CANCEL' | translate"
-        [mat-dialog-close]="FileAutoDownloadActionsEnum.CANCEL">
+        [attr.aria-label]="'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.CANCEL' | translate">
         {{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.CANCEL' | translate }}
     </button>
     <button
         mat-button
+        mat-dialog-close
         id="downloadButton"
         color="primary"
         [attr.aria-label]="'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.DOWNLOAD' | translate"
-        [mat-dialog-close]="FileAutoDownloadActionsEnum.DOWNLOAD">
+        [adfNodeDownload]="node">
         {{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.DOWNLOAD' | translate }}
     </button>
 </mat-dialog-actions>

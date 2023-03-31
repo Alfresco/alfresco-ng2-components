@@ -18,11 +18,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FileAutoDownloadComponent } from './file-auto-download.component';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { FileAutoDownloadActionsEnum } from '../../models/file-auto-download-actions.enum';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 const mockDialog = {
     close: jasmine.createSpy('close')
@@ -42,8 +42,10 @@ describe('FileAutoDownloadComponent', () => {
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
+            schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                { provide: MatDialogRef, useValue: mockDialog }
+                { provide: MatDialogRef, useValue: mockDialog },
+                { provide: MAT_DIALOG_DATA, useValue: null }
             ]
         });
 
@@ -59,7 +61,7 @@ describe('FileAutoDownloadComponent', () => {
         await fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(matDialogRef.close).toHaveBeenCalledWith(FileAutoDownloadActionsEnum.CANCEL);
+        expect(matDialogRef.close).toHaveBeenCalled();
     });
 
     it('should emit FileAutoDownloadActionsEnum.DOWNLOAD and close dialog when clicking on the wait button', async () => {
@@ -69,6 +71,6 @@ describe('FileAutoDownloadComponent', () => {
         await fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(matDialogRef.close).toHaveBeenCalledWith(FileAutoDownloadActionsEnum.DOWNLOAD);
+        expect(matDialogRef.close).toHaveBeenCalled();
     });
 });

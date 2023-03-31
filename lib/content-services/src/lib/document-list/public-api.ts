@@ -46,7 +46,6 @@ export * from './models/document-library.model';
 export * from './models/permissions.model';
 export * from './models/permissions-style.model';
 export * from './models/node-action.enum';
-export * from './models/file-auto-download-actions.enum';
 
 export * from './interfaces/document-list-loader.interface';
 
