@@ -172,7 +172,7 @@
     "protractor-retry-angular-cli": "^2.0.3",
     "protractor-screenshoter-plugin": "0.10.3",
     "protractor-smartrunner": "^2.0.0-beta6",
-    "rimraf": "^4.4.0",
+    "rimraf": "^4.4.1",
     "sass-loader": "10.1.1",
     "selenium-webdriver": "4.1.0",
     "stylelint": "^14.15.0",
