@@ -2,7 +2,7 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-04-10
+Last reviewed: 2023-04-03
 ---
 
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
@@ -47,6 +47,8 @@ Shows/edits process filter details.
 | appName | `string` | "" | The name of the application. |
 | filterProperties | `string[]` |  | List of process filter properties to display |
 | id | `string` |  | Id of the process instance filter. |
+| environmentId | `string` |  | Environment Id of the process instance filter. |
+| environmentList | `string[]` |  | List of environments. |
 | role | `string` | "" | roles to filter the apps |
 | showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
 | showProcessFilterName | `boolean` | true | Toggles the appearance of the process filter name . |
