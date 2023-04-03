@@ -33,7 +33,8 @@ import {
     FormValues,
     FormModel,
     ContentLinkModel,
-    UploadWidgetContentLinkModel
+    UploadWidgetContentLinkModel,
+    FormEvent
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -119,6 +120,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 if (content instanceof UploadWidgetContentLinkModel) {
                     this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
                     this.onFormDataRefreshed(this.form);
+                    this.formService.formDataRefreshed.next(new FormEvent(this.form));
                 } else {
                     this.formContentClicked.emit(content);
                 }
