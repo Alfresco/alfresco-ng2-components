@@ -20,7 +20,7 @@ import { NonResponsivePreviewActionsEnum } from '../../models/non-responsive-pre
 
 @Component({
     selector: 'adf-non-responsive-dialog',
-    templateUrl: './non-responsive-dialog.component.html',
+    templateUrl: './non-responsive-dialog.component.html'
 })
 export class NonResponsiveDialogComponent {
     NonResponsivePreviewActionsEnum = NonResponsivePreviewActionsEnum;

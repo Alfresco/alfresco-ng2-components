@@ -27,7 +27,7 @@ describe('NonResponsiveDialogComponent', () => {
                 CoreTestingModule
             ],
             providers: [
-                { provide: MatDialogRef, useValue: mockDialog },
+                { provide: MatDialogRef, useValue: mockDialog }
             ]
         });
         matDialogRef = TestBed.inject(MatDialogRef);
@@ -40,7 +40,7 @@ describe('NonResponsiveDialogComponent', () => {
         const waitButton = getButton('#waitButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges()
+        await fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalledWith(NonResponsivePreviewActionsEnum.WAIT);
@@ -50,7 +50,7 @@ describe('NonResponsiveDialogComponent', () => {
         const waitButton = getButton('#downloadButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges()
+        await fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalledWith(NonResponsivePreviewActionsEnum.DOWNLOAD);

@@ -633,7 +633,7 @@ describe('ViewerComponent', () => {
                     'nonResponsivePreviewInitialTimerInSeconds': 3,
                     'nonResponsivePreviewReminderTimerInSeconds': 2
                 }
-            }
+            };
             dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);
             component.urlFile = undefined;
             component.clearNonResponsiveDialogTimeouts();

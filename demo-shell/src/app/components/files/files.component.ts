@@ -791,7 +791,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onNonResponsiveInitialTimerChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['nonResponsivePreviewInitialTimerInSeconds'] = this.nonResponsivePreviewInitialTimerInSeconds
+        previewConfig['nonResponsivePreviewInitialTimerInSeconds'] = this.nonResponsivePreviewInitialTimerInSeconds;
     }
 
     onEnableNonResponsiveDialogReminderChange() {
