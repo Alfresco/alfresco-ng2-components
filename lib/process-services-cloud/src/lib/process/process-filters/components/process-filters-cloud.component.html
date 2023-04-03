@@ -1,17 +1,29 @@
 
-<ng-container *ngIf="filters$ | async as filterList; else loading">
-    <div *ngFor="let filter of filterList" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
-        <button (click)="onFilterClick(filter)"
-          [attr.aria-label]="filter.name | translate"
-          [id]="filter.id"
-          [attr.data-automation-id]="filter.key + '_filter'"
-          mat-button
-          class="adf-filter-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
-          <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcons" [value]="filter.icon"></adf-icon>
-          <span data-automation-id="adf-filter-label" class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
-        </button>
-    </div>
-</ng-container>
+
+<mat-nav-list class="adf-process-filters" *ngIf="filters$ | async as filterList; else loading">
+    <button
+        *ngFor="let filter of filterList"
+        mat-list-item
+        (click)="onFilterClick(filter)"
+        [attr.aria-label]="filter.name | translate"
+        [id]="filter.id"
+        [attr.data-automation-id]="filter.key + '_filter'"
+        [class.adf-active]="currentFilter === filter"
+    >
+        <div class="adf-process-filters__entry">
+            <adf-icon
+                data-automation-id="adf-filter-icon"
+                *ngIf="showIcons"
+                [value]="filter.icon">
+            </adf-icon>
+            <span
+                data-automation-id="adf-filter-label"
+                class="adf-filter-action-button__label">
+                {{ filter.name | translate }}
+            </span>
+        </div>
+    </button>
+</mat-nav-list>
 <ng-template #loading>
     <ng-container>
         <div class="adf-app-list-spinner">

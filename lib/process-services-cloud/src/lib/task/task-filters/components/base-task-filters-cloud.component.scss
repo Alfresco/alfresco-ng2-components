@@ -15,12 +15,6 @@
         }
     }
 
-    .adf-active {
-        .adf-task-filters__entry-label {
-            color: var(--theme-primary-color);
-        }
-    }
-
     &__entry-label {
         display: flex;
         flex: 1;
@@ -37,5 +31,9 @@
             color: var(--adf-theme-mat-grey-color-50);
             font-size: smaller;
         }
+    }
+
+    .adf-active .adf-task-filters__entry-label {
+        color: var(--theme-primary-color);
     }
 }
