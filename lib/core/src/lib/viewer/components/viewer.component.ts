@@ -352,7 +352,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private getNonResponsiveConfig() {
-        const nonResponsivePreviewConfig = this.appConfigService.get('preview-config', DEFAULT_NON_PREVIEW_CONFIG);
+        const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
 
         this.enableNonResponsiveDialog = nonResponsivePreviewConfig.enableNonResponsiveDialog;
         this.enableNonResponsiveDialogReminders = nonResponsivePreviewConfig.enableNonResponsiveDialogReminders;
