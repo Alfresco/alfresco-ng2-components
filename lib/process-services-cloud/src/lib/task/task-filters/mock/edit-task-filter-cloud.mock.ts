@@ -108,3 +108,28 @@ export const mockCreatedDateFilter = {
         to: '_createdTo'
     }
 };
+
+export const mockApplicationsSelectorOptions = [
+    {
+        label: 'application-new-1 (test-env-name-1)',
+        value: 'application-new-1'
+    },
+    {
+        label: 'application-new-1 (test-env-name-1)',
+        value: 'application-new-1'
+    },
+    {
+        label: 'application-new-1 (test-env-name-1)',
+        value: 'application-new-1'
+    }
+];
+
+export const mockApplicationTaskFilterProperties = [
+    {
+        label: 'test-label',
+        type: 'select',
+        key: 'appName',
+        value: mockApplicationsSelectorOptions[0].value,
+        options: mockApplicationsSelectorOptions
+    }
+];

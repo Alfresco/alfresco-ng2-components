@@ -2,7 +2,7 @@
 Title: Edit Task Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-27
+Last reviewed: 2023-04-03
 ---
 
 # [Edit Task Filter Cloud component](../../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filters/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
@@ -47,6 +47,8 @@ Edits task filter details.
 | appName | `string` | "" | (required) Name of the app. |
 | filterProperties | `string[]` | \[] | List of task filter properties to display. |
 | id | `string` |  | (required) ID of the task filter. |
+| environmentId | `string` |  | Environment Id of the task filter. |
+| environmentList | `string[]` |  | List of environments. |
 | processInstanceId | `string` |  | processInstanceId of the task filter. |
 | role | `string` | "" | user role. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |

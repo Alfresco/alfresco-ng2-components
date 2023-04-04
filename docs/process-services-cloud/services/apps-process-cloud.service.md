@@ -2,7 +2,7 @@
 Title: Apps Process Cloud Service
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-09
+Last reviewed: 2023-04-03
 ---
 
 # [Apps Process Cloud Service](../../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts "Defined in apps-process-cloud.service.ts")
@@ -24,6 +24,11 @@ Gets details of deployed apps for the current user.
 
 -   **loadApps**()<br/>
 
+-   **getApplicationLabel**(application: `ApplicationInstanceModel`, environmentList?: `Environment[]`): `string`<br/>
+    Gets application label.
+    -   application:_ `ApplicationInstanceModel`  - Required application
+    -   environmentList:_ `Environment[]`  - (Optional) to add environment name in front of application name
+    -   **Returns** `string` - The application label.
 ## Details
 
 This service implements some features of the [Apps process service](../../core/services/apps-process.service.md)

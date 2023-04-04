@@ -30,6 +30,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
+import { Environment } from '../../../common/interface/environment.interface';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -76,6 +77,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     actions = DEFAULT_ACTIONS;
 
+    /** Environment ID of the application. */
+    @Input()
+    environmentId: string;
+
+    /** List of environments. */
+    @Input()
+    environmentList: Environment[] = [];
+
     /** Toggles editing of process filter actions. */
     @Input()
     showFilterActions = true;
@@ -116,6 +125,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (value?.id) {
             this.id = value.id;
+        }
+
+        if (value?.environmentId) {
+            this.environmentId = value.environmentId;
         }
 
         this.processFilterProperties = this.createAndFilterProperties();
@@ -400,7 +413,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        this.applicationNames.push({ label: application.name, value: application.name });
+                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.name });
                     });
                 }
             });
@@ -624,6 +637,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID',
                 key: 'id',
                 value: 'id'
+            },
+            {
+                label: 'EnvironmentId',
+                key: 'environmentId',
+                value: 'environmentId'
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',

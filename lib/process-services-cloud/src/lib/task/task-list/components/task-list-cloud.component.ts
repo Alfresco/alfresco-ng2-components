@@ -89,6 +89,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     name: string = '';
 
+    /** Filter the tasks to display only the ones with this environment ID. */
+    @Input()
+    environmentId: string;
+
     /** Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. */
     @Input()
     parentTaskId: string = '';
@@ -190,6 +194,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             assignee: this.assignee,
             id: this.id,
             name: this.name,
+            environmentId: this.environmentId,
             parentTaskId: this.parentTaskId,
             processDefinitionName: this.processDefinitionName,
             processDefinitionId: this.processDefinitionId,

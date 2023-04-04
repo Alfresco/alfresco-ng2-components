@@ -27,6 +27,7 @@ export interface ApplicationInstanceModel {
     description?: string;
     connectors?: any;
     descriptor?: Descriptor;
+    environmentId?: string;
 }
 
 export interface Descriptor {

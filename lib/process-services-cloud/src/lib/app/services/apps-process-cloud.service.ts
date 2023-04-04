@@ -21,6 +21,7 @@ import { map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Oauth2Auth } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { Environment } from '../../common/interface/environment.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AppsProcessCloudService {
@@ -56,6 +57,16 @@ export class AppsProcessCloudService {
             app.icon = app.icon ? app.icon : 'favorite';
         });
         this.deployedApps = apps;
+    }
+
+    getApplicationLabel(application: ApplicationInstanceModel, environmentList?: Environment[]): string {
+        const envName = environmentList?.find((env: Environment) => env.id === application.environmentId)?.name;
+
+        if (application.environmentId && environmentList && envName) {
+            return `${application.name} (${envName})`;
+        } else {
+            return application.name;
+        }
     }
 
     private getApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {

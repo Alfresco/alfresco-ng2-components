@@ -22,6 +22,7 @@ export class ProcessQueryCloudRequestModel {
    appVersion?: number | string;
    initiator?: null;
    id?: string;
+   environmentId?: string;
    name?: string;
    processDefinitionId?: string;
    processDefinitionName?: string;
@@ -50,6 +51,7 @@ export class ProcessQueryCloudRequestModel {
            this.appVersion = obj.appVersion;
            this.initiator = obj.initiator;
            this.id = obj.id;
+           this.environmentId = obj.environmentId;
            this.name = obj.name;
            this.processDefinitionId = obj.processDefinitionId;
            this.processDefinitionName = obj.processDefinitionName;
