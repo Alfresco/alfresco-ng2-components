@@ -276,7 +276,7 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const filterCounters = fixture.debugElement.queryAll(By.css('.adf-filter-action-button__counter'));
+        const filterCounters = fixture.debugElement.queryAll(By.css('.adf-task-filters__entry-counter'));
         expect(component.filters.length).toBe(3);
         expect(filterCounters.length).toBe(1);
         expect(filterCounters[0].nativeElement.innerText).toContain('11');

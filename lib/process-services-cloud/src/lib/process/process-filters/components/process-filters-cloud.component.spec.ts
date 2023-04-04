@@ -102,7 +102,7 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
+        const filters = fixture.debugElement.queryAll(By.css('.adf-process-filters__entry'));
         expect(component.filters.length).toBe(3);
         expect(filters.length).toBe(3);
         expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
