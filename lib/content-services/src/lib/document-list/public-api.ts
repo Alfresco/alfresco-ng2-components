@@ -25,6 +25,7 @@ export * from './components/library-status-column/library-status-column.componen
 export * from './components/name-column/name-column.component';
 export * from './components/filter-header/filter-header.component';
 export * from './components/trashcan-name-column/trashcan-name-column.component';
+export * from './components/file-auto-download/file-auto-download.component';
 
 // data
 export * from './data/share-datatable-adapter';

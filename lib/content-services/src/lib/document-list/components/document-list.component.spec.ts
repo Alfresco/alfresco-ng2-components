@@ -27,7 +27,7 @@ import {
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService
+    ThumbnailService, AppConfigService
 } from '@alfresco/adf-core';
 import { ContentService } from '../../common/services/content.service';
 
@@ -62,6 +62,12 @@ import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
+import { MatDialog } from '@angular/material/dialog';
+import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+
+const mockDialog = {
+    open: jasmine.createSpy('open')
+};
 
 describe('DocumentList', () => {
 
@@ -71,6 +77,7 @@ describe('DocumentList', () => {
     let customResourcesService: CustomResourcesService;
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
+    let appConfigService: AppConfigService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -84,7 +91,10 @@ describe('DocumentList', () => {
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers: [
+            { provide: MatDialog, useValue: mockDialog }
+        ]
     });
 
     beforeEach(() => {
@@ -102,6 +112,7 @@ describe('DocumentList', () => {
         customResourcesService = TestBed.inject(CustomResourcesService);
         thumbnailService = TestBed.inject(ThumbnailService);
         contentService = TestBed.inject(ContentService);
+        appConfigService = TestBed.inject(AppConfigService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
@@ -1565,6 +1576,30 @@ describe('DocumentList', () => {
             rootFolderId: 'folder-id',
             where: undefined
         }), undefined);
+    });
+
+    it('should display fileAutoDownload dialog if node size exceeds appConfig.viewer.fileAutoDownloadSizeThresholdInMB', async () => {
+        appConfigService.config = {
+            ...appConfigService.config,
+            'viewer': {
+                'enableFileAutoDownload': true,
+                'fileAutoDownloadSizeThresholdInMB': 10
+            }
+        };
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        const node = { entry: {
+                ...mockNode1,
+                content: {
+                    ...mockNode1.content,
+                    sizeInBytes: 104857600
+                }
+            } };
+        documentList.onNodeClick(node);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(mockDialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
     });
 
     describe('Preselect nodes', () => {

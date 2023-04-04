@@ -1,0 +1,24 @@
+<div mat-dialog-title>
+    <h3>{{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.HEADER' | translate }}</h3>
+</div>
+<mat-dialog-content>
+    {{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.LABEL' | translate }}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button
+        mat-button
+        mat-dialog-close
+        id="cancelButton"
+        [attr.aria-label]="'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.CANCEL' | translate">
+        {{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.CANCEL' | translate }}
+    </button>
+    <button
+        mat-button
+        mat-dialog-close
+        id="downloadButton"
+        color="primary"
+        [attr.aria-label]="'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.DOWNLOAD' | translate"
+        [adfNodeDownload]="node">
+        {{ 'ADF-DOCUMENT-LIST.FILE_AUTO_DOWNLOAD_DIALOG.ACTIONS.DOWNLOAD' | translate }}
+    </button>
+</mat-dialog-actions>

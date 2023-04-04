@@ -251,6 +251,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     selectedNodes = [];
 
+    enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
+    fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
+
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -775,6 +778,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onMultipleFilesUpload() {
         this.selectedNodes = [];
+    }
+
+    onEnableFileAutoDownloadChange() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['enableFileAutoDownload'] = this.enableFileAutoDownload;
+    }
+
+    onFileAutoDownloadSizeThresholdChange() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['fileAutoDownloadSizeThresholdInMB'] = this.fileAutoDownloadSizeThresholdInMB;
     }
 
 }

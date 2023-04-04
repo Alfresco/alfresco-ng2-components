@@ -66,6 +66,10 @@ import { LockService } from '../services/lock.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
+import { MatDialog } from '@angular/material/dialog';
+import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+
+const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
     selector: 'adf-document-list',
@@ -367,7 +371,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private alfrescoApiService: AlfrescoApiService,
                 private nodeService: NodesApiService,
                 private dataTableService: DataTableService,
-                private lockService: LockService) {
+                private lockService: LockService,
+                private dialog: MatDialog) {
 
         this.nodeService.nodeUpdated.subscribe((node) => {
             this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
@@ -758,7 +763,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPreviewFile(node: NodeEntry) {
         if (node) {
-            this.preview.emit(new NodeEntityEvent(node));
+            const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
+
+            const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
+            const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
+
+            if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
+                this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });
+            } else {
+                this.preview.emit(new NodeEntityEvent(node));
+            }
         }
     }
 

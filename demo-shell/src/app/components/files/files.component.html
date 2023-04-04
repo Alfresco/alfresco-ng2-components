@@ -653,6 +653,18 @@
             </mat-form-field>
         </form>
 
+        <section>
+            <mat-slide-toggle
+                color="primary" [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
+                Enable FileAutoDownload
+            </mat-slide-toggle>
+        </section>
+        <section *ngIf="enableFileAutoDownload">
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="fileAutoDownloadSizeThresholdInMB" (change)="onFileAutoDownloadSizeThresholdChange()">
+            </mat-form-field>
+        </section>
+
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field floatPlaceholder="float">

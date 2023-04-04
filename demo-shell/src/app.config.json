@@ -1476,5 +1476,9 @@
       "ai:labels",
       "ai:textLines"
     ]
+  },
+  "viewer": {
+    "enableFileAutoDownload": true,
+    "fileAutoDownloadSizeThresholdInMB": 15
   }
 }
