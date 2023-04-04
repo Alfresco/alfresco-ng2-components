@@ -26,12 +26,13 @@ import {
     CoreTestingModule,
     EventMock,
     ViewerComponent,
-    ViewUtilService, AppConfigService
+    ViewUtilService,
+    AppConfigService,
+    NonResponsiveDialogComponent,
+    NonResponsivePreviewActionsEnum
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
-import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
 import { of } from 'rxjs';
-import { NonResponsivePreviewActionsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
