@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
-/* Enum listing the allowed actions that can be emitted from the NonResponsivePreview dialog component */
-export enum NonResponsivePreviewActionsEnum {
-    'WAIT',
-    'DOWNLOAD'
+import { Component } from '@angular/core';
+import { DownloadPromptActions } from '../../models/download-prompt.actions';
+
+@Component({
+    selector: 'adf-download-prompt-dialog',
+    templateUrl: './download-prompt-dialog.component.html'
+})
+export class DownloadPromptDialogComponent {
+    DownloadPromptActions = DownloadPromptActions;
 }

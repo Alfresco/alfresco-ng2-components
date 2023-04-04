@@ -33,11 +33,11 @@ export * from './components/viewer-toolbar-actions.component';
 export * from './components/viewer-toolbar-custom-actions.component';
 export * from './components/viewer-render.component';
 export * from './components/viewer.component';
-export * from './components/non-responsive-dialog/non-responsive-dialog.component';
+export * from './components/non-responsive-dialog/download-prompt-dialog.component';
 
 export * from './directives/viewer-extension.directive';
 
 export * from './viewer.module';
 
 export * from './models/viewer.model';
-export * from './models/non-responsive-preview-actions.enum'
+export * from './models/download-prompt.actions'

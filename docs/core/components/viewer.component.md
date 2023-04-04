@@ -390,18 +390,18 @@ In order to configure this feature, add the following code in `app.config.json`.
 
 ```
   "viewer": {
-    "enableNonResponsiveDialog":  true,
-    "enableNonResponsiveDialogReminders": true,
-    "nonResponsivePreviewInitialTimerInSeconds": 50,
-    "nonResponsivePreviewReminderTimerInSeconds": 30
+    "enableDownloadPrompt":  true,
+    "enableDownloadPromptReminder": true,
+    "downloadPromptDelay": 50,
+    "downloadPromptReminderDelay": 30
   }
 ```
 
-Here `enableNonResponsiveDialog: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
-`nonResponsivePreviewInitialTimerInSeconds` property. 
+Here `enableDownloadPrompt: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
+`downloadPromptDelay` property. 
 
-The second boolean flag `enableNonResponsiveDialogReminders: true` can be used to configure whether the reminder prompts should be displayed or not. 
-`nonResponsivePreviewReminderTimerInSeconds` property can be used to configure the time to wait between reminder prompts.
+The second boolean flag `enableDownloadPromptReminder: true` can be used to configure whether the reminder prompts should be displayed or not. 
+`downloadPromptReminderDelay` property can be used to configure the time to wait between reminder prompts.
 
 Note: All times in this configuration must be provided in seconds
 

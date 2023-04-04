@@ -251,10 +251,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     selectedNodes = [];
 
-    enableNonResponsiveDialog: boolean = this.appConfig.get('viewer.enableNonResponsiveDialog', false);
-    enableNonResponsiveDialogReminders: boolean = this.appConfig.get('viewer.enableNonResponsiveDialogReminders', false);
-    nonResponsivePreviewInitialTimerInSeconds = this.appConfig.get('viewer.nonResponsivePreviewInitialTimerInSeconds', 50);
-    nonResponsivePreviewReminderTimerInSeconds = this.appConfig.get('viewer.nonResponsivePreviewReminderTimerInSeconds', 30);
+    enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
+    enableDownloadPromptReminders: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
+    downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
+    downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
     enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
     fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
@@ -786,22 +786,22 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onEnableNonResponsiveDialogChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableNonResponsiveDialog'] = this.enableNonResponsiveDialog;
+        previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
     }
 
     onNonResponsiveInitialTimerChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['nonResponsivePreviewInitialTimerInSeconds'] = this.nonResponsivePreviewInitialTimerInSeconds;
+        previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
     }
 
     onEnableNonResponsiveDialogReminderChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableNonResponsiveDialogReminders'] = this.enableNonResponsiveDialogReminders;
+        previewConfig['enableDownloadPromptReminders'] = this.enableDownloadPromptReminders;
     }
 
     onNonResponsiveReminderTimerChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['nonResponsivePreviewReminderTimerInSeconds'] = this.nonResponsivePreviewReminderTimerInSeconds;
+        previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
     }
 
     onEnableFileAutoDownloadChange() {

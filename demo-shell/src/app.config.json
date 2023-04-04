@@ -1478,10 +1478,10 @@
     ]
   },
   "viewer": {
-    "enableNonResponsiveDialog":  true,
-    "enableNonResponsiveDialogReminders": true,
-    "nonResponsivePreviewInitialTimerInSeconds": 50,
-    "nonResponsivePreviewReminderTimerInSeconds": 30,
+    "enableDownloadPrompt":  true,
+    "enableDownloadPromptReminder": true,
+    "downloadPromptDelay": 50,
+    "downloadPromptReminderDelay": 30,
     "enableFileAutoDownload": true,
     "fileAutoDownloadSizeThresholdInMB": 15
   }

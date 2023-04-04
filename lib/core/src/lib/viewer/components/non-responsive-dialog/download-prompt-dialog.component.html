@@ -9,7 +9,7 @@
         mat-button
         id="downloadButton"
         [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
-        [mat-dialog-close]="NonResponsivePreviewActionsEnum.DOWNLOAD">
+        [mat-dialog-close]="DownloadPromptActions.DOWNLOAD">
         {{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}
     </button>
     <button
@@ -17,7 +17,7 @@
         id="waitButton"
         color="primary"
         [attr.aria-label]="'ADF_VIEWER.ACTIONS.WAIT' | translate"
-        [mat-dialog-close]="NonResponsivePreviewActionsEnum.WAIT">
+        [mat-dialog-close]="DownloadPromptActions.WAIT">
         {{ 'ADF_VIEWER.ACTIONS.WAIT' | translate }}
     </button>
 </mat-dialog-actions>

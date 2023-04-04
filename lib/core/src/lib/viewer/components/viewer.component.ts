@@ -39,15 +39,15 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
 import { Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
-import { NonResponsiveDialogComponent } from './non-responsive-dialog/non-responsive-dialog.component';
+import { DownloadPromptDialogComponent } from './non-responsive-dialog/download-prompt-dialog.component';
 import { AppConfigService } from '../../app-config';
-import { NonResponsivePreviewActionsEnum } from '../models/non-responsive-preview-actions.enum';
+import { DownloadPromptActions } from '../models/download-prompt.actions';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
-    enableNonResponsiveDialog: true,
-    enableNonResponsiveDialogReminders: true,
-    nonResponsivePreviewInitialTimerInSeconds: 50,
-    nonResponsivePreviewReminderTimerInSeconds: 30
+    enableDownloadPrompt: true,
+    enableDownloadPromptReminder: true,
+    downloadPromptDelay: 50,
+    downloadPromptReminderDelay: 30
 }
 
 @Component({
@@ -173,22 +173,22 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      * */
-    enableNonResponsiveDialog: boolean = false;
+    enableDownloadPrompt: boolean = false;
 
     /**
      * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
      * */
-    enableNonResponsiveDialogReminders: boolean = false;
+    enableDownloadPromptReminder: boolean = false;
 
     /**
      * Initial time in seconds to wait before giving the first prompt to user to download the file
      * */
-    nonResponsivePreviewInitialTimerInSeconds: number = 50;
+    downloadPromptDelay: number = 50;
 
     /**
      * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
      * */
-    nonResponsivePreviewReminderTimerInSeconds: number = 15;
+    downloadPromptReminderDelay: number = 15;
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
@@ -211,8 +211,8 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible: boolean = false;
-    public nonResponsiveInitialTimer: NodeJS.Timeout;
-    public nonResponsiveReminderTimer: NodeJS.Timeout;
+    public downloadPromptTimer: any;
+    public downloadPromptReminderTimer: any;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
@@ -236,7 +236,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     ngOnInit(): void {
         this.closeOverlayManager();
-        this.configureAndInitNonResponsiveDialog();
+        this.configureAndInitDownloadPrompt();
     }
 
     private closeOverlayManager() {
@@ -339,61 +339,61 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     ngOnDestroy() {
-        this.clearNonResponsiveDialogTimeouts();
+        this.clearDownloadPromptTimeouts();
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    private configureAndInitNonResponsiveDialog() {
-        this.getNonResponsiveConfig();
-        if (this.enableNonResponsiveDialog) {
-            this.initNonResponsiveTimer();
+    private configureAndInitDownloadPrompt() {
+        this.configureDownloadPromptProperties();
+        if (this.enableDownloadPrompt) {
+            this.initDownloadPrompt();
         }
     }
 
-    private getNonResponsiveConfig() {
+    private configureDownloadPromptProperties() {
         const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
 
-        this.enableNonResponsiveDialog = nonResponsivePreviewConfig.enableNonResponsiveDialog;
-        this.enableNonResponsiveDialogReminders = nonResponsivePreviewConfig.enableNonResponsiveDialogReminders;
-        this.nonResponsivePreviewInitialTimerInSeconds = nonResponsivePreviewConfig.nonResponsivePreviewInitialTimerInSeconds;
-        this.nonResponsivePreviewReminderTimerInSeconds = nonResponsivePreviewConfig.nonResponsivePreviewReminderTimerInSeconds;
+        this.enableDownloadPrompt = nonResponsivePreviewConfig.enableDownloadPrompt;
+        this.enableDownloadPromptReminder = nonResponsivePreviewConfig.enableDownloadPromptReminder;
+        this.downloadPromptDelay = nonResponsivePreviewConfig.downloadPromptDelay;
+        this.downloadPromptReminderDelay = nonResponsivePreviewConfig.downloadPromptReminderDelay;
     }
 
-    private initNonResponsiveTimer() {
-        this.nonResponsiveInitialTimer = setTimeout(() => {
-            this.handleNonResponsiveFilePreview();
-        }, this.nonResponsivePreviewInitialTimerInSeconds * 1000);
+    private initDownloadPrompt() {
+        this.downloadPromptTimer = setTimeout(() => {
+            this.showOrClearDownloadPrompt();
+        }, this.downloadPromptDelay * 1000);
     }
 
-    private handleNonResponsiveFilePreview() {
+    private showOrClearDownloadPrompt() {
         if (!this.urlFile) {
-            this.showDialog();
+            this.showDownloadPrompt();
         } else {
-            this.clearNonResponsiveDialogTimeouts();
+            this.clearDownloadPromptTimeouts();
         }
     }
 
-    public clearNonResponsiveDialogTimeouts() {
-        if (this.nonResponsiveInitialTimer) {
-            clearTimeout(this.nonResponsiveInitialTimer);
+    public clearDownloadPromptTimeouts() {
+        if (this.downloadPromptTimer) {
+            clearTimeout(this.downloadPromptTimer);
         }
-        if (this.nonResponsiveReminderTimer) {
-            clearTimeout(this.nonResponsiveReminderTimer);
+        if (this.downloadPromptReminderTimer) {
+            clearTimeout(this.downloadPromptReminderTimer);
         }
     }
 
-    private showDialog() {
+    private showDownloadPrompt() {
         if (!this.isDialogVisible) {
             this.isDialogVisible = true;
-            this.dialog.open(NonResponsiveDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: NonResponsivePreviewActionsEnum) => {
+            this.dialog.open(DownloadPromptDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: DownloadPromptActions) => {
                 this.isDialogVisible = false;
-                if (result === NonResponsivePreviewActionsEnum.WAIT) {
-                    if (this.enableNonResponsiveDialogReminders) {
-                        this.clearNonResponsiveDialogTimeouts();
-                        this.nonResponsiveReminderTimer = setTimeout(() => {
-                            this.handleNonResponsiveFilePreview();
-                        }, this.nonResponsivePreviewReminderTimerInSeconds * 1000);
+                if (result === DownloadPromptActions.WAIT) {
+                    if (this.enableDownloadPromptReminder) {
+                        this.clearDownloadPromptTimeouts();
+                        this.downloadPromptReminderTimer = setTimeout(() => {
+                            this.showOrClearDownloadPrompt();
+                        }, this.downloadPromptReminderDelay * 1000);
                     }
                 }
             });

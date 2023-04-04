@@ -655,25 +655,25 @@
 
         <section>
             <mat-slide-toggle
-                color="primary" [(ngModel)]="enableNonResponsiveDialog" id="enableNonResponsiveDialog" (change)="onEnableNonResponsiveDialogChange()">
-                Enable NonResponsiveDialog
+                color="primary" [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableNonResponsiveDialogChange()">
+                Enable Download Prompt
             </mat-slide-toggle>
         </section>
-        <section *ngIf="enableNonResponsiveDialog">
+        <section *ngIf="enableDownloadPrompt">
             <mat-form-field>
-                <input matInput type="number" [(ngModel)]="nonResponsivePreviewInitialTimerInSeconds" (change)="onNonResponsiveInitialTimerChange()">
+                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onNonResponsiveInitialTimerChange()">
             </mat-form-field>
         </section>
 
-        <section *ngIf="enableNonResponsiveDialog">
+        <section *ngIf="enableDownloadPrompt">
             <mat-slide-toggle
-                color="primary" [(ngModel)]="enableNonResponsiveDialogReminders" id="enableNonResponsiveDialogReminders" (change)="onEnableNonResponsiveDialogReminderChange()">
-                Enable NonResponsiveDialogReminder
+                color="primary" [(ngModel)]="enableDownloadPromptReminders" id="enableDownloadPromptReminders" (change)="onEnableNonResponsiveDialogReminderChange()">
+                Enable DownloadPrompt Reminders
             </mat-slide-toggle>
         </section>
-        <section *ngIf="enableNonResponsiveDialog && enableNonResponsiveDialogReminders">
+        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminders">
             <mat-form-field>
-                <input matInput type="number" [(ngModel)]="nonResponsivePreviewReminderTimerInSeconds" (change)="onNonResponsiveReminderTimerChange()">
+                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onNonResponsiveReminderTimerChange()">
             </mat-form-field>
         </section>
 

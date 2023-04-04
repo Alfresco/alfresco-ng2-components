@@ -28,8 +28,8 @@ import {
     ViewerComponent,
     ViewUtilService,
     AppConfigService,
-    NonResponsiveDialogComponent,
-    NonResponsivePreviewActionsEnum
+    DownloadPromptDialogComponent,
+    DownloadPromptActions
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
@@ -158,7 +158,7 @@ describe('ViewerComponent', () => {
             ],
             providers: [
                 MatDialog,
-                { provide: NonResponsiveDialogComponent, useClass: DummyDialogComponent}
+                { provide: DownloadPromptDialogComponent, useClass: DummyDialogComponent}
             ]
         });
 
@@ -637,19 +637,19 @@ describe('ViewerComponent', () => {
             };
             dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);
             component.urlFile = undefined;
-            component.clearNonResponsiveDialogTimeouts();
+            component.clearDownloadPromptTimeouts();
         });
 
         it('should configure initial timeout to display non responsive dialog when initialising component', (() => {
             fixture.detectChanges();
-            expect(component.nonResponsiveInitialTimer).toBeDefined();
+            expect(component.downloadPromptTimer).toBeDefined();
         }));
 
         it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync( () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
-            expect(component.nonResponsiveReminderTimer).toBeDefined();
+            expect(component.downloadPromptReminderTimer).toBeDefined();
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
             flush();
             discardPeriodicTasks();
@@ -663,7 +663,7 @@ describe('ViewerComponent', () => {
         }));
 
         it('should show reminder non responsive dialog after initial dialog', fakeAsync( () => {
-            dialogOpenSpy.and.returnValue({ afterClosed: () => of(NonResponsivePreviewActionsEnum.WAIT) } as any);
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();
             tick(3000);
             expect(dialogOpenSpy).toHaveBeenCalled();
