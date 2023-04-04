@@ -96,6 +96,9 @@
         --adf-theme-mat-grey-color-a200: mat.get-color-from-palette(mat.$grey-palette, A200),
         --adf-theme-mat-grey-color-a400: mat.get-color-from-palette(mat.$grey-palette, A400),
         --adf-theme-mat-grey-color-50: mat.get-color-from-palette(mat.$grey-palette, 50),
+
+        // spacing
+        --adf-theme-spacing: map-get($custom-css-variables, 'theme-adf-spacing')
     );
 
     // propagates SCSS variables into the CSS variables scope
@@ -114,5 +117,6 @@ $adf-custom-theme-sizes: (
     'theme-adf-icon-1-font-size': 17px,
     'theme-adf-picture-1-font-size': 18px,
     'theme-adf-task-footer-font-size': 18px,
-    'theme-adf-task-title-font-size': 18px
+    'theme-adf-task-title-font-size': 18px,
+    'theme-adf-spacing': 16px
 );

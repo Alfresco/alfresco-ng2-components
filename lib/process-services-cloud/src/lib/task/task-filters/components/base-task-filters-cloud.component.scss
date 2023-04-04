@@ -1,5 +1,5 @@
 .adf-task-filters {
-    margin-right: -16px;
+    margin-right: calc(-1 * var(--adf-theme-spacing));
 
     &__entry {
         font-size: var(--theme-body-1-font-size);
@@ -19,7 +19,7 @@
         display: flex;
         flex: 1;
         align-items: center;
-        gap: 16px;
+        gap: var(--adf-theme-spacing);
     }
 
     &__entry-counter {
