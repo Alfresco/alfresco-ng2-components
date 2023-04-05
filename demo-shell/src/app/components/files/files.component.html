@@ -655,25 +655,25 @@
 
         <section>
             <mat-slide-toggle
-                color="primary" [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableNonResponsiveDialogChange()">
+                color="primary" [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
                 Enable Download Prompt
             </mat-slide-toggle>
         </section>
         <section *ngIf="enableDownloadPrompt">
             <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onNonResponsiveInitialTimerChange()">
+                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onDownloadPromptDelayChange()">
             </mat-form-field>
         </section>
 
         <section *ngIf="enableDownloadPrompt">
             <mat-slide-toggle
-                color="primary" [(ngModel)]="enableDownloadPromptReminders" id="enableDownloadPromptReminders" (change)="onEnableNonResponsiveDialogReminderChange()">
-                Enable DownloadPrompt Reminders
+                color="primary" [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
+                Enable Download Prompt Reminders
             </mat-slide-toggle>
         </section>
-        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminders">
+        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminder">
             <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onNonResponsiveReminderTimerChange()">
+                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onDownloadPromptReminderChange()">
             </mat-form-field>
         </section>
 

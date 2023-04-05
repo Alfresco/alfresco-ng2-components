@@ -33,7 +33,7 @@ export * from './components/viewer-toolbar-actions.component';
 export * from './components/viewer-toolbar-custom-actions.component';
 export * from './components/viewer-render.component';
 export * from './components/viewer.component';
-export * from './components/non-responsive-dialog/download-prompt-dialog.component';
+export * from './components/download-prompt-dialog/download-prompt-dialog.component';
 
 export * from './directives/viewer-extension.directive';
 

@@ -252,7 +252,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     selectedNodes = [];
 
     enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
-    enableDownloadPromptReminders: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
+    enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
     downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
     downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
     enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
@@ -784,22 +784,22 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedNodes = [];
     }
 
-    onEnableNonResponsiveDialogChange() {
+    onEnableDownloadPrompt() {
         const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
     }
 
-    onNonResponsiveInitialTimerChange() {
+    onDownloadPromptDelayChange() {
         const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
     }
 
-    onEnableNonResponsiveDialogReminderChange() {
+    onEnableDownloadPromptReminderChange() {
         const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPromptReminders'] = this.enableDownloadPromptReminders;
+        previewConfig['enableDownloadPromptReminder'] = this.enableDownloadPromptReminder;
     }
 
-    onNonResponsiveReminderTimerChange() {
+    onDownloadPromptReminderChange() {
         const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
     }

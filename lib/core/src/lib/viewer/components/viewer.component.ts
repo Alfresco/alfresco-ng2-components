@@ -39,7 +39,7 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
 import { Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
-import { DownloadPromptDialogComponent } from './non-responsive-dialog/download-prompt-dialog.component';
+import { DownloadPromptDialogComponent } from './download-prompt-dialog/download-prompt-dialog.component';
 import { AppConfigService } from '../../app-config';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 
@@ -211,8 +211,8 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible: boolean = false;
-    public downloadPromptTimer: any;
-    public downloadPromptReminderTimer: any;
+    public downloadPromptTimer: number;
+    public downloadPromptReminderTimer: number;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
@@ -361,7 +361,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private initDownloadPrompt() {
-        this.downloadPromptTimer = setTimeout(() => {
+        this.downloadPromptTimer = window.setTimeout(() => {
             this.showOrClearDownloadPrompt();
         }, this.downloadPromptDelay * 1000);
     }
@@ -391,7 +391,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
                 if (result === DownloadPromptActions.WAIT) {
                     if (this.enableDownloadPromptReminder) {
                         this.clearDownloadPromptTimeouts();
-                        this.downloadPromptReminderTimer = setTimeout(() => {
+                        this.downloadPromptReminderTimer = window.setTimeout(() => {
                             this.showOrClearDownloadPrompt();
                         }, this.downloadPromptReminderDelay * 1000);
                     }
