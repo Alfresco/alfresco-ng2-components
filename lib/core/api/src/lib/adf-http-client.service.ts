@@ -42,7 +42,6 @@ import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encod
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
-// import { AppConfigService, AppConfigValues } from '../../../src/lib/app-config/app-config.service';
 import ee, { Emitter } from 'event-emitter';
 
 export interface Emitters {
@@ -60,6 +59,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     once: ee.EmitterMethod;
     emit: (type: string, ...args: any[]) => void;
 
+    private _disableCsrf = false;
+
     private defaultSecurityOptions = {
         withCredentials: true,
         isBpmRequest: false,
@@ -67,8 +68,15 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         defaultHeaders: {}
     };
 
+    get disableCsrf(): boolean {
+        return this._disableCsrf;
+    }
+
+    set disableCsrf(disableCsrf: boolean) {
+        this._disableCsrf = disableCsrf;
+    }
+
     constructor(private httpClient: HttpClient
-        // private appConfig: AppConfigService
         ) {
         ee(this);
     }
@@ -264,31 +272,29 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             ...((options.contentType) && {'Content-Type': options.contentType})
         };
 
-        // const disableCsrf = this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
+        if (!this.disableCsrf) {
+            this.setCsrfToken(optionsHeaders);
 
-        // if (!disableCsrf) {
-        //     this.setCsrfToken(optionsHeaders);
-
-        // }
+        }
 
         return new HttpHeaders(optionsHeaders);
     }
 
-    // private setCsrfToken(optionsHeaders: any) {
-    //     const token = this.createCSRFToken();
-    //     optionsHeaders['X-CSRF-TOKEN'] = token;
+    private setCsrfToken(optionsHeaders: any) {
+        const token = this.createCSRFToken();
+        optionsHeaders['X-CSRF-TOKEN'] = token;
 
-    //     try {
-    //         document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
-    //     } catch (err) {
-    //         /* continue regardless of error */
-    //     }
-    // }
+        try {
+            document.cookie = 'CSRF-TOKEN=' + token + ';path=/';
+        } catch (err) {
+            /* continue regardless of error */
+        }
+    }
 
-    // private createCSRFToken(a?: any): string {
-    //     const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
-    //     return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
-    // }
+    private createCSRFToken(a?: any): string {
+        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
+        return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
+    }
 
     private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
 

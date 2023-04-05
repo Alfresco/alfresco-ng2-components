@@ -17,9 +17,11 @@
 
 import { AppConfigService, AppConfigValues } from './app-config.service';
 import { StorageService } from '../common/services/storage.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
-export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService, adfHttpClient: AdfHttpClient) {
     return () => appConfigService.load().then(() => {
+        adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF);
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
     });
 }
