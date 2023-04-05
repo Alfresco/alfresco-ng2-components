@@ -174,12 +174,12 @@ describe('ViewerComponent', () => {
         appConfigService.config = {
             ...appConfigService.config,
             'viewer': {
-                'enableNonResponsiveDialog':  false,
-                'enableNonResponsiveDialogReminders': false,
-                'nonResponsivePreviewInitialTimerInSeconds': 3,
-                'nonResponsivePreviewReminderTimerInSeconds': 2
+                'enableDownloadPrompt':  false,
+                'enableDownloadPromptReminder': false,
+                'downloadPromptDelay': 3,
+                'downloadPromptReminderDelay': 2
             }
-        }
+        };
     });
 
     afterEach(() => {
@@ -621,7 +621,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Non Responsive Preview Dialog',() => {
+    describe('Download Prompt Dialog',() => {
 
         let dialogOpenSpy: jasmine.Spy;
 
@@ -629,10 +629,10 @@ describe('ViewerComponent', () => {
             appConfigService.config = {
                 ...appConfigService.config,
                 'viewer': {
-                    'enableNonResponsiveDialog':  true,
-                    'enableNonResponsiveDialogReminders': true,
-                    'nonResponsivePreviewInitialTimerInSeconds': 3,
-                    'nonResponsivePreviewReminderTimerInSeconds': 2
+                    'enableDownloadPrompt':  true,
+                    'enableDownloadPromptReminder': true,
+                    'downloadPromptDelay': 3,
+                    'downloadPromptReminderDelay': 2
                 }
             };
             dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);

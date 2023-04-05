@@ -48,7 +48,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPromptReminder: true,
     downloadPromptDelay: 50,
     downloadPromptReminderDelay: 30
-}
+};
 
 @Component({
     selector: 'adf-viewer',

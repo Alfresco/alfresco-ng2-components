@@ -40,4 +40,4 @@ export * from './directives/viewer-extension.directive';
 export * from './viewer.module';
 
 export * from './models/viewer.model';
-export * from './models/download-prompt.actions'
+export * from './models/download-prompt.actions';
