@@ -50,6 +50,7 @@ import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
 import { SecurityControlsServiceModule } from './security/services/security-controls-service.module';
+import { CategoriesModule } from './category/category.module';
 
 @NgModule({
     imports: [
@@ -84,7 +85,8 @@ import { SecurityControlsServiceModule } from './security/services/security-cont
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule
+        SecurityControlsServiceModule,
+        CategoriesModule
     ],
     providers: [
         {
@@ -123,7 +125,8 @@ import { SecurityControlsServiceModule } from './security/services/security-cont
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        SecurityControlsServiceModule
+        SecurityControlsServiceModule,
+        CategoriesModule
     ]
 })
 export class ContentModule {

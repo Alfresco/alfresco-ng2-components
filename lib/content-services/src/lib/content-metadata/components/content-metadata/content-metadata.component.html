@@ -35,7 +35,7 @@
                         data-automation-id="showing-tag-input-button"
                         mat-icon-button
                         [attr.title]="'METADATA.BASIC.ADD_TAG_TOOLTIP' | translate"
-                        (click)="tagNameControlVisible = true"
+                        (click)="toggleTagInput()"
                         [hidden]="tagNameControlVisible || saving">
                         <mat-icon>add</mat-icon>
                     </button>
@@ -49,6 +49,34 @@
                 </adf-tags-creator>
             </div>
         </ng-container>
+        <mat-expansion-panel *ngIf="!editable">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Categories</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
+        </mat-expansion-panel>
+        <div *ngIf="editable"
+            class="adf-metadata-categories-header">
+            <div class="adf-metadata-categories-title">
+                <p>Categories</p>
+                <button
+                    mat-icon-button
+                    [attr.title]="'Assign categories' | translate"
+                    [hidden]="categoryControlVisible || saving"
+                    (click)="toggleCategoryInput()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <adf-categories-management
+                [(categoryNameControlVisible)]="categoryControlVisible"
+                [disableRemoval]="saving"
+                [categories]="categories"
+                [managementMode]="categoriesManagementMode"
+                [classifiableChanged]="classifiableChanged"
+                (categoriesChange)="storeCategoriesToAssign($event)">
+            </adf-categories-management>
+        </div>
+
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
                 <div *ngFor="let group of groupedProperties; let first = first;"

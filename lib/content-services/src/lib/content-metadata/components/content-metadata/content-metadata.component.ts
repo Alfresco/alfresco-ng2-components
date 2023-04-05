@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
+import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
     CardViewItem,
@@ -33,6 +33,8 @@ import { CardViewContentUpdateService } from '../../../common/services/card-view
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
+import { CategoryService } from '../../../category/services/category.service';
+import { CategoriesManagementMode } from '../../../category/categories-management-mode';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -99,6 +101,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayTags = false;
 
+    private _assignedTags: string[] = [];
+    private assignedTagsEntries: TagEntry[] = [];
+    private _editable = false;
+    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
+    private _tags: string[] = [];
+    private targetProperty: CardViewBaseItemModel;
+    private classifiableChangedSubject = new Subject<void>;
+    private _saving = false;
+
     multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
@@ -106,14 +117,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     changedProperties = {};
     hasMetadataChanged = false;
     tagNameControlVisible = false;
-
-    private _assignedTags: string[] = [];
-    private assignedTagsEntries: TagEntry[] = [];
-    private _editable = false;
-    private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
-    private _tags: string[] = [];
-    private targetProperty: CardViewBaseItemModel;
-    private _saving = false;
+    assignedCategories: Category[] = [];
+    categories: Category[] = [];
+    categoriesManagementMode = CategoriesManagementMode.ASSIGN;
+    categoryControlVisible = false;
+    classifiableChanged = this.classifiableChangedSubject.asObservable();
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -122,7 +130,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private logService: LogService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private tagService: TagService
+        private tagService: TagService,
+        private categoryService: CategoryService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -201,6 +210,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             if (this.displayTags) {
                 this.loadTagsForNode(node.id);
             }
+            this.loadCategoriesForNode(node.id);
+            if (!this.node.aspectNames.includes('generalclassifiable')) {
+                this.classifiableChangedSubject.next();
+                this.categories = [];
+            }
         }
     }
 
@@ -227,12 +241,23 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
+    toggleTagInput(){
+        this.tagNameControlVisible = true;
+        this.categoryControlVisible = false;
+    }
+
+    toggleCategoryInput() {
+        this.categoryControlVisible = true;
+        this.tagNameControlVisible = false;
+    }
+
     /**
      * Called after clicking save button. It confirms all changes done for metadata. Before clicking on that button they are not saved.
      */
     saveChanges() {
         this._saving = true;
         this.tagNameControlVisible = false;
+        this.categoryControlVisible = false;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();
@@ -256,11 +281,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private updateNode() {
         forkJoin({
             updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
-            ...(this.displayTags ? this.saveTags() : {})
+            ...(this.displayTags ? this.saveTags() : {}),
+            ...this.saveCategories()
         }).pipe(
             catchError((err) => {
                 this.cardViewContentUpdateService.updateElement(this.targetProperty);
                 this.handleUpdateError(err);
+                this._saving = false;
                 return of(null);
             }))
             .subscribe((result) => {
@@ -273,6 +300,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     this.nodesApiService.nodeUpdated.next(this.node);
                     if (Object.keys(result).length > 1 && this.displayTags) {
                         this.loadTagsForNode(this.node.id);
+                    }
+                    if (!!result.LinkingCategories) {
+                        this.assignedCategories = result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry);
                     }
                 }
                 this._saving = false;
@@ -320,6 +350,40 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private isEmpty(value: any): boolean {
         return value === undefined || value === null || value === '';
+    }
+
+    storeCategoriesToAssign(categoriesToAssign: Category[]) {
+        this.categories = categoriesToAssign;
+        this.hasMetadataChanged = true;
+    }
+
+    private loadCategoriesForNode(nodeId: string) {
+        this.assignedCategories = [];
+        this.categoryService.getCategoryLinksForNode(nodeId).subscribe((categoryPaging) => {
+            this.categories = categoryPaging.list.entries.map((categoryEntry) => categoryEntry.entry);
+            this.assignedCategories = [...this.categories];
+        });
+    }
+
+    private saveCategories(): { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } {
+        const observables: { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } = {};
+        if (this.categories) {
+            this.assignedCategories.forEach((assignedCategory) => {
+                if (this.categories.every((category) => category.name !== assignedCategory.name)) {
+                    observables[`Removing ${assignedCategory.id}`] = this.categoryService.unlinkNodeFromCategory(this.node.id, assignedCategory.id);
+                }
+            });
+            const categoryLinkBodies: CategoryLinkBody[] = [];
+            this.categories.forEach((category) => {
+                let categoryLinkBody = new CategoryLinkBody();
+                categoryLinkBody.categoryId = category.id;
+                categoryLinkBodies.push(categoryLinkBody);
+            });
+            if (categoryLinkBodies.length > 0) {
+                observables['LinkingCategories'] = this.categoryService.linkNodeToCategory(this.node.id, categoryLinkBodies);
+            }
+        }
+        return observables;
     }
 
     private loadTagsForNode(id: string) {

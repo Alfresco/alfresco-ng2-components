@@ -21,6 +21,7 @@ import {
     CategoriesApi,
     CategoryBody,
     CategoryEntry,
+    CategoryLinkBody,
     CategoryPaging,
     RequestQuery,
     ResultSetPaging,
@@ -120,5 +121,37 @@ export class CategoryService {
             },
             include: ['path']
         }));
+    }
+
+    /**
+     * List of categories that node is assigned to
+     *
+     * @param nodeId The identifier of a node.
+     * @return Observable<CategoryPaging> Categories that node is assigned to
+     */
+    getCategoryLinksForNode(nodeId: string): Observable<CategoryPaging> {
+        return from(this.categoriesApi.getCategoryLinksForNode(nodeId, {include: ['path']}));
+    }
+
+    /**
+     * Unlink category from a node
+     *
+     * @param nodeId The identifier of a node.
+     * @param categoryId The identifier of a category.
+     * @return Observable<void>
+     */
+     unlinkNodeFromCategory(nodeId: string, categoryId: string): Observable<void> {
+        return from(this.categoriesApi.unlinkNodeFromCategory(nodeId, categoryId));
+    }
+
+    /**
+     * Link node to a category
+     *
+     * @param nodeId The identifier of a node.
+     * @param categoryLinkBodyCreate Array of a categories that node will be linked to.
+     * @return Observable<CategoryEntry>
+     */
+     linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
+        return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
     }
 }

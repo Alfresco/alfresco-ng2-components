@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,26 @@
  * limitations under the License.
  */
 
+import { ContextMenuModule, CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
-import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
-import { TagModule } from '../tag/tag.module';
-import { CategoriesModule } from '../category/category.module';
+import { CategoriesManagementComponent } from './categories-management/categories-management.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
-        FlexLayoutModule,
         CoreModule,
-        TagModule,
-        CategoriesModule
-    ],
-    exports: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent
+        MaterialModule,
+        TranslateModule,
+        ContextMenuModule
     ],
     declarations: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent
+        CategoriesManagementComponent
+    ],
+    exports: [
+        CategoriesManagementComponent
     ]
 })
-export class ContentMetadataModule {}
+export class CategoriesModule {}

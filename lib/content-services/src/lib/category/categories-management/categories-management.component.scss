@@ -1,0 +1,38 @@
+.adf-categories-management {
+    .adf-category-name-field {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .adf-assigned-categories {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        word-break: break-word;
+    }
+}
+
+.adf-categories-list {
+    .mat-list-base .mat-list-item,
+    .mat-list-base .mat-list-option {
+        display: flex;
+        height: 100%;
+        word-wrap: break-word;
+        padding: 5px 0;
+        font-size: 14px;
+
+        .mat-list-item-content,
+        .mat-list-item-content-reverse {
+            padding: 0;
+
+            .mat-pseudo-checkbox {
+                display: none;
+            }
+        }
+    }
+}
