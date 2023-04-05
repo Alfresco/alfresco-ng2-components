@@ -45,7 +45,7 @@ import { DirectiveModule } from '../directives/directive.module';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerToolbarCustomActionsComponent } from './components/viewer-toolbar-custom-actions.component';
-import { DownloadPromptDialogComponent } from './components/non-responsive-dialog/download-prompt-dialog.component';
+import { DownloadPromptDialogComponent } from './components/download-prompt-dialog/download-prompt-dialog.component';
 
 @NgModule({
     imports: [
