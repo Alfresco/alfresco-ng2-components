@@ -53,7 +53,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
 import { DirectionalityConfigService } from './common/services/directionality-config.service';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { AdfHttpClient, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -151,7 +151,7 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,
-                    deps: [ AppConfigService, StorageService ], multi: true
+                    deps: [ AppConfigService, StorageService, AdfHttpClient ], multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
