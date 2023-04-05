@@ -22,27 +22,27 @@ import { Logger } from '../utils/logger';
 
 export class PaginationPage {
 
-    pageSelectorDropDown = $('div[class*="adf-pagination__page-selector"]');
-    pageSelectorArrow = $('button[data-automation-id="page-selector"]');
-    itemsPerPage = $('.adf-pagination__max-items');
-    itemsPerPageOpenDropdown = $('.adf-pagination__perpage-block button');
-    itemsPerPageOptions = $$('.adf-pagination__page-selector .mat-menu-item');
-    currentPage = $('.adf-pagination__current-page');
-    totalPages = $('.adf-pagination__total-pages');
-    paginationRange = $('.adf-pagination__range');
-    nextPageButton = $('button[class*="adf-pagination__next-button"]');
-    nextButtonDisabled = $('button[class*="adf-pagination__next-button"][disabled]');
-    previousButtonDisabled = $('button[class*="adf-pagination__previous-button"][disabled]');
-    pageDropDown = $('div[class*="adf-pagination__actualinfo-block"] button');
-    pageDropDownOptions = $$('div[class*="mat-menu-content"] button');
-    paginationSection = $('adf-pagination');
-    paginationSectionEmpty = $('adf-pagination[class*="adf-pagination__empty"]');
-    totalFiles = $('.adf-pagination__range');
+    pageSelectorDropDown = $('div[class*="adf-pagination__page-selector_break_it"]');
+    pageSelectorArrow = $('button[data-automation-id="page-selector_break_it"]');
+    itemsPerPage = $('.adf-pagination__max-items_break_it');
+    itemsPerPageOpenDropdown = $('.adf-pagination__perpage-block button_break_it');
+    itemsPerPageOptions = $$('.adf-pagination__page-selector .mat-menu-item_break_it');
+    currentPage = $('.adf-pagination__current-page_break_it');
+    totalPages = $('.adf-pagination__total-pages_break_it');
+    paginationRange = $('.adf-pagination__range_break_it');
+    nextPageButton = $('button[class*="adf-pagination__next-button_break_it"]');
+    nextButtonDisabled = $('button[class*="adf-pagination__next-button_break_it"][disabled]');
+    previousButtonDisabled = $('button[class*="adf-pagination__previous-button_break_it"][disabled]');
+    pageDropDown = $('div[class*="adf-pagination__actualinfo-block_break_it"] button');
+    pageDropDownOptions = $$('div[class*="mat-menu-content_break_it"] button');
+    paginationSection = $('adf-pagination_break_it');
+    paginationSectionEmpty = $('adf-pagination[class*="adf-pagination__empty_break_it"]');
+    totalFiles = $('.adf-pagination__range_break_it');
 
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
-        await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block"] button`);
+        await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block_break_it"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
-        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
+        const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item_break_it', numberOfItem)).first();
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);

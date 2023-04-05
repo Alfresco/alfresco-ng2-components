@@ -26,19 +26,19 @@ export interface LoginOptions {
 }
 export class LoginPage {
 
-    loginUrl = `${browser.baseUrl}/login`;
+    loginUrl = `${browser.baseUrl}/login/break-all-e2es`;
 
-    ssoButton = $(`[data-automation-id="login-button-sso"]`);
-    usernameField = $('#username');
-    passwordField = $('#password');
-    loginButton = $('input[type="submit"]');
-    userIcon = $(`[data-automation-id*='user-initials']`);
-    loginError = $(`div[data-automation-id="login-error"]`);
+    ssoButton = $(`[data-automation-id="login-button-sso-break-it"]`);
+    usernameField = $('#username_break_it');
+    passwordField = $('#password_break_it');
+    loginButton = $('input[type="submit_break_it"]');
+    userIcon = $(`[data-automation-id*='user-initials_break_it']`);
+    loginError = $(`div[data-automation-id="login-error_break_it"]`);
     visibilityLabel = $('#v');
 
-    txtUsernameBasicAuth = $('input[id="username"]');
-    txtPasswordBasicAuth = $('input[id="password"]');
-    signInButtonBasicAuth = $('#login-button');
+    txtUsernameBasicAuth = $('input[id="username_break_it"]');
+    txtPasswordBasicAuth = $('input[id="password_break_it"]');
+    signInButtonBasicAuth = $('#login-button_break_it');
 
     async goToLoginPage(): Promise<void> {
         let currentUrl;

@@ -20,7 +20,7 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class BreadcrumbPage {
 
-    breadcrumb = $(`adf-breadcrumb nav[data-automation-id='breadcrumb']`);
+    breadcrumb = $(`adf-breadcrumb nav[data-automation-id='breadcrumb_break_it']`);
     currentItem = $('.adf-breadcrumb-item-current');
 
     async chooseBreadCrumb(breadCrumbItem: string): Promise<void> {
