@@ -300,7 +300,6 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     private updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets) {
         const bucketsToDelete = [];
-
         alreadyExistingBuckets
             .map((bucket) => {
                 const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
@@ -341,7 +340,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         };
     }
 
-    private loadCategoryNames(bucketList) {
+    private loadCategoryNames(bucketList: FacetFieldBucket[]) {
         bucketList.map((item) => {
             const categoryId = item.label.split('/').pop();
             this.categoryService.getCategory(categoryId)
@@ -353,7 +352,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                             const currentCat = res.list.entries.filter(entry => entry.entry.id === categoryId)[0];
                             const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
 
-                            path ? item.label = `${path}/${currentCat.entry.name}` : item.label = currentCat.entry.name;
+                            path ? item.display = `${path}/${currentCat.entry.name}` : item.display = currentCat.entry.name;
                         }
                     );
                 });
