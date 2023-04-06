@@ -215,6 +215,54 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
             { role: 'ACTIVITI_USER', groups: [], users: ['hruser', 'salesuser'] }
         ]
+    },
+    CONNECTOR_APP: {
+        name: 'connector-regression',
+        file_location: (TAG = 'develop') => `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/connector-regression.zip?raw=true`,
+        processes: {
+        },
+        processesData: {
+        },
+        forms: {
+        },
+        tasks: {
+        },
+        security: [
+            {
+                role: 'ACTIVITI_ADMIN',
+                groups: [],
+                users: ['superadminuser', 'processadminuser']
+            },
+            {
+                role: 'ACTIVITI_USER',
+                groups: ['hr', 'sales', 'testgroup'],
+                users: ['hruser']
+            }
+        ],
+        infrastructure: {
+            connectors: {
+                aspose: {},
+                calendar: {},
+                comprehend: {},
+                content: {},
+                'docusign-connector': {},
+                lambda: {},
+                mariadb: {},
+                rekognition: {},
+                rest: {},
+                'salesforce-connector': {},
+                slack: {},
+                teams: {},
+                textract: {},
+                transcribe: {},
+                twilio: {}
+            }
+        },
+        variables: {
+            connectors: (variables: any = {}) => variables,
+            uis: {},
+            bridges: {}
+        }
     }
 };
 

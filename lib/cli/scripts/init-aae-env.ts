@@ -42,6 +42,7 @@ export interface ConfigArgs {
     scope: string;
     host: string;
     tag: string;
+    connectorVariables: any;
 }
 
 export const AAE_MICROSERVICES = [
@@ -378,17 +379,18 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
             await checkDescriptorExist(currentAbsentApp.name);
             await sleep(TIME);
 
-            const appInfrastructure = {
-                restconnector: currentAbsentApp.infrastructure?.connectors(),
-                bridges: currentAbsentApp.infrastructure?.bridges
-            };
+            const appVariables = {
+                connectors: currentAbsentApp.variables.connectors(args.connectorVariables),
+                uis: currentAbsentApp.variables.uis,
+                bridges: currentAbsentApp.variables.bridges
+            }
 
             const deployPayload = {
                 name: currentAbsentApp.name,
                 releaseId: projectRelease.entry.id,
                 security: currentAbsentApp.security,
-                infrastructure: appInfrastructure,
-                variables: currentAbsentApp.variables
+                infrastructure: currentAbsentApp.infrastructure,
+                variables: appVariables
             };
             await deploy(deployPayload);
         }
@@ -488,6 +490,7 @@ async function main() {
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
         .option('--devopsPassword [type]', 'devops password')
         .option('--tag [type]', 'tag name of the codebase')
+        .option('--connectorsVariables [type]', 'connector variables object')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -508,7 +511,8 @@ async function main() {
         tokenEndpoint: options.tokenEndpoint,
         scope: options.scope,
         secret:  options.secret,
-        tag: options.tag
+        tag: options.tag,
+        connectorVariables: options.connectorVariables
     };
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
