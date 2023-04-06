@@ -7,21 +7,22 @@ cd $DIR/../../../
 
 BASE_DIRECTORY=$(echo "$FOLDER" | cut -d "/" -f1)
 verifyLib=$1;
+deps=$2;
 REGEX="(repository|workflow)_dispatch"
 
 # set test-e2e params
-if [ -n "$2" ]; then
-      e2eParams="--$2"
+if [ -n "$3" ]; then
+      e2eParams="--$3"
 else
       e2eParams=""
 fi
 
-echo "Step1 - Verify if affected libs contains $verifyLib"
+echo "Step1 - Verify if affected libs contains $verifyLib or if deps $deps are affected"
 
-AFFECTED_LIB=$(./scripts/github/affected-contains.sh $verifyLib )
+AFFECTED_LIB=$(./scripts/github/affected-contains.sh $verifyLib $deps)
 
 if [ ${AFFECTED_LIB} == true ]; then
-    echo "Step2 - $verifyLib affected... will execute e2e"
+    echo "Step2 - $verifyLib OR deps $deps affected... will execute e2e"
 
     if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
         echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
@@ -54,6 +55,6 @@ if [ ${AFFECTED_LIB} == true ]; then
     fi;
 
 else
-    echo "Step2 - Lib $verifyLib NOT affected. No need to run e2e"
+    echo "Step2 - Lib $verifyLib OR deps $deps NOT affected. No need to run e2e"
     exit 0
 fi

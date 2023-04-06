@@ -191,7 +191,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with: 
+        with:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - name: install
@@ -302,42 +302,49 @@ jobs:
             auth: "OAUTH"
             check-cs-env: "true"
             check-ps-env: "true"
+            deps: "testing"
           - description: "Content: Components"
             test-id: "content-services"
             folder: "content-services/components"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Content: Directives"
             test-id: "content-services"
             folder: "content-services/directives"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Content: Document List"
             test-id: "content-services"
             folder: "content-services/document-list"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Content: Metadata"
             test-id: "content-services"
             folder: "content-services/metadata"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Content: Upload and Versioning"
             test-id: "content-services"
             folder: "content-services/upload"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Search"
             test-id: "content-services"
             folder: "search"
             provider: "ECM"
             auth: "BASIC"
             check-cs-env: "true"
+            deps: "testing"
           - description: "Process: Form"
             test-id: "process-services"
             folder: "process-services/form"
@@ -345,6 +352,7 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
+            deps: "testing"
           - description: "Process: Process"
             test-id: "process-services"
             folder: "process-services/process"
@@ -352,6 +360,7 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
+            deps: "testing"
           - description: "Process: Tasks"
             test-id: "process-services"
             folder: "process-services/tasks"
@@ -359,6 +368,7 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
+            deps: "testing"
           - description: "Process: Widget"
             test-id: "process-services"
             folder: "process-services/widgets"
@@ -366,6 +376,7 @@ jobs:
             auth: "OAUTH"
             check-ps-env: "true"
             check-external-cs-env: "true"
+            deps: "testing"
           - description: "Process Cloud: Form"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/form-field"
@@ -374,6 +385,7 @@ jobs:
             apa-proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"
+            deps: "testing"
           - description: "Process Cloud: People"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/people"
@@ -382,6 +394,7 @@ jobs:
             apa-proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"
+            deps: "testing"
           - description: "Process Cloud: Process"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/process"
@@ -390,6 +403,7 @@ jobs:
             apa-proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"
+            deps: "testing"
           - description: "Process Cloud: Start Task"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/start-task"
@@ -398,6 +412,7 @@ jobs:
             apa-proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"
+            deps: "testing"
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/task-list"
@@ -406,6 +421,7 @@ jobs:
             apa-proxy: true
             check-cs-env: "true"
             check-ps-cloud-env: "true"
+            deps: "testing"
 
     steps:
       - name: Checkout repository
@@ -431,6 +447,7 @@ jobs:
           check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
+          deps: ${{ matrix.e2e-test.deps }}
 
   finalize:
     if: ${{ always() }}
