@@ -38,6 +38,10 @@ inputs:
   apa-proxy: #
     description: "proxy host"
     required: true
+  deps:
+    description: "Library dependencies"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -121,6 +125,7 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+        DEPS: "${{ inputs.deps }}"
       shell: bash
       run: |
         set -u;
@@ -134,6 +139,7 @@ runs:
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
+        DEPS: "${{ inputs.deps }}"
 
       uses: nick-fields/retry@v2.8.2
       with:
@@ -149,9 +155,9 @@ runs:
             export DISPLAY=:99
             chromedriver --url-base=/wd/hub &
             sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "browser" || exit 1
+            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" "browser" || exit 1
           else
-            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" || exit 1
+            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
           fi
 
     - name: upload artifacts on gh
