@@ -7,12 +7,12 @@ cd $DIR/../../../
 
 BASE_DIRECTORY=$(echo "$FOLDER" | cut -d "/" -f1)
 verifyLib=$1;
-deps=$3;
+deps=$2;
 REGEX="(repository|workflow)_dispatch"
 
 # set test-e2e params
-if [ -n "$2" ]; then
-      e2eParams="--$2"
+if [ -n "$3" ]; then
+      e2eParams="--$3"
 else
       e2eParams=""
 fi
