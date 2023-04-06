@@ -4,16 +4,18 @@
 
 @function get-mat-palettes($primary-color, $accent-color) {
     $mat-primary-palette: null;
-    @if $primary-color {
-        $custom-theme-primary-palette: createColorPalette($primary-color, 'primary');
+
+    @if ($primary-color) {
+        $custom-theme-primary-palette: create-color-palette($primary-color, 'primary');
         $mat-primary-palette: mat.define-palette($custom-theme-primary-palette, 500);
     } @else {
         $mat-primary-palette: mat.define-palette($aca-primary-blue, A100);
     }
 
     $mat-accent-palette: null;
-    @if $accent-color {
-        $custom-theme-accent-palette: createColorPalette($accent-color, 'accent');
+
+    @if ($accent-color) {
+        $custom-theme-accent-palette: create-color-palette($accent-color, 'accent');
         $mat-accent-palette: mat.define-palette($custom-theme-accent-palette, 500);
     } @else {
         $mat-accent-palette: mat.define-palette($aca-accent-green, A200);

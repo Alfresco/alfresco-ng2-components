@@ -72,7 +72,7 @@
     @return $text-colour;
 }
 
-@function createColorPalette($color, $colorType: 'primary') {
+@function create-color-palette($color, $colorType: 'primary') {
     $light: #fff;
     $dark: multiply($color, $color);
 
