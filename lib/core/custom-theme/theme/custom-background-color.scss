@@ -1,9 +1,14 @@
+@use 'sass:map';
+@use 'sass:color';
+
 @function get-custom-background-color($background-color, $theme) {
-    $background: map-get($theme, background);
-    $card: map-get($background, card);
+    $background: map.get($theme, background);
+    $card: map.get($background, card);
 
     $new-card-color: lighten($background-color, 10%);
     $new-selected-button: lighten($background-color, 5%);
+    // $new-card-color: color.adjust($background-color, 10%);
+    // $new-selected-button: color.adjust($background-color, 5%);
 
     $background: map_merge($background, (background: $background-color));
     $background: map_merge($background, (card: $new-card-color));
@@ -13,7 +18,7 @@
 
     $theme-with-new-background: map_merge($theme, (background: $background));
 
-    $theme-color: map-get($theme-with-new-background, color);
+    $theme-color: map.get($theme-with-new-background, color);
     $theme-color-background: map_merge($theme-color, (background: $background));
 
     $theme-with-new-background: map_merge($theme-with-new-background, (color: $theme-color-background));

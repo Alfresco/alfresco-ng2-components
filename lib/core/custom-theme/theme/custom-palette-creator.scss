@@ -1,46 +1,54 @@
-@use "sass:math";
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+@use '../../colors';
 
 @function multiply($fore, $back) {
-    $red: red($back) * red($fore) / 255;
-    $green: green($back) * green($fore) / 255;
-    $blue: blue($back) * blue($fore) / 255;
+    $red: color.red($back) * color.red($fore) / 255;
+    $green: color.green($back) * color.green($fore) / 255;
+    $blue: color.blue($back) * color.blue($fore) / 255;
 
     @return rgb($red, $green, $blue);
 }
 
 @function getColorLuminance($color) {
-  $colors: (
-    'red': red($color),
-    'green': green($color),
-    'blue': blue($color)
-  );
+    $colors: (
+        red: color.red($color),
+        green: color.green($color),
+        blue: color.blue($color),
+    );
 
-  @each $name, $value in $colors {
-    $adjusted: 0;
-    $value: $value / 255;
+    @each $name, $value in $colors {
+        $adjusted: 0;
+        $value: $value / 255;
 
-    @if $value < 0.03928 {
-      $value: $value / 12.92;
-    } @else {
-      $value: ($value + .055) / 1.055;
-      $value: math.pow($value, 2.4);
+        @if $value < 0.0393 {
+            $value: $value / 12.92;
+        } @else {
+            $value: ($value + 0.055) / 1.055;
+            $value: math.pow($value, 2.4);
+        }
+
+        $colors: map-merge(
+            $colors,
+            (
+                $name: $value,
+            )
+        );
     }
 
-    $colors: map-merge($colors, ($name: $value));
-  }
-
-  @return (map-get($colors, 'red') * .2126) + (map-get($colors, 'green') * .7152) + (map-get($colors, 'blue') * .0722);
+    @return (map.get($colors, red) * 0.2126) + (map.get($colors, green) * 0.7152) + (map.get($colors, blue) * 0.0722);
 }
 
-@function createTextColor($color, $colorType: 'primary') {
-    $red: red($color);
-    $green: green($color);
-    $blue: blue($color);
+@function createTextColor($color, $colorType: "primary") {
+    $red: color.red($color);
+    $green: color.green($color);
+    $blue: color.blue($color);
 
     $lightText: $light-primary-text;
     $darkText: $dark-primary-text;
 
-    @if ($colorType == 'accent') {
+    @if ($colorType == "accent") {
         $lightText: $light-secondary-text;
         $darkText: $dark-secondary-text;
     }
@@ -55,7 +63,6 @@
 
     $luminanceContrastForLightText: $lightTextLuminance / $backgroundColorLuminance;
     $luminanceContrastForDarkText: $backgroundColorLuminance / $darkTextLuminance;
-
     $textColour: $lightText;
 
     @if ($luminanceContrastForDarkText > $luminanceContrastForLightText) {
@@ -65,25 +72,25 @@
     @return $textColour;
 }
 
-@function createColorPalette($color, $colorType: 'primary') {
+@function createColorPalette($color, $colorType: "primary") {
     $light: #fff;
     $dark: multiply($color, $color);
 
-    $color50:  mix($light, $color, 88%);
-    $color100:  mix($light, $color, 70%);
-    $color200:  mix($light, $color, 50%);
-    $color300:  mix($light, $color, 30%);
-    $color400:  mix($light, $color, 15%);
-    $color500:  mix($light, $color, 0%);
-    $color600:  mix($dark, $color, 13%);
-    $color700:  mix($dark, $color, 30%);
-    $color800:  mix($dark, $color, 46%);
-    $color900:  mix($dark, $color, 75%);
+    $color50: color.mix($light, $color, 88%);
+    $color100: color.mix($light, $color, 70%);
+    $color200: color.mix($light, $color, 50%);
+    $color300: color.mix($light, $color, 30%);
+    $color400: color.mix($light, $color, 15%);
+    $color500: color.mix($light, $color, 0%);
+    $color600: color.mix($dark, $color, 13%);
+    $color700: color.mix($dark, $color, 30%);
+    $color800: color.mix($dark, $color, 46%);
+    $color900: color.mix($dark, $color, 75%);
 
-    $colorA100: lighten(saturate(mix($dark, $color, 15%), 80%), 45.6%);
-    $colorA200: lighten(saturate(mix($dark, $color, 15%), 80%), 35.6%);
-    $colorA400: lighten(saturate(mix($dark, $color, 15%), 100%), 25.6%);
-    $colorA700: lighten(saturate(mix($dark, $color, 15%), 100%), 20.5%);
+    $colorA100: lighten(saturate(color.mix($dark, $color, 15%), 80%), 45.6%);
+    $colorA200: lighten(saturate(color.mix($dark, $color, 15%), 80%), 35.6%);
+    $colorA400: lighten(saturate(color.mix($dark, $color, 15%), 100%), 25.6%);
+    $colorA700: lighten(saturate(color.mix($dark, $color, 15%), 100%), 20.5%);
 
     $contrast50: createTextColor($color50, $colorType);
     $contrast100: createTextColor($color100, $colorType);
@@ -130,8 +137,8 @@
             A100: $contrastA100,
             A200: $contrastA200,
             A400: $contrastA400,
-            A700: $contrastA700
-        )
+            A700: $contrastA700,
+        ),
     );
 
     @return $palette;

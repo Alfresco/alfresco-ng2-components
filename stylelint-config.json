@@ -31,7 +31,8 @@
       "vh",
       "vw",
       "vmin",
-      "s"
+      "s",
+      "rem"
     ],
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
@@ -89,6 +90,7 @@
       {
         "resolveNestedSelectors": true
       }
-    ]
+    ],
+    "scss/dollar-variable-empty-line-before": null
   }
 }
