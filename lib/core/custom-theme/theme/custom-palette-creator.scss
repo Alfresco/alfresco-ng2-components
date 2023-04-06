@@ -45,34 +45,34 @@
     $green: color.green($color);
     $blue: color.blue($color);
 
-    $lightText: $light-primary-text;
-    $darkText: $dark-primary-text;
+    $light-text: $light-primary-text;
+    $dark-text: $dark-primary-text;
 
-    @if ($colorType == "accent") {
-        $lightText: $light-secondary-text;
-        $darkText: $dark-secondary-text;
+    @if $colorType == 'accent' {
+        $light-text: $light-secondary-text;
+        $dark-text: $dark-secondary-text;
     }
 
-    $lightTextLuminance: getColorLuminance($lightText);
-    $darkTextLuminance: getColorLuminance($darkText);
-    $backgroundColorLuminance: getColorLuminance($color);
+    $light-text-luminance: getColorLuminance($light-text);
+    $dark-text-luminance: getColorLuminance($dark-text);
+    $background-color-luminance: getColorLuminance($color);
 
-    $lightTextLuminance: $lightTextLuminance + 0.5;
-    $darkTextLuminance: $darkTextLuminance + 0.5;
-    $backgroundColorLuminance: $backgroundColorLuminance + 0.5;
+    $light-text-luminance: $light-text-luminance + 0.5;
+    $dark-text-luminance: $dark-text-luminance + 0.5;
+    $background-color-luminance: $background-color-luminance + 0.5;
 
-    $luminanceContrastForLightText: $lightTextLuminance / $backgroundColorLuminance;
-    $luminanceContrastForDarkText: $backgroundColorLuminance / $darkTextLuminance;
-    $textColour: $lightText;
+    $luminance-contrast-for-light-text: $light-text-luminance / $background-color-luminance;
+    $luminance-contrast-for-dark-text: $background-color-luminance / $dark-text-luminance;
+    $text-colour: $light-text;
 
-    @if ($luminanceContrastForDarkText > $luminanceContrastForLightText) {
-        $textColour: $darkText;
+    @if $luminance-contrast-for-dark-text > $luminance-contrast-for-light-text {
+        $text-colour: $dark-text;
     }
 
-    @return $textColour;
+    @return $text-colour;
 }
 
-@function createColorPalette($color, $colorType: "primary") {
+@function createColorPalette($color, $colorType: 'primary') {
     $light: #fff;
     $dark: multiply($color, $color);
 
