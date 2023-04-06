@@ -11,7 +11,7 @@
     @return rgb($red, $green, $blue);
 }
 
-@function getColorLuminance($color) {
+@function get-color-luminance($color) {
     $colors: (
         red: color.red($color),
         green: color.green($color),
@@ -22,14 +22,14 @@
         $adjusted: 0;
         $value: $value / 255;
 
-        @if $value < 0.0393 {
+        @if ($value < 0.0393) {
             $value: $value / 12.92;
         } @else {
             $value: ($value + 0.055) / 1.055;
             $value: math.pow($value, 2.4);
         }
 
-        $colors: map-merge(
+        $colors: map.merge(
             $colors,
             (
                 $name: $value,
@@ -40,7 +40,7 @@
     @return (map.get($colors, red) * 0.2126) + (map.get($colors, green) * 0.7152) + (map.get($colors, blue) * 0.0722);
 }
 
-@function createTextColor($color, $colorType: "primary") {
+@function create-text-color($color, $colorType: 'primary') {
     $red: color.red($color);
     $green: color.green($color);
     $blue: color.blue($color);
@@ -53,9 +53,9 @@
         $dark-text: $dark-secondary-text;
     }
 
-    $light-text-luminance: getColorLuminance($light-text);
-    $dark-text-luminance: getColorLuminance($dark-text);
-    $background-color-luminance: getColorLuminance($color);
+    $light-text-luminance: get-color-luminance($light-text);
+    $dark-text-luminance: get-color-luminance($dark-text);
+    $background-color-luminance: get-color-luminance($color);
 
     $light-text-luminance: $light-text-luminance + 0.5;
     $dark-text-luminance: $dark-text-luminance + 0.5;
@@ -92,21 +92,21 @@
     $colorA400: lighten(saturate(color.mix($dark, $color, 15%), 100%), 25.6%);
     $colorA700: lighten(saturate(color.mix($dark, $color, 15%), 100%), 20.5%);
 
-    $contrast50: createTextColor($color50, $colorType);
-    $contrast100: createTextColor($color100, $colorType);
-    $contrast200: createTextColor($color200, $colorType);
-    $contrast300: createTextColor($color300, $colorType);
-    $contrast400: createTextColor($color400, $colorType);
-    $contrast500: createTextColor($color500, $colorType);
-    $contrast600: createTextColor($color600, $colorType);
-    $contrast700: createTextColor($color700, $colorType);
-    $contrast800: createTextColor($color800, $colorType);
-    $contrast900: createTextColor($color900, $colorType);
+    $contrast50: create-text-color($color50, $colorType);
+    $contrast100: create-text-color($color100, $colorType);
+    $contrast200: create-text-color($color200, $colorType);
+    $contrast300: create-text-color($color300, $colorType);
+    $contrast400: create-text-color($color400, $colorType);
+    $contrast500: create-text-color($color500, $colorType);
+    $contrast600: create-text-color($color600, $colorType);
+    $contrast700: create-text-color($color700, $colorType);
+    $contrast800: create-text-color($color800, $colorType);
+    $contrast900: create-text-color($color900, $colorType);
 
-    $contrastA100: createTextColor($colorA100, $colorType);
-    $contrastA200: createTextColor($colorA200, $colorType);
-    $contrastA400: createTextColor($colorA400, $colorType);
-    $contrastA700: createTextColor($colorA700, $colorType);
+    $contrastA100: create-text-color($colorA100, $colorType);
+    $contrastA200: create-text-color($colorA200, $colorType);
+    $contrastA400: create-text-color($colorA400, $colorType);
+    $contrastA700: create-text-color($colorA700, $colorType);
 
     $palette: (
         50: $color50,
