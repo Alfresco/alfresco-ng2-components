@@ -87,10 +87,12 @@
     $color800: color.mix($dark, $color, 46%);
     $color900: color.mix($dark, $color, 75%);
 
-    $colorA100: lighten(saturate(color.mix($dark, $color, 15%), 80%), 45.6%);
-    $colorA200: lighten(saturate(color.mix($dark, $color, 15%), 80%), 35.6%);
-    $colorA400: lighten(saturate(color.mix($dark, $color, 15%), 100%), 25.6%);
-    $colorA700: lighten(saturate(color.mix($dark, $color, 15%), 100%), 20.5%);
+    /* stylelint-disable scss/dollar-variable-pattern */
+    $colorA100: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 45.6%);
+    $colorA200: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 35.6%);
+    $colorA400: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 25.6%);
+    $colorA700: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 20.5%);
+    /* stylelint-enable scss/dollar-variable-pattern */
 
     $contrast50: create-text-color($color50, $colorType);
     $contrast100: create-text-color($color100, $colorType);
@@ -103,10 +105,12 @@
     $contrast800: create-text-color($color800, $colorType);
     $contrast900: create-text-color($color900, $colorType);
 
+    /* stylelint-disable scss/dollar-variable-pattern */
     $contrastA100: create-text-color($colorA100, $colorType);
     $contrastA200: create-text-color($colorA200, $colorType);
     $contrastA400: create-text-color($colorA400, $colorType);
     $contrastA700: create-text-color($colorA700, $colorType);
+    /* stylelint-enable scss/dollar-variable-pattern */
 
     $palette: (
         50: $color50,
@@ -119,10 +123,12 @@
         700: $color700,
         800: $color800,
         900: $color900,
+        /* stylelint-disable value-keyword-case */
         A100: $colorA100,
         A200: $colorA200,
         A400: $colorA400,
         A700: $colorA700,
+        /* stylelint-enable value-keyword-case */
         contrast: (
             50: $contrast50,
             100: $contrast100,
@@ -134,10 +140,12 @@
             700: $contrast700,
             800: $contrast800,
             900: $contrast900,
+            /* stylelint-disable value-keyword-case */
             A100: $contrastA100,
             A200: $contrastA200,
             A400: $contrastA400,
             A700: $contrastA700,
+            /* stylelint-enable value-keyword-case */
         ),
     );
 
