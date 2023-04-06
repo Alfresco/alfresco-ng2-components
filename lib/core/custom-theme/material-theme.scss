@@ -1,0 +1,24 @@
+@use 'sass:map';
+@import './theme/theme-data';
+
+$custom-theme: mat-light-theme(
+    (
+        color: (
+            primary: map.get($palettes, primary),
+            accent: map.get($palettes, accent),
+            warn: map.get($palettes, warning),
+        ),
+        typography: $app-typography,
+    )
+);
+
+@if $background-color {
+    $custom-theme: get-custom-background-color(
+        $background-color,
+        $custom-theme
+    );
+}
+
+@if $text-color {
+    $custom-theme: get-custom-text-color($text-color, $custom-theme);
+}

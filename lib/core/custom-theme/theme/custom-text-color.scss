@@ -1,0 +1,17 @@
+@use 'sass:map';
+
+@function get-custom-text-color($text-color, $theme) {
+    $foreground: map.get($theme, foreground);
+
+    $foreground: map.merge($foreground, (text: $text-color));
+    $foreground: map.merge($foreground, (secondary-text: $text-color));
+
+    $theme-with-new-foreground: map.merge($theme, (foreground: $foreground));
+
+    $theme-foreground-color: map.get($theme-with-new-foreground, color);
+    $theme-color-foreground: map.merge($theme-foreground-color, (foreground: $foreground));
+
+    $theme-with-new-foreground: map.merge($theme-with-new-foreground, (color: $theme-color-foreground));
+
+    @return $theme-with-new-foreground;
+}

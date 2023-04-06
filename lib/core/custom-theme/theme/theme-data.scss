@@ -1,0 +1,22 @@
+@use 'sass:map';
+@import '@angular/material/theming';
+@import './theme-configuration';
+@import './typography';
+@import './custom-theme-palettes';
+@import './custom-background-color';
+@import './custom-text-color';
+
+$primary-color: map.get($theme-config, 'primaryColor');
+$accent-color: map.get($theme-config, 'accentColor');
+$background-color: map.get($theme-config, 'backgroundColor');
+
+$text-color: map.get($theme-config, 'textColor');
+$base-font-size: map.get($theme-config, 'baseFontSize');
+$font-family: map.get($theme-config, 'fontFamily');
+
+$app-typography: get-mat-typography(
+    $base-font-size,
+    $font-family
+);
+
+$palettes: get-mat-palettes($primary-color, $accent-color);

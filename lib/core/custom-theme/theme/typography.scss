@@ -1,0 +1,93 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import "../variables/font-family.scss";
+
+@function get-mat-typography($base-font-size, $font-family) {
+    $custom-typography: mat.define-typography-config(
+        $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
+        $display-4: mat.define-typography-level(112px, 112px, 300),
+        $display-3: mat.define-typography-level(56px, 56px, 400),
+        $display-2: mat.define-typography-level(45px, 48px, 400),
+        $display-1: mat.define-typography-level(34px, 40px, 400),
+        $headline: mat.define-typography-level(24px, 32px, 400),
+        $title: mat.define-typography-level(20px, 32px, 500),
+        $subheading-2: mat.define-typography-level(16px, 28px, 400),
+        $subheading-1: mat.define-typography-level(15px, 24px, 400),
+        $body-2: mat.define-typography-level(14px, 24px, 500),
+        $body-1: mat.define-typography-level(14px, 20px, 400),
+        $caption: mat.define-typography-level(12px, 20px, 400),
+        $button: mat.define-typography-level(14px, 14px, 500),
+        // Line-height must be unit-less fraction of the font-size.
+        $input: mat.define-typography-level(16px, 1.25, 400),
+    );
+
+    @if $base-font-size {
+        $custom-typography: mat.define-typography-config(
+            $display-4: mat.define-typography-level(8rem, 8rem, 300),
+            $display-3: mat.define-typography-level(4rem, 4rem, 400),
+            $display-2: mat.define-typography-level(3.21rem, 3.21rem, 400),
+            $display-1: mat.define-typography-level(2.42rem, 2.85rem, 400),
+            $headline: mat.define-typography-level(1.71rem, 2.28rem, 400),
+            $title: mat.define-typography-level(1.42rem, 2.28rem, 500),
+            $subheading-2: mat.define-typography-level(1.14rem, 2rem, 400),
+            $subheading-1: mat.define-typography-level(1.07rem, 1.71rem, 400),
+            $body-2: mat.define-typography-level(1rem, 1.71rem, 500),
+            $body-1: mat.define-typography-level(1rem, 1.42rem, 400),
+            $caption: mat.define-typography-level(0.86rem, 1.42rem, 400),
+            $button: mat.define-typography-level(1rem, 1rem, 500),
+            $font-family: $default-font-family,
+            $input: mat.define-typography-level(1.14em, 1.25, 400),
+        );
+    }
+
+    @if $font-family {
+        @each $key, $level in $custom-typography {
+            @if type-of($level) == 'map' {
+                $new-level: map.merge(
+                    $level,
+                    (
+                        font-family: $font-family,
+                    )
+                );
+                $custom-typography: map.merge(
+                    $custom-typography,
+                    (
+                        $key: $new-level,
+                    )
+                );
+            }
+        }
+
+        $custom-typography: map.merge(
+            $custom-typography,
+            (
+                font-family: $font-family,
+            )
+        );
+    }
+
+    @return $custom-typography;
+}
+
+@function get-custom-adf-font-sizes() {
+    @return (
+        'theme-adf-icon-1-font-size': 1.2rem,
+        'theme-adf-picture-1-font-size': 1.28rem,
+        'theme-adf-task-footer-font-size': 1.28rem,
+        'theme-adf-task-title-font-size': 1.28rem
+    );
+}
+
+@mixin base-font-size($font-size) {
+    html,
+    body {
+        font-size: $font-size !important;
+    }
+}
+
+@mixin base-font-family($font-family) {
+    html,
+    body {
+        font-family: $font-family !important;
+    }
+}

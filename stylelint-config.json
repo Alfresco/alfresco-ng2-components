@@ -31,7 +31,8 @@
       "vh",
       "vw",
       "vmin",
-      "s"
+      "s",
+      "rem"
     ],
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
@@ -62,7 +63,12 @@
         "message": "The `initial` value is not supported in IE."
       }
     ],
-    "block-closing-brace-newline-after": "always",
+    "block-closing-brace-newline-after": [
+      "always",
+      {
+        "ignoreAtRules": ["if", "else"]
+      }
+    ],
     "block-closing-brace-newline-before": "always-multi-line",
     "block-opening-brace-newline-after": "always-multi-line",
     "block-opening-brace-space-before": "always-multi-line",
@@ -89,6 +95,8 @@
       {
         "resolveNestedSelectors": true
       }
-    ]
+    ],
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/at-rule-conditional-no-parentheses": null
   }
 }

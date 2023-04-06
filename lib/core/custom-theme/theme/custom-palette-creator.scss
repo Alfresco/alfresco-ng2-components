@@ -1,0 +1,153 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+@use '../../colors';
+
+@function multiply($fore, $back) {
+    $red: color.red($back) * color.red($fore) / 255;
+    $green: color.green($back) * color.green($fore) / 255;
+    $blue: color.blue($back) * color.blue($fore) / 255;
+
+    @return rgb($red, $green, $blue);
+}
+
+@function get-color-luminance($color) {
+    $colors: (
+        red: color.red($color),
+        green: color.green($color),
+        blue: color.blue($color),
+    );
+
+    @each $name, $value in $colors {
+        $adjusted: 0;
+        $value: $value / 255;
+
+        @if ($value < 0.0393) {
+            $value: $value / 12.92;
+        } @else {
+            $value: ($value + 0.055) / 1.055;
+            $value: math.pow($value, 2.4);
+        }
+
+        $colors: map.merge(
+            $colors,
+            (
+                $name: $value,
+            )
+        );
+    }
+
+    @return (map.get($colors, red) * 0.2126) + (map.get($colors, green) * 0.7152) + (map.get($colors, blue) * 0.0722);
+}
+
+@function create-text-color($color, $colorType: 'primary') {
+    $red: color.red($color);
+    $green: color.green($color);
+    $blue: color.blue($color);
+
+    $light-text: $light-primary-text;
+    $dark-text: $dark-primary-text;
+
+    @if $colorType == 'accent' {
+        $light-text: $light-secondary-text;
+        $dark-text: $dark-secondary-text;
+    }
+
+    $light-text-luminance: get-color-luminance($light-text);
+    $dark-text-luminance: get-color-luminance($dark-text);
+    $background-color-luminance: get-color-luminance($color);
+
+    $light-text-luminance: $light-text-luminance + 0.5;
+    $dark-text-luminance: $dark-text-luminance + 0.5;
+    $background-color-luminance: $background-color-luminance + 0.5;
+
+    $luminance-contrast-for-light-text: $light-text-luminance / $background-color-luminance;
+    $luminance-contrast-for-dark-text: $background-color-luminance / $dark-text-luminance;
+    $text-colour: $light-text;
+
+    @if $luminance-contrast-for-dark-text > $luminance-contrast-for-light-text {
+        $text-colour: $dark-text;
+    }
+
+    @return $text-colour;
+}
+
+@function create-color-palette($color, $colorType: 'primary') {
+    $light: #fff;
+    $dark: multiply($color, $color);
+
+    $color50: color.mix($light, $color, 88%);
+    $color100: color.mix($light, $color, 70%);
+    $color200: color.mix($light, $color, 50%);
+    $color300: color.mix($light, $color, 30%);
+    $color400: color.mix($light, $color, 15%);
+    $color500: color.mix($light, $color, 0%);
+    $color600: color.mix($dark, $color, 13%);
+    $color700: color.mix($dark, $color, 30%);
+    $color800: color.mix($dark, $color, 46%);
+    $color900: color.mix($dark, $color, 75%);
+
+    /* stylelint-disable scss/dollar-variable-pattern */
+    $colorA100: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 45.6%);
+    $colorA200: color.adjust(saturate(color.mix($dark, $color, 15%), 80%), $lightness: 35.6%);
+    $colorA400: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 25.6%);
+    $colorA700: color.adjust(saturate(color.mix($dark, $color, 15%), 100%), $lightness: 20.5%);
+    /* stylelint-enable scss/dollar-variable-pattern */
+
+    $contrast50: create-text-color($color50, $colorType);
+    $contrast100: create-text-color($color100, $colorType);
+    $contrast200: create-text-color($color200, $colorType);
+    $contrast300: create-text-color($color300, $colorType);
+    $contrast400: create-text-color($color400, $colorType);
+    $contrast500: create-text-color($color500, $colorType);
+    $contrast600: create-text-color($color600, $colorType);
+    $contrast700: create-text-color($color700, $colorType);
+    $contrast800: create-text-color($color800, $colorType);
+    $contrast900: create-text-color($color900, $colorType);
+
+    /* stylelint-disable scss/dollar-variable-pattern */
+    $contrastA100: create-text-color($colorA100, $colorType);
+    $contrastA200: create-text-color($colorA200, $colorType);
+    $contrastA400: create-text-color($colorA400, $colorType);
+    $contrastA700: create-text-color($colorA700, $colorType);
+    /* stylelint-enable scss/dollar-variable-pattern */
+
+    $palette: (
+        50: $color50,
+        100: $color50,
+        200: $color50,
+        300: $color50,
+        400: $color400,
+        500: $color500,
+        600: $color600,
+        700: $color700,
+        800: $color800,
+        900: $color900,
+        /* stylelint-disable value-keyword-case */
+        A100: $colorA100,
+        A200: $colorA200,
+        A400: $colorA400,
+        A700: $colorA700,
+        /* stylelint-enable value-keyword-case */
+        contrast: (
+            50: $contrast50,
+            100: $contrast100,
+            200: $contrast200,
+            300: $contrast300,
+            400: $contrast400,
+            500: $contrast500,
+            600: $contrast600,
+            700: $contrast700,
+            800: $contrast800,
+            900: $contrast900,
+            /* stylelint-disable value-keyword-case */
+            A100: $contrastA100,
+            A200: $contrastA200,
+            A400: $contrastA400,
+            A700: $contrastA700,
+            /* stylelint-enable value-keyword-case */
+        ),
+    );
+
+    @return $palette;
+}
