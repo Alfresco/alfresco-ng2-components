@@ -44,8 +44,8 @@ import { AppConfigService } from '../../app-config';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
-    enableDownloadPrompt: true,
-    enableDownloadPromptReminder: true,
+    enableDownloadPrompt: false,
+    enableDownloadPromptReminder: false,
     downloadPromptDelay: 50,
     downloadPromptReminderDelay: 30
 };
