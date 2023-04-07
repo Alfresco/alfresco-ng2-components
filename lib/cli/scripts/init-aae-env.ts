@@ -383,7 +383,7 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
                 connectors: currentAbsentApp.variables.connectors(args.connectorVariables),
                 uis: currentAbsentApp.variables.uis,
                 bridges: currentAbsentApp.variables.bridges
-            }
+            };
 
             const deployPayload = {
                 name: currentAbsentApp.name,
