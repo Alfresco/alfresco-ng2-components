@@ -393,14 +393,14 @@ describe('TagsCreatorComponent', () => {
         }));
 
         it('should have correct label when mode is Create and Assign', fakeAsync(() => {
-            component.mode = TagsCreatorMode.CREATE_AND_ASSIGN
+            component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
 
             typeTag('some tag');
             expect(getExistingTagsLabel()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION');
         }));
 
         it('should have correct label when mode is Create', fakeAsync(() => {
-            component.mode = TagsCreatorMode.CREATE
+            component.mode = TagsCreatorMode.CREATE;
 
             typeTag('some tag');
             expect(getExistingTagsLabel()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS');
