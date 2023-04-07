@@ -107,7 +107,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
-    private classifiableChangedSubject = new Subject<void>;
+    private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
 
     multiValueSeparator: string;
@@ -203,29 +203,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private loadProperties(node: Node) {
-        if (node) {
-            this.basicProperties$ = this.getProperties(node);
-            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
-            if (this.displayTags) {
-                this.loadTagsForNode(node.id);
-            }
-            this.loadCategoriesForNode(node.id);
-            if (!this.node.aspectNames.includes('generalclassifiable')) {
-                this.classifiableChangedSubject.next();
-                this.categories = [];
-            }
-        }
-    }
-
-    private getProperties(node: Node) {
-        const properties$ = this.contentMetadataService.getBasicProperties(node);
-        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
-        return zip(properties$, contentTypeProperty$)
-            .pipe(map(([properties, contentTypeProperty]) => {
-                const filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
-                return [...properties, ...filteredProperties];
-            }));
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     updateChanges(updatedNodeChanges) {
@@ -241,18 +221,25 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Toggles tag name control and hides category name control.
+     */
     toggleTagInput(){
         this.tagNameControlVisible = true;
         this.categoryControlVisible = false;
     }
 
+    /**
+     * Toggles category name control and hides tag name control.
+     */
     toggleCategoryInput() {
         this.categoryControlVisible = true;
         this.tagNameControlVisible = false;
     }
 
     /**
-     * Called after clicking save button. It confirms all changes done for metadata. Before clicking on that button they are not saved.
+     * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
+     * Before clicking on that button they are not saved.
      */
     saveChanges() {
         this._saving = true;
@@ -276,6 +263,46 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     storeTagsToAssign(tags: string[]) {
         this._tags = tags;
         this.hasMetadataChanged = true;
+    }
+
+    /**
+     * Store all categories that node should be assigned to. Please note that they are just in "stored" state and are not yet saved
+     * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     * @param categoriesToAssign array of categories to store.
+     */
+    storeCategoriesToAssign(categoriesToAssign: Category[]) {
+        this.categories = categoriesToAssign;
+        this.hasMetadataChanged = true;
+    }
+
+    revertChanges() {
+        this.changedProperties = {};
+        this.hasMetadataChanged = false;
+    }
+
+    cancelChanges() {
+        this.revertChanges();
+        this.loadProperties(this.node);
+    }
+
+    showGroup(group: CardViewGroup): boolean {
+        const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
+
+        return properties.length > 0;
+    }
+
+    canExpandTheCard(group: CardViewGroup): boolean {
+        return group.title === this.displayAspect;
+    }
+
+    canExpandProperties(): boolean {
+        return !this.expanded || this.displayAspect === 'Properties';
+    }
+
+    keyDown(event: KeyboardEvent) {
+        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+            event.stopPropagation();
+        }
     }
 
     private updateNode() {
@@ -313,48 +340,33 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return !!changedProperties?.nodeType;
     }
 
-    revertChanges() {
-        this.changedProperties = {};
-        this.hasMetadataChanged = false;
-    }
-
-    cancelChanges() {
-        this.revertChanges();
-        this.loadProperties(this.node);
-    }
-
-    showGroup(group: CardViewGroup): boolean {
-        const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
-
-        return properties.length > 0;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
-    public canExpandTheCard(group: CardViewGroup): boolean {
-        return group.title === this.displayAspect;
-    }
-
-    public canExpandProperties(): boolean {
-        return !this.expanded || this.displayAspect === 'Properties';
-    }
-
-    keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
-            event.stopPropagation();
+    private loadProperties(node: Node) {
+        if (node) {
+            this.basicProperties$ = this.getProperties(node);
+            this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            if (this.displayTags) {
+                this.loadTagsForNode(node.id);
+            }
+            this.loadCategoriesForNode(node.id);
+            if (!this.node.aspectNames.includes('generalclassifiable')) {
+                this.categories = [];
+                this.classifiableChangedSubject.next();
+            }
         }
+    }
+
+    private getProperties(node: Node) {
+        const properties$ = this.contentMetadataService.getBasicProperties(node);
+        const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
+        return zip(properties$, contentTypeProperty$)
+            .pipe(map(([properties, contentTypeProperty]) => {
+                const filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
+                return [...properties, ...filteredProperties];
+            }));
     }
 
     private isEmpty(value: any): boolean {
         return value === undefined || value === null || value === '';
-    }
-
-    storeCategoriesToAssign(categoriesToAssign: Category[]) {
-        this.categories = categoriesToAssign;
-        this.hasMetadataChanged = true;
     }
 
     private loadCategoriesForNode(nodeId: string) {
@@ -375,7 +387,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             });
             const categoryLinkBodies: CategoryLinkBody[] = [];
             this.categories.forEach((category) => {
-                let categoryLinkBody = new CategoryLinkBody();
+                const categoryLinkBody = new CategoryLinkBody();
                 categoryLinkBody.categoryId = category.id;
                 categoryLinkBodies.push(categoryLinkBody);
             });

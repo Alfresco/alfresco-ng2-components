@@ -51,17 +51,17 @@
         </ng-container>
         <mat-expansion-panel *ngIf="!editable">
             <mat-expansion-panel-header>
-                <mat-panel-title>Categories</mat-panel-title>
+                <mat-panel-title>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
             <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
         </mat-expansion-panel>
         <div *ngIf="editable"
             class="adf-metadata-categories-header">
             <div class="adf-metadata-categories-title">
-                <p>Categories</p>
+                <p>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}</p>
                 <button
                     mat-icon-button
-                    [attr.title]="'Assign categories' | translate"
+                    [attr.title]="'CATEGORIES_MANAGEMENT.ASSIGN_CATEGORIES' | translate"
                     [hidden]="categoryControlVisible || saving"
                     (click)="toggleCategoryInput()">
                     <mat-icon>add</mat-icon>

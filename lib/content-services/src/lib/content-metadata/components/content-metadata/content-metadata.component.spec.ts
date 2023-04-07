@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ClassesApi, MinimalNode, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import { Category, CategoryPaging, ClassesApi, MinimalNode, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
+import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService, TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -44,6 +44,7 @@ describe('ContentMetadataComponent', () => {
     let node: Node;
     let folderNode: Node;
     let tagService: TagService;
+    let categoryService: CategoryService;
 
     const preset = 'custom-preset';
 
@@ -61,6 +62,10 @@ describe('ContentMetadataComponent', () => {
         tagPaging.list.entries = [tagEntry1, tagEntry2];
         return tagPaging;
     };
+
+    const category1 = new Category({ id: 'test', name: 'testCat' });
+    const category2 = new Category({ id: 'test2', name: 'testCat2' });
+    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [ { entry: category1 }, { entry: category2 }]}};
 
     const findTagElements = (): DebugElement[] => fixture.debugElement.queryAll(By.css('.adf-metadata-properties-tag'));
 
@@ -83,24 +88,46 @@ describe('ContentMetadataComponent', () => {
     const findShowingTagInputButton = (): HTMLButtonElement =>
         fixture.debugElement.query(By.css('[data-automation-id=showing-tag-input-button]')).nativeElement;
 
+    function getCategories(): HTMLParagraphElement[] {
+        return fixture.debugElement.queryAll(By.css('.adf-metadata-categories'))?.map((debugElem) => debugElem.nativeElement);
+    }
+
+    function getCategoriesManagementComponent(): CategoriesManagementComponent {
+        return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
+    }
+
+    function getAssignCategoriesBtn(): HTMLButtonElement {
+        return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
+    }
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             ContentTestingModule
         ],
-        providers: [{
-            provide: LogService,
-            useValue: {
-                error: jasmine.createSpy('error')
-            }
-        }, {
-            provide: TagService,
-            useValue: {
-                getTagsByNodeId: () => EMPTY,
-                removeTag: () => EMPTY,
-                assignTagsToNode: () => EMPTY
-            }
-        }]
+        providers: [
+            {
+                provide: LogService,
+                useValue: {
+                    error: jasmine.createSpy('error')
+                }
+            },
+            {
+                provide: TagService,
+                useValue: {
+                    getTagsByNodeId: () => EMPTY,
+                    removeTag: () => EMPTY,
+                    assignTagsToNode: () => EMPTY
+                }
+            },
+            {
+                provide: CategoryService,
+                useValue: {
+                    getCategoryLinksForNode: () => EMPTY,
+                    linkNodeToCategory: () => EMPTY,
+                    unlinkNodeFromCategory: () => EMPTY
+                }
+            }]
     });
 
     beforeEach(() => {
@@ -110,6 +137,7 @@ describe('ContentMetadataComponent', () => {
         updateService = TestBed.inject(CardViewContentUpdateService);
         nodesApiService = TestBed.inject(NodesApiService);
         tagService = TestBed.inject(TagService);
+        categoryService = TestBed.inject(CategoryService);
 
         node = {
             id: 'node-id',
@@ -1137,11 +1165,179 @@ describe('ContentMetadataComponent', () => {
         expect(findTagsCreator()).toBeDefined();
     });
 
-    it('should not show tags creator if editable is true and displayTags is false', () => {
-        component.editable = true;
-        component.displayTags = false;
-        fixture.detectChanges();
-        expect(findTagsCreator()).toBeUndefined();
+    describe('Categories list', () => {
+        beforeEach(() => {
+            component.node.aspectNames.push('generalclassifiable');
+            spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+        });
+
+        it('should render categories node is assigned to', () => {
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            const categories = getCategories();
+            expect(categories.length).toBe(2);
+            expect(categories[0].textContent).toBe(category1.name);
+            expect(categories[1].textContent).toBe(category2.name);
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should render categories when ngOnChanges', () => {
+            component.ngOnChanges({ node: new SimpleChange(undefined, node, false)});
+            fixture.detectChanges();
+
+            const categories = getCategories();
+            expect(categories.length).toBe(2);
+            expect(categories[0].textContent).toBe(category1.name);
+            expect(categories[1].textContent).toBe(category2.name);
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not reload categories in ngOnChanges if node is not changed', () => {
+
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
+        });
+
+        it('should render categories after discard changes button is clicked', fakeAsync(() => {
+            component.editable = true;
+            fixture.detectChanges();
+            TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
+                changed: {}
+            } as UpdateNotification);
+            tick(500);
+            fixture.detectChanges();
+
+            clickOnCancel();
+            component.editable = false;
+            fixture.detectChanges();
+
+            const categories = getCategories();
+            expect(categories.length).toBe(2);
+            expect(categories[0].textContent).toBe(category1.name);
+            expect(categories[1].textContent).toBe(category2.name);
+            expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+        }));
+
+        it('should be hidden when editable is true', () => {
+            component.editable = true;
+            fixture.detectChanges();
+            expect(getCategories().length).toBe(0);
+        });
+    });
+
+    describe('Categories management', () => {
+        let categoriesManagementComponent: CategoriesManagementComponent;
+
+        beforeEach(() => {
+            component.editable = true;
+            component.node.aspectNames.push('generalclassifiable');
+            spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
+            fixture.detectChanges();
+            categoriesManagementComponent = getCategoriesManagementComponent();
+        });
+
+        it('should set categoryNameControlVisible to false initially', () => {
+            expect(categoriesManagementComponent.categoryNameControlVisible).toBeFalse();
+        });
+
+        it('should hide assign categories button when categoryNameControlVisible changes to true', () => {
+            categoriesManagementComponent.categoryNameControlVisibleChange.emit(true);
+            fixture.detectChanges();
+            expect(getAssignCategoriesBtn().hasAttribute('hidden')).toBeTrue();
+        });
+
+        it('should show assign categories button when categoryNameControlVisible changes to false', fakeAsync(() => {
+            categoriesManagementComponent.categoryNameControlVisibleChange.emit(true);
+            fixture.detectChanges();
+            tick();
+            categoriesManagementComponent.categoryNameControlVisibleChange.emit(false);
+            fixture.detectChanges();
+            tick(100);
+            expect(getAssignCategoriesBtn().hasAttribute('hidden')).toBeFalse();
+        }));
+
+        it('should have correct mode', () => {
+            expect(categoriesManagementComponent.managementMode).toBe(CategoriesManagementMode.ASSIGN);
+        });
+
+        it('should clear categories and emit event when classifiable changes', (done) => {
+            component.node.aspectNames = [];
+            component.ngOnChanges({ node: new SimpleChange(undefined, node, false)});
+            component.classifiableChanged.subscribe(() => {
+                expect(component.categories).toEqual([]);
+                done();
+            });
+            component.ngOnChanges({ node: new SimpleChange(undefined, node, false)});
+        });
+
+        it('should enable discard and save buttons after emitting categories change event', () => {
+            categoriesManagementComponent.categoriesChange.emit([category1, category2]);
+            fixture.detectChanges();
+            expect(findCancelButton().disabled).toBeFalse();
+            expect(findSaveButton().disabled).toBeFalse();
+        });
+
+        it('should not disable removal initially', () => {
+            expect(categoriesManagementComponent.disableRemoval).toBeFalse();
+        });
+
+        it('should disable removal on saving', () => {
+            categoriesManagementComponent.categoriesChange.emit([]);
+            fixture.detectChanges();
+
+            clickOnSave();
+            expect(categoriesManagementComponent.disableRemoval).toBeTrue();
+        });
+
+        it('should not disable removal if forkJoin fails', fakeAsync( () => {
+            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
+            const expectedNode = { ...node, name: 'some-modified-value' };
+            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+            component.ngOnInit();
+            spyOn(tagService, 'removeTag').and.returnValue(EMPTY);
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
+            spyOn(categoryService, 'unlinkNodeFromCategory').and.returnValue(EMPTY);
+            spyOn(categoryService, 'linkNodeToCategory').and.returnValue(throwError({}));
+
+            updateService.update(property, 'updated-value');
+            tick(600);
+
+            fixture.detectChanges();
+            categoriesManagementComponent.categoriesChange.emit([category1, category2]);
+            clickOnSave();
+
+            expect(categoriesManagementComponent.disableRemoval).toBeFalse();
+        }));
+
+        it('should set categoryNameControlVisible to false after saving', () => {
+            categoriesManagementComponent.categoryNameControlVisibleChange.emit(true);
+            categoriesManagementComponent.categoriesChange.emit([]);
+            fixture.detectChanges();
+
+            clickOnSave();
+            expect(categoriesManagementComponent.categoryNameControlVisible).toBeFalse();
+        });
+
+        describe('Setting categories', () => {
+            it('should set correct categories after ngOnInit', () => {
+                component.ngOnInit();
+
+                fixture.detectChanges();
+                expect(categoriesManagementComponent.categories).toEqual([ category1, category2 ]);
+                expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+            });
+
+            it('should set correct tags after ngOnChanges', () => {
+                component.ngOnChanges({ node: new SimpleChange(undefined, node, false)});
+
+                fixture.detectChanges();
+                expect(categoriesManagementComponent.categories).toEqual([ category1, category2 ]);
+                expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+            });
+        });
     });
 });
 
