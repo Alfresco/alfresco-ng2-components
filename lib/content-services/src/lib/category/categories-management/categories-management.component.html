@@ -1,40 +1,38 @@
 <div class="adf-categories-management">
-    <p
-       class="adf-no-categories-message"
-       *ngIf="!categories.length">
+    <p *ngIf="!categories.length"
+       class="adf-no-categories-message">
         {{  noCategoriesTitle | translate }}
     </p>
-    <div class="adf-categories-list"
-         #categoriesList>
-        <p
+    <div class="adf-categories-list">
+        <span
             *ngFor="let category of categories"
+            [class.adf-categories-padded]="!isCRUDMode"
             class="adf-assigned-categories">
             {{ category.name }}
             <button
-                data-automation-id="categories-dialog-remove-category-button"
+                data-automation-id="categories-remove-category-button"
                 mat-icon-button
                 (click)="removeCategory(category)"
-                [attr.title]="'Unassign Category' | translate"
-                [disabled]="saving || disableRemoval">
+                [attr.title]="removeCategoryTitle | translate"
+                [disabled]="disableRemoval">
                 <mat-icon>remove</mat-icon>
             </button>
-        </p>
+        </span>
     </div>
-    <div
-        class="adf-category-name-field"
-        *ngIf="(!categoryNameControlVisible && categoriesToCreate.length) || (categoryNameControlVisible)"
-        [hidden]="!categoryNameControlVisible">
-        <mat-form-field *ngIf="categoryNameControlVisible">
+    <div *ngIf="((!categoryNameControlVisible && categories.length)) ||categoryNameControlVisible"
+        [hidden]="!categoryNameControlVisible"
+        class="adf-category-name-field">
+        <mat-form-field>
             <mat-icon matPrefix>search</mat-icon>
-            <mat-label id="acc-category-name-input-label">
-                {{'Category name' | translate}}
+            <mat-label id="adf-category-name-input-label">
+                {{'CATEGORIES_MANAGEMENT.NAME' | translate}}
             </mat-label>
             <input
                 matInput
                 autocomplete="off"
                 [formControl]="categoryNameControl"
                 (keyup.enter)="addCategory()"
-                aria-labelledby="acc-category-name-input-label"
+                aria-labelledby="adf-category-name-input-label"
                 adf-auto-focus
             />
             <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
@@ -42,26 +40,24 @@
         <button
             mat-icon-button
             (click)="hideNameInput()"
-            [attr.title]="'Hide input' | translate">
+            [attr.title]="'CATEGORIES_MANAGEMENT.HIDE_INPUT' | translate">
             <mat-icon>remove</mat-icon>
         </button>
     </div>
 </div>
 <div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
-    <!-- <ng-container *ngIf="!existingCategoriesLoading || existingCategories">
+    <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
         <span
-            class="acc-create-category-label"
             (click)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
         </span>
-        <p class="acc-existing-categories-label">
-            {{ 'Existing Categories' | translate }}
-        </p>
-    </ng-container> -->
+        <p>{{ 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES' | translate }}</p>
+    </ng-container>
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
         <mat-selection-list
             *ngIf="!existingCategoriesLoading || existingCategories"
+            [disabled]="isCRUDMode"
             (selectionChange)="addCategoryToAssign($event)">
             <mat-list-option
                 *ngFor="let category of existingCategories"
@@ -69,12 +65,12 @@
                 [value]="category">
                 {{ category.name }}
             </mat-list-option>
-            <p *ngIf="!existingCategories?.length">{{ 'No existing categories' | translate }}</p>
+            <p *ngIf="!existingCategories?.length">{{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}</p>
         </mat-selection-list>
         <mat-spinner
             *ngIf="existingCategoriesLoading"
             [diameter]="50"
-            [attr.aria-label]="'Loading' | translate">
+            [attr.aria-label]="'CATEGORIES_MANAGEMENT.LOADING' | translate">
         </mat-spinner>
     </div>
 </div>
