@@ -62,7 +62,7 @@
             {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
         </span>
         <p class="adf-existing-tags-label">
-            {{ existingTagsLabelKey | translate }}
+            {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
         </p>
     </ng-container>
     <div class="adf-tags-list">

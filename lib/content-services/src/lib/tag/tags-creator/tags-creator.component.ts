@@ -159,7 +159,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private cancelExistingTagsLoading$ = new Subject<void>();
     private existingExactTag: TagEntry;
     private _existingTagsPanelVisible: boolean;
-    private _existingTagsLabelKey: string;
 
     @ViewChild('tagsList')
     private tagsListElement: ElementRef;
@@ -239,10 +238,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     get existingTagsPanelVisible(): boolean {
         return this._existingTagsPanelVisible;
-    }
-
-    get existingTagsLabelKey(): string {
-        return this._existingTagsLabelKey;
     }
 
     /**
