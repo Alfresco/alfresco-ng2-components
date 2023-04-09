@@ -75,7 +75,7 @@
     "@mat-datetimepicker/core": "^9.0.68",
     "@mat-datetimepicker/moment": "^9.0.68",
     "@ngx-translate/core": "^14.0.0",
-    "@storybook/core-server": "6.4.22",
+    "@storybook/core-server": "7.0.2",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^15.0.1",
     "apollo-angular": "^4.2.1",
