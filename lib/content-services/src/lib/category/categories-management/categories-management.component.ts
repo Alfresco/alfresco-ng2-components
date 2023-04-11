@@ -16,12 +16,12 @@
  */
 
 import { Category } from '@alfresco/js-api';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSelectionListChange } from '@angular/material/list';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, first, map, takeUntil, tap } from 'rxjs/operators';
-import { CategoriesManagementMode } from '../categories-management-mode';
+import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 
 interface CategoryNameControlErrors {
@@ -61,34 +61,66 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private _existingCategoriesLoading = false;
     private _typing = false;
     private _existingCategoriesPanelVisible: boolean;
-    existingCategoriesListLimit = 15;
-    noCategoriesTitle = '';
-    removeCategoryTitle = '';
+    private _categoryNameControlVisible = false;
+    private readonly existingCategoriesListLimit = 15;
     initialCategories: Category[] = [];
 
+    /** Categories to display initially */
     @Input()
     categories: Category[] = [];
 
-    @Input()
-    categoryNameControlVisible = false;
+    /**
+     * Decides if categoryNameControl should be visible. Sets also existing categories panel visibility
+     * and scrolls control into view when visible.
+     * @param categoryNameControlVisible control visibility.
+     */
+     @Input()
+     set categoryNameControlVisible(categoryNameControlVisible: boolean) {
+         this._categoryNameControlVisible = categoryNameControlVisible;
+         if (categoryNameControlVisible) {
+             setTimeout(() => {
+                 this.categoryNameInputElement.nativeElement.scrollIntoView();
+             });
+             this._existingCategoriesPanelVisible = true;
+         } else {
+            this._existingCategoriesPanelVisible = false;
+         }
+     }
 
+     get categoryNameControlVisible(): boolean {
+         return this._categoryNameControlVisible;
+     }
+
+    /** Emits when classifiable aspect changes */
     @Input()
     classifiableChanged: Observable<void>;
 
+    /** Disables remove button in upper categories list */
     @Input()
     disableRemoval = false;
 
+    /**
+     * Component mode.
+     * In ASSIGN mode we can only assign/unassign categories from existing list.
+     * In CRUD mode we can create categories.
+     */
     @Input()
     managementMode: CategoriesManagementMode;
 
+    /** ID of a parent category. New categories will be created under this parent */
     @Input()
     parentId: string;
 
+    /** Emits when state of upper categories list changes */
     @Output()
     categoriesChange = new EventEmitter<Category[]>();
 
+    /** Emits when categoryNameControl visibility changes */
     @Output()
     categoryNameControlVisibleChange = new EventEmitter<boolean>();
+
+    @ViewChild('categoryNameInput')
+    private categoryNameInputElement: ElementRef;
 
     constructor(private categoryService: CategoryService) {}
 
@@ -116,12 +148,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             .subscribe(() => this.setCategoryNameControlErrorMessageKey());
 
         this.setCategoryNameControlErrorMessageKey();
-        this.noCategoriesTitle = this.isCRUDMode ?
-            'CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED':
-            'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED';
-        this.removeCategoryTitle = this.isCRUDMode ?
-            'CATEGORIES_MANAGEMENT.DELETE_CATEGORY':
-            'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY';
 
         if (this.isCRUDMode) {
             this._categoryNameControl.addValidators(Validators.required);
@@ -172,14 +198,20 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         return this.managementMode === CategoriesManagementMode.CRUD;
     }
 
+    /**
+     * Hides and emits categoryNameControl and hides existing categories panel.
+     */
     hideNameInput() {
         this.categoryNameControlVisible = false;
         this.categoryNameControlVisibleChange.emit(false);
         this._existingCategoriesPanelVisible = false;
     }
 
+    /**
+     * Adds category that has been typed to a categoryNameControl and hides it afterwards.
+     */
     addCategory() {
-        if (!this._typing && !this.categoryNameControl.invalid) {
+        if (this.isCRUDMode && !this._typing && !this.categoryNameControl.invalid) {
             const newCatName = this.categoryNameControl.value.trim();
             const newCat = new Category({ id: newCatName, name: newCatName });
             this.categories.push(newCat);
@@ -190,6 +222,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Adds existing category to categories list and removes it from existing categories list.
+     * @param change - selection list change containing selected category
+     */
     addCategoryToAssign(change: MatSelectionListChange) {
         const selectedCategory: Category = change.options[0].value;
         this.categories.push(selectedCategory);
@@ -198,6 +234,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.categoriesChange.emit(this.categories);
     }
 
+    /**
+     * Removes the category from categories list and adds it to existing categories list in ASSIGN mode.
+     * @param category - category to remove
+     */
     removeCategory(category: Category) {
         this.categories.splice(this.categories.indexOf(category), 1);
         if (!!this._existingCategories && !this.initialCategories.some((cat) => cat.id === category.id)) {
@@ -247,7 +287,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     private validateIfNotAlreadyAdded(nameControl: FormControl<string>): CategoryNameControlErrors | null {
-        return this.categories?.some((category) => this.compareCategories(category, nameControl.value))
+        return this.categories?.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
             ? { duplicatedCategory: true }
             : null;
     }
@@ -255,7 +295,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private validateIfNotAlreadyCreated(nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null>  {
         return this.existingCategoryLoaded$.pipe(
             map<void, CategoryNameControlErrors | null>(() => {
-                return this.existingCategories.some((category) => this.compareCategories(category, nameControl.value))
+                return this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
                     ? { duplicatedExistingCategory: true }
                     : null;
             }),

@@ -19,6 +19,7 @@ import { CoreTestingModule, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoryBody,
     CategoryEntry,
+    CategoryLinkBody,
     CategoryPaging, PathInfo,
     RequestQuery, ResultNode,
     ResultSetPaging,
@@ -32,9 +33,12 @@ describe('CategoryService', () => {
     let userPreferencesService: UserPreferencesService;
 
     const fakeParentCategoryId = 'testParentId';
+    const fakeCategoryId = 'fakeId';
+    const fakeNodeId = 'fakeNodeId';
     const fakeCategoriesResponse: CategoryPaging = { list: { pagination: {}, entries: [] }};
     const fakeCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testName' }};
     const fakeCategoryBody: CategoryBody = { name: 'updatedName' };
+    const fakeCategoriesLinkBodies: CategoryLinkBody[] = [{ categoryId: fakeCategoryId }];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -150,4 +154,25 @@ describe('CategoryService', () => {
             });
         });
     });
+
+    it('should fetch categories linked to node with nodeId with path included', fakeAsync(() => {
+        const getLinkedCategoriesSpy = spyOn(categoryService.categoriesApi, 'getCategoryLinksForNode').and.returnValue(Promise.resolve(fakeCategoriesResponse));
+        categoryService.getCategoryLinksForNode(fakeNodeId).subscribe(() => {
+            expect(getLinkedCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, {include: ['path']});
+        });
+    }));
+
+    it('should unlink categories from node', fakeAsync(() => {
+        const unlinkCategoriesSpy = spyOn(categoryService.categoriesApi, 'unlinkNodeFromCategory').and.returnValue(Promise.resolve());
+        categoryService.unlinkNodeFromCategory(fakeNodeId, fakeCategoryId).subscribe(() => {
+            expect(unlinkCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, fakeCategoryId);
+        });
+    }));
+
+    it('should link categories to a node with nodeId', fakeAsync(() => {
+        const linkCategoriesSpy = spyOn(categoryService.categoriesApi, 'linkNodeToCategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
+        categoryService.linkNodeToCategory(fakeNodeId, fakeCategoriesLinkBodies).subscribe(() => {
+            expect(linkCategoriesSpy).toHaveBeenCalledOnceWith(fakeNodeId, fakeCategoriesLinkBodies);
+        });
+    }));
 });

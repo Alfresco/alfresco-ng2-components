@@ -29,7 +29,7 @@ Component allows to both assign/unassign categories to content and create multip
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| categories | [`Category`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Category.md) | [] | List of categories to assign/create. |
+| categories | [`Category`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Category.md)[] | [] | List of categories to assign/create. |
 | categoryNameControlVisible | `boolean` | false | Determines if category name control is visible. |
 | classifiableChanged | [`Observable<void>`](https://rxjs.dev/guide/observable) | | (optional) Observable emitting when `classifiable` aspect changes for a given node. |
 | disableRemoval | `boolean` | false | Determines if categories assigned/created can be unassigned/removed from the list. |

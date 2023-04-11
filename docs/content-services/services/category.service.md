@@ -43,6 +43,25 @@ Manages categories in Content Services.
     -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
     -   _maxItems:_ `number`  - (Optional) Specify max number of returned categories. Default is specified by [UserPreferencesService](../../core/services/user-preferences.service.md).
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;ResultSetPaging> Found categories which name contains searched name.
+-   **updateCategory**(categoryId: `string`, payload: `CategoryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryEntry>`<br/>
+    Updates category
+    -   _categoryId:_ `string`  - The identifier of a category.
+    -   _payload:_ `CategoryBody`  - Updated category body
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryEntry>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CategoryEntry>
+-   **getCategoryLinksForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>`<br/>
+    Searches categories by their name.
+    -   _nodeId:_ `string`  - Id of a node that is linked to categories
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>` - Found categories that node is linked to.
+-   **unlinkNodeFromCategory**(nodeId: `string`, categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
+    Unlinks category from a node.
+    -   _nodeId:_ `string`  - The identifier of a node.
+    -   _categoryId:_ `string`  - The identifier of a category.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`
+-   **linkNodeToCategory**(nodeId: `string`, categoryLinkBodyCreate: `CategoryLinkBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`]((https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md))` | `[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
+    Links node to a category.
+    -   _nodeId:_ `string`  - The identifier of a node.
+    -   _categoryLinkBodyCreate:_ [`CategoryLinkBody[]`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryLinkBody.md)  - Categories that node will be linked to.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`]((https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md))` | `[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - Categories that node has been linked to.
 
 ## Details
 

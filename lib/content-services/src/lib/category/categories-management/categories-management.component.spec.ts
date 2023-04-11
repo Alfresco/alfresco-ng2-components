@@ -25,7 +25,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { CategoriesManagementMode } from '../categories-management-mode';
+import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
 
@@ -68,7 +68,7 @@ describe('CategoriesManagementComponent', () => {
     });
 
     function getNoCategoriesMessage(): HTMLParagraphElement {
-        return fixture.debugElement.query(By.css(`.adf-no-categories-message`))?.nativeElement;
+        return fixture.debugElement.query(By.css(`.adf-no-categories-message`))?.nativeElement.textContent.trim();
     }
 
     function getAssignedCategoriesList(): HTMLSpanElement[] {
@@ -249,7 +249,7 @@ describe('CategoriesManagementComponent', () => {
         it('should display correct no categories message', () => {
             component.categories = [];
             fixture.detectChanges();
-            expect(getNoCategoriesMessage().textContent.trim()).toBe('CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED');
+            expect(getNoCategoriesMessage()).toBe('CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED');
         });
 
         it('should store initially assigned categories', () => {
@@ -335,7 +335,7 @@ describe('CategoriesManagementComponent', () => {
             flush();
         }));
 
-        it('should not add back to existing categories when category was assigned intially', fakeAsync(() => {
+        it('should not add back to existing categories when category was assigned initially', fakeAsync(() => {
             typeCategory('test');
             expect(component.existingCategories.length).toBe(2);
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
@@ -365,7 +365,7 @@ describe('CategoriesManagementComponent', () => {
         it('should display correct no categories message', () => {
             component.categories = [];
             fixture.detectChanges();
-            expect(getNoCategoriesMessage().textContent.trim()).toBe('CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED');
+            expect(getNoCategoriesMessage()).toBe('CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED');
         });
 
         it('should have correct remove category title', () => {

@@ -1167,6 +1167,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Categories list', () => {
         beforeEach(() => {
+            component.displayCategories = true;
             component.node.aspectNames.push('generalclassifiable');
             spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
         });
@@ -1182,6 +1183,16 @@ describe('ContentMetadataComponent', () => {
             expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
         });
 
+        it('should not render categories after loading categories in ngOnInit if displayCategories is false', () => {
+            component.displayCategories = false;
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            const categories = getCategories();
+            expect(categories).toHaveSize(0);
+            expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
+        });
+
         it('should render categories when ngOnChanges', () => {
             component.ngOnChanges({ node: new SimpleChange(undefined, node, false)});
             fixture.detectChanges();
@@ -1191,6 +1202,17 @@ describe('ContentMetadataComponent', () => {
             expect(categories[0].textContent).toBe(category1.name);
             expect(categories[1].textContent).toBe(category2.name);
             expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+        });
+
+        it('should not render categories after loading categories in ngOnChanges if displayCategories is false', () => {
+            component.displayCategories = false;
+            component.ngOnChanges({
+                node: new SimpleChange(undefined, node, false)
+            });
+            fixture.detectChanges();
+            const categories = getCategories();
+            expect(categories).toHaveSize(0);
+            expect(categoryService.getCategoryLinksForNode).not.toHaveBeenCalled();
         });
 
         it('should not reload categories in ngOnChanges if node is not changed', () => {
@@ -1233,6 +1255,7 @@ describe('ContentMetadataComponent', () => {
 
         beforeEach(() => {
             component.editable = true;
+            component.displayCategories = true;
             component.node.aspectNames.push('generalclassifiable');
             spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
             fixture.detectChanges();

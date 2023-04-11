@@ -20,4 +20,4 @@ export * from './services/category-tree-datasource.service';
 export * from './models/category-node.interface';
 export * from './category.module';
 export * from './categories-management/categories-management.component';
-export * from './categories-management-mode';
+export * from './categories-management/categories-management-mode';

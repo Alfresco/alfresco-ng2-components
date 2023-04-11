@@ -7,6 +7,10 @@
         mat-form-field {
             width: 100%;
         }
+
+        button {
+            margin-right: -14px;
+        }
     }
 
     .adf-assigned-categories {
@@ -14,10 +18,18 @@
         justify-content: space-between;
         align-items: center;
         word-break: break-word;
+
+        button {
+            margin-right: -14px;
+        }
     }
 
     .adf-categories-padded {
         padding: 5px 0;
+    }
+
+    [hidden] {
+        visibility: hidden;
     }
 }
 
@@ -45,5 +57,15 @@
                 display: none;
             }
         }
+    }
+
+    .adf-existing-categories-label {
+        font-size: 10px;
+        color: var(--theme-secondary-text-color);
+        margin-bottom: 2px;
+    }
+
+    mat-spinner {
+        margin: auto;
     }
 }

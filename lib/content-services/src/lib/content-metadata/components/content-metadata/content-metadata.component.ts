@@ -34,7 +34,7 @@ import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
-import { CategoriesManagementMode } from '../../../category/categories-management-mode';
+import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -100,6 +100,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /** True if tags should be displayed, false otherwise */
     @Input()
     displayTags = false;
+
+    /** True if categories should be displayed, false otherwise */
+    @Input()
+    displayCategories = false;
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
@@ -309,7 +313,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         forkJoin({
             updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
             ...(this.displayTags ? this.saveTags() : {}),
-            ...this.saveCategories()
+            ...(this.displayCategories ? this.saveCategories() : {})
         }).pipe(
             catchError((err) => {
                 this.cardViewContentUpdateService.updateElement(this.targetProperty);
@@ -328,7 +332,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     if (Object.keys(result).length > 1 && this.displayTags) {
                         this.loadTagsForNode(this.node.id);
                     }
-                    if (!!result.LinkingCategories) {
+                    if (this.displayCategories && !!result.LinkingCategories) {
                         this.assignedCategories = result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry);
                     }
                 }
@@ -347,10 +351,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             if (this.displayTags) {
                 this.loadTagsForNode(node.id);
             }
-            this.loadCategoriesForNode(node.id);
-            if (!this.node.aspectNames.includes('generalclassifiable')) {
-                this.categories = [];
-                this.classifiableChangedSubject.next();
+            if (this.displayCategories) {
+                this.loadCategoriesForNode(node.id);
+                if (!this.node.aspectNames.includes('generalclassifiable')) {
+                    this.categories = [];
+                    this.classifiableChangedSubject.next();
+                }
             }
         }
     }
@@ -385,11 +391,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     observables[`Removing ${assignedCategory.id}`] = this.categoryService.unlinkNodeFromCategory(this.node.id, assignedCategory.id);
                 }
             });
-            const categoryLinkBodies: CategoryLinkBody[] = [];
-            this.categories.forEach((category) => {
+            const categoryLinkBodies = this.categories.map((category) => {
                 const categoryLinkBody = new CategoryLinkBody();
                 categoryLinkBody.categoryId = category.id;
-                categoryLinkBodies.push(categoryLinkBody);
+                return categoryLinkBody;
             });
             if (categoryLinkBodies.length > 0) {
                 observables['LinkingCategories'] = this.categoryService.linkNodeToCategory(this.node.id, categoryLinkBodies);

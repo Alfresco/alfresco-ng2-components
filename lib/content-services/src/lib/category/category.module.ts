@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { ContextMenuModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContentDirectiveModule } from '../directives/content-directive.module';
 import { MaterialModule } from '../material.module';
 import { CategoriesManagementComponent } from './categories-management/categories-management.component';
 
@@ -28,7 +29,7 @@ import { CategoriesManagementComponent } from './categories-management/categorie
         CoreModule,
         MaterialModule,
         TranslateModule,
-        ContextMenuModule
+        ContentDirectiveModule
     ],
     declarations: [
         CategoriesManagementComponent
