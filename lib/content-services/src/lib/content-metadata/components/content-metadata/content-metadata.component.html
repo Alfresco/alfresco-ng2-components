@@ -35,7 +35,7 @@
                         data-automation-id="showing-tag-input-button"
                         mat-icon-button
                         [attr.title]="'METADATA.BASIC.ADD_TAG_TOOLTIP' | translate"
-                        (click)="toggleTagInput()"
+                        (click)="tagNameControlVisible = true"
                         [hidden]="tagNameControlVisible || saving">
                         <mat-icon>add</mat-icon>
                     </button>
@@ -64,7 +64,7 @@
                         mat-icon-button
                         [attr.title]="'CATEGORIES_MANAGEMENT.ASSIGN_CATEGORIES' | translate"
                         [hidden]="categoryControlVisible || saving"
-                        (click)="toggleCategoryInput()">
+                        (click)="categoryControlVisible = true">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>

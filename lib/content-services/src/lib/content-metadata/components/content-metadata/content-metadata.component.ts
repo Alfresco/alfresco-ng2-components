@@ -226,22 +226,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /**
-     * Toggles tag name control and hides category name control.
-     */
-    toggleTagInput(){
-        this.tagNameControlVisible = true;
-        this.categoryControlVisible = false;
-    }
-
-    /**
-     * Toggles category name control and hides tag name control.
-     */
-    toggleCategoryInput() {
-        this.categoryControlVisible = true;
-        this.tagNameControlVisible = false;
-    }
-
-    /**
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
