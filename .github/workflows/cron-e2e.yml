@@ -57,7 +57,7 @@ env:
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   SMART_RUNNER_DIRECTORY: ".protractor-smartrunner"
-  SAVE_SCREENSHOT: true
+  SAVE_SCREENSHOT: false
   REDIRECT_URI: /
   BROWSER_RUN: false
   MAXINSTANCES: 2
