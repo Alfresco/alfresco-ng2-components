@@ -127,7 +127,7 @@ jobs:
       - name: install Node >=16.0 for license check
         uses: actions/setup-node@v3
         with:
-        node-version: 16.20.0
+        node-version: 16
         cache-dependency-path: package-lock.json
       - name: release Demoshell docker
         run: |
@@ -161,7 +161,7 @@ jobs:
       - name: install Node >=16.0 for license check
         uses: actions/setup-node@v3
         with:
-        node-version: 16.20.0
+        node-version: 16
         cache-dependency-path: package-lock.json
       - name: release Storybook docker
         run: |
