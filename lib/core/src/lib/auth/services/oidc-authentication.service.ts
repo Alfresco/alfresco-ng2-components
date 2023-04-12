@@ -16,63 +16,63 @@
  */
 
 import { Injectable } from '@angular/core';
-import { OAuthEvent, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, filter, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { BaseAuthenticationService } from '../services/base-authentication.service';
+import { BaseAuthenticationService } from './base-authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
-import { JwtHelperService } from '../services/jwt-helper.service';
+import { JwtHelperService } from './jwt-helper.service';
 import { LogService } from '../../common/services/log.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
-import { AuthService } from './auth.service';
+import { AuthService } from '../oidc/auth.service';
+import { Minimatch } from "minimatch";
+import { HttpHeaders } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
 })
-export class OIDCAuthenticationService extends BaseAuthenticationService {
-    readonly supportCodeFlow = true;
+export class OidcAuthenticationService extends BaseAuthenticationService {
 
     constructor(
-        alfrescoApi: AlfrescoApiService,
         appConfig: AppConfigService,
         cookie: CookieService,
         logService: LogService,
+        private jwtHelperService: JwtHelperService,
         private authStorage: OAuthStorage,
         private oauthService: OAuthService,
         private readonly authConfig: AuthConfigService,
-        private readonly auth: AuthService
+        private readonly auth: AuthService,
     ) {
-        super(alfrescoApi, appConfig, cookie, logService);
-        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.oauthService.events.pipe(
-                filter((event)=> event.type === 'token_received')
-            ).subscribe(()=>{
-                this.onLogin.next();
-            });
-        });
+        super(appConfig, cookie, logService);
     }
 
     isEcmLoggedIn(): boolean {
-        return this.isLoggedIn();
+        if (this.isECMProvider() || this.isALLProvider()) {
+            return this.isLoggedIn();
+        }
+        return false;
+
     }
 
     isBpmLoggedIn(): boolean {
-        return this.isLoggedIn();
+        if (this.isBPMProvider() || this.isALLProvider()) {
+            return this.isLoggedIn();
+        }
+        return false;
     }
 
     isLoggedIn(): boolean {
         return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
     }
 
-    isLoggedInWith(_provider?: string): boolean {
-        return this.isLoggedIn();
+    hasValidAccessToken(): boolean {
+        return this.oauthService.hasValidAccessToken();
     }
 
-    isOauth(): boolean {
-        return this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
+    hasValidIdToken(): boolean {
+        return this.oauthService.hasValidAccessToken();
     }
 
     isImplicitFlow() {
@@ -85,10 +85,9 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         return !!oauth2?.codeFlow;
     }
 
-    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
+    login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         return this.auth.baseAuthLogin(username, password).pipe(
             map((response) => {
-                this.saveRememberMeCookie(rememberMe);
                 this.onLogin.next(response);
                 return {
                     type: this.appConfig.get(AppConfigValues.PROVIDERS),
@@ -100,11 +99,11 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
     }
 
     getEcmUsername(): string {
-        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+        return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
     getBpmUsername(): string {
-        return (this.oauthService.getIdentityClaims() as any).preferred_username;
+        return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
     ssoImplicitLogin() {
@@ -138,7 +137,31 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         }
     }
 
-    once(event: string): Observable<OAuthEvent> {
-        return this.oauthService.events.pipe(filter(_event => _event.type === event));
+    isPublicUrl(): boolean {
+        const oauth2 = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+
+        if (Array.isArray(oauth2.publicUrls)) {
+            return oauth2.publicUrls.length > 0 &&
+                oauth2.publicUrls.some((urlPattern: string) => {
+                    const minimatch = new Minimatch(urlPattern);
+                    return minimatch.match(window.location.href);
+                });
+        }
+        return false;
     }
+
+    getAuthHeaders(_requestUrl: string, header: HttpHeaders): HttpHeaders {
+        return this.addBearerToken(header);
+    }
+
+    private addBearerToken(header: HttpHeaders): HttpHeaders {
+        const token: string = this.getToken();
+
+        if (!token) {
+            return header;
+        }
+
+        return header.set('Authorization', 'bearer ' + token);
+    }
+
 }

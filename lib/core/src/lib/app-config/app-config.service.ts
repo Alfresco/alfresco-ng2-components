@@ -24,6 +24,7 @@ import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-e
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 
 /* spellchecker: disable */
+
 // eslint-disable-next-line no-shadow
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
@@ -72,6 +73,10 @@ export class AppConfigService {
     status: Status = Status.INIT;
     protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
+
+    get isLoaded() {
+        return this.status = Status.LOADED;
+    }
 
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
         this.onLoadSubject = new Subject();
@@ -214,7 +219,7 @@ export class AppConfigService {
      *
      * @returns Discovery configuration
      */
-     loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
+    loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
         return new Promise(async (resolve, reject) => {
             this.http
                 .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
@@ -239,4 +244,5 @@ export class AppConfigService {
 
         return result;
     }
+
 }

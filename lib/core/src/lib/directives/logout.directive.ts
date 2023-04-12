@@ -37,7 +37,7 @@ export class LogoutDirective implements OnInit {
                 private renderer: Renderer2,
                 private router: Router,
                 private appConfig: AppConfigService,
-                private auth: AuthenticationService) {
+                private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
@@ -58,14 +58,14 @@ export class LogoutDirective implements OnInit {
     }
 
     logout() {
-        this.auth.logout().subscribe(
+        this.authenticationService.logout().subscribe(
             () => this.redirectToUri(),
             () => this.redirectToUri()
         );
     }
 
     redirectToUri() {
-        if (this.enableRedirect && !this.auth.isOauth()) {
+        if (this.enableRedirect && !this.authenticationService.isOauth()) {
             const redirectRoute = this.getRedirectUri();
             this.router.navigate([redirectRoute]);
         }

@@ -62,7 +62,7 @@ export class HostSettingsComponent implements OnInit {
         private storageService: StorageService,
         private alfrescoApiService: AlfrescoApiService,
         private appConfig: AppConfigService,
-        private auth: AuthenticationService
+        private authenticationService: AuthenticationService
     ) {}
 
     ngOnInit() {
@@ -188,7 +188,7 @@ export class HostSettingsComponent implements OnInit {
         this.storageService.setItem(AppConfigValues.AUTHTYPE, values.authType);
 
         this.alfrescoApiService.reset();
-        this.auth.reset();
+        this.authenticationService.reset();
         this.alfrescoApiService.getInstance().invalidateSession();
         this.success.emit(true);
     }
@@ -230,10 +230,6 @@ export class HostSettingsComponent implements OnInit {
 
     isOAUTH(): boolean {
         return this.form.get('authType').value === 'OAUTH';
-    }
-
-    get supportsCodeFlow(): boolean {
-        return this.auth.supportCodeFlow;
     }
 
     get providersControl(): UntypedFormControl {

@@ -32,6 +32,8 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
+import { BasicAlfrescoAuthService } from "../basic-auth/basic-alfresco-auth.service";
+import { OidcAuthenticationService } from "../services/oidc-authentication.service";
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
@@ -44,6 +46,8 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
 
     constructor(
         protected authenticationService: AuthenticationService,
+        protected basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        protected oidcAuthenticationService: OidcAuthenticationService,
         protected router: Router,
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
@@ -95,15 +99,17 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
-            this.authenticationService.setRedirect({
+            this.basicAlfrescoAuthService.setRedirect({
                 provider: this.getProvider(),
                 url
             });
 
             urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
             return this.navigate(urlToRedirect);
-        } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
-            this.authenticationService.ssoImplicitLogin();
+       } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
+            if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
+                this.oidcAuthenticationService.ssoImplicitLogin();
+            }
         } else {
             return this.navigate(urlToRedirect);
         }

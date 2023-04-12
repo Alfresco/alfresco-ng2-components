@@ -15,40 +15,14 @@
  * limitations under the License.
  */
 
-export interface SecurityOptions {
-    // readonly isBpmRequest: boolean;
-    // readonly enableCsrf?: boolean;
-    readonly withCredentials?: boolean;
-    readonly authentications?: Authentication;
-    readonly defaultHeaders?: Record<string, string>;
-}
-
-export interface Oauth2 {
-    refreshToken?: string;
-    accessToken?: string;
+export interface Authentication {
+    basicAuth?: BasicAuth;
+    cookie?: string;
+    type?: string;
 }
 
 export interface BasicAuth {
     username?: string;
     password?: string;
     ticket?: string;
-}
-
-export interface Authentication {
-    basicAuth?: BasicAuth;
-    oauth2?: Oauth2;
-    cookie?: string;
-    type?: string;
-}
-
-export interface RequestOptions {
-    httpMethod?: string;
-    queryParams?: any;
-    headerParams?: any;
-    formParams?: any;
-    bodyParam?: any;
-    returnType?: any;
-    responseType?: string;
-    accept?: string;
-    contentType?: string;
 }
