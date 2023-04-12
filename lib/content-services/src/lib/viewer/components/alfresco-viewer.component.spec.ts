@@ -31,7 +31,7 @@ import {
     CoreTestingModule,
     setupTestBed,
     EventMock,
-    ViewUtilService, AppConfigService
+    ViewUtilService
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -188,18 +188,6 @@ describe('AlfrescoViewerComponent', () => {
         extensionService = TestBed.inject(AppExtensionService);
         renditionService = TestBed.inject(RenditionService);
         viewUtilService = TestBed.inject(ViewUtilService);
-
-        const appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.config = {
-            ...appConfigService.config,
-            'viewer': {
-                'enableDownloadPrompt':  false,
-                'enableDownloadPromptReminder': false,
-                'downloadPromptDelay': 3,
-                'downloadPromptReminderDelay': 2
-            }
-        };
-
     });
 
     afterEach(() => {

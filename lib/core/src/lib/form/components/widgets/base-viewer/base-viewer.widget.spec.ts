@@ -22,7 +22,6 @@ import { FormService } from '../../../services/form.service';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { BaseViewerWidgetComponent } from './base-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService } from '@alfresco/adf-core';
 
 describe('BaseViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -58,17 +57,6 @@ describe('BaseViewerWidgetComponent', () => {
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(BaseViewerWidgetComponent);
         widget = fixture.componentInstance;
-
-        const appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.config = {
-            ...appConfigService.config,
-            'viewer': {
-                'enableDownloadPrompt':  false,
-                'enableDownloadPromptReminder': false,
-                'downloadPromptDelay': 3,
-                'downloadPromptReminderDelay': 2
-            }
-        };
     });
 
     it('should set the file id corretly when the field value is an array', (done) => {
