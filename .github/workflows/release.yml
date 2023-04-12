@@ -121,9 +121,16 @@ jobs:
           enable-cache: false
           enable-node-modules-cache: false
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Demoshell docker
+      - name: Build Demoshell
         run: |
           nx build demoshell --configuration production
+      - name: install Node >=16.0 for license check
+        uses: actions/setup-node@v3
+        with:
+        node-version: 16.20.0
+        cache-dependency-path: package-lock.json
+      - name: release Demoshell docker
+        run: |
           . ./scripts/github/release/docker-tag.sh
           ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
@@ -148,9 +155,16 @@ jobs:
           enable-node-modules-cache: false
           act: ${{ inputs.dry-run-release }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Storybook docker
+      - name: Build storybook
         run: |
           nx run stories:build-storybook --configuration ci
+      - name: install Node >=16.0 for license check
+        uses: actions/setup-node@v3
+        with:
+        node-version: 16.20.0
+        cache-dependency-path: package-lock.json
+      - name: release Storybook docker
+        run: |
           . ./scripts/github/release/docker-tag.sh
           ./scripts/github/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
