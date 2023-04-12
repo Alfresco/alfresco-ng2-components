@@ -1478,8 +1478,8 @@
     ]
   },
   "viewer": {
-    "enableDownloadPrompt":  true,
-    "enableDownloadPromptReminder": true,
+    "enableDownloadPrompt":  false,
+    "enableDownloadPromptReminder": false,
     "downloadPromptDelay": 50,
     "downloadPromptReminderDelay": 30,
     "enableFileAutoDownload": true,
