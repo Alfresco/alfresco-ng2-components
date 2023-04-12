@@ -82,6 +82,7 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     onDataLoaded(data: any) {
         const context = data.list.context;
+
         if (context) {
             this.parseFacets(context);
         } else {
@@ -300,6 +301,7 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     private updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets) {
         const bucketsToDelete = [];
+
         alreadyExistingBuckets
             .map((bucket) => {
                 const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
