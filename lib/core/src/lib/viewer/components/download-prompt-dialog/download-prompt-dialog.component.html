@@ -1,0 +1,23 @@
+<div mat-dialog-title>
+    <h3>{{ 'ADF_VIEWER.NON_RESPONSIVE_DIALOG.HEADER' | translate }}</h3>
+</div>
+<mat-dialog-content>
+    {{ 'ADF_VIEWER.NON_RESPONSIVE_DIALOG.LABEL' | translate }}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button
+        mat-button
+        id="downloadButton"
+        [attr.aria-label]="'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate"
+        [mat-dialog-close]="DownloadPromptActions.DOWNLOAD">
+        {{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}
+    </button>
+    <button
+        mat-button
+        id="waitButton"
+        color="primary"
+        [attr.aria-label]="'ADF_VIEWER.ACTIONS.WAIT' | translate"
+        [mat-dialog-close]="DownloadPromptActions.WAIT">
+        {{ 'ADF_VIEWER.ACTIONS.WAIT' | translate }}
+    </button>
+</mat-dialog-actions>

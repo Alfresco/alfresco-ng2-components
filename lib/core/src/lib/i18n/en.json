@@ -391,7 +391,8 @@
       "FULLSCREEN": "Activate full-screen mode",
       "CLOSE": "Close",
       "NEXT_FILE": "Next File",
-      "PREV_FILE": "Previous File"
+      "PREV_FILE": "Previous File",
+      "WAIT": "Wait"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Previous page",
@@ -429,7 +430,11 @@
       "PLACEHOLDER": "Password",
       "ERROR": "Password is wrong"
     },
-    "SUBTITLES": "Subtitles"
+    "SUBTITLES": "Subtitles",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Preview loading delayed",
+      "LABEL": "You can continue to wait, or download the document."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

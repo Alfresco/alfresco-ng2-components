@@ -655,6 +655,30 @@
 
         <section>
             <mat-slide-toggle
+                color="primary" [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
+                Enable Download Prompt
+            </mat-slide-toggle>
+        </section>
+        <section *ngIf="enableDownloadPrompt">
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onDownloadPromptDelayChange()">
+            </mat-form-field>
+        </section>
+
+        <section *ngIf="enableDownloadPrompt">
+            <mat-slide-toggle
+                color="primary" [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
+                Enable Download Prompt Reminders
+            </mat-slide-toggle>
+        </section>
+        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminder">
+            <mat-form-field>
+                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onDownloadPromptReminderChange()">
+            </mat-form-field>
+        </section>
+
+        <section>
+            <mat-slide-toggle
                 color="primary" [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
                 Enable FileAutoDownload
             </mat-slide-toggle>

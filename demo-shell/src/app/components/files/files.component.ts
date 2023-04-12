@@ -251,6 +251,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     selectedNodes = [];
 
+    enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
+    enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
+    downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
+    downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
     enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
     fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
@@ -778,6 +782,26 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onMultipleFilesUpload() {
         this.selectedNodes = [];
+    }
+
+    onEnableDownloadPrompt() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
+    }
+
+    onDownloadPromptDelayChange() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
+    }
+
+    onEnableDownloadPromptReminderChange() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['enableDownloadPromptReminder'] = this.enableDownloadPromptReminder;
+    }
+
+    onDownloadPromptReminderChange() {
+        const previewConfig = this.appConfig?.config['viewer'];
+        previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
     }
 
     onEnableFileAutoDownloadChange() {

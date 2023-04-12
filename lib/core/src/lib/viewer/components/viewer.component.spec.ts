@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,12 +24,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
     CoreTestingModule,
-    setupTestBed,
     EventMock,
     ViewerComponent,
-    ViewUtilService
+    ViewUtilService,
+    AppConfigService,
+    DownloadPromptDialogComponent,
+    DownloadPromptActions
 } from '@alfresco/adf-core';
 import { Component } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -135,35 +138,48 @@ describe('ViewerComponent', () => {
     let element: HTMLElement;
     let dialog: MatDialog;
     let viewUtilService: ViewUtilService;
-
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatButtonModule,
-            MatIconModule
-        ],
-        declarations: [
-            ViewerWithCustomToolbarComponent,
-            ViewerWithCustomSidebarComponent,
-            ViewerWithCustomOpenWithComponent,
-            ViewerWithCustomMoreActionsComponent,
-            ViewerWithCustomToolbarActionsComponent
-        ],
-        providers: [
-            MatDialog
-        ]
-    });
+    let appConfigService: AppConfigService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatButtonModule,
+                MatIconModule
+            ],
+            declarations: [
+                ViewerWithCustomToolbarComponent,
+                ViewerWithCustomSidebarComponent,
+                ViewerWithCustomOpenWithComponent,
+                ViewerWithCustomMoreActionsComponent,
+                ViewerWithCustomToolbarActionsComponent
+            ],
+            providers: [
+                MatDialog,
+                { provide: DownloadPromptDialogComponent, useClass: DummyDialogComponent}
+            ]
+        });
+
         fixture = TestBed.createComponent(ViewerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
         dialog = TestBed.inject(MatDialog);
         viewUtilService = TestBed.inject(ViewUtilService);
+        appConfigService = TestBed.inject(AppConfigService);
         component.fileName = 'test-file.pdf';
+
+        appConfigService.config = {
+            ...appConfigService.config,
+            'viewer': {
+                'enableDownloadPrompt':  false,
+                'enableDownloadPromptReminder': false,
+                'downloadPromptDelay': 3,
+                'downloadPromptReminderDelay': 2
+            }
+        };
     });
 
     afterEach(() => {
@@ -603,5 +619,61 @@ describe('ViewerComponent', () => {
                 expect(domElement.msRequestFullscreen).toHaveBeenCalled();
             });
         });
+    });
+
+    describe('Download Prompt Dialog',() => {
+
+        let dialogOpenSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            appConfigService.config = {
+                ...appConfigService.config,
+                'viewer': {
+                    'enableDownloadPrompt':  true,
+                    'enableDownloadPromptReminder': true,
+                    'downloadPromptDelay': 3,
+                    'downloadPromptReminderDelay': 2
+                }
+            };
+            dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);
+            component.urlFile = undefined;
+            component.clearDownloadPromptTimeouts();
+        });
+
+        it('should configure initial timeout to display non responsive dialog when initialising component', (() => {
+            fixture.detectChanges();
+            expect(component.downloadPromptTimer).toBeDefined();
+        }));
+
+        it('should configure reminder timeout to display non responsive dialog after initial dialog', fakeAsync( () => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            fixture.detectChanges();
+            tick(3000);
+            expect(component.downloadPromptReminderTimer).toBeDefined();
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            flush();
+            discardPeriodicTasks();
+        }));
+
+        it('should show initial non responsive dialog after initial timeout', fakeAsync(  () => {
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+            expect(dialogOpenSpy).toHaveBeenCalled();
+        }));
+
+        it('should show reminder non responsive dialog after initial dialog', fakeAsync( () => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
+            fixture.detectChanges();
+            tick(3000);
+            expect(dialogOpenSpy).toHaveBeenCalled();
+
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(null) } as any);
+            tick(2000);
+            expect(dialogOpenSpy).toHaveBeenCalledTimes(2);
+
+            flush();
+            discardPeriodicTasks();
+        }));
     });
 });

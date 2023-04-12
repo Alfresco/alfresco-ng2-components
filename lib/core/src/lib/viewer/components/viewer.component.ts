@@ -30,15 +30,25 @@ import {
     TemplateRef,
     ViewEncapsulation
 } from '@angular/core';
-import {  fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
-import { filter, skipWhile, takeUntil } from 'rxjs/operators';
+import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
 import { Track } from '../models/viewer.model';
 import { ViewUtilService } from '../services/view-util.service';
+import { DownloadPromptDialogComponent } from './download-prompt-dialog/download-prompt-dialog.component';
+import { AppConfigService } from '../../app-config';
+import { DownloadPromptActions } from '../models/download-prompt.actions';
+
+const DEFAULT_NON_PREVIEW_CONFIG = {
+    enableDownloadPrompt: false,
+    enableDownloadPromptReminder: false,
+    downloadPromptDelay: 50,
+    downloadPromptReminderDelay: 30
+};
 
 @Component({
     selector: 'adf-viewer',
@@ -160,6 +170,26 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     sidebarLeftTemplateContext: T = null;
 
+    /**
+     * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
+     * */
+    enableDownloadPrompt: boolean = false;
+
+    /**
+     * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
+     * */
+    enableDownloadPromptReminder: boolean = false;
+
+    /**
+     * Initial time in seconds to wait before giving the first prompt to user to download the file
+     * */
+    downloadPromptDelay: number = 50;
+
+    /**
+     * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
+     * */
+    downloadPromptReminderDelay: number = 15;
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -180,10 +210,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
+    private isDialogVisible: boolean = false;
+    public downloadPromptTimer: number;
+    public downloadPromptReminderTimer: number;
 
     constructor(private el: ElementRef,
                 public dialog: MatDialog,
-                private viewUtilsService: ViewUtilService
+                private viewUtilsService: ViewUtilService,
+                private appConfigService: AppConfigService
                ) {
     }
 
@@ -202,6 +236,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     ngOnInit(): void {
         this.closeOverlayManager();
+        this.configureAndInitDownloadPrompt();
     }
 
     private closeOverlayManager() {
@@ -304,8 +339,64 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     ngOnDestroy() {
+        this.clearDownloadPromptTimeouts();
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
+    private configureAndInitDownloadPrompt() {
+        this.configureDownloadPromptProperties();
+        if (this.enableDownloadPrompt) {
+            this.initDownloadPrompt();
+        }
+    }
+
+    private configureDownloadPromptProperties() {
+        const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
+
+        this.enableDownloadPrompt = nonResponsivePreviewConfig.enableDownloadPrompt;
+        this.enableDownloadPromptReminder = nonResponsivePreviewConfig.enableDownloadPromptReminder;
+        this.downloadPromptDelay = nonResponsivePreviewConfig.downloadPromptDelay;
+        this.downloadPromptReminderDelay = nonResponsivePreviewConfig.downloadPromptReminderDelay;
+    }
+
+    private initDownloadPrompt() {
+        this.downloadPromptTimer = window.setTimeout(() => {
+            this.showOrClearDownloadPrompt();
+        }, this.downloadPromptDelay * 1000);
+    }
+
+    private showOrClearDownloadPrompt() {
+        if (!this.urlFile) {
+            this.showDownloadPrompt();
+        } else {
+            this.clearDownloadPromptTimeouts();
+        }
+    }
+
+    public clearDownloadPromptTimeouts() {
+        if (this.downloadPromptTimer) {
+            clearTimeout(this.downloadPromptTimer);
+        }
+        if (this.downloadPromptReminderTimer) {
+            clearTimeout(this.downloadPromptReminderTimer);
+        }
+    }
+
+    private showDownloadPrompt() {
+        if (!this.isDialogVisible) {
+            this.isDialogVisible = true;
+            this.dialog.open(DownloadPromptDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: DownloadPromptActions) => {
+                this.isDialogVisible = false;
+                if (result === DownloadPromptActions.WAIT) {
+                    if (this.enableDownloadPromptReminder) {
+                        this.clearDownloadPromptTimeouts();
+                        this.downloadPromptReminderTimer = window.setTimeout(() => {
+                            this.showOrClearDownloadPrompt();
+                        }, this.downloadPromptReminderDelay * 1000);
+                    }
+                }
+            });
+        }
+    }
 }
