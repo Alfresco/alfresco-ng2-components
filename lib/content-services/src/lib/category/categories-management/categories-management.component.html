@@ -55,7 +55,7 @@
         </span>
     </ng-container>
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
-        <ng-container *ngIf="!existingCategoriesLoading || existingCategories">
+        <ng-container *ngIf="!existingCategoriesLoading && !!existingCategories">
             <p class="adf-existing-categories-label">
                 {{ isCRUDMode ? 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES' : 'CATEGORIES_MANAGEMENT.SELECT_EXISTING_CATEGORY' | translate }}
             </p>

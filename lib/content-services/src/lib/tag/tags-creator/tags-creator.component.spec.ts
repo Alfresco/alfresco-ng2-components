@@ -228,14 +228,14 @@ describe('TagsCreatorComponent', () => {
             expect(tagElements).toEqual([tag2]);
         }));
 
-        it('should hide button for removing tag if disabledTagsRemoving is true', fakeAsync(() => {
+        it('should disable button for removing tag if disabledTagsRemoving is true', fakeAsync(() => {
             const tag1 = 'Tag 1';
             component.disabledTagsRemoving = true;
 
             addTagToAddedList(tag1);
             tick();
 
-            expect(getRemoveTagButtons()[0].hasAttribute('hidden')).toBeTrue();
+            expect(getRemoveTagButtons()[0].hasAttribute('disabled')).toBeTrue();
         }));
 
         it('should show button for removing tag if disabledTagsRemoving is false', fakeAsync(() => {

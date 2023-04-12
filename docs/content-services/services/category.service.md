@@ -49,7 +49,7 @@ Manages categories in Content Services.
     -   _payload:_ `CategoryBody`  - Updated category body
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryEntry>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CategoryEntry>
 -   **getCategoryLinksForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>`<br/>
-    Searches categories by their name.
+    Provides list of categories that node is linked to.
     -   _nodeId:_ `string`  - Id of a node that is linked to categories
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>` - Found categories that node is linked to.
 -   **unlinkNodeFromCategory**(nodeId: `string`, categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>

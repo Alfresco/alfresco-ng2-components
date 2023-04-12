@@ -17,7 +17,7 @@
                 mat-icon-button
                 (click)="removeTag(tag)"
                 [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [hidden]="disabledTagsRemoving">
+                [disabled]="disabledTagsRemoving">
                 <mat-icon>remove</mat-icon>
             </button>
         </p>

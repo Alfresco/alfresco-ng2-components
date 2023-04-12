@@ -317,7 +317,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                         this.loadTagsForNode(this.node.id);
                     }
                     if (this.displayCategories && !!result.LinkingCategories) {
-                        this.assignedCategories = result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry);
+                        this.assignedCategories = !!result.LinkingCategories.list ?
+                            result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry) :
+                            [result.LinkingCategories.entry];
                     }
                 }
                 this._saving = false;

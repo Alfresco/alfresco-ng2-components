@@ -67,7 +67,7 @@ describe('CategoriesManagementComponent', () => {
         categoryService = TestBed.inject(CategoryService);
     });
 
-    function getNoCategoriesMessage(): HTMLParagraphElement {
+    function getNoCategoriesMessage(): string {
         return fixture.debugElement.query(By.css(`.adf-no-categories-message`))?.nativeElement.textContent.trim();
     }
 

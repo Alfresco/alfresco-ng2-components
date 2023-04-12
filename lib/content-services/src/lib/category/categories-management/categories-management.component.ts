@@ -252,10 +252,12 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     private onNameControlValueChange(name: string) {
         this.categoryNameControl.markAsTouched();
-        if (this.isCRUDMode) {
-            this.getChildrenCategories();
-        } else {
-            this.searchForExistingCategories(name);
+        if (name) {
+            if (this.isCRUDMode) {
+                this.getChildrenCategories();
+            } else {
+                this.searchForExistingCategories(name);
+            }
         }
     }
 
