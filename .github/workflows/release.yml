@@ -127,10 +127,12 @@ jobs:
       - name: install Node >=16.0 for license check
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 16.20.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: release Demoshell docker
+        env:
+          NODE_VERSION: v16.20.0
         run: |
           . ./scripts/github/release/docker-tag.sh
           ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
@@ -162,10 +164,12 @@ jobs:
       - name: install Node >=16.0 for license check
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 16.20.0
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: release Storybook docker
+        env:
+          NODE_VERSION: v16.20.0
         run: |
           . ./scripts/github/release/docker-tag.sh
           ./scripts/github/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
