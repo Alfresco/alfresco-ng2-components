@@ -20,16 +20,27 @@ import { TestBed } from '@angular/core/testing';
 import { SearchFacetFiltersService } from './search-facet-filters.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchQueryBuilderService } from './search-query-builder.service';
-import { FacetBucketSortBy, FacetBucketSortDirection } from '@alfresco/adf-content-services';
+import { CategoryService, FacetBucketSortBy, FacetBucketSortDirection } from '@alfresco/adf-content-services';
+import { EMPTY, of } from 'rxjs';
 
 describe('SearchFacetFiltersService', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
     let queryBuilder: SearchQueryBuilderService;
+    let categoryService: CategoryService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [ContentTestingModule]
+          imports: [ContentTestingModule],
+            providers: [{
+                provide: CategoryService,
+                useValue: {
+                    getCategory: () => EMPTY,
+                    searchCategories: () => EMPTY
+                }
+            }],
         });
+
+        categoryService = TestBed.inject(CategoryService);
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
     });
@@ -458,6 +469,63 @@ describe('SearchFacetFiltersService', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.map(f => f.field)).toEqual(['field4', 'field1', 'Query 1', 'field2', 'field3']);
+    });
+
+    it('should load category names for cm:categories facet', () => {
+        searchFacetFiltersService.responseFacets = null;
+        spyOn(categoryService, 'getCategory').and.returnValue(of({entry: {id: 'test-id-test', name: 'name'}}));
+        spyOn(categoryService, 'searchCategories').and.returnValue(of({
+                    list: {
+                        entries: [{
+                            entry: {
+                                id: 'test-id-test',
+                                name: 'name',
+                                nodeType: 'node-type',
+                                path: { name: '/categories/General/Test Category/Subcategory'},
+                                isFolder: false,
+                                isFile: false
+                            }
+                        }]
+                    }
+                }));
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: {
+                fields: [
+                    {label: 'f1', field: 'f1', mincount: 0},
+                    {label: 'categories', field: 'cm:categories', mincount: 0}
+                ]
+            },
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        const fields: any = [
+            {type: 'field', label: 'f1', buckets: [{label: 'a1'}, {label: 'a2'}]},
+            {
+                type: 'field', label: 'categories', buckets: [{
+                    label: 'workspace://SpacesStore/test-id-test',
+                    filterQuery: 'cm:categories:"workspace://SpacesStore/test-id-test"',
+                }]
+            }
+        ];
+        let data = {
+            list: {
+                context: {
+                    facets: fields
+                }
+            }
+        };
+
+        searchFacetFiltersService.onDataLoaded(data);
+
+        expect(categoryService.getCategory).toHaveBeenCalledWith('test-id-test');
+        expect(categoryService.searchCategories).toHaveBeenCalledWith('name');
+        expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe('Test Category/Subcategory/name');
+        expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(1);
+        expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
     });
 
     describe('Bucket sorting', () => {
