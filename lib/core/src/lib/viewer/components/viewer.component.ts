@@ -191,7 +191,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     downloadPromptReminderDelay: number = 15;
 
     /**
-     * Emitted when user clicks on download button on non responsive preview dialog.
+     * Emitted when user clicks on download button on download prompt dialog.
      * */
     @Output()
     downloadFile: EventEmitter<void> = new EventEmitter<void>();

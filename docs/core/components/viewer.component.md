@@ -84,12 +84,13 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
-| submitFile | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer. |
+| Name | Type                                                                                                                            | Description                                                               |
+| ---- |---------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Before' ("&lt;") button.               |
+| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>`                                       | Emitted when user clicks 'Navigate Next' (">") button.                    |
+| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                                                           | Emitted when the viewer close                                             |
+| submitFile | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when the img is submitted in the img viewer.                      |
+| submitFile | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`void`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` | Emitted when download button is clicked on the downloadPrompt dialog. |
 
 ## Keyboard shortcuts
 
