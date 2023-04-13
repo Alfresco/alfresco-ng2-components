@@ -6,12 +6,14 @@
     $card: map.get($background, card);
 
     $new-card-color: color.adjust($background-color, $lightness: 10%);
-    $new-selected-button: color.adjust($background-color, $lightness: 5%);
+    $new-app-bar: color.adjust($background-color, $lightness: 5%);
+    $new-selected-button: color.adjust($background-color, $lightness: 7%);
 
     $background: map.merge($background, (background: $background-color));
     $background: map.merge($background, (card: $new-card-color));
     $background: map.merge($background, (modal: $new-card-color));
     $background: map.merge($background, (dialog: $new-card-color));
+    $background: map.merge($background, (app-bar: $new-app-bar));
     $background: map.merge($background, (selected-button: $new-selected-button));
 
     $theme-with-new-background: map.merge($theme, (background: $background));
