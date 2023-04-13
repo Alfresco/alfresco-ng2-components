@@ -30,7 +30,7 @@ describe('SearchFacetFiltersService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [ContentTestingModule],
+            imports: [ContentTestingModule],
             providers: [{
                 provide: CategoryService,
                 useValue: {

@@ -346,12 +346,12 @@ export class SearchFacetFiltersService implements OnDestroy {
         bucketList.map((item) => {
             const categoryId = item.label.split('/').pop();
             this.categoryService.getCategory(categoryId)
-                .subscribe(res => {
-                    this.categoryService.searchCategories(res.entry.name).subscribe(
-                        res => {
+                .subscribe(categoryEntry => {
+                    this.categoryService.searchCategories(categoryEntry.entry.name).subscribe(
+                        result => {
                             const nextAfterGeneralPathPartIndex = 3;
                             const pathSeparator = '/';
-                            const currentCat = res.list.entries.filter(entry => entry.entry.id === categoryId)[0];
+                            const currentCat = result.list.entries.filter(entry => entry.entry.id === categoryId)[0];
                             const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
 
                             path ? item.display = `${path}/${currentCat.entry.name}` : item.display = currentCat.entry.name;
