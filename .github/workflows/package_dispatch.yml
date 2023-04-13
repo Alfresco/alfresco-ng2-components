@@ -12,6 +12,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.PAT_WRITE_PKG }}
+          retries: 3
           script: |
             const payload = {
               package_name: "${{ github.event.registry_package.name }}",
