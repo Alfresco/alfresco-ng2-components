@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -155,9 +155,9 @@ export class RenditionService {
             const mimeType: string = rendition.entry.content.mimeType;
 
             if (status === 'NOT_CREATED') {
-                return {url: await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType:mimeType};
+                return {url: await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType};
             } else {
-                return {url: await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType:mimeType};
+                return {url: await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType};
             }
         }
 
