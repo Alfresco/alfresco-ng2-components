@@ -343,7 +343,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     private loadCategoryNames(bucketList: FacetFieldBucket[]) {
-        bucketList.map((item) => {
+        bucketList.forEach((item) => {
             const categoryId = item.label.split('/').pop();
             this.categoryService.getCategory(categoryId)
                 .subscribe(categoryEntry => {
