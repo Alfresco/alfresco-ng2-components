@@ -15,47 +15,6 @@ commit any changes you are currently working on. If you aren't using versioning
 then be sure to make a backup copy of your project before going ahead with the
 upgrade.
 
-## Library updates
-
-### Automatic update using the Yeoman Generator
-
-If your application has few changes from the original app created by the
-[Yeoman generator](https://github.com/Alfresco/generator-ng2-alfresco-app)
-then you may be able to update your project with the following steps:
-
-1.  Update the Yeoman generator to the latest version. Note that
-    you might need to run these commands with `sudo` on Linux or MacOS:
-
-    ```sh
-    npm uninstall -g generator-alfresco-adf-app
-    npm install -g generator-alfresco-adf-app
-    ```
-
-2.  Run the new yeoman app generator:
-
-    ```sh
-    yo alfresco-adf-app
-    ```
-
-3.  Clean your old distribution and dependencies by deleting the `node_modules` folder
-    and the `package-lock.json` file.
-
-4.  Install the dependencies:
-    ```sh
-    npm install
-    ```
-
-At this point, the generator might have overwritten some of your code where it differs from
-the original generated app. Be sure to check for any differences from your project code 
-(using a versioning system might make this easier) and if there are any differences,
-retrofit your changes. When you have done this, you should be able to start the application
-as usual:
-
-```sh
-npm run start
-```
-
-After starting the app, if everything is working fine, that's all and you don't need to do anything else. However, if things don't work as they should then recover the original version of the project and try the manual approach.
 
 ### Manual update
 
@@ -111,4 +70,9 @@ After starting the app, if everything is working fine, that's all and you don't 
 5.  Reinstall your dependencies
     ```sh
     npm install
+    ```
+    
+6.  Run the application
+    ```sh
+    npm run start
     ```
