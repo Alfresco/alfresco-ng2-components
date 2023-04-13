@@ -1,4 +1,5 @@
-{
+path = require("path");
+module.exports = {
   "extends": "../.eslintrc.js",
   "ignorePatterns": [
     "!**/*"
@@ -10,9 +11,9 @@
       ],
       "parserOptions": {
         "project": [
-          "demo-shell/tsconfig.app.json",
-          "demo-shell/src/tsconfig.spec.json",
-          "demo-shell/e2e/tsconfig.e2e.json"
+          path.join(__dirname, "tsconfig.app.json"),
+          path.join(__dirname, "src/tsconfig.spec.json"),
+          path.join(__dirname, "e2e/tsconfig.e2e.json")
         ],
         "createDefaultProgram": true
       },
