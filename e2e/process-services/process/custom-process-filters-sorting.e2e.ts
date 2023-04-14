@@ -49,6 +49,9 @@ describe('Sorting for process filters', () => {
     let firstProc: any;
     let secondProc: any;
     let thirdProc: any;
+    let deleteFirstProc: any;
+    let deleteSecondProc: any;
+    let deleteThirdProc: any;
 
     const processFilter = {
         running_old_first: 'Running - Oldest first',
@@ -61,7 +64,7 @@ describe('Sorting for process filters', () => {
         completed_least_recently: 'Completed - Least recently'
     };
 
-    const clickProcessButton = async (name, sort = 'created-asc', cancelled = true, state = 'completed') => {
+    const clickProcessButton = async (name, sort = 'created-asc', cancelled = true, state = 'completed', removed = false) => {
         await userFiltersApi.createUserProcessInstanceFilter({
             appId: null, name, icon: 'glyphicon-random',
             filter: { sort, name: '', state }
@@ -72,17 +75,23 @@ describe('Sorting for process filters', () => {
         secondProc = await processUtil.startProcessOfApp(importedApp.name);
         thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
+        if (removed) {
+            deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
+            deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);
+            deleteThirdProc = await processUtil.startProcessOfApp(importedApp.name);
+        }
+
         if (cancelled) {
-            await processUtil.cancelProcessInstance(firstProc.id);
-            await processUtil.cancelProcessInstance(secondProc.id);
-            await processUtil.cancelProcessInstance(thirdProc.id);
+            await processUtil.cancelProcessInstance((deleteFirstProc || firstProc).id);
+            await processUtil.cancelProcessInstance((deleteSecondProc || secondProc).id);
+            await processUtil.cancelProcessInstance((deleteThirdProc || thirdProc).id);
         }
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
     };
 
     beforeEach(async () => {
-        firstProc = secondProc = thirdProc = undefined;
+        firstProc = secondProc = thirdProc = deleteFirstProc = deleteSecondProc = deleteThirdProc = undefined;
         await apiService.loginWithProfile('admin');
 
         const applicationsService = new ApplicationsUtil(apiService);
@@ -138,25 +147,7 @@ describe('Sorting for process filters', () => {
     });
 
     it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
-        await userFiltersApi.createUserProcessInstanceFilter({
-            appId: null, name: processFilter.all_old_first, icon: 'glyphicon-random',
-            filter: { sort: 'created-asc', name: '', state: 'all' }
-        });
-
-        const processUtil = new ProcessUtil(apiService);
-        firstProc = await processUtil.startProcessOfApp(importedApp.name);
-        secondProc = await processUtil.startProcessOfApp(importedApp.name);
-        thirdProc = await processUtil.startProcessOfApp(importedApp.name);
-
-        const deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
-        const deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);
-        const deleteThirdProc = await processUtil.startProcessOfApp(importedApp.name);
-
-        await processUtil.cancelProcessInstance(deleteFirstProc.id);
-        await processUtil.cancelProcessInstance(deleteSecondProc.id);
-        await processUtil.cancelProcessInstance(deleteThirdProc.id);
-
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await clickProcessButton(processFilter.all_old_first, 'created-asc', true, 'all', true);
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all_old_first);
 
@@ -203,25 +194,7 @@ describe('Sorting for process filters', () => {
     });
 
     it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
-        await userFiltersApi.createUserProcessInstanceFilter({
-            appId: null, name: processFilter.all_new_first, icon: 'glyphicon-random',
-            filter: { sort: 'created-desc', name: '', state: 'all' }
-        });
-
-        const processUtil = new ProcessUtil(apiService);
-        firstProc = await processUtil.startProcessOfApp(importedApp.name);
-        secondProc = await processUtil.startProcessOfApp(importedApp.name);
-        thirdProc = await processUtil.startProcessOfApp(importedApp.name);
-
-        const deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
-        const deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);
-        const deleteThirdProc = await processUtil.startProcessOfApp(importedApp.name);
-
-        await processUtil.cancelProcessInstance(deleteFirstProc.id);
-        await processUtil.cancelProcessInstance(deleteSecondProc.id);
-        await processUtil.cancelProcessInstance(deleteThirdProc.id);
-
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+        await clickProcessButton(processFilter.all_new_first, 'created-desc', true, 'all', true);
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.all_new_first);
 
