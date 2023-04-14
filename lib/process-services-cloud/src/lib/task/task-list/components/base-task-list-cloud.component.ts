@@ -157,6 +157,9 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         if (changes['sorting']) {
             this.formatSorting(changes['sorting'].currentValue);
         }
+        if (changes['appName']) {
+            this.retrieveTasksPreferences();
+        }
         this.reload();
     }
 
@@ -165,7 +168,8 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         this.onDestroy$.complete();
     }
 
-    ngAfterContentInit() {
+    private retrieveTasksPreferences(): void {
+        this.isLoading = true;
         this.cloudPreferenceService.getPreferences(this.appName).pipe(
             take(1),
             map((preferences => {
@@ -194,8 +198,16 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             }
 
             this.createDatatableSchema();
-        }
-        );
+            this.createColumns();
+            this.isLoading = false;
+        }, (error) => {
+            this.error.emit(error);
+            this.isLoading = false;
+        });
+    }
+
+    ngAfterContentInit(): void {
+        this.retrieveTasksPreferences();
     }
 
     isListEmpty(): boolean {
