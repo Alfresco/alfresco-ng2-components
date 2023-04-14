@@ -52,7 +52,6 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
         this.requestNode = this.createRequestNode();
 
         if (this.requestNode.appName || this.requestNode.appName === '') {
-            this.isLoading = true;
 
             combineLatest([
                 this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
@@ -63,7 +62,6 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 ([tasks]) => {
                     this.rows = tasks.list.entries;
                     this.success.emit(tasks);
-                    this.isLoading = false;
                     this.pagination.next(tasks.list.pagination);
                 }, (error) => {
                     this.error.emit(error);

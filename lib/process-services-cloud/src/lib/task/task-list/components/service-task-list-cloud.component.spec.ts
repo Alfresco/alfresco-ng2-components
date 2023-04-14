@@ -130,15 +130,9 @@ describe('ServiceTaskListCloudComponent', () => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
-        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent.nativeElement).toBeDefined();
+        expect(component.isLoading).toBe(false);
 
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ appName });
-        fixture.detectChanges();
-
-        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
@@ -150,15 +144,13 @@ describe('ServiceTaskListCloudComponent', () => {
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
-        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent.nativeElement).toBeDefined();
+        expect(component.isLoading).toBe(false);
 
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);
-        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
