@@ -15,6 +15,48 @@
  * limitations under the License.
  */
 
+const createField = (id = 'TextTwo', name = 'TextTwo') => ({
+    id,
+    name,
+    type: 'text',
+    required: false,
+    colspan: 1,
+    placeholder: null,
+    minLength: 0,
+    maxLength: 0,
+    regexPattern: null,
+    visibilityCondition: null,
+    params: {
+        existingColspan: 1,
+        maxColspan: 2
+    }
+});
+
+const createFieldDefinition = (id = 'dcde7e13-2444-48bc-ab30-32902cea549e', tabName = '71da814d-5580-4f1f-972a-8089253aeded', fields = {
+    1: [createField()],
+    2: []
+}) => ({
+    id,
+    name: 'Label',
+    type: 'container',
+    tab: tabName,
+    numberOfColumns: 2,
+    fields
+});
+
+const fieldDefinition1 = createFieldDefinition();
+const fieldDefinition2 = createFieldDefinition('1308e433-08ce-4448-a62a-0accc1187d15', '0e538a28-f8d6-4cb8-ae93-dbfb2efdf3b1', {
+    1: [createField('TextOne', 'TextOne')],
+    2: []
+});
+const fieldDefinition3 = createFieldDefinition('df452297-d0e8-4406-b9d3-10842033549d', '442eea0b-65f9-484e-b37f-f5a91d5e1f21', {
+    1: [createField('TextOne', 'TextOne')],
+    2: [createField('TextThree', 'TextThree')]
+});
+
+const fieldsDefinitions1 = [fieldDefinition1, fieldDefinition2];
+const fieldsDefinitions2 = [fieldDefinition1, fieldDefinition3];
+
 export const tabFieldValueVisibilityJson = {
     formRepresentation: {
         id: 'form-3aff57d3-62af-4adf-9b14-1d8f44a28077',
@@ -44,62 +86,28 @@ export const tabFieldValueVisibilityJson = {
                 }
             ],
             fields: [
-                {
-                    id: 'dcde7e13-2444-48bc-ab30-32902cea549e',
-                    name: 'Label',
-                    type: 'container',
-                    tab: '71da814d-5580-4f1f-972a-8089253aeded',
-                    numberOfColumns: 2,
-                    fields: {
-                        1: [
-                            {
-                                id: 'TextTwo',
-                                name: 'TextTwo',
-                                type: 'text',
-                                required: false,
-                                colspan: 1,
-                                placeholder: null,
-                                minLength: 0,
-                                maxLength: 0,
-                                regexPattern: null,
-                                visibilityCondition: null,
-                                params: {
-                                    existingColspan: 1,
-                                    maxColspan: 2
-                                }
+                createFieldDefinition(),
+                createFieldDefinition('df452297-d0e8-4406-b9d3-10842033549d', '442eea0b-65f9-484e-b37f-f5a91d5e1f21', {
+                    1: [
+                        {
+                            id: 'TextOne',
+                            name: 'TextOne',
+                            type: 'text',
+                            required: false,
+                            colspan: 1,
+                            placeholder: null,
+                            minLength: 0,
+                            maxLength: 0,
+                            regexPattern: null,
+                            visibilityCondition: null,
+                            params: {
+                                existingColspan: 1,
+                                maxColspan: 2
                             }
-                        ],
-                        2: []
-                    }
-                },
-                {
-                    id: 'df452297-d0e8-4406-b9d3-10842033549d',
-                    name: 'Label',
-                    type: 'container',
-                    tab: '442eea0b-65f9-484e-b37f-f5a91d5e1f21',
-                    numberOfColumns: 2,
-                    fields: {
-                        1: [
-                            {
-                                id: 'TextOne',
-                                name: 'TextOne',
-                                type: 'text',
-                                required: false,
-                                colspan: 1,
-                                placeholder: null,
-                                minLength: 0,
-                                maxLength: 0,
-                                regexPattern: null,
-                                visibilityCondition: null,
-                                params: {
-                                    existingColspan: 1,
-                                    maxColspan: 2
-                                }
-                            }
-                        ],
-                        2: []
-                    }
-                }
+                        }
+                    ],
+                    2: []
+                })
             ],
             outcomes: [],
             metadata: {},
@@ -130,36 +138,7 @@ export const tabVarValueVisibilityJson = {
                     }
                 }
             ],
-            fields: [
-                {
-                    id: 'dcde7e13-2444-48bc-ab30-32902cea549e',
-                    name: 'Label',
-                    type: 'container',
-                    tab: '71da814d-5580-4f1f-972a-8089253aeded',
-                    numberOfColumns: 2,
-                    fields: {
-                        1: [
-                            {
-                                id: 'TextTwo',
-                                name: 'TextTwo',
-                                type: 'text',
-                                required: false,
-                                colspan: 1,
-                                placeholder: null,
-                                minLength: 0,
-                                maxLength: 0,
-                                regexPattern: null,
-                                visibilityCondition: null,
-                                params: {
-                                    existingColspan: 1,
-                                    maxColspan: 2
-                                }
-                            }
-                        ],
-                        2: []
-                    }
-                }
-            ],
+            fields: [fieldDefinition1],
             outcomes: [],
             metadata: {},
             variables: [
@@ -173,141 +152,6 @@ export const tabVarValueVisibilityJson = {
         }
     }
 };
-
-const fields1 = [
-    {
-        id: 'dcde7e13-2444-48bc-ab30-32902cea549e',
-        name: 'Label',
-        type: 'container',
-        tab: '71da814d-5580-4f1f-972a-8089253aeded',
-        numberOfColumns: 2,
-        fields: {
-            1: [
-                {
-                    id: 'TextTwo',
-                    name: 'TextTwo',
-                    type: 'text',
-                    required: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    regexPattern: null,
-                    visibilityCondition: null,
-                    params: {
-                        existingColspan: 1,
-                        maxColspan: 2
-                    }
-                }
-            ],
-            2: []
-        }
-    },
-    {
-        id: '1308e433-08ce-4448-a62a-0accc1187d15',
-        name: 'Label',
-        type: 'container',
-        tab: '0e538a28-f8d6-4cb8-ae93-dbfb2efdf3b1',
-        numberOfColumns: 2,
-        fields: {
-            1: [
-                {
-                    id: 'TextOne',
-                    name: 'TextOne',
-                    type: 'text',
-                    required: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    regexPattern: null,
-                    visibilityCondition: null,
-                    params: {
-                        existingColspan: 1,
-                        maxColspan: 2
-                    }
-                }
-            ],
-            2: []
-        }
-    }
-];
-
-const fields2 = [
-    {
-        id: 'dcde7e13-2444-48bc-ab30-32902cea549e',
-        name: 'Label',
-        type: 'container',
-        tab: '71da814d-5580-4f1f-972a-8089253aeded',
-        numberOfColumns: 2,
-        fields: {
-            1: [
-                {
-                    id: 'TextTwo',
-                    name: 'TextTwo',
-                    type: 'text',
-                    required: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    regexPattern: null,
-                    visibilityCondition: null,
-                    params: {
-                        existingColspan: 1,
-                        maxColspan: 2
-                    }
-                }
-            ],
-            2: []
-        }
-    },
-    {
-        id: 'df452297-d0e8-4406-b9d3-10842033549d',
-        name: 'Label',
-        type: 'container',
-        tab: '442eea0b-65f9-484e-b37f-f5a91d5e1f21',
-        numberOfColumns: 2,
-        fields: {
-            1: [
-                {
-                    id: 'TextOne',
-                    name: 'TextOne',
-                    type: 'text',
-                    required: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    regexPattern: null,
-                    visibilityCondition: null,
-                    params: {
-                        existingColspan: 1,
-                        maxColspan: 2
-                    }
-                }
-            ],
-            2: [
-                {
-                    id: 'TextThree',
-                    name: 'TextThree',
-                    type: 'text',
-                    required: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    regexPattern: null,
-                    visibilityCondition: null,
-                    params: {
-                        existingColspan: 1,
-                        maxColspan: 2
-                    }
-                }
-            ]
-        }
-    }
-];
 
 export const tabVarFieldVisibilityJson = {
     formRepresentation: {
@@ -336,7 +180,7 @@ export const tabVarFieldVisibilityJson = {
                     visibilityCondition: null
                 }
             ],
-            fields: fields1,
+            fields: fieldsDefinitions1,
             outcomes: [],
             metadata: {},
             variables: [
@@ -378,7 +222,7 @@ export const tabFieldFieldVisibilityJson = {
                     visibilityCondition: null
                 }
             ],
-            fields: fields2,
+            fields: fieldsDefinitions2,
             outcomes: [],
             metadata: {},
             variables: []
@@ -413,7 +257,7 @@ export const tabFieldVarVisibilityJson = {
                     visibilityCondition: null
                 }
             ],
-            fields: fields1,
+            fields: fieldsDefinitions1,
             outcomes: [],
             metadata: {},
             variables: [
@@ -451,34 +295,10 @@ export const tabVarVarVisibilityJson = {
                 }
             ],
             fields: [
-                {
-                    id: '6eeb9e54-e51d-44f3-9557-503308f07361',
-                    name: 'Label',
-                    type: 'container',
-                    tab: 'ef512cb3-0c41-4d12-84ef-a7ef8f0b111a',
-                    numberOfColumns: 2,
-                    fields: {
-                        1: [
-                            {
-                                id: 'TextOne',
-                                name: 'TextOne',
-                                type: 'text',
-                                required: false,
-                                colspan: 1,
-                                placeholder: null,
-                                minLength: 0,
-                                maxLength: 0,
-                                regexPattern: null,
-                                visibilityCondition: null,
-                                params: {
-                                    existingColspan: 1,
-                                    maxColspan: 2
-                                }
-                            }
-                        ],
-                        2: []
-                    }
-                }
+                createFieldDefinition('6eeb9e54-e51d-44f3-9557-503308f07361', 'ef512cb3-0c41-4d12-84ef-a7ef8f0b111a', {
+                    1: [createField('TextOne', 'TextOne')],
+                    2: []
+                })
             ],
             outcomes: [],
             metadata: {},
@@ -536,7 +356,7 @@ export const tabNextOperatorsVisibilityJson = {
                     visibilityCondition: null
                 }
             ],
-            fields: fields2,
+            fields: fieldsDefinitions2,
             outcomes: [],
             metadata: {},
             variables: []
