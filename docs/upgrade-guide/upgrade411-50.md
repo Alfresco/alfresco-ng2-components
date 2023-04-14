@@ -19,15 +19,14 @@ upgrade.
 ### Manual update
 
 1.  Update the `package.json` file with the latest library versions:
-    ```
+    ```json
     "dependencies": {
-        ...
-        @alfresco/adf-core: "5.0.0",
-        @alfresco/adf-content-services: "5.0.0",
-        @alfresco/adf-process-services-cloud: "5.0.0",
-        @alfresco/adf-insights: "5.0.0",
-        @alfresco/js-api: "5.0.0",
-        ...
+        "@alfresco/adf-core": "5.0.0",
+        "@alfresco/adf-content-services": "5.0.0",
+        "@alfresco/adf-process-services-cloud": "5.0.0",
+        "@alfresco/adf-insights": "5.0.0",
+        "@alfresco/js-api": "5.0.0",
+    }
     ```
 
 2.  Clean your old distribution and dependencies by deleting `node_modules` and `package-lock.json`.
@@ -58,12 +57,12 @@ upgrade.
     **Note:**: Consider the possibility of leveraging [ADF v5.0.0-angular.13.2](https://www.npmjs.com/package/@alfresco/adf-core/v/5.0.0-angular.13.2),
     a version of ADF compatible with Angular 13 that is meant to be used as intermediate step towards ADF v5. with angular v14.
     
-4.  A breaking change worth mentioning is related to style import. with ADF v5.0.0 an extra `\lib` is required.
+4.  A breaking change worth mentioning is related to style import. with ADF v5.0.0 an extra `/lib` is required.
 
 
     **example**:
 
-    previous versions of ADF :  `@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';`
+    previous versions of ADF : `@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';`
     
     starting ADF 5.0.0 : `@import '~@alfresco/adf-core/lib/prebuilt-themes/adf-blue-orange.css';`
 
