@@ -119,7 +119,7 @@ const createTabVisibilityJson = (tabs = [
 export const tabFieldValueVisibilityJson = createTabVisibilityJson();
 
 export const tabVarValueVisibilityJson = createTabVisibilityJson([
-    createTab('71da814d-5580-4f1f-972a-8089253aeded', 'tabBasicVarValue', createVisibilityCondition('variable', 'stringVar', undefined))
+    createTab('71da814d-5580-4f1f-972a-8089253aeded', 'tabBasicVarValue', createVisibilityCondition('variable', 'stringVar'))
 ], [fieldDefinition1], [
     {
         id: '803269e6-a568-40e2-aec3-75ad2f411688',
