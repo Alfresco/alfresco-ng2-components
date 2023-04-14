@@ -350,7 +350,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                     concatMap((categoryEntry) => this.categoryService.searchCategories(categoryEntry.entry.name)),
                     catchError(error => {
                         return throwError(error);
-            }),
+                    }),
                 )
                 .subscribe(
                     result => {
