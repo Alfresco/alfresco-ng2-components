@@ -56,6 +56,18 @@ describe('Process list cloud', () => {
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
+        const checkRowIsSelectedById = async () => {
+            await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.selectSelectionMode('Single');
+            await tasksCloudDemoPage.clickAppButton();
+            await processFilter.isProcessFiltersListVisible();
+            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
+            await processList.getDataTable().waitTillContentLoaded();
+            await processList.selectRowById(processInstances[0]);
+            await processList.checkRowIsSelectedById(processInstances[0]);
+        };
+
         beforeAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
 
@@ -108,16 +120,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297468] Should be able to select only one process when settings are set to Single', async () => {
-            await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.selectSelectionMode('Single');
-            await tasksCloudDemoPage.clickAppButton();
-            await processFilter.isProcessFiltersListVisible();
-            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-
-            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
-            await processList.getDataTable().waitTillContentLoaded();
-            await processList.selectRowById(processInstances[0]);
-            await processList.checkRowIsSelectedById(processInstances[0]);
+            await checkRowIsSelectedById();
             await expect(await processList.getDataTable().getNumberOfSelectedRows()).toEqual(1);
             await processList.selectRowById(processInstances[1]);
             await processList.checkRowIsSelectedById(processInstances[1]);
@@ -125,15 +128,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297470] Should be able to select multiple processes using keyboard', async () => {
-            await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.selectSelectionMode('Multiple');
-            await tasksCloudDemoPage.clickAppButton();
-            await processFilter.isProcessFiltersListVisible();
-            await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
-            await processList.getDataTable().waitTillContentLoaded();
-            await processList.selectRowById(processInstances[0]);
-            await processList.checkRowIsSelectedById(processInstances[0]);
+            await checkRowIsSelectedById();
             await processList.selectRowWithKeyboard(processInstances[1]);
             await processList.checkRowIsSelectedById(processInstances[0]);
             await processList.checkRowIsSelectedById(processInstances[1]);
