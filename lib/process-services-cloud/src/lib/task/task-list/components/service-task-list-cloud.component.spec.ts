@@ -161,7 +161,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
-        // component.ngAfterContentInit();
+        component.ngAfterContentInit();
         fixture.detectChanges();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
@@ -174,7 +174,7 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
-        // component.ngAfterContentInit();
+        component.ngAfterContentInit();
         expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
