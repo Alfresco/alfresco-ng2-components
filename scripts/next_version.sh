@@ -82,7 +82,7 @@ fi
 
 if [[ "${EXEC_ALPHA}" == true ]]
 then
-    NEXT_VERSION=${NEXT_VERSION}.${PR_NUMBER}
+    NEXT_VERSION=${NEXT_VERSION}.${GH_BUILD_NUMBER}
 fi
 
 if [[ "${EXEC_BETA}" == true ]]
