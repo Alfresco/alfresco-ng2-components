@@ -11,3 +11,12 @@
     padding-top: 6px;
     padding-bottom: 6px;
 }
+
+.adf-select-filter-input {
+    background: var(--adf-theme-background-card-color);
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}

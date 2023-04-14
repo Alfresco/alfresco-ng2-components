@@ -5,8 +5,6 @@ $select-filter-height: 4em !default;
     display: flex;
 
     .adf-select-filter-input-container {
-        position: absolute;
-        top: 0;
         width: 100%;
         display: flex;
         z-index: 100;
