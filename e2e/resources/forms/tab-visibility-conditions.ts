@@ -63,7 +63,7 @@ const createVisibilityCondition = (leftType = 'field', leftValue = 'TextOne', ne
     operator,
     rightValue,
     rightType,
-    nextConditionOperator: '',
+    nextConditionOperator: nextCondition ? 'and' : '',
     nextCondition
 });
 
@@ -200,7 +200,7 @@ export const tabNextOperatorsVisibilityJson = createTabVisibilityJson([
     createTab(
         '71da814d-5580-4f1f-972a-8089253aeded',
         'tabNextOperators',
-        createVisibilityCondition('field', 'TextOne', createVisibilityCondition('field', 'TextThree', undefined, 'showTab', 'value', '!='))
+        createVisibilityCondition('field', 'TextOne', createVisibilityCondition('field', 'TextThree', null, 'showTab', 'value', '!='))
     ),
     createTab('442eea0b-65f9-484e-b37f-f5a91d5e1f21', 'tabWithFields', null)
 ], fieldsDefinitions2);
