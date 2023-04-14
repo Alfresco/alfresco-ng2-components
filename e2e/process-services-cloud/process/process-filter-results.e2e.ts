@@ -80,6 +80,13 @@ describe('Process filters cloud', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
+    const setProcessName = async (propertyValue: string, propertyName = 'lastModifiedTo') => {
+        await editProcessFilter.openFilter();
+        await editProcessFilter.setProperty(propertyName, propertyValue);
+        await processList.getDataTable().waitTillContentLoaded();
+        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+    };
+
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
 
@@ -308,18 +315,12 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = currentDate', async () => {
-        await editProcessFilter.openFilter();
-        await editProcessFilter.setProperty('lastModifiedFrom', currentDate);
-        await processList.getDataTable().waitTillContentLoaded();
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await setProcessName(currentDate, 'lastModifiedFrom');
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311318] Should be able to filter by lastModifiedFrom - displays record when date = beforeDate', async () => {
-        await editProcessFilter.openFilter();
-        await editProcessFilter.setProperty('lastModifiedFrom', beforeDate);
-        await processList.getDataTable().waitTillContentLoaded();
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await setProcessName(beforeDate, 'lastModifiedFrom');
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
@@ -332,18 +333,12 @@ describe('Process filters cloud', () => {
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {
-        await editProcessFilter.openFilter();
-        await editProcessFilter.setProperty('lastModifiedTo', currentDate);
-        await processList.getDataTable().waitTillContentLoaded();
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await setProcessName(currentDate);
         await processList.checkContentIsDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - does not display record when date = beforeDate', async () => {
-        await editProcessFilter.openFilter();
-        await editProcessFilter.setProperty('lastModifiedTo', beforeDate);
-        await processList.getDataTable().waitTillContentLoaded();
-        await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
+        await setProcessName(beforeDate);
         await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 

@@ -57,7 +57,7 @@ const fieldDefinition3 = createFieldDefinition('df452297-d0e8-4406-b9d3-10842033
 const fieldsDefinitions1 = [fieldDefinition1, fieldDefinition2];
 const fieldsDefinitions2 = [fieldDefinition1, fieldDefinition3];
 
-const createVisibilityCondition = (leftType = 'field', leftValue = 'TextOne', nextCondition = null, rightValue = 'showTab', rightType = 'value', operator = '==') => ({
+const createVisibilityCondition = (leftType = 'field', leftValue = 'TextOne', nextCondition?: any, rightValue = 'showTab', rightType = 'value', operator = '==') => ({
     leftType,
     leftValue,
     operator,
@@ -67,7 +67,7 @@ const createVisibilityCondition = (leftType = 'field', leftValue = 'TextOne', ne
     nextCondition
 });
 
-const createTab = (id = '71da814d-5580-4f1f-972a-8089253aeded', title = 'tabBasicFieldValue', visibilityCondition = createVisibilityCondition()) => ({
+const createTab = (id = '71da814d-5580-4f1f-972a-8089253aeded', title = 'tabBasicFieldValue', visibilityCondition = createVisibilityCondition('field', 'TextOne', null)) => ({
     id,
     title,
     visibilityCondition
