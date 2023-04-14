@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,17 +38,17 @@ describe('Start Task - Custom App', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 
-    let processUserModel, assigneeUserModel;
+    let processUserModel; let assigneeUserModel;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
-    const firstComment = 'comm1', firstChecklist = 'checklist1';
+    const firstComment = 'comm1'; const firstChecklist = 'checklist1';
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File', 'Spinner'];
     const showHeaderTask = 'Show Header';
     let appModel;
     const pngFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     beforeAll(async () => {

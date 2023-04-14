@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ describe('New Process Filters', () => {
     const usersActions = new UsersActions(apiService);
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());
 
-    let tenantId, user, filterId, customProcessFilter;
+    let tenantId; let user; let filterId; let customProcessFilter;
 
     const processFilter = {
         running: 'Running',
@@ -74,10 +74,10 @@ describe('New Process Filters', () => {
 
     it('[C260473] Should be able to create a new filter on APS and display it on ADF', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null,
-            'name': processFilter.new_filter,
-            'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.new_filter,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         filterId = customProcessFilter.id;
@@ -89,10 +89,10 @@ describe('New Process Filters', () => {
 
     it('[C286450] Should display the process filter icon when a custom filter is added', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null,
-            'name': processFilter.new_icon,
-            'icon': 'glyphicon-cloud',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.new_icon,
+            icon: 'glyphicon-cloud',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         filterId = customProcessFilter.id;
@@ -111,19 +111,19 @@ describe('New Process Filters', () => {
 
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null,
-            'name': processFilter.new_icon,
-            'icon': 'glyphicon-cloud',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.new_icon,
+            icon: 'glyphicon-cloud',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         filterId = customProcessFilter.id;
 
         await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
-            'appId': null,
-            'name': processFilter.edited,
-            'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.edited,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
@@ -133,10 +133,10 @@ describe('New Process Filters', () => {
 
     it('[C286451] Should display changes on a process filter when this filter icon is edited', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null,
-            'name': processFilter.edit_icon,
-            'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.edit_icon,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         filterId = customProcessFilter.id;
@@ -146,10 +146,10 @@ describe('New Process Filters', () => {
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
         await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
-            'appId': null,
-            'name': processFilter.edit_icon,
-            'icon': 'glyphicon-cloud',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.edit_icon,
+            icon: 'glyphicon-cloud',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
@@ -178,10 +178,10 @@ describe('New Process Filters', () => {
 
     it('[C260475] Should be able to delete a filter on APS and check it on ADF', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null,
-            'name': processFilter.deleted,
-            'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.deleted,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         filterId = customProcessFilter.id;

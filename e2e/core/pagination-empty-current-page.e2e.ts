@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,8 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const usersActions = new UsersActions(apiService);
 
     const acsUser = new UserModel();
-    const folderModel = new FolderModel({ 'name': 'folderOne' });
-    const parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
+    const folderModel = new FolderModel({ name: 'folderOne' });
+    const parentFolderModel = new FolderModel({ name: 'parentFolder' });
 
     let fileNames = [];
     const nrOfFiles = 6;
@@ -63,8 +63,8 @@ describe('Pagination - returns to previous page when current is empty', () => {
     };
 
     const pngFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     beforeAll(async () => {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,16 +49,16 @@ describe('Task Details component', () => {
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
-    let processUserModel, appModel;
+    let processUserModel; let appModel;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'll';
     let formModel;
 
     const taskFormModel = {
-        'name': StringUtil.generateRandomString(),
-        'description': '',
-        'modelType': 2,
-        'stencilSet': 0
+        name: StringUtil.generateRandomString(),
+        description: '',
+        modelType: 2,
+        stencilSet: 0
     };
 
     beforeAll(async () => {
@@ -315,7 +315,7 @@ describe('Task Details component', () => {
         const form = await modelsActions.modelsApi.createModel(taskFormModel);
         const task = await taskUtil.createStandaloneTask(taskName);
 
-        await taskActionsApi.attachForm(task.id, { 'formId': form.id });
+        await taskActionsApi.attachForm(task.id, { formId: form.id });
         await taskFormsApi.completeTaskForm(task.id, { values: { label: null } });
 
         await (await processServices.goToTaskApp()).clickTasksButton();

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,10 @@ describe('Task filters cloud', () => {
         const processInstancesService = new ProcessInstancesService(apiService);
         const queryService = new QueryService(apiService);
 
-        const createdTaskName = StringUtil.generateRandomString(),
-            completedTaskName = StringUtil.generateRandomString(),
-            assignedTaskName = StringUtil.generateRandomString(), deletedTaskName = StringUtil.generateRandomString();
-        let assignedTask, deletedTask, testUser, groupInfo;
+        const createdTaskName = StringUtil.generateRandomString();
+            const completedTaskName = StringUtil.generateRandomString();
+            const assignedTaskName = StringUtil.generateRandomString(); const deletedTaskName = StringUtil.generateRandomString();
+        let assignedTask; let deletedTask; let testUser; let groupInfo;
         const orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let priority = 1;
         const nrOfTasks = 3;
@@ -77,7 +77,7 @@ describe('Task filters cloud', () => {
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
             for (let i = 0; i < nrOfTasks; i++) {
-                await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, { priority: priority });
+                await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, { priority });
                 priority = priority + 1;
             }
 

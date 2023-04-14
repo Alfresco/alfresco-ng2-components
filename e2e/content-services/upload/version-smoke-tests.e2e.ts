@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,28 +36,28 @@ describe('Version component', () => {
     let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const fileModelVersionThree = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     const fileModelVersionFor = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
     const fileModelVersionFive = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
     const uploadActions = new UploadActions(apiService);

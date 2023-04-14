@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,20 +83,20 @@ describe('Start Task Form', () => {
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const startEventFormProcess = StringUtil.generateRandomString(5);
-    let testUser, groupInfo;
+    let testUser; let groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
-    let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
-        cancelUploadFileProcess, completeUploadFileProcess, downloadContentFileProcess;
+    let processDefinition; let uploadLocalFileProcess; let uploadContentFileProcess; let uploadDefaultFileProcess;
+        let cancelUploadFileProcess; let completeUploadFileProcess; let downloadContentFileProcess;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
     const testFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     const folderName = StringUtil.generateRandomString(5);
@@ -118,35 +118,35 @@ describe('Start Task Form', () => {
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         uploadLocalFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         uploadContentFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
         const task = await queryService.getProcessInstanceTasks(uploadContentFileProcess.entry.id, candidateBaseApp);
         await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
 
         uploadDefaultFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         cancelUploadFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         completeUploadFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         downloadContentFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-            'name': StringUtil.generateRandomString(),
-            'businessKey': StringUtil.generateRandomString()
+            name: StringUtil.generateRandomString(),
+            businessKey: StringUtil.generateRandomString()
         });
 
         await apiService.login(testUser.username, testUser.password);

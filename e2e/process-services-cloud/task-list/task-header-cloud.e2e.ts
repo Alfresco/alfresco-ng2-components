@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,9 +31,7 @@ import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import * as moment from 'moment';
 
-const isValueInvalid = (value: any): boolean => {
-    return value === null || value === undefined;
-};
+const isValueInvalid = (value: any): boolean => value === null || value === undefined;
 
 describe('Task Header cloud component', () => {
 
@@ -75,21 +73,21 @@ describe('Task Header cloud component', () => {
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
 
-    const createCompletedTask = async function () {
+    const createCompletedTask = async function() {
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
-            simpleApp, { priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate });
+            simpleApp, { priority, description, dueDate: basicCreatedTask.entry.createdDate });
         await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         return tasksService.getTask(completedTaskId.entry.id, simpleApp);
     };
 
-    const createSubTask = async function (createdTaskId) {
+    const createSubTask = async function(createdTaskId) {
         const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
         return  tasksService.getTask(subTaskId.entry.id, simpleApp);
     };
 
-    const createTask = async function () {
+    const createTask = async function() {
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ describe('Start Task - Group Cloud Component', () => {
 
     const bothGroupsTaskName = StringUtil.generateRandomString(5);
     const oneGroupTaskName = StringUtil.generateRandomString(5);
-    let apsUser, testUser, hrGroup, testGroup;
+    let apsUser; let testUser; let hrGroup; let testGroup;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');

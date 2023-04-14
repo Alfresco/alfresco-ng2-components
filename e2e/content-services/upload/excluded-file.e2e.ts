@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,23 +43,23 @@ describe('Upload component - Excluded Files', () => {
     let acsUser: UserModel;
 
     const iniExcludedFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.INI.file_location
     });
 
     const txtFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const folderUpload = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     const acceptedFileInsideFolder = new FolderModel({
@@ -114,7 +114,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['.DS_Store', 'desktop.ini', '*.txt'],
-            'match-options': { 'nocase': true }
+            'match-options': { nocase: true }
         }));
 
         await contentServicesPage.goToDocumentList();
@@ -128,7 +128,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C260125] Should not upload excluded file when they are in a Folder', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['*.cpio'],
-            'match-options': { 'nocase': true }
+            'match-options': { nocase: true }
         }));
 
         await uploadToggles.enableFolderUpload();
@@ -147,7 +147,7 @@ describe('Upload component - Excluded Files', () => {
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {
         await LocalStorageUtil.setConfigField('files', JSON.stringify({
             excluded: ['.DS_Store', 'desktop.ini', '*.png'],
-            'match-options': { 'nocase': true }
+            'match-options': { nocase: true }
         }));
 
         await contentServicesPage.goToDocumentList();

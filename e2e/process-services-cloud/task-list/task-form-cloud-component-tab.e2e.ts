@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,10 +46,10 @@ describe('Task form cloud component', () => {
     let processInstancesService: ProcessInstancesService;
     let identityService: IdentityService;
 
-    let completedTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser;
+    let completedTask; let assigneeTask; let toBeCompletedTask; let formValidationsTask; let testUser;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
+    const completedTaskName = StringUtil.generateRandomString(); const assignedTaskName = StringUtil.generateRandomString();
     const apiService = createApiService();
     const apiServiceHrUser = createApiService();
 

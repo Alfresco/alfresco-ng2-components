@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Document List Component', () => {
 
-    let uploadedFolder, uploadedFolderExtra;
+    let uploadedFolder; let uploadedFolderExtra;
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -35,7 +35,7 @@ describe('Document List Component', () => {
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
-    let testFileNode, pdfBFileNode;
+    let testFileNode; let pdfBFileNode;
 
     afterEach(async () => {
         await apiService.loginWithProfile('admin');
@@ -76,7 +76,7 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
 
-        let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
+        let pdfUploadedNode; let docxUploadedNode; let timeAgoUploadedNode; let mediumDateUploadedNode;
 
         beforeAll(async () => {
             /* cspell:disable-next-line */
@@ -168,7 +168,7 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
-        let fileANode, fileBNode, fileCNode;
+        let fileANode; let fileBNode; let fileCNode;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');

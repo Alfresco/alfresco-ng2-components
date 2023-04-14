@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,8 @@ describe('Aspect oriented config', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
-    const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
-    const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
+    const modelOneName = 'modelOne'; const emptyAspectName = 'emptyAspect';
+    const defaultModel = 'cm'; const defaultEmptyPropertiesAspect = 'taggable'; const aspectName = 'Taggable';
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);

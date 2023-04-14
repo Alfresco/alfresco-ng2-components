@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,17 +68,17 @@ describe('Search component - Search Bar', () => {
     const filesToDelete = [];
 
     const firstFileModel = new FileModel({
-        'name': filename, 'shortName': filename.substring(0, 8)
+        name: filename, shortName: filename.substring(0, 8)
     });
 
     const firstFolderModel = new FolderModel({
-        'name': firstFolderName, 'shortName': firstFolderName.substring(0, 8)
+        name: firstFolderName, shortName: firstFolderName.substring(0, 8)
     });
     const secondFolder = new FolderModel({
-        'name': secondFolderName, 'shortName': secondFolderName.substring(0, 8)
+        name: secondFolderName, shortName: secondFolderName.substring(0, 8)
     });
     const thirdFolder = new FolderModel({
-        'name': thirdFolderName, 'shortName': thirdFolderName.substring(0, 8)
+        name: thirdFolderName, shortName: thirdFolderName.substring(0, 8)
     });
 
     const term = 'Zoizo';
@@ -94,9 +94,9 @@ describe('Search component - Search Bar', () => {
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
         fileHighlightUploaded = await nodesApi.createNode('-my-', {
-            'name': StringUtil.generateRandomString(16),
-            'nodeType': 'cm:content',
-            'properties': {
+            name: StringUtil.generateRandomString(16),
+            nodeType: 'cm:content',
+            properties: {
                 'cm:title': term,
                 'cm:description': 'Jadore les ' + term
             }

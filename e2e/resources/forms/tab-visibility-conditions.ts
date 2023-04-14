@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,10 +164,10 @@ export const tabVarValueVisibilityJson = {
             metadata: {},
             variables: [
                 {
-                    id: "803269e6-a568-40e2-aec3-75ad2f411688",
-                    name: "stringVar",
-                    type: "string",
-                    value: "showTab"
+                    id: '803269e6-a568-40e2-aec3-75ad2f411688',
+                    name: 'stringVar',
+                    type: 'string',
+                    value: 'showTab'
                 }
             ]
         }
@@ -263,10 +263,10 @@ export const tabVarFieldVisibilityJson = {
             metadata: {},
             variables: [
                 {
-                    id: "803269e6-a568-40e2-aec3-75ad2f411688",
-                    name: "stringVar",
-                    type: "string",
-                    value: "showTab"
+                    id: '803269e6-a568-40e2-aec3-75ad2f411688',
+                    name: 'stringVar',
+                    type: 'string',
+                    value: 'showTab'
                 }
             ]
         }
@@ -471,10 +471,10 @@ export const tabFieldVarVisibilityJson = {
             metadata: {},
             variables: [
                 {
-                    id: "803269e6-a568-40e2-aec3-75ad2f411688",
-                    name: "stringVar",
-                    type: "string",
-                    value: "showTab"
+                    id: '803269e6-a568-40e2-aec3-75ad2f411688',
+                    name: 'stringVar',
+                    type: 'string',
+                    value: 'showTab'
                 }
             ]
         }
@@ -537,16 +537,16 @@ export const tabVarVarVisibilityJson = {
             metadata: {},
             variables: [
                 {
-                    id: "b116df99-f6b5-45f8-b48c-15b74f7f1c92",
-                    name: "showTabOne",
-                    type: "string",
-                    value: "showTab"
+                    id: 'b116df99-f6b5-45f8-b48c-15b74f7f1c92',
+                    name: 'showTabOne',
+                    type: 'string',
+                    value: 'showTab'
                 },
                 {
-                    id: "6e3e88ab-848c-4f48-8326-a404d1427f60",
-                    name: "showTabTwo",
-                    type: "string",
-                    value: "showTab"
+                    id: '6e3e88ab-848c-4f48-8326-a404d1427f60',
+                    name: 'showTabTwo',
+                    type: 'string',
+                    value: 'showTab'
                 }
             ]
         }

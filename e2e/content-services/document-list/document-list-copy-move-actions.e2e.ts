@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,11 +45,11 @@ describe('Document List Component', () => {
     const nodesApi = new NodesApi(apiService.getInstance());
     const uploadActions = new UploadActions(apiService);
 
-    let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
-        duplicateFolderName;
+    let uploadedFolder; let uploadedFile; let sourceFolder; let destinationFolder; let subFolder; let subFolder2; let copyFolder; let subFile;
+        let duplicateFolderName;
     const acsUser = new UserModel();
     const anotherAcsUser = new UserModel();
-    let folderName, sameNameFolder, site;
+    let folderName; let sameNameFolder; let site;
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,

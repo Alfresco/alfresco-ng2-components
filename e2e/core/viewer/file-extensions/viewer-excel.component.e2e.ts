@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,8 @@ describe('Viewer', () => {
     const acsUser = new UserModel();
 
     const excelFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
     });
 
     const apiService = createApiService();

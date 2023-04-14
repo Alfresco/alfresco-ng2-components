@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -121,14 +121,14 @@ describe('People and Group widget', () => {
 
         const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
             usersActions.createUser(new UserModel({
-                tenantId: tenantId,
+                tenantId,
                 firstName: usersToCreate.firstName,
                 lastName: usersToCreate.lastName
             }))
         ));
 
         const subgroupUser = await usersActions.createUser(new UserModel({
-            tenantId: tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
+            tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
         }));
 
         const group = await adminGroupsApi.createNewGroup({

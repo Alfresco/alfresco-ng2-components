@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ describe('Dynamic Table widget ', () => {
     const processUtil = new ProcessUtil(apiService);
 
     let processUserModel;
-    let deployedAppId, process;
+    let deployedAppId; let process;
 
     describe('with Date Time Widget App', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;

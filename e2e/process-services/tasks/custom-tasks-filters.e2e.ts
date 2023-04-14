@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,14 +50,14 @@ describe('Start Task - Custom App', () => {
     const tasksApi = new TasksApi(apiService.getInstance());
 
     let processUserModel;
-    let appRuntime, secondAppRuntime;
+    let appRuntime; let secondAppRuntime;
     let appModel;
     const completedTasks = [];
     const paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
     const completedTasksName = ['completed01', 'completed02', 'completed03'];
     const allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02',
         'User Task', 'User Task', 'User Task', 'User Task'];
-    const invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
+    const invalidAppId = '1234567890'; const invalidName = 'invalidName'; const invalidTaskId = '0000';
     const noTasksFoundMessage = 'No Tasks Found';
     const nrOfTasks = 20;
     let currentPage = 1;
@@ -107,15 +107,15 @@ describe('Start Task - Custom App', () => {
 
         for (let i = 0; i < 3; i++) {
             completedTasks[i] = await tasksApi.createNewTask(new TaskRepresentation({
-                'name': completedTasksName[i],
-                'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
+                name: completedTasksName[i],
+                dueDate: DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             }));
             await taskActionsApi.completeTask(completedTasks[i].id);
         }
 
         taskWithDueDate = await tasksApi.createNewTask(new TaskRepresentation({
-            'name': paginationTasksName[0],
-            'dueDate': currentDateStandardFormat
+            name: paginationTasksName[0],
+            dueDate: currentDateStandardFormat
         }));
 
         await loginPage.login(processUserModel.username, processUserModel.password);

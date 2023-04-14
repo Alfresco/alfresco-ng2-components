@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    let uploadedFolder, uploadedFolderExtra;
+    let uploadedFolder; let uploadedFolderExtra;
     const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
-    let testFileNode, pdfBFileNode;
+    let testFileNode; let pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
     const usersActions = new UsersActions(apiService);
 
@@ -70,7 +70,7 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
         });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        let filePdfNode, fileTestNode, fileDocxNode, folderNode;
+        let filePdfNode; let fileTestNode; let fileDocxNode; let folderNode;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');

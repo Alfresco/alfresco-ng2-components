@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ describe('Search component - Text widget', () => {
     const nodesApi = new NodesApi(apiService.getInstance());
 
     const acsUser = new UserModel();
-    const newFolderModel = new FolderModel({ 'description': 'newDescription' });
+    const newFolderModel = new FolderModel({ description: 'newDescription' });
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -58,9 +58,9 @@ describe('Search component - Text widget', () => {
         await apiService.login(acsUser.username, acsUser.password);
 
         await nodesApi.createNode('-my-', {
-            'name': newFolderModel.name,
-            'nodeType': 'cm:folder',
-            'properties':
+            name: newFolderModel.name,
+            nodeType: 'cm:folder',
+            properties:
                 {
                     'cm:description': newFolderModel.description
                 }

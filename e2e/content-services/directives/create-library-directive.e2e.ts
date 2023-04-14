@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -214,7 +214,7 @@ describe('Create library directive', () => {
         await createLibraryDialog.libraryIdField.typeText(libraryId);
 
         await createLibraryDialog.errorMessage.waitVisible(60000);
-        await expect(await createLibraryDialog.errorMessage.getText()).toMatch("Library name can't contain only spaces");
+        await expect(await createLibraryDialog.errorMessage.getText()).toMatch('Library name can\'t contain only spaces');
     });
 
     it('[C290177] Should not accept a duplicate Library Id', async () => {
@@ -231,7 +231,7 @@ describe('Create library directive', () => {
         await createLibraryDialog.libraryNameField.typeText(name);
         await createLibraryDialog.libraryIdField.typeText(libraryId);
         await createLibraryDialog.errorMessage.waitVisible(60000);
-        await expect(await createLibraryDialog.errorMessage.getText()).toMatch("This Library ID isn't available. Try a different Library ID.");
+        await expect(await createLibraryDialog.errorMessage.getText()).toMatch('This Library ID isn\'t available. Try a different Library ID.');
     });
 
     it('[C290178] Should accept the same library name but different Library Ids', async () => {

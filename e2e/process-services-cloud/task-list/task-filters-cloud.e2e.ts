@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,9 +47,9 @@ describe('Task filters cloud', () => {
         const groupIdentityService = new GroupIdentityService(apiService);
         const tasksService = new TasksService(apiService);
 
-        let testUser, groupInfo;
+        let testUser; let groupInfo;
 
-        const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
+        const newTask = StringUtil.generateRandomString(5); const completedTask = StringUtil.generateRandomString(5);
 
         beforeAll(async () => {
             await apiService.loginWithProfile('identityAdmin');

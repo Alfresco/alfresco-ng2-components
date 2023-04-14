@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ describe('Attach widget - File', () => {
     const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel;
-    const pdfFile = new FileModel({'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    const pdfFile = new FileModel({name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name});
     const appFields = app.form_fields;
 
     beforeAll(async () => {

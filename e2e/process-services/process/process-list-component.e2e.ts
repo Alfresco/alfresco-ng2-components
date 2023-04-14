@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ describe('Process List Test', () => {
     const modelsActions = new ModelsActions(apiService);
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
-    let appDateModel, appUserWidgetModel, user;
+    let appDateModel; let appUserWidgetModel; let user;
 
     const processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];
 
@@ -57,7 +57,7 @@ describe('Process List Test', () => {
     };
 
     let appWithDateFieldId;
-    let procWithDate, completedProcWithDate, completedProcWithUserWidget;
+    let procWithDate; let completedProcWithDate; let completedProcWithUserWidget;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ describe('Document List Component - Actions', () => {
         const folderModel5 = new FolderModel({ name: StringUtil.generateRandomString() });
         const folderModel6 = new FolderModel({ name: StringUtil.generateRandomString() });
 
-        let folder1, folder2, folder3, folder4, folder5, folder6;
+        let folder1; let folder2; let folder3; let folder4; let folder5; let folder6;
 
         let folders;
         const contentServicesUser = new UserModel();

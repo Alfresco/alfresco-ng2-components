@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ describe('Process Filters Test', () => {
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());
     const appsApi = new RuntimeAppDefinitionsApi(apiService.getInstance());
 
-    let appModel, user;
+    let appModel; let user;
 
     const processTitle = {
         running: 'Test_running',

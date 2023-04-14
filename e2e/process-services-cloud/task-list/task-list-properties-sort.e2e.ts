@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,8 +47,8 @@ describe('Edit task filters and task list properties', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    let createdTask, notDisplayedTask, noPriorityTask, lowPriorityTask, normalPriorityTask, hightPriorityTask, subTask,
-        otherOwnerTask, testUser, groupInfo;
+    let createdTask; let notDisplayedTask; let noPriorityTask; let lowPriorityTask; let normalPriorityTask; let hightPriorityTask; let subTask;
+        let otherOwnerTask; let testUser; let groupInfo;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
@@ -78,7 +78,7 @@ describe('Edit task filters and task list properties', () => {
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
-        subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { 'parentTaskId': createdTask.entry.id });
+        subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { parentTaskId: createdTask.entry.id });
         await tasksService.claimTask(subTask.entry.id, simpleApp);
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
@@ -86,7 +86,7 @@ describe('Edit task filters and task list properties', () => {
         await loginSSOPage.login(testUser.username, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
-            'filterProperties': [
+            filterProperties: [
                 'taskId',
                 'appName',
                 'status',
@@ -102,7 +102,7 @@ describe('Edit task filters and task list properties', () => {
                 'sort',
                 'order'
             ],
-            'sortProperties': [
+            sortProperties: [
                 'id',
                 'name',
                 'createdDate',
@@ -115,7 +115,7 @@ describe('Edit task filters and task list properties', () => {
                 'owner',
                 'assignee'
             ],
-            'actions': [
+            actions: [
                 'save',
                 'saveAs',
                 'delete'

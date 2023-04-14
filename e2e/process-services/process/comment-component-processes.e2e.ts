@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ describe('Comment component for Processes', () => {
     const commentsApi = new ActivitiCommentsApi(apiService.getInstance());
     const taskApi = new TasksApi(apiService.getInstance());
 
-    let user, appId, processInstanceId, addedComment;
+    let user; let appId; let processInstanceId; let addedComment;
     const processName = 'Comment APS';
 
     beforeAll(async () => {
@@ -76,7 +76,7 @@ describe('Comment component for Processes', () => {
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        addedComment = await commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        addedComment = await commentsApi.getProcessInstanceComments(processInstanceId, { latestFirst: true });
 
         await commentsPage.checkUserIconIsDisplayed();
 
@@ -94,16 +94,16 @@ describe('Comment component for Processes', () => {
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const taskQuery = await taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await taskApi.listTasks({ processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
-        const taskComments = await commentsApi.getTaskComments(taskId, { 'latestFirst': true });
+        const taskComments = await commentsApi.getTaskComments(taskId, { latestFirst: true });
         await expect(taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {
-        const taskQuery = await taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await taskApi.listTasks({ processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
@@ -114,7 +114,7 @@ describe('Comment component for Processes', () => {
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const addedTaskComment = await commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        const addedTaskComment = await commentsApi.getProcessInstanceComments(processInstanceId, { latestFirst: true });
 
         await commentsPage.checkUserIconIsDisplayed();
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,13 +38,13 @@ describe('Viewer', () => {
     let txtFileUploaded;
 
     const txtFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     beforeAll(async () => {

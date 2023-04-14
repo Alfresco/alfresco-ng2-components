@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,68 +19,68 @@ export class ProcessListCloudConfiguration {
 
     getConfiguration() {
         return {
-            'presets': {
-                'default': [
+            presets: {
+                default: [
                     {
-                        'key': 'id',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID',
-                        'sortable': true
+                        key: 'id',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID',
+                        sortable: true
                     },
                     {
-                        'key': 'name',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
-                        'sortable': true
+                        key: 'name',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
+                        sortable: true
                     },
                     {
-                        'key': 'status',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS',
-                        'sortable': true
+                        key: 'status',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS',
+                        sortable: true
                     },
                     {
-                        'key': 'startDate',
-                        'type': 'date',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
-                        'sortable': true,
-                        'format': 'timeAgo'
+                        key: 'startDate',
+                        type: 'date',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE',
+                        sortable: true,
+                        format: 'timeAgo'
                     },
                     {
-                        'key': 'appName',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.APP_NAME',
-                        'sortable': true
+                        key: 'appName',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.APP_NAME',
+                        sortable: true
                     },
                     {
-                        'key': 'businessKey',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
-                        'sortable': true
+                        key: 'businessKey',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
+                        sortable: true
                     },
                     {
-                        'key': 'initiator',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STARTED_BY',
-                        'sortable': true
+                        key: 'initiator',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.STARTED_BY',
+                        sortable: true
                     },
                     {
-                        'key': 'lastModified',
-                        'type': 'date',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.LAST_MODIFIED',
-                        'sortable': true
+                        key: 'lastModified',
+                        type: 'date',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.LAST_MODIFIED',
+                        sortable: true
                     },
                     {
-                        'key': 'processDefinitionId',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_ID',
-                        'sortable': true
+                        key: 'processDefinitionId',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_ID',
+                        sortable: true
                     },
                     {
-                        'key': 'processDefinitionKey',
-                        'type': 'text',
-                        'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_KEY',
-                        'sortable': true
+                        key: 'processDefinitionKey',
+                        type: 'text',
+                        title: 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.PROCESS_DEF_KEY',
+                        sortable: true
                     }
                 ]
             }

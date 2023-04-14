@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ describe('Process list cloud', () => {
         const processDefinitionService = new ProcessDefinitionsService(apiService);
         const processInstancesService = new ProcessInstancesService(apiService);
 
-        let testUser, groupInfo;
+        let testUser; let groupInfo;
 
         const noOfProcesses = 3;
         const processInstances = [];
@@ -76,7 +76,7 @@ describe('Process list cloud', () => {
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 
-        afterAll(async() => {
+        afterAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
@@ -114,7 +114,7 @@ describe('Process list cloud', () => {
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
 
-            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
             await processList.getDataTable().waitTillContentLoaded();
             await processList.selectRowById(processInstances[0]);
             await processList.checkRowIsSelectedById(processInstances[0]);
@@ -130,7 +130,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
             await processList.getDataTable().waitTillContentLoaded();
             await processList.selectRowById(processInstances[0]);
             await processList.checkRowIsSelectedById(processInstances[0]);
@@ -147,7 +147,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
             await processList.getDataTable().waitTillContentLoaded();
             await processList.checkCheckboxById(processInstances[0]);
             await processList.checkRowIsCheckedById(processInstances[0]);
@@ -164,7 +164,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
-            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
             await processList.getDataTable().waitTillContentLoaded();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await browser.sleep(1000);
@@ -188,7 +188,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
-            await editProcessFilter.setFilter({ 'initiator': `${testUser.firstName} ${testUser.lastName}`});
+            await editProcessFilter.setFilter({ initiator: `${testUser.firstName} ${testUser.lastName}`});
             await processList.getDataTable().waitTillContentLoaded();
             await processList.checkCheckboxById(processInstances[0]);
             await processList.checkRowIsCheckedById(processInstances[0]);

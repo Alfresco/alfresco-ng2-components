@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ describe('Favorite directive', () => {
     });
 
     const uploadActions = new UploadActions(apiService);
-    let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
+    let testFolder1; let testFolder2; let testFolder3; let testFolder4; let testFile;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');

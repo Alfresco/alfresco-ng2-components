@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,16 +44,16 @@ describe('Search Sorting Picker', () => {
     const acsUser = new UserModel();
 
     const pngAModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     };
 
     const pngDModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     };
 
-    let pngA, pngD;
+    let pngA; let pngD;
     const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
@@ -105,11 +105,11 @@ describe('Search Sorting Picker', () => {
         await navigationBarPage.navigateToContentServices();
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
-            'key': 'Modifier',
-            'label': 'Modifier',
-            'type': 'FIELD',
-            'field': 'cm:modifier',
-            'ascending': true
+            key: 'Modifier',
+            label: 'Modifier',
+            type: 'FIELD',
+            field: 'cm:modifier',
+            ascending: true
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -147,11 +147,11 @@ describe('Search Sorting Picker', () => {
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
-            'key': 'Size',
-            'label': 'Size',
-            'type': 'FIELD',
-            'field': 'content.size',
-            'ascending': true
+            key: 'Size',
+            label: 'Size',
+            type: 'FIELD',
+            field: 'content.size',
+            ascending: true
         };
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -200,11 +200,11 @@ describe('Search Sorting Picker', () => {
 
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options.push({
-            'key': 'Modified Date',
-            'label': 'Modified Date',
-            'type': 'FIELD',
-            'field': 'cm:modified',
-            'ascending': true
+            key: 'Modified Date',
+            label: 'Modified Date',
+            type: 'FIELD',
+            field: 'cm:modified',
+            ascending: true
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -229,7 +229,7 @@ describe('Search Sorting Picker', () => {
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
 
-    const getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
+    const getNodesDisplayed = async function(numberOfElements: number, idList: string[]) {
         const promises = [];
         let nodeList;
 

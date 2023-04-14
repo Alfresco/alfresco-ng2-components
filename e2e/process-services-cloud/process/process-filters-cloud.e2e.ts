@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ describe('Process filters cloud', () => {
         const tasksService = new TasksService(apiService);
         const processInstancesService = new ProcessInstancesService(apiService);
 
-        let runningProcess, completedProcess, testUser, groupInfo;
+        let runningProcess; let completedProcess; let testUser; let groupInfo;
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
@@ -68,13 +68,13 @@ describe('Process filters cloud', () => {
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
             const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);

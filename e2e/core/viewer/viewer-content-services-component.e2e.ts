@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,44 +42,44 @@ describe('Content Services Viewer', () => {
     let zoom;
 
     const pdfFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
-        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
-        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
+        secondPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
+        lastPageNumber: browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number
     });
     const protectedFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
-        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
-        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
-        'password': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
+        firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
+        secondPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
+        lastPageNumber: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
+        password: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_path
     });
     const docxFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
+        location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
     });
     const jpgFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
     const mp4File = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_path,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
     const unsupportedFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const unsupportedFileByLocation = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_path,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
+        firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
     const apiService = createApiService();

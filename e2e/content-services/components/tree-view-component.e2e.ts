@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ describe('Tree View Component', () => {
     const uploadActions = new UploadActions(apiService);
     const nodesApi = new NodesApi(apiService.getInstance());
 
-    let treeFolder, secondTreeFolder, thirdTreeFolder;
+    let treeFolder; let secondTreeFolder; let thirdTreeFolder;
 
     const nodeNames = {
         folder: 'Folder1',

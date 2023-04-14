@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,28 +46,28 @@ describe('Upload component', () => {
     let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const fileWithSpecificSize = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
     });
     const emptyFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async () => {

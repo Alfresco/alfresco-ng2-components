@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
 
-    attachFileButton = $("input[type='file']");
-    buttonMenu = $("button[data-automation-id='action_menu_0']");
-    viewButton = $("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']");
-    removeButton = $("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']");
-    downloadButton = $("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']");
-    noContentContainer = $("div[class*='adf-no-content-container']");
+    attachFileButton = $('input[type=\'file\']');
+    buttonMenu = $('button[data-automation-id=\'action_menu_0\']');
+    viewButton = $('button[data-automation-id*=\'MENU_ACTIONS.VIEW_CONTENT\']');
+    removeButton = $('button[data-automation-id*=\'MENU_ACTIONS.REMOVE_CONTENT\']');
+    downloadButton = $('button[data-automation-id*=\'MENU_ACTIONS.DOWNLOAD_CONTENT\']');
+    noContentContainer = $('div[class*=\'adf-no-content-container\']');
 
     async checkEmptyAttachmentList(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
