@@ -63,6 +63,26 @@ describe('Search Sorting Picker', () => {
     const search = '_png_file.png';
     let jsonFile;
 
+    const checkSortingDropdownIsDisplayed = async (key = 'Modifier', label = 'Modifier') => {
+        await navigationBarPage.navigateToContentServices();
+        jsonFile = SearchConfiguration.getConfiguration();
+        jsonFile.sorting.options.push({
+            key,
+            label,
+            type: 'FIELD',
+            field: 'cm:modifier',
+            ascending: true
+        });
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
+
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+    };
+
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
@@ -102,23 +122,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
-        await navigationBarPage.navigateToContentServices();
-        jsonFile = SearchConfiguration.getConfiguration();
-        jsonFile.sorting.options.push({
-            key: 'Modifier',
-            label: 'Modifier',
-            type: 'FIELD',
-            field: 'cm:modifier',
-            ascending: true
-        });
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search);
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
         await searchSortingPicker.checkOptionsDropdownIsDisplayed();
         await searchSortingPicker.checkOptionIsDisplayed('Modifier');
@@ -196,24 +200,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
-        await navigationBarPage.navigateToContentServices();
-
-        jsonFile = SearchConfiguration.getConfiguration();
-        jsonFile.sorting.options.push({
-            key: 'Modified Date',
-            label: 'Modified Date',
-            type: 'FIELD',
-            field: 'cm:modified',
-            ascending: true
-        });
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search);
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await checkSortingDropdownIsDisplayed('Modified Date', 'Modified Date');
         await searchSortingPicker.sortBy('ASC', 'Modified Date');
 
         const idList = await contentServices.getElementsDisplayedId();
