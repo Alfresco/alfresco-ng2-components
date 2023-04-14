@@ -19,14 +19,14 @@ upgrade.
 ### Manual update
 
 1.  Update the `package.json` file with the latest library versions:
-    ```json
+    ```
     "dependencies": {
         ...
-        "@alfresco/adf-core": "5.0.0",
-        "@alfresco/adf-content-services": "5.0.0",
-        "@alfresco/adf-process-services-cloud": "5.0.0",
-        "@alfresco/adf-insights": "5.0.0",
-        "@alfresco/js-api": "5.0.0",
+        @alfresco/adf-core: "5.0.0",
+        @alfresco/adf-content-services: "5.0.0",
+        @alfresco/adf-process-services-cloud: "5.0.0",
+        @alfresco/adf-insights: "5.0.0",
+        @alfresco/js-api: "5.0.0",
         ...
     ```
 
@@ -48,23 +48,24 @@ upgrade.
     | --- | --- |
     | v11 | [Changes & Deprecations](https://v11.angular.io/guide/updating-to-version-11)|
     | v12 | [Changes & Deprecations](https://v12.angular.io/guide/updating-to-version-12)|
-    | v13 |  [Changes & Deprecations](https://v13.angular.io/guide/update-to-latest-version)|
+    | v13 | [Changes & Deprecations](https://v13.angular.io/guide/update-to-latest-version)|
     | v14 | [Changes & Deprecations](https://angular.io/guide/update-to-latest-version) |
 
     ## Upgrade
 
     To migrate custom code and application to Angular 14, please refer to the [offcial documentation](https://angular.io/).
 
-    **Note:**: Consider the possibility of leveraging [ADF v5.0.0-angular.13.2](https://www.npmjs.com/package/@alfresco/adf-core/v/5.0.0-angular.13.2), a       version of ADF compatible with Angular 13 that is meant to be used as intermediate step towards ADF v5. with angular v14.
+    **Note:**: Consider the possibility of leveraging [ADF v5.0.0-angular.13.2](https://www.npmjs.com/package/@alfresco/adf-core/v/5.0.0-angular.13.2),
+    a version of ADF compatible with Angular 13 that is meant to be used as intermediate step towards ADF v5. with angular v14.
     
-4.  A breaking change worth mentioning is related to style import. with ADF v5.0.0 an extra ```\lib``` is required.
+4.  A breaking change worth mentioning is related to style import. with ADF v5.0.0 an extra `\lib` is required.
 
 
     **example**:
 
-    previous versions of ADF :  ```@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';```
+    previous versions of ADF :  `@import '~@alfresco/adf-core/prebuilt-themes/adf-blue-orange.css';`
     
-    starting ADF 5.0.0 : ```@import '~@alfresco/adf-core/lib/prebuilt-themes/adf-blue-orange.css';```
+    starting ADF 5.0.0 : `@import '~@alfresco/adf-core/lib/prebuilt-themes/adf-blue-orange.css';`
 
 
 5.  Reinstall your dependencies
@@ -74,5 +75,5 @@ upgrade.
     
 6.  Run the application
     ```sh
-    npm run start
+    npm start
     ```
