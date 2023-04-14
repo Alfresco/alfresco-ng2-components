@@ -123,10 +123,10 @@ export default {
         copyrightText: {
             control: 'text',
             description: 'The copyright text below the login box.',
-            defaultValue: '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.',
+            defaultValue: '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.' }
+                defaultValue: { summary: '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.' }
             }
         },
         fieldsValidation: {

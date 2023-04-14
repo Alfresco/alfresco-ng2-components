@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** The copyright text below the login box. */
     @Input()
-    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText: string = '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.';
 
     /** Custom validation rules for the login form. */
     @Input()

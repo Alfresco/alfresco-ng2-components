@@ -2,7 +2,7 @@
   "name": "adf-tslint-rules",
   "description": "Custom Rules for the ADF project",
   "version": "0.0.7",
-  "author": "Alfresco Software, Ltd.",
+  "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "build": "tsc",
     "tscv": "tsc --version",
