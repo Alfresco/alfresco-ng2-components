@@ -17,12 +17,12 @@
 
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchService } from './search.service';
-import { takeUntil } from 'rxjs/operators';
+import { catchError, concatMap, takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
@@ -346,18 +346,23 @@ export class SearchFacetFiltersService implements OnDestroy {
         bucketList.forEach((item) => {
             const categoryId = item.label.split('/').pop();
             this.categoryService.getCategory(categoryId)
-                .subscribe(categoryEntry => {
-                    this.categoryService.searchCategories(categoryEntry.entry.name).subscribe(
-                        result => {
-                            const nextAfterGeneralPathPartIndex = 3;
-                            const pathSeparator = '/';
-                            const currentCat = result.list.entries.filter(entry => entry.entry.id === categoryId)[0];
-                            const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
+                .pipe(
+                    concatMap((categoryEntry) => this.categoryService.searchCategories(categoryEntry.entry.name)),
+                    catchError(error => {
+                        return throwError(error);
+            }),
+                )
+                .subscribe(
+                    result => {
+                        const nextAfterGeneralPathPartIndex = 3;
+                        const pathSeparator = '/';
+                        const currentCat = result.list.entries.filter(entry => entry.entry.id === categoryId)[0];
+                        const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
 
-                            path ? item.display = `${path}/${currentCat.entry.name}` : item.display = currentCat.entry.name;
-                        }
-                    );
-                });
+                        item.display = path ? `${path}/${currentCat.entry.name}` : currentCat.entry.name;
+                    },
+                    error => console.log(`Error: ${error}`)
+                );
         });
     }
 

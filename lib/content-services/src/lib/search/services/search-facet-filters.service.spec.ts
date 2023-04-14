@@ -472,14 +472,14 @@ describe('SearchFacetFiltersService', () => {
     });
 
     it('should load category names for cm:categories facet', () => {
+        const entry = {id: 'test-id-test', name: 'name'};
         searchFacetFiltersService.responseFacets = null;
-        spyOn(categoryService, 'getCategory').and.returnValue(of({entry: {id: 'test-id-test', name: 'name'}}));
+        spyOn(categoryService, 'getCategory').and.returnValue(of({entry}));
         spyOn(categoryService, 'searchCategories').and.returnValue(of({
                     list: {
                         entries: [{
                             entry: {
-                                id: 'test-id-test',
-                                name: 'name',
+                                ...entry,
                                 nodeType: 'node-type',
                                 path: { name: '/categories/General/Test Category/Subcategory'},
                                 isFolder: false,
@@ -506,8 +506,8 @@ describe('SearchFacetFiltersService', () => {
             {type: 'field', label: 'f1', buckets: [{label: 'a1'}, {label: 'a2'}]},
             {
                 type: 'field', label: 'categories', buckets: [{
-                    label: 'workspace://SpacesStore/test-id-test',
-                    filterQuery: 'cm:categories:"workspace://SpacesStore/test-id-test"',
+                    label: `workspace://SpacesStore/${entry.id}`,
+                    filterQuery: `cm:categories:"workspace://SpacesStore/${entry.id}"`,
                 }]
             }
         ];
@@ -521,9 +521,9 @@ describe('SearchFacetFiltersService', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
 
-        expect(categoryService.getCategory).toHaveBeenCalledWith('test-id-test');
-        expect(categoryService.searchCategories).toHaveBeenCalledWith('name');
-        expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe('Test Category/Subcategory/name');
+        expect(categoryService.getCategory).toHaveBeenCalledWith(entry.id);
+        expect(categoryService.searchCategories).toHaveBeenCalledWith(entry.name);
+        expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe(`Test Category/Subcategory/${entry.name}`);
         expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(1);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
     });
