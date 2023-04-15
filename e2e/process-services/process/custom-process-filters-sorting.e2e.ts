@@ -82,9 +82,9 @@ describe('Sorting for process filters', () => {
         }
 
         if (cancelled) {
-            await processUtil.cancelProcessInstance((deleteFirstProc || firstProc).id);
-            await processUtil.cancelProcessInstance((deleteSecondProc || secondProc).id);
-            await processUtil.cancelProcessInstance((deleteThirdProc || thirdProc).id);
+            await processUtil.cancelProcessInstance((removed ? deleteFirstProc : firstProc).id);
+            await processUtil.cancelProcessInstance((removed ? deleteSecondProc : secondProc).id);
+            await processUtil.cancelProcessInstance((removed ? deleteThirdProc : thirdProc).id);
         }
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();

@@ -56,9 +56,9 @@ describe('Process list cloud', () => {
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
-        const checkRowIsSelectedById = async () => {
+        const checkRowIsSelectedById = async (mode = 'Single') => {
             await tasksCloudDemoPage.clickSettingsButton();
-            await tasksCloudDemoPage.selectSelectionMode('Single');
+            await tasksCloudDemoPage.selectSelectionMode(mode);
             await tasksCloudDemoPage.clickAppButton();
             await processFilter.isProcessFiltersListVisible();
             await expect(await processFilter.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
@@ -128,7 +128,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297470] Should be able to select multiple processes using keyboard', async () => {
-            await checkRowIsSelectedById();
+            await checkRowIsSelectedById('Multiple');
             await processList.selectRowWithKeyboard(processInstances[1]);
             await processList.checkRowIsSelectedById(processInstances[0]);
             await processList.checkRowIsSelectedById(processInstances[1]);
