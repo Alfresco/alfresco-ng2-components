@@ -27,16 +27,16 @@ Manages Audit apps and entries.
     Get audit application info.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _opts:_ `any`  - (Optional) Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppEntry>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppEntry>` - status of an audit application.
 -   **getAuditApps**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppPaging>`<br/>
-    List audit applications.
+    Gets a list of audit applications.
     -   _opts:_ `any`  - (Optional) Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppPaging>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditAppPaging>` - a list of the audit applications.
 -   **getAuditEntries**(auditApplicationId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>`<br/>
     List audit entries for an audit application.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _opts:_ `any`  - (Optional) Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>` - a list of audit entries.
 -   **getAuditEntriesForNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryPaging>`<br/>
     List audit entries for a node.
     -   _nodeId:_ `string`  - The identifier of a node.
@@ -47,7 +47,7 @@ Manages Audit apps and entries.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.
     -   _auditEntryId:_ `string`  - The identifier of an audit entry.
     -   _opts:_ `any`  - (Optional) Options.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryEntry>` - 
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditEntryEntry>` - audit entry.
 -   **updateAuditApp**(auditApplicationId: `string`, auditAppBodyUpdate: `boolean`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<AuditApp|any>`<br/>
     Update audit application info.
     -   _auditApplicationId:_ `string`  - The identifier of an audit application.

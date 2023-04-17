@@ -32,15 +32,19 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
+    /** Determines if user is logged in. */
     @Input()
     isLoggedIn: boolean;
 
+    /** ECM user info. */
     @Input()
     ecmUser: EcmUserModel;
 
+    /** Identity user info. */
     @Input()
     identityUser: IdentityUserModel;
 
+    /** current mode. */
     @Input()
     mode: UserInfoMode = UserInfoMode.CONTENT;
 

@@ -29,9 +29,11 @@ import { TaskCommentsService } from './services/task-comments.service';
     }]
 })
 export class TaskCommentsComponent {
+    /** The numeric ID of the task. */
     @Input()
     taskId: string;
 
+    /** Determines if comments are read only. */
     @Input()
     readOnly: boolean;
 }

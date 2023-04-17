@@ -54,7 +54,7 @@ Edits task filter details.
 | showTaskFilterName | `boolean` | true | Toggles display of task filter name |
 | showTitle | `boolean` | true | Toggles the title. |
 | sortProperties | `string[]` | \[] | List of sort properties to display. |
-| taskFilter | [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts) |  | Task Filter to use |
+| taskFilter | [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts) |  | Task Filter to use. |
 
 ### Events
 

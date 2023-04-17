@@ -25,5 +25,5 @@ Displays comments from users involved in a specified task and allows an involved
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| readOnly | `boolean` |  | Are the comments read only? |
+| readOnly | `boolean` |  | Determines if comments are read only. |
 | taskId | `string` |  | The numeric ID of the task. |

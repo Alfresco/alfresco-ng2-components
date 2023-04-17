@@ -23,9 +23,9 @@ Shows user information for `CONTENT` and `CONTENT_SSO` mode.
 | ---- | ---- | ------------- | ----------- |
 | bpmBackgroundImage | `string` |  | Custom path for the background banner image for APS users. |
 | ecmBackgroundImage | `string` |  | Custom path for the background banner image for ACS users. |
-| ecmUser | [`EcmUserModel`](../../core/models/ecm-user.model.md) |  |  |
-| identityUser | [`IdentityUserModel`](../../../lib/process-services-cloud/src/lib/people/models/identity-user.model.ts) |  |  |
-| isLoggedIn | `boolean` |  |  |
+| ecmUser | [`EcmUserModel`](../../core/models/ecm-user.model.md) |  | ECM user info. |
+| identityUser | [`IdentityUserModel`](../../../lib/process-services-cloud/src/lib/people/models/identity-user.model.ts) |  | Identity user info. |
+| isLoggedIn | `boolean` |  | Determines if user is logged in. |
 | menuPositionX | [`MenuPositionX`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "after" | Custom choice for opening the menu at the bottom. Can be `before` or `after`. |
 | menuPositionY | [`MenuPositionY`](https://github.com/angular/components/blob/master/src/material/menu/menu-positions.ts) | "below" | Custom choice for opening the menu at the bottom. Can be `above` or `below`. |
 | mode | `UserInfoMode` |  | current mode. |
