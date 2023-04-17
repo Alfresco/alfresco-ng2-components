@@ -71,7 +71,7 @@ jobs:
             const hasVersionNewJS = process.env.HAS_NEW_JS_VERSION;
             const latestVersionJS = process.env.LATEST_JS_VERSION;
 
-            const checkPRAlreadyExist = require('./scripts/ci/jobs/check-pr-already-exist.js');
+            const checkPRAlreadyExist = require('./scripts/github/update/check-pr-already-exist.js');
             let isPRWithLatestJSAlreadyAvailable = false;
 
             if (hasVersionNewJS === 'true') {
