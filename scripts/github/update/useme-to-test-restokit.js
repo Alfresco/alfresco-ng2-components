@@ -40,7 +40,7 @@ const octokit = new Octokit({
             metadata: { package_type: 'npm' }
           })
 
-        const filteredReleasePkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*\.[0-9]*\.[0-9]*.A\.[0-9]*$') ||  item.name.match('^[0-9]*\.[0-9]*\.[0-9]*$') )
+        const filteredReleasePkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*.[0-9]*.[0-9]*.A.[0-9]*$') ||  item.name.match('^[0-9]*.[0-9]*.[0-9]*$') )
         console.log(filteredReleasePkgs)
 
         // console.log('alpha')
