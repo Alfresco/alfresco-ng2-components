@@ -20,12 +20,12 @@ module.exports = async ({github, context, dependencyName, tagVersion = 'alpha' }
     if (tagVersion !== 'release') {
         console.log('alpha: taking most recent')
         console.log(availablePakages[0])
-        const filteredAlphaPkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*.[0-9]*.[0-9]*.A.[0-9].[0-9]*$') );
+        const filteredAlphaPkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*\.[0-9]*\.[0-9]*\.A\.[0-9]\.[0-9]*$') );
         console.log(filteredAlphaPkgs)
         latestPkgToUpdate = filteredAlphaPkgs[0];
     } else {
         console.log('release: taking most recent')
-        const filteredReleasePkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*.[0-9]*.[0-9]*.A.[0-9]*$') ||  item.name.match('^[0-9]*.[0-9]*.[0-9]*$')  )
+        const filteredReleasePkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*\.[0-9]*\.[0-9]*\.A\.[0-9]*$') ||  item.name.match('^[0-9]*.[0-9]*.[0-9]*$')  )
         latestPkgToUpdate = filteredReleasePkgs[0];
     }
 
