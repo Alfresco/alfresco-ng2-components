@@ -41,9 +41,9 @@ Datasource service for category tree.
 -   **getSubNodes**(parentNodeId: `string`, skipCount?: `number`, maxItems?: `number`, name?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TreeResponse`](../../../lib/content-services/src/lib/tree/models/tree-response.interface.ts)`<`[`CategoryNode`](../../../lib/content-services/src/lib/category/models/category-node.interface.ts)`>>`<br/>
     Gets categories as nodes for category tree.
     -   _parentNodeId:_ `string`  - Identifier of a parent category
-    -   _skipCount:_ `number`  - (Optional) (Optional) Number of top categories to skip
-    -   _maxItems:_ `number`  - (Optional) (Optional) Maximum number of subcategories returned from 
-    -   _name:_ `string`  - (Optional) (Optional) Optional parameter which specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
+    -   _skipCount:_ `number`  - (Optional) Number of top categories to skip
+    -   _maxItems:_ `number`  - (Optional) Maximum number of subcategories returned from 
+    -   _name:_ `string`  - (Optional) Optional parameter which specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TreeResponse`](../../../lib/content-services/src/lib/tree/models/tree-response.interface.ts)`<`[`CategoryNode`](../../../lib/content-services/src/lib/category/models/category-node.interface.ts)`>>` - 
 -   **isEmpty**(): `boolean`<br/>
     Checks if tree is empty

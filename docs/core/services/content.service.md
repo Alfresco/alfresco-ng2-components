@@ -22,8 +22,8 @@ Accesses app-generated data objects via URLs and file downloads.
 -   **getDocumentThumbnailUrl**(nodeId: `string`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     (
     -   _nodeId:_ `string`  - 
-    -   _attachment:_ `boolean`  - (Optional) (Optional) Toggles whether to retrieve content as an attachment for download
-    -   _ticket:_ `string`  - (Optional) (Optional) Custom ticket to use for authentication
+    -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
+    -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - 
 -   **hasAllowableOperations**(node: `Node`, allowableOperation: [`AllowableOperationsEnum`](../../../lib/content-services/src/lib/common/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node

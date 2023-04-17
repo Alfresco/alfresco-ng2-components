@@ -799,10 +799,12 @@ file size, the [Document List component](../../content-services/components/docum
 
 In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json - 
 
-    "viewer": {
-        "enableFileAutoDownload": true,
-        "fileAutoDownloadSizeThresholdInMB": 15
-    }
+```
+"viewer": {
+    "enableFileAutoDownload": true,
+    "fileAutoDownloadSizeThresholdInMB": 15
+}
+```
 
 Here, `"enableFileAutoDownload": true,` would enable the file auto download feature on the [Document List component](../../content-services/components/document-list.component.md). Setting this flag to false disables this feature, and always
 triggers a file preview when trying to view a file, regardless of its size.

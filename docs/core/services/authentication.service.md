@@ -107,7 +107,7 @@ Provides authentication to ACS and APS.
     -   _rememberMe:_ `boolean`  - Enables a long-life cookie
 -   **setRedirect**(url?: [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
-    -   _url:_ [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts)  - (Optional) (Optional) URL to redirect to
+    -   _url:_ [`RedirectionModel`](../../../lib/core/src/lib/auth/models/redirection.model.ts)  - (Optional) URL to redirect to
 -   **ssoImplicitLogin**()<br/>
     Logs the user in with SSO
 

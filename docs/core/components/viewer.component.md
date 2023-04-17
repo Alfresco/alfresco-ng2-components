@@ -389,12 +389,14 @@ In case the user decides to wait, the viewer can further be configured to displa
 
 In order to configure this feature, add the following code in `app.config.json`.
 
-      "viewer": {
-        "enableDownloadPrompt":  true,
-        "enableDownloadPromptReminder": true,
-        "downloadPromptDelay": 50,
-        "downloadPromptReminderDelay": 30
-      }
+```
+  "viewer": {
+    "enableDownloadPrompt":  true,
+    "enableDownloadPromptReminder": true,
+    "downloadPromptDelay": 50,
+    "downloadPromptReminderDelay": 30
+  }
+```
 
 Here `enableDownloadPrompt: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
 `downloadPromptDelay` property. 

@@ -19,7 +19,7 @@ Gets OAuth2 personal details and roles for users and performs CRUD operations on
 -   **search**(name: `string`, filters?: [`IdentityUserFilterInterface`](../../../lib/process-services-cloud/src/lib/people/services/identity-user-filter.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/process-services-cloud/src/lib/people/models/identity-user.model.ts)`[]>`<br/>
     Search users based on name input and filters.
     -   _name:_ `string`  - Search query string
-    -   _filters:_ [`IdentityUserFilterInterface`](../../../lib/process-services-cloud/src/lib/people/services/identity-user-filter.interface.ts)  - (Optional) (Optional) 
+    -   _filters:_ [`IdentityUserFilterInterface`](../../../lib/process-services-cloud/src/lib/people/services/identity-user-filter.interface.ts)  - (Optional) 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../../lib/process-services-cloud/src/lib/people/models/identity-user.model.ts)`[]>` - List of users
 
 ## See also
