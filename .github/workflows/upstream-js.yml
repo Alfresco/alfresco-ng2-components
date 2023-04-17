@@ -31,11 +31,12 @@ jobs:
         name: Fetch the latest package version
         uses: actions/github-script@v6
         env:
-          TAG_VERSION: ${{ inputs.repo_to_update }}
+          TAG_VERSION: ${{ inputs.tag_version }}
         with:
           github-token: ${{ secrets.PAT_WRITE_PKG }}
           script: |
             const tagVersion = process.env.TAG_VERSION;
+            console.log('tagVersion:',tagVersion);
             const getLatestVersionOf = require('./scripts/github/update/latest-version-of.js');
             
             const { hasVersionNew: hasVersionNewJS, latestVersion: latestVersionJS } = await getLatestVersionOf({github, context, dependencyName: 'js-api', tagVersion});

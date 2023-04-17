@@ -16,8 +16,8 @@ module.exports = async ({github, context, dependencyName, tagVersion = 'alpha' }
         org: organization
     });
     
-    let latestPkgToUpdate = null;
-    if (tagVersion === 'alpha') {
+    let latestPkgToUpdate = undefined;
+    if (tagVersion !== 'release') {
         console.log('alpha: taking most recent')
         const filteredAlphaPkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*.[0-9]*.[0-9]*.A.[0-9].[0-9]*$') )
         latestPkgToUpdate = filteredAlphaPkgs[0];
@@ -27,7 +27,7 @@ module.exports = async ({github, context, dependencyName, tagVersion = 'alpha' }
         latestPkgToUpdate = filteredReleasePkgs[0];
     }
 
-    if (latestPkgToUpdate === null) {
+    if (latestPkgToUpdate === undefined) {
         console.log(`Something went wrong. Not able to find any version.`);
         return { hasVersionNew: 'false' };
     } else {
