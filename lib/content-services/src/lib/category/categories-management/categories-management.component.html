@@ -3,7 +3,8 @@
        class="adf-no-categories-message">
         {{ isCRUDMode ? 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED' : 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED' | translate }}
     </p>
-    <div class="adf-categories-list">
+    <div class="adf-categories-list"
+         [class.adf-categories-list-fixed]="!categoryNameControlVisible">
         <span
             *ngFor="let category of categories"
             [class.adf-categories-padded]="!isCRUDMode"
@@ -12,6 +13,7 @@
             <button
                 data-automation-id="categories-remove-category-button"
                 mat-icon-button
+                [class.adf-btn-padded]="!isCRUDMode"
                 (click)="removeCategory(category)"
                 [attr.title]="isCRUDMode ? 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY' : 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY' | translate"
                 [disabled]="disableRemoval">
@@ -40,6 +42,7 @@
         </mat-form-field>
         <button
             mat-icon-button
+            [class.adf-btn-padded]="!isCRUDMode"
             (click)="hideNameInput()"
             [attr.title]="'CATEGORIES_MANAGEMENT.HIDE_INPUT' | translate">
             <mat-icon>remove</mat-icon>
@@ -48,14 +51,14 @@
 </div>
 <div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
     <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
-        <span
+        <span class="adf-create-category-label"
             (click)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
         </span>
     </ng-container>
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
-        <ng-container *ngIf="!existingCategoriesLoading && !!existingCategories">
+        <ng-container *ngIf="!existingCategoriesLoading && existingCategories">
             <p class="adf-existing-categories-label">
                 {{ isCRUDMode ? 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES' : 'CATEGORIES_MANAGEMENT.SELECT_EXISTING_CATEGORY' | translate }}
             </p>

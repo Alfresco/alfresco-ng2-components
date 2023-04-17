@@ -100,7 +100,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
-            this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
+            this._existingTagsPanelVisible = true;
             setTimeout(() => {
                 this.tagNameInputElement.nativeElement.scrollIntoView();
             });

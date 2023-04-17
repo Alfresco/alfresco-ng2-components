@@ -377,11 +377,11 @@ describe('TagsCreatorComponent', () => {
             expect(getPanel()).toBeFalsy();
         }));
 
-        it('should not be visible when input is visible and nothing has been typed', () => {
+        it('should be visible when input is visible and nothing has been typed to reserve required space', () => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
 
-            expect(getPanel()).toBeFalsy();
+            expect(getPanel()).toBeTruthy();
         });
 
         it('should not be visible when something has been typed and input has been hidden', fakeAsync(() => {
@@ -444,12 +444,6 @@ describe('TagsCreatorComponent', () => {
                 typeTag(tag);
                 expect(getCreateTagLabel().hasAttribute('hidden')).toBeTruthy();
             }));
-
-            it('should not be visible if typed nothing', () => {
-                component.tagNameControlVisible = true;
-                fixture.detectChanges();
-                expect(getCreateTagLabel()).toBeFalsy();
-            });
 
             it('should not be visible during typing', fakeAsync(() => {
                 typeTag('some tag', 0);

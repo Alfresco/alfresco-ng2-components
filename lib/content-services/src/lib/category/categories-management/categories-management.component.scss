@@ -8,7 +8,7 @@
             width: 100%;
         }
 
-        button {
+        .adf-btn-padded {
             margin-right: -14px;
         }
     }
@@ -19,7 +19,7 @@
         align-items: center;
         word-break: break-word;
 
-        button {
+        .adf-btn-padded {
             margin-right: -14px;
         }
     }
@@ -67,5 +67,12 @@
 
     mat-spinner {
         margin: auto;
+    }
+}
+
+.adf-existing-categories-panel {
+    .adf-create-category-label {
+        color: var(--theme-primary-color);
+        cursor: pointer;
     }
 }

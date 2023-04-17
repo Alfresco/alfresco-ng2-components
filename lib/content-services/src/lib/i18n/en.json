@@ -184,7 +184,7 @@
       "REQUIRED": "Category name is required",
       "EMPTY_CATEGORY": "Category name can't contain only spaces",
       "ALREADY_EXISTS": "Category already exists",
-      "ALREADY_ADDED_CATEGORY": "Category is already added",
+      "DUPLICATED_CATEGORY": "Category is already added",
       "CREATE_CATEGORIES": "Error while creating categories",
       "EXISTING_CATEGORIES": "Some categories already exist"
     }

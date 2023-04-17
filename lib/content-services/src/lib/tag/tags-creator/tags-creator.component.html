@@ -7,6 +7,7 @@
     <div
         class="adf-tags-list"
         [class.adf-tags-list-with-scrollbar]="tagsListScrollbarVisible"
+        [class.adf-tags-list-fixed]="!tagNameControlVisible"
         #tagsList>
         <p
             *ngFor="let tag of tags"
@@ -67,7 +68,7 @@
     </ng-container>
     <div class="adf-tags-list">
         <mat-selection-list
-            *ngIf="!spinnerVisible || existingTags"
+            *ngIf="!spinnerVisible && existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)"
             [disabled]="isOnlyCreateMode()">
             <mat-list-option

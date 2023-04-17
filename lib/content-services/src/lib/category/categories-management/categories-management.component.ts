@@ -52,7 +52,8 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         '',
         [
             this.validateIfNotAlreadyAdded.bind(this),
-            this.validateEmptyCategory
+            this.validateEmptyCategory,
+            Validators.required
         ],
         this.validateIfNotAlreadyCreated.bind(this)
     );
@@ -149,9 +150,8 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
         this.setCategoryNameControlErrorMessageKey();
 
-        if (this.isCRUDMode) {
-            this._categoryNameControl.addValidators(Validators.required);
-        } else {
+        if (!this.isCRUDMode) {
+            this._categoryNameControl.removeValidators(Validators.required);
             this.categories.forEach((category) => this.initialCategories.push(category));
             this.classifiableChanged
             .pipe(takeUntil(this.onDestroy$))
@@ -218,6 +218,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             this.hideNameInput();
             this.categoryNameControl.setValue('');
             this.categoryNameControl.markAsUntouched();
+            this._existingCategories = null;
             this.categoriesChange.emit(this.categories);
         }
     }
@@ -240,7 +241,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      */
     removeCategory(category: Category) {
         this.categories.splice(this.categories.indexOf(category), 1);
-        if (!!this._existingCategories && !this.initialCategories.some((cat) => cat.id === category.id)) {
+        if (!this.isCRUDMode && !!this._existingCategories && !this.initialCategories.some((cat) => cat.id === category.id)) {
             this._existingCategories.push(category);
             this.sortCategoriesList(this._existingCategories);
         }
@@ -254,10 +255,12 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.categoryNameControl.markAsTouched();
         if (name) {
             if (this.isCRUDMode) {
-                this.getChildrenCategories();
+                this.getChildrenCategories(name);
             } else {
                 this.searchForExistingCategories(name);
             }
+        } else {
+            this._existingCategories = [];
         }
     }
 
@@ -278,9 +281,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getChildrenCategories() {
+    private getChildrenCategories(searchTerm: string) {
         this.categoryService.getSubcategories(this.parentId).subscribe((childrenCategories) => {
             this._existingCategories = childrenCategories.list.entries.map((categoryEntry) => categoryEntry.entry);
+            this._existingCategories = this._existingCategories.filter((existingCat) => existingCat.name.toLowerCase().includes(searchTerm.toLowerCase()));
             this.sortCategoriesList(this._existingCategories);
             this._existingCategoriesLoading = false;
             this._typing = false;
