@@ -150,10 +150,8 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, sorting = {
-        orderBy: 'tag',
-        direction: 'asc'
-    }, includedCounts?: boolean, skipCount = 0, maxItems?: number): Observable<TagPaging> {
+    searchTags(name: string, sorting = { orderBy: 'tag', direction: 'asc' },
+               includedCounts?: boolean, skipCount = 0, maxItems?: number): Observable<TagPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
         return this.getAllTheTags({
             tag: `*${name}*`,

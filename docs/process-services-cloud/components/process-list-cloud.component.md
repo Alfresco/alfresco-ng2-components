@@ -57,6 +57,7 @@ when the process list is empty:
 | completedDate | `string` | "" | Filter the processes. Display only process with completedDate equal to the supplied date. |
 | completedFrom | `string` | "" | Filter the processes. Display only process with completedFrom equal to the supplied date. |
 | completedTo | `string` | "" | Filter the processes. Display only process with completedTo equal to the supplied date. |
+| environmentId | `string` |  | Filter the processes to display only the ones with this environment ID. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
 | isResizingEnabled | `boolean` | false | Toggles main datatable column resizing feature. |

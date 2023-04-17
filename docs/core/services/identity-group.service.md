@@ -16,7 +16,7 @@ Performs CRUD operations on identity groups.
 -   **search**(name: `string`, filters?: [`IdentityGroupFilterInterface`](../../../lib/process-services-cloud/src/lib/group/services/identity-group-filter.interface.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]>`<br/>
 
     -   _name:_ `string`  - 
-    -   _filters:_ [`IdentityGroupFilterInterface`](../../../lib/process-services-cloud/src/lib/group/services/identity-group-filter.interface.ts)  - (Optional) 
+    -   _filters:_ [`IdentityGroupFilterInterface`](../../../lib/process-services-cloud/src/lib/group/services/identity-group-filter.interface.ts)  - (Optional) (Optional) 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/process-services-cloud/src/lib/group/models/identity-group.model.ts)`[]>` -
 
 ## See also
