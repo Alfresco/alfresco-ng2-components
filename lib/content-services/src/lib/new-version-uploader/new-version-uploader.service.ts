@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentService } from  '../common/services/content.service';
 
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { VersionPaging, VersionsApi } from '@alfresco/js-api';
@@ -38,7 +37,6 @@ export class NewVersionUploaderService {
     }
 
     constructor(
-        private contentService: ContentService,
         private apiService: AlfrescoApiService,
         private dialog: MatDialog,
         private overlayContainer: OverlayContainer
@@ -61,30 +59,26 @@ export class NewVersionUploaderService {
         const allowDownload = true;
 
         return new Observable((observer) => {
-            if (this.contentService.hasAllowableOperations(node, 'update')) {
-                this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
-                    const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
-                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
-                        panelClass: this.composePanelClass(showVersionsOnly),
-                        width: '630px',
-                        ...(config && Object.keys(config).length > 0 && config)
-                    });
-                    dialogRef.componentInstance.dialogAction.asObservable()
-                        .subscribe((newVersionUploaderData: NewVersionUploaderData) => {
-                            observer.next(newVersionUploaderData);
-                        });
-                    dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
-                        observer.error(error);
-                    });
-                    dialogRef.afterClosed().subscribe(() => {
-                        this.overlayContainer.getContainerElement().setAttribute('role', 'region');
-                        NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose);
-                    });
-                    this.overlayContainer.getContainerElement().setAttribute('role', 'main');
+            this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
+                const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
+                    data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
+                    panelClass: this.composePanelClass(showVersionsOnly),
+                    width: '630px',
+                    ...(config && Object.keys(config).length > 0 && config)
                 });
-            } else {
-                observer.error({ value: 'OPERATION.ERROR.PERMISSION' });
-            }
+                dialogRef.componentInstance.dialogAction.asObservable()
+                    .subscribe((newVersionUploaderData: NewVersionUploaderData) => {
+                        observer.next(newVersionUploaderData);
+                    });
+                dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
+                    observer.error(error);
+                });
+                dialogRef.afterClosed().subscribe(() => {
+                    this.overlayContainer.getContainerElement().setAttribute('role', 'region');
+                    NewVersionUploaderService.focusOnClose(selectorAutoFocusedOnClose);
+                });
+                this.overlayContainer.getContainerElement().setAttribute('role', 'main');
+            });
         });
 
     }
