@@ -31,7 +31,7 @@ import {
     CoreTestingModule,
     setupTestBed,
     EventMock,
-    ViewUtilService
+    ViewUtilService, ViewerComponent
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -39,6 +39,7 @@ import { FileModel } from '../../common/models/file.model';
 import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -355,7 +356,10 @@ describe('AlfrescoViewerComponent', () => {
 
     it('should download file when downloadFile event is emitted', () => {
         spyOn(nodeActionsService, 'downloadNode');
-        component.onDownloadFile();
+        const viewerComponent = fixture.debugElement.query(By.directive(ViewerComponent));
+        viewerComponent.triggerEventHandler('downloadFile');
+
+        fixture.detectChanges();
         expect(nodeActionsService.downloadNode).toHaveBeenCalled();
     });
 
