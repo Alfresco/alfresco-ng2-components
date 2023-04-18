@@ -317,7 +317,7 @@ describe('TaskListCloudComponent', () => {
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
-
+        
         const newColumns = [...component.columns];
         newColumns[0].width = 120;
         component.onColumnsWidthChanged(newColumns);
@@ -332,7 +332,7 @@ describe('TaskListCloudComponent', () => {
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
-
+        
         const newColumns = [...component.columns];
         newColumns[0].width = 120;
         component.onColumnsWidthChanged(newColumns);

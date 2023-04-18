@@ -383,7 +383,7 @@ describe('ProcessListCloudComponent', () => {
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
-
+        
         const newColumns = [...component.columns];
         newColumns[0].width = 120;
         component.onColumnsWidthChanged(newColumns);
@@ -399,7 +399,7 @@ describe('ProcessListCloudComponent', () => {
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
-
+        
         const newColumns = [...component.columns];
         newColumns[0].width = 120;
         component.onColumnsWidthChanged(newColumns);
@@ -608,7 +608,7 @@ describe('ProcessListCloudComponent', () => {
         }
 
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
-        preferencesService = jasmine.createSpyObj('preferencesService', {
+        const preferencesService: PreferenceCloudServiceInterface = jasmine.createSpyObj('preferencesService', {
             getPreferences: of({}),
             updatePreference: of({})
         });

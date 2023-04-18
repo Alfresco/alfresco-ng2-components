@@ -1986,8 +1986,8 @@ describe('Column Resizing', () => {
             {
                 key: 'created',
                 type: 'text',
-                width: 150
-            }
+                width: 150,
+            },
         ]);
         spyOn(adapter, 'setColumns').and.callThrough();
 
