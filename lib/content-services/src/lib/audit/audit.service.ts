@@ -43,6 +43,11 @@ export class AuditService {
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {
     }
 
+    /**
+     * Gets a list of audit applications.
+     * @param opts Options.
+     * @returns a list of the audit applications.
+     */
     getAuditApps(opts?: any): Observable<AuditAppPaging> {
         const defaultOptions = {
             skipCount: 0
@@ -54,6 +59,12 @@ export class AuditService {
             );
     }
 
+    /**
+     * Get audit application info.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param opts Options.
+     * @returns status of an audit application.
+     */
     getAuditApp(auditApplicationId: string, opts?: any): Observable<AuditAppEntry> {
         const defaultOptions = {
             auditApplicationId
@@ -65,6 +76,13 @@ export class AuditService {
             );
     }
 
+    /**
+     * Update audit application info.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param auditAppBodyUpdate The audit application to update.
+     * @param opts Options.
+     * @returns
+     */
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | any> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
@@ -74,6 +92,12 @@ export class AuditService {
             );
     }
 
+    /**
+     * List audit entries for an audit application.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param opts Options.
+     * @returns a list of audit entries.
+     */
     getAuditEntries(auditApplicationId: string, opts?: any): Observable<AuditEntryPaging> {
         const defaultOptions = {
             skipCount: 0,
@@ -86,6 +110,13 @@ export class AuditService {
             );
     }
 
+    /**
+     * Get audit entry.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param auditEntryId The identifier of an audit entry.
+     * @param opts Options.
+     * @returns audit entry.
+     */
     getAuditEntry(auditApplicationId: string, auditEntryId: string, opts?: any): Observable<AuditEntryEntry> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
@@ -95,6 +126,12 @@ export class AuditService {
             );
     }
 
+    /**
+     * List audit entries for a node.
+     * @param nodeId The identifier of a node.
+     * @param opts Options.
+     * @returns
+     */
     getAuditEntriesForNode(nodeId: string, opts?: any): Observable<AuditEntryPaging> {
         const defaultOptions = {
             nodeId
@@ -106,6 +143,12 @@ export class AuditService {
             );
     }
 
+    /**
+     * Permanently delete audit entries for an audit application.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids.
+     * @returns
+     */
     deleteAuditEntries(auditApplicationId: string, where: string): Observable<any> {
         return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where))
             .pipe(
@@ -113,6 +156,12 @@ export class AuditService {
             );
     }
 
+    /**
+     * Permanently delete an audit entry.
+     * @param auditApplicationId The identifier of an audit application.
+     * @param auditEntryId The identifier of an audit entry.
+     * @returns
+     */
     deleteAuditEntry(auditApplicationId: string, auditEntryId: string): Observable<any> {
         return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId))
             .pipe(

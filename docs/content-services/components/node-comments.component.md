@@ -25,5 +25,5 @@ Displays comments from users involved in a specified content and allows an invol
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | The numeric ID of the node. |
-| readOnly | `boolean` |  | Are the comments read only? |
+| nodeId | `string` |  | nodeId of the document that has comments |
+| readOnly | `boolean` |  | make the [comments component](../../core/components/comments.component.md) readOnly |

@@ -38,6 +38,7 @@ Displays the documents from a repository.
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
     -   [Custom 'permission denied' template](#custom-permission-denied-template)
     -   [Custom 'loading' template](#custom-loading-template)
+    -   [File Auto downloading](#file-auto-downloading)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -792,9 +793,9 @@ This will give the following output:
 
 ### File Auto downloading
 
-In case of files exceeding a predefined file size, the document list component can be configured to automatically download those file when trying to preview them. 
+In case of files exceeding a predefined file size, the [document list component](../../content-services/components/document-list.component.md) can be configured to automatically download those file when trying to preview them. 
 This can help in reducing server load, and ensuring quick access to such files. After turning this feature on, whenever the user tries to preview a file with a large
-file size, the Document List component will first preview a dialog, asking for confirmation from the user on whether they want to download the file, or cancel the preview altogether.
+file size, the [Document List component](../../content-services/components/document-list.component.md) will first preview a dialog, asking for confirmation from the user on whether they want to download the file, or cancel the preview altogether.
 
 In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json - 
 
@@ -805,10 +806,10 @@ In order to configure the Document List to automatically download the files, the
 }
 ```
 
-Here, `"enableFileAutoDownload": true,` would enable the file auto download feature on the Document List component. Setting this flag to false disables this feature, and always
+Here, `"enableFileAutoDownload": true,` would enable the file auto download feature on the [Document List component](../../content-services/components/document-list.component.md). Setting this flag to false disables this feature, and always
 triggers a file preview when trying to view a file, regardless of its size.
 
-The second configuration here, `"fileAutoDownloadSizeThresholdInMB": 15` specifies the file size threshold (in MB), after which the Document List component will start downloading the file.
+The second configuration here, `"fileAutoDownloadSizeThresholdInMB": 15` specifies the file size threshold (in MB), after which the [Document List component](../../content-services/components/document-list.component.md) will start downloading the file.
 In the example provided above, any file greater than 15MB in size would trigger the auto download functionality. Files lower than 15MB in size would continue to preview normally.
 
 ## See also

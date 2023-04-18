@@ -126,6 +126,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
+    /** Task Filter to use. */
     @Input()
     taskFilter: T;
 

@@ -33,15 +33,19 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
+    /** Determines if user is logged in. */
     @Input()
     isLoggedIn: boolean;
 
+    /** BPM user info. */
     @Input()
     bpmUser: BpmUserModel;
 
+    /** ECM user info. */
     @Input()
     ecmUser: EcmUserModel;
 
+    /** current mode. */
     @Input()
     mode: UserInfoMode = UserInfoMode.PROCESS;
 

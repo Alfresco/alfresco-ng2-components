@@ -32,7 +32,7 @@ Gets information about Process Services users.
     Gets information about users across all tasks.
     -   _taskId:_ `string`  - (Optional) ID of the task
     -   _searchWord:_ `string`  - (Optional) Filter text to search for
-    -   _groupId:_ `string`  - (Optional) 
+    -   _groupId:_ `string`  - (Optional)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>` - Array of user information objects
 -   **involveUserWithTask**(taskId: `string`, idToInvolve: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`[]>`<br/>
     Sets a user to be involved with a task.

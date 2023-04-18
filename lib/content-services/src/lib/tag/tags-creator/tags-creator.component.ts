@@ -117,10 +117,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     @Output()
     existingTagsPanelVisibilityChange = new EventEmitter<boolean>();
-    @Output()
     /**
      * Emitted when tags in top list are changed.
      */
+    @Output()
     tagsChange = new EventEmitter<string[]>();
     /**
      * Emitted when input is showing or hiding.

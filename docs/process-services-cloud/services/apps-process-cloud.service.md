@@ -13,6 +13,11 @@ Gets details of deployed apps for the current user.
 
 ### Methods
 
+-   **getApplicationLabel**(application: [`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts), environmentList?: [`Environment`](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts)`[]`): `string`<br/>
+    Gets application label.
+    -   _application:_ [`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)  - 
+    -   _environmentList:_ [`Environment`](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts)`[]`  - (Optional) 
+    -   **Returns** `string` - 
 -   **getDeployedApplicationsByStatus**(status: `string`, role?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`[]>`<br/>
     Gets a list of deployed apps for this user by status.
     -   _status:_ `string`  - Required status value
@@ -24,11 +29,6 @@ Gets details of deployed apps for the current user.
 
 -   **loadApps**()<br/>
 
--   **getApplicationLabel**(application: `ApplicationInstanceModel`, environmentList?: `Environment[]`): `string`<br/>
-    Gets application label.
-    -   application:_ `ApplicationInstanceModel`  - Required application
-    -   environmentList:_ `Environment[]`  - (Optional) to add environment name in front of application name
-    -   **Returns** `string` - The application label.
 ## Details
 
 This service implements some features of the [Apps process service](../../core/services/apps-process.service.md)

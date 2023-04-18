@@ -120,7 +120,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-By providing a `decorativeIcon` property in the `SnackBarData`, it is possible to render a decorative
+By providing a `decorativeIcon` property in the [`SnackBarData`](../../../lib/core/src/lib/snackbar-content/snack-bar-data.ts), it is possible to render a decorative
 [`MaterialIcon`](https://material.angular.io/components/icon/overview#interactive-icons) to the left of the message.
 
 ```ts

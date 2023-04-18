@@ -45,16 +45,16 @@ Shows/edits process filter details.
 | ---- | ---- | ------------- | ----------- |
 | actions | `string[]` | DEFAULT_ACTIONS | List of sort actions. |
 | appName | `string` | "" | The name of the application. |
+| environmentId | `string` |  | [Environment](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts) ID of the application. |
+| environmentList | [`Environment`](../../../lib/process-services-cloud/src/lib/common/interface/environment.interface.ts)`[]` | \[] | List of environments. |
 | filterProperties | `string[]` |  | List of process filter properties to display |
 | id | `string` |  | Id of the process instance filter. |
-| environmentId | `string` |  | Environment Id of the process instance filter. |
-| environmentList | `string[]` |  | List of environments. |
 | role | `string` | "" | roles to filter the apps |
 | showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
 | showProcessFilterName | `boolean` | true | Toggles the appearance of the process filter name . |
 | showTitle | `boolean` | true | Toggles editing of the process filter title. |
 | sortProperties | `string[]` |  | List of sort properties to display. |
-| processFilter | [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) |  |  |
+| processFilter | [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts) |  | Process filter |
 
 ### Events
 

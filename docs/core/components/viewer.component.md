@@ -23,6 +23,7 @@ Displays content from blob file or url file.
     -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
+-   [Handling non responsive file preview](#handling-non-responsive-file-preview)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -382,7 +383,7 @@ By default the viewer's zoom scaling is set to 100%.
 
 ## Handling non responsive file preview
 
-It is possible that trying to load a large file, especially over a slow network, can cause the viewer component to get stuck in the loading state. To handle such cases, 
+It is possible that trying to load a large file, especially over a slow network, can cause the [viewer component](../../core/components/viewer.component.md) to get stuck in the loading state. To handle such cases, 
 the viewer can be configured to display a prompt to ask the user to either download the file locally and then close the viewer, or wait for the viewer to load the file.
 In case the user decides to wait, the viewer can further be configured to display subsequent reminder prompts asking the same options.
 

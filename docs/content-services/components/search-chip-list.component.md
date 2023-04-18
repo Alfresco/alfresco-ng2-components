@@ -25,4 +25,4 @@ Displays search criteria as a set of "chips".
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | clearAll | `boolean` | false | Flag used to enable the display of a clear-all-filters button. |
-| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. Not required from 4.5.0 and later versions |
+| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. Not required from 4.5.0 and later versions @deprecated |
