@@ -348,9 +348,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             this.categoryService.getCategory(categoryId)
                 .pipe(
                     concatMap((categoryEntry) => this.categoryService.searchCategories(categoryEntry.entry.name)),
-                    catchError(error => {
-                        return throwError(error);
-                    }),
+                    catchError(error => throwError(error))
                 )
                 .subscribe(
                     result => {
@@ -360,8 +358,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                         const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
 
                         item.display = path ? `${path}/${currentCat.entry.name}` : currentCat.entry.name;
-                    },
-                    error => console.log(`Error: ${error}`)
+                    }
                 );
         });
     }

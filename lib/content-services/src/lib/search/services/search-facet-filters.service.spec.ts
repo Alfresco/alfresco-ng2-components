@@ -37,7 +37,7 @@ describe('SearchFacetFiltersService', () => {
                     getCategory: () => EMPTY,
                     searchCategories: () => EMPTY
                 }
-            }],
+            }]
         });
 
         categoryService = TestBed.inject(CategoryService);
@@ -507,7 +507,7 @@ describe('SearchFacetFiltersService', () => {
             {
                 type: 'field', label: 'categories', buckets: [{
                     label: `workspace://SpacesStore/${entry.id}`,
-                    filterQuery: `cm:categories:"workspace://SpacesStore/${entry.id}"`,
+                    filterQuery: `cm:categories:"workspace://SpacesStore/${entry.id}"`
                 }]
             }
         ];
