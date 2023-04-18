@@ -45,11 +45,6 @@ adf-tags-creator {
         padding-left: 10px;
         padding-right: 0;
         overflow: auto;
-
-        &.adf-tags-list-with-scrollbar {
-            padding-right: 7px;
-            margin-right: -22px;
-        }
     }
 
     .adf-tag {
@@ -85,7 +80,6 @@ adf-tags-creator {
             padding-right: 0;
             display: flex;
             flex-direction: column;
-            min-height: 75px;
 
             .adf-tag {
                 margin-bottom: 18px;

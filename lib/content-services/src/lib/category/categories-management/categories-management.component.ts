@@ -134,8 +134,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
                     if (name) {
                         this._existingCategoriesLoading = true;
                         this._existingCategoriesPanelVisible = true;
-                    } else {
-                        this._existingCategoriesPanelVisible = false;
                     }
                     this.cancelExistingCategoriesLoading$.next();
                 }),
@@ -260,7 +258,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
                 this.searchForExistingCategories(name);
             }
         } else {
-            this._existingCategories = [];
+            this._existingCategories = null;
         }
     }
 

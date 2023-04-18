@@ -480,7 +480,7 @@ describe('CategoriesManagementComponent', () => {
             it('should not display create category label when control has error', fakeAsync(() => {
                 typeCategory('   ');
 
-                expect(getCreateCategoryLabel()).toBeUndefined();
+                expect(getCreateCategoryLabel().hidden).toBeTrue();
             }));
         });
     });

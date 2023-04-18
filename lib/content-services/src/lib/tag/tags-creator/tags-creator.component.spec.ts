@@ -371,12 +371,6 @@ describe('TagsCreatorComponent', () => {
             expect(getPanel()).toBeFalsy();
         });
 
-        it('should not be visible when input is visible and empty string is typed in input', fakeAsync(() => {
-            typeTag('   ');
-
-            expect(getPanel()).toBeFalsy();
-        }));
-
         it('should be visible when input is visible and nothing has been typed to reserve required space', () => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
@@ -416,12 +410,12 @@ describe('TagsCreatorComponent', () => {
             it('should not be visible if typed only spaces', fakeAsync(() => {
                 typeTag('  ');
 
-                expect(getCreateTagLabel()).toBeFalsy();
+                expect(getCreateTagLabel().hidden).toBeTrue();
             }));
 
             it('should not be visible if required error occurs', fakeAsync(() => {
                 typeTag('');
-                expect(getCreateTagLabel()).toBeFalsy();
+                expect(getCreateTagLabel().hidden).toBeTrue();
             }));
 
             it('should not be visible when trying to duplicate already added tag', fakeAsync(() => {

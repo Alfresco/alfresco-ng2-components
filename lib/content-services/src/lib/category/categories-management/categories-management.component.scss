@@ -40,7 +40,7 @@
     .mat-list-base .mat-list-option {
         display: flex;
         height: 100%;
-        word-wrap: break-word;
+        overflow-wrap: anywhere;
         padding: 5px 0;
         font-size: 14px;
 
@@ -74,5 +74,6 @@
     .adf-create-category-label {
         color: var(--theme-primary-color);
         cursor: pointer;
+        overflow-wrap: anywhere;
     }
 }
