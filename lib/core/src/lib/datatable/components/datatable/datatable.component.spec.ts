@@ -1968,6 +1968,38 @@ describe('Column Resizing', () => {
         expect(adapter.setColumns).toHaveBeenCalledWith(columns);
     }));
 
+    it('should set column widths while resizing ONLY on visible columns', fakeAsync(() => {
+        const adapter = dataTable.data;
+        spyOn(adapter, 'getColumns').and.returnValue([
+            {
+                key: 'name',
+                type: 'text',
+                width: 110,
+                isHidden: true
+            },
+            {
+                key: 'status',
+                type: 'text',
+                width: 120,
+                isHidden: false
+            },
+            {
+                key: 'created',
+                type: 'text',
+                width: 150,
+            },
+        ]);
+        spyOn(adapter, 'setColumns').and.callThrough();
+
+        dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 65 } }, 0);
+        tick();
+
+        expect(adapter.setColumns).toHaveBeenCalledWith([
+            { key: 'status', type: 'text', width: 65, isHidden: false },
+            { key: 'created', type: 'text', width: 150 }
+        ]);
+    }));
+
     it('should set the column header style on resizing', fakeAsync(() => {
         dataTable.onResizing({ rectangle: { top: 0, bottom: 10, left: 0, right: 20, width: 125 } }, 0);
         tick();
