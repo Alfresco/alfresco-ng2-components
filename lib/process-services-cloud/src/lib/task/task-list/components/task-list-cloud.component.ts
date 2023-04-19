@@ -24,7 +24,7 @@ import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../.
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { of } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../models/task-cloud.model';
@@ -161,8 +161,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     reload() {
         this.isLoading = true;
 
-        this.isColumnSchemaCreated$.pipe(
-            take(1),
+        this.columnsSchemaSubject$.pipe(
+            takeUntil(this.onDestroy$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),
             switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode))

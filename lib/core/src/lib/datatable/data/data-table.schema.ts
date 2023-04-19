@@ -43,7 +43,7 @@ export abstract class DataTableSchema<T = unknown> {
 
     private layoutPresets = {};
 
-    private columnsSchemaSubject$ = new ReplaySubject<boolean>();
+    columnsSchemaSubject$ = new ReplaySubject<boolean>();
     isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
     constructor(private appConfigService: AppConfigService,

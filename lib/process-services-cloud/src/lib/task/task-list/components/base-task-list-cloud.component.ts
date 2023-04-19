@@ -127,7 +127,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
-    private onDestroy$ = new Subject<boolean>();
+    onDestroy$ = new Subject<boolean>();
 
     constructor(appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
@@ -304,6 +304,8 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
         this.createColumns();
 
+        this.columnsSchemaSubject$.next(true);
+
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
                 this.appName,
@@ -311,8 +313,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
                 this.columnsVisibility
             );
         }
-
-        this.reload();
     }
 
     onColumnsWidthChanged(columns: DataColumn[]): void {
