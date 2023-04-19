@@ -21,7 +21,7 @@ import { CategoryNode } from '../models/category-node.interface';
 import { CategoryService } from './category.service';
 import { CategoryEntry, CategoryPaging } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
-import { map, mergeMap, tap, toArray } from 'rxjs/operators';
+import { map, mergeMap, toArray } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
@@ -30,7 +30,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
         super();
     }
 
-    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<any> {
+    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
         return !name ? this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
             const parentNode: CategoryNode = this.getParentNode(parentNodeId);
             const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => ({
@@ -77,19 +77,8 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
                     })
                 );
             }),
-                toArray());
-            // const treeResponse: TreeResponse<CategoryNode>;
-            // entries.subscribe(res => {
-            //    treeResponse = {entries: res, pagination: pagingResult.list.pagination}
-            // })
-            //
-            // const treeResponse: TreeResponse<CategoryNode> = {entries, pagination: pagingResult.list.pagination}
-            // return treeResponse;
-        })).pipe(
-            tap(res => {
-
-                console.log(res)
-            })
-        );
+                toArray(),
+                map(res =>  ({entries: res, pagination: pagingResult.list.pagination})));
+        }))
     }
 }

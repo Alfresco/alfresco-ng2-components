@@ -96,7 +96,7 @@ describe('CategoryTreeDatasourceService', () => {
                         parentId: 'parent id 1',
                         level: 0,
                         nodeType: TreeNodeType.RegularNode,
-                        hasChildren: false,
+                        hasChildren: true,
                         isLoading: false
                     }, {
                         id: 'some id 2',
@@ -104,7 +104,7 @@ describe('CategoryTreeDatasourceService', () => {
                         parentId: 'parent id 2',
                         level: 0,
                         nodeType: TreeNodeType.RegularNode,
-                        hasChildren: false,
+                        hasChildren: true,
                         isLoading: false
                     }]
                 });

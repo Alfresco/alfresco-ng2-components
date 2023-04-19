@@ -32,6 +32,16 @@ export class CategoryServiceMock {
         return parentNodeId ? of(this.getChildrenLevelResponse(skipCount, maxItems)) : of(this.getRootLevelResponse(skipCount, maxItems));
     }
 
+    public getCategory(): Observable<CategoryEntry> {
+        return of({
+            entry: {
+                name: 'some name',
+                id: 'some id',
+                hasChildren: true
+            }
+        });
+    }
+
     public searchCategories(): Observable<ResultSetPaging> {
         const result = new ResultSetPaging();
         result.list = new ResultSetPagingList();
