@@ -73,7 +73,15 @@
       "REMOVE": "Fjern",
       "DOWNLOAD": "Download"
     },
-    "LOADER_LABEL": "Dokumentlisteindlæser"
+    "LOADER_LABEL": "Dokumentlisteindlæser",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Indlæsning af forhåndsvisning reagerer ikke",
+      "LABEL": "Download for at få vist dette dokument, eller annullér for at fortsætte uden forhåndsvisning.",
+      "ACTIONS": {
+        "CANCEL": "Annuller",
+        "DOWNLOAD": "Download"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Vælg indhold der skal  vedhæftes fra '{{ name }}'",
     "COPY": "Kopiér",
     "COPY_ITEM": "Kopiér '{{ name }}' til...",
+    "LOCATION": "Placering",
     "MOVE": "Flyt",
     "MOVE_ITEM": "Flyt '{{ name }}' til...",
     "NO_RESULTS": "Der blev ikke fundet nogen resultater",
     "SEARCH": "Søg",
     "SEARCH_RESULTS": "Søgeresultater",
-    "SELECT_LOCATION": "Vælg placering",
+    "SELECT_LIBRARY": "Vælg et bibliotek",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke uploade en fil sideløbende med en søgning",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Bruger har ikke tilladelse til at uploade indhold til mappen",
     "REPOSITORY": "Opbevaringssted",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Tilføj tag"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Eksisterende tags:",
+      "EXISTING_TAGS_SELECTION": "Vælg et eksisterende tag:",
+      "NO_TAGS_CREATED": "Ingen tags oprettet",
+      "NO_EXISTING_TAGS": "Ingen eksisterende tags",
+      "TITLE": "Opret tags",
+      "CREATE_TAG": "Opret: {{tag}}",
+      "NAME": "Navn",
+      "ERRORS": {
+        "EXISTING_TAG": "Denne tag findes allerede",
+        "ALREADY_ADDED_TAG": "Tag er allerede tilføjet",
+        "EMPTY_TAG": "Tag-navn kan ikke kun indeholde mellemrum",
+        "REQUIRED": "Tag-navn er påkrævet",
+        "FETCH_TAGS": "Fejl under hentning af tags",
+        "CREATE_TAGS": "Fejl, mens tags oprettes"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Slet tag",
+        "HIDE_INPUT": "Skjul input"
+      },
+      "TAGS_LOADING": "Indlæsning af tags",
+      "CREATE_TAGS_SUCCESS": "Tags oprettet"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorier",
+    "NO_CATEGORIES_CREATED": "Ingen kategorier oprettet",
+    "NO_CATEGORIES_ASSIGNED": "Ingen kategorier tildelt",
+    "ASSIGN_CATEGORIES": "Tildel kategorier",
+    "UNASSIGN_CATEGORY": "Fjern tildeling af kategori",
+    "DELETE_CATEGORY": "Slet kategori",
+    "EXISTING_CATEGORIES": "Eksisterende kategorier",
+    "GENERIC_CREATE": "Opret: {{name}}",
+    "NAME": "Kategorinavn",
+    "LOADING": "Indlæser",
+    "HIDE_INPUT": "Skjul input",
+    "ERRORS": {
+      "NOT_FOUND": "Kategorier ikke fundet",
+      "REQUIRED": "Kategorinavn er påkrævet",
+      "EMPTY_CATEGORY": "Kategorinavn kan ikke indeholde kun mellemrum",
+      "ALREADY_EXISTS": "Kategorien findes allerede",
+      "ALREADY_ADDED_CATEGORY": "Kategorien er allerede tilføjet",
+      "CREATE_CATEGORIES": "Fejl, mens kategorier oprettes",
+      "EXISTING_CATEGORIES": "Nogle kategorier findes allerede"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -227,7 +281,7 @@
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultater fundet for {{searchTerm}}",
       "NONE": "Der blev ikke fundet nogen resultater for {{searchTerm}}",
-      "ERROR": "Der er opstået et problem under søgningen – prøv igen.",
+      "ERROR": "Vi stødte på et problem under søgningen – prøv igen.",
       "COLUMNS": {
         "NAME": "Visningsnavn",
         "MODIFIED_BY": "Ændret af",
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Oprettelsesdato",
       "MODIFIER": "Ændret af",
       "MODIFIED_DATE": "Ændringsdato",
-      "CONTENT_TYPE": "Indholdstype"
+      "CONTENT_TYPE": "Indholdstype",
+      "TAGS": "Tags",
+      "ADD_TAG_TOOLTIP": "Tilføj tag"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -501,7 +557,7 @@
       "SITE_TITLE_EXISTS": "Biblioteksnavnet er allerede i brug"
     },
     "ERRORS": {
-      "GENERIC": "Der er opstået et problem",
+      "GENERIC": "Der opstod et problem",
       "EXISTENT_SITE": "Dette biblioteks-id er ikke tilgængeligt. Prøv et andet biblioteks-id.",
       "CONFLICT": "Dette biblioteks-id er allerede i brug. Se eventuelt papirkurven.",
       "ID_TOO_LONG": "URL-navnet må ikke være på mere end 72 tegn",

@@ -384,8 +384,8 @@
     "RETRIEVE_METADATA": "自动填充表单"
   },
   "ADF_CLOUD_TASK_ASSIGNMENT_FILTER": {
-    "ASSIGNED_TO": "分配给",
-    "CURRENT_USER": "分配给我",
+    "ASSIGNED_TO": "被指派给",
+    "CURRENT_USER": "被指派给我",
     "UNASSIGNED": "未指派",
     "NONE": "无",
     "CANDIDATE_GROUPS": "候选组列表",

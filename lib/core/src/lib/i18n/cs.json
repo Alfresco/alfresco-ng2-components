@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "„{{ name }}“ nebylo možné odstranit",
       "ERROR_PLURAL": "Některé položky ({{ number }}) nebylo možné odstranit"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Typ ověřování",
+      "BASIC": "Základní ověřování",
+      "SSO": "Jednotné přihlášení",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Poskytovatel",
+      "REQUIRED": "Toto pole je povinné",
+      "CS_URL_ERROR": "Adresa Content Services neodpovídá formátu adresy URL",
+      "PS_URL_ERROR": "Adresa Process Services neodpovídá formátu adresy URL",
+      "TITLE": "Nastavení",
+      "CS-HOST": "Adresa URL pro Content Services",
+      "BP-HOST": "Adresa URL pro Process Services",
+      "BACK": "Zpět",
+      "APPLY": "Použít",
+      "NOT_VALID": "http(s)://host|ip:port(/path) nelze rozeznat. Použijte jinou adresu URL.",
+      "REDIRECT": "URI pro přesměrování",
+      "REDIRECT_LOGOUT": "URI pro přesměrování (odhlášení)",
+      "SILENT": "Přihlášení na pozadí",
+      "SCOPE": "Rozsah",
+      "CLIENT": "ID klienta",
+      "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí",
+      "SECRET": "Tajné"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Přidat nové",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Aktivovat režim celé obrazovky",
       "CLOSE": "Zavřít",
       "NEXT_FILE": "Další soubor",
-      "PREV_FILE": "Předchozí soubor"
+      "PREV_FILE": "Předchozí soubor",
+      "WAIT": "Čekat"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Předchozí stránka",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Heslo",
       "ERROR": "Heslo je chybné"
     },
-    "SUBTITLES": "Titulky"
+    "SUBTITLES": "Titulky",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Načítání náhledu se zpozdilo",
+      "LABEL": "Pokud chcete počkat, pokračujte, nebo si stáhněte dokument."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

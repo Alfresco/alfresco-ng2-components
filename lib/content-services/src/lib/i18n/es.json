@@ -25,7 +25,8 @@
   },
   "ADF-NEW-VERSION-UPLOADER": {
     "DIALOG_LIST": {
-      "TITLE": "Gestionar versiones"
+      "TITLE": "Gestionar versiones",
+      "CLOSE": "Cerrar"
     },
     "DIALOG_UPLOAD": {
       "TITLE": "Cargar nueva versión",
@@ -72,7 +73,15 @@
       "REMOVE": "Eliminar",
       "DOWNLOAD": "Descargar"
     },
-    "LOADER_LABEL": "Cargador de lista de documentos"
+    "LOADER_LABEL": "Cargador de lista de documentos",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "La vista previa de carga no responde",
+      "LABEL": "Descargar para ver este documento o cancelar para continuar sin vista previa.",
+      "ACTIONS": {
+        "CANCEL": "Cancelar",
+        "DOWNLOAD": "Descargar"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -93,12 +102,13 @@
     "CHOOSE_ITEM": "Seleccione el contenido que adjuntar de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' a...",
+    "LOCATION": "Ubicación",
     "MOVE": "Mover",
     "MOVE_ITEM": "Mover '{{ name }}' a...",
     "NO_RESULTS": "Ningún resultado encontrado",
     "SEARCH": "Buscar",
     "SEARCH_RESULTS": "Resultados de la búsqueda",
-    "SELECT_LOCATION": "Seleccionar ubicación",
+    "SELECT_LIBRARY": "Seleccionar una biblioteca",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "No puede cargar un fichero mientras se está realizando una búsqueda",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "El usuario no tiene permiso para cargar contenido en la carpeta",
     "REPOSITORY": "Repositorio",
@@ -130,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Añadir etiqueta"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Etiquetas existentes:",
+      "EXISTING_TAGS_SELECTION": "Seleccionar una etiqueta existente:",
+      "NO_TAGS_CREATED": "No se ha creado ninguna etiqueta",
+      "NO_EXISTING_TAGS": "No hay tarjetas existentes",
+      "TITLE": "Crear etiquetas",
+      "CREATE_TAG": "Crear: {{tag}}",
+      "NAME": "Nombre",
+      "ERRORS": {
+        "EXISTING_TAG": "Ya existe esta etiqueta",
+        "ALREADY_ADDED_TAG": "La etiqueta ya está añadida",
+        "EMPTY_TAG": "El nombre de la etiqueta no puede contener solo espacios",
+        "REQUIRED": "Se requiere un nombre de etiqueta",
+        "FETCH_TAGS": "Error al recuperar las etiquetas",
+        "CREATE_TAGS": "Error al crear las etiquetas"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Eliminar etiqueta",
+        "HIDE_INPUT": "Ocultar entrada"
+      },
+      "TAGS_LOADING": "Etiquetas cargando",
+      "CREATE_TAGS_SUCCESS": "Se han creado las etiquetas correctamente"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categorías",
+    "NO_CATEGORIES_CREATED": "No se ha creado ninguna categoría",
+    "NO_CATEGORIES_ASSIGNED": "No se ha asignado ninguna categoría",
+    "ASSIGN_CATEGORIES": "Asignar categorías",
+    "UNASSIGN_CATEGORY": "Desasignar categoría",
+    "DELETE_CATEGORY": "Eliminar categoría",
+    "EXISTING_CATEGORIES": "Categorías existentes",
+    "GENERIC_CREATE": "Crear: {{name}}",
+    "NAME": "Nombre de categoría",
+    "LOADING": "Cargando",
+    "HIDE_INPUT": "Ocultar entrada",
+    "ERRORS": {
+      "NOT_FOUND": "Categorías no encontradas",
+      "REQUIRED": "Se requiere un nombre de categoría",
+      "EMPTY_CATEGORY": "El nombre de la categoría no puede tener solo espacios",
+      "ALREADY_EXISTS": "La categoría ya existe",
+      "ALREADY_ADDED_CATEGORY": "La categoría ya está añadida",
+      "CREATE_CATEGORIES": "Error al crear las categorías",
+      "EXISTING_CATEGORIES": "Algunas de las categorías ya existen"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -228,7 +283,7 @@
       "NONE": "No se han encontrado resultados para {{searchTerm}}",
       "ERROR": "Se ha surgido un problema durante la búsqueda; vuelva a intentarlo.",
       "COLUMNS": {
-        "NAME": "Nombre a mostrar",
+        "NAME": "Mostrar nombre",
         "MODIFIED_BY": "Modificado por",
         "MODIFIED_AT": "Modificado a las"
       }
@@ -244,6 +299,7 @@
       },
       "BUTTONS": {
         "CLOSE": "Cerrar",
+        "CLEAR": "Borrar",
         "REMOVE": "Eliminar",
         "APPLY": "Aplicar",
         "CLEAR-ALL": {
@@ -259,7 +315,9 @@
         "FROM": "De",
         "TO": "A",
         "FROM-DATE": "De",
-        "TO-DATE": "A"
+        "TO-DATE": "A",
+        "SELECT-FROM-DATE": "Seleccionar desde la fecha",
+        "SELECT-TO-DATE": "Seleccionar hasta la fecha"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Valor requerido",
@@ -289,7 +347,7 @@
     },
     "DOCUMENT_LIST": {
       "COLUMNS": {
-        "DISPLAY_NAME": "Nombre a mostrar",
+        "DISPLAY_NAME": "Mostrar nombre",
         "CREATED_BY": "Creado por",
         "CREATED_ON": "Creado"
       },
@@ -354,7 +412,9 @@
       "CREATED_DATE": "Fecha de creación",
       "MODIFIER": "Modificador",
       "MODIFIED_DATE": "Fecha de modificación",
-      "CONTENT_TYPE": "Tipo de contenido"
+      "CONTENT_TYPE": "Tipo de contenido",
+      "TAGS": "Etiquetas",
+      "ADD_TAG_TOOLTIP": "Añadir etiqueta"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -424,13 +484,13 @@
     "LABELS": {
       "HIDE": "Ocultar",
       "SHOW": "Mostrar",
-      "ON": "Activado",
-      "OFF": "Desactivado",
+      "ON": "habilitado",
+      "OFF": "deshabilitado",
       "DIRECT-PERMISSIONS": "Permiso aplicado directamente",
       "INHERITED-PERMISSIONS": "Permiso heredado",
       "INHERITED-SUBTITLE": "{{count}} usuarios o grupos están heredando el permiso de una carpeta principal",
       "SELECT-ROLE": "Seleccionar función",
-      "INHERITED_PERMISSION_TOGGLE": "Alternar el permiso heredado"
+      "INHERITED_PERMISSION_TOGGLE": "Cambiar el permiso heredado"
     },
     "MESSAGE": {
       "EMPTY-PERMISSION": "Sin usuarios/grupos",
@@ -446,7 +506,7 @@
       "PERMISSION-ADD-FAIL": "Error al añadir usuario/grupo",
       "INHERIT-ENABLE-SUCCESS": "Permiso heredado habilitado",
       "INHERIT-DISABLE-SUCCESS": "Permiso heredado inhabilitado",
-      "TOGGLE-PERMISSION-FAILED": "Error al alternar permiso heredado"
+      "TOGGLE-PERMISSION-FAILED": "Error al cambiar permiso heredado"
     },
     "ACTION": {
       "DELETE": "Eliminar",
@@ -461,8 +521,11 @@
   "ADF-TREE-VIEW": {
     "MISSING-ID": "No se ha especificado un ID de nodo.",
     "ACCESSIBILITY": {
-      "ARIA_LABEL": "Alternar {{ name }}"
+      "ARIA_LABEL": "Cambiar {{ name }}"
     }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Cargar más {{ name }}"
   },
   "LIBRARY": {
     "DIALOG": {
@@ -537,6 +600,9 @@
   },
   "NODE_COUNTER": {
     "SELECTED_COUNT": "{{ count }} seleccionado(s)"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "Ver {{ count }} más"
   },
   "swsdp": "Ejemplo: Proyecto de diseño de sitio web"
 }

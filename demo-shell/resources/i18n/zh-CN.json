@@ -4,7 +4,7 @@
       "TYPE-AUTH": "身份验证类型",
       "BASIC": "基本身份验证",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "隐式流",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "提供程序",
       "REQUIRED": "此字段为必填字段",
       "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",

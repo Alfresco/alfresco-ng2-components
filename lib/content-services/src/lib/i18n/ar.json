@@ -73,7 +73,15 @@
       "REMOVE": "إزالة",
       "DOWNLOAD": "تنزيل"
     },
-    "LOADER_LABEL": "محمل قائمة المستندات"
+    "LOADER_LABEL": "محمل قائمة المستندات",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "معاينة التحميل لا تستجيب",
+      "LABEL": "قم بالتنزيل لعرض هذا المستند ، أو إلغاء للمتابعة بدون معاينة.",
+      "ACTIONS": {
+        "CANCEL": "إلغاء",
+        "DOWNLOAD": "تنزيل"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "حدد محتوى لإرفاقه من '{{ name }}'",
     "COPY": "نسخ",
     "COPY_ITEM": "نسخ '{{ name }}' إلى...",
+    "LOCATION": "مكان",
     "MOVE": "نقل",
     "MOVE_ITEM": "نقل '{{ name }}' إلى...",
     "NO_RESULTS": "لم يتم العثور على نتائج",
     "SEARCH": "بحث",
     "SEARCH_RESULTS": "نتائج البحث",
-    "SELECT_LOCATION": "حدد المكان",
+    "SELECT_LIBRARY": "حدد مكتبة",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "لا يمكنك تحميل ملف أثناء تشغيل بحث",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "لا يملك المستخدم إذنًا لتحميل المحتوى إلى المجلد",
     "REPOSITORY": "مخزن",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "إضافة علامة"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "العلامات الموجودة:",
+      "EXISTING_TAGS_SELECTION": "حدد علامة موجودة:",
+      "NO_TAGS_CREATED": "لم يتم إنشاء أي علامات",
+      "NO_EXISTING_TAGS": "ليس هناك علامات موجودة",
+      "TITLE": "إنشاء العلامات",
+      "CREATE_TAG": "إنشاء: {{tag}}",
+      "NAME": "الاسم",
+      "ERRORS": {
+        "EXISTING_TAG": "العلامة موجودة بالفعل",
+        "ALREADY_ADDED_TAG": "تمت إضافة العلامة بالفعل",
+        "EMPTY_TAG": "لا يمكن أن يحتوي اسم العلامة على مسافات فقط",
+        "REQUIRED": "اسم العلامة مطلوب",
+        "FETCH_TAGS": "خطأ أثناء إحضار العلامات",
+        "CREATE_TAGS": "خطأ أثناء إنشاء العلامات"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "حذف العلامة",
+        "HIDE_INPUT": "إخفاء الإدخال"
+      },
+      "TAGS_LOADING": "تحميل العلامات",
+      "CREATE_TAGS_SUCCESS": "تم إنشاء العلامات بنجاح"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "فئات",
+    "NO_CATEGORIES_CREATED": "لم يتم إنشاء فئات",
+    "NO_CATEGORIES_ASSIGNED": "لم يتم تعيين فئات",
+    "ASSIGN_CATEGORIES": "تعيين الفئات",
+    "UNASSIGN_CATEGORY": "إلغاء تعيين الفئة",
+    "DELETE_CATEGORY": "حذف الفئة",
+    "EXISTING_CATEGORIES": "الفئات الموجودة",
+    "GENERIC_CREATE": "إنشاء: {{name}}",
+    "NAME": "اسم التصنيف",
+    "LOADING": "تحميل",
+    "HIDE_INPUT": "إخفاء الإدخال",
+    "ERRORS": {
+      "NOT_FOUND": "لم يتم العثور على الفئات",
+      "REQUIRED": "مطلوب اسم الفئة",
+      "EMPTY_CATEGORY": "لا يمكن أن يحتوي اسم الفئة على مسافات فقط",
+      "ALREADY_EXISTS": "الفئة موجودة بالفعل",
+      "ALREADY_ADDED_CATEGORY": "تمت إضافة الفئة بالفعل",
+      "CREATE_CATEGORIES": "خطأ أثناء إنشاء الفئات",
+      "EXISTING_CATEGORIES": "بعض الفئات موجودة بالفعل"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "تاريخ الإنشاء",
       "MODIFIER": "المعدل",
       "MODIFIED_DATE": "تاريخ التعديل",
-      "CONTENT_TYPE": "نوع المحتوى"
+      "CONTENT_TYPE": "نوع المحتوى",
+      "TAGS": "علامات",
+      "ADD_TAG_TOOLTIP": "إضافة علامة"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

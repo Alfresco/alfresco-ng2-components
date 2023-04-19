@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Authentifizierungstyp",
       "BASIC": "Basisauthentifizierung",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Impliziter Fluss",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Provider",
       "REQUIRED": "Dieses Feld ist erforderlich",
       "CS_URL_ERROR": "Content Services-Adresse nicht im richtigen URL-Format",

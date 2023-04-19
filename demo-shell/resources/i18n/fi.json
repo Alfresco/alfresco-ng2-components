@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Todennustyyppi",
       "BASIC": "Perustodennus",
       "SSO": "Kertakirjautuminen",
-      "IMPLICIT-FLOW": "Epäsuora kulku",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Palvelu",
       "REQUIRED": "Tämä kenttä on pakollinen",
       "CS_URL_ERROR": "Content Services -osoite ei täsmää URL-muodon kanssa",

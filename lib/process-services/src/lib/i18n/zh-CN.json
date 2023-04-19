@@ -218,7 +218,7 @@
         "START_FORM": "启动表单",
         "TASKS_ACTIVE": "活动的任务",
         "TASKS_COMPLETED": "完成的任务",
-        "TASK_SUBTITLE": "分配给 {{user}}，已创建 {{created}}",
+        "TASK_SUBTITLE": "被指派给 {{user}}，已创建 {{created}}",
         "REFRESH": "刷新"
       },
       "BUTTON": {
@@ -295,7 +295,7 @@
         "START": "无法启动新流程实例，请确定您是否有访问权限。",
         "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符",
         "SPACE_VALIDATOR": "不能以空格开头或结尾。",
-        "PROCESS_NAME_REQUIRED": "流程名称为必填项。"
+        "PROCESS_NAME_REQUIRED": "流程名称是必需的。"
       }
     },
     "PROCESS-ATTACHMENT": {

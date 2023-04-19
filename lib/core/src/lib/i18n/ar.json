@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "تعذر حذف {{ name }}",
       "ERROR_PLURAL": "تعذر حذف {{ number }} من العناصر"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "نوع المصادقة",
+      "BASIC": "مصادقة أساسية",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "موفر",
+      "REQUIRED": "هذا الحقل مطلوب",
+      "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",
+      "PS_URL_ERROR": "لا يتطابق عنوان Process Services مع تنسيق URL",
+      "TITLE": "الإعدادات",
+      "CS-HOST": "عنوان URL لـ Content Services",
+      "BP-HOST": "عنوان URL لـ Process Services",
+      "BACK": "عودة",
+      "APPLY": "تطبيق",
+      "NOT_VALID": "لم يتم التعرف على http(s)://host|ip:port(/path)، جرّب عنوان URL مختلفًا.",
+      "REDIRECT": "إعادة توجيه URI",
+      "REDIRECT_LOGOUT": "إعادة توجيه خروج URI",
+      "SILENT": "دخول صامت",
+      "SCOPE": "نطاق",
+      "CLIENT": "معرف العميل",
+      "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت",
+      "SECRET": "سر"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "إضافة جديد",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "تنشيط وضع ملء الشاشة",
       "CLOSE": "إغلاق",
       "NEXT_FILE": "الملف التالي",
-      "PREV_FILE": "الملف السابق"
+      "PREV_FILE": "الملف السابق",
+      "WAIT": "انتظر"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "الصفحة السابقة",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "كلمة سر",
       "ERROR": "كلمة السر خطأ"
     },
-    "SUBTITLES": "العناوين الفرعية"
+    "SUBTITLES": "العناوين الفرعية",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "تأخرت معاينة التحميل",
+      "LABEL": "يمكنك الاستمرار في الانتظار أو تنزيل المستند."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

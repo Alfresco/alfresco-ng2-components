@@ -73,7 +73,15 @@
       "REMOVE": "Rimuovi",
       "DOWNLOAD": "Scarica"
     },
-    "LOADER_LABEL": "Caricatore elenco documenti"
+    "LOADER_LABEL": "Caricatore elenco documenti",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Il processo di caricamento dell'anteprima non risponde",
+      "LABEL": "Scaricare per visualizzare il documento o annullare per continuare senza anteprima.",
+      "ACTIONS": {
+        "CANCEL": "Annulla",
+        "DOWNLOAD": "Scarica"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\"",
     "COPY": "Copia",
     "COPY_ITEM": "Copia '{{ name }}' in...",
+    "LOCATION": "Posizione",
     "MOVE": "Sposta",
     "MOVE_ITEM": "Sposta '{{ name }}' in...",
     "NO_RESULTS": "Nessun risultato trovato",
     "SEARCH": "Cerca",
     "SEARCH_RESULTS": "Risultati della ricerca",
-    "SELECT_LOCATION": "Seleziona località",
+    "SELECT_LIBRARY": "Seleziona una libreria",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Impossibile caricare un file mentre è ancora in esecuzione una ricerca",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "L'utente non dispone dell'autorizzazione per caricare il contenuto nella cartella",
     "REPOSITORY": "Repository",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Aggiungi tag"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Tag esistenti:",
+      "EXISTING_TAGS_SELECTION": "Selezionare un tag esistente:",
+      "NO_TAGS_CREATED": "Nessun tag creato",
+      "NO_EXISTING_TAGS": "Nessun tag esistente",
+      "TITLE": "Crea tag",
+      "CREATE_TAG": "Creare: {{tag}}",
+      "NAME": "Nome",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag già presente",
+        "ALREADY_ADDED_TAG": "Il tag è già stato aggiunto",
+        "EMPTY_TAG": "Il nome del tag non può contenere solo spazi",
+        "REQUIRED": "Il nome del tag è obbligatorio",
+        "FETCH_TAGS": "Errore durante il recupero dei tag",
+        "CREATE_TAGS": "Errore durante la creazione dei tag"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Elimina tag",
+        "HIDE_INPUT": "Nascondi input"
+      },
+      "TAGS_LOADING": "Caricamento dei tag in corso",
+      "CREATE_TAGS_SUCCESS": "Tag creati correttamente"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categorie",
+    "NO_CATEGORIES_CREATED": "Nessuna categoria creata",
+    "NO_CATEGORIES_ASSIGNED": "Nessuna categoria assegnata",
+    "ASSIGN_CATEGORIES": "Assegna categorie",
+    "UNASSIGN_CATEGORY": "Annulla assegnazione categoria",
+    "DELETE_CATEGORY": "Elimina categoria",
+    "EXISTING_CATEGORIES": "Categorie esistenti",
+    "GENERIC_CREATE": "Creare: {{name}}",
+    "NAME": "Nome categoria",
+    "LOADING": "Caricamento in corso",
+    "HIDE_INPUT": "Nascondi input",
+    "ERRORS": {
+      "NOT_FOUND": "Categorie non trovate",
+      "REQUIRED": "Il nome della categoria è obbligatorio",
+      "EMPTY_CATEGORY": "Il nome della categoria non può contenere solo spazi",
+      "ALREADY_EXISTS": "La categoria esiste già",
+      "ALREADY_ADDED_CATEGORY": "La categoria è già stata aggiunta",
+      "CREATE_CATEGORIES": "Errore durante la creazione delle categorie",
+      "EXISTING_CATEGORIES": "Alcune categorie esistono già"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Data di creazione",
       "MODIFIER": "Modificatore",
       "MODIFIED_DATE": "Data di modifica",
-      "CONTENT_TYPE": "Tipo di contenuto"
+      "CONTENT_TYPE": "Tipo di contenuto",
+      "TAGS": "Tag",
+      "ADD_TAG_TOOLTIP": "Aggiungi tag"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

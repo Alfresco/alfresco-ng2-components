@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Verificatietype",
       "BASIC": "Basisverificatie",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Impliciete stroom",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Provider",
       "REQUIRED": "Dit veld is vereist",
       "CS_URL_ERROR": "Content Services-adres komt niet overeen met de URL-indeling",

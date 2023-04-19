@@ -7,7 +7,7 @@
     "START-DATE": "開始日",
     "END-DATE": "終了日",
     "MESSAGES": {
-      "START-DATE-REQUIRED": "開始日を指定してください",
+      "START-DATE-REQUIRED": "開始日は必須です",
       "START-LESS-THAN-END-DATE": "開始日は終了日より前の日付でなければなりません"
     }
   },
@@ -295,7 +295,7 @@
         "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
         "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
         "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。",
-        "PROCESS_NAME_REQUIRED": "プロセス名を指定してください。"
+        "PROCESS_NAME_REQUIRED": "プロセス名は必須です。"
       }
     },
     "PROCESS-ATTACHMENT": {

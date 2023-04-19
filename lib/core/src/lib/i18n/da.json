@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "{{ name }} kunne ikke slettes",
       "ERROR_PLURAL": "{{ number }} elementer kunne ikke slettes"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Godkendelsestype",
+      "BASIC": "Grundlæggende godkendelse",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Udbyder",
+      "REQUIRED": "Dette felt er påkrævet",
+      "CS_URL_ERROR": "Content Services-adressen matcher ikke URL-formatet",
+      "PS_URL_ERROR": "Process Services-adressen matcher ikke URL-adresseformatet",
+      "TITLE": "Indstillinger",
+      "CS-HOST": "Content Services-URL",
+      "BP-HOST": "Process Services-URL",
+      "BACK": "Tilbage",
+      "APPLY": "Anvend",
+      "NOT_VALID": "http(s)://vært|ip-adresse:port(/sti) blev ikke genkendt. Prøv en anden URL-adresse.",
+      "REDIRECT": "URI til omdirigering",
+      "REDIRECT_LOGOUT": "Omdiriger URI til aflogning",
+      "SILENT": "Uovervåget login",
+      "SCOPE": "Omfang",
+      "CLIENT": "Klient-id",
+      "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser",
+      "SECRET": "Hemmelig"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Tilføj ny(t)",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Aktivér fuld skærm",
       "CLOSE": "Luk",
       "NEXT_FILE": "Næste fil",
-      "PREV_FILE": "Forrige fil"
+      "PREV_FILE": "Forrige fil",
+      "WAIT": "Vent"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Forrige side",
@@ -405,11 +430,15 @@
       "PLACEHOLDER": "Adgangskode",
       "ERROR": "Adgangskoden er forkert"
     },
-    "SUBTITLES": "Undertekster"
+    "SUBTITLES": "Undertekster",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Indlæsning af forhåndsvisning forsinket",
+      "LABEL": "Du kan fortsætte med at vente eller downloade dokumentet."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Der er opstået et problem.",
+      "TITLE": "Der opstod et problem",
       "DESCRIPTION": "Det ser ud til, at noget gik forkert.",
       "SECONDARY_BUTTON": {
         "TEXT": ""

@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "Не удалось удалить {{ name }}",
       "ERROR_PLURAL": "Не удалось удалить элементов: {{ number }}"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Тип авторизации",
+      "BASIC": "Базовая авторизация",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Поставщик",
+      "REQUIRED": "Поле обязательно для заполнения",
+      "CS_URL_ERROR": "Адрес Content Services не соответствует формату URL",
+      "PS_URL_ERROR": "Адрес Process Services не соответствует формату URL",
+      "TITLE": "Параметры",
+      "CS-HOST": "URL-адрес Content Services",
+      "BP-HOST": "URL-адрес Process Services",
+      "BACK": "Назад",
+      "APPLY": "Применить",
+      "NOT_VALID": "http(s)://host|ip:port(/path) не распознан, используйте другой URL-адрес.",
+      "REDIRECT": "URI перенаправления",
+      "REDIRECT_LOGOUT": "Выход URI перенаправления",
+      "SILENT": "Автоматический вход",
+      "SCOPE": "Область применения",
+      "CLIENT": "Идентификатор клиента",
+      "PUBLIC_URLS": "Общедоступные URL-адреса с автоматическим входом",
+      "SECRET": "Секретный"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Добавить",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Включить полноэкранный режим",
       "CLOSE": "Закрыть",
       "NEXT_FILE": "Следующий файл",
-      "PREV_FILE": "Предыдущий файл"
+      "PREV_FILE": "Предыдущий файл",
+      "WAIT": "Подождать"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Предыдущая страница",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Пароль",
       "ERROR": "Неверный пароль"
     },
-    "SUBTITLES": "Субтитры"
+    "SUBTITLES": "Субтитры",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Загрузка предварительного просмотра задерживается",
+      "LABEL": "Вы можете еще подождать или скачать документ."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

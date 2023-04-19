@@ -57,7 +57,7 @@
         "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
         "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
       },
-      "FILE_ALREADY_UPLOADED": "同じ名前のファイルが既にアップロードされています。",
+      "FILE_ALREADY_UPLOADED": "同じ名前のファイルがすでにアップロードされています。",
       "ATTACH": "添付"
     },
     "FORM_RENDERER": {
@@ -124,7 +124,7 @@
       "FOLDER_NAME": {
         "LABEL": "名前",
         "ERRORS": {
-          "REQUIRED": "フォルダ名を指定してください",
+          "REQUIRED": "フォルダ名は必須です",
           "SPECIAL_CHARACTERS": "フォルダ名に次の文字を含めることはできません。 * \" < > \\ / ? : |",
           "ENDING_DOT": "フォルダ名の最後にピリオド (。) を付けることはできません 。",
           "ONLY_SPACES": "フォルダ名をスペースだけにすることはできません"
@@ -149,13 +149,13 @@
     "MESSAGES": {
       "ERRORS": {
         "GENERIC": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
-        "EXISTENT_FOLDER": "この名前のフォルダは既に存在します。別の名前を使用してください。"
+        "EXISTENT_FOLDER": "この名前のフォルダはすでに存在します。別の名前を使用してください。"
       }
     },
     "RESTORE_NODE": {
       "VIEW": "表示",
       "PARTIAL_PLURAL": "{{ number }} 件のアイテムが復元されませんでした。復元先の場所に問題があります。",
-      "NODE_EXISTS": "復元できません。''{{ name }}'' アイテムは既に存在します",
+      "NODE_EXISTS": "復元できません。''{{ name }}'' 項目はすでに存在します",
       "LOCATION_MISSING": "''{{ name }}'' アイテムを復元できません。アイテムの元の場所が削除されています",
       "GENERIC": "''{{ name }}'' アイテムの復元中に問題が発生しました",
       "PLURAL": "正常に復元されました",
@@ -168,6 +168,30 @@
       "PARTIAL_PLURAL": "{{ success }} 件のアイテムを削除しましたが、{{ failed }} 件は削除できませんでした",
       "ERROR_SINGULAR": "{{ name }} を削除できませんでした",
       "ERROR_PLURAL": "{{ number }} 件のアイテムを削除できませんでした"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "認証タイプ",
+      "BASIC": "基本認証",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "プロバイダ",
+      "REQUIRED": "このフィールドは必須です",
+      "CS_URL_ERROR": "Content Services のアドレスが URL 形式と一致しません",
+      "PS_URL_ERROR": "Process Services のアドレスが URL 形式と一致しません",
+      "TITLE": "設定",
+      "CS-HOST": "Content Services の URL",
+      "BP-HOST": "Process Services の URL",
+      "BACK": "戻る",
+      "APPLY": "適用",
+      "NOT_VALID": "http(s)://host|ip:port(/path) が認識されません。別の URL を指定してください。",
+      "REDIRECT": "リダイレクト URI",
+      "REDIRECT_LOGOUT": "リダイレクト URI のログアウト",
+      "SILENT": "サイレントログイン",
+      "SCOPE": "範囲",
+      "CLIENT": "クライアント ID",
+      "PUBLIC_URLS": "サイレントログインのパブリック URL",
+      "SECRET": "シークレット"
     },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
@@ -367,7 +391,8 @@
       "FULLSCREEN": "全画面表示モードをアクティブにする",
       "CLOSE": "閉じる",
       "NEXT_FILE": "次のファイル",
-      "PREV_FILE": "前のファイル"
+      "PREV_FILE": "前のファイル",
+      "WAIT": "待機"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "前のページ",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "パスワード",
       "ERROR": "パスワードが間違っています"
     },
-    "SUBTITLES": "字幕"
+    "SUBTITLES": "字幕",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "プレビュー読み込みの遅延",
+      "LABEL": "そのまま待機するか、ドキュメントをダウンロードできます。"
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

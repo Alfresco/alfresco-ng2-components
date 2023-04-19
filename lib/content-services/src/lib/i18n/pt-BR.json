@@ -73,7 +73,15 @@
       "REMOVE": "Remover",
       "DOWNLOAD": "Baixar"
     },
-    "LOADER_LABEL": "Carregador de lista de documentos"
+    "LOADER_LABEL": "Carregador de lista de documentos",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Carregamento de visualização sem resposta",
+      "LABEL": "Baixar para visualizar este documento, ou cancelar para continuar sem a visualização.",
+      "ACTIONS": {
+        "CANCEL": "Cancelar",
+        "DOWNLOAD": "Baixar"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Selecionar conteúdo para anexar a partir de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' para...",
+    "LOCATION": "Localização",
     "MOVE": "Mover",
     "MOVE_ITEM": "Mover '{{ name }}' para...",
     "NO_RESULTS": "Nenhum resultado encontrado",
     "SEARCH": "Pesquisar",
     "SEARCH_RESULTS": "Resultados da pesquisa",
-    "SELECT_LOCATION": "Selecionar localização",
+    "SELECT_LIBRARY": "Selecione uma biblioteca",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Não é possível carregar um arquivo enquanto uma pesquisa está em execução",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "O usuário não tem permissão para carregar conteúdo na pasta",
     "REPOSITORY": "Repositório",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Adicionar marca"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Marcas existentes:",
+      "EXISTING_TAGS_SELECTION": "Selecione uma marca existente:",
+      "NO_TAGS_CREATED": "Nenhuma marca criada",
+      "NO_EXISTING_TAGS": "Nenhuma marca existente",
+      "TITLE": "Criar marcas",
+      "CREATE_TAG": "Criar: {{tag}}",
+      "NAME": "Nome",
+      "ERRORS": {
+        "EXISTING_TAG": "A marca já existe",
+        "ALREADY_ADDED_TAG": "A marca já está adicionada",
+        "EMPTY_TAG": "O nome da marca não pode conter apenas espaços",
+        "REQUIRED": "O nome é necessário",
+        "FETCH_TAGS": "Erro ao buscar as marcas",
+        "CREATE_TAGS": "Erro ao criar as marcas"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Excluir marca",
+        "HIDE_INPUT": "Ocultar entrada"
+      },
+      "TAGS_LOADING": "Carregando marcas",
+      "CREATE_TAGS_SUCCESS": "Marcas criadas com êxito"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categorias",
+    "NO_CATEGORIES_CREATED": "Nenhuma categoria criada",
+    "NO_CATEGORIES_ASSIGNED": "Nenhuma categoria atribuída",
+    "ASSIGN_CATEGORIES": "Atribuir categorias",
+    "UNASSIGN_CATEGORY": "Cancelar atribuição de categoria",
+    "DELETE_CATEGORY": "Excluir categoria",
+    "EXISTING_CATEGORIES": "Categorias existentes",
+    "GENERIC_CREATE": "Criar: {{name}}",
+    "NAME": "Nome da categoria",
+    "LOADING": "Carregando",
+    "HIDE_INPUT": "Ocultar entrada",
+    "ERRORS": {
+      "NOT_FOUND": "Categorias não encontradas",
+      "REQUIRED": "O nome da categoria é necessário",
+      "EMPTY_CATEGORY": "O nome da categoria não pode conter somente espaços",
+      "ALREADY_EXISTS": "A categoria já existe",
+      "ALREADY_ADDED_CATEGORY": "A categoria já está adicionada",
+      "CREATE_CATEGORIES": "Erro ao criar categorias",
+      "EXISTING_CATEGORIES": "Algumas categorias já existem"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Data de criação",
       "MODIFIER": "Modificador",
       "MODIFIED_DATE": "Data de modificação",
-      "CONTENT_TYPE": "Tipo de conteúdo"
+      "CONTENT_TYPE": "Tipo de conteúdo",
+      "TAGS": "Marcas",
+      "ADD_TAG_TOOLTIP": "Adicionar marca"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

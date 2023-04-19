@@ -73,7 +73,15 @@
       "REMOVE": "Usuń",
       "DOWNLOAD": "Pobierz"
     },
-    "LOADER_LABEL": "Program do wczytywania listy dokumentów"
+    "LOADER_LABEL": "Program do wczytywania listy dokumentów",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Wczytywanie podglądu nie odpowiada",
+      "LABEL": "Pobierz, aby wyświetlić ten dokument, lub anuluj, aby kontynuować bez podglądu.",
+      "ACTIONS": {
+        "CANCEL": "Anuluj",
+        "DOWNLOAD": "Pobierz"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Wybierz treść do dołączenia z „{{ name }}”",
     "COPY": "Kopiuj",
     "COPY_ITEM": "Kopiuj '{{ name }}' do...",
+    "LOCATION": "Lokalizacja",
     "MOVE": "Przenieś",
     "MOVE_ITEM": "Przenieś '{{ name }}' do...",
     "NO_RESULTS": "Brak wyników",
     "SEARCH": "Szukaj",
     "SEARCH_RESULTS": "Wyniki wyszukiwania",
-    "SELECT_LOCATION": "Wybierz lokalizację",
+    "SELECT_LIBRARY": "Wybierz bibliotekę",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Nie można przesłać pliku, ponieważ nadal trwa wyszukiwanie",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Użytkownik nie ma uprawnienia do przesyłania zawartości do tego folderu",
     "REPOSITORY": "Repozytorium",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Dodaj znacznik"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Istniejące znaczniki:",
+      "EXISTING_TAGS_SELECTION": "Wybierz istniejący znacznik:",
+      "NO_TAGS_CREATED": "Nie utworzono znaczników",
+      "NO_EXISTING_TAGS": "Brak istniejących znaczników",
+      "TITLE": "Utwórz znaczniki",
+      "CREATE_TAG": "Utwórz: {{tag}}",
+      "NAME": "Nazwa",
+      "ERRORS": {
+        "EXISTING_TAG": "Znacznik już istnieje.",
+        "ALREADY_ADDED_TAG": "Znacznik został już dodany",
+        "EMPTY_TAG": "Nazwa nie może zawierać spacji",
+        "REQUIRED": "Nazwa jest wymagana",
+        "FETCH_TAGS": "Błąd podczas pobierania znaczników",
+        "CREATE_TAGS": "Błąd podczas tworzenia znaczników"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Usuń znacznik",
+        "HIDE_INPUT": "Ukryj dane"
+      },
+      "TAGS_LOADING": "Wczytywanie znaczników",
+      "CREATE_TAGS_SUCCESS": "Znaczniki zostały utworzone pomyślnie"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorie",
+    "NO_CATEGORIES_CREATED": "Nie utworzono kategorii",
+    "NO_CATEGORIES_ASSIGNED": "Brak przypisanych kategorii",
+    "ASSIGN_CATEGORIES": "Przypisz kategorie",
+    "UNASSIGN_CATEGORY": "Usuń przypisanie kategorii",
+    "DELETE_CATEGORY": "Usuń kategorię",
+    "EXISTING_CATEGORIES": "Istniejące kategorie",
+    "GENERIC_CREATE": "Utwórz: {{name}}",
+    "NAME": "Nazwa kategorii",
+    "LOADING": "Wczytywanie",
+    "HIDE_INPUT": "Ukryj dane",
+    "ERRORS": {
+      "NOT_FOUND": "Nie znaleziono kategorii",
+      "REQUIRED": "Nazwa kategorii jest wymagana",
+      "EMPTY_CATEGORY": "Nazwa biblioteki nie może zawierać wyłącznie spacji",
+      "ALREADY_EXISTS": "Kategoria '{{name}}' już istnieje",
+      "ALREADY_ADDED_CATEGORY": "Kategoria została już dodana",
+      "CREATE_CATEGORIES": "Błąd podczas tworzenia znaczników",
+      "EXISTING_CATEGORIES": "Niektóre znaczniki już istnieją"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Data utworzenia",
       "MODIFIER": "Modyfikator",
       "MODIFIED_DATE": "Data modyfikacji",
-      "CONTENT_TYPE": "Typ zawartości"
+      "CONTENT_TYPE": "Typ zawartości",
+      "TAGS": "Znaczniki",
+      "ADD_TAG_TOOLTIP": "Dodaj znacznik"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

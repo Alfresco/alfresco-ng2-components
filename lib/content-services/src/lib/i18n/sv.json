@@ -73,7 +73,15 @@
       "REMOVE": "Ta bort",
       "DOWNLOAD": "Ladda ner"
     },
-    "LOADER_LABEL": "Inläsare för dokumentlista"
+    "LOADER_LABEL": "Inläsare för dokumentlista",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Förhandsgranskning svarar ej",
+      "LABEL": "Ladda ner för att visa det här dokumentet, eller avbryt för att fortsätta utan förhandsgranskning.",
+      "ACTIONS": {
+        "CANCEL": "Avbryt",
+        "DOWNLOAD": "Ladda ner"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Välj innehåll att bifoga från '{{ name }}'",
     "COPY": "Kopiera",
     "COPY_ITEM": "Kopiera '{{ name }}' till...",
+    "LOCATION": "Plats",
     "MOVE": "Flytta",
     "MOVE_ITEM": "Flytta '{{ name }}' till...",
     "NO_RESULTS": "Inga resultat hittades",
     "SEARCH": "Sök",
     "SEARCH_RESULTS": "Sökresultat",
-    "SELECT_LOCATION": "Välj plats",
+    "SELECT_LIBRARY": "Välj ett bibliotek",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan inte ladda upp en fil medan en sökning pågår",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Användaren har inte tillstånd att ladda upp innehåll till mappen",
     "REPOSITORY": "Arkiv",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Lägg till tagg"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Befintliga taggar:",
+      "EXISTING_TAGS_SELECTION": "Välj en befintlig tagg:",
+      "NO_TAGS_CREATED": "Inga taggar skapade",
+      "NO_EXISTING_TAGS": "Inga befintliga taggar",
+      "TITLE": "Skapa taggar",
+      "CREATE_TAG": "Skapa: {{tag}}",
+      "NAME": "Namn",
+      "ERRORS": {
+        "EXISTING_TAG": "Tagg finns redan",
+        "ALREADY_ADDED_TAG": "Tagg är redan tillagd",
+        "EMPTY_TAG": "Namnet kan inte innehålla endast mellanslag",
+        "REQUIRED": "Taggnamn krävs",
+        "FETCH_TAGS": "Fel vid hämtning av taggarn",
+        "CREATE_TAGS": "Det gick inte att skapa taggar"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Radera tagg",
+        "HIDE_INPUT": "Dölj indata"
+      },
+      "TAGS_LOADING": "Taggar läses in",
+      "CREATE_TAGS_SUCCESS": "Taggar skapades"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorier",
+    "NO_CATEGORIES_CREATED": "Inga kategorier skapade",
+    "NO_CATEGORIES_ASSIGNED": "Inga kategorier tilldelade",
+    "ASSIGN_CATEGORIES": "Tilldela kategorier",
+    "UNASSIGN_CATEGORY": "Avtilldela kategori",
+    "DELETE_CATEGORY": "Radera kategori",
+    "EXISTING_CATEGORIES": "Befintliga kategorier",
+    "GENERIC_CREATE": "Skapa: {{name}}",
+    "NAME": "Kategorinamn",
+    "LOADING": "Läser in",
+    "HIDE_INPUT": "Dölj indata",
+    "ERRORS": {
+      "NOT_FOUND": "Hittade inte kategorier",
+      "REQUIRED": "Kategorinamn krävs",
+      "EMPTY_CATEGORY": "Kategorinamnet kan inte innehålla endast mellanslag",
+      "ALREADY_EXISTS": "Kategorin finns redan",
+      "ALREADY_ADDED_CATEGORY": "Kategorin är redan tillagd",
+      "CREATE_CATEGORIES": "Det gick inte att skapa kategorier",
+      "EXISTING_CATEGORIES": "Vissa kategorier finns redan"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Skapad datum",
       "MODIFIER": "Ändrad av",
       "MODIFIED_DATE": "Ändringsdatum",
-      "CONTENT_TYPE": "Innehållstyp"
+      "CONTENT_TYPE": "Innehållstyp",
+      "TAGS": "Taggar",
+      "ADD_TAG_TOOLTIP": "Lägg till tagg"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

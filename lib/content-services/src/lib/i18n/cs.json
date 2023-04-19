@@ -73,7 +73,15 @@
       "REMOVE": "Odstranit",
       "DOWNLOAD": "Stáhnout"
     },
-    "LOADER_LABEL": "Loader seznamu dokumentů"
+    "LOADER_LABEL": "Loader seznamu dokumentů",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Načítání náhledu neodpovídá",
+      "LABEL": "Po stažení můžete zobrazit tento dokument, případně zvolte možnost zrušení, pokud chcete pokračovat bez náhledu.",
+      "ACTIONS": {
+        "CANCEL": "Zrušit",
+        "DOWNLOAD": "Stáhnout"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Vybrat obsah pro připojení z '{{ name }}'",
     "COPY": "Kopírovat",
     "COPY_ITEM": "Zkopírovat položku '{{ name }}' do...",
+    "LOCATION": "Umístění",
     "MOVE": "Přesunout",
     "MOVE_ITEM": "Přesunout položku '{{ name }}' do...",
     "NO_RESULTS": "Nebyly nalezeny žádné výsledky",
     "SEARCH": "Hledat",
     "SEARCH_RESULTS": "Výsledky hledání",
-    "SELECT_LOCATION": "Vybrat umístění",
+    "SELECT_LIBRARY": "Vybrat knihovnu",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Soubor nelze nahrát, když probíhá hledání.",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Uživatel nemá oprávnění nahrávat obsah do složky.",
     "REPOSITORY": "Úložiště",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Přidat tag"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Existující tagy:",
+      "EXISTING_TAGS_SELECTION": "Vyberte existující tag:",
+      "NO_TAGS_CREATED": "Nejsou vytvořeny žádné tagy",
+      "NO_EXISTING_TAGS": "Žádné existující tagy",
+      "TITLE": "Vytvořit tagy",
+      "CREATE_TAG": "Vytvořit: {{tag}}",
+      "NAME": "Název",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag již existuje",
+        "ALREADY_ADDED_TAG": "Tag je již přidán",
+        "EMPTY_TAG": "Název tagu nemůže obsahovat pouze mezery",
+        "REQUIRED": "Název tagu je povinný",
+        "FETCH_TAGS": "Chyba při načítání úloh",
+        "CREATE_TAGS": "Vyskytla se chyba při vytváření tagů"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Odstranit tag",
+        "HIDE_INPUT": "Skrýt vstup"
+      },
+      "TAGS_LOADING": "Tagy se načítají",
+      "CREATE_TAGS_SUCCESS": "Tagy byly úspěšně vytvořeny"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorie",
+    "NO_CATEGORIES_CREATED": "Nejsou vytvořeny žádné kategorie",
+    "NO_CATEGORIES_ASSIGNED": "Nejsou přiřazeny žádné kategorie",
+    "ASSIGN_CATEGORIES": "Přiřadit kategorie",
+    "UNASSIGN_CATEGORY": "Zrušit přiřazení kategorie",
+    "DELETE_CATEGORY": "Odstranit kategorii",
+    "EXISTING_CATEGORIES": "Existující kategorie",
+    "GENERIC_CREATE": "Vytvořit: {{name}}",
+    "NAME": "Název kategorie",
+    "LOADING": "Načítání",
+    "HIDE_INPUT": "Skrýt vstup",
+    "ERRORS": {
+      "NOT_FOUND": "Kategorie nebyly nalezeny",
+      "REQUIRED": "Název kategorie je povinný",
+      "EMPTY_CATEGORY": "Název kategorie nemůže obsahovat pouze mezery",
+      "ALREADY_EXISTS": "Kategorie již existuje",
+      "ALREADY_ADDED_CATEGORY": "Kategorie je již přidána",
+      "CREATE_CATEGORIES": "Vyskytla se chyba při vytváření kategorií",
+      "EXISTING_CATEGORIES": "Některé kategorie již existují"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Datum vytvoření",
       "MODIFIER": "Upravující",
       "MODIFIED_DATE": "Datum úpravy",
-      "CONTENT_TYPE": "Typ obsahu"
+      "CONTENT_TYPE": "Typ obsahu",
+      "TAGS": "Tag",
+      "ADD_TAG_TOOLTIP": "Přidat tag"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

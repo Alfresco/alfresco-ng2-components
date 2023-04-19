@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "Impossibile eliminare {{ name }}",
       "ERROR_PLURAL": "Impossibile eliminare {{ number }} elementi"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Tipo di autenticazione",
+      "BASIC": "Autenticazione di base",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Fornitore",
+      "REQUIRED": "Questo campo è obbligatorio",
+      "CS_URL_ERROR": "L'indirizzo Content Services non corrisponde al formato dell'URL",
+      "PS_URL_ERROR": "L'indirizzo Process Services non corrisponde al formato dell'URL",
+      "TITLE": "Impostazioni",
+      "CS-HOST": "URL Content Services",
+      "BP-HOST": "URL Process Services",
+      "BACK": "Indietro",
+      "APPLY": "Applica",
+      "NOT_VALID": "http(s)://host|ip:port(/path) non riconosciuto, provare un URL diverso.",
+      "REDIRECT": "Reindirizza URI",
+      "REDIRECT_LOGOUT": "Reindirizza logout URI",
+      "SILENT": "Login invisibile",
+      "SCOPE": "Ambito",
+      "CLIENT": "ID client",
+      "PUBLIC_URLS": "URL pubblici per login invisibile",
+      "SECRET": "Segreto"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Aggiungi nuova",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Attiva modalità schermo intero",
       "CLOSE": "Chiudi",
       "NEXT_FILE": "File successivo",
-      "PREV_FILE": "File precedente"
+      "PREV_FILE": "File precedente",
+      "WAIT": "Attendi"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Pagina precedente",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Password",
       "ERROR": "Password errata"
     },
-    "SUBTITLES": "Sottotitoli"
+    "SUBTITLES": "Sottotitoli",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Caricamento anteprima ritardato",
+      "LABEL": "Attendere ancora o caricare il documento."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

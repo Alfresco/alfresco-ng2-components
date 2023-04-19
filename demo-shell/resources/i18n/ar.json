@@ -4,7 +4,7 @@
       "TYPE-AUTH": "نوع المصادقة",
       "BASIC": "مصادقة أساسية",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "تدفق ضمني",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "موفر",
       "REQUIRED": "هذا الحقل مطلوب",
       "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",

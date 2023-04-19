@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Typ uwierzytelnienia",
       "BASIC": "Uwierzytelnienie podstawowe",
       "SSO": "Logowanie jednokrotne",
-      "IMPLICIT-FLOW": "Niejawny przepływ",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Dostawca",
       "REQUIRED": "To pole jest wymagane.",
       "CS_URL_ERROR": "Adres usług Content Services jest niezgodny z formatem adresu URL.",

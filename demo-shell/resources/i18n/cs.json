@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Typ ověřování",
       "BASIC": "Základní ověřování",
       "SSO": "Jednotné přihlášení",
-      "IMPLICIT-FLOW": "Implicitní tok",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Poskytovatel",
       "REQUIRED": "Toto pole je povinné",
       "CS_URL_ERROR": "Adresa Content Services neodpovídá formátu adresy URL",

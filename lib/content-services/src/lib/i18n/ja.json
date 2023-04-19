@@ -73,7 +73,15 @@
       "REMOVE": "削除",
       "DOWNLOAD": "ダウンロード"
     },
-    "LOADER_LABEL": "ドキュメントリストローダー"
+    "LOADER_LABEL": "ドキュメントリストローダー",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "プレビューの読み込みの応答なし",
+      "LABEL": "このドキュメントをダウンロードして表示するか、キャンセルしてプレビュー無しで続行します。",
+      "ACTIONS": {
+        "CANCEL": "キャンセル",
+        "DOWNLOAD": "ダウンロード"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください",
     "COPY": "コピー",
     "COPY_ITEM": "'{{ name }}' のコピー先...",
+    "LOCATION": "場所",
     "MOVE": "移動",
     "MOVE_ITEM": "'{{ name }}' の移動先...",
     "NO_RESULTS": "一致するアイテムはありません",
     "SEARCH": "検索",
     "SEARCH_RESULTS": "検索結果",
-    "SELECT_LOCATION": "場所の選択",
+    "SELECT_LIBRARY": "ライブラリの選択",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "検索がまだ実行中のため、ファイルをアップロードできません",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "ユーザーに、コンテンツをフォルダにアップロードする権限がありません",
     "REPOSITORY": "リポジトリ",
@@ -117,7 +126,7 @@
       }
     },
     "ERROR": {
-      "CONFLICT": "この名前は既に使用されています。別の名前を使用してください。",
+      "CONFLICT": "この名前はすでに使用されています。別の名前を使用してください。",
       "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
       "PERMISSION": "この処理を行うための権限がありません。"
     }
@@ -127,10 +136,55 @@
       "NEWTAG": "新しいタグ"
     },
     "MESSAGES": {
-      "EXIST": "タグは既に存在します"
+      "EXIST": "タグはすでに存在します"
     },
     "BUTTON": {
       "ADD": "タグの追加"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "既存のタグ",
+      "EXISTING_TAGS_SELECTION": "既存のタグの選択：",
+      "NO_TAGS_CREATED": "作成されたタグはありません",
+      "NO_EXISTING_TAGS": "既存のタグはありません",
+      "TITLE": "タグの作成",
+      "CREATE_TAG": "作成: {{tag}}",
+      "NAME": "名前",
+      "ERRORS": {
+        "EXISTING_TAG": "タグはすでに存在します",
+        "ALREADY_ADDED_TAG": "タグはすでに追加されています",
+        "EMPTY_TAG": "タグ名をスペースだけにすることはできません",
+        "REQUIRED": "タグ名は必須です",
+        "FETCH_TAGS": "タグの取得中にエラーが発生しました",
+        "CREATE_TAGS": "タグの作成中にエラーが発生しました"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "タグの削除",
+        "HIDE_INPUT": "入力の非表示"
+      },
+      "TAGS_LOADING": "タグの読み込み中",
+      "CREATE_TAGS_SUCCESS": "タグが正常に作成されました"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "カテゴリ",
+    "NO_CATEGORIES_CREATED": "作成されたカテゴリはありません",
+    "NO_CATEGORIES_ASSIGNED": "割り当てられたカテゴリはありません",
+    "ASSIGN_CATEGORIES": "カテゴリの割り当て",
+    "UNASSIGN_CATEGORY": "カテゴリの割り当て解除",
+    "DELETE_CATEGORY": "カテゴリの削除",
+    "EXISTING_CATEGORIES": "既存のカテゴリ",
+    "GENERIC_CREATE": "作成：{{name}}",
+    "NAME": "カテゴリ名",
+    "LOADING": "読み込み中",
+    "HIDE_INPUT": "入力の非表示",
+    "ERRORS": {
+      "NOT_FOUND": "カテゴリが見つかりませんでした",
+      "REQUIRED": "カテゴリ名は必須です",
+      "EMPTY_CATEGORY": "カテゴリ名をスペースだけにすることはできません",
+      "ALREADY_EXISTS": "カテゴリはすでに存在します",
+      "ALREADY_ADDED_CATEGORY": "カテゴリはすでに追加されています",
+      "CREATE_CATEGORIES": "カテゴリの作成中にエラーが発生しました",
+      "EXISTING_CATEGORIES": "いくつかのカテゴリは、すでに存在します"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -191,7 +245,7 @@
       "UPLOAD_ERROR": "{{ total }} 個をアップロードできませんでした",
       "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
       "PROGRESS": "アップロードしています...",
-      "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' は既に存在します",
+      "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' はすでに存在します",
       "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください",
       "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
       "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
@@ -206,7 +260,7 @@
       "504": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください。[504]",
       "403": "この場所にアップロードするための権限がありません [403]",
       "404": "アップロード場所は削除されました [404]",
-      "409": "同じ名前のファイルが既に存在します [409]"
+      "409": "同じ名前のファイルがすでに存在します [409]"
     },
     "ARIA-LABEL": {
       "ERROR": "アップロードエラー"
@@ -241,7 +295,7 @@
         "APPLY": "適用",
         "CLEAR-ALL": "すべて消去",
         "SHOW-MORE": "続きを表示",
-        "SHOW-LESS": "詳細を隠す"
+        "SHOW-LESS": "表示数を減らす"
       },
       "BUTTONS": {
         "CLOSE": "閉じる",
@@ -358,7 +412,9 @@
       "CREATED_DATE": "作成日",
       "MODIFIER": "変更者",
       "MODIFIED_DATE": "変更日",
-      "CONTENT_TYPE": "コンテンツタイプ"
+      "CONTENT_TYPE": "コンテンツタイプ",
+      "TAGS": "タグ",
+      "ADD_TAG_TOOLTIP": "タグの追加"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -458,7 +514,7 @@
     },
     "ERROR": {
       "NOT-FOUND": "このアイテムは削除されたか、このアイテムを表示する権限がありません。",
-      "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}",
+      "DUPLICATE-PERMISSION": "設定済みの権限がすでにあります: {{list}}",
       "NOT-ALLOWED": "権限を変更することはできません"
     }
   },
@@ -498,12 +554,12 @@
       "MODERATED": "条件付き公開"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "ライブラリ名は既に使用されています"
+      "SITE_TITLE_EXISTS": "ライブラリ名はすでに使用されています"
     },
     "ERRORS": {
       "GENERIC": "問題が発生しました",
       "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリ ID を使用してください。",
-      "CONFLICT": "このライブラリ ID は既に使われています。ごみ箱をチェックしてください。",
+      "CONFLICT": "このライブラリ ID はすでに使われています。ごみ箱を確認してください。",
       "ID_TOO_LONG": "URL 名は 72 文字以内で入力してください",
       "DESCRIPTION_TOO_LONG": "説明は 512 文字以内で入力してください",
       "TITLE_TOO_LONG": "タイトルは 256 文字以内で入力してください",
