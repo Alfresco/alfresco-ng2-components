@@ -42,6 +42,7 @@ export interface ConfigArgs {
     scope: string;
     host: string;
     tag: string;
+    environmentId: string;
 }
 
 export const AAE_MICROSERVICES = [
@@ -296,7 +297,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     return new AlfrescoApi(config as unknown as AlfrescoApiConfig);
 }
 
-async function deployMissingApps(tag?: string) {
+async function deployMissingApps(tag?: string, environmentId?: string) {
     const deployedApps = await getApplicationByStatus('');
     findMissingApps(deployedApps.list.entries);
     findFailingApps(deployedApps.list.entries);
@@ -311,7 +312,7 @@ async function deployMissingApps(tag?: string) {
         process.exit(1);
     } else if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(absentApps, tag);
+        await checkIfAppIsReleased(absentApps, tag, environmentId);
     } else {
         const reset = '\x1b[0m';
         const green = '\x1b[32m';
@@ -319,7 +320,7 @@ async function deployMissingApps(tag?: string) {
     }
 }
 
-async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
+async function checkIfAppIsReleased(missingApps: any [], tag?: string, environmentId?: string) {
     const projectList = await getProjects();
     let TIME = 5000;
     let noError = true;
@@ -382,7 +383,8 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string) {
                 releaseId: projectRelease.entry.id,
                 security: currentAbsentApp.security,
                 infrastructure: currentAbsentApp.infrastructure,
-                variables: currentAbsentApp.variables
+                variables: currentAbsentApp.variables,
+                environmentId
             };
             await deploy(deployPayload);
         }
@@ -482,6 +484,7 @@ async function main() {
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
         .option('--devopsPassword [type]', 'devops password')
         .option('--tag [type]', 'tag name of the codebase')
+        .option('--environmentId [type]', 'environment id to deploy applications')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -502,7 +505,8 @@ async function main() {
         tokenEndpoint: options.tokenEndpoint,
         scope: options.scope,
         secret:  options.secret,
-        tag: options.tag
+        tag: options.tag,
+        environmentId: options.environmentId
     };
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
@@ -532,7 +536,7 @@ async function main() {
             process.exit(1);
         });
 
-        await deployMissingApps(args.tag);
+        await deployMissingApps(args.tag, args.environmentId);
     } else {
         logger.error('The environment is not up');
         process.exit(1);
