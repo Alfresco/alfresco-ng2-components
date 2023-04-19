@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { ContentService } from '../common/services/content.service';
 import { mockFile, mockNewVersionUploaderData, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import {
@@ -51,7 +50,6 @@ class TestDialogComponent {
 describe('NewVersionUploaderService', () => {
     let fixture: ComponentFixture<TestDialogComponent>;
     let service: NewVersionUploaderService;
-    let contentService: ContentService;
     let dialog: MatDialog;
     let spyOnDialogOpen: jasmine.Spy;
     let dialogRefSpyObj;
@@ -68,7 +66,6 @@ describe('NewVersionUploaderService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(NewVersionUploaderService);
-        contentService = TestBed.inject(ContentService);
         dialog = TestBed.inject(MatDialog);
         fixture = TestBed.createComponent(TestDialogComponent);
 
@@ -83,29 +80,9 @@ describe('NewVersionUploaderService', () => {
     });
 
     describe('openUploadNewVersionDialog', () => {
-        it('Should not open dialog if update operation is not allowed', () => {
-            spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
-            expect(spyOnDialogOpen).not.toHaveBeenCalled();
-        });
-
-        it('Should return error if update operation is not allowed', async () => {
-            spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
-            const mockNewVersionUploaderDialogData: NewVersionUploaderDialogData = {
-                node: mockNode,
-                file: mockFile
-            };
-            try {
-                await service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).toPromise();
-                fail('An error should have been thrown');
-            } catch (error) {
-                expect(error).toEqual({ value: 'OPERATION.ERROR.PERMISSION' });
-            }
-        });
-
         describe('Mat Dialog configuration', () => {
             let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
             beforeEach(() => {
-                spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
                 spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
                     list: { entries: [{ entry: '2' }] }
                 } as any));
@@ -220,7 +197,6 @@ describe('NewVersionUploaderService', () => {
             let mockNewVersionUploaderDialogData: NewVersionUploaderDialogData;
 
             beforeEach(() => {
-                spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
                 spyOn(service.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve({
                     list: { entries: [{ entry: '2' }] }
                 }) as any);
