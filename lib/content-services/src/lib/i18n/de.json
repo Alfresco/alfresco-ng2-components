@@ -73,7 +73,15 @@
       "REMOVE": "Entfernen",
       "DOWNLOAD": "Herunterladen"
     },
-    "LOADER_LABEL": "Ladeprogramm für Dokumentenliste"
+    "LOADER_LABEL": "Ladeprogramm für Dokumentenliste",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Laden der Vorschau reagiert nicht",
+      "LABEL": "Zur Ansicht dieses Dokuments herunterladen, oder abbrechen, um ohne Vorschau fortzufahren",
+      "ACTIONS": {
+        "CANCEL": "Abbrechen",
+        "DOWNLOAD": "Herunterladen"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Wählen Sie aus '{{ name }}' Content zum Anhängen aus",
     "COPY": "Kopieren",
     "COPY_ITEM": "'{{ name }}' kopieren nach...",
+    "LOCATION": "Speicherort",
     "MOVE": "Verschieben",
     "MOVE_ITEM": "'{{ name }}' verschieben nach...",
     "NO_RESULTS": "Keine Ergebnisse gefunden",
     "SEARCH": "Suchen",
     "SEARCH_RESULTS": "Ergebnisse durchsuchen",
-    "SELECT_LOCATION": "Speicherort auswählen",
+    "SELECT_LIBRARY": "Bibliothek auswählen",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Sie können während einer laufenden Suche keine Datei hochladen.",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Benutzer besitzt keine Berechtigung, um Inhalt in Ordner hochzuladen",
     "REPOSITORY": "Repository",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Tag hinzufügen"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Vorhandene Tags:",
+      "EXISTING_TAGS_SELECTION": "Wählen Sie einen vorhandenen Tag aus:",
+      "NO_TAGS_CREATED": "Keine Tags erstellt",
+      "NO_EXISTING_TAGS": "Keine vorhandenen Tags",
+      "TITLE": "Tags erstellen",
+      "CREATE_TAG": "Erstellen: {{tag}}",
+      "NAME": "Name",
+      "ERRORS": {
+        "EXISTING_TAG": "Dieses Tag gibt es bereits",
+        "ALREADY_ADDED_TAG": "Tag wurde bereits hinzugefügt",
+        "EMPTY_TAG": "Tag-Name darf nicht nur aus Leerzeichen bestehen",
+        "REQUIRED": "Tag-Name ist erforderlich",
+        "FETCH_TAGS": "Fehler beim Abrufen der Tags",
+        "CREATE_TAGS": "Fehler beim Erstellen der Tags"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Tag löschen",
+        "HIDE_INPUT": "Eingabe ausblenden"
+      },
+      "TAGS_LOADING": "Tags werden geladen",
+      "CREATE_TAGS_SUCCESS": "Tags erfolgreich erstellt"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorien",
+    "NO_CATEGORIES_CREATED": "Keine Kategorien erstellt",
+    "NO_CATEGORIES_ASSIGNED": "Keine Kategorien zugewiesen",
+    "ASSIGN_CATEGORIES": "Kategorien zuweisen",
+    "UNASSIGN_CATEGORY": "Kategoriezuweisung aufheben",
+    "DELETE_CATEGORY": "Kategorie löschen",
+    "EXISTING_CATEGORIES": "Vorhandene Kategorien",
+    "GENERIC_CREATE": "Erstellen: {{name}}",
+    "NAME": "Kategoriename",
+    "LOADING": "Laden",
+    "HIDE_INPUT": "Eingabe ausblenden",
+    "ERRORS": {
+      "NOT_FOUND": "Kategorie nicht gefunden",
+      "REQUIRED": "Kategoriename ist erforderlich",
+      "EMPTY_CATEGORY": "Kategoriename darf nicht nur aus Leerzeichen bestehen.",
+      "ALREADY_EXISTS": "Kategorie ist bereits vorhanden",
+      "ALREADY_ADDED_CATEGORY": "Kategorie wurde bereits hinzugefügt",
+      "CREATE_CATEGORIES": "Fehler beim Erstellen von Kategorien",
+      "EXISTING_CATEGORIES": "Einige Kategorien sind bereits vorhanden"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Datum der Erstellung",
       "MODIFIER": "Bearbeiter",
       "MODIFIED_DATE": "Datum der Änderung",
-      "CONTENT_TYPE": "Content-Typ"
+      "CONTENT_TYPE": "Content-Typ",
+      "TAGS": "Tags",
+      "ADD_TAG_TOOLTIP": "Tag hinzufügen"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

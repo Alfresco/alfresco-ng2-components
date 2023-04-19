@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "{{ name }} n'a pas pu être supprimé",
       "ERROR_PLURAL": "{{ number }} éléments n'ont pas pu être supprimés"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Type d'authentification",
+      "BASIC": "Authentification de base",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Fournisseur",
+      "REQUIRED": "Ce champ est obligatoire",
+      "CS_URL_ERROR": "L'adresse Content Services ne correspond pas au format d'URL",
+      "PS_URL_ERROR": "L'adresse Process Services ne correspond pas au format d'URL",
+      "TITLE": "Paramètres",
+      "CS-HOST": "URL de Content Services",
+      "BP-HOST": "URL de Process Services",
+      "BACK": "Retour",
+      "APPLY": "Appliquer",
+      "NOT_VALID": "Adresse http(s)://host|ip:port(/path) non reconnue, essayez une autre URL.",
+      "REDIRECT": "URI de redirection",
+      "REDIRECT_LOGOUT": "Déconnexion URI de redirection",
+      "SILENT": "Connexion en mode silencieux",
+      "SCOPE": "Etendue",
+      "CLIENT": "ID client",
+      "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux",
+      "SECRET": "Secret"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Ajouter nouveau",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Activer le mode plein écran",
       "CLOSE": "Fermer",
       "NEXT_FILE": "Fichier suivant",
-      "PREV_FILE": "Fichier précédent"
+      "PREV_FILE": "Fichier précédent",
+      "WAIT": "Attendez"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Page précédente",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Mot de passe",
       "ERROR": "Mot de passe erroné"
     },
-    "SUBTITLES": "Sous-titres"
+    "SUBTITLES": "Sous-titres",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Chargement de l'aperçu retardé",
+      "LABEL": "Vous pouvez continuer à attendre, ou téléchargez le document."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

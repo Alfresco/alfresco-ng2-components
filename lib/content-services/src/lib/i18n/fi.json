@@ -73,7 +73,15 @@
       "REMOVE": "Poista",
       "DOWNLOAD": "Lataa"
     },
-    "LOADER_LABEL": "Asiakirjaluettelon lataustoiminto"
+    "LOADER_LABEL": "Asiakirjaluettelon lataustoiminto",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Esikatselun lataus ei vastaa",
+      "LABEL": "Lataa tämä asiakirja tarkastelua varten tai peruuta, jos haluat jatkaa ilman esikatselua.",
+      "ACTIONS": {
+        "CANCEL": "Peruuta",
+        "DOWNLOAD": "Lataa"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Valitse liitettävä sisältö kohteesta '{{ name }}'",
     "COPY": "Kopioi",
     "COPY_ITEM": "Kopioi '{{ name }}' kohteeseen...",
+    "LOCATION": "Sijainti",
     "MOVE": "Siirrä",
     "MOVE_ITEM": "Siirrä '{{ name }}' kohteeseen...",
     "NO_RESULTS": "Tuloksia ei löydy",
     "SEARCH": "Hae",
     "SEARCH_RESULTS": "Hakutulokset",
-    "SELECT_LOCATION": "Valitse sijainti",
+    "SELECT_LIBRARY": "Valitse kirjasto",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Et voi ladata tiedostoa haun ollessa kesken",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Käyttäjällä ei ole oikeuksia ladata sisältöä kansioon",
     "REPOSITORY": "Säilö",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Lisää tunniste"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Olemassa olevat tunnisteet:",
+      "EXISTING_TAGS_SELECTION": "Valitse olemassa oleva tunniste:",
+      "NO_TAGS_CREATED": "Ei luotuja tunnisteita",
+      "NO_EXISTING_TAGS": "Ei olemassa olevia tunnisteita",
+      "TITLE": "Luo merkkejä",
+      "CREATE_TAG": "Luo: {{tag}}",
+      "NAME": "Nimi",
+      "ERRORS": {
+        "EXISTING_TAG": "Tunniste on jo olemassa",
+        "ALREADY_ADDED_TAG": "Tunniste on jo lisätty",
+        "EMPTY_TAG": "Tunnisteen nimi ei voi koostua vain välilyönneistä",
+        "REQUIRED": "Tunnisteen nimi on pakollinen",
+        "FETCH_TAGS": "Virhe tunnisteita noudettaessa",
+        "CREATE_TAGS": "Virhe merkkejä luodessa"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Poista merkki",
+        "HIDE_INPUT": "Piilota syöte"
+      },
+      "TAGS_LOADING": "Tunnisteita ladataan",
+      "CREATE_TAGS_SUCCESS": "Merkkien luonti onnistui"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Luokat",
+    "NO_CATEGORIES_CREATED": "Ei luotuja luokkia",
+    "NO_CATEGORIES_ASSIGNED": "Ei määrättyjä luokkia",
+    "ASSIGN_CATEGORIES": "Määrää luokkia",
+    "UNASSIGN_CATEGORY": "Poista luokan määräys",
+    "DELETE_CATEGORY": "Poista luokka",
+    "EXISTING_CATEGORIES": "Olemassa olevat luokat",
+    "GENERIC_CREATE": "Luo: {{name}}",
+    "NAME": "Luokan nimi",
+    "LOADING": "Ladataan",
+    "HIDE_INPUT": "Piilota syöte",
+    "ERRORS": {
+      "NOT_FOUND": "Luokkia ei löytynyt",
+      "REQUIRED": "Luokan nimi on pakollinen",
+      "EMPTY_CATEGORY": "Luokan nimi ei voi koostua vain välilyönneistä",
+      "ALREADY_EXISTS": "Luokka on jo olemassa",
+      "ALREADY_ADDED_CATEGORY": "Luokka on jo lisätty",
+      "CREATE_CATEGORIES": "Virhe luokkia luodessa",
+      "EXISTING_CATEGORIES": "Osa luokista on jo olemassa"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Luontipäivämäärä",
       "MODIFIER": "Muokkaaja",
       "MODIFIED_DATE": "Muokkauspäivämäärä",
-      "CONTENT_TYPE": "Sisältötyyppi"
+      "CONTENT_TYPE": "Sisältötyyppi",
+      "TAGS": "Tunnisteet",
+      "ADD_TAG_TOOLTIP": "Lisää tunniste"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

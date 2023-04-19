@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "Kan {{ name }} niet verwijderen",
       "ERROR_PLURAL": "Kan {{ number }} items niet verwijderen"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Verificatietype",
+      "BASIC": "Basisverificatie",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Provider",
+      "REQUIRED": "Dit veld is vereist",
+      "CS_URL_ERROR": "Content Services-adres komt niet overeen met de URL-indeling",
+      "PS_URL_ERROR": "Process Services-adres komt niet overeen met de URL-indeling",
+      "TITLE": "Instellingen",
+      "CS-HOST": "Content Services-URL",
+      "BP-HOST": "Process Services-URL",
+      "BACK": "Terug",
+      "APPLY": "Toepassen",
+      "NOT_VALID": "http(s)://host|ip:port(/path) niet herkend, probeer een andere URL.",
+      "REDIRECT": "Omleidings-URI",
+      "REDIRECT_LOGOUT": "Omleidings-URI afmelden",
+      "SILENT": "Stille aanmelding",
+      "SCOPE": "Bereik",
+      "CLIENT": "Client-id",
+      "PUBLIC_URLS": "Openbare URL's voor stille aanmelding",
+      "SECRET": "Geheim"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Nieuwe toevoegen",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Modus voor volledig scherm activeren",
       "CLOSE": "Sluiten",
       "NEXT_FILE": "Volgende bestand",
-      "PREV_FILE": "Vorige bestand"
+      "PREV_FILE": "Vorige bestand",
+      "WAIT": "Wachten"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Vorige pagina",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Wachtwoord",
       "ERROR": "Wachtwoord is verkeerd"
     },
-    "SUBTITLES": "Ondertitels"
+    "SUBTITLES": "Ondertitels",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Voorbeeld laden vertraagd",
+      "LABEL": "U kunt blijven wachten of het document downloaden."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

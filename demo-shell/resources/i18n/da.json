@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Godkendelsestype",
       "BASIC": "Grundlæggende godkendelse",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit flow",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Udbyder",
       "REQUIRED": "Dette felt er påkrævet",
       "CS_URL_ERROR": "Content Services-adressen matcher ikke URL-formatet",

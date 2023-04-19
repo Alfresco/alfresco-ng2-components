@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Godkjenningstype",
       "BASIC": "Grunnleggende godkjenning",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implisitt flyt",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Leverandør",
       "REQUIRED": "Dette feltet er påkrevd",
       "CS_URL_ERROR": "Adressen til innholdstjenesten stemmer ikke med URL-formatet",

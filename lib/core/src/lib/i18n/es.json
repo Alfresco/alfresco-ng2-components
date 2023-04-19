@@ -68,7 +68,7 @@
     "HEADER": {
       "LOGO_ARIA": "Logotipo de la empresa",
       "ACCESSIBILITY": {
-        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Alternar menú"
+        "SIDEBAR_TOGGLE_BUTTON_ARIA_LABEL": "Cambiar menú"
       }
     },
     "FILE_SIZE": {
@@ -173,7 +173,8 @@
       "TYPE-AUTH": "Tipo de autenticación",
       "BASIC": "Autenticación básica",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Flujo implícito",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
       "PROVIDER": "Proveedor",
       "REQUIRED": "Este campo es obligatorio",
       "CS_URL_ERROR": "La dirección de Content Services no coincide con el formato de la URL",
@@ -243,7 +244,7 @@
         "SAVE": "Guardar",
         "CANCEL": "Cancelar",
         "CLEAR": "Borrar",
-        "TOGGLE": "Alternar valor",
+        "TOGGLE": "Cambiar valor",
         "COPY_TO_CLIPBOARD": "Haga doble clic para copiar el valor",
         "EDIT_ASPECTS": "Editar aspecto"
       },
@@ -255,7 +256,7 @@
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Alternar entre orden ascendente y descendente de resultados",
+      "TOGGLE_ASC_DESC_ORDER": "Cambiar entre orden ascendente y descendente de resultados",
       "SORT_BY": "Clasificar por"
     }
   },
@@ -390,7 +391,8 @@
       "FULLSCREEN": "Activar el modo de pantalla completa",
       "CLOSE": "Cerrar",
       "NEXT_FILE": "Fichero siguiente",
-      "PREV_FILE": "Fichero anterior"
+      "PREV_FILE": "Fichero anterior",
+      "WAIT": "Espere por favor"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Página anterior",
@@ -428,7 +430,11 @@
       "PLACEHOLDER": "Contraseña",
       "ERROR": "La contraseña es incorrecta"
     },
-    "SUBTITLES": "Subtítulos"
+    "SUBTITLES": "Subtítulos",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Vista previa de carga retrasada",
+      "LABEL": "Puede seguir esperando o descargue el documento."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

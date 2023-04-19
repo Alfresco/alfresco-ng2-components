@@ -4,7 +4,7 @@
       "TYPE-AUTH": "認証タイプ",
       "BASIC": "基本認証",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "暗黙的フロー",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "プロバイダ",
       "REQUIRED": "このフィールドは必須です",
       "CS_URL_ERROR": "Content Services のアドレスが URL 形式と一致しません",
@@ -189,7 +189,7 @@
       "SHARE": "共有",
       "THEME": "テーマを選択してください",
       "SHOW_VERSION": "バージョンを表示する",
-      "HIDE_VERSION": "バージョンを隠す",
+      "HIDE_VERSION": "バージョンの非表示",
       "LISTVIEW": "一覧表示モード",
       "CREATE_LIBRARY": "ライブラリの作成"
     },

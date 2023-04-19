@@ -73,7 +73,15 @@
       "REMOVE": "删除",
       "DOWNLOAD": "下载"
     },
-    "LOADER_LABEL": "文档列表加载器"
+    "LOADER_LABEL": "文档列表加载器",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "预览加载无响应",
+      "LABEL": "下载以查看此文档，或取消以继续而不预览。",
+      "ACTIONS": {
+        "CANCEL": "取消",
+        "DOWNLOAD": "下载"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "从 '{{ name }}'中选择要附加的内容",
     "COPY": "复制",
     "COPY_ITEM": "将 '{{ name }}' 复制到...",
+    "LOCATION": "位置",
     "MOVE": "移动",
     "MOVE_ITEM": "将 '{{ name }}' 移动到...",
     "NO_RESULTS": "未找到结果",
     "SEARCH": "搜索",
     "SEARCH_RESULTS": "搜索结果",
-    "SELECT_LOCATION": "选择位置",
+    "SELECT_LIBRARY": "选择一个库",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "当搜索仍在运行时，您不能上传文件",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "用户没有向文件夹上传内容的权限",
     "REPOSITORY": "存储库",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "添加标题"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "现有标签:",
+      "EXISTING_TAGS_SELECTION": "选择一个现有标记:",
+      "NO_TAGS_CREATED": "未创建标记",
+      "NO_EXISTING_TAGS": "没有现有标记",
+      "TITLE": "创建标记",
+      "CREATE_TAG": "创建: {{tag}}",
+      "NAME": "名称",
+      "ERRORS": {
+        "EXISTING_TAG": "标记已存在",
+        "ALREADY_ADDED_TAG": "已添加标记",
+        "EMPTY_TAG": "标记名称不能只包含空格",
+        "REQUIRED": "标记名称是必需的",
+        "FETCH_TAGS": "获取标记时出错",
+        "CREATE_TAGS": "创建标记时出错"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "删除标记",
+        "HIDE_INPUT": "隐藏输入"
+      },
+      "TAGS_LOADING": "标记加载",
+      "CREATE_TAGS_SUCCESS": "标记创建成功"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "类别",
+    "NO_CATEGORIES_CREATED": "未创建类别",
+    "NO_CATEGORIES_ASSIGNED": "未指派类别",
+    "ASSIGN_CATEGORIES": "指派类别",
+    "UNASSIGN_CATEGORY": "未指派类别",
+    "DELETE_CATEGORY": "删除类别",
+    "EXISTING_CATEGORIES": "现有类别",
+    "GENERIC_CREATE": "创建: {{name}}",
+    "NAME": "类别名称",
+    "LOADING": "正在加载",
+    "HIDE_INPUT": "隐藏输入",
+    "ERRORS": {
+      "NOT_FOUND": "未找到类别",
+      "REQUIRED": "类别名称是必需的",
+      "EMPTY_CATEGORY": "类别名称不能只包含空格",
+      "ALREADY_EXISTS": "类别已存在",
+      "ALREADY_ADDED_CATEGORY": "类别已添加",
+      "CREATE_CATEGORIES": "创建类别时出错",
+      "EXISTING_CATEGORIES": "某些类别已存在"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "创建日期",
       "MODIFIER": "修改者",
       "MODIFIED_DATE": "修改日期",
-      "CONTENT_TYPE": "内容类型"
+      "CONTENT_TYPE": "内容类型",
+      "TAGS": "标记",
+      "ADD_TAG_TOOLTIP": "添加标记"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

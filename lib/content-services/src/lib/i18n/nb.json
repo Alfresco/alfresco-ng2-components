@@ -73,7 +73,15 @@
       "REMOVE": "Fjern",
       "DOWNLOAD": "Last ned"
     },
-    "LOADER_LABEL": "Lasting av dokumentliste"
+    "LOADER_LABEL": "Lasting av dokumentliste",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Lasting av forhåndsvisning svarer ikke",
+      "LABEL": "Last ned for å vise dette dokumentet, eller avbryt for å fortsette uten forhåndsvisning.",
+      "ACTIONS": {
+        "CANCEL": "Avbryt",
+        "DOWNLOAD": "Last ned"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Velg innhold du vil legge ved fra '{{ name }}'",
     "COPY": "Kopier",
     "COPY_ITEM": "Kopier {{ name }} til ...",
+    "LOCATION": "Sted",
     "MOVE": "Flytt",
     "MOVE_ITEM": "Flytt {{ name }}'til ...",
     "NO_RESULTS": "Ingen resultater funnet",
     "SEARCH": "Søk",
     "SEARCH_RESULTS": "Søkeresultater",
-    "SELECT_LOCATION": "Velg plassering",
+    "SELECT_LIBRARY": "Velg et bibliotek",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "Du kan ikke laste opp en fil mens et søk fremdeles pågår",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Brukeren har ikke tillatelse til å laste opp innhold til mappen",
     "REPOSITORY": "Datalager",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Legg til tagg"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Eksisterende tagger:",
+      "EXISTING_TAGS_SELECTION": "Velg en eksisterende tagg:",
+      "NO_TAGS_CREATED": "Ingen tagger opprettet",
+      "NO_EXISTING_TAGS": "Ingen eksisterende tagger",
+      "TITLE": "Opprett tagger",
+      "CREATE_TAG": "Opprett: {{tag}}",
+      "NAME": "Navn",
+      "ERRORS": {
+        "EXISTING_TAG": "Tagg finnes allerede",
+        "ALREADY_ADDED_TAG": "Tagg er allerede lagt til",
+        "EMPTY_TAG": "Navnet kan ikke kun bestå av mellomrom",
+        "REQUIRED": "Et navn på taggen er påkrevd",
+        "FETCH_TAGS": "Feil under henting av tags",
+        "CREATE_TAGS": "Feil under oppretting av taggene"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Slett tagg",
+        "HIDE_INPUT": "Skjul inntasting"
+      },
+      "TAGS_LOADING": "Tagger laster",
+      "CREATE_TAGS_SUCCESS": "Tagger ble opprettet"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Kategorier",
+    "NO_CATEGORIES_CREATED": "Ingen kategorier opprettet",
+    "NO_CATEGORIES_ASSIGNED": "Ingen kategorier tilordnet",
+    "ASSIGN_CATEGORIES": "Tilordne kategorier",
+    "UNASSIGN_CATEGORY": "Fjern tilordning av kategorier",
+    "DELETE_CATEGORY": "Slett kategori",
+    "EXISTING_CATEGORIES": "Eksisterende kategorier",
+    "GENERIC_CREATE": "Opprett: {{name}}",
+    "NAME": "Kategorinavn",
+    "LOADING": "Laster",
+    "HIDE_INPUT": "Skjul inntasting",
+    "ERRORS": {
+      "NOT_FOUND": "Kategorier ikke funnet",
+      "REQUIRED": "Kategorinavn er påkrevd",
+      "EMPTY_CATEGORY": "Kategorinavn kan ikke kun inneholde mellomrom",
+      "ALREADY_EXISTS": "Kategori eksisterer allerede",
+      "ALREADY_ADDED_CATEGORY": "Kategori er allerede lagt til",
+      "CREATE_CATEGORIES": "Feil under oppretting av kategorier",
+      "EXISTING_CATEGORIES": "Noen kategorier eksisterer allerede"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Opprettelsesdato",
       "MODIFIER": "Modifikator",
       "MODIFIED_DATE": "Endringsdato",
-      "CONTENT_TYPE": "Innholdstype"
+      "CONTENT_TYPE": "Innholdstype",
+      "TAGS": "Tagger",
+      "ADD_TAG_TOOLTIP": "Legg til tagg"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

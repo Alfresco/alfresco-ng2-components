@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "Kohteen {{ name }} poistaminen ei onnistunut",
       "ERROR_PLURAL": "{{ number }} kohteen poistaminen ei onnistunut"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Todennustyyppi",
+      "BASIC": "Perustodennus",
+      "SSO": "Kertakirjautuminen",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Palvelu",
+      "REQUIRED": "Tämä kenttä on pakollinen",
+      "CS_URL_ERROR": "Content Services -osoite ei täsmää URL-muodon kanssa",
+      "PS_URL_ERROR": "Process Services -osoite ei täsmää URL-muodon kanssa",
+      "TITLE": "Asetukset",
+      "CS-HOST": "Content Servicesin URL-osoite",
+      "BP-HOST": "Process Servicesin URL-osoite",
+      "BACK": "Takaisin",
+      "APPLY": "Käytä",
+      "NOT_VALID": "Osoitetta http(s)://host|ip:port(/path) ei tunnisteta. Kokeile toista URL-osoitetta.",
+      "REDIRECT": "Uudelleenohjauksen URI-osoite",
+      "REDIRECT_LOGOUT": "Uudelleenohjauksen URI-osoite – uloskirjautuminen",
+      "SILENT": "Hiljainen kirjautuminen",
+      "SCOPE": "Laajuus",
+      "CLIENT": "Asiakastunnus",
+      "PUBLIC_URLS": "Yleisten url-osoitteiden hiljainen sisäänkirjaus",
+      "SECRET": "Salainen"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Lisää uusi",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Ota koko näytön tila käyttöön",
       "CLOSE": "Sulje",
       "NEXT_FILE": "Seuraava tiedosto",
-      "PREV_FILE": "Edellinen tiedosto"
+      "PREV_FILE": "Edellinen tiedosto",
+      "WAIT": "Odota"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Edellinen sivu",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Salasana",
       "ERROR": "Salasana on väärä"
     },
-    "SUBTITLES": "Tekstitykset"
+    "SUBTITLES": "Tekstitykset",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Esikatselun lataus viivästynyt",
+      "LABEL": "Voit odottaa edelleen tai ladata asiakirjan."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

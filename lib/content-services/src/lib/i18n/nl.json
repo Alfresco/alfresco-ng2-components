@@ -73,7 +73,15 @@
       "REMOVE": "Verwijderen",
       "DOWNLOAD": "Downloaden"
     },
-    "LOADER_LABEL": "Lader lijst met documenten"
+    "LOADER_LABEL": "Lader lijst met documenten",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Voorbeeld laden reageert niet",
+      "LABEL": "Download om dit document te bekijken of annuleer om door te gaan zonder voorbeeld.",
+      "ACTIONS": {
+        "CANCEL": "Annuleren",
+        "DOWNLOAD": "Downloaden"
+      }
+    }
   },
   "ALFRESCO_DOCUMENT_LIST": {
     "BUTTON": {
@@ -94,12 +102,13 @@
     "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'",
     "COPY": "Kopiëren",
     "COPY_ITEM": "'{{ name }}' kopiëren naar...",
+    "LOCATION": "Locatie",
     "MOVE": "Verplaatsen",
     "MOVE_ITEM": "'{{ name }}' verplaatsen naar...",
     "NO_RESULTS": "Geen resultaten gevonden",
     "SEARCH": "Zoeken",
     "SEARCH_RESULTS": "Zoekresultaten",
-    "SELECT_LOCATION": "Locatie selecteren",
+    "SELECT_LIBRARY": "Selecteer een bibliotheek",
     "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "U kunt geen bestand uploaden terwijl een zoekopdracht wordt uitgevoerd",
     "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "Gebruiker heeft geen rechten voor het uploaden van content naar de map",
     "REPOSITORY": "Repository",
@@ -131,6 +140,51 @@
     },
     "BUTTON": {
       "ADD": "Tag toevoegen"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Bestaande tags:",
+      "EXISTING_TAGS_SELECTION": "Selecteer een bestaande tag:",
+      "NO_TAGS_CREATED": "Geen tags gemaakt",
+      "NO_EXISTING_TAGS": "Geen bestaande tags",
+      "TITLE": "Tags maken",
+      "CREATE_TAG": "Maken: {{tag}}",
+      "NAME": "Naam",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag bestaat al",
+        "ALREADY_ADDED_TAG": "Tag is al toegevoegd",
+        "EMPTY_TAG": "Tagnaam mag niet alleen uit spaties bestaan",
+        "REQUIRED": "Een tagnaam is vereist",
+        "FETCH_TAGS": "Fout bij het ophalen van de tags",
+        "CREATE_TAGS": "Fout bij het maken van de tags"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Tag verwijderen",
+        "HIDE_INPUT": "Invoer verbergen"
+      },
+      "TAGS_LOADING": "Tags laden",
+      "CREATE_TAGS_SUCCESS": "Tags zijn gemaakt"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categorieën",
+    "NO_CATEGORIES_CREATED": "Geen categorieën gemaakt",
+    "NO_CATEGORIES_ASSIGNED": "Geen categorieën toegewezen",
+    "ASSIGN_CATEGORIES": "Categorieën toewijzen",
+    "UNASSIGN_CATEGORY": "Toewijzing van categorie ongedaan maken",
+    "DELETE_CATEGORY": "Categorie verwijderen",
+    "EXISTING_CATEGORIES": "Bestaande categorieën",
+    "GENERIC_CREATE": "Maken: {{name}}",
+    "NAME": "Categorienaam",
+    "LOADING": "Wordt geladen",
+    "HIDE_INPUT": "Invoer verbergen",
+    "ERRORS": {
+      "NOT_FOUND": "Categorieën niet gevonden",
+      "REQUIRED": "Een categorienaam is vereist",
+      "EMPTY_CATEGORY": "Categorienaam mag niet alleen uit spaties bestaan",
+      "ALREADY_EXISTS": "Categorie bestaat al",
+      "ALREADY_ADDED_CATEGORY": "Categorie is al toegevoegd",
+      "CREATE_CATEGORIES": "Fout bij het maken van categorieën",
+      "EXISTING_CATEGORIES": "Sommige categorieën bestaan al"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -358,7 +412,9 @@
       "CREATED_DATE": "Datum gemaakt",
       "MODIFIER": "Gewijzigd door",
       "MODIFIED_DATE": "Datum gewijzigd",
-      "CONTENT_TYPE": "Contenttype"
+      "CONTENT_TYPE": "Contenttype",
+      "TAGS": "Tags",
+      "ADD_TAG_TOOLTIP": "Tag toevoegen"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

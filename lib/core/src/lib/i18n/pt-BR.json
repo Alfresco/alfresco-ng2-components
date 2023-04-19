@@ -169,6 +169,30 @@
       "ERROR_SINGULAR": "Não foi possível excluir {{ name }}",
       "ERROR_PLURAL": "Não foi possível excluir {{ number }} itens"
     },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "Tipo de autenticação",
+      "BASIC": "Autenticação básica",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "Implicit Flow",
+      "CODE-FLOW": "Code Flow",
+      "PROVIDER": "Provedor",
+      "REQUIRED": "Este campo é obrigatório",
+      "CS_URL_ERROR": "O endereço do Content Services não corresponde ao formato de URL",
+      "PS_URL_ERROR": "O endereço do Process Services não corresponde ao formato de URL",
+      "TITLE": "Configurações",
+      "CS-HOST": "URL do Content Services",
+      "BP-HOST": "URL do Process Services",
+      "BACK": "Voltar",
+      "APPLY": "Aplicar",
+      "NOT_VALID": "http(s)://host|ip:port(/path) não reconhecida, tente uma URL diferente.",
+      "REDIRECT": "Redirecionar URI",
+      "REDIRECT_LOGOUT": "Redirecionar logout de URI",
+      "SILENT": "Login silencioso",
+      "SCOPE": "Escopo",
+      "CLIENT": "ID de cliente",
+      "PUBLIC_URLS": "Login silencioso de URLs públicas",
+      "SECRET": "Segredo"
+    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Adicionar",
@@ -367,7 +391,8 @@
       "FULLSCREEN": "Ativar modo de tela cheia",
       "CLOSE": "Fechar",
       "NEXT_FILE": "Próximo arquivo",
-      "PREV_FILE": "Arquivo anterior"
+      "PREV_FILE": "Arquivo anterior",
+      "WAIT": "Aguarde"
     },
     "ARIA": {
       "PREVIOUS_PAGE": "Página anterior",
@@ -405,7 +430,11 @@
       "PLACEHOLDER": "Senha",
       "ERROR": "A senha está errada"
     },
-    "SUBTITLES": "Legendas"
+    "SUBTITLES": "Legendas",
+    "NON_RESPONSIVE_DIALOG": {
+      "HEADER": "Carregamento de visualização atrasado",
+      "LABEL": "Você pode continuar a esperar, ou baixar o documento."
+    }
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {

@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Autentiseringstyp",
       "BASIC": "Grundläggande autentisering",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit flöde",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Leverantör",
       "REQUIRED": "Detta fält krävs",
       "CS_URL_ERROR": "Content Services-adressen matchar inte URL-formatet",

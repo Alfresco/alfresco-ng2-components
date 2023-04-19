@@ -45,8 +45,8 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
         "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
-        "PROCESS_NAME_REQUIRED": "プロセス名を入力してください",
-        "PROCESS_DEFINITION_REQUIRED": "プロセス定義を指定してください",
+        "PROCESS_NAME_REQUIRED": "プロセス名は必須です",
+        "PROCESS_DEFINITION_REQUIRED": "プロセス定義は必須です",
         "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
         "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。"
       }

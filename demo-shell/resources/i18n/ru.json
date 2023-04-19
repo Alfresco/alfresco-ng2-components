@@ -4,7 +4,7 @@
       "TYPE-AUTH": "Тип авторизации",
       "BASIC": "Базовая авторизация",
       "SSO": "SSO",
-      "IMPLICIT-FLOW": "Неявный поток",
+      "IMPLICIT-FLOW": "Implicit Flow",
       "PROVIDER": "Поставщик",
       "REQUIRED": "Поле обязательно для заполнения",
       "CS_URL_ERROR": "Адрес Content Services не соответствует формату URL",
@@ -106,7 +106,7 @@
     "FORM_LOADING": "Загрузка формы",
     "UPLOADER": "Загрузчик",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Метка",
+    "TAG": "Тег",
     "PIPES": "Каналы",
     "TRASHCAN": "Корзина",
     "SOCIAL": "Социальный",
@@ -169,7 +169,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "Отображаемое имя",
       "IS_LOCKED": "Блокировка",
-      "TAG": "Метка",
+      "TAG": "Тег",
       "NODE_ID": "Идентификатор узла",
       "CREATED_BY": "Создано пользователем",
       "CREATED_ON": "Дата создания",
@@ -294,9 +294,9 @@
     "RATING": "Компонент \"Рейтинг\""
   },
   "TAG": {
-    "LIST": "Список меток Content Services",
+    "LIST": "Список тегов Content Services",
     "INSERT": "Вставить идентификатор узла",
-    "NODE_LIST": "Список меток по идентификатору узла"
+    "NODE_LIST": "Список тегов по идентификатору узла"
   },
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Наследовать разрешение",
