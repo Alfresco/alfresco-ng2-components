@@ -17,7 +17,7 @@ module.exports = async ({github, context, dependencyName, tagVersion = 'alpha' }
     });
     
     let latestPkgToUpdate = undefined;
-    if (tagVersion !== 'release') {
+    if (tagVersion !== 'latest') {
         console.log('alpha: taking most recent')
 
         const filteredAlphaPkgs = availablePakages.filter( (item) => item.name.match('^[0-9]*.[0-9]*.[0-9]*.-[0-9]*$'));
