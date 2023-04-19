@@ -20,8 +20,8 @@ import { TreeNodeType, TreeResponse, TreeService } from '../../tree';
 import { CategoryNode } from '../models/category-node.interface';
 import { CategoryService } from './category.service';
 import { CategoryEntry, CategoryPaging } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, mergeMap, tap, toArray } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
@@ -30,7 +30,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
         super();
     }
 
-    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
+    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<any> {
         return !name ? this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
             const parentNode: CategoryNode = this.getParentNode(parentNodeId);
             const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => ({
@@ -56,25 +56,40 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
             }
             const treeResponse: TreeResponse<CategoryNode> = {entries: nodesList, pagination: response.list.pagination};
             return treeResponse;
-        })) : this.categoryService.searchCategories(name, skipCount, maxItems).pipe(map((pagingResult) => {
+        })) : this.categoryService.searchCategories(name, skipCount, maxItems).pipe(mergeMap((pagingResult) => {
             const nextAfterGeneralPathPartIndex = 3;
             const pathSeparator = '/';
-            return {
-                entries: pagingResult.list.entries.map((category) => {
-                    const path = category.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex)
-                        .join(pathSeparator);
-                    return {
-                        id: category.entry.id,
-                        nodeName: path ? `${path}/${category.entry.name}` : category.entry.name,
-                        parentId: category.entry.parentId,
-                        level: 0,
-                        nodeType: TreeNodeType.RegularNode,
-                        hasChildren: false,
-                        isLoading: false
-                    };
-                }),
-                pagination: pagingResult.list.pagination
-            };
-        }));
+            return from(pagingResult.list.entries).pipe(mergeMap((category) => {
+                const path = category.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex)
+                    .join(pathSeparator);
+
+                return this.categoryService.getCategory(category.entry.id).pipe(
+                    map((res) => {
+                        return {
+                            id: category.entry.id,
+                            nodeName: path ? `${path}/${category.entry.name}` : category.entry.name,
+                            parentId: category.entry.parentId,
+                            level: 0,
+                            nodeType: TreeNodeType.RegularNode,
+                            hasChildren: res.entry.hasChildren,
+                            isLoading: false
+                        };
+                    })
+                );
+            }),
+                toArray());
+            // const treeResponse: TreeResponse<CategoryNode>;
+            // entries.subscribe(res => {
+            //    treeResponse = {entries: res, pagination: pagingResult.list.pagination}
+            // })
+            //
+            // const treeResponse: TreeResponse<CategoryNode> = {entries, pagination: pagingResult.list.pagination}
+            // return treeResponse;
+        })).pipe(
+            tap(res => {
+
+                console.log(res)
+            })
+        );
     }
 }
