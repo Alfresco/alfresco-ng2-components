@@ -49,6 +49,35 @@
                 </adf-tags-creator>
             </div>
         </ng-container>
+        <ng-container *ngIf="displayCategories">
+            <mat-expansion-panel *ngIf="!editable">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
+            </mat-expansion-panel>
+            <div *ngIf="editable"
+                class="adf-metadata-categories-header">
+                <div class="adf-metadata-categories-title">
+                    <p>{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}</p>
+                    <button
+                        mat-icon-button
+                        [attr.title]="'CATEGORIES_MANAGEMENT.ASSIGN_CATEGORIES' | translate"
+                        [hidden]="categoryControlVisible || saving"
+                        (click)="categoryControlVisible = true">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <adf-categories-management
+                    [(categoryNameControlVisible)]="categoryControlVisible"
+                    [disableRemoval]="saving"
+                    [categories]="categories"
+                    [managementMode]="categoriesManagementMode"
+                    [classifiableChanged]="classifiableChanged"
+                    (categoriesChange)="storeCategoriesToAssign($event)">
+                </adf-categories-management>
+            </div>
+        </ng-container>
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
                 <div *ngFor="let group of groupedProperties; let first = first;"

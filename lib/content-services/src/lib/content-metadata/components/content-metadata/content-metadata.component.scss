@@ -63,4 +63,26 @@
         justify-content: space-evenly;
         margin: 10px;
     }
+
+    &-metadata-categories-header {
+        display: flex;
+        flex-direction: column;
+        padding: 0 24px;
+
+        .adf-metadata-categories-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            height: 64px;
+
+            button {
+                margin-right: -14px;
+            }
+
+            [hidden] {
+                visibility: hidden;
+            }
+        }
+    }
 }

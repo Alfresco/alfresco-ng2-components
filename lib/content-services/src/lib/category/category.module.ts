@@ -15,32 +15,27 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
-import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
-import { TagModule } from '../tag/tag.module';
-import { CategoriesModule } from '../category/category.module';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentDirectiveModule } from '../directives/content-directive.module';
+import { MaterialModule } from '../material.module';
+import { CategoriesManagementComponent } from './categories-management/categories-management.component';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule,
-        FlexLayoutModule,
         CoreModule,
-        TagModule,
-        CategoriesModule
-    ],
-    exports: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent
+        MaterialModule,
+        TranslateModule,
+        ContentDirectiveModule
     ],
     declarations: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent
+        CategoriesManagementComponent
+    ],
+    exports: [
+        CategoriesManagementComponent
     ]
 })
-export class ContentMetadataModule {}
+export class CategoriesModule {}

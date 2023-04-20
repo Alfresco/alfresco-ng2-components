@@ -6,7 +6,7 @@
     </p>
     <div
         class="adf-tags-list"
-        [class.adf-tags-list-with-scrollbar]="tagsListScrollbarVisible"
+        [class.adf-tags-list-fixed]="!tagNameControlVisible"
         #tagsList>
         <p
             *ngFor="let tag of tags"
@@ -17,7 +17,7 @@
                 mat-icon-button
                 (click)="removeTag(tag)"
                 [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [hidden]="disabledTagsRemoving">
+                [disabled]="disabledTagsRemoving">
                 <mat-icon>remove</mat-icon>
             </button>
         </p>
@@ -67,7 +67,7 @@
     </ng-container>
     <div class="adf-tags-list">
         <mat-selection-list
-            *ngIf="!spinnerVisible || existingTags"
+            *ngIf="!spinnerVisible && existingTags"
             (selectionChange)="addExistingTagToTagsToAssign($event)"
             [disabled]="isOnlyCreateMode()">
             <mat-list-option

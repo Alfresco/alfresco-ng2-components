@@ -26,7 +26,7 @@ import { catchError, concatMap, takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
-import { CategoryService } from '../../category';
+import { CategoryService } from '../../category/services/category.service';
 
 export interface SelectedBucket {
     field: FacetField;

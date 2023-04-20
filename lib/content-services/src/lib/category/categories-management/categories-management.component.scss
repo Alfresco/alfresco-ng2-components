@@ -1,0 +1,79 @@
+.adf-categories-management {
+    .adf-category-name-field {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        .adf-btn-padded {
+            margin-right: -14px;
+        }
+    }
+
+    .adf-assigned-categories {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        word-break: break-word;
+
+        .adf-btn-padded {
+            margin-right: -14px;
+        }
+    }
+
+    .adf-categories-padded {
+        padding: 5px 0;
+    }
+
+    [hidden] {
+        visibility: hidden;
+    }
+}
+
+.adf-categories-list {
+    padding-bottom: 10px;
+
+    .mat-list-base .mat-list-item,
+    .mat-list-base .mat-list-option {
+        display: flex;
+        height: 100%;
+        overflow-wrap: anywhere;
+        padding: 5px 0;
+        font-size: 14px;
+
+        &.mat-list-item-disabled {
+            background-color: inherit;
+            color: inherit;
+        }
+
+        .mat-list-item-content,
+        .mat-list-item-content-reverse {
+            padding: 0;
+
+            .mat-pseudo-checkbox {
+                display: none;
+            }
+        }
+    }
+
+    .adf-existing-categories-label {
+        font-size: 10px;
+        color: var(--theme-secondary-text-color);
+        margin-bottom: 2px;
+    }
+
+    mat-spinner {
+        margin: auto;
+    }
+}
+
+.adf-existing-categories-panel {
+    .adf-create-category-label {
+        color: var(--theme-primary-color);
+        cursor: pointer;
+        overflow-wrap: anywhere;
+    }
+}

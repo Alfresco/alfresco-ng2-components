@@ -80,7 +80,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
-        this._spinnerVisible = true;
         this._initialExistingTags = null;
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
@@ -100,7 +99,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     set tagNameControlVisible(tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
-            this._existingTagsPanelVisible = !!this.tagNameControl.value.trim();
+            this._existingTagsPanelVisible = true;
             setTimeout(() => {
                 this.tagNameInputElement.nativeElement.scrollIntoView();
             });
@@ -182,8 +181,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     if (name) {
                         this._spinnerVisible = true;
                         this._existingTagsPanelVisible = true;
-                    } else {
-                        this._existingTagsPanelVisible = false;
                     }
                     this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
                     this.cancelExistingTagsLoading$.next();
@@ -339,6 +336,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             });
         } else {
             this.existingExactTag = null;
+            this._spinnerVisible = false;
         }
     }
 

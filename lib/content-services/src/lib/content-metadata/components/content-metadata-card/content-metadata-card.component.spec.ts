@@ -96,6 +96,10 @@ describe('ContentMetadataCardComponent', () => {
         expect(fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance.displayTags).toBeTrue();
     });
 
+    it('should assign true to displayCategories for ContentMetadataComponent', () => {
+        expect(fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance.displayCategories).toBeTrue();
+    });
+
     it('should pass through the preset to the underlying component', () => {
         const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
 

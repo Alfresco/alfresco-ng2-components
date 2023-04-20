@@ -228,14 +228,14 @@ describe('TagsCreatorComponent', () => {
             expect(tagElements).toEqual([tag2]);
         }));
 
-        it('should hide button for removing tag if disabledTagsRemoving is true', fakeAsync(() => {
+        it('should disable button for removing tag if disabledTagsRemoving is true', fakeAsync(() => {
             const tag1 = 'Tag 1';
             component.disabledTagsRemoving = true;
 
             addTagToAddedList(tag1);
             tick();
 
-            expect(getRemoveTagButtons()[0].hasAttribute('hidden')).toBeTrue();
+            expect(getRemoveTagButtons()[0].hasAttribute('disabled')).toBeTrue();
         }));
 
         it('should show button for removing tag if disabledTagsRemoving is false', fakeAsync(() => {
@@ -371,17 +371,11 @@ describe('TagsCreatorComponent', () => {
             expect(getPanel()).toBeFalsy();
         });
 
-        it('should not be visible when input is visible and empty string is typed in input', fakeAsync(() => {
-            typeTag('   ');
-
-            expect(getPanel()).toBeFalsy();
-        }));
-
-        it('should not be visible when input is visible and nothing has been typed', () => {
+        it('should be visible when input is visible and nothing has been typed to reserve required space', () => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
 
-            expect(getPanel()).toBeFalsy();
+            expect(getPanel()).toBeTruthy();
         });
 
         it('should not be visible when something has been typed and input has been hidden', fakeAsync(() => {
@@ -416,12 +410,12 @@ describe('TagsCreatorComponent', () => {
             it('should not be visible if typed only spaces', fakeAsync(() => {
                 typeTag('  ');
 
-                expect(getCreateTagLabel()).toBeFalsy();
+                expect(getCreateTagLabel().hidden).toBeTrue();
             }));
 
             it('should not be visible if required error occurs', fakeAsync(() => {
                 typeTag('');
-                expect(getCreateTagLabel()).toBeFalsy();
+                expect(getCreateTagLabel().hidden).toBeTrue();
             }));
 
             it('should not be visible when trying to duplicate already added tag', fakeAsync(() => {
@@ -444,12 +438,6 @@ describe('TagsCreatorComponent', () => {
                 typeTag(tag);
                 expect(getCreateTagLabel().hasAttribute('hidden')).toBeTruthy();
             }));
-
-            it('should not be visible if typed nothing', () => {
-                component.tagNameControlVisible = true;
-                fixture.detectChanges();
-                expect(getCreateTagLabel()).toBeFalsy();
-            });
 
             it('should not be visible during typing', fakeAsync(() => {
                 typeTag('some tag', 0);

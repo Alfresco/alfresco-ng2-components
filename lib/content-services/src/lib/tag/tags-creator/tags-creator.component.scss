@@ -2,10 +2,6 @@ adf-tags-creator {
     display: block;
     margin-left: -24px;
 
-    &.adf-creator-with-existing-tags-panel {
-        background-color: var(--theme-background-color);
-    }
-
     .adf-label-with-icon-button {
         display: flex;
         justify-content: space-between;
@@ -49,11 +45,6 @@ adf-tags-creator {
         padding-left: 10px;
         padding-right: 0;
         overflow: auto;
-
-        &.adf-tags-list-with-scrollbar {
-            padding-right: 7px;
-            margin-right: -22px;
-        }
     }
 
     .adf-tag {
@@ -71,13 +62,10 @@ adf-tags-creator {
     }
 
     .adf-existing-tags-panel {
-        background-color: var(--theme-card-background-color);
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         padding-top: 12px;
-        position: relative;
         width: 100%;
-        z-index: 100;
 
         .adf-existing-tags-label {
             font-size: 10px;
@@ -92,7 +80,6 @@ adf-tags-creator {
             padding-right: 0;
             display: flex;
             flex-direction: column;
-            min-height: 75px;
 
             .adf-tag {
                 margin-bottom: 18px;
