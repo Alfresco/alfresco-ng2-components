@@ -493,8 +493,6 @@ describe('TaskListCloudComponent', () => {
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
-
-            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
@@ -619,8 +617,6 @@ describe('TaskListCloudComponent', () => {
             fixture = TestBed.createComponent(TaskListCloudComponent);
             component = fixture.componentInstance;
             taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-
-            component.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
