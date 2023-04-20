@@ -21,11 +21,11 @@ import { DataTableSchema, PaginatedComponent,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent, CustomLoadingContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataTableComponent, DataColumn } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
@@ -202,6 +202,8 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    private onDestroy$ = new Subject<boolean>();
+
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
     skipCount: number = 0;
@@ -269,6 +271,11 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             });
     }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);
@@ -293,8 +300,8 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     private load() {
         this.isLoading = true;
 
-        this.isColumnSchemaCreated$.pipe(
-            take(1),
+        this.columnsSchemaSubject$.pipe(
+            takeUntil(this.onDestroy$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),
             switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode))
@@ -386,7 +393,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
         }, {});
 
         this.createColumns();
-        this.reload();
+        this.columnsSchemaSubject$.next(true);
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(

@@ -166,13 +166,11 @@ describe('TaskListCloudComponent', () => {
     it('should display empty content when process list is empty', () => {
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
-
+        
+        component.reload();
         fixture.detectChanges();
+        
         expect(component.isLoading).toBe(false);
-
-        component.appName = 'FAKE-APP-NAME';
-        fixture.detectChanges();
-
         const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
@@ -182,7 +180,6 @@ describe('TaskListCloudComponent', () => {
 
     it('should load spinner and show the content', () => {
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-        component.appName = 'FAKE-APP-NAME';
 
         component.reload();
         fixture.detectChanges();
@@ -208,8 +205,6 @@ describe('TaskListCloudComponent', () => {
     it('should hide columns on applying new columns visibility through columns selector', () => {
         component.showMainDatatableActions = true;
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-
-        component.appName = 'FAKE-APP-NAME';
 
         component.reload();
         fixture.detectChanges();
@@ -266,21 +261,9 @@ describe('TaskListCloudComponent', () => {
 
             expect(component.rows[0]).toEqual(expectedTask);
         });
-        component.appName = 'FAKE-APP-NAME';
-        fixture.detectChanges();
-    });
 
-    it('should reload tasks when reload() is called', (done) => {
-        component.appName = 'fake';
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            done();
-        });
-        fixture.detectChanges();
         component.reload();
+        fixture.detectChanges();
     });
 
     it('should emit row click event', (done) => {
@@ -383,7 +366,16 @@ describe('TaskListCloudComponent', () => {
             component.lastModifiedFrom = 'mock-lastmodified-date';
             component.owner = 'mock-owner-name';
 
-            component.reload();
+            const priorityChange = new SimpleChange(undefined, 1, true);
+            const statusChange = new SimpleChange(undefined, 'mock-status', true);
+            const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
+            const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+            component.ngOnChanges({
+                priority: priorityChange,
+                status: statusChange,
+                lastModifiedFrom: lastModifiedFromChange,
+                owner: ownerChange
+            });
             fixture.detectChanges();
 
             expect(component.isListEmpty()).toBeFalsy();
@@ -431,7 +423,7 @@ describe('TaskListCloudComponent', () => {
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', async () => {
+        it('should reset pagination when resetPaginationValues is called', () => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             const size = component.size;
@@ -450,20 +442,13 @@ describe('TaskListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            await fixture.whenStable();
 
             component.resetPagination();
-
-            component.appName = 'FAKE-APP-NAME';
-            fixture.detectChanges();
         });
 
-        it('should set pagination and reload when updatePagination is called', (done) => {
+        it('should set pagination and reload when updatePagination is called', () => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'reload').and.stub();
-            component.appName = 'FAKE-APP-NAME';
-
-            fixture.detectChanges();
 
             const pagination = {
                 maxItems: 250,
@@ -476,10 +461,11 @@ describe('TaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(pagination.skipCount);
                     expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                     expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                    done();
                 });
 
             component.updatePagination(pagination);
+
+            expect(component.reload).toHaveBeenCalled();
         });
     });
 
@@ -537,18 +523,17 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('it should not show copy tooltip when key is not present in data-column', () => {
-            customCopyComponent.taskList.success.subscribe(async () => {
-                await copyFixture.whenStable();
-
-                copyFixture.detectChanges();
-                copyFixture.debugElement
-                    .query(By.css('span[title="standalone-subtask"]'))
-                    .triggerEventHandler('mouseenter');
-                copyFixture.detectChanges();
+            customCopyComponent.taskList.success.subscribe(() => {
                 expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
             });
 
-            customCopyComponent.taskList.appName = 'FAKE-APP-NAME';
+            customCopyComponent.taskList.reload();
+            copyFixture.detectChanges();
+
+            copyFixture.debugElement
+                .query(By.css('span[title="standalone-subtask"]'))
+                .triggerEventHandler('mouseenter');
+
             copyFixture.detectChanges();
         });
     });
@@ -645,7 +630,6 @@ describe('TaskListCloudComponent', () => {
         it('should show tooltip if config copyContent flag is true', () => {
             taskSpy.and.returnValue(of(fakeGlobalTasks));
             component.presetColumn = 'fakeCustomSchema';
-            component.appName = 'FAKE-APP-NAME';
 
             component.reload();
             fixture.detectChanges();
@@ -661,7 +645,6 @@ describe('TaskListCloudComponent', () => {
         it('should replace priority values', () => {
             taskSpy.and.returnValue(of(fakeGlobalTasks));
             component.presetColumn = 'fakeCustomSchema';
-            component.appName = 'FAKE-APP-NAME';
 
             component.reload();
             fixture.detectChanges();
@@ -674,9 +657,6 @@ describe('TaskListCloudComponent', () => {
         it('replacePriorityValues should return undefined when no rows defined', () => {
             const emptyList = { list: { entries: [] } };
             taskSpy.and.returnValue(of(emptyList));
-            fixture.detectChanges();
-
-            component.appName = 'FAKE-APP-NAME';
             fixture.detectChanges();
 
             const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
@@ -694,9 +674,6 @@ describe('TaskListCloudComponent', () => {
 
         it('replacePriorityValues should return replaced value when rows are defined', () => {
             taskSpy.and.returnValue(of(fakeGlobalTasks));
-            fixture.detectChanges();
-
-            component.appName = 'FAKE-APP-NAME';
             fixture.detectChanges();
 
             expect(component.replacePriorityValues({
