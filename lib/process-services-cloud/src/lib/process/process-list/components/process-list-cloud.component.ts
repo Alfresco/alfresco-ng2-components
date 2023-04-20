@@ -398,12 +398,14 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     }
 
     onColumnsWidthChanged(columns: DataColumn[]): void {
-        this.columnsWidths = columns.reduce((widthsColumnsMap, column) => {
+        const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
             if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
             }
             return widthsColumnsMap;
         }, {});
+
+        this.columnsWidths = {...this.columnsWidths, ...newColumnsWidths};
 
         this.createColumns();
 

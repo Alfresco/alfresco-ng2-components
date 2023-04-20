@@ -39,10 +39,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { TASK_LIST_CLOUD_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudModule } from '../task-list-cloud.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 
 @Component({
     template: `
@@ -96,6 +97,10 @@ describe('TaskListCloudComponent', () => {
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
     let taskListCloudService: TaskListCloudServiceInterface;
+    const preferencesService: PreferenceCloudServiceInterface = jasmine.createSpyObj('preferencesService', {
+        getPreferences: of({}),
+        updatePreference: of({})
+    });
 
     setupTestBed({
         imports: [
@@ -106,6 +111,10 @@ describe('TaskListCloudComponent', () => {
             {
                 provide: TASK_LIST_CLOUD_TOKEN,
                 useClass: TaskListCloudService
+            },
+            {
+                provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+                useValue: preferencesService
             }
         ]
     });
@@ -302,6 +311,46 @@ describe('TaskListCloudComponent', () => {
         component.onColumnsWidthChanged(newColumns);
 
         expect(component.columns[0].width).toBe(120);
+    });
+
+    it('should update columns widths when a column width gets changed', () => {
+        component.appName = 'fake-app-name';
+        component.reload();
+        fixture.detectChanges();
+
+        const newColumns = [...component.columns];
+        newColumns[0].width = 120;
+        component.onColumnsWidthChanged(newColumns);
+
+        expect(component.columns[0].width).toBe(120);
+        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+            name: 120
+        });
+    });
+
+    it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
+        component.appName = 'fake-app-name';
+        component.reload();
+        fixture.detectChanges();
+
+        const newColumns = [...component.columns];
+        newColumns[0].width = 120;
+        component.onColumnsWidthChanged(newColumns);
+
+        expect(component.columns[0].width).toBe(120);
+        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+            name: 120
+        });
+
+        newColumns[1].width = 150;
+        component.onColumnsWidthChanged(newColumns);
+
+        expect(component.columns[0].width).toBe(120);
+        expect(component.columns[1].width).toBe(150);
+        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+            name: 120,
+            created: 150
+        });
     });
 
     it('should re-create columns when a column order gets changed', () => {
