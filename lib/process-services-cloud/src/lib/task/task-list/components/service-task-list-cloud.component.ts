@@ -25,7 +25,7 @@ import { ServiceTaskListCloudService } from '../services/service-task-list-cloud
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { combineLatest } from 'rxjs';
 import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
-import { take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -57,7 +57,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent {
                 this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
                 this.columnsSchemaSubject$
             ]).pipe(
-                take(1)
+                takeUntil(this.onDestroy$)
             ).subscribe(
                 ([tasks]) => {
                     this.rows = tasks.list.entries;
