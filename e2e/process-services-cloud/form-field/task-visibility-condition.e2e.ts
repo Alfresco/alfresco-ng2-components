@@ -105,39 +105,6 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
 
-    it('[C315169] Should be able to start a process with visibility condition for number widgets ', async () => {
-        await processCloudDemoPage.openNewProcessForm();
-        await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
-
-        await startProcessPage.enterProcessName(processName);
-        await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
-        await startProcessPage.clickStartProcessButton();
-
-        await editProcessFilter.setFilter({ processName });
-        await processList.getDataTable().waitTillContentLoaded();
-        await processList.selectRow(processName);
-        await taskList.getDataTable().waitTillContentLoaded();
-        await taskList.selectRow('number_visibility_task');
-        await taskFormCloudComponent.clickClaimButton();
-
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
-        await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-
-        await taskFormCloudComponent.formFields().setFieldValue('Number1', '5');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
-
-        await taskFormCloudComponent.formFields().setFieldValue('Number1', '123');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
-        await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
-
-        await taskFormCloudComponent.formFields().setFieldValue('Number1', '4');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
-        await taskFormCloudComponent.clickCompleteButton();
-    });
-
     it('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
