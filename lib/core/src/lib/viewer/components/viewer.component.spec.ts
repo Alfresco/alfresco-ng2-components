@@ -675,5 +675,15 @@ describe('ViewerComponent', () => {
             flush();
             discardPeriodicTasks();
         }));
+
+        it('should emit downloadFileEvent when DownloadPromptDialog return DownloadPromptActions.DOWNLOAD on close', fakeAsync( () => {
+            dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.DOWNLOAD) } as any);
+            spyOn(component.downloadFile, 'emit');
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+
+            expect(component.downloadFile.emit).toHaveBeenCalled();
+        }));
     });
 });

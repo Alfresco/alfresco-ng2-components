@@ -21,6 +21,7 @@
     [urlFile]="urlFileContent"
     [tracks]="tracks"
     [readOnly]="readOnly"
+    (downloadFile)="onDownloadFile()"
     (navigateBefore)="onNavigateBeforeClick($event)"
     (navigateNext)="onNavigateNextClick($event)"
     (showViewerChange)="onClose()"

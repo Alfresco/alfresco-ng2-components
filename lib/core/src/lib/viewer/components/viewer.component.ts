@@ -190,6 +190,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
      * */
     downloadPromptReminderDelay: number = 15;
 
+    /**
+     * Emitted when user clicks on download button on download prompt dialog.
+     * */
+    @Output()
+    downloadFile: EventEmitter<void> = new EventEmitter<void>();
+
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
     navigateBefore = new EventEmitter<MouseEvent | KeyboardEvent>();
@@ -388,7 +394,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             this.isDialogVisible = true;
             this.dialog.open(DownloadPromptDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: DownloadPromptActions) => {
                 this.isDialogVisible = false;
-                if (result === DownloadPromptActions.WAIT) {
+                if (result === DownloadPromptActions.DOWNLOAD) {
+                    this.downloadFile.emit();
+                    this.onClose();
+                } else if (result === DownloadPromptActions.WAIT) {
                     if (this.enableDownloadPromptReminder) {
                         this.clearDownloadPromptTimeouts();
                         this.downloadPromptReminderTimer = window.setTimeout(() => {
