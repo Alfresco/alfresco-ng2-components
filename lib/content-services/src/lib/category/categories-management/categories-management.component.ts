@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     /**
      * Decides if categoryNameControl should be visible. Sets also existing categories panel visibility
      * and scrolls control into view when visible.
+     *
      * @param categoryNameControlVisible control visibility.
      */
      @Input()
@@ -223,6 +224,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     /**
      * Adds existing category to categories list and removes it from existing categories list.
+     *
      * @param change - selection list change containing selected category
      */
     addCategoryToAssign(change: MatSelectionListChange) {
@@ -235,6 +237,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     /**
      * Removes the category from categories list and adds it to existing categories list in ASSIGN mode.
+     *
      * @param category - category to remove
      */
     removeCategory(category: Category) {
@@ -298,11 +301,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     private validateIfNotAlreadyCreated(nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null>  {
         return this.existingCategoryLoaded$.pipe(
-            map<void, CategoryNameControlErrors | null>(() => {
-                return this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
+            map<void, CategoryNameControlErrors | null>(() => this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
                     ? { duplicatedExistingCategory: true }
-                    : null;
-            }),
+                    : null),
             first()
         );
     }

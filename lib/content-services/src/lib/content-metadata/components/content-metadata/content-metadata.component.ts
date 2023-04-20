@@ -256,6 +256,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Store all categories that node should be assigned to. Please note that they are just in "stored" state and are not yet saved
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     *
      * @param categoriesToAssign array of categories to store.
      */
     storeCategoriesToAssign(categoriesToAssign: Category[]) {
