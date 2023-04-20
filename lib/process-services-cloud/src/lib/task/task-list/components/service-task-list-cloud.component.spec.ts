@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, User } from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { shareReplay, skip } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 
 @Component({
@@ -111,8 +111,6 @@ describe('ServiceTaskListCloudComponent', () => {
                 }
             }
         });
-
-        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -120,7 +118,8 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should use the default schemaColumn as default', () => {
-        component.ngAfterContentInit();
+        fixture.detectChanges();
+
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(3);
     });
@@ -141,12 +140,8 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should load spinner and show the content', () => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-        fixture.detectChanges();
-        expect(component.isLoading).toBe(false);
-
-        component.ngOnChanges({ appName });
+        component.reload();
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);
@@ -161,27 +156,28 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
-        component.ngAfterContentInit();
+
         fixture.detectChanges();
+
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
         component.presetColumn = 'fakeCustomSchema';
+
         fixture.detectChanges();
+
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(2);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
-        component.ngAfterContentInit();
         expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
 
     it('should return the results if an application name is given', (done) => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -202,8 +198,8 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(component.rows[0]['serviceName']).toBe('simpleapp-rb');
             done();
         });
-        component.appName = appName.currentValue;
-        component.ngOnChanges({ appName });
+
+        component.reload();
         fixture.detectChanges();
     });
 
@@ -216,8 +212,9 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(component.isListEmpty()).not.toBeTruthy();
             done();
         });
-        fixture.detectChanges();
+
         component.reload();
+        fixture.detectChanges();
     });
 
     it('should emit row click event', (done) => {
@@ -299,12 +296,8 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(getServiceTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reset pagination when resetPaginationValues is called', () => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
 
             const size = component.size;
             const skipCount = component.skipCount;
@@ -315,7 +308,6 @@ describe('ServiceTaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(skipCount);
                     expect(updatedPagination.maxItems).toEqual(size);
                     expect(updatedPagination.skipCount).toEqual(skipCount);
-                    done();
                 });
 
             const pagination = {
@@ -323,17 +315,13 @@ describe('ServiceTaskListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            fixture.whenStable().then( () => {
-                component.resetPagination();
-            });
+
+            component.resetPagination();
         });
 
-        it('should set pagination and reload when updatePagination is called', (done) => {
+        it('should set pagination and reload when updatePagination is called', () => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
             spyOn(component, 'reload').and.stub();
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.ngOnChanges({ appName });
-            fixture.detectChanges();
 
             const pagination = {
                 maxItems: 250,
@@ -346,7 +334,6 @@ describe('ServiceTaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(pagination.skipCount);
                     expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                     expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                    done();
                 });
 
             component.updatePagination(pagination);
@@ -357,7 +344,6 @@ describe('ServiceTaskListCloudComponent', () => {
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
         let componentCustom: CustomTaskListComponent;
         let customCopyComponent: CustomCopyContentTaskListComponent;
-        let element: HTMLElement;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
         setupTestBed({
@@ -378,9 +364,6 @@ describe('ServiceTaskListCloudComponent', () => {
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
-            element = copyFixture.debugElement.nativeElement;
-
-            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
@@ -396,42 +379,35 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(componentCustom.taskList.columns.length).toEqual(2);
         });
 
-        it('it should show copy tooltip when key is present in data-colunn', fakeAsync(() => {
+        it('it should show copy tooltip when key is present in data-column', () => {
+            customCopyComponent.taskList.reload();
             copyFixture.detectChanges();
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            copyFixture.whenStable().then(() => {
-                copyFixture.detectChanges();
-                const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
-                spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-                copyFixture.detectChanges();
-                expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-            });
-            customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ appName });
-            copyFixture.detectChanges();
-        }));
 
-        it('it should not show copy tooltip when key is not present in data-column', (done) => {
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            copyFixture.debugElement
+                    .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
+                    .triggerEventHandler('mouseenter');
+
+            copyFixture.detectChanges();
+            expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
+        });
+
+        it('it should not show copy tooltip when key is not present in data-column', () => {
             customCopyComponent.taskList.success.subscribe(() => {
-                copyFixture.whenStable().then(() => {
-                    copyFixture.detectChanges();
-                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="serviceTaskName"]');
-                    spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-                    copyFixture.detectChanges();
-                    expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
-                    done();
-                });
+                expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
             });
-            customCopyComponent.taskList.appName = appName.currentValue;
-            customCopyComponent.taskList.ngOnChanges({ appName });
+
+            customCopyComponent.taskList.reload();
+            copyFixture.detectChanges();
+
+            copyFixture.debugElement
+                .query(By.css('span[title="serviceTaskName"]'))
+                .triggerEventHandler('mouseenter');
+
             copyFixture.detectChanges();
         });
     });
 
     describe('Copy cell content directive from app.config specifications', () => {
-
-        let element: HTMLElement;
         let taskSpy: jasmine.Spy;
 
         setupTestBed({
@@ -467,7 +443,6 @@ describe('ServiceTaskListCloudComponent', () => {
             });
             fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
             component = fixture.componentInstance;
-            element = fixture.debugElement.nativeElement;
             taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
         });
@@ -475,42 +450,37 @@ describe('ServiceTaskListCloudComponent', () => {
             fixture.destroy();
         });
 
-        it('shoud show tooltip if config copyContent flag is true', fakeAsync(() => {
+        it('shoud show tooltip if config copyContent flag is true', () => {
             taskSpy.and.returnValue(of(fakeServiceTask));
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.presetColumn = 'fakeCustomSchema';
+
+            component.reload();
+            fixture.detectChanges();
+
+            fixture.debugElement
+                .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
+                .triggerEventHandler('mouseenter');
+
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
+        });
+
+        it('shoud not show tooltip if config copyContent flag is true', () => {
+            taskSpy.and.returnValue(of(fakeServiceTask));
+            component.presetColumn = 'fakeCustomSchema';
 
             component.success.subscribe(() => {
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]');
-                    spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-                    fixture.detectChanges();
-                    expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-                });
+                expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
             });
 
-            component.presetColumn = 'fakeCustomSchema';
-            component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            component.ngAfterContentInit();
-        }));
+            component.reload();
+            fixture.detectChanges();
 
-        it('shoud not show tooltip if config copyContent flag is true', fakeAsync(() => {
-            taskSpy.and.returnValue(of(fakeServiceTask));
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.success.subscribe(() => {
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const spanHTMLElement = element.querySelector<HTMLInputElement>('span[title="serviceTaskName"]');
-                    spanHTMLElement.dispatchEvent(new Event('mouseenter'));
-                    fixture.detectChanges();
-                    expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
-                });
-            });
-            component.presetColumn = 'fakeCustomSchema';
-            component.appName = appName.currentValue;
-            component.ngOnChanges({ appName });
-            component.ngAfterContentInit();
-        }));
+            fixture.debugElement
+                .query(By.css('span[title="serviceTaskName"]'))
+                .triggerEventHandler('mouseenter');
+
+            fixture.detectChanges();
+        });
     });
 });

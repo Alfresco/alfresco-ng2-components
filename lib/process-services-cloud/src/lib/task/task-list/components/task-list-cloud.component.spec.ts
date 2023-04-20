@@ -245,7 +245,7 @@ describe('TaskListCloudComponent', () => {
         expect(component.isListEmpty()).toBeTruthy();
     });
 
-    it('should return the results if an application name is given', () => {
+    it('should return the results if an application name is given', (done) => {
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
         component.success.subscribe((res) => {
@@ -260,6 +260,7 @@ describe('TaskListCloudComponent', () => {
             };
 
             expect(component.rows[0]).toEqual(expectedTask);
+            done();
         });
 
         component.reload();

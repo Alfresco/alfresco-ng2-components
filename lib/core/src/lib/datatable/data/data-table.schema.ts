@@ -44,7 +44,6 @@ export abstract class DataTableSchema<T = unknown> {
     private layoutPresets = {};
 
     columnsSchemaSubject$ = new ReplaySubject<boolean>();
-    isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
     constructor(private appConfigService: AppConfigService,
                 protected presetKey: string,
