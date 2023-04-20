@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ describe('Start Process Component', () => {
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
-    let appCreated, simpleAppCreated, dateFormAppCreated;
+    let appCreated; let simpleAppCreated; let dateFormAppCreated;
 
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -79,8 +79,8 @@ describe('Start Process Component', () => {
     const auditLogFile = 'Audit.pdf';
 
     const jpgFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
+        location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        name: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     describe('Provider: BPM', () => {
@@ -476,8 +476,8 @@ describe('Start Process Component', () => {
         const uploadDialog = new UploadDialogPage();
         let processUserModel;
         const imageUploaded = new FileModel({
-            'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
-            'location': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location
+            name: browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
+            location: browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location
         });
 
         beforeAll(async () => {

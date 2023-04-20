@@ -3,7 +3,7 @@
   "description": "Provides extensibility support for ADF applications.",
   "version": "6.0.0-A.4",
   "license": "Apache-2.0",
-  "author": "Alfresco Software, Ltd.",
+  "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@
 import { SecurityMarkPaging, SecurityMarkEntry, SecurityMarkBody } from '@alfresco/js-api';
 
 export const fakeMarksApiResponse: SecurityMarkPaging = {
-    'list': {
-        'pagination': {
-            'count': 1,
-            'hasMoreItems': false,
-            'totalItems': 1,
-            'skipCount': 0,
-            'maxItems': 10
+    list: {
+        pagination: {
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1,
+            skipCount: 0,
+            maxItems: 10
         },
-        'entries': [
+        entries: [
             {
-                'entry': {
-                    'groupId': 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                    'name': 'securityMark1',
-                    'id': 'ffBOeOJJ'
+                entry: {
+                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    name: 'securityMark1',
+                    id: 'ffBOeOJJ'
                 }
             }
         ]

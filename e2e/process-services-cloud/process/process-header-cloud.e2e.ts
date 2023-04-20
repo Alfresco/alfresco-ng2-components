@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,9 +55,9 @@ describe('Process Header cloud component', () => {
         const processInstancesService = new ProcessInstancesService(apiService);
         const queryService = new QueryService(apiService);
 
-        let testUser, groupInfo;
+        let testUser; let groupInfo;
 
-        let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
+        let runningProcess; let runningCreatedDate; let parentCompleteProcess; let childCompleteProcess; let completedCreatedDate;
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
@@ -92,7 +92,7 @@ describe('Process Header cloud component', () => {
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 
-        afterAll(async() => {
+        afterAll(async () => {
             await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });

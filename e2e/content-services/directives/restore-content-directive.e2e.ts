@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ describe('Restore content directive', () => {
     let testFolder: NodeEntry;
 
     const uploadActions = new UploadActions(apiService);
-    let folderWithContent, folderWithFolder, subFolder, subFile, testFile;
+    let folderWithContent; let folderWithFolder; let subFolder; let subFile; let testFile;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -223,7 +223,7 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore with folder hierarchies', () => {
-        let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
+        let parentFolder; let folderWithin; let pdfFile; let pngFile; let mainFile; let mainFolder;
 
         beforeAll(async () => {
             await apiService.login(anotherAcsUser.username, anotherAcsUser.password);

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -173,11 +173,11 @@ describe('ViewerComponent', () => {
 
         appConfigService.config = {
             ...appConfigService.config,
-            'viewer': {
-                'enableDownloadPrompt':  false,
-                'enableDownloadPromptReminder': false,
-                'downloadPromptDelay': 3,
-                'downloadPromptReminderDelay': 2
+            viewer: {
+                enableDownloadPrompt:  false,
+                enableDownloadPromptReminder: false,
+                downloadPromptDelay: 3,
+                downloadPromptReminderDelay: 2
             }
         };
     });
@@ -628,11 +628,11 @@ describe('ViewerComponent', () => {
         beforeEach(() => {
             appConfigService.config = {
                 ...appConfigService.config,
-                'viewer': {
-                    'enableDownloadPrompt':  true,
-                    'enableDownloadPromptReminder': true,
-                    'downloadPromptDelay': 3,
-                    'downloadPromptReminderDelay': 2
+                viewer: {
+                    enableDownloadPrompt:  true,
+                    enableDownloadPromptReminder: true,
+                    downloadPromptDelay: 3,
+                    downloadPromptReminderDelay: 2
                 }
             };
             dialogOpenSpy = spyOn(dialog, 'open').and.returnValue({afterClosed: () => of(null)} as any);

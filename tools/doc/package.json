@@ -2,7 +2,7 @@
   "name": "adf-doc-tools",
   "description": "ADF doc tools",
   "version": "4.2.0",
-  "author": "Alfresco Software, Ltd.",
+  "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {},
   "dependencies": {
     "@alfresco/js-api": "5.5.0-780",

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,8 +77,8 @@ describe('Process list cloud', () => {
         const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
-        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo,
-            anotherProcessInstance;
+        let completedProcess; let runningProcessInstance; let switchProcessInstance; let noOfApps; let testUser; let groupInfo;
+            let anotherProcessInstance;
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
@@ -99,23 +99,23 @@ describe('Process list cloud', () => {
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
         anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
         switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
         completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
+                name: StringUtil.generateRandomString(),
+                businessKey: StringUtil.generateRandomString()
             });
 
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);

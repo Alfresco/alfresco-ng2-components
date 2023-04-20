@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,104 +149,104 @@ export const dropdownVisibilityFormFieldJson = {
 };
 
 export const dropdownVisibilityFormVariableJson = {
-    'formRepresentation': {
-        'id': 'form-8fe70790-ba51-4c46-8ef0-efc9044ed51c',
-        'name': 'SampleDropdown',
-        'description': '',
-        'version': 0,
-        'formDefinition': {
-            'tabs': [],
-            'fields': [{
-                'id': 'fde2c0bd-dbd6-4946-945e-4ab20aa1633a',
-                'name': 'Label',
-                'type': 'container',
-                'tab': null,
-                'numberOfColumns': 2,
-                'fields': {
-                    '1': [{
-                        'id': 'dropdownOne',
-                        'name': 'Dropdown',
-                        'type': 'dropdown',
-                        'required': false,
-                        'colspan': 1,
-                        'optionType': 'manual',
-                        'options': [{
-                            'id': 'empty',
-                            'name': 'Choose one...'
+    formRepresentation: {
+        id: 'form-8fe70790-ba51-4c46-8ef0-efc9044ed51c',
+        name: 'SampleDropdown',
+        description: '',
+        version: 0,
+        formDefinition: {
+            tabs: [],
+            fields: [{
+                id: 'fde2c0bd-dbd6-4946-945e-4ab20aa1633a',
+                name: 'Label',
+                type: 'container',
+                tab: null,
+                numberOfColumns: 2,
+                fields: {
+                    1: [{
+                        id: 'dropdownOne',
+                        name: 'Dropdown',
+                        type: 'dropdown',
+                        required: false,
+                        colspan: 1,
+                        optionType: 'manual',
+                        options: [{
+                            id: 'empty',
+                            name: 'Choose one...'
                         }, {
-                            'id': 'option_2',
-                            'name': '1'
+                            id: 'option_2',
+                            name: '1'
                         }, {
-                            'id': 'option_3',
-                            'name': '2'
+                            id: 'option_3',
+                            name: '2'
                         }],
-                        'restUrl': null,
-                        'restResponsePath': null,
-                        'restIdProperty': null,
-                        'restLabelProperty': null,
-                        'visibilityCondition': {
-                            'leftType': 'variable',
-                            'leftValue': 'name',
-                            'operator': '==',
-                            'rightValue': 'value1',
-                            'rightType': 'value',
-                            'nextConditionOperator': 'and',
-                            'nextCondition': {
-                                'leftType': 'variable',
-                                'leftValue': 'number',
-                                'operator': '==',
-                                'rightValue': 11,
-                                'rightType': 'value',
-                                'nextConditionOperator': 'and',
-                                'nextCondition': {
-                                    'leftType': 'variable',
-                                    'leftValue': 'yesOrNo',
-                                    'operator': '==',
-                                    'rightValue': 'true',
-                                    'rightType': 'value',
-                                    'nextConditionOperator': 'and',
-                                    'nextCondition': {
-                                        'leftType': 'variable',
-                                        'leftValue': 'today',
-                                        'operator': '!=',
-                                        'rightValue': '2019-08-06',
-                                        'rightType': 'value',
-                                        'nextConditionOperator': '',
-                                        'nextCondition': null
+                        restUrl: null,
+                        restResponsePath: null,
+                        restIdProperty: null,
+                        restLabelProperty: null,
+                        visibilityCondition: {
+                            leftType: 'variable',
+                            leftValue: 'name',
+                            operator: '==',
+                            rightValue: 'value1',
+                            rightType: 'value',
+                            nextConditionOperator: 'and',
+                            nextCondition: {
+                                leftType: 'variable',
+                                leftValue: 'number',
+                                operator: '==',
+                                rightValue: 11,
+                                rightType: 'value',
+                                nextConditionOperator: 'and',
+                                nextCondition: {
+                                    leftType: 'variable',
+                                    leftValue: 'yesOrNo',
+                                    operator: '==',
+                                    rightValue: 'true',
+                                    rightType: 'value',
+                                    nextConditionOperator: 'and',
+                                    nextCondition: {
+                                        leftType: 'variable',
+                                        leftValue: 'today',
+                                        operator: '!=',
+                                        rightValue: '2019-08-06',
+                                        rightType: 'value',
+                                        nextConditionOperator: '',
+                                        nextCondition: null
                                     }
                                 }
                             }
                         },
-                        'params': {
-                            'existingColspan': 1,
-                            'maxColspan': 2
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
                         }
                     }],
-                    '2': []
+                    2: []
                 }
             }],
-            'outcomes': [],
-            'metadata': {},
-            'variables': [{
-                'id': '74cdd5d3-120b-4926-995e-89e929a16c8f',
-                'name': 'name',
-                'type': 'string',
-                'value': 'value1'
+            outcomes: [],
+            metadata: {},
+            variables: [{
+                id: '74cdd5d3-120b-4926-995e-89e929a16c8f',
+                name: 'name',
+                type: 'string',
+                value: 'value1'
             }, {
-                'id': '4a46531a-c217-4c08-99bb-c510b7c18e63',
-                'name': 'number',
-                'type': 'integer',
-                'value': 11
+                id: '4a46531a-c217-4c08-99bb-c510b7c18e63',
+                name: 'number',
+                type: 'integer',
+                value: 11
             }, {
-                'id': 'c469fbce-4039-4817-9d1c-5102ccc2bd26',
-                'name': 'yesOrNo',
-                'type': 'boolean',
-                'value': true
+                id: 'c469fbce-4039-4817-9d1c-5102ccc2bd26',
+                name: 'yesOrNo',
+                type: 'boolean',
+                value: true
             }, {
-                'id': '36aa1031-3bbe-48f2-9d5d-465bf4158cb9',
-                'name': 'today',
-                'type': 'date',
-                'value': '2019-05-13'
+                id: '36aa1031-3bbe-48f2-9d5d-465bf4158cb9',
+                name: 'today',
+                type: 'date',
+                value: '2019-05-13'
             }]
         }
     }

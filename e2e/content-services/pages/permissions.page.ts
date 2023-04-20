@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ export class PermissionsPage {
     inheritedButton = '[data-automation-id="adf-inherit-toggle-button"]';
     errorElement = TestElement.byId('adf-permission-manager-error');
     localPermissionList = TestElement.byCss('[data-automation-id="adf-locally-set-permission"]');
-    addPermissionButton = TestElement.byCss("button[data-automation-id='adf-add-permission-button']");
+    addPermissionButton = TestElement.byCss('button[data-automation-id=\'adf-add-permission-button\']');
 
     async changePermission(name: string, role: string): Promise<void> {
         await browser.sleep(1000);

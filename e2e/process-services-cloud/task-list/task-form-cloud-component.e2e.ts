@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ describe('Task form cloud component', () => {
     const processInstancesService = new ProcessInstancesService(apiService);
     const formCloudService = new FormCloudService(apiService);
 
-    const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
+    const completedTaskName = StringUtil.generateRandomString(); const assignedTaskName = StringUtil.generateRandomString();
     const myTasksFilter = 'my-tasks';
     const completedTasksFilter = 'completed-tasks';
     const dateFieldId = 'Date0rzbb6';
@@ -69,8 +69,8 @@ describe('Task form cloud component', () => {
     const changedDate = '2020-07-10';
     const dropdownFieldId = 'DropdownOptions';
 
-    let completedTask, createdTask, assigneeTask, toBeCompletedTask, formValidationsTask, formTaskId, assigneeTaskId, assigneeReleaseTask, candidateUsersTask ;
-    let dateTimerTaskId, dateTimerTask, dateTimerChangedTaskId, dateTimerChangedTask, dropdownOptionsTask;
+    let completedTask; let createdTask; let assigneeTask; let toBeCompletedTask; let formValidationsTask; let formTaskId; let assigneeTaskId; let assigneeReleaseTask; let candidateUsersTask ;
+    let dateTimerTaskId; let dateTimerTask; let dateTimerChangedTaskId; let dateTimerChangedTask; let dropdownOptionsTask;
 
     beforeAll(async () => {
         try {

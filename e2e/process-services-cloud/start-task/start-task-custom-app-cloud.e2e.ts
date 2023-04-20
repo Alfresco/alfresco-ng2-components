@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    let apsUser, testUser, activitiUser, groupInfo;
+    let apsUser; let testUser; let activitiUser; let groupInfo;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');

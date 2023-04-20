@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1581,9 +1581,9 @@ describe('DocumentList', () => {
     it('should display fileAutoDownload dialog if node size exceeds appConfig.viewer.fileAutoDownloadSizeThresholdInMB', async () => {
         appConfigService.config = {
             ...appConfigService.config,
-            'viewer': {
-                'enableFileAutoDownload': true,
-                'fileAutoDownloadSizeThresholdInMB': 10
+            viewer: {
+                enableFileAutoDownload: true,
+                fileAutoDownloadSizeThresholdInMB: 10
             }
         };
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;

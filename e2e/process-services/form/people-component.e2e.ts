@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ describe('People component', () => {
     const taskUtil = new TaskUtil(apiService);
     const applicationUtil = new ApplicationsUtil(apiService);
 
-    let processUserModel, assigneeUserModel, secondAssigneeUserModel;
+    let processUserModel; let assigneeUserModel; let secondAssigneeUserModel;
     const peopleTitle = 'People this task is shared with ';
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];

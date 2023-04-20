@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ describe('Lock File', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
     });
 
-    let site, documentLibrary;
+    let site; let documentLibrary;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');

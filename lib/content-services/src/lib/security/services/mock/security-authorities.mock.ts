@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +18,22 @@
 import { AuthorityClearanceGroupPaging } from '@alfresco/js-api';
 
 export const fakeAuthorityClearanceApiResponse: AuthorityClearanceGroupPaging = {
-    'list': {
-        'pagination': {
-            'count': 1,
-            'hasMoreItems': false,
-            'totalItems': 1,
-            'skipCount': 0,
-            'maxItems': 10
+    list: {
+        pagination: {
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1,
+            skipCount: 0,
+            maxItems: 10
         },
-        'entries': [
+        entries: [
             {
-                'entry': {
-                    'id': 'test-id',
-                    'displayLabel': 'test-displayLabel',
-                    'systemGroup': false,
-                    'type': 'test-type',
-                    'marks': []
+                entry: {
+                    id: 'test-id',
+                    displayLabel: 'test-displayLabel',
+                    systemGroup: false,
+                    type: 'test-type',
+                    marks: []
                 }
             }
         ]

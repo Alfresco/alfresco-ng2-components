@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,18 +54,18 @@ describe('Version component permissions', () => {
     const nodesApi = new NodesApi(apiService.getInstance());
 
     const newVersionFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     const lockFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
     });
 
     const differentCreatorFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     });
 
     const uploadActions = new UploadActions(apiService);
@@ -133,8 +133,8 @@ describe('Version component permissions', () => {
 
     describe('Manager', () => {
         const sameCreatorFile = new FileModel({
-            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {
@@ -205,8 +205,8 @@ describe('Version component permissions', () => {
 
     describe('Contributor', () => {
         const sameCreatorFile = new FileModel({
-            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {
@@ -260,8 +260,8 @@ describe('Version component permissions', () => {
 
     describe('Collaborator', () => {
         const sameCreatorFile = new FileModel({
-            'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+            name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {

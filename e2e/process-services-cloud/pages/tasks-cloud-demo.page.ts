@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ export class TasksCloudDemoPage {
     contextMenuToggle = $('mat-slide-toggle[data-automation-id="contextmenu"]');
     multiSelectionToggle = $('mat-slide-toggle[data-automation-id="multiSelection"]');
     testingModeToggle = $('mat-slide-toggle[data-automation-id="testingMode"]');
-    selectedRows = element(by.xpath("//div[text()=' Selected Rows: ']"));
-    noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
+    selectedRows = element(by.xpath('//div[text()=\' Selected Rows: \']'));
+    noOfSelectedRows = element.all(by.xpath('//div[text()=\' Selected Rows: \']//li'));
     addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
     keyInputField = TestElement.byCss('input[data-placeholder="Key"]');
     titleInputField = TestElement.byCss('input[data-placeholder="Title"]');

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ describe('Comment component for Processes', () => {
     const activitiCommentsApi = new ActivitiCommentsApi(apiService.getInstance());
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
 
-    let user, appId, secondUser;
+    let user; let appId; let secondUser;
 
     const taskName = {
         completed_task: 'Test Completed',
@@ -106,7 +106,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalCommentsLatest = await activitiCommentsApi.getTaskComments(newTask.id, { 'latestFirst': true });
+        const totalCommentsLatest = await activitiCommentsApi.getTaskComments(newTask.id, { latestFirst: true });
 
         const thirdTaskComment = { message: 'Third Task Comment' };
 
@@ -135,7 +135,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalComments = await activitiCommentsApi.getTaskComments(newTask.id, { 'latestFirst': true });
+        const totalComments = await activitiCommentsApi.getTaskComments(newTask.id, { latestFirst: true });
 
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();

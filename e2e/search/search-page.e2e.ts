@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ describe('Search component - Search Page', () => {
     const usersActions = new UsersActions(apiService);
 
     const acsUser = new UserModel();
-    const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
+    const emptyFolderModel = new FolderModel({ name: 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
     const newFolderModel = new FolderModel();
     let fileNames = [];
@@ -66,8 +66,8 @@ describe('Search component - Search Page', () => {
         fileNames.splice(0, 1);
 
         firstFileModel = new FileModel({
-            'name': search.active.firstFile,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+            name: search.active.firstFile,
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
         await apiService.loginWithProfile('admin');
@@ -95,7 +95,7 @@ describe('Search component - Search Page', () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    it('[C260264] Should display message when no results are found', async() => {
+    it('[C260264] Should display message when no results are found', async () => {
         const notExistentFileName = StringUtil.generateRandomString();
         await searchBarPage.checkSearchBarIsNotVisible();
         await searchBarPage.checkSearchIconIsVisible();

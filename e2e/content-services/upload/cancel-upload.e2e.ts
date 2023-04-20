@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,18 +35,18 @@ describe('Upload component', async () => {
     let acsUser: UserModel;
 
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const mediumFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_location
     });
 
     const largeFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+        name: browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
     beforeAll(async () => {
@@ -58,7 +58,7 @@ describe('Upload component', async () => {
         await contentServicesPage.goToDocumentList();
     });
 
-    const deleteNodesInCurrentPage = async function () {
+    const deleteNodesInCurrentPage = async function() {
         const nodeList = await contentServicesPage.getElementsDisplayedId();
 
         for (const node of nodeList) {

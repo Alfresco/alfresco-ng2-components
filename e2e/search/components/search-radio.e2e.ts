@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ describe('Search Radio Component', () => {
         folder: `${randomName}Folder`
     };
 
-    let createdFile, createdFolder;
+    let createdFile; let createdFolder;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -141,8 +141,8 @@ describe('Search Radio Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
-                    'name': 'APP.SEARCH.RADIO.FOLDER',
-                    'value': "TYPE:'cm:folder'"
+                    name: 'APP.SEARCH.RADIO.FOLDER',
+                    value: 'TYPE:\'cm:folder\''
                 });
             }
 
@@ -199,8 +199,8 @@ describe('Search Radio Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
-                    'name': 'APP.SEARCH.RADIO.FOLDER',
-                    'value': "TYPE:'cm:folder'"
+                    name: 'APP.SEARCH.RADIO.FOLDER',
+                    value: 'TYPE:\'cm:folder\''
                 });
             }
 
@@ -281,8 +281,8 @@ describe('Search Radio Component', () => {
             await navigationBarPage.navigateToContentServices();
 
             jsonFile.categories[5].component.settings.options.push({
-                'name': filterType.custom,
-                'value': "TYPE:'cm:content'"
+                name: filterType.custom,
+                value: 'TYPE:\'cm:content\''
             });
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));

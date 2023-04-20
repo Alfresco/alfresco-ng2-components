@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,9 +67,9 @@ describe('Task Assignee', () => {
 
             try {// creates group if not available
                 await adminGroupsApi.createNewGroup({
-                    'name': app.candidateGroup,
-                    'tenantId': user.tenantId,
-                    'type': 1
+                    name: app.candidateGroup,
+                    tenantId: user.tenantId,
+                    type: 1
                 });
             } catch (e) {
             }
@@ -134,7 +134,7 @@ describe('Task Assignee', () => {
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
             const adminGroup = await adminGroupsApi.createNewGroup(
-                { 'name': app.adminGroup, 'tenantId': user.tenantId }
+                { name: app.adminGroup, tenantId: user.tenantId }
             );
 
             await adminGroupsApi.addGroupMember(adminGroup.id, user.id);
@@ -142,7 +142,7 @@ describe('Task Assignee', () => {
             await adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
             const candidateGroup = await adminGroupsApi.createNewGroup(
-                { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
+                { name: app.candidateGroup, tenantId: user.tenantId, type: 1 }
             );
 
             await adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);

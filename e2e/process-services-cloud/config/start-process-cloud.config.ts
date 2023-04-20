@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,20 +19,20 @@ export class StartProcessCloudConfiguration {
 
     getConfiguration() {
         return {
-            'name': 'processwithstarteventform',
-            'values': [
+            name: 'processwithstarteventform',
+            values: [
                 {
-                    'name': 'FirstName',
-                    'value': 'sample name'
+                    name: 'FirstName',
+                    value: 'sample name'
                 },
                 {
-                    'name': 'Number07vyx9',
-                    'value': 17
+                    name: 'Number07vyx9',
+                    value: 17
                 }
             ],
-            'variable': {
-                'mykey1': 'myvalue',
-                'mykey2': 'myvalue2'
+            variable: {
+                mykey1: 'myvalue',
+                mykey2: 'myvalue2'
             }
         };
     }

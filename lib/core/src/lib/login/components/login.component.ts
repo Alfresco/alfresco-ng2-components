@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /** The copyright text below the login box. */
     @Input()
-    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText: string = '\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.';
 
     /** Custom validation rules for the login form. */
     @Input()

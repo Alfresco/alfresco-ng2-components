@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ describe('Task counters cloud', () => {
         const processInstancesService = new ProcessInstancesService(apiService);
         const queryService = new QueryService(apiService);
 
-        let testUser, groupInfo;
+        let testUser; let groupInfo;
 
         const createdTaskName = StringUtil.generateRandomString();
 
@@ -83,7 +83,7 @@ describe('Task counters cloud', () => {
             await expect(await taskFilter.getTaskFilterCounter('my-tasks')).toBe('0');
 
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles, simpleApp);
-            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { 'name': StringUtil.generateRandomString() });
+            const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: StringUtil.generateRandomString() });
             const task = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
             await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,8 +50,8 @@ describe('Edit task filters and task list properties', () => {
     const processInstancesService = new ProcessInstancesService(apiService);
 
     const noTasksFoundMessage = 'No Tasks Found';
-    let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask,
-        otherOwnerTask, testUser, groupInfo, simpleTask;
+    let createdTask; let notAssigned; let notDisplayedTask; let processDefinition; let processInstance; let priorityTask; let subTask;
+        let otherOwnerTask; let testUser; let groupInfo; let simpleTask;
     const priority = 1;
 
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
@@ -76,7 +76,7 @@ describe('Edit task filters and task list properties', () => {
 
         simpleTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
         notAssigned = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
-        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority: priority });
+        priorityTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { priority });
         await tasksService.claimTask(priorityTask.entry.id, simpleApp);
 
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
@@ -87,7 +87,7 @@ describe('Edit task filters and task list properties', () => {
 
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-        subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { 'parentTaskId': createdTask.entry.id });
+        subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { parentTaskId: createdTask.entry.id });
         await tasksService.claimTask(subTask.entry.id, simpleApp);
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();

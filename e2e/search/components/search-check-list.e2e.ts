@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ describe('Search Checklist Component', () => {
         folder: `${randomName}Folder`
     };
 
-    let createdFile, createdFolder;
+    let createdFile; let createdFolder;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -152,8 +152,8 @@ describe('Search Checklist Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
-                    'name': 'Folder',
-                    'value': "TYPE:'cm:folder'"
+                    name: 'Folder',
+                    value: 'TYPE:\'cm:folder\''
                 });
             }
 
@@ -192,8 +192,8 @@ describe('Search Checklist Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
-                    'name': 'Folder',
-                    'value': "TYPE:'cm:folder'"
+                    name: 'Folder',
+                    value: 'TYPE:\'cm:folder\''
                 });
             }
 
@@ -249,8 +249,8 @@ describe('Search Checklist Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
                 jsonFile.categories[1].component.settings.options.push({
-                    'name': 'Folder',
-                    'value': "TYPE:'cm:folder'"
+                    name: 'Folder',
+                    value: 'TYPE:\'cm:folder\''
                 });
             }
 
@@ -339,8 +339,8 @@ describe('Search Checklist Component', () => {
 
         it('[C277019] Should be able to add new properties with different types', async () => {
             jsonFile.categories[1].component.settings.options.push({
-                'name': filterType.custom,
-                'value': "TYPE:'cm:auditable'"
+                name: filterType.custom,
+                value: 'TYPE:\'cm:auditable\''
             });
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));

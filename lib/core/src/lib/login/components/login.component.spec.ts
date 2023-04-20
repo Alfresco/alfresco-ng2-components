@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -327,7 +327,7 @@ describe('LoginComponent', () => {
 
         it('should render the default copyright text', () => {
             expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.');
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('\u00A9 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.');
         });
 
         it('should render the customised copyright text', () => {

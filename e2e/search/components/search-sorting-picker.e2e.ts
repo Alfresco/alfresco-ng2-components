@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,16 +44,16 @@ describe('Search Sorting Picker', () => {
     const acsUser = new UserModel();
 
     const pngAModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     };
 
     const pngDModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     };
 
-    let pngA, pngD;
+    let pngA; let pngD;
     const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
@@ -62,6 +62,26 @@ describe('Search Sorting Picker', () => {
 
     const search = '_png_file.png';
     let jsonFile;
+
+    const checkSortingDropdownIsDisplayed = async (key = 'Modifier', label = 'Modifier') => {
+        await navigationBarPage.navigateToContentServices();
+        jsonFile = SearchConfiguration.getConfiguration();
+        jsonFile.sorting.options.push({
+            key,
+            label,
+            type: 'FIELD',
+            field: 'cm:modifier',
+            ascending: true
+        });
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
+
+        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+    };
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -102,23 +122,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277271] Should be able to add a custom search sorter in the "sort by" option', async () => {
-        await navigationBarPage.navigateToContentServices();
-        jsonFile = SearchConfiguration.getConfiguration();
-        jsonFile.sorting.options.push({
-            'key': 'Modifier',
-            'label': 'Modifier',
-            'type': 'FIELD',
-            'field': 'cm:modifier',
-            'ascending': true
-        });
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search);
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
         await searchSortingPicker.checkOptionsDropdownIsDisplayed();
         await searchSortingPicker.checkOptionIsDisplayed('Modifier');
@@ -147,11 +151,11 @@ describe('Search Sorting Picker', () => {
         jsonFile = SearchConfiguration.getConfiguration();
         jsonFile.sorting.options[0].ascending = false;
         jsonFile.sorting.defaults[0] = {
-            'key': 'Size',
-            'label': 'Size',
-            'type': 'FIELD',
-            'field': 'content.size',
-            'ascending': true
+            key: 'Size',
+            label: 'Size',
+            type: 'FIELD',
+            field: 'content.size',
+            ascending: true
         };
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -196,24 +200,7 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', async () => {
-        await navigationBarPage.navigateToContentServices();
-
-        jsonFile = SearchConfiguration.getConfiguration();
-        jsonFile.sorting.options.push({
-            'key': 'Modified Date',
-            'label': 'Modified Date',
-            'type': 'FIELD',
-            'field': 'cm:modified',
-            'ascending': true
-        });
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search);
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchSortingPicker.checkSortingDropdownIsDisplayed();
+        await checkSortingDropdownIsDisplayed('Modified Date', 'Modified Date');
         await searchSortingPicker.sortBy('ASC', 'Modified Date');
 
         const idList = await contentServices.getElementsDisplayedId();
@@ -229,7 +216,7 @@ describe('Search Sorting Picker', () => {
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
 
-    const getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
+    const getNodesDisplayed = async function(numberOfElements: number, idList: string[]) {
         const promises = [];
         let nodeList;
 

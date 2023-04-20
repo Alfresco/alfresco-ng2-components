@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,26 +56,26 @@ describe('Task Details - Form', () => {
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
     const tasksApi = new TasksApi(apiService.getInstance());
 
-    let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
+    let task; let otherTask; let user; let newForm; let attachedForm; let otherAttachedForm;
 
     beforeAll(async () => {
         const attachedFormModel = {
-            'name': StringUtil.generateRandomString(),
-            'description': '',
-            'modelType': 2,
-            'stencilSet': 0
+            name: StringUtil.generateRandomString(),
+            description: '',
+            modelType: 2,
+            stencilSet: 0
         };
         const otherAttachedFormModel = {
-            'name': StringUtil.generateRandomString(),
-            'description': '',
-            'modelType': 2,
-            'stencilSet': 0
+            name: StringUtil.generateRandomString(),
+            description: '',
+            modelType: 2,
+            stencilSet: 0
         };
         const newFormModel = {
-            'name': StringUtil.generateRandomString(),
-            'description': '',
-            'modelType': 2,
-            'stencilSet': 0
+            name: StringUtil.generateRandomString(),
+            description: '',
+            modelType: 2,
+            stencilSet: 0
         };
 
         await apiService.loginWithProfile('admin');
@@ -89,7 +89,7 @@ describe('Task Details - Form', () => {
 
         otherAttachedForm = await modelsActions.modelsApi.createModel(otherAttachedFormModel);
 
-        await taskActionsApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
+        await taskActionsApi.attachForm(otherEmptyTask.id, { formId: otherAttachedForm.id });
         otherTask = await tasksApi.getTask(otherEmptyTask.id);
 
         await loginPage.login(user.username, user.password);
@@ -102,7 +102,7 @@ describe('Task Details - Form', () => {
 
     beforeEach(async () => {
         const emptyTask = await taskUtil.createStandaloneTask();
-        await taskActionsApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
+        await taskActionsApi.attachForm(emptyTask.id, { formId: attachedForm.id });
         task = await tasksApi.getTask(emptyTask.id);
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
@@ -183,7 +183,7 @@ describe('Task Details - Form', () => {
             tabFieldVar: 'tabBasicFieldVar'
         };
 
-        let newTask, appModel;
+        let newTask; let appModel;
 
         beforeAll(async () => {
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
@@ -192,7 +192,7 @@ describe('Task Details - Form', () => {
         beforeEach(async () => {
             newTask = await taskUtil.createStandaloneTask();
             const form = await formActions.getFormByName(app.visibilityProcess.formName);
-            await taskActionsApi.attachForm(newTask.id, { 'formId': form.id });
+            await taskActionsApi.attachForm(newTask.id, { formId: form.id });
 
             await browser.refresh();
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();

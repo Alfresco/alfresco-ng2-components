@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ describe('Attachment list action menu for tasks', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     const downloadedPngFile = pngFile.name;
-    let tenantId, appId, relatedContent, relatedContentId;
+    let tenantId; let appId; let relatedContent; let relatedContentId;
     const taskName = {
         active: 'Active Task',
         completed: 'Completed Task',
@@ -175,7 +175,7 @@ describe('Attachment list action menu for tasks', () => {
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
-        relatedContent = await contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContent = await contentApi.createRelatedContentOnTask(newTaskId, file, { isRelatedContent: true });
         relatedContentId = relatedContent.id;
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();

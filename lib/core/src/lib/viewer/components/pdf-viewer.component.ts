@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -167,7 +167,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            let pdfOptions = {
+            const pdfOptions = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)

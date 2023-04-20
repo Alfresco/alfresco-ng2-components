@@ -38,7 +38,7 @@ Open the `src/app/login/login.component.html` file. The contents will look like 
 
 ```html
 <adf-login
-	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
+	copyrightText="© 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved."
 	successRoute="/documentlist">
 </adf-login>
 ```
@@ -49,7 +49,7 @@ Looking at the documentation, we can see that the `<adf-login/>` component has a
 <adf-login
 	[showRememberMe]="false"
 	[showLoginActions]="false"
-	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
+	copyrightText="© 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved."
 	successRoute="/documentlist">
 </adf-login>
 ```
@@ -80,7 +80,7 @@ Open `src/app/login/login.component.html` and add `(executeSubmit)="myExecuteSub
 	[showRememberMe]="false"
 	[showLoginActions]="false"
 	(executeSubmit)="myExecuteSubmitMethod($event)"
-	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
+	copyrightText="© 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved."
 	successRoute="/documentlist">
 </adf-login>
 ```
@@ -147,7 +147,7 @@ Let's add a simple Hello World message in the footer. Open the template `src/app
 	[showRememberMe]="false"
 	[showLoginActions]="false"
 	(executeSubmit)="myExecuteSubmitMethod($event)"
-	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
+	copyrightText="© 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved."
 	successRoute="/documentlist">
 		<adf-login-footer>
 			<ng-template>

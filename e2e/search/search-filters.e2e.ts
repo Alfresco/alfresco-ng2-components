@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,30 +59,30 @@ describe('Search Filters', () => {
     const uniqueFileName3 = fileNamePrefix + StringUtil.generateRandomString(5);
 
     const fileModel = new FileModel({
-        'name': filename, 'shortName': filename.substring(0, 8)
+        name: filename, shortName: filename.substring(0, 8)
     });
 
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const txtFileModel1 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
-        'name': `${uniqueFileName1}.txt`
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+        name: `${uniqueFileName1}.txt`
     });
 
     const jpgFileModel = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
-        'name': `${uniqueFileName2}.jpg`
+        location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+        name: `${uniqueFileName2}.jpg`
     });
 
     const txtFileModel2 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
-        'name': `${uniqueFileName3}.txt`
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+        name: `${uniqueFileName3}.txt`
     });
 
-    let fileUploaded, fileTypePng, fileTypeTxt1, fileTypeJpg, fileTypeTxt2;
+    let fileUploaded; let fileTypePng; let fileTypeTxt1; let fileTypeJpg; let fileTypeTxt2;
 
     const filter = { type: 'TYPE-PNG Image' };
 
@@ -126,18 +126,18 @@ describe('Search Filters', () => {
         const currentYear = moment().year();
 
         jsonFile.facetQueries.queries[0] = {
-            'query': `created:${currentYear}`,
-            'label': 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR'
+            query: `created:${currentYear}`,
+            label: 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR'
         };
         jsonFile.facetQueries.queries[1] = {
-            'query': `content.mimetype:text/html`,
-            'label': 'SEARCH.FACET_QUERIES.MIMETYPE',
-            'group': 'Type facet queries'
+            query: `content.mimetype:text/html`,
+            label: 'SEARCH.FACET_QUERIES.MIMETYPE',
+            group: 'Type facet queries'
         };
         jsonFile.facetQueries.queries[2] = {
-            'query': `content.size:[0 TO 10240]`,
-            'label': 'SEARCH.FACET_QUERIES.XTRASMALL',
-            'group': 'Size facet queries'
+            query: `content.size:[0 TO 10240]`,
+            label: 'SEARCH.FACET_QUERIES.XTRASMALL',
+            group: 'Size facet queries'
         };
 
 

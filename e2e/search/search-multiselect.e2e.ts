@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,34 +36,35 @@ describe('Search Component - Multi-Select Facet', () => {
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
-    let site, userOption;
+    const createSite = async (user: UserModel) => {
+        await apiService.loginWithProfile('admin');
+        await usersActions.createUser(user);
+        await apiService.login(user.username, user.password);
+        const sitesApi = new SitesApi(apiService.getInstance());
+        site = await sitesApi.createSite({
+            title: StringUtil.generateRandomString(8),
+            visibility: 'PUBLIC'
+        });
+    };
+    const randomName = StringUtil.generateRandomString();
+    const txtFileInfo = new FileModel({
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+        name: `${randomName}.txt`
+    });
+
+    let site; let userOption;
 
     describe('', () => {
-        let jpgFile, jpgFileSite, txtFile, txtFileSite;
+        let jpgFile; let jpgFileSite; let txtFile; let txtFileSite;
         const acsUser = new UserModel();
 
-        const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
-            'name': `${randomName}.jpg`
-        });
-        const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
-            'name': `${randomName}.txt`
+            location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+            name: `${randomName}.jpg`
         });
 
         beforeAll(async () => {
-            await apiService.loginWithProfile('admin');
-
-            await usersActions.createUser(acsUser);
-
-            await apiService.login(acsUser.username, acsUser.password);
-
-            const sitesApi = new SitesApi(apiService.getInstance());
-            site = await sitesApi.createSite({
-                title: StringUtil.generateRandomString(8),
-                visibility: 'PUBLIC'
-            });
+            await createSite(acsUser);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, '-my-');
 
@@ -131,18 +132,13 @@ describe('Search Component - Multi-Select Facet', () => {
     });
 
     describe('', () => {
-        let jpgFile, txtFile;
+        let jpgFile; let txtFile;
         const userUploadingTxt = new UserModel();
         const userUploadingImg = new UserModel();
 
-        const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
-            'name': `${randomName}.jpg`
-        });
-        const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
-            'name': `${randomName}.txt`
+            location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+            name: `${randomName}.jpg`
         });
 
         beforeAll(async () => {
@@ -202,23 +198,8 @@ describe('Search Component - Multi-Select Facet', () => {
         let txtFile;
         const acsUser = new UserModel();
 
-        const randomName = StringUtil.generateRandomString();
-        const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
-            'name': `${randomName}.txt`
-        });
-
         beforeAll(async () => {
-            await apiService.loginWithProfile('admin');
-
-            await usersActions.createUser(acsUser);
-
-            await apiService.login(acsUser.username, acsUser.password);
-            const sitesApi = new SitesApi(apiService.getInstance());
-            site = await sitesApi.createSite({
-                title: StringUtil.generateRandomString(8),
-                visibility: 'PUBLIC'
-            });
+            await createSite(acsUser);
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
             await browser.sleep(browser.params.testConfig.timeouts.index_search);

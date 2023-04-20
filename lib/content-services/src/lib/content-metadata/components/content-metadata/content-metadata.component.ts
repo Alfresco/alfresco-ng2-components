@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -245,6 +245,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Register all tags which should be assigned to node. Please note that they are just in "register" state and are not yet saved
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
+     *
      * @param tags array of tags to register, they are not saved yet until we click save button.
      */
     storeTagsToAssign(tags: string[]) {
