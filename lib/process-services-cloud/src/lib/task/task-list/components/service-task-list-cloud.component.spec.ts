@@ -176,7 +176,7 @@ describe('ServiceTaskListCloudComponent', () => {
         expect(component.isListEmpty()).toBeTruthy();
     });
 
-    it('should return the results if an application name is given', (done) => {
+    it('should reload tasks when reload() is called', (done) => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -196,20 +196,6 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(component.rows[0]['status']).toBe('COMPLETED');
             expect(component.rows[0]['serviceFullName']).toBe('simpleapp-rb');
             expect(component.rows[0]['serviceName']).toBe('simpleapp-rb');
-            done();
-        });
-
-        component.reload();
-        fixture.detectChanges();
-    });
-
-    it('should reload tasks when reload() is called', (done) => {
-        component.appName = 'fake';
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
             done();
         });
 
