@@ -212,7 +212,7 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns.length).toEqual(2);
     });
 
-    it('should return the results if an application name is given', () => {
+    it('should return the results if an application name is given', (done) => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -231,8 +231,10 @@ describe('ProcessListCloudComponent', () => {
             expect(component.rows[0].entry['lastModified']).toBe(1540381146276);
             expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
             expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
+            done();
         });
 
+        component.reload();
         fixture.detectChanges();
     });
 
