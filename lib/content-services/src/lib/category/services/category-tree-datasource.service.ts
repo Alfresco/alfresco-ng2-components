@@ -79,6 +79,6 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
             }),
                 toArray(),
                 map(res =>  ({entries: res, pagination: pagingResult.list.pagination})));
-        }))
+        }));
     }
 }
