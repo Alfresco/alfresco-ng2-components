@@ -17,12 +17,12 @@
 
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { FacetBucketSortBy, FacetBucketSortDirection, FacetField } from '../models/facet-field.interface';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchService } from './search.service';
-import { takeUntil } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
@@ -346,6 +346,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         bucketList.forEach((item) => {
             const categoryId = item.label.split('/').pop();
             this.categoryService.getCategory(categoryId, {include: ['path']})
+                .pipe(catchError(error => throwError(error)))
                 .subscribe(
                     category => {
                         const nextAfterGeneralPathPartIndex = 3;

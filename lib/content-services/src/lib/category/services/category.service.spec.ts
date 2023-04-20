@@ -63,7 +63,7 @@ describe('CategoryService', () => {
 
     it('should fetch the category with the provided categoryId', fakeAsync(() => {
         const getSpy = spyOn(categoryService.categoriesApi, 'getCategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
-        categoryService.getCategory(fakeParentCategoryId, {include: ['path']}).subscribe(() =>  {
+        categoryService.getCategory(fakeParentCategoryId, {include: ['path']}).subscribe(() => {
             expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, {include: ['path']});
         });
     }));
