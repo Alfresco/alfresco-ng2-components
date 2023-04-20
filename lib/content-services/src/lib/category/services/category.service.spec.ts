@@ -61,6 +61,13 @@ describe('CategoryService', () => {
         });
     }));
 
+    it('should fetch the category with the provided categoryId', fakeAsync(() => {
+        const getSpy = spyOn(categoryService.categoriesApi, 'getCategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
+        categoryService.getCategory(fakeParentCategoryId).subscribe(() => {
+            expect(getSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId);
+        });
+    }));
+
     it('should create subcategory', fakeAsync(() => {
         const createSpy = spyOn(categoryService.categoriesApi, 'createSubcategories').and.returnValue(Promise.resolve(fakeCategoryEntry));
         categoryService.createSubcategories(fakeParentCategoryId, [fakeCategoryEntry.entry]).subscribe(() => {

@@ -13,32 +13,36 @@ Manages categories in Content Services.
 
 ### Methods
 
--   **createSubcategories**(parentCategoryId: `string`, payload: `CategoryBody[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryPaging|CategoryEntry>`<br/>
-    Creates subcategories under category with provided categoryId
-    -   _parentCategoryId:_ `string`  - The identifier of a parent category.
-    -   _payload:_ `CategoryBody[]`  - List of categories to be created.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryPaging|CategoryEntry>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CategoryPaging | CategoryEntry>
+-   **getSubcategories**(parentCategoryId: `string`, skipCount?: `number`, maxItems?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>`<br/>
+    Gets subcategories of a given parent category.
+    -   _parentCategoryId:_ `string`  - Identifier of a parent category
+    -   _skipCount:_ `number`  - Number of top categories to skip
+    -   _maxItems:_ `number`  - Maximum number of subcategories returned from Observable
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md)`>` - CategoryPaging object (defined in JS-API) with category paging list
+-   **getCategory**(categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
+    Gets a specific category by categoryId.
+    -   _categoryId:_ `string`  - The identifier of a category
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing information about the category.
+-   **createSubcategories**(parentCategoryId: `string`, payload: [`CategoryBody[]`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md) | [`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
+    Creates subcategories under category with provided categoryId.
+    -   _parentCategoryId:_ `string`  - Identifier of a parent category
+    -   _payload:_ [`CategoryBody[]`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)  - List of categories to be created
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md) | [`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing the category
+-   **updateCategory**(categoryId: `string`, payload: [`CategoryBody`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
+    Updates category.
+    -   _categoryId:_ `string`  - Identifier of a category
+    -   _payload:_ [`CategoryBody`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)  - Created category body
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing the category
 -   **deleteCategory**(categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Deletes category
     -   _categoryId:_ `string`  - The identifier of a category.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;void>
--   **getSubcategories**(parentCategoryId: `string`, skipCount?: `number`, maxItems?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryPaging>`<br/>
-    Get subcategories of a given parent category
-    -   _parentCategoryId:_ `string`  - The identifier of a parent category.
-    -   _skipCount:_ `number`  - (Optional) Number of top categories to skip.
-    -   _maxItems:_ `number`  - (Optional) Maximum number of subcategories returned from [Observable](http://reactivex.io/documentation/observable.html).
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryPaging>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CategoryPaging>
 -   **searchCategories**(name: `string`, skipCount: `number` = `0`, maxItems?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
     Searches categories by their name.
     -   _name:_ `string`  - Value for name which should be used during searching categories.
     -   _skipCount:_ `number`  - Specify how many first results should be skipped. Default 0.
     -   _maxItems:_ `number`  - (Optional) Specify max number of returned categories. Default is specified by [UserPreferencesService](../../core/services/user-preferences.service.md).
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;ResultSetPaging> Found categories which name contains searched name.
--   **updateCategory**(categoryId: `string`, payload: `CategoryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryEntry>`<br/>
-    Updates category
-    -   _categoryId:_ `string`  - The identifier of a category.
-    -   _payload:_ `CategoryBody`  - Updated category body
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<CategoryEntry>` - [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CategoryEntry>
 
 ## Details
 
