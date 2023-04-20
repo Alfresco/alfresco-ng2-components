@@ -137,6 +137,10 @@ describe('TagsCreatorComponent', () => {
         return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
     }
 
+    function getExistingTagsLabel(): string {
+        return fixture.debugElement.query(By.css('.adf-existing-tags-label')).nativeElement.textContent.trim();
+    }
+
     describe('Created tags list', () => {
         it('should display no tags created message after initialization', () => {
             const message =  fixture.debugElement.query(By.css('.adf-no-tags-message')).nativeElement.textContent.trim();
@@ -386,6 +390,20 @@ describe('TagsCreatorComponent', () => {
             clickAtHideNameInputButton();
 
             expect(getPanel()).toBeFalsy();
+        }));
+
+        it('should have correct label when mode is Create and Assign', fakeAsync(() => {
+            component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
+
+            typeTag('some tag');
+            expect(getExistingTagsLabel()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION');
+        }));
+
+        it('should have correct label when mode is Create', fakeAsync(() => {
+            component.mode = TagsCreatorMode.CREATE;
+
+            typeTag('some tag');
+            expect(getExistingTagsLabel()).toBe('TAG.TAGS_CREATOR.EXISTING_TAGS');
         }));
 
         describe('Label for tag creation', () => {
