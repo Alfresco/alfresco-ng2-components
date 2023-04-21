@@ -21,7 +21,7 @@ import { CategoryService } from '../services/category.service';
 import { CategoryNode, CategoryTreeDatasourceService } from '@alfresco/adf-content-services';
 import { CategoryServiceMock } from '../mock/category-mock.service';
 import { TreeNodeType, TreeResponse } from '../../tree';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { Pagination } from '@alfresco/js-api';
 
 describe('CategoryTreeDatasourceService', () => {
@@ -83,7 +83,45 @@ describe('CategoryTreeDatasourceService', () => {
         expect(categoryService.searchCategories).toHaveBeenCalledWith(name, skipCount, maxItems);
     });
 
+    it('should call getCategory for every instance if value of name parameter is defined', (done) => {
+        spyOn(categoryService, 'getCategory').and.returnValues(of({
+                entry: {
+                    name: 'name',
+                    id: 'some id 1',
+                    hasChildren: true
+                }
+            }),
+            of({
+                entry: {
+                    name: 'Language/some other name',
+                    id: 'some id 2',
+                    hasChildren: false
+                }
+            }));
+        categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name')
+            .subscribe(() => {
+
+                expect(categoryService.getCategory).toHaveBeenCalledWith('some id 1');
+                expect(categoryService.getCategory).toHaveBeenCalledWith('some id 2');
+                done();
+            });
+    });
+
     it('should return observable which emits correct categories', (done) => {
+        spyOn(categoryService, 'getCategory').and.returnValues(of({
+                entry: {
+                    name: 'some name',
+                    id: 'some id 1',
+                    hasChildren: true
+                }
+            }),
+            of({
+                entry: {
+                    name: 'Language/some other name',
+                    id: 'some id 2',
+                    hasChildren: false
+                }
+            }));
         categoryTreeDatasourceService.getSubNodes('id', undefined, undefined, 'name')
             .subscribe((response) => {
                 const pagination = new Pagination();
@@ -96,7 +134,7 @@ describe('CategoryTreeDatasourceService', () => {
                         parentId: 'parent id 1',
                         level: 0,
                         nodeType: TreeNodeType.RegularNode,
-                        hasChildren: false,
+                        hasChildren: true,
                         isLoading: false
                     }, {
                         id: 'some id 2',
