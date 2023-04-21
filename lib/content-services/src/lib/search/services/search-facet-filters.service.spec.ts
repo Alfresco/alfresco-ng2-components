@@ -34,8 +34,7 @@ describe('SearchFacetFiltersService', () => {
             providers: [{
                 provide: CategoryService,
                 useValue: {
-                    getCategory: () => EMPTY,
-                    searchCategories: () => EMPTY
+                    getCategory: () => EMPTY
                 }
             }]
         });
@@ -472,22 +471,9 @@ describe('SearchFacetFiltersService', () => {
     });
 
     it('should load category names for cm:categories facet', () => {
-        const entry = {id: 'test-id-test', name: 'name'};
+        const entry = {id: 'test-id-test', name: 'name', path: '/categories/General/Test Category/Subcategory'};
         searchFacetFiltersService.responseFacets = null;
         spyOn(categoryService, 'getCategory').and.returnValue(of({entry}));
-        spyOn(categoryService, 'searchCategories').and.returnValue(of({
-                    list: {
-                        entries: [{
-                            entry: {
-                                ...entry,
-                                nodeType: 'node-type',
-                                path: { name: '/categories/General/Test Category/Subcategory'},
-                                isFolder: false,
-                                isFile: false
-                            }
-                        }]
-                    }
-                }));
 
         queryBuilder.config = {
             categories: [],
@@ -521,8 +507,7 @@ describe('SearchFacetFiltersService', () => {
 
         searchFacetFiltersService.onDataLoaded(data);
 
-        expect(categoryService.getCategory).toHaveBeenCalledWith(entry.id);
-        expect(categoryService.searchCategories).toHaveBeenCalledWith(entry.name);
+        expect(categoryService.getCategory).toHaveBeenCalledWith(entry.id, { include: [ 'path' ]});
         expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe(`Test Category/Subcategory/${entry.name}`);
         expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(1);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);

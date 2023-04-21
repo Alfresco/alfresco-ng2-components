@@ -62,10 +62,15 @@ export class CategoryService {
      * Get a category by ID
      *
      * @param categoryId The identifier of a category.
+     * @param opts Optional parameters.
+     * @param opts.fields A list of field names.
+     * @param opts.include Returns additional information about the category. The following optional fields can be requested:
+     * count
+     * path
      * @return Observable<CategoryEntry>
      */
-    getCategory(categoryId: string): Observable<CategoryEntry> {
-        return from(this.categoriesApi.getCategory(categoryId));
+    getCategory(categoryId: string, opts?: any): Observable<CategoryEntry> {
+        return from(this.categoriesApi.getCategory(categoryId, opts));
     }
 
     /**

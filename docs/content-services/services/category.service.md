@@ -22,6 +22,9 @@ Manages categories in Content Services.
 -   **getCategory**(categoryId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
     Gets a specific category by categoryId.
     -   _categoryId:_ `string`  - The identifier of a category
+    -   _opts:_ `any`  - Optional parameters
+    -   _opts.fields_ `string[]` - A list of field names
+    -   _opts.include_ `string[]` - Returns additional information about the category. The following optional fields can be requested: count, path
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>` - CategoryEntry object (defined in JS-API) containing information about the category.
 -   **createSubcategories**(parentCategoryId: `string`, payload: [`CategoryBody[]`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryBody.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CategoryPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryPaging.md) | [`CategoryEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/api/content-rest-api/docs/CategoryEntry.md)`>`<br/>
     Creates subcategories under category with provided categoryId.

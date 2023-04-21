@@ -22,7 +22,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../search-query-service.token';
 import { SearchQueryBuilderService } from './search-query-builder.service';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchService } from './search.service';
-import { catchError, concatMap, takeUntil } from 'rxjs/operators';
+import { catchError, takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { SearchFilterList } from '../models/search-filter-list.model';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
@@ -345,19 +345,14 @@ export class SearchFacetFiltersService implements OnDestroy {
     private loadCategoryNames(bucketList: FacetFieldBucket[]) {
         bucketList.forEach((item) => {
             const categoryId = item.label.split('/').pop();
-            this.categoryService.getCategory(categoryId)
-                .pipe(
-                    concatMap((categoryEntry) => this.categoryService.searchCategories(categoryEntry.entry.name)),
-                    catchError(error => throwError(error))
-                )
+            this.categoryService.getCategory(categoryId, {include: ['path']})
+                .pipe(catchError(error => throwError(error)))
                 .subscribe(
-                    result => {
+                    category => {
                         const nextAfterGeneralPathPartIndex = 3;
                         const pathSeparator = '/';
-                        const currentCat = result.list.entries.filter(entry => entry.entry.id === categoryId)[0];
-                        const path = currentCat.entry.path.name.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
-
-                        item.display = path ? `${path}/${currentCat.entry.name}` : currentCat.entry.name;
+                        const path = category.entry.path.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
+                        item.display = path ? `${path}/${category.entry.name}` : category.entry.name;
                     }
                 );
         });
