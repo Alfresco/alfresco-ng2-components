@@ -132,6 +132,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.form.addValuesNotPresent(valuesToSetIfNotPresent);
                 this.onFormDataRefreshed(this.form);
             });
+
+        this.formService.formFieldValueChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                this.disableSaveButton = false;
+            });
     }
 
     @HostListener('keydown', ['$event'])
@@ -314,7 +320,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 formValues[variable.name] = variable.value;
             });
 
-            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly);
+            const form = new FormModel(formCloudRepresentationJSON, formValues, this.readOnly, this.formService);
             if (!form) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }

@@ -1079,6 +1079,20 @@ describe('FormCloudComponent', () => {
         expect(formComponent.showTitle).toBeTruthy();
     });
 
+    it('should disable save button on [save] outcome click', () => {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
+            id: FormCloudComponent.SAVE_OUTCOME_ID,
+            name: 'SAVE',
+            isSystem: true
+        });
+        formComponent.form = formModel;
+
+        formComponent.onOutcomeClicked(outcome);
+
+        expect(formComponent.disableSaveButton).toBeTrue();
+    });
+
     describe('form validations', () => {
         it('should be able to set visibility conditions for Attach File widget', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
@@ -1315,5 +1329,13 @@ describe('retrieve metadata on submit', () => {
         fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
 
         expect(stopPropagationSpy).toHaveBeenCalled();
+    });
+
+    it('should enable save button when form field value changed', () => {
+        formComponent.disableSaveButton = true;
+
+        formService.formFieldValueChanged.next();
+
+        expect(formComponent.disableSaveButton).toBeFalse();
     });
 });
