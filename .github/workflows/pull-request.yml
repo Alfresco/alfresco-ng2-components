@@ -20,6 +20,7 @@ on:
       - master
       - develop-patch*
       - master-patch*
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
