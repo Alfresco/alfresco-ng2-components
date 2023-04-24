@@ -458,7 +458,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const issueHasLabels = require('../scripts/github/update/check-issue-has-label.js');
+            const getLatestVersionOf = require('./scripts/github/update/latest-version-of.js');
+
             const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
 
             const hasLabel = await issueHasLabels({github, context, checkLabels})
