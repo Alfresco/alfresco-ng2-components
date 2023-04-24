@@ -136,7 +136,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.formFieldValueChanged
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
-                this.disableSaveButton = false;
+                if (this.disableSaveButton) {
+                    this.disableSaveButton = false;
+                }
             });
     }
 
