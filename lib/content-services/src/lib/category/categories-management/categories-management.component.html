@@ -1,7 +1,7 @@
 <div class="adf-categories-management">
     <p *ngIf="!categories.length && !categoryNameControlVisible"
        class="adf-no-categories-message">
-        {{ isCRUDMode ? 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED' : 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED' | translate }}
+        {{ noCategoriesMsg | translate }}
     </p>
     <div class="adf-categories-list"
          [class.adf-categories-list-fixed]="!categoryNameControlVisible">
@@ -15,7 +15,7 @@
                 mat-icon-button
                 [class.adf-btn-padded]="!isCRUDMode"
                 (click)="removeCategory(category)"
-                [attr.title]="isCRUDMode ? 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY' : 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY' | translate"
+                [attr.title]="removeCategoryTitle | translate"
                 [disabled]="disableRemoval">
                 <mat-icon>remove</mat-icon>
             </button>
@@ -60,7 +60,7 @@
     <div *ngIf="categoryNameControlVisible" class="adf-categories-list">
         <ng-container *ngIf="!existingCategoriesLoading && existingCategories">
             <p class="adf-existing-categories-label">
-                {{ isCRUDMode ? 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES' : 'CATEGORIES_MANAGEMENT.SELECT_EXISTING_CATEGORY' | translate }}
+                {{ existingCategoriesMsg | translate }}
             </p>
             <mat-selection-list
                 [disabled]="isCRUDMode"

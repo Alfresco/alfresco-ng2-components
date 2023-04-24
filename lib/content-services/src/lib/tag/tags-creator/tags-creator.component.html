@@ -54,17 +54,15 @@
 <div
     class="adf-existing-tags-panel"
     *ngIf="existingTagsPanelVisible">
-    <ng-container *ngIf="!spinnerVisible || existingTags">
-        <span
-            class="adf-create-tag-label"
-            (click)="addTag()"
-            [hidden]="tagNameControl.invalid || typing">
-            {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
-        </span>
-        <p class="adf-existing-tags-label">
-            {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
-        </p>
-    </ng-container>
+    <span *ngIf="!spinnerVisible || existingTags"
+        class="adf-create-tag-label"
+        (click)="addTag()"
+        [hidden]="tagNameControl.invalid || typing">
+        {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
+    </span>
+    <p *ngIf="!spinnerVisible && existingTags" class="adf-existing-tags-label">
+        {{ (isOnlyCreateMode() ? 'TAG.TAGS_CREATOR.EXISTING_TAGS' : 'TAG.TAGS_CREATOR.EXISTING_TAGS_SELECTION') | translate }}
+    </p>
     <div class="adf-tags-list">
         <mat-selection-list
             *ngIf="!spinnerVisible && existingTags"
