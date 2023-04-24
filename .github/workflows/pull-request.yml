@@ -449,6 +449,32 @@ jobs:
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
           deps: ${{ matrix.e2e-test.deps }}
 
+  PR-forbidden-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkoutRepo
+        name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: PR contains forbidden labels
+        id: pr-forbidden
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueHasLabels = require('./scripts/github/update/check-issue-has-label.js');
+            const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
+
+            const hasLabel = await issueHasLabels({github, context, checkLabels})
+
+            if(hasLabel) {
+              core.setFailed('The PR contains a forbidden label! You are not allowed to merge until the label is there.');
+            }
+      - name: Check value after
+        run: |
+          echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
+          echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
+
   finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
