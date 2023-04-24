@@ -1,0 +1,10 @@
+{
+  "packages": ["lib/core/", "lib/extensions/"],
+  "version": "6.0.0-A.3",
+  "granularPathspec": false,
+  "command": {
+    "publish": {
+      "graphType": "all"
+    }
+  }
+}
