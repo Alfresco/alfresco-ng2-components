@@ -20,7 +20,6 @@ on:
       - master
       - develop-patch*
       - master-patch*
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -453,13 +452,17 @@ jobs:
   PR-forbidden-labels:
     runs-on: ubuntu-latest
     steps:
+      - id: checkoutRepo
+        name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: PR contains forbidden labels
         id: pr-forbidden
         uses: actions/github-script@v6
         with:
           script: |
-            const getLatestVersionOf = require('./scripts/github/update/latest-version-of.js');
-
+            const issueHasLabels = require('./scripts/github/update/check-issue-has-label.js');
             const checkLabels = ['next version ➡️', 'do not merge🙅🏻‍♂️'];
 
             const hasLabel = await issueHasLabels({github, context, checkLabels})
