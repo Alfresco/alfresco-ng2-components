@@ -65,6 +65,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     private _categoryNameControlVisible = false;
     private readonly existingCategoriesListLimit = 15;
     initialCategories: Category[] = [];
+    noCategoriesMsg = '';
+    removeCategoryTitle = '';
+    existingCategoriesMsg = '';
 
     /** Categories to display initially */
     @Input()
@@ -148,6 +151,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             .subscribe(() => this.setCategoryNameControlErrorMessageKey());
 
         this.setCategoryNameControlErrorMessageKey();
+
+        this.noCategoriesMsg = this.isCRUDMode ? 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_CREATED' : 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ASSIGNED';
+        this.removeCategoryTitle = this.isCRUDMode ? 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY' : 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY';
+        this.existingCategoriesMsg = this.isCRUDMode ? 'CATEGORIES_MANAGEMENT.EXISTING_CATEGORIES' : 'CATEGORIES_MANAGEMENT.SELECT_EXISTING_CATEGORY';
 
         if (!this.isCRUDMode) {
             this._categoryNameControl.removeValidators(Validators.required);
