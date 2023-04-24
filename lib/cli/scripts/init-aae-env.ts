@@ -42,7 +42,7 @@ export interface ConfigArgs {
     scope: string;
     host: string;
     tag: string;
-    environmentId: string;
+    envs: string[];
 }
 
 export const AAE_MICROSERVICES = [
@@ -297,7 +297,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     return new AlfrescoApi(config as unknown as AlfrescoApiConfig);
 }
 
-async function deployMissingApps(tag?: string, environmentId?: string) {
+async function deployMissingApps(tag?: string, envs?: string[]) {
     const deployedApps = await getApplicationByStatus('');
     findMissingApps(deployedApps.list.entries);
     findFailingApps(deployedApps.list.entries);
@@ -312,7 +312,7 @@ async function deployMissingApps(tag?: string, environmentId?: string) {
         process.exit(1);
     } else if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(absentApps, tag, environmentId);
+        await checkIfAppIsReleased(absentApps, tag, envs);
     } else {
         const reset = '\x1b[0m';
         const green = '\x1b[32m';
@@ -320,7 +320,7 @@ async function deployMissingApps(tag?: string, environmentId?: string) {
     }
 }
 
-async function checkIfAppIsReleased(missingApps: any [], tag?: string, environmentId?: string) {
+async function checkIfAppIsReleased(missingApps: any [], tag?: string, envs?: string[]) {
     const projectList = await getProjects();
     let TIME = 5000;
     let noError = true;
@@ -378,17 +378,29 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string, environme
         if (noError) {
             await checkDescriptorExist(currentAbsentApp.name);
             await sleep(TIME);
-            const deployPayload = {
-                name: currentAbsentApp.name,
-                releaseId: projectRelease.entry.id,
-                security: currentAbsentApp.security,
-                infrastructure: currentAbsentApp.infrastructure,
-                variables: currentAbsentApp.variables,
-                environmentId
-            };
-            await deploy(deployPayload);
+
+            if (envs && envs.length > 0) {
+                for (const envId of envs){
+                    await deployWithPayload(currentAbsentApp, projectRelease, envId);
+                }
+            } else {
+                await deployWithPayload(currentAbsentApp, projectRelease);
+            }
         }
     }
+}
+
+async function deployWithPayload(currentAbsentApp: any, projectRelease: any, envId?: string) {
+    const deployPayload = {
+        name: currentAbsentApp.name,
+        releaseId: projectRelease.entry.id,
+        security: currentAbsentApp.security,
+        infrastructure: currentAbsentApp.infrastructure,
+        variables: currentAbsentApp.variables,
+        environmentId: envId
+    };
+
+    deploy(deployPayload);
 }
 
 async function checkDescriptorExist(name: string) {
@@ -484,7 +496,7 @@ async function main() {
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
         .option('--devopsPassword [type]', 'devops password')
         .option('--tag [type]', 'tag name of the codebase')
-        .option('--environmentId [type]', 'environment id to deploy applications')
+        .option('--envs [type...]', 'environment ids of the envs where to deploy the app')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -506,7 +518,7 @@ async function main() {
         scope: options.scope,
         secret:  options.secret,
         tag: options.tag,
-        environmentId: options.environmentId
+        envs: options.envs
     };
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
@@ -536,7 +548,7 @@ async function main() {
             process.exit(1);
         });
 
-        await deployMissingApps(args.tag, args.environmentId);
+        await deployMissingApps(args.tag, args.envs);
     } else {
         logger.error('The environment is not up');
         process.exit(1);
