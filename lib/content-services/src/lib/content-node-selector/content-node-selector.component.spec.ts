@@ -261,6 +261,36 @@ describe('ContentNodeSelectorComponent', () => {
 
     describe('Upload button', () => {
 
+        it('[C588832] Should not be able to upload a file whilst a search is still running', () => {
+            enableLocalUpload();
+            fixture.detectChanges();
+
+            let infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+            let uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+
+            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
+            expect(infoMatIcon).toBeFalsy();
+
+            component.showingSearch = true;
+            fixture.detectChanges();
+
+            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+
+            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('true');
+            expect(infoMatIcon).toBeTruthy();
+            expect(component.getWarningMessage()).toEqual('NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE');
+
+            component.showingSearch = false;
+            fixture.detectChanges();
+
+            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
+
+            expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
+            expect(infoMatIcon).toBeFalsy();
+        });
+
         it('should be able to show upload button if showLocalUploadButton set to true', async () => {
             enableLocalUpload();
             selectTabByIndex(1);
