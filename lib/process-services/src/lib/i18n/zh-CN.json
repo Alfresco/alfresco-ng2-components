@@ -169,7 +169,7 @@
     "ATTACH_FORM": {
       "SELECT_FORM": "选择要附加的表单",
       "REMOVE_FORM": "删除表单",
-      "SELECT_OPTION": "选择选项"
+      "SELECT_OPTION": "选择一个选项"
     }
   },
   "ADF_PROCESS_LIST": {

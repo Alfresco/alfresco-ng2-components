@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Kategorien zuweisen",
     "UNASSIGN_CATEGORY": "Kategoriezuweisung aufheben",
     "DELETE_CATEGORY": "Kategorie löschen",
-    "EXISTING_CATEGORIES": "Vorhandene Kategorien",
+    "EXISTING_CATEGORIES": "Vorhandene Kategorien:",
+    "SELECT_EXISTING_CATEGORY": "Eine vorhandene Kategorie auswählen:",
+    "NO_EXISTING_CATEGORIES": "Keine vorhandenen Kategorien",
     "GENERIC_CREATE": "Erstellen: {{name}}",
     "NAME": "Kategoriename",
     "LOADING": "Laden",
@@ -182,7 +184,7 @@
       "REQUIRED": "Kategoriename ist erforderlich",
       "EMPTY_CATEGORY": "Kategoriename darf nicht nur aus Leerzeichen bestehen.",
       "ALREADY_EXISTS": "Kategorie ist bereits vorhanden",
-      "ALREADY_ADDED_CATEGORY": "Kategorie wurde bereits hinzugefügt",
+      "DUPLICATED_CATEGORY": "Kategorie wurde bereits hinzugefügt",
       "CREATE_CATEGORIES": "Fehler beim Erstellen von Kategorien",
       "EXISTING_CATEGORIES": "Einige Kategorien sind bereits vorhanden"
     }

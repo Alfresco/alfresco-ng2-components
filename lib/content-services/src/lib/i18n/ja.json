@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "カテゴリの割り当て",
     "UNASSIGN_CATEGORY": "カテゴリの割り当て解除",
     "DELETE_CATEGORY": "カテゴリの削除",
-    "EXISTING_CATEGORIES": "既存のカテゴリ",
+    "EXISTING_CATEGORIES": "既存のカテゴリ:",
+    "SELECT_EXISTING_CATEGORY": "既存のカテゴリの選択",
+    "NO_EXISTING_CATEGORIES": "既存のカテゴリはありません",
     "GENERIC_CREATE": "作成：{{name}}",
     "NAME": "カテゴリ名",
     "LOADING": "読み込み中",
@@ -182,7 +184,7 @@
       "REQUIRED": "カテゴリ名は必須です",
       "EMPTY_CATEGORY": "カテゴリ名をスペースだけにすることはできません",
       "ALREADY_EXISTS": "カテゴリはすでに存在します",
-      "ALREADY_ADDED_CATEGORY": "カテゴリはすでに追加されています",
+      "DUPLICATED_CATEGORY": "カテゴリはすでに追加されています",
       "CREATE_CATEGORIES": "カテゴリの作成中にエラーが発生しました",
       "EXISTING_CATEGORIES": "いくつかのカテゴリは、すでに存在します"
     }

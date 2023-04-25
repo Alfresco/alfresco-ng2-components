@@ -106,7 +106,7 @@
     "FORM_LOADING": "Загрузка формы",
     "UPLOADER": "Загрузчик",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Тег",
+    "TAG": "Метка",
     "PIPES": "Каналы",
     "TRASHCAN": "Корзина",
     "SOCIAL": "Социальный",
@@ -169,7 +169,7 @@
     "COLUMNS": {
       "DISPLAY_NAME": "Отображаемое имя",
       "IS_LOCKED": "Блокировка",
-      "TAG": "Тег",
+      "TAG": "Метка",
       "NODE_ID": "Идентификатор узла",
       "CREATED_BY": "Создано пользователем",
       "CREATED_ON": "Дата создания",
@@ -294,9 +294,9 @@
     "RATING": "Компонент \"Рейтинг\""
   },
   "TAG": {
-    "LIST": "Список тегов Content Services",
+    "LIST": "Список меток Content Services",
     "INSERT": "Вставить идентификатор узла",
-    "NODE_LIST": "Список тегов по идентификатору узла"
+    "NODE_LIST": "Список меток по идентификатору узла"
   },
   "DEMO_PERMISSION": {
     "INHERIT_PERMISSION_BUTTON": "Наследовать разрешение",

@@ -133,36 +133,36 @@
   },
   "TAG": {
     "LABEL": {
-      "NEWTAG": "Новый тег"
+      "NEWTAG": "Новая метка"
     },
     "MESSAGES": {
-      "EXIST": "Тег уже существует"
+      "EXIST": "Метка уже существует"
     },
     "BUTTON": {
-      "ADD": "Добавить тег"
+      "ADD": "Добавить метку"
     },
     "TAGS_CREATOR": {
-      "EXISTING_TAGS": "Существующие теги:",
-      "EXISTING_TAGS_SELECTION": "Выберите существующий тег:",
-      "NO_TAGS_CREATED": "Теги не созданы",
-      "NO_EXISTING_TAGS": "Нет существующих тегов",
-      "TITLE": "Создать теги",
+      "EXISTING_TAGS": "Существующие метки:",
+      "EXISTING_TAGS_SELECTION": "Выберите существующую метку:",
+      "NO_TAGS_CREATED": "Метки не созданы",
+      "NO_EXISTING_TAGS": "Существующих меток нет",
+      "TITLE": "Создать метки",
       "CREATE_TAG": "Создать: {{tag}}",
       "NAME": "Имя",
       "ERRORS": {
-        "EXISTING_TAG": "Тег уже существует",
-        "ALREADY_ADDED_TAG": "Тег уже добавлен",
-        "EMPTY_TAG": "Имя тега не может содержать только пробелы",
-        "REQUIRED": "Необходимо указать имя тега",
-        "FETCH_TAGS": "Ошибка при получении тегов",
-        "CREATE_TAGS": "Ошибка при создании гегов"
+        "EXISTING_TAG": "Метка уже существует",
+        "ALREADY_ADDED_TAG": "Метка уже добавлена",
+        "EMPTY_TAG": "Имя метки не может содержать только пробелы",
+        "REQUIRED": "Необходимо указать имя метки",
+        "FETCH_TAGS": "Ошибка при получении меток",
+        "CREATE_TAGS": "Ошибка при создании меток"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Удалить тег",
+        "DELETE_TAG": "Удалить метку",
         "HIDE_INPUT": "Скрыть ввод"
       },
-      "TAGS_LOADING": "Загрузка тегов",
-      "CREATE_TAGS_SUCCESS": "Теги успешно созданы"
+      "TAGS_LOADING": "Загрузка меток",
+      "CREATE_TAGS_SUCCESS": "Метки успешно созданы"
     }
   },
   "CATEGORIES_MANAGEMENT": {
@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Назначить категории",
     "UNASSIGN_CATEGORY": "Отменить назначение категории",
     "DELETE_CATEGORY": "Удалить категорию",
-    "EXISTING_CATEGORIES": "Существующие категории",
+    "EXISTING_CATEGORIES": "Существующие категории:",
+    "SELECT_EXISTING_CATEGORY": "Выберите существующую категорию:",
+    "NO_EXISTING_CATEGORIES": "Существующих категорий нет",
     "GENERIC_CREATE": "Создать: {{name}}",
     "NAME": "Имя категории",
     "LOADING": "Загружается",
@@ -182,7 +184,7 @@
       "REQUIRED": "Необходимо указать имя категории",
       "EMPTY_CATEGORY": "Имя категории не может состоять только из пробелов",
       "ALREADY_EXISTS": "Категория уже существует",
-      "ALREADY_ADDED_CATEGORY": "Категория уже добавлена",
+      "DUPLICATED_CATEGORY": "Категория уже добавлена",
       "CREATE_CATEGORIES": "Ошибка при создании категорий",
       "EXISTING_CATEGORIES": "Некоторые категории уже существуют"
     }
@@ -413,8 +415,8 @@
       "MODIFIER": "Редактор",
       "MODIFIED_DATE": "Дата изменения",
       "CONTENT_TYPE": "Тип содержимого",
-      "TAGS": "Теги",
-      "ADD_TAG_TOOLTIP": "Добавить тег"
+      "TAGS": "Метки",
+      "ADD_TAG_TOOLTIP": "Добавить метку"
     },
     "CONTENT_TYPE": {
       "DIALOG": {

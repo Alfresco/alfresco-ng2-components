@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Categorieën toewijzen",
     "UNASSIGN_CATEGORY": "Toewijzing van categorie ongedaan maken",
     "DELETE_CATEGORY": "Categorie verwijderen",
-    "EXISTING_CATEGORIES": "Bestaande categorieën",
+    "EXISTING_CATEGORIES": "Bestaande categorieën:",
+    "SELECT_EXISTING_CATEGORY": "Selecteer een bestaande categorie:",
+    "NO_EXISTING_CATEGORIES": "Geen bestaande categorieën",
     "GENERIC_CREATE": "Maken: {{name}}",
     "NAME": "Categorienaam",
     "LOADING": "Wordt geladen",
@@ -182,7 +184,7 @@
       "REQUIRED": "Een categorienaam is vereist",
       "EMPTY_CATEGORY": "Categorienaam mag niet alleen uit spaties bestaan",
       "ALREADY_EXISTS": "Categorie bestaat al",
-      "ALREADY_ADDED_CATEGORY": "Categorie is al toegevoegd",
+      "DUPLICATED_CATEGORY": "Categorie is al toegevoegd",
       "CREATE_CATEGORIES": "Fout bij het maken van categorieën",
       "EXISTING_CATEGORIES": "Sommige categorieën bestaan al"
     }

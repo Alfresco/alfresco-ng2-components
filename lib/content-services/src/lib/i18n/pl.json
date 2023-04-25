@@ -152,8 +152,8 @@
       "ERRORS": {
         "EXISTING_TAG": "Znacznik już istnieje.",
         "ALREADY_ADDED_TAG": "Znacznik został już dodany",
-        "EMPTY_TAG": "Nazwa nie może zawierać spacji",
-        "REQUIRED": "Nazwa jest wymagana",
+        "EMPTY_TAG": "Znacznik nie może zawierać spacji",
+        "REQUIRED": "Nazwa znacznika jest wymagana",
         "FETCH_TAGS": "Błąd podczas pobierania znaczników",
         "CREATE_TAGS": "Błąd podczas tworzenia znaczników"
       },
@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Przypisz kategorie",
     "UNASSIGN_CATEGORY": "Usuń przypisanie kategorii",
     "DELETE_CATEGORY": "Usuń kategorię",
-    "EXISTING_CATEGORIES": "Istniejące kategorie",
+    "EXISTING_CATEGORIES": "Istniejące kategorie:",
+    "SELECT_EXISTING_CATEGORY": "Wybierz istniejącą kategorię:",
+    "NO_EXISTING_CATEGORIES": "Brak istniejących kategorii",
     "GENERIC_CREATE": "Utwórz: {{name}}",
     "NAME": "Nazwa kategorii",
     "LOADING": "Wczytywanie",
@@ -180,11 +182,11 @@
     "ERRORS": {
       "NOT_FOUND": "Nie znaleziono kategorii",
       "REQUIRED": "Nazwa kategorii jest wymagana",
-      "EMPTY_CATEGORY": "Nazwa biblioteki nie może zawierać wyłącznie spacji",
-      "ALREADY_EXISTS": "Kategoria '{{name}}' już istnieje",
-      "ALREADY_ADDED_CATEGORY": "Kategoria została już dodana",
-      "CREATE_CATEGORIES": "Błąd podczas tworzenia znaczników",
-      "EXISTING_CATEGORIES": "Niektóre znaczniki już istnieją"
+      "EMPTY_CATEGORY": "Nazwa kategorii nie może zawierać wyłącznie spacji",
+      "ALREADY_EXISTS": "Kategoria już istnieje",
+      "DUPLICATED_CATEGORY": "Kategoria została już dodana",
+      "CREATE_CATEGORIES": "Błąd podczas tworzenia kategorii",
+      "EXISTING_CATEGORIES": "Niektóre kategorie już istnieją"
     }
   },
   "ADF_FILE_UPLOAD": {
@@ -214,7 +216,7 @@
       "VERSION": "Wersja pliku: {{ version }}",
       "DIALOG": "Lista przesyłania",
       "DIALOG_MAXIMIZE": "Maksymalizuj okno dialogowe przesyłania",
-      "DIALOG_MINIMIZE": "Minimalizuj okno dialogowe przesyłania",
+      "DIALOG_MINIMIZE": "Zminimalizuj okno dialogowe wysyłania",
       "DIALOG_CLOSE": "Zamknij okno dialogowe przesyłania",
       "STOP_ALL": "Zatrzymaj operacje przesyłania",
       "UPLOAD_SUCCESSFUL": "Plik pomyślnie przesłany {{ file }}",
@@ -499,10 +501,10 @@
       "PERMISSION-BULK-UPDATE-SUCCESS": "Liczba zaktualizowanych użytkowników: {{user}}, grup: {{group}}",
       "PERMISSION-UPDATE-SUCCESS": "Zaktualizowano użytkownika/grupę",
       "PERMISSION-UPDATE-FAIL": "Nie udało się zaktualizować użytkownika/grupy",
-      "PERMISSION-BULK-DELETE-SUCCESS": "Liczba usuniętych użytkowników: {{user}}, grup: {{group}}",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Usunięta (-e) {{user}} grupa(-y) {{group}} użytkownika(-ów)",
       "PERMISSION-DELETE-SUCCESS": "Usunięto użytkownika/grupę",
       "PERMISSION-DELETE-FAIL": "Nie udało się usunąć użytkownika/grupy",
-      "PERMISSION-ADD-SUCCESS": "Liczba dodanych użytkowników: {{user}}, grup: {{group}}",
+      "PERMISSION-ADD-SUCCESS": "Dodana(-e) {{user}} grupa(-y) {{group}} użytkownika(-ów)",
       "PERMISSION-ADD-FAIL": "Nie udało się dodać użytkownika/grupy",
       "INHERIT-ENABLE-SUCCESS": "Włączono dziedziczone uprawnienie",
       "INHERIT-DISABLE-SUCCESS": "Wyłączono dziedziczone uprawnienie",

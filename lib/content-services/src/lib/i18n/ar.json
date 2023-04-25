@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "تعيين الفئات",
     "UNASSIGN_CATEGORY": "إلغاء تعيين الفئة",
     "DELETE_CATEGORY": "حذف الفئة",
-    "EXISTING_CATEGORIES": "الفئات الموجودة",
+    "EXISTING_CATEGORIES": "الفئات الموجودة:",
+    "SELECT_EXISTING_CATEGORY": "حدد فئة موجودة:",
+    "NO_EXISTING_CATEGORIES": "لا يوجد فئات موجودة",
     "GENERIC_CREATE": "إنشاء: {{name}}",
     "NAME": "اسم التصنيف",
     "LOADING": "تحميل",
@@ -182,7 +184,7 @@
       "REQUIRED": "مطلوب اسم الفئة",
       "EMPTY_CATEGORY": "لا يمكن أن يحتوي اسم الفئة على مسافات فقط",
       "ALREADY_EXISTS": "الفئة موجودة بالفعل",
-      "ALREADY_ADDED_CATEGORY": "تمت إضافة الفئة بالفعل",
+      "DUPLICATED_CATEGORY": "تمت إضافة الفئة بالفعل",
       "CREATE_CATEGORIES": "خطأ أثناء إنشاء الفئات",
       "EXISTING_CATEGORIES": "بعض الفئات موجودة بالفعل"
     }
