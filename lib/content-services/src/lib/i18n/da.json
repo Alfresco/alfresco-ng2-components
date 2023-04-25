@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Tildel kategorier",
     "UNASSIGN_CATEGORY": "Fjern tildeling af kategori",
     "DELETE_CATEGORY": "Slet kategori",
-    "EXISTING_CATEGORIES": "Eksisterende kategorier",
+    "EXISTING_CATEGORIES": "Eksisterende kategorier:",
+    "SELECT_EXISTING_CATEGORY": "Vælg et eksisterende kategori:",
+    "NO_EXISTING_CATEGORIES": "Ingen eksisterende kategorier",
     "GENERIC_CREATE": "Opret: {{name}}",
     "NAME": "Kategorinavn",
     "LOADING": "Indlæser",
@@ -182,7 +184,7 @@
       "REQUIRED": "Kategorinavn er påkrævet",
       "EMPTY_CATEGORY": "Kategorinavn kan ikke indeholde kun mellemrum",
       "ALREADY_EXISTS": "Kategorien findes allerede",
-      "ALREADY_ADDED_CATEGORY": "Kategorien er allerede tilføjet",
+      "DUPLICATED_CATEGORY": "Kategorien er allerede tilføjet",
       "CREATE_CATEGORIES": "Fejl, mens kategorier oprettes",
       "EXISTING_CATEGORIES": "Nogle kategorier findes allerede"
     }

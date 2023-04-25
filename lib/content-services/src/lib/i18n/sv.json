@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Tilldela kategorier",
     "UNASSIGN_CATEGORY": "Avtilldela kategori",
     "DELETE_CATEGORY": "Radera kategori",
-    "EXISTING_CATEGORIES": "Befintliga kategorier",
+    "EXISTING_CATEGORIES": "Befintliga kategorier:",
+    "SELECT_EXISTING_CATEGORY": "Välj en befintlig kategori:",
+    "NO_EXISTING_CATEGORIES": "Inga befintliga kategorier",
     "GENERIC_CREATE": "Skapa: {{name}}",
     "NAME": "Kategorinamn",
     "LOADING": "Läser in",
@@ -182,7 +184,7 @@
       "REQUIRED": "Kategorinamn krävs",
       "EMPTY_CATEGORY": "Kategorinamnet kan inte innehålla endast mellanslag",
       "ALREADY_EXISTS": "Kategorin finns redan",
-      "ALREADY_ADDED_CATEGORY": "Kategorin är redan tillagd",
+      "DUPLICATED_CATEGORY": "Kategorin är redan tillagd",
       "CREATE_CATEGORIES": "Det gick inte att skapa kategorier",
       "EXISTING_CATEGORIES": "Vissa kategorier finns redan"
     }

@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Přiřadit kategorie",
     "UNASSIGN_CATEGORY": "Zrušit přiřazení kategorie",
     "DELETE_CATEGORY": "Odstranit kategorii",
-    "EXISTING_CATEGORIES": "Existující kategorie",
+    "EXISTING_CATEGORIES": "Existující kategorie:",
+    "SELECT_EXISTING_CATEGORY": "Vyberte existující kategorie:",
+    "NO_EXISTING_CATEGORIES": "Nejsou existující kategorie",
     "GENERIC_CREATE": "Vytvořit: {{name}}",
     "NAME": "Název kategorie",
     "LOADING": "Načítání",
@@ -182,7 +184,7 @@
       "REQUIRED": "Název kategorie je povinný",
       "EMPTY_CATEGORY": "Název kategorie nemůže obsahovat pouze mezery",
       "ALREADY_EXISTS": "Kategorie již existuje",
-      "ALREADY_ADDED_CATEGORY": "Kategorie je již přidána",
+      "DUPLICATED_CATEGORY": "Kategorie je již přidána",
       "CREATE_CATEGORIES": "Vyskytla se chyba při vytváření kategorií",
       "EXISTING_CATEGORIES": "Některé kategorie již existují"
     }

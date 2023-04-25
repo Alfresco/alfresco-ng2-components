@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "指派类别",
     "UNASSIGN_CATEGORY": "未指派类别",
     "DELETE_CATEGORY": "删除类别",
-    "EXISTING_CATEGORIES": "现有类别",
+    "EXISTING_CATEGORIES": "现有类别:",
+    "SELECT_EXISTING_CATEGORY": "选择一个现有类别:",
+    "NO_EXISTING_CATEGORIES": "没有现有类别",
     "GENERIC_CREATE": "创建: {{name}}",
     "NAME": "类别名称",
     "LOADING": "正在加载",
@@ -182,7 +184,7 @@
       "REQUIRED": "类别名称是必需的",
       "EMPTY_CATEGORY": "类别名称不能只包含空格",
       "ALREADY_EXISTS": "类别已存在",
-      "ALREADY_ADDED_CATEGORY": "类别已添加",
+      "DUPLICATED_CATEGORY": "已添加类别",
       "CREATE_CATEGORIES": "创建类别时出错",
       "EXISTING_CATEGORIES": "某些类别已存在"
     }

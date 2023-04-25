@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Asignar categorías",
     "UNASSIGN_CATEGORY": "Desasignar categoría",
     "DELETE_CATEGORY": "Eliminar categoría",
-    "EXISTING_CATEGORIES": "Categorías existentes",
+    "EXISTING_CATEGORIES": "Categorías existentes:",
+    "SELECT_EXISTING_CATEGORY": "Seleccionar una categoría existente:",
+    "NO_EXISTING_CATEGORIES": "No hay categorías existentes",
     "GENERIC_CREATE": "Crear: {{name}}",
     "NAME": "Nombre de categoría",
     "LOADING": "Cargando",
@@ -182,7 +184,7 @@
       "REQUIRED": "Se requiere un nombre de categoría",
       "EMPTY_CATEGORY": "El nombre de la categoría no puede tener solo espacios",
       "ALREADY_EXISTS": "La categoría ya existe",
-      "ALREADY_ADDED_CATEGORY": "La categoría ya está añadida",
+      "DUPLICATED_CATEGORY": "Ya se añadió esa categoría",
       "CREATE_CATEGORIES": "Error al crear las categorías",
       "EXISTING_CATEGORIES": "Algunas de las categorías ya existen"
     }

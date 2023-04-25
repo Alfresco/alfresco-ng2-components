@@ -152,8 +152,8 @@
       "ERRORS": {
         "EXISTING_TAG": "Le tag existe déjà",
         "ALREADY_ADDED_TAG": "Le tag a déjà été ajouté",
-        "EMPTY_TAG": "Le nom ne peut pas contenir que des espaces",
-        "REQUIRED": "Vous devez spécifier un nom",
+        "EMPTY_TAG": "Le nom du tag ne peut pas contenir que des espaces",
+        "REQUIRED": "Le nom du tag est obligatoire",
         "FETCH_TAGS": "Erreur lors de la récupération des tags",
         "CREATE_TAGS": "Erreur lors de la création des tags"
       },
@@ -172,19 +172,21 @@
     "ASSIGN_CATEGORIES": "Assigner des catégories",
     "UNASSIGN_CATEGORY": "Désassigner la catégorie",
     "DELETE_CATEGORY": "Supprimer la catégorie",
-    "EXISTING_CATEGORIES": "Catégories existantes",
-    "GENERIC_CREATE": "Créer un nouveau",
+    "EXISTING_CATEGORIES": "Catégories existantes :",
+    "SELECT_EXISTING_CATEGORY": "Sélectionner une catégorie existante :",
+    "NO_EXISTING_CATEGORIES": "Aucune catégorie existante :",
+    "GENERIC_CREATE": "Créer : {{name}}",
     "NAME": "Nom de catégorie",
     "LOADING": "Chargement en cours",
     "HIDE_INPUT": "Masquer l'entrée",
     "ERRORS": {
       "NOT_FOUND": "Catégories non trouvées",
       "REQUIRED": "Le nom de la catégorie est obligatoire",
-      "EMPTY_CATEGORY": "Un nom de bibliothèque ne peut pas contenir uniquement des espaces",
-      "ALREADY_EXISTS": "La catégorie '{{name}}' existe déjà",
-      "ALREADY_ADDED_CATEGORY": "La catégorie est déjà ajoutée",
-      "CREATE_CATEGORIES": "Erreur lors de la création des tags",
-      "EXISTING_CATEGORIES": "Certains tags existent déjà"
+      "EMPTY_CATEGORY": "Le nom de la catégorie ne peut pas contenir que des espaces",
+      "ALREADY_EXISTS": "La catégorie existe déjà",
+      "DUPLICATED_CATEGORY": "La catégorie est déjà ajoutée",
+      "CREATE_CATEGORIES": "Erreur lors de la création des catégories",
+      "EXISTING_CATEGORIES": "Certaines catégories existent déjà"
     }
   },
   "ADF_FILE_UPLOAD": {

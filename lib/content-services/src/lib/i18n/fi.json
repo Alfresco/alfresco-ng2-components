@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Määrää luokkia",
     "UNASSIGN_CATEGORY": "Poista luokan määräys",
     "DELETE_CATEGORY": "Poista luokka",
-    "EXISTING_CATEGORIES": "Olemassa olevat luokat",
+    "EXISTING_CATEGORIES": "Olemassa olevat luokkat:",
+    "SELECT_EXISTING_CATEGORY": "Valitse olemassaoleva luokka:",
+    "NO_EXISTING_CATEGORIES": "Ei olemassaolevialuokkia",
     "GENERIC_CREATE": "Luo: {{name}}",
     "NAME": "Luokan nimi",
     "LOADING": "Ladataan",
@@ -182,7 +184,7 @@
       "REQUIRED": "Luokan nimi on pakollinen",
       "EMPTY_CATEGORY": "Luokan nimi ei voi koostua vain välilyönneistä",
       "ALREADY_EXISTS": "Luokka on jo olemassa",
-      "ALREADY_ADDED_CATEGORY": "Luokka on jo lisätty",
+      "DUPLICATED_CATEGORY": "Luokka on jo lisätty",
       "CREATE_CATEGORIES": "Virhe luokkia luodessa",
       "EXISTING_CATEGORIES": "Osa luokista on jo olemassa"
     }

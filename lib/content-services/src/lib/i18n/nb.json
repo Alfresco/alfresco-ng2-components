@@ -172,7 +172,9 @@
     "ASSIGN_CATEGORIES": "Tilordne kategorier",
     "UNASSIGN_CATEGORY": "Fjern tilordning av kategorier",
     "DELETE_CATEGORY": "Slett kategori",
-    "EXISTING_CATEGORIES": "Eksisterende kategorier",
+    "EXISTING_CATEGORIES": "Eksisterende kategorier:",
+    "SELECT_EXISTING_CATEGORY": "Velg en eksisterende kategori:",
+    "NO_EXISTING_CATEGORIES": "Ingen Eksisterende kategorier",
     "GENERIC_CREATE": "Opprett: {{name}}",
     "NAME": "Kategorinavn",
     "LOADING": "Laster",
@@ -182,7 +184,7 @@
       "REQUIRED": "Kategorinavn er påkrevd",
       "EMPTY_CATEGORY": "Kategorinavn kan ikke kun inneholde mellomrom",
       "ALREADY_EXISTS": "Kategori eksisterer allerede",
-      "ALREADY_ADDED_CATEGORY": "Kategori er allerede lagt til",
+      "DUPLICATED_CATEGORY": "Kategori er allerede lagt til",
       "CREATE_CATEGORIES": "Feil under oppretting av kategorier",
       "EXISTING_CATEGORIES": "Noen kategorier eksisterer allerede"
     }
