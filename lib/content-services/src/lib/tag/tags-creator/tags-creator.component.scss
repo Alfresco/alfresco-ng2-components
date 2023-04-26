@@ -38,7 +38,8 @@ adf-tags-creator {
         display: inline-block;
         padding-right: 12px;
         overflow: auto;
-        max-height: 7vh;
+        width: 75%;
+        word-break: break-all;
     }
 
     .adf-tags-list {
