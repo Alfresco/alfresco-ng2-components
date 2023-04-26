@@ -604,8 +604,6 @@ describe('ProcessListCloudComponent', () => {
         });
 
         it('should render the custom template', () => {
-            const emptyList = {list: {entries: []}};
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
             fixtureEmpty.componentInstance.processListCloud.isLoading = false;
 
             fixtureEmpty.detectChanges();
