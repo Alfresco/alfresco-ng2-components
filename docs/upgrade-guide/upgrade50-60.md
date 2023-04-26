@@ -129,7 +129,7 @@ export class MyModule {}
 
 ### PaginationModel
 
-`Pagination` model from `@alfresco/js-api` has been now deprecated in favour of internal implemented model [`PaginationModel`](../../lib/core/src/lib/models/pagination.model.ts).
+`Pagination` model from `@alfresco/js-api` has been now deprecated in favour of ADF model [`PaginationModel`](../../lib/core/src/lib/models/pagination.model.ts).
 
 ## Relocated classes
 
@@ -175,7 +175,7 @@ export class MyModule {}
 
 ### DataTable changes
 
-Staring with v6.0.0, you need to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) to update a row of your table.
+Starting with v6.0.0, you need to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) to update a row of your table.
 The model to update the DataTable require the `id` of the row that is being changed, and the new data Object of the row:
 
 ```typescript
