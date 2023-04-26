@@ -261,7 +261,7 @@ describe('ContentNodeSelectorComponent', () => {
 
     describe('Upload button', () => {
 
-        it('[C588832] Should not be able to upload a file whilst a search is still running', () => {
+        it('Should not be able to upload a file whilst a search is still running', () => {
             enableLocalUpload();
             fixture.detectChanges();
 
