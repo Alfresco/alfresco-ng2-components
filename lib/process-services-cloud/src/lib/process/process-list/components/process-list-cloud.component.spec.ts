@@ -140,7 +140,8 @@ describe('ProcessListCloudComponent', () => {
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
-        component.reload();
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
