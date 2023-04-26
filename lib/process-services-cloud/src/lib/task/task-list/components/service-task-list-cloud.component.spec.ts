@@ -282,7 +282,7 @@ describe('ServiceTaskListCloudComponent', () => {
             expect(getServiceTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', () => {
+        it('should reset pagination when resetPaginationValues is called', (done) => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
             const size = component.size;
@@ -294,6 +294,7 @@ describe('ServiceTaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(skipCount);
                     expect(updatedPagination.maxItems).toEqual(size);
                     expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
                 });
 
             const pagination = {
@@ -305,7 +306,7 @@ describe('ServiceTaskListCloudComponent', () => {
             component.resetPagination();
         });
 
-        it('should set pagination and reload when updatePagination is called', () => {
+        it('should set pagination and reload when updatePagination is called', (done) => {
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
             spyOn(component, 'reload').and.stub();
 
@@ -320,6 +321,7 @@ describe('ServiceTaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(pagination.skipCount);
                     expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                     expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
                 });
 
             component.updatePagination(pagination);
@@ -378,10 +380,6 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         it('it should not show copy tooltip when key is not present in data-column', () => {
-            customCopyComponent.taskList.success.subscribe(() => {
-                expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
-            });
-
             customCopyComponent.taskList.reload();
             copyFixture.detectChanges();
 
@@ -390,6 +388,7 @@ describe('ServiceTaskListCloudComponent', () => {
                 .triggerEventHandler('mouseenter');
 
             copyFixture.detectChanges();
+            expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
         });
     });
 

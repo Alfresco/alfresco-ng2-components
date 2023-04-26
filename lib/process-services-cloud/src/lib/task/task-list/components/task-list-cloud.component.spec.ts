@@ -424,7 +424,7 @@ describe('TaskListCloudComponent', () => {
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', () => {
+        it('should reset pagination when resetPaginationValues is called', (done) => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
 
             const size = component.size;
@@ -436,6 +436,7 @@ describe('TaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(skipCount);
                     expect(updatedPagination.maxItems).toEqual(size);
                     expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
                 });
 
             const pagination = {
@@ -447,7 +448,7 @@ describe('TaskListCloudComponent', () => {
             component.resetPagination();
         });
 
-        it('should set pagination and reload when updatePagination is called', () => {
+        it('should set pagination and reload when updatePagination is called', (done) => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             spyOn(component, 'reload').and.stub();
 
@@ -462,6 +463,7 @@ describe('TaskListCloudComponent', () => {
                     expect(component.skipCount).toBe(pagination.skipCount);
                     expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                     expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
                 });
 
             component.updatePagination(pagination);
@@ -522,10 +524,6 @@ describe('TaskListCloudComponent', () => {
         });
 
         it('it should not show copy tooltip when key is not present in data-column', () => {
-            customCopyComponent.taskList.success.subscribe(() => {
-                expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
-            });
-
             customCopyComponent.taskList.reload();
             copyFixture.detectChanges();
 
@@ -534,6 +532,7 @@ describe('TaskListCloudComponent', () => {
                 .triggerEventHandler('mouseenter');
 
             copyFixture.detectChanges();
+            expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
         });
     });
 

@@ -481,7 +481,7 @@ describe('ProcessListCloudComponent', () => {
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', () => {
+        it('should reset pagination when resetPaginationValues is called', (done) => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
             const size = component.size;
@@ -493,6 +493,7 @@ describe('ProcessListCloudComponent', () => {
                 expect(component.skipCount).toBe(skipCount);
                 expect(updatedPagination.maxItems).toEqual(size);
                 expect(updatedPagination.skipCount).toEqual(skipCount);
+                done();
             });
 
             const pagination = {
@@ -504,7 +505,7 @@ describe('ProcessListCloudComponent', () => {
             component.resetPagination();
         });
 
-        it('should set pagination and reload when updatePagination is called', () => {
+        it('should set pagination and reload when updatePagination is called', (done) => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             spyOn(component, 'reload').and.stub();
 
@@ -519,6 +520,7 @@ describe('ProcessListCloudComponent', () => {
                 expect(component.skipCount).toBe(pagination.skipCount);
                 expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                 expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                done();
             });
 
             component.updatePagination(pagination);
