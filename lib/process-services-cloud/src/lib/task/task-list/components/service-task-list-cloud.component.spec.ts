@@ -455,10 +455,6 @@ describe('ServiceTaskListCloudComponent', () => {
             taskSpy.and.returnValue(of(fakeServiceTask));
             component.presetColumn = 'fakeCustomSchema';
 
-            component.success.subscribe(() => {
-                expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
-            });
-
             component.reload();
             fixture.detectChanges();
 
@@ -467,6 +463,7 @@ describe('ServiceTaskListCloudComponent', () => {
                 .triggerEventHandler('mouseenter');
 
             fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
         });
     });
 });
