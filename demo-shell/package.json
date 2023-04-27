@@ -1,7 +1,7 @@
 {
   "name": "Alfresco-ADF-Angular-Demo",
   "description": "Demo shell for Alfresco Angular components",
-  "version": "6.0.0-A.4",
+  "version": "6.0.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
