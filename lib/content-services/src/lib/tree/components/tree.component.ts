@@ -208,7 +208,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
                 node.isLoading = true;
                 this.treeService.getSubNodes(node.id, 0, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
                     this.treeService.expandNode(node, response.entries);
-                    this.paginationChanged.emit(response.pagination);
                     node.isLoading = false;
                     if (this.treeNodesSelection.isSelected(node)) {
                         //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected
@@ -233,7 +232,6 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         const loadedChildren: number = this.treeService.getChildren(parentNode).length;
         this.treeService.getSubNodes(parentNode.id, loadedChildren, this.userPreferenceService.paginationSize).subscribe((response: TreeResponse<T>) => {
             this.treeService.appendNodes(parentNode, response.entries);
-            this.paginationChanged.emit(response.pagination);
             node.isLoading = false;
             if (this.treeNodesSelection.isSelected(parentNode)) {
                 //timeout used to update nodeCheckboxes query list after new nodes are added so they can be selected

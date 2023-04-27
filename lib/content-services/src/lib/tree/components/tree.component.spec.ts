@@ -87,6 +87,18 @@ describe('TreeComponent', () => {
         expect(refreshSpy).toHaveBeenCalled();
     });
 
+    it('should emit pagination when tree is refreshed', (done) => {
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({
+            pagination: {skipCount: 0, maxItems: userPreferenceService.paginationSize}, entries: []
+        }));
+        component.paginationChanged.subscribe((pagination) => {
+            expect(pagination.skipCount).toBe(0);
+            expect(pagination.maxItems).toBe(userPreferenceService.paginationSize);
+            done();
+        });
+        component.refreshTree();
+    });
+
     it('should show a header title showing displayName property value', () => {
         spyOn(component, 'isEmpty').and.returnValue(false);
         component.displayName = 'test';
@@ -145,16 +157,6 @@ describe('TreeComponent', () => {
         expect(nodeIcons[0].nativeElement.innerText).toContain('chevron_left');
     });
 
-    it('should emit pagination when nodes are loaded', (done) => {
-        component.treeService.treeNodes = Array.from(treeNodesMockExpanded);
-        component.paginationChanged.subscribe((pagination) => {
-            expect(pagination.skipCount).toBe(0);
-            expect(pagination.maxItems).toBe(userPreferenceService.paginationSize);
-            done();
-        });
-        component.expandCollapseNode(component.treeService.treeNodes[0]);
-    });
-
     it('when node has more items to load loadMore node should appear', () => {
         component.treeService.treeNodes = Array.from(treeNodesMockExpanded);
         fixture.detectChanges();
@@ -172,6 +174,7 @@ describe('TreeComponent', () => {
 
     it('should call correct server method on collapsing node', () => {
         component.refreshTree();
+        component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'collapseNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
