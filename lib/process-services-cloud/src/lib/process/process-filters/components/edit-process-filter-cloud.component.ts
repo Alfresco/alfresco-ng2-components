@@ -413,7 +413,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.name });
+                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.uniqueAppName });
                     });
                 }
             });

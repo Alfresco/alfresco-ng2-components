@@ -28,6 +28,9 @@ export interface ApplicationInstanceModel {
     connectors?: any;
     descriptor?: Descriptor;
     environmentId?: string;
+    environment?: string;
+    environmentIdShort?: string;
+    uniqueAppName?: string;
 }
 
 export interface Descriptor {

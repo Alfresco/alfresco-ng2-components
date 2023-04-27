@@ -249,7 +249,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.name });
+                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.uniqueAppName });
                     });
                 }
             });

@@ -87,6 +87,10 @@ export class AppsProcessCloudService {
             contentTypes, accepts))
             .pipe(
                 map((applications: any) => applications.list.entries.map((application) => application.entry)),
+                map((applications: ApplicationInstanceModel[]) => applications.map((application: ApplicationInstanceModel) => {
+                    application['uniqueAppName'] = application.environmentId ? `${application.name}-${application.environmentId.slice(0, 8)}` : application.name;
+                    return application;
+                })),
                 catchError((err) => this.handleError(err))
             );
     }
