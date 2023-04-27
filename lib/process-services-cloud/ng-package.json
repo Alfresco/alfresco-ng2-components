@@ -26,6 +26,17 @@
   "allowedNonPeerDependencies": [
     "@apollo/client",
     "apollo-angular",
-    "subscriptions-transport-ws"
+    "subscriptions-transport-ws",
+    "@editorjs/editorjs",
+    "@editorjs/code",
+    "@editorjs/header",
+    "@editorjs/inline-code",
+    "@editorjs/list",
+    "@editorjs/marker",
+    "@editorjs/underline",
+    "@quanzo/change-font-size",
+    "editorjs-text-color-plugin",
+    "editorjs-html",
+    "editorjs-paragraph-with-alignment"
   ]
 }
