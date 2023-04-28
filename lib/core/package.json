@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-core",
   "description": "Alfresco ADF core",
-  "version": "6.0.0-A.4",
+  "version": "6.0.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -18,17 +18,6 @@
   },
   "dependencies": {
     "cropperjs": "1.5.13",
-    "@editorjs/editorjs": "^2.26.5",
-    "@editorjs/code": "2.7.0",
-    "@editorjs/header": "2.7.0",
-    "@editorjs/inline-code": "1.3.1",
-    "@editorjs/list": "1.8.0",
-    "@editorjs/marker": "1.2.2",
-    "@editorjs/underline": "1.0.0",
-    "@quanzo/change-font-size": "1.0.0",
-    "editorjs-text-color-plugin": "1.13.1",
-    "editorjs-html": "3.4.2",
-    "editorjs-paragraph-with-alignment": "3.0.0",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^13.0.1"
   },
@@ -44,8 +33,8 @@
     "@angular/router": ">=14.1.3",
     "@mat-datetimepicker/core": "^9.0.68",
     "@mat-datetimepicker/moment": "^9.0.68",
-    "@alfresco/js-api": "5.5.0",
-    "@alfresco/adf-extensions": "6.0.0-A.4",
+    "@alfresco/js-api": "6.0.0",
+    "@alfresco/adf-extensions": "6.0.0",
     "@ngx-translate/core": ">=14.0.0",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
