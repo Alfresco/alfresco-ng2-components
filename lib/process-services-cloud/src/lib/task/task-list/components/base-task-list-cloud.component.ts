@@ -127,7 +127,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
-    onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
