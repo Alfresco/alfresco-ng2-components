@@ -167,10 +167,14 @@ describe('TaskListCloudComponent', () => {
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
         
-        component.reload();
         fixture.detectChanges();
         
         expect(component.isLoading).toBe(false);
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+        fixture.detectChanges();
+
         const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
@@ -180,8 +184,12 @@ describe('TaskListCloudComponent', () => {
 
     it('should load spinner and show the content', () => {
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-        component.reload();
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(false);
+
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);
@@ -196,17 +204,18 @@ describe('TaskListCloudComponent', () => {
 
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
-
-        fixture.detectChanges();
-
+        component.ngAfterContentInit();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
     it('should hide columns on applying new columns visibility through columns selector', () => {
         component.showMainDatatableActions = true;
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+        component.ngAfterContentInit();
 
-        component.reload();
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+
         fixture.detectChanges();
 
         fixture.debugElement
@@ -241,6 +250,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
+        component.ngAfterContentInit();
         expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
@@ -630,9 +640,10 @@ describe('TaskListCloudComponent', () => {
             component.reload();
             fixture.detectChanges();
 
-            fixture.debugElement
-                .query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'))
-                .triggerEventHandler('mouseenter');
+            const columnWithCopyContentFlagTrue = fixture.debugElement
+                .query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'));
+
+            columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();

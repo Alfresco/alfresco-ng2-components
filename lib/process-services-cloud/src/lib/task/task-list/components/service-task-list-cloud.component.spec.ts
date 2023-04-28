@@ -140,8 +140,12 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should load spinner and show the content', () => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-        component.reload();
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(false);
+
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);
@@ -156,22 +160,19 @@ describe('ServiceTaskListCloudComponent', () => {
 
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
-
-        fixture.detectChanges();
-
+        component.ngAfterContentInit();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
         component.presetColumn = 'fakeCustomSchema';
-
         fixture.detectChanges();
-
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(2);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
+        component.ngAfterContentInit();
         expect(component.rows).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
@@ -442,24 +443,26 @@ describe('ServiceTaskListCloudComponent', () => {
             component.reload();
             fixture.detectChanges();
 
-            fixture.debugElement
-                .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
-                .triggerEventHandler('mouseenter');
+            const columnWithCopyContentFlagTrue = fixture.debugElement
+                .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'));
+
+            columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
         });
 
-        it('shoud not show tooltip if config copyContent flag is true', () => {
+        it('shoud not show tooltip if config copyContent flag is NOT true', () => {
             taskSpy.and.returnValue(of(fakeServiceTask));
             component.presetColumn = 'fakeCustomSchema';
 
             component.reload();
             fixture.detectChanges();
 
-            fixture.debugElement
-                .query(By.css('span[title="serviceTaskName"]'))
-                .triggerEventHandler('mouseenter');
+            const columnWithCopyContentFlagNotTrue = fixture.debugElement
+                .query(By.css('span[title="serviceTaskName"]'));
+
+            columnWithCopyContentFlagNotTrue.triggerEventHandler('mouseenter');
 
             fixture.detectChanges();
             expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
