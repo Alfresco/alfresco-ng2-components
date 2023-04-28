@@ -228,6 +228,21 @@ describe('ServiceTaskListCloudComponent', () => {
         expect(component.createDatatableSchema).toHaveBeenCalled();
     });
 
+    it('should call endpoint when a column visibility gets changed', () => {
+        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
+        component.appName = 'fake-app-name';
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(serviceTaskListCloudService.getServiceTaskByRequest).toHaveBeenCalledTimes(1);
+    });
+
     describe('component changes', () => {
 
         beforeEach(() => {

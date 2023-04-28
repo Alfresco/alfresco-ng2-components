@@ -443,6 +443,22 @@ describe('ProcessListCloudComponent', () => {
         expect(component.createDatatableSchema).toHaveBeenCalled();
     });
 
+    it('should call endpoint when a column visibility gets changed', () => {
+        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+        spyOn(processListCloudService, 'getProcessByRequest');
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
+        component.appName = 'fake-app-name';
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(processListCloudService.getProcessByRequest).toHaveBeenCalledTimes(1);
+    });
+
     describe('component changes', () => {
 
         beforeEach(() => {
