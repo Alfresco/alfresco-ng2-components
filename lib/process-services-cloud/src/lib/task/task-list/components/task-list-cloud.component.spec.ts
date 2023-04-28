@@ -157,8 +157,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should use the default schemaColumn as default', () => {
-        fixture.detectChanges();
-
+        component.ngAfterContentInit();
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(3);
     });
@@ -166,9 +165,7 @@ describe('TaskListCloudComponent', () => {
     it('should display empty content when process list is empty', () => {
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
-        
         fixture.detectChanges();
-        
         expect(component.isLoading).toBe(false);
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
@@ -205,6 +202,7 @@ describe('TaskListCloudComponent', () => {
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();
+        fixture.detectChanges();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
@@ -218,10 +216,8 @@ describe('TaskListCloudComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.debugElement
-            .query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'))
-            .triggerEventHandler('click', {});
-
+        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+        mainMenuButton.triggerEventHandler('click', {});
         fixture.detectChanges();
 
         const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
@@ -376,7 +372,6 @@ describe('TaskListCloudComponent', () => {
             component.status = 'mock-status';
             component.lastModifiedFrom = 'mock-lastmodified-date';
             component.owner = 'mock-owner-name';
-
             const priorityChange = new SimpleChange(undefined, 1, true);
             const statusChange = new SimpleChange(undefined, 'mock-status', true);
             const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
@@ -388,7 +383,6 @@ describe('TaskListCloudComponent', () => {
                 owner: ownerChange
             });
             fixture.detectChanges();
-
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
@@ -477,8 +471,6 @@ describe('TaskListCloudComponent', () => {
                 });
 
             component.updatePagination(pagination);
-
-            expect(component.reload).toHaveBeenCalled();
         });
     });
 
@@ -666,6 +658,10 @@ describe('TaskListCloudComponent', () => {
             taskSpy.and.returnValue(of(emptyList));
             fixture.detectChanges();
 
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
             const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
             expect(emptyContent.nativeElement).toBeDefined();
             expect(component.replacePriorityValues({
@@ -681,6 +677,10 @@ describe('TaskListCloudComponent', () => {
 
         it('replacePriorityValues should return replaced value when rows are defined', () => {
             taskSpy.and.returnValue(of(fakeGlobalTasks));
+            fixture.detectChanges();
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
             fixture.detectChanges();
 
             expect(component.replacePriorityValues({

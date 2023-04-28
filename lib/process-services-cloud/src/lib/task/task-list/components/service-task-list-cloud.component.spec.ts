@@ -118,8 +118,7 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should use the default schemaColumn as default', () => {
-        fixture.detectChanges();
-
+        component.ngAfterContentInit();
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(3);
     });
@@ -161,6 +160,7 @@ describe('ServiceTaskListCloudComponent', () => {
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();
+        fixture.detectChanges();
         expect(component.columns).toEqual(fakeCustomSchema);
     });
 
