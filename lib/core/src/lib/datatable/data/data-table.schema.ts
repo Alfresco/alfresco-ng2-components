@@ -50,10 +50,6 @@ export abstract class DataTableSchema<T = unknown> {
                 protected presetKey: string,
                 protected presetsModel: any) { }
 
-    public emitColumnsSchemaSubject() {
-        this.columnsSchemaSubject$.next(true);
-    }
-
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
 

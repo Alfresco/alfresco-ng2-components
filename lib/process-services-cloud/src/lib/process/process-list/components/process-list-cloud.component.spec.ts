@@ -432,16 +432,15 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
     });
 
-    it('should emit columnsSchemaSubject when a column visibility gets changed', () => {
-        spyOn(component, 'emitColumnsSchemaSubject');
-        component.reload();
-        fixture.detectChanges();
+    it('should create datatable schema when a column visibility gets changed', () => {
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
 
         component.onColumnsVisibilityChange(component.columns);
 
         fixture.detectChanges();
 
-        expect(component.emitColumnsSchemaSubject).toHaveBeenCalled();
+        expect(component.createDatatableSchema).toHaveBeenCalled();
     });
 
     describe('component changes', () => {

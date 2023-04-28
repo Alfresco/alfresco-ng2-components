@@ -393,7 +393,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
         }, {});
 
         this.createColumns();
-        this.emitColumnsSchemaSubject();
+        this.createDatatableSchema();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(

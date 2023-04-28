@@ -353,16 +353,15 @@ describe('TaskListCloudComponent', () => {
         expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
     });
 
-    it('should emit columnsSchemaSubject when a column visibility gets changed', () => {
-        spyOn(component, 'emitColumnsSchemaSubject');
-        component.reload();
-        fixture.detectChanges();
+    it('should create datatable schema when a column visibility gets changed', () => {
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
 
         component.onColumnsVisibilityChange(component.columns);
 
         fixture.detectChanges();
 
-        expect(component.emitColumnsSchemaSubject).toHaveBeenCalled();
+        expect(component.createDatatableSchema).toHaveBeenCalled();
     });
 
     describe('component changes', () => {
