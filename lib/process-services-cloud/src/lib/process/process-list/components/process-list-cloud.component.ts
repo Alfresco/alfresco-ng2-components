@@ -300,7 +300,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     private load() {
         this.isLoading = true;
 
-        this.columnsSchemaSubject$.pipe(
+        this.isColumnSchemaCreated$.pipe(
             takeUntil(this.onDestroy$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),
@@ -393,7 +393,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
         }, {});
 
         this.createColumns();
-        this.columnsSchemaSubject$.next(true);
+        this.emitColumnsSchemaSubject();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(

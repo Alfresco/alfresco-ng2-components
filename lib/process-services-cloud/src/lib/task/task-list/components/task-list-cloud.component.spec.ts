@@ -37,7 +37,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { skip } from 'rxjs/operators';
+import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudModule } from '../task-list-cloud.module';
@@ -144,6 +144,8 @@ describe('TaskListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -351,6 +353,18 @@ describe('TaskListCloudComponent', () => {
         expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
     });
 
+    it('should emit columnsSchemaSubject when a column visibility gets changed', () => {
+        spyOn(component, 'emitColumnsSchemaSubject');
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(component.emitColumnsSchemaSubject).toHaveBeenCalled();
+    });
+
     describe('component changes', () => {
 
         beforeEach(() => {
@@ -498,6 +512,7 @@ describe('TaskListCloudComponent', () => {
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
+            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
@@ -619,6 +634,7 @@ describe('TaskListCloudComponent', () => {
             fixture = TestBed.createComponent(TaskListCloudComponent);
             component = fixture.componentInstance;
             taskSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+            component.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {

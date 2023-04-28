@@ -43,11 +43,16 @@ export abstract class DataTableSchema<T = unknown> {
 
     private layoutPresets = {};
 
-    columnsSchemaSubject$ = new ReplaySubject<boolean>();
+    private columnsSchemaSubject$ = new ReplaySubject<boolean>();
+    isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
     constructor(private appConfigService: AppConfigService,
                 protected presetKey: string,
                 protected presetsModel: any) { }
+
+    public emitColumnsSchemaSubject() {
+        this.columnsSchemaSubject$.next(true);
+    }
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();

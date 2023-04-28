@@ -33,7 +33,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -117,6 +117,8 @@ describe('ProcessListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -238,6 +240,7 @@ describe('ProcessListCloudComponent', () => {
             done();
         });
         component.appName = appName.currentValue;
+        component.ngAfterContentInit();
         component.ngOnChanges({ appName });
         fixture.detectChanges();
     });
@@ -427,6 +430,18 @@ describe('ProcessListCloudComponent', () => {
 
         expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
         expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
+    });
+
+    it('should emit columnsSchemaSubject when a column visibility gets changed', () => {
+        spyOn(component, 'emitColumnsSchemaSubject');
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(component.emitColumnsSchemaSubject).toHaveBeenCalled();
     });
 
     describe('component changes', () => {

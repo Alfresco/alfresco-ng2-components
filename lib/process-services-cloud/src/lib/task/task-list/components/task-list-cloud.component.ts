@@ -168,7 +168,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     reload() {
         this.isLoading = true;
 
-        this.columnsSchemaSubject$.pipe(
+        this.isColumnSchemaCreated$.pipe(
             takeUntil(this.onDestroyTaskList$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),

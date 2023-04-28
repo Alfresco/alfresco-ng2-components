@@ -62,7 +62,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
 
             combineLatest([
                 this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
-                this.columnsSchemaSubject$
+                this.isColumnSchemaCreated$
             ]).pipe(
                 takeUntil(this.onDestroyServiceTaskList$)
             ).subscribe(

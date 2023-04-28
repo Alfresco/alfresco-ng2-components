@@ -304,7 +304,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
         this.createColumns();
 
-        this.columnsSchemaSubject$.next(true);
+        this.emitColumnsSchemaSubject();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(

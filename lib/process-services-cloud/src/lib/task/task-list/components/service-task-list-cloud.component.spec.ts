@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
-import { skip } from 'rxjs/operators';
+import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 
 @Component({
@@ -111,6 +111,8 @@ describe('ServiceTaskListCloudComponent', () => {
                 }
             }
         });
+
+        component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
     });
 
     afterEach(() => {
@@ -213,6 +215,19 @@ describe('ServiceTaskListCloudComponent', () => {
             done();
         });
         component.onRowClick(rowEvent);
+    });
+
+    it('should emit columnsSchemaSubject when a column visibility gets changed', () => {
+        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
+        spyOn(component, 'emitColumnsSchemaSubject');
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(component.emitColumnsSchemaSubject).toHaveBeenCalled();
     });
 
     describe('component changes', () => {
@@ -353,6 +368,7 @@ describe('ServiceTaskListCloudComponent', () => {
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
             customCopyComponent = copyFixture.componentInstance;
+            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
         });
 
         afterEach(() => {
