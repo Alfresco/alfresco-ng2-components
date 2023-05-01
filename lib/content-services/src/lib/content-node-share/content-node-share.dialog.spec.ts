@@ -137,7 +137,7 @@ describe('ShareDialogComponent', () => {
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
         expect(renditionService.getNodeRendition).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-checked');
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
@@ -160,7 +160,7 @@ describe('ShareDialogComponent', () => {
 
         expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-checked');
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
@@ -176,7 +176,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('.mat-slide-toggle label')
+        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
             .dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
@@ -196,7 +196,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('.mat-slide-toggle label')
+        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
             .dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
@@ -216,7 +216,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('.mat-slide-toggle label')
+        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
             .dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
@@ -235,7 +235,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-disabled');
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-disabled');
         expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
         expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
     });
@@ -263,10 +263,6 @@ describe('ShareDialogComponent', () => {
 
         await fixture.whenStable();
 
-        // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-        //     properties: {'qshare:expiryDate': null}
-        // });
-
         expect(
             fixture.nativeElement.querySelector('input[formcontrolname="time"]').value
         ).toBe('');
@@ -289,45 +285,14 @@ describe('ShareDialogComponent', () => {
             .classList).toContain('mat-disabled');
     });
 
-    it('should update node expiration date with selected date', fakeAsync(() => {
-        const date = moment();
-        node.entry.allowableOperations = ['update'];
-        node.entry.properties['qshare:sharedId'] = 'sharedId';
-        fixture.componentInstance.form.controls['time'].setValue(null);
-
-        component.data = {
-            node,
-            baseShareUrl: 'some-url/'
-        };
-
-        fixture.detectChanges();
-
-        fixture.nativeElement
-            .querySelector(
-                'mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
-            )
-            .dispatchEvent(new MouseEvent('click'));
-
-        fixture.componentInstance.form.controls['time'].setValue(date);
-        fixture.detectChanges();
-
-        tick(100);
-
-        // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-        //     properties: {'qshare:expiryDate': date.utc().format()}
-        // });
-
-        const expiryDate = '2025-04-27T10:15:00.000+0000';
-
-        expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
-            nodeId: 'nodeId',
-            expiresAt: expiryDate
-        });
-    }));
 
     describe('datetimepicker type', () => {
         beforeEach(() => {
-            // spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of(null));
+            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+            spyOn(renditionService, 'getNodeRendition');
+
+            node.entry.properties['qshare:sharedId'] = 'sharedId';
             node.entry.allowableOperations = ['update'];
             component.data = {
                 node,
@@ -348,57 +313,20 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(500);
 
-            // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            //     properties: {'qshare:expiryDate': date.endOf('day').utc().format()}
-            // });
+            let expiryDate = date.endOf('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+            const lastIndex = expiryDate?.lastIndexOf(':');
+            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
 
-            const expiryDate = '2025-04-27T10:15:00.000+0000';
-
+            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
             expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
                 nodeId: 'nodeId',
                 expiresAt: expiryDate
             });
         }));
 
-        it('it should update node with input date and time when type is `datetime`', async () => {
+        it('it should update node with input date and time when type is `datetime`', fakeAsync (() => {
             const dateTimePickerType = 'datetime';
             const date = moment('2525-01-01 13:00:00');
-            const expiryDate = date.toDate();
-            spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
-            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
-            node.entry.properties['qshare:sharedId'] = 'sharedId';
-            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
-                entry: {id: 'sharedId', expiresAt: expiryDate}
-            }));
-
-
-            fixture.detectChanges();
-            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
-                .dispatchEvent(new MouseEvent('click'));
-
-            fixture.componentInstance.time.setValue(date);
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-
-            // const lastIndex = expiryDate?.lastIndexOf(':');
-            // expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
-            // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            //     properties: {'qshare:expiryDate': date.utc().format()}
-            // });
-
-            // const expiryDate = '2025-04-27T10:15:00.000+0000';
-            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
-            // expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
-            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
-                id: 'sharedId',
-                expiresAt: expiryDate
-            });
-        });
-
-        it('it should update the link expiry date and time of the link when we provide `datetime` in datetimepicker', fakeAsync(() => {
-            const dateTimePickerType = 'datetime';
-            const date = moment('2525-01-01 15:00:00');
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
 
             fixture.detectChanges();
@@ -409,14 +337,11 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalledWith('sharedId');
+            let expiryDate = date.utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+            const lastIndex = expiryDate?.lastIndexOf(':');
+            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
 
-            const expiryDate = '2025-04-27T10:15:00.000+0000';
-
-            // spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
-            //     entry: { nodeId: 'nodeId', expiresAt: expiryDate }
-            // }));
-
+            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
             expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
                 nodeId: 'nodeId',
                 expiresAt: expiryDate

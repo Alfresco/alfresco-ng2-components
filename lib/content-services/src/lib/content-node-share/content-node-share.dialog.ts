@@ -125,8 +125,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     onTimeChanged(date: moment.Moment) {
-        // eslint-disable-next-line no-console
-        console.log('Time change');
         this.updateNode(date);
     }
 
