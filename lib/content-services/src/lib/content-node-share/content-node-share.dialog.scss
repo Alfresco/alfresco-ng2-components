@@ -30,6 +30,11 @@
             font-size: var(--theme-caption-font-size);
         }
 
+        &__warn {
+            color: var(--theme-warn-color);
+            font-size: var(--theme-caption-font-size);
+        }
+
         &--row {
             display: flex;
             flex-direction: row;
@@ -41,6 +46,7 @@
         &__input {
             color: var(--adf-theme-foreground-text-color-087);
         }
+
     }
 
     .adf-input-action {
@@ -49,6 +55,10 @@
 
     .adf-full-width {
         width: 100%;
+    }
+
+    .adf-sharable-link {
+        padding-left: 10px;
     }
 
     .mat-form-field-infix {

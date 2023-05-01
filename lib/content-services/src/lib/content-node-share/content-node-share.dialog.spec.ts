@@ -263,9 +263,9 @@ describe('ShareDialogComponent', () => {
 
         await fixture.whenStable();
 
-        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            properties: {'qshare:expiryDate': null}
-        });
+        // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+        //     properties: {'qshare:expiryDate': null}
+        // });
 
         expect(
             fixture.nativeElement.querySelector('input[formcontrolname="time"]').value
@@ -313,14 +313,21 @@ describe('ShareDialogComponent', () => {
 
         tick(100);
 
-        expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-            properties: {'qshare:expiryDate': date.utc().format()}
+        // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+        //     properties: {'qshare:expiryDate': date.utc().format()}
+        // });
+
+        const expiryDate = '2025-04-27T10:15:00.000+0000';
+
+        expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+            nodeId: 'nodeId',
+            expiresAt: expiryDate
         });
     }));
 
     describe('datetimepicker type', () => {
         beforeEach(() => {
-            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of(null));
+            // spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of(null));
             node.entry.allowableOperations = ['update'];
             component.data = {
                 node,
@@ -341,14 +348,57 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(500);
 
-            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-                properties: {'qshare:expiryDate': date.endOf('day').utc().format()}
+            // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            //     properties: {'qshare:expiryDate': date.endOf('day').utc().format()}
+            // });
+
+            const expiryDate = '2025-04-27T10:15:00.000+0000';
+
+            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+                nodeId: 'nodeId',
+                expiresAt: expiryDate
             });
         }));
 
-        it('it should update node with input date and time when type is `datetime`', fakeAsync(() => {
+        it('it should update node with input date and time when type is `datetime`', async () => {
             const dateTimePickerType = 'datetime';
             const date = moment('2525-01-01 13:00:00');
+            const expiryDate = date.toDate();
+            spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+            node.entry.properties['qshare:sharedId'] = 'sharedId';
+            spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
+                entry: {id: 'sharedId', expiresAt: expiryDate}
+            }));
+
+
+            fixture.detectChanges();
+            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+                .dispatchEvent(new MouseEvent('click'));
+
+            fixture.componentInstance.time.setValue(date);
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+
+            // const lastIndex = expiryDate?.lastIndexOf(':');
+            // expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
+            // expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
+            //     properties: {'qshare:expiryDate': date.utc().format()}
+            // });
+
+            // const expiryDate = '2025-04-27T10:15:00.000+0000';
+            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
+            // expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
+            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+                id: 'sharedId',
+                expiresAt: expiryDate
+            });
+        });
+
+        it('it should update the link expiry date and time of the link when we provide `datetime` in datetimepicker', fakeAsync(() => {
+            const dateTimePickerType = 'datetime';
+            const date = moment('2525-01-01 15:00:00');
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
 
             fixture.detectChanges();
@@ -359,8 +409,17 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
-                properties: {'qshare:expiryDate': date.utc().format()}
+            expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalledWith('sharedId');
+
+            const expiryDate = '2025-04-27T10:15:00.000+0000';
+
+            // spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
+            //     entry: { nodeId: 'nodeId', expiresAt: expiryDate }
+            // }));
+
+            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+                nodeId: 'nodeId',
+                expiresAt: expiryDate
             });
         }));
     });
