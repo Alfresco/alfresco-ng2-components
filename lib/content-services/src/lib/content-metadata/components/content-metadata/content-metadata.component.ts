@@ -366,7 +366,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.assignedCategories = [];
         this.categoryService.getCategoryLinksForNode(nodeId).subscribe((categoryPaging) => {
             this.categories = categoryPaging.list.entries.map((categoryEntry) => {
-                const path = 'categoryEntry.entry.path' ? 'categoryEntry.entry.path'.split('/').splice(3).join('/') : null;
+                const path = categoryEntry.entry.path ? categoryEntry.entry.path.split('/').splice(3).join('/') : null;
                 categoryEntry.entry.name = path ? `${path}/${categoryEntry.entry.name}` : categoryEntry.entry.name;
                 return categoryEntry.entry;
             });
