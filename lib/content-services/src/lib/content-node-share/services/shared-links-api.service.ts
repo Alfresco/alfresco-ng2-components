@@ -21,6 +21,10 @@ import { Observable, from, of, Subject } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
 
+interface NodeOptions {
+    nodeId: string;
+    expiresAt?: string;
+}
 @Injectable({
     providedIn: 'root'
 })
@@ -65,8 +69,14 @@ export class SharedLinksApiService {
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
-    createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink({ nodeId }, options);
+    createSharedLinks(nodeId: string | NodeOptions, options: any = {}): Observable<SharedLinkEntry> {
+        let nodeOptions;
+        if (typeof nodeId === 'string') {
+            nodeOptions = { nodeId };
+        } else {
+            nodeOptions = nodeId;
+        }
+        const promise = this.sharedLinksApi.createSharedLink( nodeOptions , options);
 
         return from(promise).pipe(
             catchError((err) => of(err))
