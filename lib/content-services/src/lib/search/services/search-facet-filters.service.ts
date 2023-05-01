@@ -351,7 +351,7 @@ export class SearchFacetFiltersService implements OnDestroy {
                     category => {
                         const nextAfterGeneralPathPartIndex = 3;
                         const pathSeparator = '/';
-                        const path = 'category.entry.path'.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
+                        const path = category.entry.path.split(pathSeparator).slice(nextAfterGeneralPathPartIndex).join('/');
                         item.display = path ? `${path}/${category.entry.name}` : category.entry.name;
                     }
                 );
