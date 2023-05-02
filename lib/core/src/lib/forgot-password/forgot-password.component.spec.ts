@@ -19,22 +19,31 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ForgotPasswordComponent } from './forgot-password.component';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('ResetPasswordComponent', () => {
+describe('ForgotPasswordComponent', () => {
     let component: ForgotPasswordComponent;
     let fixture: ComponentFixture<ForgotPasswordComponent>;
     let router: Router;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [ForgotPasswordComponent]
+            imports: [CoreTestingModule, RouterTestingModule],
+            declarations: [ForgotPasswordComponent],
+            providers: [
+                {
+                  provide: AlfrescoApiService,
+                  useClass: AlfrescoApiServiceMock
+                }
+              ]
         });
 
         fixture = TestBed.createComponent(ForgotPasswordComponent);
         component = fixture.componentInstance;
-        component.ngOnInit();
         router = TestBed.inject(Router);
+        fixture.detectChanges();
     });
 
     afterEach(() => {
@@ -52,9 +61,6 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('send instructions button should be enabled when username field is not empty', async () => {
-        fixture.detectChanges();
-        await fixture.whenStable();
-
         component.forgotPasswordForm.controls['userName'].setValue('userABC');
         spyOn(component, 'isButtonDisabled').and.callThrough();
         const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.adf-send-instructions-button');
@@ -70,9 +76,6 @@ describe('ResetPasswordComponent', () => {
         component.forgotPasswordForm.controls['userName'].setValue('userABC');
         spyOn(component, 'sendInstructions').and.callThrough();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
         const sendInstructionsBtn = fixture.debugElement.nativeElement.querySelector('.adf-send-instructions-button');
         sendInstructionsBtn.dispatchEvent(new Event('click'));
 
@@ -82,9 +85,6 @@ describe('ResetPasswordComponent', () => {
     it('should route user back to login page when the close button is clicked', async () => {
         spyOn(component, 'close').and.callThrough();
         spyOn(router, 'navigate');
-
-        fixture.detectChanges();
-        await fixture.whenStable();
 
         const closeBtn = fixture.debugElement.nativeElement.querySelector('.adf-close-button');
         closeBtn.dispatchEvent(new Event('click'));
