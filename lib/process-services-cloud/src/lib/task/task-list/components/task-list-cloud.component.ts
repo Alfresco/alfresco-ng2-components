@@ -169,10 +169,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         this.isLoading = true;
 
         this.isColumnSchemaCreated$.pipe(
-            takeUntil(this.onDestroyTaskList$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),
-            switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode))
+            switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode)),
+            takeUntil(this.onDestroyTaskList$)
         ).subscribe((tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
             const tasksWithVariables = tasks.list.entries.map((task) => ({
                 ...task,

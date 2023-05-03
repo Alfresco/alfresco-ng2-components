@@ -301,10 +301,10 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
         this.isLoading = true;
 
         this.isColumnSchemaCreated$.pipe(
-            takeUntil(this.onDestroy$),
             switchMap(() => of(this.createRequestNode())),
             tap((requestNode) => this.requestNode = requestNode),
-            switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode))
+            switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode)),
+            takeUntil(this.onDestroy$)
         ).subscribe((processes) => {
             this.rows = this.variableMapperService.mapVariablesByColumnTitle(
                 processes.list.entries,
