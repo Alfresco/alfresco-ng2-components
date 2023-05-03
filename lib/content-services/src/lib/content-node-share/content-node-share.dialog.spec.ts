@@ -234,13 +234,19 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
+        const slideToggleChecked: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]');
 
+        expect(slideToggleChecked).toBe(null);
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-disabled');
-        expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
-        expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
+        // expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
+        // expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
     });
 
-    it('should reset expiration date when toggle is unchecked', async () => {
+    it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
+        spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
+        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+        spyOn(renditionService, 'getNodeRendition');
+
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
         node.entry.allowableOperations = ['update'];
@@ -248,6 +254,7 @@ describe('ShareDialogComponent', () => {
             node,
             baseShareUrl: 'some-url/'
         };
+
 
         fixture.detectChanges();
 
@@ -263,9 +270,9 @@ describe('ShareDialogComponent', () => {
 
         await fixture.whenStable();
 
-        expect(
-            fixture.nativeElement.querySelector('input[formcontrolname="time"]').value
-        ).toBe('');
+        expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
+        expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId');
+
     });
 
     it('should not allow expiration date action when node has no update permission', async () => {
@@ -280,7 +287,10 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
+        const slideToggleChecked: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]');
+
+        expect(slideToggleChecked).toBe(null);
+        // expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
             .classList).toContain('mat-disabled');
     });

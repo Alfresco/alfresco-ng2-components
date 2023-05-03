@@ -462,7 +462,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
     "EXPIRES": "Expires on",
     "LINK-EXPIRY-DATE": "Link Expiry Date",
-    "EXPIRATION-LABEL" : "Expiration Date",
+    "EXPIRATION-LABEL" : "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CLOSE": "Close",
     "COPY_BUTTON_LABEL": "Copy link",
