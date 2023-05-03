@@ -3,7 +3,7 @@ name: "release"
 on:
   workflow_call:
     inputs:
-      dry-run-release:
+      dry-run-flag:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
@@ -115,7 +115,7 @@ jobs:
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:
-          dry-run-flag: ${{ inputs.dry-run-release }}
+          dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/setup
         with:
           enable-cache: false
@@ -141,12 +141,12 @@ jobs:
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:
-          dry-run-flag: ${{ inputs.dry-run-release }}
+          dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/setup
         with:
           enable-cache: false
           enable-node-modules-cache: false
-          act: ${{ inputs.dry-run-release }}
+          act: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: release Storybook docker
         run: |
@@ -174,7 +174,7 @@ jobs:
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:
-          dry-run-flag: ${{ inputs.dry-run-release }}
+          dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: check PR number
         id: action
