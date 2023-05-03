@@ -1,107 +1,119 @@
 <div class="adf-share-link__dialog-content">
-    <div data-automation-id="adf-share-dialog-title" class="adf-share-link__title" role="heading" aria-level="1">
-        {{ 'SHARE.DIALOG-TITLE' | translate }} {{ fileName }}
-    </div>
+    <div class="adf-share-link__dialog-container">
+        <div class="adf-share-link--row">
+            <div data-automation-id="adf-share-dialog-title" class="adf-share-link__title adf-share-link__label" role="heading" aria-level="1">
+                {{ 'SHARE.DIALOG-TITLE' | translate }} {{ fileName }}
+            </div>
+            <mat-icon mat-dialog-close class="adf-share-link__close">close</mat-icon>
+        </div>
 
-    <mat-dialog-content>
-        <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
+        <mat-dialog-content>
+            <!-- <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p> -->
+            <hr class="adf-share-link__seperation-line" />
 
-        <form [formGroup]="form">
+            <form [formGroup]="form">
 
-            <div class="adf-share-link--row">
-                <mat-icon>timer</mat-icon>
+                <div class="adf-share-link--row">
+                    <mat-icon>timer</mat-icon>
 
-                <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}</div>
+                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}</div>
 
-                <mat-slide-toggle
-                    #slideToggleExpirationDate
-                    [disabled]="!canUpdate"
+                    <mat-slide-toggle
+                        #slideToggleExpirationDate
+                        [disabled]="!canUpdate"
+                        color="primary"
+                        data-automation-id="adf-expire-toggle"
+                        aria-label="{{ 'SHARE.EXPIRES' | translate }}"
+                        [checked]="time.value"
+                        (change)="onToggleExpirationDate($event)">
+                    </mat-slide-toggle>
+                </div>
+
+                <div *ngIf="isSlideToggleChecked" data-automation-id="adf-slide-toggle-checked">
+                    <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
+                        <mat-label>{{ 'SHARE.EXPIRATION-LABEL' | translate }}</mat-label>
+                        <mat-datetimepicker-toggle
+                            #matDatetimepickerToggle="matDatetimepickerToggle"
+                            [disabled]="time.disabled"
+                            [for]="datetimePicker"
+                            matSuffix>
+                        </mat-datetimepicker-toggle>
+                        <mat-datetimepicker
+                            #datetimePicker
+                            (closed)="onDatetimepickerClosed()"
+                            [type]="type"
+                            [timeInterval]="1">
+                        </mat-datetimepicker>
+                        <input class="adf-share-link__input"
+                            #dateTimePickerInput
+                            matInput
+                            placeholder="{{ 'SHARE.EXPIRATION-LABEL' | translate }}"
+                            [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
+                            [min]="minDate"
+                            formControlName="time"
+                            [matDatetimepicker]="datetimePicker" />
+                    </mat-form-field>
+                </div>
+
+
+                <p class="adf-share-link__info">{{ 'SHARE.SHARE-LINK' | translate }}</p>
+
+                <div class="adf-share-link--row">
+                    <mat-slide-toggle
                     color="primary"
-                    data-automation-id="adf-expire-toggle"
-                    aria-label="{{ 'SHARE.EXPIRES' | translate }}"
-                    [checked]="time.value"
-                    (change)="onToggleExpirationDate($event)">
-                </mat-slide-toggle>
-            </div>
+                    data-automation-id="adf-share-toggle"
+                    aria-label="{{ 'SHARE.TITLE' | translate }}"
+                    [checked]="isFileShared"
+                    [disabled]="!canUpdate || isDisabled"
+                    (change)="onSlideShareChange($event)">
+                    </mat-slide-toggle>
 
-            <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
-                <mat-datetimepicker-toggle
-                    #matDatetimepickerToggle="matDatetimepickerToggle"
-                    [disabled]="time.disabled"
-                    [for]="datetimePicker"
-                    matSuffix>
-                </mat-datetimepicker-toggle>
-                <mat-datetimepicker
-                    #datetimePicker
-                    (closed)="onDatetimepickerClosed()"
-                    [type]="type"
-                    [timeInterval]="1">
-                </mat-datetimepicker>
-                <input class="adf-share-link__input"
-                    #dateTimePickerInput
-                    matInput
-                    placeholder="{{ 'SHARE.EXPIRATION-LABEL' | translate }}"
-                    [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
-                    [min]="minDate"
-                    formControlName="time"
-                    [matDatetimepicker]="datetimePicker" />
-            </mat-form-field>
+                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}</div>
 
-            <p class="adf-share-link__info">{{ 'SHARE.SHARE-LINK' | translate }}</p>
+                </div>
 
-            <div class="adf-share-link--row">
-                <mat-slide-toggle
-                color="primary"
-                data-automation-id="adf-share-toggle"
-                aria-label="{{ 'SHARE.TITLE' | translate }}"
-                [checked]="isFileShared"
-                [disabled]="!canUpdate || isDisabled"
-                (change)="onSlideShareChange($event)">
-                </mat-slide-toggle>
+                <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
+                    <input
+                        #sharedLinkInput
+                        data-automation-id="adf-share-link"
+                        class="adf-share-link__input"
+                        matInput
+                        cdkFocusInitial
+                        placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
+                        [attr.aria-label]="'SHARE.PUBLIC-LINK' | translate"
+                        formControlName="sharedUrl"
+                        readonly="readonly">
+                    <mat-icon
+                        class="adf-input-action"
+                        role="button"
+                        matSuffix
+                        [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate" [adf-clipboard]
+                        [attr.aria-label]="'SHARE.COPY_BUTTON_LABEL' | translate"
+                        [target]="sharedLinkInput"
+                        tabindex="0">
+                        content_copy
+                    </mat-icon>
+                </mat-form-field>
 
-                <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}</div>
+                <p class="adf-share-link__warn" *ngIf="linkWithExpirySettings">
+                    {{ 'SHARE.LINK-WITH-EXPIRY-SETTINGS' | translate }}
+                </p>
 
-            </div>
+                <div class="adf-share-link--row">
+                    <mat-icon>public</mat-icon>
 
-            <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
-                <input
-                    #sharedLinkInput
-                    data-automation-id="adf-share-link"
-                    class="adf-share-link__input"
-                    matInput
-                    cdkFocusInitial
-                    placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
-                    [attr.aria-label]="'SHARE.PUBLIC-LINK' | translate"
-                    formControlName="sharedUrl"
-                    readonly="readonly">
-                <mat-icon
-                    class="adf-input-action"
-                    role="button"
-                    matSuffix
-                    [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate" [adf-clipboard]
-                    [attr.aria-label]="'SHARE.COPY_BUTTON_LABEL' | translate"
-                    [target]="sharedLinkInput"
-                    tabindex="0">
-                    content_copy
-                </mat-icon>
-            </mat-form-field>
+                    <p class="adf-share-link__info adf-sharable-link">{{ 'SHARE.PUBLIC-CONTENT' | translate }}</p>
+                </div>
 
-            <p class="adf-share-link__warn" *ngIf="linkWithExpirySettings">
-                {{ 'SHARE.LINK-WITH-EXPIRY-SETTINGS' | translate }}
-            </p>
+            </form>
 
-            <div class="adf-share-link--row">
-                <mat-icon>public</mat-icon>
+            <hr class="adf-share-link__seperation-line" />
+        </mat-dialog-content>
 
-                <p class="adf-share-link__info adf-sharable-link">{{ 'SHARE.PUBLIC-CONTENT' | translate }}</p>
-            </div>
-
-        </form>
-    </mat-dialog-content>
-
-    <div mat-dialog-actions>
-        <button data-automation-id="adf-share-dialog-close" mat-button color="primary" mat-dialog-close>
-            {{ 'SHARE.CLOSE' | translate }}
-        </button>
+        <div mat-dialog-actions>
+            <button data-automation-id="adf-share-dialog-close" mat-button color="primary" mat-dialog-close>
+                {{ 'SHARE.CLOSE' | translate }}
+            </button>
+        </div>
     </div>
 </div>
