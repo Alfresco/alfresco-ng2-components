@@ -18,6 +18,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 -   [Basic usage](#basic-usage)
     -   [Setting the rows and column schema](#setting-the-rows-and-column-schema)
     -   [Transclusions](#transclusions)
+    -   [Row Update](#row-update)
 -   [Class members](#class-members)
     -   [Properties](#properties)
     -   [Events](#events)
@@ -245,6 +246,59 @@ export class DataTableDemo {
     [rows]="rows"
     [columns]="schema">
 </adf-datatable>
+```
+
+### Row Update
+
+Starting with v6.0.0, you need to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) to update a row of your table.
+The model to update the DataTable require the `id` of the row that is being changed, and the new data Object of the row:
+
+```typescript
+interface DataRowUpdateModel {
+    obj: any;
+    id: string;
+}
+```
+
+For example, if your table use entry nodes you can pass:
+
+```typescript
+this.dataTableService.rowUpdate.next({
+    id: node.id, 
+    obj: {
+        entry: node
+    }
+});
+```
+
+As good practice, it is suggested to provide a [`DataTableService`](../../lib/core/src/lib/datatable/services/datatable.service.ts) at the component level:
+
+```typescript
+@Component({
+    selector: 'app-files-component',
+    templateUrl: './files.component.html',
+    styleUrls: ['./files.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        DataTableService
+    ]
+})
+export class FilesComponent implements OnInit {
+    constructor(private dataTableService: DataTableService,
+                private nodeService: NodesApiService) {
+    }
+    
+    ngOnInit() {
+        this.nodeService.nodeUpdated.subscribe((node) => {
+            this.dataTableService.rowUpdate.next({
+                id: node.id, 
+                obj: {
+                    entry: node
+                }
+            });
+        });
+    }
+}
 ```
 
 ### [Transclusions](../../user-guide/transclusion.md)
