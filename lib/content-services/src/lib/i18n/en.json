@@ -173,7 +173,7 @@
     "UNASSIGN_CATEGORY": "Unassign Category",
     "DELETE_CATEGORY": "Delete Category",
     "EXISTING_CATEGORIES": "Existing Categories:",
-    "SELECT_EXISTING_CATEGORY": "Select a existing Category:",
+    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
     "NO_EXISTING_CATEGORIES": "No existing Categories",
     "GENERIC_CREATE": "Create: {{name}}",
     "NAME": "Category name",
