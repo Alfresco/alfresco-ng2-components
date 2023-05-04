@@ -103,7 +103,7 @@ jobs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version-file: '.nvmrc'
       - name: "Release tag"
         run: |
           git fetch --all --quiet

@@ -22,7 +22,7 @@ runs:
       - name: install NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
@@ -56,6 +56,3 @@ runs:
         uses: ./.github/actions/before-install
         with:
           act: ${{ inputs.act }}
-      - name: link nx executable
-        run: sudo ln -s $(npm bin)/nx /usr/bin/nx
-        shell: bash
