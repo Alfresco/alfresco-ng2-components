@@ -172,7 +172,7 @@ describe('TreeComponent', () => {
         expect(getNodesSpy).toHaveBeenCalledWith('-root-', 0, 25, 'some term');
     });
 
-    it('should  not collapse node when loading', () => {
+    it('should not collapse node when loading', () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = true;
         fixture.detectChanges();
