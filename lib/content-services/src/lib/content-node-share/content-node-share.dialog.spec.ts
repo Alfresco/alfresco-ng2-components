@@ -234,12 +234,9 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
-        const slideToggleChecked: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]');
 
-        expect(slideToggleChecked).toBe(null);
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-disabled');
-        // expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
-        // expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]')).toBe(null);
     });
 
     it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
@@ -287,12 +284,10 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const slideToggleChecked: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]');
 
-        expect(slideToggleChecked).toBe(null);
-        // expect(fixture.nativeElement.querySelector('input[formcontrolname="time"]').disabled).toBe(true);
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
-            .classList).toContain('mat-disabled');
+        .classList).toContain('mat-disabled');
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]')).toBe(null);
     });
 
 
