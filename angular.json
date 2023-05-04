@@ -437,6 +437,35 @@
               ]
           }
         },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo core bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-core/ && mkdir -p ./node_modules/@alfresco/adf-core/ &&  cp -R ./dist/libs/core/* ./node_modules/@alfresco/adf-core/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
+        },
         "npm-publish": {
           "executor": "nx:run-commands",
           "dependsOn": [
@@ -557,6 +586,35 @@
               ]
           }
         },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo content-services bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-content-services/ && mkdir -p ./node_modules/@alfresco/adf-content-services/ &&  cp -R ./dist/libs/content-services/* ./node_modules/@alfresco/adf-content-services/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
+        },
         "npm-publish": {
           "executor": "nx:run-commands",
           "dependsOn": [
@@ -642,6 +700,35 @@
                   }
               ]
           }
+        },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo process-services bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-process-services/ && mkdir -p ./node_modules/@alfresco/adf-process-services/ &&  cp -R ./dist/libs/process-services/* ./node_modules/@alfresco/adf-process-services/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
         },
         "npm-publish": {
           "executor": "nx:run-commands",
@@ -773,6 +860,35 @@
                   }
               ]
           }
+        },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo process-services-cloud bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-process-services-cloud/ && mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ &&  cp -R ./dist/libs/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
         },
         "npm-publish": {
           "executor": "nx:run-commands",
@@ -915,6 +1031,35 @@
                   }
               ]
           }
+        },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo extensions bundle created"
+              }
+            ]
+          },
+          "dependsOn": [
+            "copyToNodeModules"
+          ]
+        },
+        "copyToNodeModules": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf ./node_modules/@alfresco/adf-extensions/ && mkdir -p ./node_modules/@alfresco/adf-extensions/ &&  cp -R ./dist/libs/extensions/* ./node_modules/@alfresco/adf-extensions/"
+              }
+            ]
+          },
+          "dependsOn": [
+            {
+              "projects": "self",
+              "target": "build"
+            }
+          ]
         },
         "npm-publish": {
           "executor": "nx:run-commands",
