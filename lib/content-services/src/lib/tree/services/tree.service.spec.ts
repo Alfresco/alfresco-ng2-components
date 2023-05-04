@@ -50,8 +50,10 @@ describe('TreeService', () => {
         const treeNodesMockCopy = Array.from(treeNodesMock);
         service.treeNodes = treeNodesMockCopy;
         const nodesSourceSpy = spyOn(service.treeNodesSource, 'next');
+        const treeControlExpandSpy = spyOn(service.treeControl, 'expand');
         service.expandNode(treeNodesMockCopy[0], Array.from(treeNodesChildrenMock));
         expect(nodesSourceSpy).toHaveBeenCalled();
+        expect(treeControlExpandSpy).toHaveBeenCalledWith(treeNodesMockCopy[0]);
         expect(service.treeNodes.length).toEqual(treeNodesMockCopy.length);
     });
 
@@ -59,8 +61,10 @@ describe('TreeService', () => {
         const treeNodesMockExpandedCopy = Array.from(treeNodesMockExpanded);
         service.treeNodes = treeNodesMockExpandedCopy;
         const nodesSourceSpy = spyOn(service.treeNodesSource, 'next');
+        const treeControlCollapseSpy = spyOn(service.treeControl, 'collapse');
         service.collapseNode(treeNodesMockExpandedCopy[0]);
         expect(nodesSourceSpy).toHaveBeenCalled();
+        expect(treeControlCollapseSpy).toHaveBeenCalledWith(treeNodesMockExpandedCopy[0]);
         expect(service.treeNodes.length).toEqual(treeNodesMock.length);
     });
 
@@ -75,16 +79,20 @@ describe('TreeService', () => {
     it('should not expand node without children', () => {
         service.treeNodes = Array.from(treeNodesNoChildrenMock);
         const nodesSourceSpy = spyOn(service.treeNodesSource, 'next');
+        const treeControlExpandSpy = spyOn(service.treeControl, 'expand');
         service.expandNode(Array.from(treeNodesNoChildrenMock)[0], []);
         expect(nodesSourceSpy).not.toHaveBeenCalled();
+        expect(treeControlExpandSpy).not.toHaveBeenCalled();
         expect(service.treeNodes.length).toEqual(treeNodesNoChildrenMock.length);
     });
 
     it('should not collapse node without children', () => {
         service.treeNodes = Array.from(treeNodesNoChildrenMock);
         const nodesSourceSpy = spyOn(service.treeNodesSource, 'next');
+        const treeControlCollapseSpy = spyOn(service.treeControl, 'collapse');
         service.collapseNode(Array.from(treeNodesNoChildrenMock)[0]);
         expect(nodesSourceSpy).not.toHaveBeenCalled();
+        expect(treeControlCollapseSpy).not.toHaveBeenCalled();
         expect(service.treeNodes.length).toEqual(treeNodesNoChildrenMock.length);
     });
 

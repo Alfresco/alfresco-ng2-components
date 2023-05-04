@@ -201,7 +201,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
      * @param node node to be collapsed/expanded
      */
     public expandCollapseNode(node: T): void {
-        if (node.hasChildren) {
+        if (node.hasChildren && !node.isLoading) {
             if (this.treeService.treeControl.isExpanded(node)) {
                 this.treeService.collapseNode(node);
             } else {
