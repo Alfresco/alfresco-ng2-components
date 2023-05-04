@@ -272,7 +272,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'demo-shell/**/*.ts'"
+                      "command": "npx cspell 'demo-shell/**/*.ts'"
                   }
               ]
           }
@@ -407,7 +407,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/core/**/*.ts'"
+                      "command": "npx cspell 'lib/core/**/*.ts'"
                   }
               ]
           }
@@ -417,7 +417,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/stylelint lib/core/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/core/**/*.scss --config stylelint-config.json"
                   }
               ]
           }
@@ -427,7 +427,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+                      "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
                   }
               ]
           }
@@ -437,7 +437,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
+                      "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
                   }
               ]
           }
@@ -547,7 +547,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/content-services/**/*.ts'"
+                      "command": "npx cspell 'lib/content-services/**/*.ts'"
                   }
               ]
           }
@@ -557,7 +557,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/stylelint lib/content-services/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/content-services/**/*.scss --config stylelint-config.json"
                   }
               ]
           }
@@ -623,7 +623,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/process-services/**/*.ts'"
+                      "command": "npx cspell 'lib/process-services/**/*.ts'"
                   }
               ]
           },
@@ -632,7 +632,7 @@
                 "options": {
                 "commands": [
                     {
-                        "command": "$(npm bin)/stylelint lib/process-services/**/*.scss --config stylelint-config.json"
+                        "command": "npx stylelint lib/process-services/**/*.scss --config stylelint-config.json"
                     }
                 ]
             }
@@ -643,7 +643,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
                   }
               ]
           }
@@ -754,7 +754,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/playwright test --config='e2e-playwright/playwright.config.ts'"
+                      "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
                   }
               ]
           }
@@ -764,7 +764,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/process-services-cloud/**/*.ts'"
+                      "command": "npx cspell 'lib/process-services-cloud/**/*.ts'"
                   }
               ]
           }
@@ -774,7 +774,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config stylelint-config.json"
                   }
               ]
           }
@@ -840,7 +840,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/insights/**/*.ts'"
+                      "command": "npx cspell 'lib/insights/**/*.ts'"
                   }
               ]
           }
@@ -850,7 +850,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/stylelint lib/insights/**/*.scss --config stylelint-config.json"
+                      "command": "npx stylelint lib/insights/**/*.scss --config stylelint-config.json"
                   }
               ]
           }
@@ -916,7 +916,7 @@
               "options": {
               "commands": [
                   {
-                      "command": "$(npm bin)/cspell 'lib/extensions/**/*.ts'"
+                      "command": "npx cspell 'lib/extensions/**/*.ts'"
                   }
               ]
           }

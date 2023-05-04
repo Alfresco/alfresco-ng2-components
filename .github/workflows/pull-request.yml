@@ -231,7 +231,7 @@ jobs:
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - name: Run unit tests
         run: |
-          /usr/bin/xvfb-run --auto-servernum nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
+          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
 
   lint:
     # long timeout required when cache has to be recreated
