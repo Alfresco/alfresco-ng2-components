@@ -172,6 +172,16 @@ describe('TreeComponent', () => {
         expect(getNodesSpy).toHaveBeenCalledWith('-root-', 0, 25, 'some term');
     });
 
+    it('should  not collapse node when loading', () => {
+        component.refreshTree();
+        component.treeService.treeNodes[0].isLoading = true;
+        fixture.detectChanges();
+        const collapseSpy = spyOn(component.treeService, 'collapseNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(true);
+        getNodeSpinner(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(collapseSpy).not.toHaveBeenCalled();
+    });
+
     it('should call correct server method on collapsing node', () => {
         component.refreshTree();
         component.treeService.treeNodes[0].isLoading = false;
@@ -182,8 +192,19 @@ describe('TreeComponent', () => {
         expect(collapseSpy).toHaveBeenCalledWith(component.treeService.treeNodes[0]);
     });
 
+    it('should not expand node when loading', () => {
+        component.refreshTree();
+        component.treeService.treeNodes[0].isLoading = true;
+        fixture.detectChanges();
+        const expandSpy = spyOn(component.treeService, 'expandNode');
+        spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
+        getNodeSpinner(component.treeService.treeNodes[0].id).dispatchEvent(new Event('click'));
+        expect(expandSpy).not.toHaveBeenCalled();
+    });
+
     it('should call correct server method on expanding node', () => {
         component.refreshTree();
+        component.treeService.treeNodes[0].isLoading = false;
         fixture.detectChanges();
         const collapseSpy = spyOn(component.treeService, 'expandNode');
         spyOn(component.treeService.treeControl, 'isExpanded').and.returnValue(false);
