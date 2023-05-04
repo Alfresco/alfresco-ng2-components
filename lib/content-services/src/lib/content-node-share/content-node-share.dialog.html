@@ -8,7 +8,6 @@
         </div>
 
         <mat-dialog-content>
-            <!-- <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p> -->
             <hr class="adf-share-link__seperation-line" />
 
             <form [formGroup]="form">
@@ -31,7 +30,7 @@
 
                 <div *ngIf="isSlideToggleChecked" data-automation-id="adf-slide-toggle-checked">
                     <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
-                        <mat-label>{{ 'SHARE.EXPIRATION-LABEL' | translate }}</mat-label>
+                        <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datetimepicker-toggle
                             #matDatetimepickerToggle="matDatetimepickerToggle"
                             [disabled]="time.disabled"
@@ -47,7 +46,7 @@
                         <input class="adf-share-link__input"
                             #dateTimePickerInput
                             matInput
-                            placeholder="{{ 'SHARE.EXPIRATION-LABEL' | translate }}"
+                            placeholder="{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}"
                             [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
                             [min]="minDate"
                             formControlName="time"
