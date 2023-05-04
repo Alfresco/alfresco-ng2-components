@@ -56,6 +56,3 @@ runs:
         uses: ./.github/actions/before-install
         with:
           act: ${{ inputs.act }}
-      - name: link nx executable
-        run: sudo ln -s $(npm bin)/nx /usr/bin/nx
-        shell: bash
