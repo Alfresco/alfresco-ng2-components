@@ -24,6 +24,10 @@
             align-items: center;
             margin-top: -14px;
             margin-bottom: 1em;
+
+            &:first-of-type {
+                margin-top: 5px;
+            }
         }
 
         &-tags {
@@ -38,6 +42,8 @@
             }
 
             adf-tags-creator {
+                margin-top: 19px;
+
                 .adf-tags-creation {
                     padding-right: 0;
                     padding-left: 12px;
