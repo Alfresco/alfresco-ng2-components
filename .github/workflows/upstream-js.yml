@@ -38,7 +38,7 @@ jobs:
             const tagVersion = process.env.TAG_VERSION;
             console.log('tagVersion:',tagVersion);
             const getLatestVersionOf = require('./scripts/github/update/latest-version-of.js');
-            
+
             const { hasVersionNew: hasVersionNewJS, latestVersion: latestVersionJS } = await getLatestVersionOf({github, context, dependencyName: 'js-api', tagVersion});
             console.log('hasVersionNewJS', hasVersionNewJS)
             console.log('latestVersionJS', latestVersionJS)
@@ -99,7 +99,7 @@ jobs:
       - name: setup NPM
         uses: actions/setup-node@v3
         with:
-          node-version: 14.15.4
+          node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: "General :: dbpci-install"
         run: |

@@ -96,11 +96,11 @@ jobs:
 
       - name: Check package-lock.json version
         run: |
-          if [[ $(jq '.lockfileVersion == 2' package-lock.json) == "true" ]] ; then
-            echo -e "\033[31mpackage-lock must be version 1\033[0m"
-            exit 1
+          if [[ $(jq '.lockfileVersion == 3' package-lock.json) == "true" ]] ; then
+            echo "package-lock.json has a correct version"
           else
-            echo -e "\033[32mpackage-lock.json has a correct version\033[0m"
+            echo "package-lock must be version 3"
+            exit 1
           fi
 
   check-if-pr-is-approved:

@@ -196,7 +196,7 @@ jobs:
       - uses: actions/setup-node@v3
         name: release libraries GH registry
         with:
-          node-version: 14
+          node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
       - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
@@ -205,7 +205,7 @@ jobs:
       - uses: actions/setup-node@v3
         name: release libraries Npm registry
         with:
-          node-version: 14
+          node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
       - run: nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
