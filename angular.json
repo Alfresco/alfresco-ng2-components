@@ -442,19 +442,6 @@
           "options": {
             "commands": [
               {
-                "command": "echo core bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
                 "command": "rm -rf ./node_modules/@alfresco/adf-core/ && mkdir -p ./node_modules/@alfresco/adf-core/ &&  cp -R ./dist/libs/core/* ./node_modules/@alfresco/adf-core/"
               }
             ]
@@ -591,19 +578,6 @@
           "options": {
             "commands": [
               {
-                "command": "echo content-services bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
                 "command": "rm -rf ./node_modules/@alfresco/adf-content-services/ && mkdir -p ./node_modules/@alfresco/adf-content-services/ &&  cp -R ./dist/libs/content-services/* ./node_modules/@alfresco/adf-content-services/"
               }
             ]
@@ -702,19 +676,6 @@
           }
         },
         "bundle": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "echo process-services bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
           "executor": "nx:run-commands",
           "options": {
             "commands": [
@@ -862,19 +823,6 @@
           }
         },
         "bundle": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "echo process-services-cloud bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
           "executor": "nx:run-commands",
           "options": {
             "commands": [
@@ -1037,20 +985,7 @@
           "options": {
             "commands": [
               {
-                "command": "echo extensions bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "rm -rf ./node_modules/@alfresco/adf-extensions/ && mkdir -p ./node_modules/@alfresco/adf-extensions/ &&  cp -R ./dist/libs/extensions/* ./node_modules/@alfresco/adf-extensions/"
+                "command": "rm -rf ./node_modules/@alfresco/adf-extensions/ && mkdir -p ./node_modules/@alfresco/adf-extensions/ && cp -R ./dist/libs/extensions/* ./node_modules/@alfresco/adf-extensions/"
               }
             ]
           },
@@ -1120,19 +1055,6 @@
           }
         },
         "bundle": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "echo testing bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
           "executor": "nx:run-commands",
           "options": {
             "commands": [
@@ -1247,19 +1169,6 @@
           "defaultConfiguration": "production"
         },
         "bundle": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "echo cli bundle created"
-              }
-            ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
           "executor": "nx:run-commands",
           "options": {
             "commands": [
