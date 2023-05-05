@@ -364,10 +364,8 @@ describe('ProcessListCloudComponent', () => {
 
     it('should re-create columns when a column width gets changed', () => {
         component.isResizingEnabled = true;
-        component.appName = 'FAKE-APP-NAME';
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
-        fixture.detectChanges();
         component.reload();
         fixture.detectChanges();
 
@@ -421,9 +419,6 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should re-create columns when a column order gets changed', () => {
-        component.appName = 'FAKE-APP-NAME';
-
-        fixture.detectChanges();
         component.reload();
         fixture.detectChanges();
 
@@ -435,6 +430,33 @@ describe('ProcessListCloudComponent', () => {
 
         expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
         expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
+    });
+
+    it('should create datatable schema when a column visibility gets changed', () => {
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(component.createDatatableSchema).toHaveBeenCalled();
+    });
+
+    it('should call endpoint when a column visibility gets changed', () => {
+        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+        spyOn(processListCloudService, 'getProcessByRequest');
+        component.ngAfterContentInit();
+        spyOn(component, 'createDatatableSchema');
+        component.appName = 'fake-app-name';
+        component.reload();
+        fixture.detectChanges();
+
+        component.onColumnsVisibilityChange(component.columns);
+
+        fixture.detectChanges();
+
+        expect(processListCloudService.getProcessByRequest).toHaveBeenCalledTimes(1);
     });
 
     describe('component changes', () => {
@@ -515,12 +537,12 @@ describe('ProcessListCloudComponent', () => {
             const skipCount = component.skipCount;
             component.pagination.pipe(skip(3))
             .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(size);
-                    expect(component.skipCount).toBe(skipCount);
-                    expect(updatedPagination.maxItems).toEqual(size);
-                    expect(updatedPagination.skipCount).toEqual(skipCount);
-                    done();
+                fixture.detectChanges();
+                expect(component.size).toBe(size);
+                expect(component.skipCount).toBe(skipCount);
+                expect(updatedPagination.maxItems).toEqual(size);
+                expect(updatedPagination.skipCount).toEqual(skipCount);
+                done();
             });
 
             const pagination = {
@@ -546,12 +568,12 @@ describe('ProcessListCloudComponent', () => {
             };
             component.pagination.pipe(skip(1))
             .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(pagination.maxItems);
-                    expect(component.skipCount).toBe(pagination.skipCount);
-                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
-                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                    done();
+                fixture.detectChanges();
+                expect(component.size).toBe(pagination.maxItems);
+                expect(component.skipCount).toBe(pagination.skipCount);
+                expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                done();
             });
 
             component.updatePagination(pagination);
@@ -634,12 +656,10 @@ describe('ProcessListCloudComponent', () => {
             fixtureEmpty.destroy();
         });
 
-        it('should render the custom template', async () => {
-            const emptyList = {list: {entries: []}};
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
+        it('should render the custom template', () => {
             fixtureEmpty.componentInstance.processListCloud.isLoading = false;
+
             fixtureEmpty.detectChanges();
-            await fixtureEmpty.whenStable();
 
             expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
             expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();

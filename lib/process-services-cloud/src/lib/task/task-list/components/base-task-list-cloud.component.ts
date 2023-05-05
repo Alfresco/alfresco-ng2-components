@@ -303,6 +303,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         }, {});
 
         this.createColumns();
+        this.createDatatableSchema();
 
         if (this.appName) {
             this.cloudPreferenceService.updatePreference(
@@ -311,8 +312,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
                 this.columnsVisibility
             );
         }
-
-        this.reload();
     }
 
     onColumnsWidthChanged(columns: DataColumn[]): void {
