@@ -96,7 +96,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "14.1.3",
+    "@angular-devkit/build-angular": "14.2.11",
     "@angular-devkit/schematics": "~14.1.0",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "14.3.0",
@@ -106,7 +106,7 @@
     "@editorjs/code": "2.8.0",
     "@editorjs/inline-code": "1.4.0",
     "@editorjs/marker": "1.2.2",
-    "@nrwl/angular": "14.8.6",
+    "@nrwl/angular": "16.1.0",
     "@nrwl/cli": "14.5.4",
     "@nrwl/eslint-plugin-nx": "14.5.4",
     "@nrwl/node": "14.5.4",
