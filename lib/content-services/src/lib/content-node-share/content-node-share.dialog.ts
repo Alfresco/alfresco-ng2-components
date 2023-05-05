@@ -70,7 +70,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     type: DatePickerType = 'datetime';
     maxDebounceTime = 500;
     expiryDate: string;
-    isSlideToggleChecked: boolean;
+    isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', {static: true})
     slideToggleExpirationDate;
@@ -110,10 +110,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 if (expiryDate !== null && expiryDate !== undefined) {
                     this.time.enable();
                     this.linkWithExpirySettings = true;
-                    this.isSlideToggleChecked = true;
+                    this.isExpiryDateToggleChecked = true;
                 } else {
                     this.time.disable();
-                    this.isSlideToggleChecked = false;
+                    this.isExpiryDateToggleChecked = false;
                     this.linkWithExpirySettings = false;
                 }
             }
@@ -162,7 +162,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
                 this.time.enable();
-                this.isSlideToggleChecked = true;
+                this.isExpiryDateToggleChecked = true;
         } else {
                 this.time.disable();
                 this.time.setValue(null);
@@ -249,7 +249,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                         }
                         if (dialogOpenFlag) {
                             this.createSharedLinks(this.data.node.entry.id);
-                            this.isSlideToggleChecked = false;
+                            this.isExpiryDateToggleChecked = false;
                             this.linkWithExpirySettings = false;
                         } else {
                             this.dialogRef.close(false);
