@@ -143,6 +143,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }
+
+        if (!changes['urlFile'].firstChange && changes['fileName']) {
+            if (changes['fileName'].previousValue !== changes['fileName'].currentValue) {
+                this.cropper.replace(changes['urlFile'].currentValue);
+            }
+        }
+
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }

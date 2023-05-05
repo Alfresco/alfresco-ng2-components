@@ -126,7 +126,7 @@ describe('Test Img viewer component ', () => {
         it('If no url or blob are passed should thrown an error', () => {
             const change = new SimpleChange(null, null, true);
             expect(() => {
-                component.ngOnChanges({ blobFile: change });
+                component.ngOnChanges({ blobFile: change, urlFile: change });
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
@@ -141,6 +141,19 @@ describe('Test Img viewer component ', () => {
             component.fileName = 'fake-name';
             fixture.detectChanges();
             expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
+        });
+
+        it('should call replace on cropper with new url if blobFile is null', () => {
+            component.fileName = 'fake-name';
+            component.urlFile = 'fake-url';
+            spyOn(component.cropper, 'replace').and.stub();
+            const fileName = new SimpleChange('val', 'val2', false);
+            const urlFile = new SimpleChange('fake-url', 'fake-url-2', false);
+
+            fixture.detectChanges();
+            component.ngOnChanges({ fileName, urlFile });
+
+            expect(component.cropper.replace).toHaveBeenCalledWith('fake-url-2');
         });
 
         it('If blob is passed should not thrown an error', () => {
