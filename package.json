@@ -174,7 +174,7 @@
     "protractor-screenshoter-plugin": "0.10.3",
     "protractor-smartrunner": "^2.0.0-beta6",
     "rimraf": "^4.4.1",
-    "sass-loader": "10.1.1",
+    "sass-loader": "13.2.2",
     "selenium-webdriver": "4.1.0",
     "stylelint": "^14.15.0",
     "stylelint-config-standard-scss": "^3.0.0",
