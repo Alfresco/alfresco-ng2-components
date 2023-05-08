@@ -25,7 +25,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
