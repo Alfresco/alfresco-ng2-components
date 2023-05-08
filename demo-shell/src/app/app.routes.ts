@@ -57,11 +57,16 @@ import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-ta
 import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { ForgotPasswordComponent } from 'lib/core/src/lib/forgot-password/forgot-password.component';
+import { ForgotPasswordRuleGuard } from 'lib/core/src/lib/forgot-password/forgot-password-guard';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
-    { path: 'forgot-password', component: ForgotPasswordComponent },
+    { 
+        path: 'forgot-password', 
+        component: ForgotPasswordComponent,
+        canActivate: [ForgotPasswordRuleGuard]
+    },
     {
         path: 'settings',
         loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
