@@ -23,14 +23,5 @@
         &-dropdown-failed-message .adf-error-container {
             margin-top: 1px !important;
         }
-
-        .adf-select-filter-input {
-            background: var(--adf-theme-background-card-color);
-            position: sticky;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1;
-        }
     }
 }
