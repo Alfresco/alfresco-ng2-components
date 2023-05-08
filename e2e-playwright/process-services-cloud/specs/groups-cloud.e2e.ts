@@ -26,7 +26,7 @@ test.describe('Groups component stories tests', () => {
             Meat Chicken  cancel
         `;
 
-        await processServicesCloud.navigateTo({moduleNames:['group-cloud'], componentName: 'group-cloud', story: 'valid-preselected-groups' });
+        await processServicesCloud.navigateTo({ moduleNames: ['group-cloud'], componentName: 'group-cloud', story: 'valid-preselected-groups' });
 
         await expect(groupComponent.groupNaming).toContainText(expectedUsersName);
     });
@@ -37,7 +37,7 @@ test.describe('Groups component stories tests', () => {
             Meat Chicken
         `;
 
-        await processServicesCloud.navigateTo({moduleNames:['group-cloud'], componentName: 'group-cloud', story: 'mandatory-preselected-groups' });
+        await processServicesCloud.navigateTo({ moduleNames: ['group-cloud'], componentName: 'group-cloud', story: 'mandatory-preselected-groups' });
         await expect.soft(groupComponent.groupNaming).toContainText(expectedUsersName);
 
         await groupComponent.getUserLocator('Meat Chicken').hover();
@@ -45,10 +45,10 @@ test.describe('Groups component stories tests', () => {
     });
 
     test('Invalid Preselected Groups', async ({ processServicesCloud, groupComponent }) => {
-        const expectedWarningMessage = 'No group found with the name Invalid Group';
+        const expectedWarningMessage = 'Group not found';
         const expectedWarningIcon = 'error_outline';
 
-        await processServicesCloud.navigateTo({moduleNames:['group-cloud'], componentName: 'group-cloud', story: 'invalid-preselected-groups' });
+        await processServicesCloud.navigateTo({ moduleNames: ['group-cloud'], componentName: 'group-cloud', story: 'invalid-preselected-groups' });
 
         await expect(groupComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
     });

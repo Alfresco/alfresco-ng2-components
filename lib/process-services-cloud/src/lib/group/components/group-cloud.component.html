@@ -49,7 +49,7 @@
                 <mat-option *ngIf="searchGroupsControl.hasError('searchTypingError') && !searchLoading" disabled
                             class="adf-cloud-group-option-not-active"
                             data-automation-id="adf-cloud-group-no-results">
-                    <span> {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName: searchedValue } }}</span>
+                    <span> {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</span>
                 </mat-option>
             </ng-template>
         </mat-autocomplete>
@@ -62,7 +62,7 @@
     <div class="adf-error-container">
         <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
-            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : validateGroupsMessage } }}</div>
+            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
         </mat-error>
         <mat-error *ngIf="searchGroupsControl.hasError('pattern')" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
@@ -84,7 +84,7 @@
         <mat-error *ngIf="searchGroupsControl.hasError('searchTypingError') && !this.isFocused"
             data-automation-id="invalid-groups-typing-error" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
-            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}</div>
+            <div class="adf-error-text">{{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate }}</div>
         </mat-error>
     </div>
 </form>
