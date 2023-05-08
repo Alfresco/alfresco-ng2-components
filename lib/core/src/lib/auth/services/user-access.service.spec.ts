@@ -155,6 +155,15 @@ describe('UserAccessService', () => {
             expect(getAccessFromApiSpy).toHaveBeenCalledWith({ url: `${fakeIdentityHost}/identity-adapter-service/v1/roles` });
         });
 
+        it('should the url contain appkey if its present in app config', async () => {
+            const fakeIdentityHost = 'https://fake-identity-host.fake.com';
+            appConfigService.config.bpmHost = fakeIdentityHost;
+            appConfigService.config.application.key = 'fake-app-key';
+            await userAccessService.fetchUserAccess();
+
+            expect(getAccessFromApiSpy).toHaveBeenCalledWith({ url: `${fakeIdentityHost}/identity-adapter-service/v1/roles` , queryParams: { appkey: 'fake-app-key' } });
+        });
+
         it('should not fetch the access from the API if is not configured with OAUTH', async () => {
             appConfigService.config.authType = 'BASIC';
             await userAccessService.fetchUserAccess();

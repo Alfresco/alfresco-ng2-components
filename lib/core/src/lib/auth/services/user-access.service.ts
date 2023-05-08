@@ -55,7 +55,10 @@ export class UserAccessService {
 
     private async fetchAccessFromApi() {
         const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/roles`;
-        await this.oAuth2Service.get({ url })
+        const appkey = this.appConfigService.get('application.key');
+        const opts = appkey ? { url, queryParams: { appkey } } : { url };
+
+        await this.oAuth2Service.get(opts)
             .pipe(
                 catchError(() => of({
                     globalAccess: {
