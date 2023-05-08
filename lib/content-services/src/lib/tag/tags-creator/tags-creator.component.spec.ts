@@ -300,11 +300,19 @@ describe('TagsCreatorComponent', () => {
         describe('Errors', () => {
             function getFirstError(): string {
                 const error = fixture.debugElement.query(By.directive(MatError));
-                return error.nativeElement.textContent;
+                return error?.nativeElement.textContent;
             }
 
             it('should show error for only spaces', fakeAsync(() => {
                 typeTag('  ');
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
+            }));
+
+            it('should show error for only spaces if tags are changed', fakeAsync(() => {
+                typeTag('  ');
+                component.tags = ['new tag 1', 'new tag 2'];
+                fixture.detectChanges();
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
@@ -315,11 +323,31 @@ describe('TagsCreatorComponent', () => {
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
             }));
 
+            it('should not show error for required if tags are changed', fakeAsync(() => {
+                typeTag('');
+                component.tags = ['new tag 1', 'new tag 2'];
+                fixture.detectChanges();
+                const error = getFirstError();
+                expect(error).toBeUndefined();
+            }));
+
             it('should show error when duplicated already added tag', fakeAsync(() => {
                 const tag = 'Some tag';
 
                 addTagToAddedList(tag);
                 typeTag(tag);
+
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
+            }));
+
+            it('should show error when duplicated already added tag if tags are changed', fakeAsync(() => {
+                const tag = 'Some tag';
+
+                addTagToAddedList(tag);
+                typeTag(tag);
+                component.tags = ['Some tag'];
+                fixture.detectChanges();
 
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
