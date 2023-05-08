@@ -62,7 +62,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     baseShareUrl: string;
     isFileShared: boolean = false;
     isDisabled: boolean = false;
-    linkWithExpirySettings: boolean = false;
+    isLinkWithExpiryDate: boolean = false;
     form: UntypedFormGroup = new UntypedFormGroup({
         sharedUrl: new UntypedFormControl(''),
         time: new UntypedFormControl({value: '', disabled: true})
@@ -109,12 +109,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 const expiryDate = this.updateForm();
                 if (expiryDate !== null && expiryDate !== undefined) {
                     this.time.enable();
-                    this.linkWithExpirySettings = true;
+                    this.isLinkWithExpiryDate = true;
                     this.isExpiryDateToggleChecked = true;
                 } else {
                     this.time.disable();
                     this.isExpiryDateToggleChecked = false;
-                    this.linkWithExpirySettings = false;
+                    this.isLinkWithExpiryDate = false;
                 }
             }
         }
@@ -232,7 +232,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-        deleteSharedLink(sharedId: string, dialogOpenFlag?: boolean) {
+    deleteSharedLink(sharedId: string, dialogOpenFlag?: boolean) {
         this.isDisabled = true;
 
         this.sharedLinksApiService
@@ -250,7 +250,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                         if (dialogOpenFlag) {
                             this.createSharedLinks(this.data.node.entry.id);
                             this.isExpiryDateToggleChecked = false;
-                            this.linkWithExpirySettings = false;
+                            this.isLinkWithExpiryDate = false;
                         } else {
                             this.dialogRef.close(false);
                         }
@@ -302,29 +302,25 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             : null;
 
         if (this.sharedId && expiryDate) {
-                    this.isDisabled = true;
+                this.isDisabled = true;
 
-                    this.sharedLinksApiService
-                    .deleteSharedLink(this.sharedId)
-                    .subscribe((response: any) => {
-                        if (response instanceof Error) {
-                            this.isDisabled = false;
-                            this.isFileShared = true;
-                            this.handleError(response);
-                        } else {
-                            this.sharedLinkWithExpirySettings(expiryDate);
-                            this.linkWithExpirySettings = true;
-                            this.updateEntryExpiryDate(date);
-                        }
+                this.sharedLinksApiService.deleteSharedLink(this.sharedId).subscribe((response: any) => {
+                    if (response instanceof Error) {
+                        this.isDisabled = false;
+                        this.isFileShared = true;
+                        this.handleError(response);
+                    } else {
+                        this.sharedLinkWithExpirySettings(expiryDate);
+                        this.isLinkWithExpiryDate = true;
+                        this.updateEntryExpiryDate(date);
+                    }
             });
         }
     }
 
     private sharedLinkWithExpirySettings(expiryDate: string) {
-
         const lastIndex = expiryDate?.lastIndexOf(':');
         expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
-
         const nodeObject = {
             nodeId: this.data.node.entry.id,
             expiresAt: expiryDate
