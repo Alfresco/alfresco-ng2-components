@@ -28,7 +28,7 @@
 
         &.adf-active {
             background-color: var(--theme-accent-color);
-            color: var(--adf-theme-mat-grey-color-50);
+            color: var(--theme-accent-color-default-contrast);
             font-size: smaller;
         }
     }
