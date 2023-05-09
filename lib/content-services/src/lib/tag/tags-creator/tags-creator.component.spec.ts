@@ -313,8 +313,7 @@ describe('TagsCreatorComponent', () => {
                 typeTag('  ');
                 component.tags = ['new tag 1', 'new tag 2'];
                 fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
 
             it('should show error for required', fakeAsync(() => {
@@ -327,8 +326,7 @@ describe('TagsCreatorComponent', () => {
                 typeTag('');
                 component.tags = ['new tag 1', 'new tag 2'];
                 fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBeUndefined();
+                expect(getFirstError()).toBeUndefined();
             }));
 
             it('should show error when duplicated already added tag', fakeAsync(() => {
@@ -349,8 +347,7 @@ describe('TagsCreatorComponent', () => {
                 component.tags = ['Some tag'];
                 fixture.detectChanges();
 
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
+                expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
             }));
 
             it('should show error when duplicated already existing tag', fakeAsync(() => {
