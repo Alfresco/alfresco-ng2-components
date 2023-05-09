@@ -60,7 +60,7 @@
             color: var(--adf-theme-foreground-text-color-087);
         }
 
-        &__seperation-line {
+        &__separation-line {
             border: 1px solid var(--theme-grey-background-color);
             margin: 8px -24px 8px;
         }
@@ -129,7 +129,7 @@
     }
 
     .mat-dialog-container {
-        padding: 0px;
+        padding: 0;
     }
 
     .mat-form-field-appearance-legacy .mat-form-field-underline {

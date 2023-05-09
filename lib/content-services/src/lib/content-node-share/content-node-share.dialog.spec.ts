@@ -45,6 +45,13 @@ describe('ShareDialogComponent', () => {
     let component: ShareDialogComponent;
     let appConfigService: AppConfigService;
 
+    const getShareToggleId = '[data-automation-id="adf-share-toggle"]';
+
+    const getShareToggleLinkedClasses = (): DOMTokenList => fixture.nativeElement.querySelector(getShareToggleId).classList;
+
+    const clickShareToggleButton = () => fixture.nativeElement.querySelector(`${getShareToggleId} label`)
+    .dispatchEvent(new MouseEvent('click'));
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -137,7 +144,7 @@ describe('ShareDialogComponent', () => {
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
         expect(renditionService.getNodeRendition).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-checked');
+        expect(getShareToggleLinkedClasses()).toContain('mat-checked');
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
@@ -160,7 +167,7 @@ describe('ShareDialogComponent', () => {
 
         expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-checked');
+        expect(getShareToggleLinkedClasses()).toContain('mat-checked');
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
@@ -176,8 +183,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
-            .dispatchEvent(new MouseEvent('click'));
+        clickShareToggleButton();
 
         fixture.detectChanges();
 
@@ -196,8 +202,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
-            .dispatchEvent(new MouseEvent('click'));
+        clickShareToggleButton();
 
         fixture.detectChanges();
 
@@ -216,8 +221,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"] label')
-            .dispatchEvent(new MouseEvent('click'));
+        clickShareToggleButton();
 
         fixture.detectChanges();
 
@@ -235,7 +239,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-share-toggle"]').classList).toContain('mat-disabled');
+        expect(getShareToggleLinkedClasses()).toContain('mat-disabled');
     });
 
     it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
@@ -250,7 +254,6 @@ describe('ShareDialogComponent', () => {
             node,
             baseShareUrl: 'some-url/'
         };
-
 
         fixture.detectChanges();
 
@@ -283,7 +286,6 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
         .classList).toContain('mat-disabled');
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]')).toBe(null);
@@ -304,7 +306,7 @@ describe('ShareDialogComponent', () => {
             };
         });
 
-        it('it should update node with input date and end of day time when type is `date`', fakeAsync(() => {
+        it('should update node with input date and end of day time when type is `date`', fakeAsync(() => {
             const dateTimePickerType = 'date';
             const date = moment('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
@@ -328,7 +330,7 @@ describe('ShareDialogComponent', () => {
             });
         }));
 
-        it('it should update node with input date and time when type is `datetime`', fakeAsync (() => {
+        it('should update node with input date and time when type is `datetime`', fakeAsync(() => {
             const dateTimePickerType = 'datetime';
             const date = moment('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
