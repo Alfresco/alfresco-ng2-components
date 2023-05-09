@@ -365,6 +365,13 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
         });
 
+        it('should emit new value when onSavingFile receives new event', () => {
+            spyOn(component.isSaving, 'emit');
+            component.onSavingFile(true);
+
+            expect(component.isSaving.emit).toHaveBeenCalledWith(true);
+        });
+
         describe('Attribute', () => {
 
             it('should  urlFile present not thrown any error ', () => {

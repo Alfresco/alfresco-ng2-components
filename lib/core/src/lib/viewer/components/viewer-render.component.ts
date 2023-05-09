@@ -90,6 +90,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     close = new EventEmitter<boolean>();
 
+    /** Emitted when the img is saving. */
+    @Output()
+    isSaving = new EventEmitter<boolean>();
+
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extension: string;
     internalFileName: string;
@@ -173,6 +177,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         } else if (extensionAllowed.length > 0) {
             return extensionAllowed.find((currentExtension) => this.extension.toLowerCase() === currentExtension.toLowerCase());
         }
+    }
+
+    onSavingFile(isSaving: boolean) {
+        this.isSaving.emit(isSaving);
     }
 
     onSubmitFile(newImageBlob: Blob) {

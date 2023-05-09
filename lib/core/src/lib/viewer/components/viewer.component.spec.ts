@@ -371,6 +371,19 @@ describe('ViewerComponent', () => {
             expect(prevButton).toBeNull();
         });
 
+        it('should not show navigation buttons if file is saving', async () => {
+            component.allowNavigate = true;
+            component.onSavingFile(true);
+
+            fixture.detectChanges();
+
+            expect(component.allowNavigate).toBeFalsy();
+
+            component.onSavingFile(false);
+
+            expect(component.allowNavigate).toBeTruthy();
+        });
+
         it('should now show navigation buttons even if navigation enabled', async () => {
             component.allowNavigate = true;
             component.canNavigateBefore = false;

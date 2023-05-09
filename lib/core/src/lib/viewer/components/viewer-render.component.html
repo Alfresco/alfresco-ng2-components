@@ -38,7 +38,6 @@
                                 [cacheType]="cacheTypeForContent"
                                 (close)="onClose()"
                                 (error)="onUnsupportedFile()">
-
                 </adf-pdf-viewer>
             </ng-container>
 
@@ -49,6 +48,7 @@
                                 [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"
+                                (isSaving)="onSavingFile($event)"
                 ></adf-img-viewer>
             </ng-container>
 
@@ -66,7 +66,6 @@
             <ng-container *ngSwitchCase="'text'">
                 <adf-txt-viewer [urlFile]="urlFile"
                                 [blobFile]="blobFile">
-
                 </adf-txt-viewer>
             </ng-container>
 

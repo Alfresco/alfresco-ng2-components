@@ -344,6 +344,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.submitFile.emit(newImageBlob);
     }
 
+    onSavingFile(isSaving: boolean) {
+        this.allowNavigate = !isSaving;
+    }
+
     ngOnDestroy() {
         this.clearDownloadPromptTimeouts();
         this.onDestroy$.next(true);

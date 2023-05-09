@@ -354,13 +354,15 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             component.isEditing = true;
 
-            spyOn(component, 'save');
+            spyOn(component.isSaving, 'emit');
+            spyOn(component, 'save').and.callThrough();
             fixture.detectChanges();
             const saveButtonElement = fixture.debugElement.query(By.css('#viewer-save-button'));
             saveButtonElement.triggerEventHandler('click', null);
             tick();
 
             expect(component.save).toHaveBeenCalled();
+            expect(component.isSaving.emit).toHaveBeenCalled();
         }));
 
     });
