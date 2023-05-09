@@ -9,7 +9,7 @@
         </div>
 
         <mat-dialog-content>
-            <hr class="adf-share-link__seperation-line" />
+            <hr class="adf-share-link__separation-line" />
 
             <form [formGroup]="form" class="adf-share-link__form">
 
@@ -34,7 +34,6 @@
                     <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datetimepicker-toggle
-                            #matDatetimepickerToggle="matDatetimepickerToggle"
                             [disabled]="time.disabled"
                             [for]="datetimePicker"
                             matSuffix
@@ -110,7 +109,7 @@
 
             </form>
 
-            <hr class="adf-share-link__seperation-line" />
+            <hr class="adf-share-link__separation-line" />
         </mat-dialog-content>
 
         <div mat-dialog-actions>
