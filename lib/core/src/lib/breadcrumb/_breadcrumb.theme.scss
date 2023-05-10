@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin theme($theme) {
+    $config: mat.get-color-config($theme);
+    $foreground-palette: map.get($config, foreground);
+    $primary-palette: map.get($config, primary);
+    $text-color: mat.get-color-from-palette($foreground-palette, text);
+
+    .adf-breadcrumb__show-all-button-icon--rotate {
+        color: mat.get-color-from-palette($primary-palette, 500);
+    }
+
+    .adf-breadcrumb .adf-breadcrumb__item-wrapper:last-child a {
+        text-decoration: none;
+        color: $text-color;
+    }
+
+    .adf-breadcrumb .adf-breadcrumb__item-wrapper:last-child a:hover {
+        text-decoration: none;
+    }
+}
+
+@mixin typography($config) {
+    .adf-breadcrumb__item-wrapper {
+        @include mat.typograpadf-level($config, button);
+    }
+}
