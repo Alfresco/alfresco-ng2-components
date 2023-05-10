@@ -48,7 +48,7 @@
                                 [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"
-                                (isSaving)="onSavingFile($event)"
+                                (isSaving)="isSaving.emit($event)"
                 ></adf-img-viewer>
             </ng-container>
 

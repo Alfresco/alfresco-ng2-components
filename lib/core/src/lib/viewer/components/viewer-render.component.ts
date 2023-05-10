@@ -179,10 +179,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onSavingFile(isSaving: boolean) {
-        this.isSaving.emit(isSaving);
-    }
-
     onSubmitFile(newImageBlob: Blob) {
         this.submitFile.next(newImageBlob);
     }

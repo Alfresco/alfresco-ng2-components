@@ -354,17 +354,21 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             component.isEditing = true;
 
+            const canvasMock = document.createElement("CANVAS");
             spyOn(component.isSaving, 'emit');
             spyOn(component, 'save').and.callThrough();
+            spyOn(component.cropper, 'getCroppedCanvas').and.returnValue(canvasMock as HTMLCanvasElement);
+            spyOn(component.cropper.getCroppedCanvas(), 'toBlob').and.callFake(() => component.isSaving.emit(false));
+
             fixture.detectChanges();
             const saveButtonElement = fixture.debugElement.query(By.css('#viewer-save-button'));
             saveButtonElement.triggerEventHandler('click', null);
             tick();
 
             expect(component.save).toHaveBeenCalled();
-            expect(component.isSaving.emit).toHaveBeenCalled();
+            expect(component.isSaving.emit).toHaveBeenCalledWith(true);
+            expect(component.isSaving.emit).toHaveBeenCalledWith(false);
         }));
-
     });
 
 });

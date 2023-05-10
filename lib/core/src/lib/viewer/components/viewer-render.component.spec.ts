@@ -30,6 +30,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-double-viewer',
@@ -365,9 +366,14 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should emit new value when onSavingFile receives new event', () => {
+        it('should emit new value when isSaving emits new event', () => {
             spyOn(component.isSaving, 'emit');
-            component.onSavingFile(true);
+            component.urlFile = 'fake-url-file.png';
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const imgViewer = fixture.debugElement.query(By.css('adf-img-viewer'));
+            imgViewer.triggerEventHandler('isSaving', true)
 
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
         });

@@ -188,6 +188,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.cropper.setDragMode('move');
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
+            console.log('msdg')
             this.cropper.replace(this.cropper.getCroppedCanvas().toDataURL());
             this.cropper.clear();
             this.isSaving.emit(false);

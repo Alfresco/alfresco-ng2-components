@@ -38,6 +38,7 @@ import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-si
 import { ViewerWithCustomOpenWithComponent } from './mock/adf-viewer-container-open-with.component.mock';
 import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
 import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -288,14 +289,13 @@ describe('ViewerComponent', () => {
 
         it('should not show navigation buttons if file is saving', async () => {
             component.allowNavigate = true;
-            component.onSavingFile(true);
-
             fixture.detectChanges();
+            const viewerRender = fixture.debugElement.query(By.css('adf-viewer-render'));
 
+            viewerRender.triggerEventHandler('isSaving', true)
             expect(component.allowNavigate).toBeFalsy();
 
-            component.onSavingFile(false);
-
+            viewerRender.triggerEventHandler('isSaving', false)
             expect(component.allowNavigate).toBeTruthy();
         });
 
