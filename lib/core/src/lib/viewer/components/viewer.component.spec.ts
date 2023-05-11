@@ -70,7 +70,7 @@ describe('ViewerComponent', () => {
                 ViewerWithCustomSidebarComponent,
                 ViewerWithCustomOpenWithComponent,
                 ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent,
+                ViewerWithCustomToolbarActionsComponent
             ],
             providers: [
                 MatDialog,
@@ -292,10 +292,10 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
             const viewerRender = fixture.debugElement.query(By.css('adf-viewer-render'));
 
-            viewerRender.triggerEventHandler('isSaving', true)
+            viewerRender.triggerEventHandler('isSaving', true);
             expect(component.allowNavigate).toBeFalsy();
 
-            viewerRender.triggerEventHandler('isSaving', false)
+            viewerRender.triggerEventHandler('isSaving', false);
             expect(component.allowNavigate).toBeTruthy();
         });
 

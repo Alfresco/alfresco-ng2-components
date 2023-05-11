@@ -373,7 +373,7 @@ describe('ViewerComponent', () => {
             fixture.detectChanges();
 
             const imgViewer = fixture.debugElement.query(By.css('adf-img-viewer'));
-            imgViewer.triggerEventHandler('isSaving', true)
+            imgViewer.triggerEventHandler('isSaving', true);
 
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
         });
