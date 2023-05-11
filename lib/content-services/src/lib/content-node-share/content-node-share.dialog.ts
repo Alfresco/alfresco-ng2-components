@@ -101,7 +101,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 this.isFileShared = true;
 
                 const expiryDate = this.updateForm();
-                this.isExpiryDateToggleChecked = this.isLinkWithExpiryDate = expiryDate !== null && expiryDate !== undefined;
+                this.isExpiryDateToggleChecked = this.isLinkWithExpiryDate = !!expiryDate;
                 this.isLinkWithExpiryDate ? this.time.enable() : this.time.disable();
             }
         }
@@ -148,12 +148,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
-                this.time.enable();
-                this.isExpiryDateToggleChecked = true;
+            this.time.enable();
+            this.isExpiryDateToggleChecked = true;
         } else {
-                this.time.disable();
-                this.time.setValue(null);
-                this.deleteSharedLink(this.sharedId, true);
+            this.time.disable();
+            this.time.setValue(null);
+            this.deleteSharedLink(this.sharedId, true);
         }
     }
 
@@ -280,7 +280,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     private updateNode(date: moment.Moment) {
-
         let expiryDate: Date | string;
         if (date) {
             if (this.type === 'date') {

@@ -245,7 +245,6 @@ describe('ShareDialogComponent', () => {
     it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
-        spyOn(renditionService, 'getNodeRendition');
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
@@ -271,7 +270,6 @@ describe('ShareDialogComponent', () => {
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId');
-
     });
 
     it('should not allow expiration date action when node has no update permission', async () => {
@@ -296,7 +294,6 @@ describe('ShareDialogComponent', () => {
         beforeEach(() => {
             spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
             spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
-            spyOn(renditionService, 'getNodeRendition');
 
             node.entry.properties['qshare:sharedId'] = 'sharedId';
             node.entry.allowableOperations = ['update'];
