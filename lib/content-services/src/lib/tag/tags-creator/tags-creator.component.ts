@@ -84,6 +84,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
+        if (this.tagNameControl.errors?.required) {
+            this.tagNameControl.markAsUntouched();
+        }
     }
 
     get tags(): string[] {
