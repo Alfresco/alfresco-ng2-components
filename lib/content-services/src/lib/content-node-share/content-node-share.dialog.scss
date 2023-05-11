@@ -62,7 +62,7 @@
 
         &__separation-line {
             border: 1px solid var(--theme-grey-background-color);
-            margin: 8px -24px 8px;
+            margin: 8px -24px;
         }
 
         &__close {
@@ -76,7 +76,7 @@
 
         &__para {
             margin-top: 8px;
-            margin-bottom: 8px
+            margin-bottom: 8px;
         }
 
         &__heading {
@@ -115,7 +115,7 @@
     .mat-dialog-actions {
         justify-content: flex-end;
         padding: 0;
-        margin: 8px 0 0 0;
+        margin: 8px 0 0;
 
         & > button {
             color: var(--adf-theme-foreground-base-color);
