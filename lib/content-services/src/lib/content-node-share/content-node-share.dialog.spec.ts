@@ -45,11 +45,11 @@ describe('ShareDialogComponent', () => {
     let component: ShareDialogComponent;
     let appConfigService: AppConfigService;
 
-    const getShareToggleId = '[data-automation-id="adf-share-toggle"]';
+    const shareToggleId = '[data-automation-id="adf-share-toggle"]';
 
-    const getShareToggleLinkedClasses = (): DOMTokenList => fixture.nativeElement.querySelector(getShareToggleId).classList;
+    const getShareToggleLinkedClasses = (): DOMTokenList => fixture.nativeElement.querySelector(shareToggleId).classList;
 
-    const clickShareToggleButton = () => fixture.nativeElement.querySelector(`${getShareToggleId} label`)
+    const clickShareToggleButton = () => fixture.nativeElement.querySelector(`${shareToggleId} label`)
     .dispatchEvent(new MouseEvent('click'));
 
     setupTestBed({
