@@ -10,14 +10,10 @@
 
         <mat-dialog-content>
             <hr class="adf-share-link__separation-line" />
-
             <form [formGroup]="form" class="adf-share-link__form">
-
                 <div class="adf-share-link--row">
                     <mat-icon class="adf-share-link__icon">timer</mat-icon>
-
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}</div>
-
                     <mat-slide-toggle
                         #slideToggleExpirationDate
                         [disabled]="!canUpdate"
@@ -56,9 +52,7 @@
                     </mat-form-field>
                 </div>
 
-
                 <p class="adf-share-link__info adf-share-link__para">{{ 'SHARE.SHARE-LINK' | translate }}</p>
-
                 <div class="adf-share-link--row">
                     <mat-slide-toggle
                     color="primary"
@@ -68,9 +62,7 @@
                     [disabled]="!canUpdate || isDisabled"
                     (change)="onSlideShareChange($event)">
                     </mat-slide-toggle>
-
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}</div>
-
                 </div>
 
                 <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
@@ -99,16 +91,13 @@
                 <p class="adf-share-link__warn adf-share-link__para" *ngIf="isLinkWithExpiryDate">
                     {{ 'SHARE.LINK-WITH-EXPIRY-SETTINGS' | translate }}
                 </p>
-
                 <div class="adf-share-link--row">
                     <mat-icon class="adf-share-link__icon">public</mat-icon>
-
                     <p class="adf-share-link__info adf-sharable-link adf-share-link__public-content adf-share-link__para">
-                        {{ 'SHARE.PUBLIC-CONTENT' | translate }}</p>
+                        {{ 'SHARE.PUBLIC-CONTENT' | translate }}
+                    </p>
                 </div>
-
             </form>
-
             <hr class="adf-share-link__separation-line" />
         </mat-dialog-content>
 
