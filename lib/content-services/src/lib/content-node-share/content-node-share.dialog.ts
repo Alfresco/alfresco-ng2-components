@@ -281,10 +281,16 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     private updateNode(date: moment.Moment) {
 
-        const expiryDate = date
-            ? (this.type === 'date' ? date.endOf('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ')
-            : date.utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ'))
-            : null;
+        let expiryDate: Date | string;
+        if (date) {
+            if (this.type === 'date') {
+                expiryDate =  date.endOf('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+            } else {
+                expiryDate = date.utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+            }
+        } else {
+            expiryDate = null;
+        }
 
         if (this.sharedId && expiryDate) {
                 this.isDisabled = true;
