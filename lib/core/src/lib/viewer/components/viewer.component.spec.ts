@@ -44,7 +44,7 @@ import { By } from '@angular/platform-browser';
     selector: 'adf-dialog-dummy',
     template: ``
 })
-export class DummyDialogComponent {
+class DummyDialogComponent {
 }
 
 describe('ViewerComponent', () => {

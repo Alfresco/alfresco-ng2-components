@@ -354,10 +354,10 @@ describe('Test Img viewer component ', () => {
             component.readOnly = false;
             component.isEditing = true;
 
-            const canvasMock = document.createElement("CANVAS");
+            const canvasMock = document.createElement('canvas');
             spyOn(component.isSaving, 'emit');
             spyOn(component, 'save').and.callThrough();
-            spyOn(component.cropper, 'getCroppedCanvas').and.returnValue(canvasMock as HTMLCanvasElement);
+            spyOn(component.cropper, 'getCroppedCanvas').and.returnValue(canvasMock);
             spyOn(component.cropper.getCroppedCanvas(), 'toBlob').and.callFake(() => component.isSaving.emit(false));
 
             fixture.detectChanges();
