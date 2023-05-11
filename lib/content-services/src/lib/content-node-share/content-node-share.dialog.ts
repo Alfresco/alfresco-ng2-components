@@ -308,7 +308,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             const lastIndex = expiryDate?.lastIndexOf(':');
             expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
         }
-        const nodeObject = {
+        const nodeObject: SharedLinkBodyCreate = {
             nodeId: this.data.node.entry.id,
             expiresAt: expiryDate as Date
         };
