@@ -64,7 +64,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     });
     type: DatePickerType = 'datetime';
     maxDebounceTime = 500;
-    expiryDate: Date;
     isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', {static: true})
@@ -188,10 +187,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createSharedLinks(nodeId: string | SharedLinkBodyCreate) {
+    private createSharedLinks(sharedLinkParams: string | SharedLinkBodyCreate) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.createSharedLinks(nodeId).subscribe(
+        this.sharedLinksApiService.createSharedLinks(sharedLinkParams).subscribe(
             (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
@@ -266,18 +265,18 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     private updateForm(): Date {
         const {entry} = this.data.node;
-        this.expiryDate = null;
+        let expiryDate = null;
 
         if (entry && entry.properties) {
-            this.expiryDate = entry.properties['qshare:expiryDate'];
+            expiryDate = entry.properties['qshare:expiryDate'];
         }
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
-            time: this.expiryDate ? moment(this.expiryDate).local() : null
+            time: expiryDate ? moment(expiryDate).local() : null
         }, { emitEvent: false });
 
-        return this.expiryDate;
+        return expiryDate;
     }
 
     private updateNode(date: moment.Moment) {
@@ -304,16 +303,17 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    private sharedLinkWithExpirySettings(expiryDate) {
-        const lastIndex = expiryDate?.lastIndexOf(':');
-        expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
+    private sharedLinkWithExpirySettings(expiryDate: Date | string) {
+        if (typeof expiryDate === 'string') {
+            const lastIndex = expiryDate?.lastIndexOf(':');
+            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
+        }
         const nodeObject = {
             nodeId: this.data.node.entry.id,
-            expiresAt: expiryDate
+            expiresAt: expiryDate as Date
         };
 
         this.createSharedLinks(nodeObject);
-
     }
 
     private updateEntryExpiryDate(date: moment.Moment) {
