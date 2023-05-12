@@ -1,0 +1,25 @@
+:host {
+    min-height: 100%;
+    min-width: 100%;
+    display: flex;
+}
+
+:host, .app-task-list-container {
+    height: 100%;
+    width: 100%;
+}
+
+.app-task-list-with-filter, .app-task-list-container {
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+}
+
+.app-task-list-container {
+    place-content: stretch space-between;
+    align-items: stretch;
+
+    .app-cloud-layout-overflow {
+        flex: 1;
+    }
+}

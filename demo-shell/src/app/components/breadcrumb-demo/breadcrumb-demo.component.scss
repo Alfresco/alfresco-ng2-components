@@ -11,3 +11,9 @@
 .app-full-content-toolbar .app-toolbar-title .app-breadcrumb {
     width: 0;
 }
+
+@media screen and (min-width: 600px) {
+    .app-files-breadcrumb {
+        display: none;
+    }
+}

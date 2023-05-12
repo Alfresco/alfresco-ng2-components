@@ -1,0 +1,20 @@
+.app-cloud-layout-overflow {
+    overflow: auto;
+}
+
+.app-cloud-layout-tab-body {
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+
+    .mat-tab-body-wrapper {
+        height: 100%;
+    }
+
+    adf-sidenav-layout {
+        min-height: 100%;
+        min-width: 100%;
+    }
+}
+

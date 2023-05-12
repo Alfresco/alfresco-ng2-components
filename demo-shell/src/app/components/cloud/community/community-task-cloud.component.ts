@@ -29,7 +29,7 @@ const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
 @Component({
     templateUrl: './community-task-cloud.component.html',
-    styles: [`.adf-cloud-layout-tab-body .mat-tab-body-wrapper { height: 100%; }`]
+    styleUrls: ['./community-task-cloud.component.scss']
 })
 export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')

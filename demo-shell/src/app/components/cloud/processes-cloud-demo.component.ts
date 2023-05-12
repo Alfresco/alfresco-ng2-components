@@ -26,7 +26,8 @@ import { Pagination } from '@alfresco/js-api';
 import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
 
 @Component({
-    templateUrl: './processes-cloud-demo.component.html'
+    templateUrl: './processes-cloud-demo.component.html',
+    styleUrls: ['./processes-cloud-demo.component.scss']
 })
 export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     appName: string = '';

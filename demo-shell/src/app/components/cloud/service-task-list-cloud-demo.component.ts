@@ -25,7 +25,8 @@ import { takeUntil } from 'rxjs/operators';
 const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-service-task-filter';
 
 @Component({
-    templateUrl: './service-task-list-cloud-demo.component.html'
+    templateUrl: './service-task-list-cloud-demo.component.html',
+    styleUrls: ['./service-task-list-cloud-demo.component.scss']
 })
 export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')

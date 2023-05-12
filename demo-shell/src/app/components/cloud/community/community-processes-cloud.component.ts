@@ -35,7 +35,8 @@ const PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 const ACTION_SAVE_AS = 'saveAs';
 
 @Component({
-    templateUrl: './community-processes-cloud.component.html'
+    templateUrl: './community-processes-cloud.component.html',
+    styleUrls: ['./community-processes-cloud.component.scss']
 })
 export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('processCloud')

@@ -1,6 +1,11 @@
 .app-rich-text-editor-container {
+    display: flex;
+
     .app-rich-text-editor-col {
         padding: 20px;
+        flex: 1 1 50%;
+        max-width: 50%;
+        box-sizing: border-box;
 
         &-rx {
             border-left: 1px dashed var(--theme-primary-color);

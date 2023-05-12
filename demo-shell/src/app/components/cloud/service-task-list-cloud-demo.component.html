@@ -1,42 +1,38 @@
-<div fxLayout
-     fxFill>
-    <adf-cloud-service-task-filters [appName]="appName"
-                                    [filterParam]="{index: 0}"
-                                    (filterClicked)="onTaskFilterSelected($event)"
-                                    (filterSelected)="onTaskFilterSelected($event)">
-
-    </adf-cloud-service-task-filters>
-    <div fxLayout="column"
-         fxFlex>
-        <adf-cloud-edit-service-task-filter [id]="filterId"
-                                            [appName]="appName"
-                                            [filterProperties]="taskFilterProperties.filterProperties"
-                                            [sortProperties]="taskFilterProperties.sortProperties"
-                                            [actions]="taskFilterProperties.actions"
-                                            (filterChange)="onFilterChange($event)">
-        </adf-cloud-edit-service-task-filter>
-        <div fxLayout="column"
-             fxFlex
-             fxFill
-             fxLayoutAlign="space-between"
-             *ngIf="editedFilter">
-            <adf-cloud-service-task-list #taskCloud
-                                         fxFlex
-                                         [queryParams]="editedFilter"
-                                         class="app-cloud-layout-overflow"
-                                         [appName]="editedFilter.appName"
-                                         [sorting]="sortArray"
-                                         [multiselect]="multiselect"
-                                         [selectionMode]="selectionMode"
-                                         [stickyHeader]="true"
-                                         [showActions]="actionMenu"
-                                         [showContextMenu]="contextMenu">
-            </adf-cloud-service-task-list>
-            <adf-pagination [target]="taskCloud"
-                            (changePageSize)="onChangePageSize($event)"
-                            (nextPage)="resetSelectedRows()"
-                            (prevPage)="resetSelectedRows()">
-            </adf-pagination>
-        </div>
+<adf-cloud-service-task-filters
+    [appName]="appName"
+    [filterParam]="{index: 0}"
+    (filterClicked)="onTaskFilterSelected($event)"
+    (filterSelected)="onTaskFilterSelected($event)">
+</adf-cloud-service-task-filters>
+<div class="app-task-list-with-filter">
+    <adf-cloud-edit-service-task-filter
+        [id]="filterId"
+        [appName]="appName"
+        [filterProperties]="taskFilterProperties.filterProperties"
+        [sortProperties]="taskFilterProperties.sortProperties"
+        [actions]="taskFilterProperties.actions"
+        (filterChange)="onFilterChange($event)">
+    </adf-cloud-edit-service-task-filter>
+    <div
+        class="app-task-list-container"
+        *ngIf="editedFilter">
+        <adf-cloud-service-task-list
+            #taskCloud
+            [queryParams]="editedFilter"
+            class="app-cloud-layout-overflow"
+            [appName]="editedFilter.appName"
+            [sorting]="sortArray"
+            [multiselect]="multiselect"
+            [selectionMode]="selectionMode"
+            [stickyHeader]="true"
+            [showActions]="actionMenu"
+            [showContextMenu]="contextMenu">
+        </adf-cloud-service-task-list>
+        <adf-pagination
+            [target]="taskCloud"
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="resetSelectedRows()"
+            (prevPage)="resetSelectedRows()">
+        </adf-pagination>
     </div>
 </div>

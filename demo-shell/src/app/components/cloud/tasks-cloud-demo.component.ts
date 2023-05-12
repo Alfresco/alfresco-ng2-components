@@ -28,7 +28,8 @@ const ACTION_DELETE = 'delete';
 const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
 @Component({
-    templateUrl: './tasks-cloud-demo.component.html'
+    templateUrl: './tasks-cloud-demo.component.html',
+    styleUrls: ['./tasks-cloud-demo.component.scss']
 })
 export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')
