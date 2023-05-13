@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    EXTENDIBLE_COMPONENT, FileInfo, FileUtils,
-    NotificationService, TranslationService
-} from '@alfresco/adf-core';
-import { Component, forwardRef, ViewEncapsulation, NgZone } from '@angular/core';
+import { EXTENDIBLE_COMPONENT, FileInfo, FileUtils, NotificationService } from '@alfresco/adf-core';
+import { Component, forwardRef, ViewEncapsulation, inject } from '@angular/core';
 import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-operation-subject.interface';
 import { UploadBase } from './base-upload/upload-base';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
-import { UploadService } from '../../common/services/upload.service';
 import { ContentService } from '../../common/services/content.service';
 import { FileModel } from '../../common/models/file.model';
 
@@ -38,14 +34,8 @@ import { FileModel } from '../../common/models/file.model';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadDragAreaComponent extends UploadBase implements NodeAllowableOperationSubject {
-
-    constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService,
-                private notificationService: NotificationService,
-                private contentService: ContentService,
-                protected ngZone: NgZone) {
-        super(uploadService, translationService, ngZone);
-    }
+    private notificationService = inject(NotificationService);
+    private contentService = inject(ContentService);
 
     /**
      * Method called when files are dropped in the drag area.

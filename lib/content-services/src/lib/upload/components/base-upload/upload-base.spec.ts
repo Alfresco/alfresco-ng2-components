@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslationService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -32,12 +32,6 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
     template: 'test component'
 })
 export class UploadTestComponent extends UploadBase {
-
-    constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService,
-                protected ngZone: NgZone) {
-        super(uploadService, translationService, ngZone);
-    }
 }
 
 const file = { name: 'bigFile.png', size: 1000 } as File;
