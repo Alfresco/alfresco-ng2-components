@@ -18,7 +18,6 @@
 import { Component, Input } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
@@ -27,13 +26,8 @@ import { BaseCardView } from '../base-card-view';
 })
 
 export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {
-
     @Input()
     editable: boolean;
-
-    constructor(cardViewUpdateService: CardViewUpdateService) {
-        super(cardViewUpdateService);
-    }
 
     isEditable() {
         return this.editable && this.property.editable;

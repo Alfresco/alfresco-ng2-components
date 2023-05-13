@@ -17,7 +17,6 @@
 
 import { Component, Input } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
@@ -32,10 +31,6 @@ export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel>
 
     @Input()
     displayEmpty: boolean = true;
-
-    constructor(cardViewUpdateService: CardViewUpdateService) {
-        super(cardViewUpdateService);
-    }
 
     showProperty() {
         return this.displayEmpty || !this.property.isEmpty();

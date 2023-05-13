@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -36,10 +35,6 @@ export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKey
 
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;
-
-    constructor(cardViewUpdateService: CardViewUpdateService) {
-        super(cardViewUpdateService);
-    }
 
     ngOnChanges() {
         this.values = this.property.value || [];

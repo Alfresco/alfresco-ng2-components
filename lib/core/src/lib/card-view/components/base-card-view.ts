@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, OnDestroy, Directive } from '@angular/core';
+import { Input, OnDestroy, Directive, inject } from '@angular/core';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
@@ -25,13 +25,14 @@ import { takeUntil } from 'rxjs/operators';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy {
+    protected cardViewUpdateService = inject(CardViewUpdateService);
 
     @Input()
     property: T;
 
     protected destroy$ = new Subject<boolean>();
 
-    constructor(protected cardViewUpdateService: CardViewUpdateService) {
+    constructor() {
         this.cardViewUpdateService.updateItem$
             .pipe(takeUntil(this.destroy$))
             .subscribe((itemModel: CardViewBaseItemModel) => {

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, inject } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange } from '@angular/material/select';
@@ -31,6 +30,7 @@ import { takeUntil, map } from 'rxjs/operators';
     styleUrls: ['./card-view-selectitem.component.scss']
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
+    private appConfig = inject(AppConfigService);
     static HIDE_FILTER_LIMIT = 5;
 
     @Input() editable: boolean = false;
@@ -50,10 +50,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     private onDestroy$ = new Subject<void>();
 
     list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
-
-    constructor(cardViewUpdateService: CardViewUpdateService, private appConfig: AppConfigService) {
-        super(cardViewUpdateService);
-    }
 
     ngOnChanges(): void {
         this.value = this.property.value;

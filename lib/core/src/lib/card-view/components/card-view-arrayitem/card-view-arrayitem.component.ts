@@ -17,7 +17,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
@@ -27,11 +26,6 @@ import { BaseCardView } from '../base-card-view';
   encapsulation: ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
-
-    constructor(cardViewUpdateService: CardViewUpdateService) {
-        super(cardViewUpdateService);
-    }
-
     clicked(): void {
         if (this.isClickable()) {
             this.cardViewUpdateService.clicked(this.property);
