@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -29,13 +28,6 @@ import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.mode
     providedIn: 'root'
 })
 export class StartProcessCloudService extends BaseCloudService {
-
-    constructor(apiService: AlfrescoApiService,
-        private logService: LogService,
-        appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
-    }
-
     /**
      * Gets the process definitions associated with an app.
      *

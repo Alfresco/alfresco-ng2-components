@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
@@ -55,10 +54,8 @@ export class TaskFilterCloudService extends BaseCloudService {
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface,
-        apiService: AlfrescoApiService,
-        appConfigService: AppConfigService,
         private notificationCloudService: NotificationCloudService) {
-        super(apiService, appConfigService);
+        super();
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }

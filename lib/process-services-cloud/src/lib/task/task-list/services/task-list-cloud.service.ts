@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
@@ -27,13 +26,6 @@ import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud
 
 @Injectable({ providedIn: 'root' })
 export class TaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
-
-    constructor(apiService: AlfrescoApiService,
-                appConfigService: AppConfigService,
-                protected logService: LogService) {
-        super(apiService, appConfigService);
-    }
-
     /**
      * Finds a task using an object with optional query properties.
      *

@@ -16,13 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    AlfrescoApiService,
-    FormValues,
-    AppConfigService,
-    FormModel,
-    FormFieldOption
-} from '@alfresco/adf-core';
+import { FormValues, FormModel, FormFieldOption } from '@alfresco/adf-core';
 import { Observable, from, EMPTY } from 'rxjs';
 import { expand, map, reduce, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
@@ -43,11 +37,8 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this._uploadApi;
     }
 
-    constructor(
-        apiService: AlfrescoApiService,
-        appConfigService: AppConfigService
-    ) {
-        super(apiService, appConfigService);
+    constructor() {
+        super();
     }
 
     /**

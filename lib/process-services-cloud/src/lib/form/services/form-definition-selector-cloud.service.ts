@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { BaseCloudService } from '../../services/base-cloud.service';
@@ -27,12 +26,6 @@ import { FormDefinitionSelectorCloudServiceInterface } from './form-definition-s
     providedIn: 'root'
 })
 export class FormDefinitionSelectorCloudService extends BaseCloudService implements FormDefinitionSelectorCloudServiceInterface {
-
-    constructor(apiService: AlfrescoApiService,
-                appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
-    }
-
     /**
      * Get all forms of an app.
      *

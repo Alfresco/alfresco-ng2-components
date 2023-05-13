@@ -17,20 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
-import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { throwError, Observable } from 'rxjs';
 import { BaseCloudService } from './base-cloud.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
-
-  constructor(
-    apiService: AlfrescoApiService,
-    appConfigService: AppConfigService,
-    private logService: LogService) {
-    super(apiService, appConfigService);
-  }
-
   /**
    * Gets user preferences
    *
