@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { AppConfigValues } from '../../app-config/app-config.service';
 import { BaseAuthenticationService } from '../../services/base-authentication.service';
-import { CookieService } from '../../common/services/cookie.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { LogService } from '../../common/services/log.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
 import { AuthService } from './auth.service';
 
@@ -32,19 +29,15 @@ import { AuthService } from './auth.service';
     providedIn: 'root'
 })
 export class OIDCAuthenticationService extends BaseAuthenticationService {
+    private authStorage = inject(OAuthStorage);
+    private oauthService = inject(OAuthService);
+    private readonly authConfig = inject(AuthConfigService);
+    private readonly auth = inject(AuthService);
+
     readonly supportCodeFlow = true;
 
-    constructor(
-        alfrescoApi: AlfrescoApiService,
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        logService: LogService,
-        private authStorage: OAuthStorage,
-        private oauthService: OAuthService,
-        private readonly authConfig: AuthConfigService,
-        private readonly auth: AuthService
-    ) {
-        super(alfrescoApi, appConfig, cookie, logService);
+    constructor() {
+        super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();
