@@ -26,15 +26,12 @@ import {
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
-    OnDestroy
+    OnDestroy,
+    inject
 } from '@angular/core';
 import { FormComponent } from './form.component';
-import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeModel } from '@alfresco/adf-core';
+import { ContentLinkModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { ProcessService } from '../process-list/services/process.service';
-import { EditorService } from './services/editor.service';
-import { ModelService } from './services/model.service';
-import { TaskFormService } from './services/task-form.service';
-import { TaskService } from './services/task.service';
 
 @Component({
     selector: 'adf-start-form',
@@ -43,6 +40,7 @@ import { TaskService } from './services/task.service';
     encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
+    public processService = inject(ProcessService);
 
     /** Definition ID of the process to start, this parameter can not be use in combination with processId */
     @Input()
@@ -66,22 +64,17 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     /** Emitted when the user clicks one of the outcome buttons that completes the form. */
     @Output()
-    outcomeClick: EventEmitter<any> = new EventEmitter<any>();
+    outcomeClick = new EventEmitter<any>();
 
     /** Emitted when a field of the form is clicked. */
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     @ViewChild('outcomesContainer')
     outcomesContainer: ElementRef = null;
 
-    constructor(public processService: ProcessService,
-                taskFormService: TaskFormService,
-                taskService: TaskService,
-                editorService: EditorService,
-                modelService: ModelService,
-                formService: FormService, visibilityService: WidgetVisibilityService) {
-        super(formService, taskFormService, taskService, editorService, modelService, visibilityService, null, null);
+    constructor() {
+        super();
         this.showTitle = false;
     }
 
