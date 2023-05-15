@@ -11,6 +11,10 @@
         margin: 0;
         padding: 8px 12px;
         border-top: 1px solid var(--adf-theme-foreground-text-color-007);
+        display: flex;
+        place-content: stretch space-between;
+        align-items: stretch;
+        max-height: 100%;
 
         button {
             color: var(--adf-theme-foreground-text-color-054);

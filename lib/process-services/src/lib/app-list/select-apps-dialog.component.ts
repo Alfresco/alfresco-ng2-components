@@ -21,7 +21,8 @@ import { AppsProcessService } from './services/apps-process.service';
 
 @Component({
     selector: 'adf-select-apps-dialog',
-    templateUrl: './select-apps-dialog.component.html'
+    templateUrl: './select-apps-dialog.component.html',
+    styleUrls: ['./select-apps-dialog.component.scss']
 })
 export class SelectAppsDialogComponent {
 

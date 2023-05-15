@@ -52,6 +52,7 @@ adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-prop
 
     &-core {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
 
         &-sidebar {
@@ -70,6 +71,7 @@ adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-prop
 
         &-form {
             flex-grow: 1;
+            margin-bottom: 8px;
 
             & ::ng-deep .adf-form-debug-container {
                 display: flex;

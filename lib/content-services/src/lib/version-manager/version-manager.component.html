@@ -2,7 +2,7 @@
 
     <adf-version-comparison *ngIf="showVersionComparison" [node]="node" [newFileVersion]="newFileVersion"></adf-version-comparison>
 
-    <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" fxLayout="row" fxLayoutAlign="end center" [@uploadToggle]="uploadState">
+    <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [@uploadToggle]="uploadState">
         <table class="adf-version-upload" *ngIf="uploadState !== 'close' && !versionList.isLoading">
             <tr>
                 <td>
