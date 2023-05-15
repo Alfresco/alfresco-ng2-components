@@ -36,11 +36,14 @@ $tile-themes: (
 
 .adf-app-listgrid {
     padding: 8px;
+    display: block;
 
     &-item {
         outline: none;
         padding: 8px;
         box-sizing: border-box;
+        flex: unset;
+        max-width: unset;
 
         &-card {
             @for $i from 1 through 10 {

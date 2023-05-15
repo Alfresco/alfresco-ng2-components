@@ -57,11 +57,25 @@ $tile-themes: (
 
 .adf-app-listgrid {
     padding: 8px;
+    flex-flow: row wrap;
+    display: flex;
 
     &-item {
         outline: none;
         padding: 8px;
         box-sizing: border-box;
+        flex: 1 1 33.3333%;
+        max-width: 33.3333%;
+
+        @media screen and (max-width: 960px) {
+            flex: 1 1 50%;
+            max-width: 50%;
+        }
+
+        @media screen and (max-width: 600px) {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
 
         &-card {
             @for $i from 1 through 10 {
@@ -73,6 +87,8 @@ $tile-themes: (
             }
 
             outline: none;
+            flex-direction: column;
+            display: flex;
             transition:
                 transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -131,6 +147,7 @@ $tile-themes: (
                 color: white;
                 z-index: 9999;
                 padding: 16px;
+                flex: 1 0 auto;
 
                 .adf-line-clamp {
                     @include adf-line-clamp(1.25, 3);
