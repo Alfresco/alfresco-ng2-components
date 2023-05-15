@@ -1,13 +1,12 @@
 <mat-card>
-    <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"
-                     class="adf-cloud-start-task-heading">
+    <mat-card-header class="adf-cloud-start-task-heading">
         <mat-card-title>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
     </mat-card-header>
-    <form [formGroup]="taskForm" fxLayout="column" (ngSubmit)="saveTask()">
+    <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
 
         <mat-card-content>
             <div class="adf-task-name">
-                <mat-form-field fxFlex>
+                <mat-form-field>
                     <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
                     <input
                         matInput
@@ -22,8 +21,8 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
-                <mat-form-field fxFlex>
+            <div class="adf-cloud-start-task-form-row">
+                <mat-form-field>
                     <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                     <textarea
                         matInput
@@ -33,15 +32,15 @@
                     </textarea>
                 </mat-form-field>
 
-                <mat-form-field fxFlex class="adf-cloud-priority-container">
+                <mat-form-field class="adf-cloud-priority-container">
                     <mat-label>{{ 'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.PRIORITY' | translate }}</mat-label>
                     <mat-select formControlName="priority">
                         <mat-option *ngFor="let priorityOption of priorities" [value]="priorityOption.value">{{ priorityOption.label | translate }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
-                <mat-form-field fxFlex>
+            <div class="adf-cloud-start-task-form-row">
+                <mat-form-field>
                     <input matInput
                            [matDatepicker]="taskDatePicker"
                            (focusout)="onDateChanged($any($event).srcElement.value)"
@@ -61,7 +60,7 @@
                         </div>
                     </div>
                 </mat-form-field>
-                <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser"
+                <adf-cloud-people #peopleInput *ngIf="currentUser"
                                   [appName]="appName"
                                   [preSelectUsers]="[currentUser]"
                                   [searchUserCtrl]="assigneeFormControl"
@@ -70,8 +69,9 @@
                                   (removeUser)="onAssigneeRemove()"></adf-cloud-people>
             </div>
 
-            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
-                <adf-cloud-group fxFlex #groupInput *ngIf="currentUser"
+            <div class="adf-cloud-start-task-form-row">
+                <adf-cloud-group #groupInput
+                                 *ngIf="currentUser"
                                  [mode]="'multiple'"
                                  [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
                                  [appName]="appName"
@@ -80,7 +80,6 @@
                                  (removeGroup)="onCandidateGroupRemove($event)">
                 </adf-cloud-group>
                 <adf-cloud-form-definition-selector *ngIf="appName"
-                                                    fxFlex
                                                     [appName]="appName"
                                                     (selectForm)="onFormSelect($event)">
                 </adf-cloud-form-definition-selector>
@@ -88,7 +87,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <div class="adf-cloud-start-task-footer" fxLayout="row" fxLayoutAlign="end end">
+            <div class="adf-cloud-start-task-footer">
                 <button
                     mat-button
                     type="button"

@@ -57,7 +57,11 @@ $tile-themes: (
             outline: none;
             transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 200px;
+            flex-direction: column;
+            box-sizing: border-box;
+            display: flex;
             padding: 0 !important;
+            max-width: unset;
 
             &:hover {
                 box-shadow:
@@ -111,6 +115,7 @@ $tile-themes: (
                 color: white;
                 z-index: 9999;
                 padding: 16px;
+                flex: 1 0 auto;
 
                 .adf-line-clamp {
                     @include adf-line-clamp(1.25, 3);

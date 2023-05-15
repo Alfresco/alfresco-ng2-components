@@ -2,9 +2,9 @@
     <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
         <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <mat-panel-title *ngIf="showTaskFilterName" fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id"
+                <mat-panel-title *ngIf="showTaskFilterName" id="adf-edit-task-filter-title-id"
                     >{{taskFilter.name | translate}}</mat-panel-title>
-                <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-task-filter-sub-title-id">
+                <mat-panel-description class="adf-edit-task-filter-description" id="adf-edit-task-filter-sub-title-id">
                     <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-task-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
@@ -28,10 +28,9 @@
         </mat-expansion-panel-header>
         <ng-container *ngIf="!isLoading;">
             <form *ngIf="editTaskFilterForm" [formGroup]="editTaskFilterForm">
-                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start">
+                <div class="adf-edit-task-filter-form">
                     <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
-                        <mat-form-field fxFlex="23%"
-                                        [floatLabel]="'auto'"
+                        <mat-form-field [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'select'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-select placeholder="{{taskFilterProperty.label | translate}}"
@@ -45,8 +44,7 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%"
-                                        [floatLabel]="'auto'"
+                        <mat-form-field [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'text'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <input matInput
@@ -55,8 +53,7 @@
                                    placeholder="{{taskFilterProperty.label | translate}}"
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
-                        <mat-form-field fxFlex="23%"
-                                        [floatLabel]="'auto'"
+                        <mat-form-field [floatLabel]="'auto'"
                                         *ngIf="taskFilterProperty.type === 'date'"
                                         [attr.data-automation-id]="taskFilterProperty.key">
                             <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
@@ -95,19 +92,18 @@
                             (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
                             (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)">
                         </adf-cloud-date-range-filter>
+                        <adf-cloud-people
+                            class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}"
+                            *ngIf="taskFilterProperty.type === 'people'"
+                            [preSelectUsers]="taskFilterProperty.value"
+                            [title]="taskFilterProperty.label"
+                            [validate]="true"
+                            [appName]="appName"
+                            [mode]="taskFilterProperty.selectionMode"
+                            (changedUsers)="onChangedUser($event, taskFilterProperty)">
+                        </adf-cloud-people>
 
-                        <div fxFlex="23%" class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}" *ngIf="taskFilterProperty.type === 'people'">
-                            <adf-cloud-people
-                                [preSelectUsers]="taskFilterProperty.value"
-                                [title]="taskFilterProperty.label"
-                                [validate]="true"
-                                [appName]="appName"
-                                [mode]="taskFilterProperty.selectionMode"
-                                (changedUsers)="onChangedUser($event, taskFilterProperty)">
-                            </adf-cloud-people>
-                        </div>
-
-                        <adf-cloud-task-assignment-filter fxFlex="23%"
+                        <adf-cloud-task-assignment-filter
                             *ngIf="taskFilterProperty.type === 'assignment'"
                             [taskFilterProperty]="taskFilterProperty"
                             [status]="selectedStatus"
