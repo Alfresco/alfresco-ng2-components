@@ -21,10 +21,6 @@
     /* stylelint-enable */
 }
 
-.adf-apps {
-    width: 100%;
-}
-
 .adf-app-list-item {
     cursor: pointer;
 }
@@ -56,6 +52,8 @@ $tile-themes: (
 }
 
 .adf-apps {
+    width: 100%;
+
     .adf-app-listgrid {
         padding: 8px;
         flex-flow: row wrap;
