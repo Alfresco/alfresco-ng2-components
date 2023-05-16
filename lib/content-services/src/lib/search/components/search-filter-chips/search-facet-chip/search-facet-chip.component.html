@@ -11,13 +11,13 @@
           #menuTrigger="matMenuTrigger">
 
     <span class="adf-search-filter-placeholder">
-        <span class="adf-search-filter-ellipsis">{{ field.label | translate }}</span>
-        <ng-container *ngIf="facetField.displayValue$ | async">:</ng-container>
+        <span class="adf-search-filter-ellipsis">{{ field.label | translate }}:</span>
     </span>
 
-    <span class="adf-search-filter-ellipsis" *ngIf="facetField.displayValue$ | async as displayValue">
+    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="facetField.displayValue$ | async as displayValue; else showAny">
         &nbsp; {{ displayValue | translate }}
     </span>
+    <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
     <mat-icon>keyboard_arrow_down</mat-icon>
 </mat-chip>
 

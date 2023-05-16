@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "Search Filter List"
-      }
+      },
+      "ANY": "Any"
     },
     "ICONS": {
       "ft_ic_raster_image": "Image file",
