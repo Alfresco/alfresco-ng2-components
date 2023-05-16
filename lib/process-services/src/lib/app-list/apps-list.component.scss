@@ -84,6 +84,10 @@ $tile-themes: (
                         $tile-theme: map-get($tile-themes, theme-#{$i});
 
                         background-color: map-get($tile-theme, bg);
+
+                        .adf-app-listgrid-item-card-logo-icon {
+                            color: map-get($tile-theme, color);
+                        }
                     }
                 }
 
@@ -114,14 +118,6 @@ $tile-themes: (
                         font-size: 70px;
                         width: 1em !important;
                         height: 1em !important;
-
-                        @for $i from 1 through 10 {
-                            .theme-#{$i} & {
-                                $tile-theme: map-get($tile-themes, theme-#{$i});
-
-                                color: map-get($tile-theme, color);
-                            }
-                        }
                     }
                 }
 
