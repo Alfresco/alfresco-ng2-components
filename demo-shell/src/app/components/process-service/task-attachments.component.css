@@ -1,3 +1,9 @@
 adf-create-task-attachment ::ng-deep button {
     float: right;
 }
+
+@media screen and (max-width: 960px) {
+    .app-empty-list-drag_drop, .app-empty-list__any-files-here-to-add {
+        display: none;
+    }
+}
