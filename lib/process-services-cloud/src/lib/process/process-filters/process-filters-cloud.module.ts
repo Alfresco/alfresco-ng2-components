@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
 import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
@@ -36,7 +35,6 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
-        FlexLayoutModule,
         MaterialModule,
         AppListCloudModule,
         CoreModule,

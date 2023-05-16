@@ -19,7 +19,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     ProcessServicesCloudModule,
     LocalPreferenceCloudService,
@@ -76,8 +75,7 @@ const routes: Routes = [
         CoreModule,
         ProcessServicesCloudModule,
         RouterModule.forChild(routes),
-        AppCloudSharedModule,
-        FlexLayoutModule
+        AppCloudSharedModule
     ],
     declarations: [
         CommunityCloudComponent,

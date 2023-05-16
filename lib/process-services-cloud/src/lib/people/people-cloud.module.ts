@@ -20,7 +20,6 @@ import { PeopleCloudComponent } from './components/people-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdentityUserService } from './services/identity-user.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.token';
@@ -28,7 +27,6 @@ import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.to
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,

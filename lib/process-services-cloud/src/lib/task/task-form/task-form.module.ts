@@ -23,7 +23,6 @@ import { TaskDirectiveModule } from '../directives/task-directive.module';
 
 import { TaskFormCloudComponent } from './components/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -31,8 +30,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         CommonModule,
         MaterialModule,
         FormCloudModule,
-        TaskDirectiveModule,
-        FlexLayoutModule
+        TaskDirectiveModule
     ],
     declarations: [
         TaskFormCloudComponent

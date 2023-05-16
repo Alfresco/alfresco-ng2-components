@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExtensionsModule } from '@alfresco/adf-extensions';
@@ -37,7 +36,6 @@ import { ContentDirectiveModule } from '../directives';
         TranslateModule,
         FormsModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
         A11yModule,
         ExtensionsModule,
         ContentDirectiveModule

@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
@@ -30,7 +29,6 @@ import { IdentityGroupService } from './services/identity-group.service';
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
