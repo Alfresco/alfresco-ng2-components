@@ -67,11 +67,15 @@ adf-cloud-start-task {
         &-cloud-start-task-form-row {
             display: flex;
 
-            mat-form-field, adf-cloud-people, adf-cloud-group, adf-cloud-form-definition-selector {
+            mat-form-field,
+            adf-cloud-people,
+            adf-cloud-group,
+            adf-cloud-form-definition-selector {
                 flex: 1;
             }
 
-            mat-form-field, adf-cloud-group {
+            mat-form-field,
+            adf-cloud-group {
                 margin-right: 20px;
 
                 &:last-of-type:not(:first-of-type) {
@@ -79,10 +83,11 @@ adf-cloud-start-task {
                 }
             }
 
-            @media screen and (max-width: 960px){
+            @media screen and (max-width: 960px) {
                 flex-direction: column;
 
-                mat-form-field, adf-cloud-group {
+                mat-form-field,
+                adf-cloud-group {
                     margin-right: 0;
                 }
             }
