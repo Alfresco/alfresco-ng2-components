@@ -260,7 +260,6 @@
               "/@angular/compiler",
               "/@angular/compiler-cli",
               "/@angular/core",
-              "/@angular/flex-layout",
               "/@angular/forms",
               "/@angular/http",
               "/@angular/material",
@@ -560,11 +559,6 @@
         ]
       },
       "peerMissing": true
-    },
-    "@angular/flex-layout": {
-      "version": "7.0.0-beta.24",
-      "from": "@angular/flex-layout@^7.0.0-beta.24",
-      "resolved": "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-7.0.0-beta.24.tgz"
     },
     "@angular/forms": {
       "version": "7.2.15",
