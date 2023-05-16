@@ -38,7 +38,6 @@
                 </div>
                 <div
                     class="app-grid-item app-tasks-list"
-                    [ngClass.gt-md]="{'adf-small-pagination': true}"
                     *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
@@ -166,7 +165,6 @@
                 </div>
                 <div
                     class="app-grid-item app-processes-list app-list"
-                    [ngClass.gt-md]="{'adf-small-pagination': true}"
                     *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
                         #processList
