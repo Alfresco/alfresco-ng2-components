@@ -31,49 +31,14 @@ import {
     DownloadPromptDialogComponent,
     DownloadPromptActions
 } from '@alfresco/adf-core';
-import { Component } from '@angular/core';
 import { of } from 'rxjs';
-
-@Component({
-    selector: 'adf-viewer-container-toolbar',
-    template: `
-        <adf-viewer>
-            <adf-viewer-toolbar>
-                <div class="custom-toolbar-element"></div>
-            </adf-viewer-toolbar>
-        </adf-viewer>
-    `
-})
-class ViewerWithCustomToolbarComponent {
-}
-
-@Component({
-    selector: 'adf-viewer-container-toolbar-actions',
-    template: `
-        <adf-viewer>
-            <adf-viewer-toolbar-actions>
-                <button mat-icon-button id="custom-button">
-                    <mat-icon>alarm</mat-icon>
-                </button>
-            </adf-viewer-toolbar-actions>
-        </adf-viewer>
-    `
-})
-class ViewerWithCustomToolbarActionsComponent {
-}
-
-@Component({
-    selector: 'adf-viewer-container-sidebar',
-    template: `
-        <adf-viewer>
-            <adf-viewer-sidebar>
-                <div class="custom-sidebar"></div>
-            </adf-viewer-sidebar>
-        </adf-viewer>
-    `
-})
-class ViewerWithCustomSidebarComponent {
-}
+import { ViewerWithCustomMoreActionsComponent } from './mock/adf-viewer-container-more-actions.component.mock';
+import { ViewerWithCustomToolbarComponent } from './mock/adf-viewer-container-toolbar.component.mock';
+import { ViewerWithCustomSidebarComponent } from './mock/adf-viewer-container-sidebar.component.mock';
+import { ViewerWithCustomOpenWithComponent } from './mock/adf-viewer-container-open-with.component.mock';
+import { ViewerWithCustomToolbarActionsComponent } from './mock/adf-viewer-container-toolbar-actions.component.mock';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-dialog-dummy',
@@ -81,55 +46,6 @@ class ViewerWithCustomSidebarComponent {
 })
 class DummyDialogComponent {
 }
-
-@Component({
-    selector: 'adf-viewer-container-open-with',
-    template: `
-        <adf-viewer>
-            <adf-viewer-open-with>
-                <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
-                    <span>Option 1</span>
-                </button>
-                <button mat-menu-item disabled>
-                    <mat-icon>voicemail</mat-icon>
-                    <span>Option 2</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
-                    <span>Option 3</span>
-                </button>
-            </adf-viewer-open-with>
-        </adf-viewer>
-    `
-})
-class ViewerWithCustomOpenWithComponent {
-}
-
-@Component({
-    selector: 'adf-viewer-container-more-actions',
-    template: `
-        <adf-viewer>
-            <adf-viewer-more-actions>
-                <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
-                    <span>Action One</span>
-                </button>
-                <button mat-menu-item disabled>
-                    <mat-icon>voicemail</mat-icon>
-                    <span>Action Two</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
-                    <span>Action Three</span>
-                </button>
-            </adf-viewer-more-actions>
-        </adf-viewer>
-    `
-})
-class ViewerWithCustomMoreActionsComponent {
-}
-
 
 describe('ViewerComponent', () => {
 
@@ -369,6 +285,18 @@ describe('ViewerComponent', () => {
 
             const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
             expect(prevButton).toBeNull();
+        });
+
+        it('should not show navigation buttons if file is saving', async () => {
+            component.allowNavigate = true;
+            fixture.detectChanges();
+            const viewerRender = fixture.debugElement.query(By.css('adf-viewer-render'));
+
+            viewerRender.triggerEventHandler('isSaving', true);
+            expect(component.allowNavigate).toBeFalsy();
+
+            viewerRender.triggerEventHandler('isSaving', false);
+            expect(component.allowNavigate).toBeTruthy();
         });
 
         it('should now show navigation buttons even if navigation enabled', async () => {

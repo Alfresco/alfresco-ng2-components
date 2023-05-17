@@ -90,6 +90,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     close = new EventEmitter<boolean>();
 
+    /** Emitted when the img is saving. */
+    @Output()
+    isSaving = new EventEmitter<boolean>();
+
     extensionTemplates: { template: TemplateRef<any>; isVisible: boolean }[] = [];
     extension: string;
     internalFileName: string;

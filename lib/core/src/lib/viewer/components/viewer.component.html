@@ -157,6 +157,7 @@
                 [readOnly]="readOnly"
                 (submitFile)="onSubmitFile($event)"
                 [urlFile]="urlFile"
+                (isSaving)="allowNavigate = !$event"
                 [tracks]="tracks">
             </adf-viewer-render>
 

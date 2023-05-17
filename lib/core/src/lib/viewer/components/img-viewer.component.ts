@@ -61,6 +61,9 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Output()
     submit = new EventEmitter<any>();
 
+    @Output()
+    isSaving = new EventEmitter<boolean>();
+
     @ViewChild('image', { static: false})
     public imageElement: ElementRef;
 
@@ -74,7 +77,8 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     constructor(
         private appConfigService: AppConfigService,
-        private urlService: UrlService) {
+        private urlService: UrlService
+    ) {
         this.initializeScaling();
     }
 
@@ -143,6 +147,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
             this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }
+
+        if (!changes['urlFile'].firstChange && changes['fileName']) {
+            if (changes['fileName'].previousValue !== changes['fileName'].currentValue) {
+                this.cropper.replace(changes['urlFile'].currentValue);
+            }
+        }
+
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
@@ -172,13 +183,14 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     save() {
+        this.isSaving.emit(true);
         this.isEditing = false;
         this.cropper.setDragMode('move');
-
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.submit.emit(blob);
             this.cropper.replace(this.cropper.getCroppedCanvas().toDataURL());
             this.cropper.clear();
+            this.isSaving.emit(false);
         });
     }
 
