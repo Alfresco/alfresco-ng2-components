@@ -40,6 +40,7 @@ import { PropertiesViewerWrapperComponent } from './components/widgets/propertie
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
+import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
 import { RichTextEditorModule } from '../rich-text-editor';
 
 @NgModule({
@@ -72,7 +73,8 @@ import { RichTextEditorModule } from '../rich-text-editor';
         PropertiesViewerWrapperComponent,
         PropertiesViewerWidgetComponent,
         FilePropertiesTableCloudComponent,
-        FileViewerWidgetComponent
+        FileViewerWidgetComponent,
+        DisplayRichTextWidgetComponent
     ],
     exports: [
         FormCloudComponent,
@@ -86,7 +88,8 @@ import { RichTextEditorModule } from '../rich-text-editor';
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWidgetComponent,
-        FileViewerWidgetComponent
+        FileViewerWidgetComponent,
+        DisplayRichTextWidgetComponent
     ]
 })
 export class FormCloudModule {
