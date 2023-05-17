@@ -95,3 +95,12 @@ adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-prop
         }
     }
 }
+
+adf-info-drawer-tab {
+    mat-card {
+        background: var(--adf-comp-adf-task-details-background);
+        border: var(--adf-comp-adf-task-details-border);
+        border-color: var(--adf-comp-adf-task-details-border-color);
+        border-radius: var(--adf-comp-adf-task-details-border-radius);
+    }
+}

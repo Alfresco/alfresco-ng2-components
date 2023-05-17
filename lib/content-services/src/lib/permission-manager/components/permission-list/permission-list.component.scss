@@ -5,6 +5,10 @@
         display: flex !important;
         flex-direction: column;
         overflow: hidden;
+        background: var(--adf-comp-adf-permission-list-background);
+        border: var(--adf-comp-adf-permission-list-border);
+        border-color: var(--adf-comp-adf-permission-list-border-color);
+        border-radius: var(--adf-comp-adf-permission-list-border-radius);
     }
 
     &-permission-loader {
@@ -76,8 +80,8 @@
     }
 }
 
-[aria-sort='Ascending'] adf-user-role-column,
-[aria-sort='Descending'] adf-user-role-column {
+[aria-sort="Ascending"] adf-user-role-column,
+[aria-sort="Descending"] adf-user-role-column {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -89,6 +93,7 @@
     .adf-pop-over-card {
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 8px 9px -5px var(--adf-theme-foreground-divider-color), 0 15px 22px 2px var(--adf-theme-foreground-divider-color);
+        box-shadow: 0 8px 9px -5px var(--adf-theme-foreground-divider-color),
+            0 15px 22px 2px var(--adf-theme-foreground-divider-color);
     }
 }

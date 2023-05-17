@@ -22,6 +22,10 @@
 
     &-card-container {
         font-family: inherit;
+        background: var(--adf-comp-adf-task-header-background);
+        border: var(--adf-comp-adf-task-header-border);
+        border-color: var(--adf-comp-adf-task-header-border-color);
+        border-radius: var(--adf-comp-adf-task-header-border-radius);
     }
 }
 

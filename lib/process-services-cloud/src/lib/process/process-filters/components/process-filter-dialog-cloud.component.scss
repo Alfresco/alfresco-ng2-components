@@ -1,6 +1,10 @@
 .adf-process-filter-dialog .mat-card {
     padding: 0;
     box-shadow: none;
+    background: var(--adf-comp-adf-cloud-process-filter-dialog-cloud-background);
+    border: var(--adf-comp-adf-cloud-process-filter-dialog-cloud-border);
+    border-color: var(--adf-comp-adf-cloud-process-filter-dialog-cloud-border-color);
+    border-radius: var(--adf-comp-adf-cloud-process-filter-dialog-cloud-border-radius);
 }
 
 .adf-process-filter-dialog .mat-card-content {

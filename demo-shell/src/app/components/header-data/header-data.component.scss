@@ -2,6 +2,11 @@
     padding: 10px;
 
     .mat-card {
+        background: var(--adf-comp-header-data-background);
+        border: var(--adf-comp-header-data-border);
+        border-color: var(--adf-comp-header-data-border-color);
+        border-radius: var(--adf-comp-header-data-border-radius);
+
         padding: 16px 24px;
         max-width: 100% !important;
         max-height: 100% !important;

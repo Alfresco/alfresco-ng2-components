@@ -31,6 +31,10 @@
     display: flex;
     flex-flow: row wrap;
     align-items: stretch;
+    background: var(--adf-comp-adf-people-background);
+    border: var(--adf-comp-adf-people-border);
+    border-color: var(--adf-comp-adf-people-border-color);
+    border-radius: var(--adf-comp-adf-people-border-radius);
 }
 
 .adf-assignment-top-container-content {

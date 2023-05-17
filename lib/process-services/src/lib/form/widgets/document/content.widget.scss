@@ -13,3 +13,10 @@
         text-align: center;
     }
 }
+
+.adf-content-container {
+    background: var(--adf-comp-adf-content-background);
+    border: var(--adf-comp-adf-content-border);
+    border-color: var(--adf-comp-adf-content-border-color);
+    border-radius: var(--adf-comp-adf-content-border-radius);
+}

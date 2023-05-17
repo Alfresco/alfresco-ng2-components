@@ -54,3 +54,10 @@ adf-cloud-start-task {
         }
     }
 }
+
+.adf-cloud-start-mat-card {
+    background: var(--adf-comp-adf-cloud-start-task-background);
+    border: var(--adf-comp-adf-cloud-start-task-border);
+    border-color: var(--adf-comp-adf-cloud-start-task-border-color);
+    border-radius: var(--adf-comp-adf-cloud-start-task-border-radius);
+}

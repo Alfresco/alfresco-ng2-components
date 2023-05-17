@@ -5,3 +5,10 @@
 .app-settings-container mat-form-field {
     max-width: 200px;
 }
+
+mat-card {
+    background: var(--adf-comp-app-cloud-settings-background);
+    border: var(--adf-comp-app-cloud-settings-border);
+    border-color: var(--adf-comp-app-cloud-settings-border-color);
+    border-radius: var(--adf-comp-app-cloud-settings-border-radius);
+}

@@ -1,6 +1,10 @@
 .adf-task-filter-dialog .mat-card {
     padding: 0;
     box-shadow: none;
+    background: var(--adf-comp-adf-cloud-task-filter-dialog-background);
+    border: var(--adf-comp-adf-cloud-task-filter-dialog-border);
+    border-color: var(--adf-comp-adf-cloud-task-filter-dialog-border-color);
+    border-radius: var(--adf-comp-adf-cloud-task-filter-dialog-border-radius);
 }
 
 .adf-task-filter-dialog .mat-card-content {

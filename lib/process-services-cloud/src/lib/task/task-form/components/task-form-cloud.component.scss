@@ -22,3 +22,10 @@
         }
     }
 }
+
+mat-card.adf-task-form-container {
+    background: var(--adf-comp-adf-cloud-task-form-background);
+    border: var(--adf-comp-adf-cloud-task-form-border);
+    border-color: var(--adf-comp-adf-cloud-task-form-border-color);
+    border-radius: var(--adf-comp-adf-cloud-task-form-border-radius);
+}

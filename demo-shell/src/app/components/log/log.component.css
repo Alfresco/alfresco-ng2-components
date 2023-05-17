@@ -7,6 +7,10 @@
 }
 
 .log-card {
+    background: var(--adf-comp-app-log-background);
+    border: var(--adf-comp-app-log-border);
+    border-color: var(--adf-comp-app-log-border-color);
+    border-radius: var(--adf-comp-app-log-border-radius);
     min-width: 200px;
     z-index: 1;
     height: 20%;

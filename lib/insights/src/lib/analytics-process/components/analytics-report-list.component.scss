@@ -43,6 +43,10 @@
         display: flex;
         flex-direction: column;
         cursor: pointer;
+        background: var(--adf-comp-adf-analytics-report-list-background);
+        border: var(--adf-comp-adf-analytics-report-list-border);
+        border-color: var(--adf-comp-adf-analytics-report-list-border-color);
+        border-radius: var(--adf-comp-adf-analytics-report-list-border-radius);
 
         &-logo {
             position: absolute;

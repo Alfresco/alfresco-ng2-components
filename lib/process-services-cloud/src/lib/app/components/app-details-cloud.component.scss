@@ -42,6 +42,13 @@ $tile-themes: (
         padding: 8px;
         box-sizing: border-box;
 
+        mat-card {
+            background: var(--adf-comp-adf-cloud-app-details-background);
+            border: var(--adf-comp-adf-cloud-app-details-border);
+            border-color: var(--adf-comp-adf-cloud-app-details-border-color);
+            border-radius: var(--adf-comp-adf-cloud-app-details-border-radius);
+        }
+
         &-card {
             @for $i from 1 through 10 {
                 &.theme-#{$i} {

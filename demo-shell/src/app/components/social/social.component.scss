@@ -1,5 +1,9 @@
 .app-social-example-area {
     margin: 10px;
+    background: var(--adf-comp-app-social-background);
+    border: var(--adf-comp-app-social-border);
+    border-color: var(--adf-comp-app-social-border-color);
+    border-radius: var(--adf-comp-app-social-border-radius);
 }
 
 .app-social-example-title {

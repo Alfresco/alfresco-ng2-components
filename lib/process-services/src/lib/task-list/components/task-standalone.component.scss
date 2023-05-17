@@ -3,6 +3,10 @@
         width: 60%;
         box-sizing: border-box;
         margin: 16px auto;
+        background: var(--adf-comp-adf-task-standalone-background);
+        border: var(--adf-comp-adf-task-standalone-border);
+        border-color: var(--adf-comp-adf-task-standalone-border-color);
+        border-radius: var(--adf-comp-adf-task-standalone-border-radius);
 
         .mat-card-actions {
             border-top: solid 1px var(--adf-theme-background-status-bar-color);

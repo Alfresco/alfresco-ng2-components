@@ -25,6 +25,10 @@
             box-shadow: none;
             max-height: 300px;
             overflow-y: auto;
+            background: var(--adf-comp-adf-card-view-arrayitem-background);
+            border: var(--adf-comp-adf-card-view-arrayitem-border);
+            border-color: var(--adf-comp-adf-card-view-arrayitem-border-color);
+            border-radius: var(--adf-comp-adf-card-view-arrayitem-border-radius);
         }
     }
 

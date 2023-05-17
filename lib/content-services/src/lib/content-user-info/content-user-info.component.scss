@@ -81,6 +81,10 @@
 
     &-userinfo-card.mat-card {
         padding: 0;
+        background: var(--adf-comp-adf-content-user-info-background);
+        border: var(--adf-comp-adf-content-user-info-border);
+        border-color: var(--adf-comp-adf-content-user-info-border-color);
+        border-radius: var(--adf-comp-adf-content-user-info-border-radius);
     }
 
     &-userinfo-supporting-text {

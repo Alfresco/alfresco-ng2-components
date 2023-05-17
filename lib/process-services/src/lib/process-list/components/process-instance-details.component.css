@@ -19,3 +19,10 @@
 .adf-in-medias-res-button {
     margin: 16px 0;
 }
+
+.adf-process-instance-details-mat-card{
+    background: var(--adf-comp-adf-process-instance-details-background);
+    border: var(--adf-comp-adf-process-instance-details-border);
+    border-color: var(--adf-comp-adf-process-instance-details-border-color);
+    border-radius: var(--adf-comp-adf-process-instance-details-border-radius);
+}

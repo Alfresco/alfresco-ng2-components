@@ -45,6 +45,10 @@ div.app-search-results-container {
     width: 200px;
     flex: 0 20%;
     margin: 15px;
+    background: var(--adf-comp-app-search-extended-component-background);
+    border: var(--adf-comp-app-search-extended-component-border);
+    border-color: var(--adf-comp-app-search-extended-component-border-color);
+    border-radius: var(--adf-comp-app-search-extended-component-border-radius);
 }
 
 .app-example-card-search-container {

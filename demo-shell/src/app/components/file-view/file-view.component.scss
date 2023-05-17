@@ -10,3 +10,12 @@
 app-preview-extension {
     width: 600px;
 }
+
+adf-info-drawer-tab {
+    mat-card {
+        background: var(--adf-comp-app-file-view-background);
+        border: var(--adf-comp-app-file-view-border);
+        border-color: var(--adf-comp-app-file-view-border-color);
+        border-radius: var(--adf-comp-app-file-view-border-radius);
+    }
+}

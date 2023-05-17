@@ -7,11 +7,16 @@
 .app-grid {
     .app-grid-item {
         margin: 4px;
-        box-shadow:
-            0 2px 2px 0 rgba(0, 0, 0, 0.14),
-            0 3px 1px -2px rgba(0, 0, 0, 0.2),
-            0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+            0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
         padding: 10px;
+
+        mat-card {
+            background: var(--adf-comp-app-process-service-background);
+            border: var(--adf-comp-app-process-service-border);
+            border-color: var(--adf-comp-app-process-service-border-color);
+            border-radius: var(--adf-comp-app-process-service-border-radius);
+        }
     }
 
     .app-list-buttons {

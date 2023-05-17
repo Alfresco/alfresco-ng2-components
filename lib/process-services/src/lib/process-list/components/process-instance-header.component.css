@@ -4,4 +4,8 @@
 
 .adf-card-container {
     font-family: inherit;
+    background: var(--adf-comp-adf-process-instance-header-background);
+    border: var(--adf-comp-adf-process-instance-header-border);
+    border-color: var(--adf-comp-adf-process-instance-header-border-color);
+    border-radius: var(--adf-comp-adf-process-instance-header-border-radius);
 }

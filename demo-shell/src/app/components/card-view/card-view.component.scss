@@ -3,6 +3,10 @@
 }
 
 .app-card-view {
+    background: var(--adf-comp-card-view-background);
+    border: var(--adf-comp-card-view-border);
+    border-color: var(--adf-comp-card-view-border-color);
+    border-radius: var(--adf-comp-card-view-border-radius);
     width: 30%;
     display: inline-block;
 }

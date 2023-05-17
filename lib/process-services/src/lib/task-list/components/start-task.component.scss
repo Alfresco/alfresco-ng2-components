@@ -15,6 +15,10 @@
 
 .adf-new-task-layout-card {
     margin: 10px auto;
+    background: var(--adf-comp-adf-start-task-background);
+    border: var(--adf-comp-adf-start-task-border);
+    border-color: var(--adf-comp-adf-start-task-border-color);
+    border-radius: var(--adf-comp-adf-start-task-border-radius);
 }
 
 .adf-new-task-footer {

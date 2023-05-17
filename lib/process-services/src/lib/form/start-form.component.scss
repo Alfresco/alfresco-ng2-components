@@ -6,6 +6,10 @@
         & .mat-card {
             padding: 16px 24px;
             overflow: hidden;
+            background: var(--adf-comp-adf-start-form-background);
+            border: var(--adf-comp-adf-start-form-border);
+            border-color: var(--adf-comp-adf-start-form-border-color);
+            border-radius: var(--adf-comp-adf-start-form-border-radius);
         }
 
         & .mat-card-header-text {

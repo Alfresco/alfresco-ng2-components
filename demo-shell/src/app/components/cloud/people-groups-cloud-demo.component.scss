@@ -27,5 +27,12 @@
                 }
             }
         }
+
+        mat-card {
+            background: var(--adf-comp-app-people-groups-cloud-background);
+            border: var(--adf-comp-app-people-groups-cloud-border);
+            border-color: var(--adf-comp-app-people-groups-cloud-border-color);
+            border-radius: var(--adf-comp-app-people-groups-cloud-border-radius);
+        }
     }
 }

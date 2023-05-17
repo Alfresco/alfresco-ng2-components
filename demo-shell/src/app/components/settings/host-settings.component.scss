@@ -19,4 +19,11 @@
     .adf-full-width {
         width: 100%;
     }
+
+    .adf-setting-card {
+        background: var(--adf-comp-adf-host-settings-background);
+        border: var(--adf-comp-adf-host-settings-border);
+        border-color: var(--adf-comp-adf-host-settings-border-color);
+        border-radius: var(--adf-comp-adf-host-settings-border-radius);
+    }
 }

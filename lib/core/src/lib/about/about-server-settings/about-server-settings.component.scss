@@ -1,3 +1,10 @@
 .adf-github-link-container {
     padding: 10px;
+
+    mat-card {
+        background: var(--adf-comp-adf-about-server-settings-background);
+        border: var(--adf-comp-adf-about-server-settings-border);
+        border-color: var(--adf-comp-adf-about-server-settings-border-color);
+        border-radius: var(--adf-comp-adf-about-server-settings-border-radius);
+    }
 }

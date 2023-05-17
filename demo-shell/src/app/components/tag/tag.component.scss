@@ -1,5 +1,9 @@
 .app-tag-example-area {
     margin: 10px;
+    background: var(--adf-comp-app-tag-background);
+    border: var(--adf-comp-app-tag-border);
+    border-color: var(--adf-comp-app-tag-border-color);
+    border-radius: var(--adf-comp-app-tag-border-radius);
 }
 
 .app-tag-example-title {

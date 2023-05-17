@@ -78,6 +78,10 @@ $tile-themes: (
                 box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 200px;
             padding: 0 !important;
+            background: var(--adf-comp-adf-apps-background);
+            border: var(--adf-comp-adf-apps-border);
+            border-color: var(--adf-comp-adf-apps-border-color);
+            border-radius: var(--adf-comp-adf-apps-border-radius);
 
             &:hover {
                 box-shadow:

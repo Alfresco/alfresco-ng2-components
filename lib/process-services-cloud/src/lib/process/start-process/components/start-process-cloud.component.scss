@@ -1,5 +1,12 @@
 .adf {
     &-start-process {
+        mat-card {
+            background: var(--adf-comp-adf-cloud-start-process-background);
+            border: var(--adf-comp-adf-cloud-start-process-border);
+            border-color: var(--adf-comp-adf-cloud-start-process-border-color);
+            border-radius: var(--adf-comp-adf-cloud-start-process-border-radius);
+        }
+
         .mat-form-field-label {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }

@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@import "../../styles/mixins";
 
 .adf-login {
     @include flex-column;
@@ -64,11 +64,16 @@
     .adf-login-card-wide {
         border-radius: 8px;
         background-color: var(--adf-theme-background-dialog-color);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24),
+            0 0 2px 0 rgba(0, 0, 0, 0.12);
         width: 450px;
         min-width: 320px;
         padding: 21px 64px 34px;
         box-sizing: border-box;
+        background: var(--adf-comp-adf-login-background);
+        border: var(--adf-comp-adf-login-border);
+        border-color: var(--adf-comp-adf-login-border-color);
+        border-radius: var(--adf-comp-adf-login-border-radius);
     }
 
     @media (max-width: 482px) {
@@ -206,8 +211,11 @@
 
     .adf-login__field input:-webkit-autofill {
         /* stylelint-disable */
-        -webkit-box-shadow: 0 0 0 1000px var(--adf-theme-background-dialog-color) inset;
-        -webkit-text-fill-color: var(--adf-theme-foreground-text-color) !important;
+        -webkit-box-shadow: 0 0 0 1000px
+            var(--adf-theme-background-dialog-color) inset;
+        -webkit-text-fill-color: var(
+            --adf-theme-foreground-text-color
+        ) !important;
         /* stylelint-enable */
     }
 

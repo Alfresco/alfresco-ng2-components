@@ -1,5 +1,9 @@
 .adf-content-metadata-card {
     .mat-card {
+        background: var(--adf-comp-adf-content-metadata-card-background);
+        border: var(--adf-comp-adf-content-metadata-card-border);
+        border-color: var(--adf-comp-adf-content-metadata-card-border-color);
+        border-radius: var(--adf-comp-adf-content-metadata-card-border-radius);
         padding: 0;
 
         .mat-card-content {

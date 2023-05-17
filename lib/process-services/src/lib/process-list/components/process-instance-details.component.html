@@ -1,5 +1,5 @@
 <div *ngIf="!processInstanceDetails">{{ 'ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE'|translate }}</div>
-<mat-card *ngIf="processInstanceDetails">
+<mat-card class="adf-process-instance-details-mat-card" *ngIf="processInstanceDetails">
     <mat-card-header>
         <mat-card-title>{{ getProcessNameOrDescription('medium') }}</mat-card-title>
     </mat-card-header>
