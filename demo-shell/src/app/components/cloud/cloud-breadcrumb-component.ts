@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-cloud-breadcrumbs',
     templateUrl: './cloud-breadcrumb-component.html',
-    styleUrls: ['./cloud-breadcrumb-component.scss']
+    styleUrls: ['./cloud-breadcrumb-component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CloudBreadcrumbsComponent implements OnInit {
     appName: string;

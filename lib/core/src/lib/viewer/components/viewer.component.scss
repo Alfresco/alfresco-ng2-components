@@ -36,6 +36,7 @@
 
     &__file-title {
         text-align: center;
+        flex: 1 1 auto;
     }
 
     &__display-name {
@@ -92,6 +93,8 @@
             @extend .adf-full-screen;
 
             flex: 1;
+            flex-direction: column;
+            display: flex;
 
             & > div {
                 height: 0; // Firefox
@@ -112,20 +115,33 @@
         @extend .adf-full-screen;
     }
 
-    &__sidebar {
-        width: 350px;
-        display: block;
-        padding: 0;
-        background-color: var(--theme-background-color);
-        box-shadow: 0 2px 4px 0 var(--adf-theme-foreground-text-color-027);
-        overflow: auto;
+    &-sidebars {
+        display: flex;
+        flex: 1 1 auto;
 
-        &__right {
-            border-left: 1px solid var(--adf-theme-foreground-text-color-007);
+        .adf-viewer__sidebar {
+            width: 350px;
+            display: block;
+            padding: 0;
+            background-color: var(--theme-background-color);
+            box-shadow: 0 2px 4px 0 var(--adf-theme-foreground-text-color-027);
+            overflow: auto;
+
+            &__right {
+                border-left: 1px solid var(--adf-theme-foreground-text-color-007);
+                order: 4;
+            }
+
+            &__left {
+                border-right: 1px solid var(--adf-theme-foreground-text-color-007);
+                order: 1;
+            }
         }
 
-        &__left {
-            border-right: 1px solid var(--adf-theme-foreground-text-color-007);
+        adf-viewer-render {
+            order: 1;
+            flex: 1 1 auto;
+            display: flex;
         }
     }
 }

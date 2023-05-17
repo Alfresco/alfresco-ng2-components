@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    TaskListService,
     TaskAttachmentListComponent,
-    TaskUploadService,
-    TaskDetailsModel
+    TaskDetailsModel,
+    TaskListService,
+    TaskUploadService
 } from '@alfresco/adf-process-services';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { UploadService, DiscoveryApiService } from '@alfresco/adf-content-services';
+import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -36,6 +36,7 @@ export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppCon
     selector: 'app-task-attachments',
     templateUrl: './task-attachments.component.html',
     styleUrls: ['./task-attachments.component.css'],
+    encapsulation: ViewEncapsulation.None,
     providers: [
         {
             provide: UploadService,

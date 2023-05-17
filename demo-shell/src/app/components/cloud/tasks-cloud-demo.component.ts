@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService, AppConfigService, DataCellEvent } from '@alfresco/adf-core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    TaskFilterCloudModel,
+    TaskListCloudComponent,
+    TaskListCloudSortingModel
+} from '@alfresco/adf-process-services-cloud';
+import { AppConfigService, DataCellEvent, UserPreferencesService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
@@ -28,7 +32,10 @@ const ACTION_DELETE = 'delete';
 const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
 @Component({
-    templateUrl: './tasks-cloud-demo.component.html'
+    selector: 'app-tasks-cloud-demo',
+    templateUrl: './tasks-cloud-demo.component.html',
+    styleUrls: ['./tasks-cloud-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')

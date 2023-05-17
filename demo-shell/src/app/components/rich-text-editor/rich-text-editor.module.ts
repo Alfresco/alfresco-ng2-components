@@ -22,7 +22,6 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { RichTextEditorModule } from '@alfresco/adf-process-services-cloud';
 import { CoreModule } from '@alfresco/adf-core';
 import { RouterModule, Routes } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
     {
@@ -38,7 +37,6 @@ const routes: Routes = [
         CoreModule,
         RouterModule.forChild(routes),
         ContentModule.forChild(),
-        FlexLayoutModule,
         RichTextEditorModule
     ]
 })

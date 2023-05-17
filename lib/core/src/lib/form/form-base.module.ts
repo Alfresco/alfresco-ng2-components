@@ -35,7 +35,6 @@ import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimep
 import { FormRendererComponent } from './components/form-renderer.component';
 import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.module';
 import { A11yModule } from '@angular/cdk/a11y';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ViewerModule } from '../viewer/viewer.module';
 import { InplaceFormInputComponent } from './components/inplace-form-input/inplace-form-input.component';
 
@@ -43,7 +42,6 @@ import { InplaceFormInputComponent } from './components/inplace-form-input/inpla
     imports: [
         CommonModule,
         A11yModule,
-        FlexLayoutModule,
         DataTableModule,
         HttpClientModule,
         MaterialModule,

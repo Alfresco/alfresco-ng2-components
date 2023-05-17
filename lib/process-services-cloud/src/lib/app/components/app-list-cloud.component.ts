@@ -16,7 +16,16 @@
  */
 
 import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
@@ -29,7 +38,8 @@ export const RUNNING_STATUS: string = 'RUNNING';
 @Component({
     selector: 'adf-cloud-app-list',
     templateUrl: './app-list-cloud.component.html',
-    styleUrls: ['./app-list-cloud.component.scss']
+    styleUrls: ['./app-list-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AppListCloudComponent implements OnInit, AfterContentInit {
     @ContentChild(CustomEmptyContentTemplateDirective)

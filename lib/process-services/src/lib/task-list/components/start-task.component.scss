@@ -9,18 +9,55 @@
     }
 }
 
-.adf-new-task-form {
-    width: 100%;
-}
-
 .adf-new-task-layout-card {
     margin: 10px auto;
+    flex: 1 1 100%;
+    max-width: 70%;
+
+    .adf-new-task-form {
+        flex-direction: column;
+        display: flex;
+
+        .adf-task-name, .adf-task-description, .input-row {
+            display: flex;
+            margin-bottom: 10px;
+
+            mat-form-field {
+                flex: 1;
+            }
+        }
+
+        .input-row {
+            @media screen and (max-width: 960px){
+                flex-direction: column;
+            }
+
+            @media screen and (min-width: 960px) {
+                mat-form-field {
+                    margin-right: 20px;
+                }
+            }
+        }
+
+        .adf-task-form {
+            flex: 1 1 100%;
+            box-sizing: border-box;
+            max-width: 48%;
+
+            @media screen and (max-width: 600px){
+                max-width: 100%;
+            }
+        }
+    }
 }
 
 .adf-new-task-footer {
     padding: 4px;
     font-size: var(--theme-adf-task-footer-font-size);
     border-top: 1px solid #eee;
+    display: flex;
+    place-content: flex-end;
+    align-items: flex-end;
 }
 
 .adf-mat-select {

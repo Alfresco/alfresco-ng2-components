@@ -32,7 +32,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CardViewContentProxyDirective } from './directives/card-view-content-proxy.directive';
@@ -52,7 +51,6 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
         TranslateModule,
         MatDatepickerModule,
         MatNativeDateModule,

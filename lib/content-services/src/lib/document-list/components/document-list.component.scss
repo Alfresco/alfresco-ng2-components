@@ -170,6 +170,13 @@
             width: 250px;
         }
     }
+
+    @media screen and (max-width: 960px) {
+        &-drag-drop,
+        &-any-files-here-to-add {
+            display: none;
+        }
+    }
 }
 
 .adf-datatable-gallery-thumbnails {

@@ -1,8 +1,14 @@
-.app-app-crumb {
-    opacity: 0.5;
-}
+app-cloud-breadcrumbs {
+    .app-app-crumb {
+        opacity: 0.5;
+    }
 
-.app-filter-crumb {
-    opacity: 0.8;
-    margin-left: 5px;
+    .app-filter-crumb {
+        opacity: 0.8;
+        margin-left: 5px;
+    }
+
+    adf-toolbar {
+        display: flex;
+    }
 }

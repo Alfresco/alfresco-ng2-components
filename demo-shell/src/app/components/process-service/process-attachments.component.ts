@@ -15,11 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ProcessInstance, ProcessService ,
-    ProcessAttachmentListComponent, ProcessUploadService } from '@alfresco/adf-process-services';
+import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    ProcessAttachmentListComponent,
+    ProcessInstance,
+    ProcessService,
+    ProcessUploadService
+} from '@alfresco/adf-process-services';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { UploadService, DiscoveryApiService } from '@alfresco/adf-content-services';
+import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -38,7 +42,8 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
             useFactory: (processUploadServiceFactory),
             deps: [AlfrescoApiService, AppConfigService, DiscoveryApiService]
         }
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy {

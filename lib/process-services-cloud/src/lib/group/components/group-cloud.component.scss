@@ -2,6 +2,16 @@
     &-cloud-group-list {
         margin: 5px 0;
         padding: 10px 0;
+
+        .adf-cloud-group-row {
+            place-content: center flex-start;
+            align-items: center;
+            display: flex;
+
+            .adf-group-short-name {
+                margin-right: 20px;
+            }
+        }
     }
 
     &-cloud-group {

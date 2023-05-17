@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel, TaskFilterCloudService } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    TaskFilterCloudModel,
+    TaskFilterCloudService,
+    TaskListCloudComponent,
+    TaskListCloudSortingModel
+} from '@alfresco/adf-process-services-cloud';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
@@ -28,8 +33,10 @@ const ACTION_SAVE_AS = 'saveAs';
 const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
 @Component({
+    selector: 'app-community-tasks-cloud-demo',
     templateUrl: './community-task-cloud.component.html',
-    styles: [`.adf-cloud-layout-tab-body .mat-tab-body-wrapper { height: 100%; }`]
+    styleUrls: ['./community-task-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('taskCloud')

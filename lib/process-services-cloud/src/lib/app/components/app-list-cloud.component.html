@@ -1,8 +1,12 @@
 <div class="menu-container" *ngIf="apps$ | async as appsList; else loadingOrError">
     <ng-container *ngIf="appsList.length > 0; else noApps">
-        <div *ngIf="isGrid(); else appList" fxLayout="row wrap">
-            <adf-cloud-app-details fxFlex="33.33333%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%"
-                *ngFor="let app of appsList" [applicationInstance]="app" (selectedApp)="onSelectApp($event)">
+        <div
+            *ngIf="isGrid(); else appList"
+            class="adf-app-apps-grid">
+            <adf-cloud-app-details
+                *ngFor="let app of appsList"
+                [applicationInstance]="app"
+                (selectedApp)="onSelectApp($event)">
             </adf-cloud-app-details>
         </div>
 

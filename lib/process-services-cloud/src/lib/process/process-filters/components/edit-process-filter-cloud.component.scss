@@ -30,4 +30,35 @@
         margin-left: calc((100% - 100px) / 2);
         margin-right: calc((100% - 100px) / 2);
     }
+
+    &-edit-process-filter-description {
+        place-content: center space-between;
+    }
+
+    &-edit-process-filter-form {
+        flex-flow: row wrap;
+        display: flex;
+        max-width: 100%;
+        place-content: stretch flex-start;
+        align-items: stretch;
+
+        :not(:last-child) {
+            margin-right: 10px;
+        }
+
+        mat-form-field,
+        adf-cloud-people {
+            flex: 1 1 23%;
+            max-width: 23%;
+        }
+
+        @media screen and (max-width: 600px) {
+            flex-flow: column;
+
+            :not(:last-child) {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+    }
 }

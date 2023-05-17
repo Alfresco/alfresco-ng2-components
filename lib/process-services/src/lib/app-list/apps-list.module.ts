@@ -16,7 +16,6 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
@@ -28,7 +27,6 @@ import { SelectAppsDialogComponent } from './select-apps-dialog.component';
     imports: [
         CommonModule,
         MaterialModule,
-        FlexLayoutModule,
         CoreModule
     ],
     declarations: [

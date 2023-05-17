@@ -33,9 +33,10 @@
         </adf-sites-dropdown>
     </div>
 
-    <div id="document-list-container" class="app-document-list-container" fxLayout="row" fxLayoutAlign="start stretch"
-         fxLayoutGap="16px">
-        <adf-upload-drag-area fxFlex="1 1 auto"
+    <div
+        id="document-list-container"
+        class="app-document-list-container">
+        <adf-upload-drag-area
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
                               [rootFolderId]="currentFolderId"
@@ -51,21 +52,21 @@
                 <span class="app-error-message--text">{{errorMessage}}</span>
             </div>
             <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="app-files-toolbar">
-                <adf-toolbar-title  fxFlex="0 1 auto">
-                    <adf-breadcrumb fxShow fxHide.lt-sm="true"
+                <adf-toolbar-title>
+                    <adf-breadcrumb
                                     class="app-files-breadcrumb"
                                     root="APP.PERSONAL-FILES"
                                     [target]="documentList">
                     </adf-breadcrumb>
-                    <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
+                    <adf-dropdown-breadcrumb
                                              class="app-files-breadcrumb"
                                              [target]="documentList">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
-                <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
+                <adf-toolbar-divider></adf-toolbar-divider>
 
-                <div fxFlex="0 0 auto" class="app-document-action-buttons" fxShow fxHide.lt-sm="true">
+                <div class="app-document-action-buttons">
                     <button
                         mat-icon-button
                         data-automation-id="document-list-grid-view"
@@ -150,7 +151,7 @@
                     </button>
                 </div>
 
-                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker"
+                <button mat-icon-button [matMenuTriggerFor]="themePicker"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
                     <mat-icon>format_color_fill</mat-icon>
                 </button>
@@ -171,9 +172,9 @@
                     </mat-icon>
                 </button>
 
-                <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
+                <adf-toolbar-divider class="app-toolbar-divider-before-more-menu"></adf-toolbar-divider>
 
-                <button fxFlex="0 0 auto" mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm="true">
+                <button class="app-toolbar-more-menu-button" mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
@@ -212,7 +213,7 @@
                 </mat-menu>
             </adf-toolbar>
 
-            <div class="app-document-list-container" [ngClass]="{'adf-sticky-document-list': stickyHeader }">
+            <div class="app-document-list-container-in-upload-drag-area app-document-list-container" [ngClass]="{'adf-sticky-document-list': stickyHeader }">
                 <adf-document-list
                 #documentList
                 class="app-file-list-container"
@@ -464,7 +465,7 @@
             </adf-infinite-pagination>
         </adf-upload-drag-area>
 
-        <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar" fxFlex="0 0 auto">
+        <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar">
             <div info-drawer-content>
 
                 <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">

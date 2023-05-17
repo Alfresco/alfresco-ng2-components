@@ -1,20 +1,16 @@
 <h4 data-automation-id="task-details-header">Simple page to show the taskId: {{ taskId }}</h4>
 
-<div fxLayout="column" fxFill fxLayoutGap="2px">
-    <div fxLayout="row" fxFill>
-        <div fxLayout="column" fxFlex="80%">
-            <adf-cloud-task-form
-                [taskId]="taskId"
-                (cancelClick)="goBack()"
-                (taskClaimed)="onClaimTask()"
-                (taskCompleted)="onTaskCompleted()"
-                (taskUnclaimed)="onUnclaimTask()"
-                (formSaved)="onFormSaved()"
-                (error)="onError($event)">
-            </adf-cloud-task-form>
-        </div>
-        <adf-cloud-task-header fxFlex
-            [taskId]="taskId">
-        </adf-cloud-task-header>
+<div class="app-community-task-details-cloud-column">
+    <div class="app-community-task-details-cloud-row">
+        <adf-cloud-task-form
+            [taskId]="taskId"
+            (cancelClick)="goBack()"
+            (taskClaimed)="onClaimTask()"
+            (taskCompleted)="onTaskCompleted()"
+            (taskUnclaimed)="onUnclaimTask()"
+            (formSaved)="onFormSaved()"
+            (error)="onError($event)">
+        </adf-cloud-task-form>
+        <adf-cloud-task-header [taskId]="taskId"></adf-cloud-task-header>
     </div>
 </div>

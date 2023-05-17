@@ -26,6 +26,37 @@
     .app-datatable-list {
         min-height: 400px;
     }
+
+    adf-upload-drag-area {
+        margin-right: 16px;
+
+        adf-toolbar-title {
+            flex: 0 1 auto;
+        }
+
+        .app-document-action-buttons {
+            flex: 0 0 auto;
+        }
+
+        @media screen and (max-width: 600px) {
+            adf-breadcrumb, .app-document-action-buttons {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 600px) {
+            adf-dropdown-breadcrumb, .app-toolbar-divider-before-more-menu, .app-toolbar-more-menu-button {
+                display: none;
+            }
+        }
+    }
+
+    &:not(.app-document-list-container-in-upload-drag-area) {
+        display: flex;
+        place-content: stretch flex-start;
+        align-items: stretch;
+        max-height: 100%;
+    }
 }
 
 .adf-datatable-card .app-lock-button {
@@ -45,10 +76,10 @@
 }
 
 .app-manage-versions-sidebar {
-    width: 360px !important;
+    flex: 0 0 auto;
 
-    & .app-info-drawer-layout-header {
-        display: none !important;
+    &.adf-info-drawer-layout {
+        width: 360px;
     }
 }
 

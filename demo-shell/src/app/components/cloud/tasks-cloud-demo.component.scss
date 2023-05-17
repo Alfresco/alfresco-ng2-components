@@ -1,0 +1,22 @@
+app-tasks-cloud-demo {
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+
+    .adf-cloud-task-list-container {
+        box-sizing: border-box;
+        place-content: stretch space-between;
+        align-items: stretch;
+        margin-top: 2px;
+    }
+
+    &, .adf-cloud-task-list-container {
+        flex-direction: column;
+        display: flex;
+    }
+
+    .adf-cloud-task-list-container, .app-cloud-layout-overflow {
+        flex: 1;
+    }
+}

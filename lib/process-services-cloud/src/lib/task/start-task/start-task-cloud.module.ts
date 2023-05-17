@@ -17,7 +17,6 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
@@ -29,7 +28,6 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,

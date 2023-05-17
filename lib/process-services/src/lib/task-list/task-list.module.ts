@@ -17,7 +17,6 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +44,6 @@ import { TaskCommentsModule } from '../task-comments/task-comments.module';
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule,
         MaterialModule,
         FormsModule,
         FormModule,

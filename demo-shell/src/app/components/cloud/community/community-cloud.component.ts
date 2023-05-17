@@ -21,14 +21,7 @@ import { CloudLayoutService } from '../services/cloud-layout.service';
 
 @Component({
     templateUrl: './community-cloud.component.html',
-    styles: [`.app-cloud-layout-overflow {
-        overflow: auto;
-      }
-
-      .app-cloud-layout-tab-body .mat-tab-body-wrapper {
-        height: 100% !important;
-      }
-      `],
+    styleUrls: ['./community-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CommunityCloudComponent implements OnInit {

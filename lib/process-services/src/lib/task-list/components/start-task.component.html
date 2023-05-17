@@ -1,11 +1,11 @@
-<mat-card fxFlex="70%" class="adf-new-task-layout-card">
-    <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="adf-new-task-heading">
+<mat-card class="adf-new-task-layout-card">
+    <mat-card-header class="adf-new-task-heading">
         <mat-card-title>{{'ADF_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="taskForm" fxLayout="column" fxLayoutGap="10px">
+        <form [formGroup]="taskForm" class="adf-new-task-form">
             <div class="adf-task-name">
-                <mat-form-field fxFlex>
+                <mat-form-field>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
                     <input
                         matInput
@@ -20,7 +20,7 @@
                 </mat-form-field>
             </div>
             <div class="adf-task-description">
-                <mat-form-field fxFlex>
+                <mat-form-field>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                     <textarea
                         matInput
@@ -33,8 +33,8 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
-                <mat-form-field fxFlex>
+            <div class="input-row">
+                <mat-form-field>
                     <input
                         matInput
                         (keyup)="onDateChanged($any($event).srcElement.value)"
@@ -56,29 +56,25 @@
                         </div>
                     </div>
                 </mat-form-field>
-                <div fxFlex>
-                    <people-widget
-                        (peopleSelected)="getAssigneeId($event)"
-                        [field]="field"
-                        class="adf-people-widget-content"></people-widget>
-                </div>
+                <people-widget
+                    (peopleSelected)="getAssigneeId($event)"
+                    [field]="field"
+                    class="adf-people-widget-content"></people-widget>
             </div>
-            <div class="adf-task-form">
-                <mat-form-field fxFlex="48%" fxFlex.xs="100%">
-                    <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
-                    <mat-select
-                        id="form_id"
-                        class="form-control"
-                        formControlName="formKey">
-                    <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                    <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="adf-task-form">
+                <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+                <mat-select
+                    id="form_id"
+                    class="form-control"
+                    formControlName="formKey">
+                <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </form>
     </mat-card-content>
     <mat-card-actions>
-        <div class="adf-new-task-footer" fxLayout="row" fxLayoutAlign="end end">
+        <div class="adf-new-task-footer">
             <button
                 mat-button
                 class="adf-uppercase"

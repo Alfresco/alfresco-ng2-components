@@ -43,6 +43,9 @@
     padding: 4px;
     font-size: var(--theme-adf-task-footer-font-size);
     border-top: 1px solid #eee;
+    display: flex;
+    place-content: flex-end;
+    align-items: flex-end;
 }
 
 adf-cloud-start-task {
@@ -50,6 +53,43 @@ adf-cloud-start-task {
         &-cloud-start-task-footer {
             .mat-button {
                 text-transform: uppercase !important;
+            }
+        }
+
+        &-task-name {
+            display: flex;
+
+            mat-form-field {
+                flex: 1;
+            }
+        }
+
+        &-cloud-start-task-form-row {
+            display: flex;
+
+            mat-form-field,
+            adf-cloud-people,
+            adf-cloud-group,
+            adf-cloud-form-definition-selector {
+                flex: 1;
+            }
+
+            mat-form-field,
+            adf-cloud-group {
+                margin-right: 20px;
+
+                &:last-of-type:not(:first-of-type) {
+                    margin-right: 0;
+                }
+            }
+
+            @media screen and (max-width: 960px) {
+                flex-direction: column;
+
+                mat-form-field,
+                adf-cloud-group {
+                    margin-right: 0;
+                }
             }
         }
     }

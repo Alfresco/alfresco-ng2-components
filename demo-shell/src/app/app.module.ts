@@ -18,7 +18,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -144,7 +143,6 @@ registerLocaleData(localeSv);
         FormsModule,
         HttpClientModule,
         MaterialModule,
-        FlexLayoutModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),

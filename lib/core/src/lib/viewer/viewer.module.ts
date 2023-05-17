@@ -18,7 +18,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ExtensionsModule } from '@alfresco/adf-extensions';
@@ -56,7 +55,6 @@ import { DownloadPromptDialogComponent } from './components/download-prompt-dial
         ReactiveFormsModule,
         ToolbarModule,
         PipeModule,
-        FlexLayoutModule,
         DirectiveModule,
         A11yModule,
         ExtensionsModule

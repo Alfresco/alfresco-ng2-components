@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    ProcessListCloudComponent,
     ProcessFilterCloudModel,
-    ProcessListCloudSortingModel,
+    ProcessFilterCloudService,
     ProcessFiltersCloudComponent,
-    ProcessFilterCloudService
+    ProcessListCloudComponent,
+    ProcessListCloudSortingModel
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { CloudLayoutService } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,7 +35,10 @@ const PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 const ACTION_SAVE_AS = 'saveAs';
 
 @Component({
-    templateUrl: './community-processes-cloud.component.html'
+    selector: 'app-community-processes-cloud-demo',
+    templateUrl: './community-processes-cloud.component.html',
+    styleUrls: ['./community-processes-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     @ViewChild('processCloud')

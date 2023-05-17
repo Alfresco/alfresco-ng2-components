@@ -4,7 +4,6 @@
      [class.adf-viewer-inline-container]="!overlayMode">
 
     <div class="adf-viewer-content"
-         fxLayout="column"
          [cdkTrapFocus]="overlayMode"
          cdkTrapFocusAutoCapture>
         <ng-content select="adf-viewer-toolbar"></ng-content>
@@ -35,8 +34,7 @@
                     </button>
                 </adf-toolbar-title>
 
-                <div fxFlex="1 1 auto"
-                     class="adf-viewer__file-title">
+                <div class="adf-viewer__file-title">
                     <button *ngIf="allowNavigate && canNavigateBefore"
                             data-automation-id="adf-toolbar-pref-file"
                             mat-icon-button
@@ -125,13 +123,10 @@
             </adf-toolbar>
         </ng-container>
 
-        <div fxLayout="row"
-             fxFlex="1 1 auto">
+        <div class="adf-viewer-sidebars">
 
             <ng-container *ngIf="allowRightSidebar && showRightSidebar">
-                <div class="adf-viewer__sidebar"
-                     [ngClass]="'adf-viewer__sidebar__right'"
-                     fxFlexOrder="4"
+                <div class="adf-viewer__sidebar adf-viewer__sidebar__right"
                      id="adf-right-sidebar">
                     <ng-container *ngIf="sidebarRightTemplate">
                         <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext">
@@ -143,9 +138,7 @@
             </ng-container>
 
             <ng-container *ngIf="allowLeftSidebar && showLeftSidebar">
-                <div class="adf-viewer__sidebar"
-                     [ngClass]="'adf-viewer__sidebar__left'"
-                     fxFlexOrder="1"
+                <div class="adf-viewer__sidebar adf-viewer__sidebar__left"
                      id="adf-left-sidebar">
                     <ng-container *ngIf="sidebarLeftTemplate">
                         <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext">
@@ -157,8 +150,6 @@
             </ng-container>
 
             <adf-viewer-render
-                fxFlexOrder="1"
-                fxFlex="1 1 auto"
                 (close)="onClose()"
                 [mimeType]="mimeType"
                 [fileName]="fileName"

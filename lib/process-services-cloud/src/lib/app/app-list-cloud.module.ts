@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
@@ -28,7 +27,6 @@ import { TemplateModule, CoreModule } from '@alfresco/adf-core';
         CommonModule,
         TemplateModule,
         MaterialModule,
-        FlexLayoutModule,
         CoreModule
     ],
     declarations: [

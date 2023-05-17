@@ -36,8 +36,6 @@ import { DropdownWidgetAnalyticsComponent } from './components/widgets/dropdown/
 import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
 import { NumberWidgetAnalyticsComponent } from './components/widgets/number/number.widget';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-
 @NgModule({
     imports: [
         FormsModule,
@@ -46,7 +44,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ChartsModule,
         DiagramsModule,
         MaterialModule,
-        FlexLayoutModule,
         CoreModule
     ],
     declarations: [

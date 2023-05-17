@@ -23,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CoreModule } from '@alfresco/adf-core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -32,8 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MatDialogModule,
         MatInputModule,
         MatSelectModule,
-        MatSlideToggleModule,
-        FlexLayoutModule
+        MatSlideToggleModule
     ],
     declarations: [ CloudSettingsComponent ],
     exports: [ CommonModule, CloudSettingsComponent]

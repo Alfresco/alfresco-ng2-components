@@ -28,11 +28,10 @@
         role="link"
         [attr.aria-label]="title | translate"
         [routerLink]="redirectUrl"
-        fxFlex="1 1 auto"
-        fxShow
-        fxHide.lt-sm="true"
         class="adf-app-title"
-        >{{ title }}</h1>
+        >
+        {{ title }}
+    </h1>
     <ng-content></ng-content>
 
     <button

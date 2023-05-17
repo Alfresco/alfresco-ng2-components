@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+    selector: 'app-process-details-cloud-demo',
     templateUrl: './process-details-cloud-demo.component.html',
-    styleUrls: ['./process-details-cloud-demo.component.scss']
+    styleUrls: ['./process-details-cloud-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ProcessDetailsCloudDemoComponent {
 

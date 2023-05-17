@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProcessFilterAction, ProcessFilterCloudModel, PROCESS_FILTER_ACTION_DELETE, PROCESS_FILTER_ACTION_SAVE, PROCESS_FILTER_ACTION_SAVE_AS } from '@alfresco/adf-process-services-cloud';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    PROCESS_FILTER_ACTION_DELETE,
+    PROCESS_FILTER_ACTION_SAVE,
+    PROCESS_FILTER_ACTION_SAVE_AS,
+    ProcessFilterAction,
+    ProcessFilterCloudModel
+} from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService, DataCellEvent } from '@alfresco/adf-core';
+import { DataCellEvent, UserPreferencesService } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,7 +32,10 @@ import { Pagination } from '@alfresco/js-api';
 import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
 
 @Component({
-    templateUrl: './processes-cloud-demo.component.html'
+    selector: 'app-processes-cloud-demo',
+    templateUrl: './processes-cloud-demo.component.html',
+    styleUrls: ['./processes-cloud-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     appName: string = '';
