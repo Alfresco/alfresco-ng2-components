@@ -1,39 +1,39 @@
-:host {
+adf-cloud-app-list {
     width: 100%;
-}
 
-.adf-app-list-item {
-    cursor: pointer;
-}
-
-.adf-app-list-spinner,
-.adf-app-list-empty,
-.adf-app-list-error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 85vh;
-
-    .mat-spinner {
-        margin: 0 auto;
+    .adf-app-list-item {
+        cursor: pointer;
     }
-}
 
-.adf-app-apps-grid {
-    flex-flow: row wrap;
-    display: flex;
+    .adf-app-list-spinner,
+    .adf-app-list-empty,
+    .adf-app-list-error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
 
-    adf-cloud-app-details {
-        flex: 1 1 100%;
-        max-width: 33.3333%;
-
-        @media screen and (max-width: 960px) {
-            max-width: 50%;
+        .mat-spinner {
+            margin: 0 auto;
         }
+    }
 
-        @media screen and (max-width: 600px) {
-            max-width: 100%;
+    .adf-app-apps-grid {
+        flex-flow: row wrap;
+        display: flex;
+
+        adf-cloud-app-details {
+            flex: 1 1 100%;
+            max-width: 33.3333%;
+
+            @media screen and (max-width: 960px) {
+                max-width: 50%;
+            }
+
+            @media screen and (max-width: 600px) {
+                max-width: 100%;
+            }
         }
     }
 }

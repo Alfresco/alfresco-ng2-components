@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
+    selector: 'app-task-details-cloud-demo',
     templateUrl: './task-details-cloud-demo.component.html',
-    styleUrls: ['./task-details-cloud-demo.component.scss']
+    styleUrls: ['./task-details-cloud-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsCloudDemoComponent {
 

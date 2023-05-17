@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
+    selector: 'app-breadcrumb-demo',
     templateUrl: './breadcrumb-demo.component.html',
-    styleUrls: [`./breadcrumb-demo.component.scss`]
+    styleUrls: [`./breadcrumb-demo.component.scss`],
+    encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbDemoComponent {
 

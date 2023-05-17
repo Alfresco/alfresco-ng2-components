@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, AbstractControl, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'adf-cloud-task-filter-dialog',
   templateUrl: './task-filter-dialog-cloud.component.html',
-  styleUrls: ['./task-filter-dialog-cloud.component.scss']
+  styleUrls: ['./task-filter-dialog-cloud.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
 

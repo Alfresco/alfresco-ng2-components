@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-tag',
     templateUrl: './tag.component.html',
-    styleUrls: ['./tag.component.scss']
+    styleUrls: ['./tag.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TagComponent {
 

@@ -1,19 +1,21 @@
-.app-breadcrumb-container-restricted {
-    width: 800px;
-    max-width: 800px;
-    border: 1px solid lightgray;
-}
+app-breadcrumb-demo {
+    .app-breadcrumb-container-restricted {
+        width: 800px;
+        max-width: 800px;
+        border: 1px solid lightgray;
+    }
 
-.app-content {
-    margin: 10px 0;
-}
+    .app-content {
+        margin: 10px 0;
+    }
 
-.app-full-content-toolbar .app-toolbar-title .app-breadcrumb {
-    width: 0;
-}
+    .app-full-content-toolbar .app-toolbar-title .app-breadcrumb {
+        width: 0;
+    }
 
-@media screen and (min-width: 600px) {
-    .app-files-breadcrumb {
-        display: none;
+    @media screen and (min-width: 600px) {
+        .app-files-breadcrumb {
+            display: none;
+        }
     }
 }

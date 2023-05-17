@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 
 @Component({
+    selector: 'app-community-task-details-cloud',
     templateUrl: './community-task-details-cloud.component.html',
-    styleUrls: ['./community-task-details-cloud.component.scss']
+    styleUrls: ['./community-task-details-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CommunityTaskDetailsCloudDemoComponent {
 

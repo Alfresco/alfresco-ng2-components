@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CloudLayoutService, ActionMenuModel } from '../services/cloud-layout.service';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActionMenuModel, CloudLayoutService } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-cloud-settings',
     templateUrl: './cloud-settings.component.html',
-    styleUrls: ['./cloud-settings.component.scss']
+    styleUrls: ['./cloud-settings.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CloudSettingsComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();

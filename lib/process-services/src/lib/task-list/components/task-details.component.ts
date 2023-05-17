@@ -18,22 +18,26 @@
 import {
     CardViewUpdateService,
     ClickNotification,
-    LogService,
-    UpdateNotification,
     CommentsComponent,
-    ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent
+    ContentLinkModel,
+    FormFieldValidator,
+    FormModel,
+    FormOutcomeEvent,
+    LogService,
+    UpdateNotification
 } from '@alfresco/adf-core';
 import {
     Component,
     EventEmitter,
     Input,
     OnChanges,
+    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
     TemplateRef,
     ViewChild,
-    OnDestroy
+    ViewEncapsulation
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
@@ -48,7 +52,8 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss']
+    styleUrls: ['./task-details.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 

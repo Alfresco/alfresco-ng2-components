@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DocumentListComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-custom-sources',
-    templateUrl: './custom-sources.component.html'
+    templateUrl: './custom-sources.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class CustomSourcesComponent {
 

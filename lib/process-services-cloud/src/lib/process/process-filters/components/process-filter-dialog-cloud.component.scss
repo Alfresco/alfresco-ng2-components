@@ -1,20 +1,22 @@
-.adf-process-filter-dialog .mat-card {
-    padding: 0;
-    box-shadow: none;
+adf-cloud-process-filter-dialog-cloud {
+    .adf-process-filter-dialog .mat-card {
+        padding: 0;
+        box-shadow: none;
 
-    mat-card-actions {
-        display: flex;
-        max-height: 100%;
-        place-content: flex-end;
-        align-items: flex-end;
+        mat-card-actions {
+            display: flex;
+            max-height: 100%;
+            place-content: flex-end;
+            align-items: flex-end;
+        }
     }
-}
 
-.adf-process-filter-dialog .mat-card-content {
-    padding: 0;
-    box-shadow: none;
+    .adf-process-filter-dialog .mat-card-content {
+        padding: 0;
+        box-shadow: none;
 
-    .adf-process-filter-name {
-        flex: 1;
+        .adf-process-filter-name {
+            flex: 1;
+        }
     }
 }

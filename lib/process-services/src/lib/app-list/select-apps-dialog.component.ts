@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AppsProcessService } from './services/apps-process.service';
 
 @Component({
     selector: 'adf-select-apps-dialog',
     templateUrl: './select-apps-dialog.component.html',
-    styleUrls: ['./select-apps-dialog.component.scss']
+    styleUrls: ['./select-apps-dialog.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SelectAppsDialogComponent {
 

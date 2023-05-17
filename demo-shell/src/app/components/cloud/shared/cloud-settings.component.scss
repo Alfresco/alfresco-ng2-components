@@ -1,25 +1,25 @@
-:host {
+app-cloud-settings {
     padding: 20px 30px;
     flex-direction: column;
     display: flex;
     flex: 1;
-}
-
-mat-form-field {
-    max-width: 200px;
-}
-
-.app-cloud-settings-form {
-    display: flex;
-    place-content: center space-around;
-    align-items: center;
 
     mat-form-field {
-        flex: 1 1 100%;
-        max-width: 23%;
+        max-width: 200px;
     }
 
-    mat-form-field, mat-checkbox {
-        margin-right: 20px;
+    .app-cloud-settings-form {
+        display: flex;
+        place-content: center space-around;
+        align-items: center;
+
+        mat-form-field {
+            flex: 1 1 100%;
+            max-width: 23%;
+        }
+
+        mat-form-field, mat-checkbox {
+            margin-right: 20px;
+        }
     }
 }

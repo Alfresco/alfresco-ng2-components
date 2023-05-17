@@ -1,15 +1,17 @@
-.app {
-    &-process-cloud-container {
-        display: flex;
-    }
+app-community-process-details-cloud {
+    .app {
+        &-process-cloud-container {
+            display: flex;
+        }
 
-    &-cloud-layout-overflow {
-        width: 67%;
-        flex: 1;
-    }
+        &-cloud-layout-overflow {
+            width: 67%;
+            flex: 1;
+        }
 
-    &-process-cloud-header {
-        margin-left: 10px;
-        width: 25%;
+        &-process-cloud-header {
+            margin-left: 10px;
+            width: 25%;
+        }
     }
 }
