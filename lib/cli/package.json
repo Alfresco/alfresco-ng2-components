@@ -22,9 +22,8 @@
   "dependencies": {
     "@alfresco/js-api": ">=6.0.0",
     "commander": "^6.2.1",
-    "ejs": "^2.6.1",
+    "ejs": "^3.1.9",
     "license-checker": "^25.0.1",
-    "npm-registry-fetch": "^4.0.5",
     "request": "^2.88.2",
     "rxjs": "^6.6.6",
     "shelljs": "^0.8.3",
@@ -35,9 +34,9 @@
   ],
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/ejs": "^3.1.1",
-    "@types/node": "^18.13.0",
-    "@types/shelljs": "^0.8.11",
+    "@types/ejs": "^3.1.2",
+    "@types/node": "^20.1.7",
+    "@types/shelljs": "^0.8.12",
     "typescript": "^4.9.5"
   }
 }
