@@ -64,5 +64,9 @@ adf-cloud-start-process {
         max-height: 100%;
         place-content: flex-end;
         align-items: flex-end;
+
+        .adf-btn-start {
+            margin-left: 8px;
+        }
     }
 }
