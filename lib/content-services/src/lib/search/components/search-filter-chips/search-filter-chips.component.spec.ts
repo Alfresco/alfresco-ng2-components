@@ -249,7 +249,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(chips.length).toBe(2);
 
             const titleElements = fixture.debugElement.queryAll(By.css('.adf-search-filter-placeholder'));
-            expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name', 'Type']);
+            expect(titleElements.map(title => title.nativeElement.innerText.trim())).toEqual(['Name:', 'Type:']);
         });
 
         it('should be update the search query when name changed', async () => {

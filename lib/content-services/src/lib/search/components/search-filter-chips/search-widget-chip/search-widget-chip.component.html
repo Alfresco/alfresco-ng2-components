@@ -10,12 +10,12 @@
           [attr.title]="widget.getDisplayValue() | async"
           #menuTrigger="matMenuTrigger">
     <span class="adf-search-filter-placeholder">
-        <span class="adf-search-filter-ellipsis">{{ category.name | translate }}</span>
-        <ng-container *ngIf="widget.getDisplayValue() | async">:</ng-container>
+        <span class="adf-search-filter-ellipsis">{{ category.name | translate }}:</span>
     </span>
-    <span class="adf-search-filter-ellipsis" *ngIf="widget.getDisplayValue() | async as displayValue">
+    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="widget.getDisplayValue() | async as displayValue; else showAny">
         &nbsp;{{ displayValue | translate }}
     </span>
+    <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
     <mat-icon>keyboard_arrow_down</mat-icon>
 </mat-chip>
 
