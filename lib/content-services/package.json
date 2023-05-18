@@ -21,10 +21,10 @@
     "@angular/platform-browser": ">=14.1.3",
     "@angular/platform-browser-dynamic": ">=14.1.3",
     "@angular/router": ">=14.1.3",
-    "@alfresco/js-api": ">=6.0.0",
+    "@alfresco/js-api": "^6.1.0",
     "@ngx-translate/core": ">=14.0.0",
     "moment": ">=2.22.2",
-    "@alfresco/adf-core": ">=6.0.0"
+    "@alfresco/adf-core": "^6.1.0"
   },
   "keywords": [
     "content-services",
