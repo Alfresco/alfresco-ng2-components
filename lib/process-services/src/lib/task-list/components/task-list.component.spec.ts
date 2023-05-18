@@ -619,9 +619,9 @@ describe('TaskListComponent', () => {
 
         const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
         const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.click();
-        selectTask1.click();
-        selectTask2.click();
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -632,7 +632,7 @@ describe('TaskListComponent', () => {
         expect(selectRow2).toBeDefined();
         expect(component.selectedInstances.length).toBe(2);
 
-        selectTask2.click();
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -657,9 +657,9 @@ describe('TaskListComponent', () => {
 
         const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
         const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.click();
-        selectTask1.click();
-        selectTask2.click();
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -670,7 +670,7 @@ describe('TaskListComponent', () => {
         expect(selectRow2).toBeDefined();
         expect(component.selectedInstances.length).toBe(2);
 
-        selectTask2.click();
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -700,25 +700,13 @@ describe('TaskListComponent', () => {
 
         const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
         const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.click();
-        selectTask1.click();
-        selectTask2.click();
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.selectedInstances.length).toBe(2);
-
-        // const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
-        // selectTask2Row.click();
-
-        // fixture.detectChanges();
-        // await fixture.whenStable();
-
-        // expect(component.selectedInstances.length).toBe(1);
-        // const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        // const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        // expect(selectRow1).toBeNull();
-        // expect(selectRow2).toBeDefined();
     });
 
     it('should change selected row after clicking on different row', async () => {

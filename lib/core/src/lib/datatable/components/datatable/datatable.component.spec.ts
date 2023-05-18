@@ -32,6 +32,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
 import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { take } from 'rxjs/operators';
+import { By } from '@angular/platform-browser';
 
 @Component({selector: 'adf-custom-column-template-component', template: `
     <ng-template #tmplRef></ng-template>
@@ -1373,6 +1375,45 @@ describe('DataTable', () => {
         expect(dataTable.selectedRowId).toEqual('2345');
         expect(row.isContextMenuSource).toBeTrue();
     });
+
+    it('should select the row, regardless of where the user clicks in the row.', async () => {
+        dataTable.selectionMode = 'single';
+        const dataRows = [{ id: 0 }, { id: 1 }];
+        dataTable.data = new ObjectDataTableAdapter(
+            dataRows,
+            [new ObjectDataColumn({ key: 'id' })]
+        );
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+        fixture.detectChanges();
+
+        const rows = dataTable.data.getRows();
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.resetSelection();
+        const rowClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
+        const rowElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-0"]`)).nativeElement as HTMLElement;
+        rowElement.dispatchEvent(new MouseEvent('click'));
+        fixture.detectChanges();
+        await rowClickPromise;
+
+        const rows2 = dataTable.data.getRows();
+        expect(rows2[0].isSelected).toBeTruthy();
+        expect(rows2[1].isSelected).toBeFalsy();
+
+        dataTable.resetSelection();
+        const cellClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
+        const cellElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-1"] > div`)).nativeElement as HTMLElement;
+        cellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        fixture.detectChanges();
+        await cellClickPromise;
+
+        const rows3 = dataTable.data.getRows();
+        expect(rows3[0].isSelected).toBeFalsy();
+        expect(rows3[1].isSelected).toBeTruthy();
+    });
 });
 
 describe('Accesibility', () => {
@@ -1488,7 +1529,7 @@ describe('Accesibility', () => {
         const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
         const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-        rowCellElement.dispatchEvent(new MouseEvent('click'));
+        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         fixture.debugElement.nativeElement.dispatchEvent(event);
 
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
@@ -1518,7 +1559,7 @@ describe('Accesibility', () => {
         const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[1];
         const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-        rowCellElement.dispatchEvent(new MouseEvent('click'));
+        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         fixture.debugElement.nativeElement.dispatchEvent(event);
 
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
@@ -1550,7 +1591,7 @@ describe('Accesibility', () => {
         const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
         const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-        rowCellElement.dispatchEvent(new MouseEvent('click'));
+        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         fixture.debugElement.nativeElement.dispatchEvent(event);
 
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-header');
