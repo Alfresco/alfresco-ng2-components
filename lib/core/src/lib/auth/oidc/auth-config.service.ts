@@ -18,8 +18,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 
 export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {
@@ -45,7 +44,7 @@ export class AuthConfigService {
     }
 
     loadAppConfig(): AuthConfig {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth2 = this.appConfigService.oauth2;
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
 
@@ -73,7 +72,7 @@ export class AuthConfigService {
             ? `${this.getLocationOrigin()}/#/${viewUrl}`
             : `${this.getLocationOrigin()}/${viewUrl}`;
 
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth2 = this.appConfigService.oauth2;
 
         // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
         // `cannot match any routes`, and displaying the wildcard ** error page

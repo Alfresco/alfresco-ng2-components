@@ -24,7 +24,6 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
 import { BaseAuthenticationService } from '../../services/base-authentication.service';
 
 @Injectable({
@@ -162,8 +161,7 @@ export class AuthenticationService extends BaseAuthenticationService {
     }
 
     isImplicitFlow(): boolean {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
+        return !!this.appConfig.oauth2?.implicitFlow;
     }
 
     isAuthCodeFlow(): boolean {

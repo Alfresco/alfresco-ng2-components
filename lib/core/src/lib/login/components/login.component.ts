@@ -22,7 +22,6 @@ import {
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthenticationService } from '../../auth/services/authentication.service';
-import { OauthConfigModel } from '../../auth/models/oauth-config.model';
 import { TranslationService } from '../../translation/translation.service';
 import { UserPreferencesService } from '../../common/services/user-preferences.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -154,7 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         } else {
 
             if (this.authService.isOauth()) {
-                const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+                const oauth = this.appConfig.oauth2;
                 if (oauth && oauth.silentLogin) {
                     this.redirectToImplicitLogin();
                 } else if (oauth && oauth.implicitFlow) {

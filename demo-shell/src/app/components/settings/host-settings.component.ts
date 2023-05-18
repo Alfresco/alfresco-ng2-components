@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, OauthConfigModel, AuthenticationService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
@@ -137,7 +137,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createOAuthFormGroup(): UntypedFormGroup {
-        const oauth = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, {} as any);
+        const oauth = this.appConfig.oauth2;
 
         return this.formBuilder.group({
             host: [oauth.host, [Validators.required, Validators.pattern(HOST_REGEX)]],

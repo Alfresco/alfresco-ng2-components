@@ -20,7 +20,6 @@ import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { BaseAuthenticationService } from '../../services/base-authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
@@ -73,14 +72,12 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
         return this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
     }
 
-    isImplicitFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
+    isImplicitFlow(): boolean {
+        return !!this.appConfig.oauth2?.implicitFlow;
     }
 
-    isAuthCodeFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.codeFlow;
+    isAuthCodeFlow(): boolean {
+        return !!this.appConfig.oauth2?.codeFlow;
     }
 
     login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
@@ -121,7 +118,7 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
     reset(): void {
         const config = this.authConfig.loadAppConfig();
         this.auth.updateIDPConfiguration(config);
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth2 = this.appConfig.oauth2;
 
         if (config.oidc && oauth2.silentLogin) {
             this.auth.login();
