@@ -85,6 +85,42 @@ describe('DataTable', () => {
     let dataTable: DataTableComponent;
     let element: any;
 
+    const testNotShownHeader = (data: ObjectDataTableAdapter) => {
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, data, false)
+        });
+
+        dataTable.showHeader = ShowHeaderMode.Data;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+        dataTable.showHeader = ShowHeaderMode.Always;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+        dataTable.showHeader = ShowHeaderMode.Never;
+        fixture.detectChanges();
+        expect(element.querySelector('.adf-datatable-header')).toBeNull();
+    };
+
+    const testIfRowIsSelected = (data: any[], done?: DoneFn) => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(data, [new ObjectDataColumn({ key: 'name' })]);
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        if (done) {
+            fixture.detectChanges();
+
+            dataTable.rowClick.subscribe(() => {
+                expect(rows[0].isSelected).toBeFalsy();
+                expect(rows[1].isSelected).toBeTruthy();
+                done();
+            });
+        }
+        return rows;
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -257,41 +293,13 @@ describe('DataTable', () => {
 
             dataTable.loading = false;
             dataTable.noPermission = true;
-            dataTable.ngOnChanges({
-                data: new SimpleChange(null, emptyData, false)
-            });
-
-            dataTable.showHeader = ShowHeaderMode.Data;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
-
-            dataTable.showHeader = ShowHeaderMode.Always;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
-
-            dataTable.showHeader = ShowHeaderMode.Never;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+            testNotShownHeader(emptyData);
         });
 
         it('should never show the header if loading is true', () => {
 
             dataTable.loading = true;
-            dataTable.ngOnChanges({
-                data: new SimpleChange(null, emptyData, false)
-            });
-
-            dataTable.showHeader = ShowHeaderMode.Data;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
-
-            dataTable.showHeader = ShowHeaderMode.Always;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
-
-            dataTable.showHeader = ShowHeaderMode.Never;
-            fixture.detectChanges();
-            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+            testNotShownHeader(emptyData);
         });
     });
 
@@ -478,65 +486,28 @@ describe('DataTable', () => {
     });
 
     it('should select only one row with [single] selection mode', (done) => {
-        dataTable.selectionMode = 'single';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1', isSelected: true },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        const rows = dataTable.data.getRows();
-
-        dataTable.ngOnChanges({});
-        fixture.detectChanges();
-
-        dataTable.rowClick.subscribe(() => {
-            expect(rows[0].isSelected).toBeFalsy();
-            expect(rows[1].isSelected).toBeTruthy();
-            done();
-        });
-
+        const rows = testIfRowIsSelected([
+            { name: '1', isSelected: true },
+            { name: '2' }
+        ], done);
         dataTable.onRowClick(rows[1], new MouseEvent('click'));
     });
 
     it('should select only one row with [single] selection mode and key modifier', (done) => {
-        dataTable.selectionMode = 'single';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1', isSelected: true },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        const rows = dataTable.data.getRows();
-
-        dataTable.ngOnChanges({});
-        fixture.detectChanges();
-
-        dataTable.rowClick.subscribe(() => {
-            expect(rows[0].isSelected).toBeFalsy();
-            expect(rows[1].isSelected).toBeTruthy();
-            done();
-        });
-
+        const rows = testIfRowIsSelected([
+            { name: '1', isSelected: true },
+            { name: '2' }
+        ], done);
         dataTable.onRowClick(rows[1], new MouseEvent('click', {
             metaKey: true
         }));
     });
 
     it('should select only one row with [single] selection mode pressing enter key', () => {
-        dataTable.selectionMode = 'single';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        const rows = dataTable.data.getRows();
-
-        dataTable.ngOnChanges({});
+        const rows = testIfRowIsSelected([
+            { name: '1' },
+            { name: '2' }
+        ]);
         dataTable.onEnterKeyPressed(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
