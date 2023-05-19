@@ -63,6 +63,43 @@ describe('TaskListComponent', () => {
         });
     };
 
+    const testRowSelection = async (selectionMode?: string) => {
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
+        const state = new SimpleChange(null, 'open', true);
+        component.multiselect = true;
+        if (selectionMode) {
+            component.selectionMode = selectionMode;
+        }
+        component.ngOnChanges({ sort: state });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeDefined();
+        expect(component.selectedInstances.length).toBe(2);
+        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.selectedInstances.length).toBe(1);
+        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeNull();
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -565,83 +602,16 @@ describe('TaskListComponent', () => {
     });
 
     it('should be able to unselect a selected tasks using the checkbox', async () => {
-        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
-        const state = new SimpleChange(null, 'open', true);
-        component.multiselect = true;
-
-        component.ngOnChanges({ sort: state });
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeDefined();
-        expect(component.selectedInstances.length).toBe(2);
-
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(component.selectedInstances.length).toBe(1);
-        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeNull();
+        await testRowSelection();
     });
 
     it('should not be able to select different row when selection mode is set to NONE and multiselection is enabled', async () => {
-        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
-        const state = new SimpleChange(null, 'open', true);
-        component.multiselect = true;
-        component.selectionMode = 'none';
-
-        component.ngOnChanges({ sort: state });
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeDefined();
-        expect(component.selectedInstances.length).toBe(2);
-
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(component.selectedInstances.length).toBe(1);
-        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeNull();
-
+        await testRowSelection('none');
         const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
         selectTask2Row.click();
 
-        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
         expect(selectRow1).toBeDefined();
         expect(selectRow2).toBeNull();
     });
