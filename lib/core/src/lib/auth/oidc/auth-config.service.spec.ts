@@ -20,36 +20,67 @@ import { TestBed } from '@angular/core/testing';
 import { EMPTY } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
-import { mockAuthConfigCodeFlow, mockAuthConfigImplicitFlow } from '../mock/auth-config.service.mock';
-
 import { AuthConfigService } from './auth-config.service';
+import { AuthConfig } from 'angular-oauth2-oidc';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 describe('AuthConfigService', () => {
     let service: AuthConfigService;
-    let appConfigServiceMock;
+    let appConfigService: AppConfigService;
+
+    const mockAuthConfigImplicitFlow: OauthConfigModel = {
+        host: 'http://localhost:3000/auth/realms/alfresco',
+        clientId: 'alfresco',
+        scope: 'openid profile email',
+        secret: '',
+        implicitFlow: true,
+        silentLogin: true,
+        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
+        redirectUri: '/',
+        redirectUriLogout: '#/logout',
+        publicUrls: [
+            '**/preview/s/*',
+            '**/settings',
+            '**/logout'
+        ]
+    };
+
+    const mockAuthConfigCodeFlow: OauthConfigModel = {
+        host: 'http://localhost:3000/auth/realms/alfresco',
+        clientId: 'alfresco',
+        scope: 'openid profile email',
+        secret: '',
+        implicitFlow: false,
+        codeFlow: true,
+        silentLogin: true,
+        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
+        redirectUri: '/',
+        redirectUriLogout: '#/logout',
+        publicUrls: [
+            '**/preview/s/*',
+            '**/settings',
+            '**/logout'
+        ]
+    };
 
     beforeEach(() => {
-        appConfigServiceMock = jasmine.createSpyObj(['get'], { onLoad: EMPTY });
-
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
-                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } },
-                { provide: AppConfigService, useValue: appConfigServiceMock }
+                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }
             ]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
-    });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
+        appConfigService = TestBed.inject(AppConfigService);
+        appConfigService.onLoad = EMPTY;
     });
 
     describe('load auth config using hash', () => {
         it('should load configuration if implicit flow is true ', async () => {
-            appConfigServiceMock.get.and.returnValue(mockAuthConfigImplicitFlow);
-            const expectedConfig = {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigImplicitFlow);
+            const expectedConfig: AuthConfig = {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
@@ -64,7 +95,7 @@ describe('AuthConfigService', () => {
         });
 
         it('should load configuration if code flow is true ', async () => {
-            appConfigServiceMock.get.and.returnValue(mockAuthConfigCodeFlow);
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigCodeFlow);
             const expectedConfig = {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
