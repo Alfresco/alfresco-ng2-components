@@ -41,6 +41,8 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
 
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 
+    isLoading = false;
+
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
@@ -56,6 +58,8 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
     }
 
     reload() {
+        this.isLoading = true;
+
         this.requestNode = this.createRequestNode();
 
         if (this.requestNode.appName || this.requestNode.appName === '') {
@@ -70,6 +74,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
                     this.rows = tasks.list.entries;
                     this.success.emit(tasks);
                     this.pagination.next(tasks.list.pagination);
+                    this.isLoading = false;
                 }, (error) => {
                     this.error.emit(error);
                     this.isLoading = false;

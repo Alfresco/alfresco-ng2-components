@@ -149,6 +149,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
+    isLoading = false;
 
     constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,

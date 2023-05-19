@@ -119,7 +119,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
@@ -128,6 +127,8 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
     private onDestroy$ = new Subject<boolean>();
+
+    abstract isLoading: boolean;
 
     constructor(appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
@@ -169,7 +170,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     private retrieveTasksPreferences(): void {
-        this.isLoading = true;
         this.cloudPreferenceService.getPreferences(this.appName).pipe(
             take(1),
             map((preferences => {
@@ -199,10 +199,8 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
             this.createDatatableSchema();
             this.createColumns();
-            this.isLoading = false;
         }, (error) => {
             this.error.emit(error);
-            this.isLoading = false;
         });
     }
 
