@@ -1517,7 +1517,7 @@
           "type": "string"
         },
         "silentLogin": {
-          "type": "boolean"
+          "type": ["boolean", "string"]
         },
         "authPath": {
           "type": "string"
