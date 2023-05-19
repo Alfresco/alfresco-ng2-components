@@ -501,7 +501,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onRowClick(row: DataRow, mouseEvent: MouseEvent) {
-        if (!mouseEvent.composedPath().some((element: HTMLElement) => element.id?.startsWith('action_menu_right_'))) {
+        if (!mouseEvent.composedPath().some(
+            (element: HTMLElement) => element.id?.startsWith('action_menu_right_') || element.classList.contains('adf-checkbox-sr-only'))
+        ) {
             if (mouseEvent) {
                 mouseEvent.preventDefault();
             }
