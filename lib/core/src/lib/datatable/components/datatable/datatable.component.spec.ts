@@ -587,7 +587,7 @@ describe('DataTable', () => {
             expect(rows[1].isSelected).toBeFalsy();
             done();
         });
-        dataTable.onRowClick(rows[0], null);
+        dataTable.onRowClick(rows[0], new MouseEvent('click'));
     });
 
     it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
@@ -608,7 +608,8 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {}
+            preventDefault: () => {},
+            composedPath: () => []
         } as any);
     });
 
@@ -753,7 +754,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
         fixture.detectChanges();
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
     });
 
     it('should emit double click if there are two single click in 250ms', fakeAsync(() => {
@@ -768,9 +769,9 @@ describe('DataTable', () => {
             doubleClickCount += 1;
         });
 
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
         setTimeout(() => {
-            dataTable.onRowClick(row, null);
+            dataTable.onRowClick(row, new MouseEvent('click'));
         }
             , 240);
 
@@ -791,11 +792,11 @@ describe('DataTable', () => {
             doubleClickCount += 1;
         });
 
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
         setTimeout(() => {
 
-            dataTable.onRowClick(row, null);
-            dataTable.onRowClick(row, null);
+            dataTable.onRowClick(row, new MouseEvent('click'));
+            dataTable.onRowClick(row, new MouseEvent('click'));
         }
             , 240);
 
@@ -816,10 +817,10 @@ describe('DataTable', () => {
             clickCount += 1;
         });
 
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
 
         setTimeout(() => {
-            dataTable.onRowClick(row, null);
+            dataTable.onRowClick(row, new MouseEvent('click'));
         }
             , 260);
 
@@ -839,7 +840,7 @@ describe('DataTable', () => {
 
         dataTable.ngOnChanges({});
         fixture.detectChanges();
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
     });
 
     it('should emit row-dblclick dom event', (done) => {
@@ -852,12 +853,13 @@ describe('DataTable', () => {
         });
         dataTable.ngOnChanges({});
         fixture.detectChanges();
-        dataTable.onRowClick(row, null);
-        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, new MouseEvent('click'));
+        dataTable.onRowClick(row, new MouseEvent('click'));
     });
 
     it('should prevent default behaviour on row click event', () => {
-        const e = jasmine.createSpyObj('event', ['preventDefault']);
+        const e = new MouseEvent('click');
+        spyOn(e, 'preventDefault');
         dataTable.ngAfterContentInit();
         dataTable.onRowClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
