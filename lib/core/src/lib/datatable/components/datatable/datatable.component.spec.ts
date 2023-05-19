@@ -121,6 +121,31 @@ describe('DataTable', () => {
         return rows;
     };
 
+    const testDoubleClickCount = (tickTime = 490, rowClickNumber = 1) => {
+        let doubleClickCount = 0;
+
+        const row = {} as DataRow;
+        dataTable.data = new ObjectDataTableAdapter([], []);
+        dataTable.ngOnChanges({});
+        fixture.detectChanges();
+
+        dataTable.rowDblClick.subscribe(() => {
+            doubleClickCount += 1;
+        });
+
+        dataTable.onRowClick(row, new MouseEvent('click'));
+        setTimeout(() => {
+            for (let i = 0; i < rowClickNumber; i++) {
+                dataTable.onRowClick(row, new MouseEvent('click'));
+            }
+        }, 240);
+
+        tick(tickTime);
+
+
+        expect(doubleClickCount).toBe(1);
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -729,51 +754,11 @@ describe('DataTable', () => {
     });
 
     it('should emit double click if there are two single click in 250ms', fakeAsync(() => {
-        let doubleClickCount = 0;
-
-        const row = {} as DataRow;
-        dataTable.data = new ObjectDataTableAdapter([], []);
-        dataTable.ngOnChanges({});
-        fixture.detectChanges();
-
-        dataTable.rowDblClick.subscribe(() => {
-            doubleClickCount += 1;
-        });
-
-        dataTable.onRowClick(row, new MouseEvent('click'));
-        setTimeout(() => {
-            dataTable.onRowClick(row, new MouseEvent('click'));
-        }
-            , 240);
-
-        tick(490);
-
-
-        expect(doubleClickCount).toBe(1);
+        testDoubleClickCount();
    }));
 
     it('should emit double click if there are more than two single click in 250ms', fakeAsync(() => {
-        let doubleClickCount = 0;
-        const row = {} as DataRow;
-        dataTable.data = new ObjectDataTableAdapter([], []);
-        dataTable.ngOnChanges({});
-        fixture.detectChanges();
-
-        dataTable.rowDblClick.subscribe(() => {
-            doubleClickCount += 1;
-        });
-
-        dataTable.onRowClick(row, new MouseEvent('click'));
-        setTimeout(() => {
-
-            dataTable.onRowClick(row, new MouseEvent('click'));
-            dataTable.onRowClick(row, new MouseEvent('click'));
-        }
-            , 240);
-
-        tick(740);
-
-        expect(doubleClickCount).toBe(1);
+        testDoubleClickCount(740, 2);
    }));
 
     it('should emit single click if there are two single click in more than 250ms',  fakeAsync(() => {
@@ -1478,128 +1463,99 @@ describe('Accesibility', () => {
         });
     });
 
-    it('should focus next row on ArrowDown event', () => {
-        const event = new KeyboardEvent('keyup', {
-            code: 'ArrowDown',
-            key: 'ArrowDown',
-            keyCode: 40
-        } as KeyboardEventInit );
+    describe('Focus row', () => {
+        let event: KeyboardEvent;
+        let dataRows: {name: string}[];
 
-        const dataRows =
-        [ { name: 'test1'}, { name: 'test2' } ];
-
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+        beforeEach(() => {
+            event = new KeyboardEvent('keyup', {
+                code: 'ArrowUp',
+                key: 'ArrowUp',
+                keyCode: 38
+            } as KeyboardEventInit);
+            dataRows = [{name: 'test1'}, {name: 'test2'}];
+            dataTable.data = new ObjectDataTableAdapter([],
+                [new ObjectDataColumn({key: 'name'})]
+            );
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
+        it('should focus next row on ArrowDown event', () => {
+            event = new KeyboardEvent('keyup', {
+                code: 'ArrowDown',
+                key: 'ArrowDown',
+                keyCode: 40
+            } as KeyboardEventInit);
 
-        const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
-        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
 
-        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        fixture.debugElement.nativeElement.dispatchEvent(event);
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
 
-        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
-    });
+            const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
+            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-    it('should focus previous row on ArrowUp event', () => {
-        const event = new KeyboardEvent('keyup', {
-            code: 'ArrowUp',
-            key: 'ArrowUp',
-            keyCode: 38
-        } as KeyboardEventInit );
+            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            fixture.debugElement.nativeElement.dispatchEvent(event);
 
-        const dataRows =
-        [ { name: 'test1'}, { name: 'test2' } ];
-
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
+        it('should focus previous row on ArrowUp event', () => {
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
 
-        const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[1];
-        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
 
-        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        fixture.debugElement.nativeElement.dispatchEvent(event);
+            const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[1];
+            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
-    });
+            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            fixture.debugElement.nativeElement.dispatchEvent(event);
 
-    it('should select header row when `showHeader` is `Always`', () => {
-        const event = new KeyboardEvent('keyup', {
-            code: 'ArrowUp',
-            key: 'ArrowUp',
-            keyCode: 38
-        } as KeyboardEventInit );
-
-        const dataRows =
-        [ { name: 'test1'}, { name: 'test2' } ];
-
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.showHeader = ShowHeaderMode.Always;
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
+        it('should select header row when `showHeader` is `Always`', () => {
+            dataTable.showHeader = ShowHeaderMode.Always;
 
-        const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
-        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
 
-        rowCellElement.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        fixture.debugElement.nativeElement.dispatchEvent(event);
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
 
-        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-header');
-    });
+            const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
+            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-    it('should not select header row when `showHeader` is `Never`', () => {
-        const event = new KeyboardEvent('keyup', {
-            code: 'ArrowUp',
-            key: 'ArrowUp',
-            keyCode: 38
-        } as KeyboardEventInit );
+            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            fixture.debugElement.nativeElement.dispatchEvent(event);
 
-        const dataRows =
-        [ { name: 'test1'}, { name: 'test2' } ];
-
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.showHeader = ShowHeaderMode.Never;
-
-        dataTable.ngOnChanges({
-            rows: new SimpleChange(null, dataRows, false)
+            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-header');
         });
 
-        fixture.detectChanges();
-        dataTable.ngAfterViewInit();
+        it('should not select header row when `showHeader` is `Never`', () => {
+            dataTable.showHeader = ShowHeaderMode.Never;
 
-        const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
-        const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            dataTable.ngOnChanges({
+                rows: new SimpleChange(null, dataRows, false)
+            });
 
-        rowCellElement.dispatchEvent(new MouseEvent('click'));
-        fixture.debugElement.nativeElement.dispatchEvent(event);
+            fixture.detectChanges();
+            dataTable.ngAfterViewInit();
 
-        expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+            const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
+            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+
+            rowCellElement.dispatchEvent(new MouseEvent('click'));
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+
+            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+        });
     });
 
     it('should remove cell focus when [focus] is set to false', () => {
@@ -1847,6 +1803,21 @@ describe('Column Resizing', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
+
+    const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
+        dataTable.isResizingEnabled = true;
+        fixture.detectChanges();
+
+        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
+        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
+        fixture.detectChanges();
+
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll(headerColumnsSelector);
+
+        expect(dataTable.isResizing).toBeTrue();
+        headerColumns.forEach((header: HTMLElement) => expect(header.classList).not.toContain(excludedClass));
+    };
+
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
@@ -1904,35 +1875,11 @@ describe('Column Resizing', () => {
     });
 
     it('should NOT have the cursor pointer class in the header upon resizing starts', () => {
-        dataTable.isResizingEnabled = true;
-        fixture.detectChanges();
-
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
-        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        fixture.detectChanges();
-
-        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header');
-
-        expect(dataTable.isResizing).toBeTrue();
-        headerColumns.forEach((header: HTMLElement) => {
-            expect(header.classList).not.toContain('adf-datatable__cursor--pointer');
-        });
+        testClassesAfterResizing();
     });
 
     it('should NOT have the [adf-datatable-cell-header-content--hovered] class in the header upon resizing starts', () => {
-        dataTable.isResizingEnabled = true;
-        fixture.detectChanges();
-
-        const resizeHandle: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-datatable__resize-handle');
-        resizeHandle.dispatchEvent(new MouseEvent('mousedown'));
-        fixture.detectChanges();
-
-        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
-
-        expect(dataTable.isResizing).toBeTrue();
-        headerColumns.forEach((header: HTMLElement) => {
-            expect(header.classList).not.toContain('adf-datatable-cell-header-content--hovered');
-        });
+        testClassesAfterResizing('.adf-datatable-cell-header-content', 'adf-datatable-cell-header-content--hovered');
     });
 
     it('should NOT display drag icon upon resizing starts', () => {
