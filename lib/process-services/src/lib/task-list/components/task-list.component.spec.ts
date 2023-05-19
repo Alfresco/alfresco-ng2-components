@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
@@ -38,6 +38,30 @@ describe('TaskListComponent', () => {
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
     let taskListService: TaskListService;
+
+    const testMostRecentCall = (changes: SimpleChanges) => {
+        component.ngAfterContentInit();
+        component.ngOnChanges(changes);
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
+    };
+
+    const testSubscribeForFilteredTaskList = (done: DoneFn) => {
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            done();
+        });
+    };
 
     setupTestBed({
         imports: [
@@ -157,15 +181,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['processDefinitionCategory']).toEqual('http://www.activiti.org/processdef');
             done();
         });
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, processDefinitionKey, assignment });
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testMostRecentCall({ state, processDefinitionKey, assignment });
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
@@ -182,16 +198,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['name']).toEqual('nameFake1');
             done();
         });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, processDefinitionKey, assignment });
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testMostRecentCall({ state, processDefinitionKey, assignment });
     });
 
     it('should return the filtered task list by processInstanceId', (done) => {
@@ -208,16 +215,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['processInstanceId']).toEqual(2511);
             done();
         });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, processInstanceId, assignment });
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testMostRecentCall({ state, processInstanceId, assignment });
     });
 
     it('should return the filtered task list by processDefinitionId', (done) => {
@@ -225,47 +223,15 @@ describe('TaskListComponent', () => {
         const processDefinitionId = new SimpleChange(null, 'fakeprocessDefinitionId', true);
         const assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.rows.length).toEqual(2);
-            expect(component.rows[0]['name']).toEqual('nameFake1');
-            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
-            done();
-        });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, processDefinitionId, assignment });
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testSubscribeForFilteredTaskList(done);
+        testMostRecentCall({ state, processDefinitionId, assignment });
     });
 
     it('should return the filtered task list by created date', (done) => {
         const state = new SimpleChange(null, 'open', true);
         const afterDate = new SimpleChange(null, '28-02-2017', true);
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.rows.length).toEqual(2);
-            expect(component.rows[0]['name']).toEqual('nameFake1');
-            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
-            done();
-        });
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, afterDate });
-        fixture.detectChanges();
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testSubscribeForFilteredTaskList(done);
+        testMostRecentCall({ state, afterDate });
     });
 
     it('should return the filtered task list for all state', (done) => {
@@ -285,16 +251,7 @@ describe('TaskListComponent', () => {
             expect(component.rows[1]['endDate']).toBeUndefined();
             done();
         });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({ state, processInstanceId });
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
+        testMostRecentCall({ state, processInstanceId });
     });
 
     it('should return a currentId null when the taskList is empty', () => {
