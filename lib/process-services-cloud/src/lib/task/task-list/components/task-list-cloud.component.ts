@@ -150,7 +150,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
 
-    isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+    private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([
         this.isLoadingPreferences$,
         this.isReloadingSubject$

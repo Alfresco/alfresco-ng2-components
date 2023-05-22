@@ -41,8 +41,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
 
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 
-    isReloadingSubject$ = new BehaviorSubject<boolean>(false);
-
+    private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([
         this.isLoadingPreferences$,
         this.isReloadingSubject$
