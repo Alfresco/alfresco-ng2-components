@@ -165,10 +165,13 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should display empty content when process list is empty', () => {
+        let isLoading: boolean;
+        component.isLoading$.subscribe((value) => isLoading = value);
+
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
         fixture.detectChanges();
-        expect(component.isLoading).toBe(false);
+        expect(isLoading).toBe(false);
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.ngOnChanges({ appName });
@@ -182,16 +185,19 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should load spinner and show the content', () => {
+        let isLoading: boolean;
+        component.isLoading$.subscribe((value) => isLoading = value);
+
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(false);
+        expect(isLoading).toBe(false);
 
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        expect(component.isLoading).toBe(false);
+        expect(isLoading).toBe(false);
         const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 
