@@ -23,9 +23,9 @@ import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
@@ -41,7 +41,14 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
 
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 
-    isLoading = false;
+    isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+
+    isLoading$ = combineLatest([
+        this.isLoadingPreferences$,
+        this.isReloadingSubject$
+    ]).pipe(
+        map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
+    );
 
     constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
                 appConfigService: AppConfigService,
@@ -58,7 +65,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
     }
 
     reload() {
-        this.isLoading = true;
+        this.isReloadingSubject$.next(true);
 
         this.requestNode = this.createRequestNode();
 
@@ -74,10 +81,10 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
                     this.rows = tasks.list.entries;
                     this.success.emit(tasks);
                     this.pagination.next(tasks.list.pagination);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                 }, (error) => {
                     this.error.emit(error);
-                    this.isLoading = false;
+                    this.isReloadingSubject$.next(false);
                 });
         } else {
             this.rows = [];
