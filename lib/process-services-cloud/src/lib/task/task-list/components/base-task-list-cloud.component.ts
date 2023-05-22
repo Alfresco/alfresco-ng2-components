@@ -129,7 +129,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     private onDestroy$ = new Subject<boolean>();
 
     abstract isLoading$: Observable<boolean>;
-    isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
+    protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
     constructor(appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
