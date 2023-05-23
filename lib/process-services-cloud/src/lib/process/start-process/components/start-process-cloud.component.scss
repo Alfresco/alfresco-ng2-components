@@ -5,7 +5,8 @@
         }
 
         mat-card-actions {
-            text-align: right;
+            display: flex;
+            justify-content: flex-end;
 
             .mat-button {
                 text-transform: uppercase !important;
@@ -55,18 +56,5 @@
         min-height: 300px;
         display: flex;
         height: 100%;
-    }
-}
-
-adf-cloud-start-process {
-    .adf-start-process-cloud-actions {
-        display: flex;
-        max-height: 100%;
-        place-content: flex-end;
-        align-items: flex-end;
-
-        .adf-btn-start {
-            margin-left: 8px;
-        }
     }
 }
