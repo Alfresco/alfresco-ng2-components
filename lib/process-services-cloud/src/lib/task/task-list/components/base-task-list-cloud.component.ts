@@ -24,7 +24,7 @@ import {
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -119,7 +119,6 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     size: number;
     skipCount: number = 0;
     currentInstanceId: any;
-    isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
@@ -128,6 +127,9 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
     private onDestroy$ = new Subject<boolean>();
+
+    protected abstract isLoading$: Observable<boolean>;
+    protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
     constructor(appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
@@ -169,7 +171,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     private retrieveTasksPreferences(): void {
-        this.isLoading = true;
+        this.isLoadingPreferences$.next(true);
         this.cloudPreferenceService.getPreferences(this.appName).pipe(
             take(1),
             map((preferences => {
@@ -199,10 +201,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
             this.createDatatableSchema();
             this.createColumns();
-            this.isLoading = false;
+            this.isLoadingPreferences$.next(false);
         }, (error) => {
             this.error.emit(error);
-            this.isLoading = false;
+            this.isLoadingPreferences$.next(false);
         });
     }
 

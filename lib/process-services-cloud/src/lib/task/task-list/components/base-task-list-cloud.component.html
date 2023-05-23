@@ -4,7 +4,7 @@
             [rows]="rows"
             [columns]="columns"
             [data]="dataAdapter"
-            [loading]="isLoading"
+            [loading]="isLoading$ | async"
             [sorting]="formattedSorting"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"

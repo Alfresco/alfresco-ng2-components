@@ -168,7 +168,6 @@ describe('TaskListCloudComponent', () => {
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
         fixture.detectChanges();
-        expect(component.isLoading).toBe(false);
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.ngOnChanges({ appName });
@@ -186,12 +185,9 @@ describe('TaskListCloudComponent', () => {
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
-        expect(component.isLoading).toBe(false);
-
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        expect(component.isLoading).toBe(false);
         const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent).toBeFalsy();
 

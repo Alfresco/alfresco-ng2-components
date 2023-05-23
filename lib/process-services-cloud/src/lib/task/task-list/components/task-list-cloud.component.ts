@@ -23,8 +23,8 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, of } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject, of, BehaviorSubject, combineLatest } from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../models/task-cloud.model';
@@ -150,6 +150,14 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
 
+    private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
+    isLoading$ = combineLatest([
+        this.isLoadingPreferences$,
+        this.isReloadingSubject$
+    ]).pipe(
+        map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
+    );
+
     constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
                 appConfigService: AppConfigService,
                 taskCloudService: TaskCloudService,
@@ -166,7 +174,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     }
 
     reload() {
-        this.isLoading = true;
+        this.isReloadingSubject$.next(true);
 
         this.isColumnSchemaCreated$.pipe(
             switchMap(() => of(this.createRequestNode())),
@@ -187,11 +195,11 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             this.dataAdapter = new TasksListDatatableAdapter(this.rows, this.columns);
 
             this.success.emit(tasks);
-            this.isLoading = false;
+            this.isReloadingSubject$.next(false);
             this.pagination.next(tasks.list.pagination);
         }, (error) => {
             this.error.emit(error);
-            this.isLoading = false;
+            this.isReloadingSubject$.next(false);
         });
     }
 
