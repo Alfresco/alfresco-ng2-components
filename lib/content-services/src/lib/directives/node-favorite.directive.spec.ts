@@ -80,13 +80,13 @@ describe('NodeFavoriteDirective', () => {
             directive.ngOnChanges({selection: change});
             tick();
 
-            expect(directive.hasFavorites()).toBe(true);
+            expect(directive.hasFavorites).toBe(true);
 
             change = new SimpleChange(null, [], true);
             directive.ngOnChanges({selection: change});
             tick();
 
-            expect(directive.hasFavorites()).toBe(false);
+            expect(directive.hasFavorites).toBe(false);
         }));
     });
 
@@ -304,7 +304,7 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.hasFavorites()).toBe(false);
+            expect(directive.hasFavorites).toBe(false);
         }));
 
         it('should set isFavorites items to true', fakeAsync(() => {
@@ -317,7 +317,7 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.hasFavorites()).toBe(true);
+            expect(directive.hasFavorites).toBe(true);
         }));
     });
 
@@ -371,7 +371,7 @@ describe('NodeFavoriteDirective', () => {
         it('should return false when favorites collection is empty', () => {
             directive.favorites = [];
 
-            const hasFavorites = directive.hasFavorites();
+            const hasFavorites = directive.hasFavorites;
 
             expect(hasFavorites).toBe(false);
         });
@@ -382,7 +382,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2', isFavorite: false } }
             ];
 
-            const hasFavorites = directive.hasFavorites();
+            const hasFavorites = directive.hasFavorites;
 
             expect(hasFavorites).toBe(false);
         });
@@ -393,7 +393,7 @@ describe('NodeFavoriteDirective', () => {
                 { entry: { id: '2', name: 'name2', isFavorite: true } }
             ];
 
-            const hasFavorites = directive.hasFavorites();
+            const hasFavorites = directive.hasFavorites;
 
             expect(hasFavorites).toBe(true);
         });

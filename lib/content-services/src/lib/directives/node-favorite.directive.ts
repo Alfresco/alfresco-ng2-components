@@ -36,6 +36,8 @@ export class NodeFavoriteDirective implements OnChanges {
         return this._favoritesApi;
     }
 
+    hasFavorites = false;
+
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
     selection: NodeEntry[] = [];
@@ -105,8 +107,8 @@ export class NodeFavoriteDirective implements OnChanges {
 
     markFavoritesNodes(selection: NodeEntry[]) {
         if (selection.length <= this.favorites.length) {
-            const newFavorites = this.reduce(this.favorites, selection);
-            this.favorites = newFavorites;
+            this.favorites = this.reduce(this.favorites, selection);
+            this.hasFavorites = this.evaluateHasFavorites();
         }
 
         const result = this.diff(selection, this.favorites);
@@ -114,10 +116,11 @@ export class NodeFavoriteDirective implements OnChanges {
 
         forkJoin(batch).subscribe((data) => {
             this.favorites.push(...data);
+            this.hasFavorites = this.evaluateHasFavorites();
         });
     }
 
-    hasFavorites(): boolean {
+    evaluateHasFavorites(): boolean {
         if (this.favorites && !this.favorites.length) {
             return false;
         }

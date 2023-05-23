@@ -134,7 +134,7 @@
                             [adf-node-favorite]="documentList.selection"
                             matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
                         <mat-icon>
-                            {{ favorite.hasFavorites() ? 'star' :'star_border' }}
+                            {{ favorite.hasFavorites ? 'star' :'star_border' }}
                         </mat-icon>
                     </button>
                     <button mat-icon-button
