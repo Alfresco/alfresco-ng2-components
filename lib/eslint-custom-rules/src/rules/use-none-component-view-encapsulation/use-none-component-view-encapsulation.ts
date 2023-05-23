@@ -15,19 +15,16 @@
  * limitations under the License.
  */
 
-import {
-    ASTUtils,
-    Selectors
-} from '@angular-eslint/utils';
+import { ASTUtils, Selectors } from '@angular-eslint/utils';
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createESLintRule } from '@nrwl/eslint-plugin-nx/src/utils/create-eslint-rule';
 import { RuleContext } from '@typescript-eslint/utils/dist/ts-eslint/Rule';
+import { createESLintRule } from '../../utils/create-eslint-rule/create-eslint-rule';
 
 type MessageId = 'useNoneComponentViewEncapsulation';
-export const RULE_NAME = 'use-none-component-view-encapsulation';
 const VIEW_ENCAPSULATION_NONE = 'ViewEncapsulation.None';
+export const RULE_NAME = 'use-none-component-view-encapsulation';
 
-export default createESLintRule<[], MessageId>({
+export default createESLintRule<unknown[], MessageId>({
     name: RULE_NAME,
     meta: {
         type: 'suggestion',
@@ -62,7 +59,7 @@ export default createESLintRule<[], MessageId>({
     }
 });
 
-const checkEncapsulation = (context: Readonly<RuleContext<MessageId, []>>, encapsulation: string) => ({
+const checkEncapsulation = (context: Readonly<RuleContext<MessageId, unknown[]>>, encapsulation: string) => ({
     [`${Selectors.COMPONENT_CLASS_DECORATOR} ${Selectors.metadataProperty(
         'encapsulation'
     )} > MemberExpression[object.name='ViewEncapsulation'] > Identifier[name='${encapsulation}']`](

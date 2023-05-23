@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-import useNoneEncapsulationRule, {
-    RULE_NAME as useNoneEncapsulationRuleName
-} from './src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation';
+import { ESLintUtils } from '@typescript-eslint/utils';
 
-export = {
-    rules: {
-        [useNoneEncapsulationRuleName]: useNoneEncapsulationRule
-    }
-};
+export const createESLintRule = ESLintUtils.RuleCreator((ruleName) => ruleName);
