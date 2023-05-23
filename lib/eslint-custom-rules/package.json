@@ -1,0 +1,8 @@
+{
+  "name": "@alfresco/eslint-plugin-custom-rules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "author": "",
+  "license": "ISC"
+}

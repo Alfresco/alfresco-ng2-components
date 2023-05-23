@@ -1025,6 +1025,67 @@
         }
       }
     },
+    "eslint-custom-rules": {
+      "root": "lib/eslint-custom-rules",
+      "sourceRoot": "lib/eslint-custom-rules/src",
+      "projectType": "library",
+      "prefix": "adf",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:webpack",
+          "options": {
+            "projectRoot": "lib/eslint-custom-rules",
+            "outputPath": "dist/libs/eslint-plugin-custom-rules",
+            "main": "lib/eslint-custom-rules/index.ts",
+            "generatePackageJson" : true,
+            "tsConfig": "lib/eslint-custom-rules/tsconfig.lib.prod.json"
+          },
+          "configurations": {
+            "production": {
+              "projectRoot": "lib/eslint-custom-rules",
+              "outputPath": "dist/libs/eslint-plugin-custom-rules",
+              "main": "lib/eslint-custom-rules/index.ts",
+              "generatePackageJson" : true,
+              "tsConfig": "lib/eslint-custom-rules/tsconfig.lib.prod.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "lib/eslint-custom-rules/**/*.ts"
+            ]
+          }
+        },
+        "bundle": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "echo testing bundle created"
+              }
+            ]
+          }
+        },
+        "npm-publish": {
+          "executor": "nx:run-commands",
+          "dependsOn": [
+            "build"
+          ],
+          "options": {
+            "cwd": "dist/libs/eslint-custom-rules",
+            "commands": [
+              {
+                "command": "npm publish --tag {args.tag}",
+                "forwardAllArgs": true
+              }
+            ]
+          }
+        }
+      }
+    },
     "cli": {
       "root": "lib/cli",
       "sourceRoot": "lib/cli",
