@@ -1,8 +1,19 @@
 {
   "name": "@alfresco/eslint-plugin-custom-rules",
-  "version": "1.0.0",
-  "description": "",
+  "version": "6.0.0",
+  "description": "Alfresco ADF eslint custom rules",
   "main": "main.js",
-  "author": "",
-  "license": "ISC"
+  "author": "Hyland Software, Inc. and its affiliates",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-custom-rules"
+  ],
+  "license": "Apache-2.0"
 }

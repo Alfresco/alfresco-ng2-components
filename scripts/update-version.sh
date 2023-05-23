@@ -17,7 +17,8 @@ eval projects=( "cli"
     "process-services-cloud"
     "insights"
     "testing"
-    "extensions" )
+    "extensions",
+    "eslint-plugin-custom-rules" )
 
 cd `dirname $0`
 
