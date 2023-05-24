@@ -606,9 +606,9 @@ Contains all custom rules used by ESLint.
 
 ### Rules
 
-| Name                                                                                                   | Description                                           | Source link                                                                                                  |
-|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md) | Enforces using ViewEncapsulation.None for components. | [Source](../lib/eslint-custom-rules/src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation.ts) |
+| Name                                                                                                   | Description                                           | Source link                                                                                                              |
+|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md) | Enforces using ViewEncapsulation.None for components. | [Source](../lib/eslint-angular/src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation.ts) |
 
 <!--eslint-angular end-->
 
