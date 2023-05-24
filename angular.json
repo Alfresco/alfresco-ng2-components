@@ -1025,28 +1025,28 @@
         }
       }
     },
-    "eslint-custom-rules": {
-      "root": "lib/eslint-custom-rules",
-      "sourceRoot": "lib/eslint-custom-rules/src",
+    "eslint-angular": {
+      "root": "lib/eslint-angular",
+      "sourceRoot": "lib/eslint-angular/src",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@nrwl/node:webpack",
           "options": {
-            "projectRoot": "lib/eslint-custom-rules",
-            "outputPath": "dist/libs/eslint-plugin-custom-rules",
-            "main": "lib/eslint-custom-rules/index.ts",
+            "projectRoot": "lib/eslint-angular",
+            "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+            "main": "lib/eslint-angular/index.ts",
             "generatePackageJson" : true,
-            "tsConfig": "lib/eslint-custom-rules/tsconfig.lib.prod.json"
+            "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
           },
           "configurations": {
             "production": {
-              "projectRoot": "lib/eslint-custom-rules",
-              "outputPath": "dist/libs/eslint-plugin-custom-rules",
-              "main": "lib/eslint-custom-rules/index.ts",
+              "projectRoot": "lib/eslint-angular",
+              "outputPath": "dist/libs/eslint-plugin-eslint-angular",
+              "main": "lib/eslint-angular/index.ts",
               "generatePackageJson" : true,
-              "tsConfig": "lib/eslint-custom-rules/tsconfig.lib.prod.json"
+              "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
             }
           },
           "defaultConfiguration": "production"
@@ -1055,7 +1055,7 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "lib/eslint-custom-rules/**/*.ts"
+              "lib/eslint-angular/**/*.ts"
             ]
           }
         },
@@ -1075,7 +1075,7 @@
             "build"
           ],
           "options": {
-            "cwd": "dist/libs/eslint-custom-rules",
+            "cwd": "dist/libs/eslint-angular",
             "commands": [
               {
                 "command": "npm publish --tag {args.tag}",

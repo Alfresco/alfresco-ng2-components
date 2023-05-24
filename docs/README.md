@@ -51,7 +51,7 @@ A few other pages of information are also available:
 -   [Process Services Cloud API](#process-services-cloud-api)
 -   [Extensions API](#extensions-api)
 -   [Insights API](#insights-api)
--   [ESLint Custom rules API](#eslint-custom-rules-api)
+-   [ESLint Angular API](#eslint-angular-api)
 
 ## User guide
 
@@ -598,18 +598,18 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ESLint custom rules API
+## ESLint Angular API
 
 Contains all custom rules used by ESLint.
 
-<!--eslint-custom-rules start-->
+<!--eslint-angular start-->
 
 ### Rules
 
-| Name                                                                                                                 | Description                                           | Source link                                                                                                  |
-|----------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| [Use none component view encapsulation](eslint-custom-rules/rules/use-none-component-view-encapsulation.md) | Enforces using ViewEncapsulation.None for components. | [Source](../lib/eslint-custom-rules/src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation.ts) |
+| Name                                                                                                   | Description                                           | Source link                                                                                                  |
+|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md) | Enforces using ViewEncapsulation.None for components. | [Source](../lib/eslint-custom-rules/src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation.ts) |
 
-<!--eslint-custom-rules end-->
+<!--eslint-angular end-->
 
 [(Back to Contents)](#contents)

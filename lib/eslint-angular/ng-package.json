@@ -1,8 +1,8 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/libs/eslint-custom-rules",
+  "dest": "../../dist/libs/eslint-angular",
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "eslint-plugin-custom-rules"
+    "flatModuleFile": "eslint-plugin-eslint-angular"
   }
 }

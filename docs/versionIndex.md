@@ -54,7 +54,7 @@ backend services have been tested with each released version of ADF.
 -   [Process user info component](process-services/components/process-user-info.component.md)
 -   [Task comments service](content-services/services/task-comments.service.md)
 -   [Viewer render component](core/components/viewer-render.component.md)
--   [Use none component view encapsulation](eslint-custom-rules/rules/use-none-component-view-encapsulation.md)
+-   [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md)
 
 <!--v600 end-->
 

@@ -1,5 +1,5 @@
 {
-  "name": "@alfresco/eslint-plugin-custom-rules",
+  "name": "@alfresco/eslint-plugin-eslint-angular",
   "version": "6.0.0",
   "description": "Alfresco ADF eslint custom rules",
   "main": "main.js",

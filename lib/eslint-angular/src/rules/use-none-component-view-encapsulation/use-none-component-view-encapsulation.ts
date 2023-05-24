@@ -71,8 +71,8 @@ export default createESLintRule<unknown[], MessageIds>({
         const withoutEncapsulationProperty =
             `${Selectors.COMPONENT_CLASS_DECORATOR}:matches([expression.arguments.length=0], [expression.arguments.0.type='ObjectExpression']:not(:has(${encapsulationProperty})))` as const;
         const nonNoneViewEncapsulationNoneProperty =
-            // eslint-disable-next-line max-len
-            `${Selectors.COMPONENT_CLASS_DECORATOR} > CallExpression > ObjectExpression > ${encapsulationProperty}:matches([value.type='Identifier'][value.name='undefined'], [value.object.name='ViewEncapsulation'][value.property.name!='None'])` as const;
+            `${Selectors.COMPONENT_CLASS_DECORATOR} > CallExpression > ObjectExpression > ` +
+            `${encapsulationProperty}:matches([value.type='Identifier'][value.name='undefined'], [value.object.name='ViewEncapsulation'][value.property.name!='None'])`;
         const selectors = [
             withoutEncapsulationProperty,
             nonNoneViewEncapsulationNoneProperty
