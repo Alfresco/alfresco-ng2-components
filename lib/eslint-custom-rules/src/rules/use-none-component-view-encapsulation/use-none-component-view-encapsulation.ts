@@ -19,7 +19,9 @@ import { ASTUtils, isNotNullOrUndefined, RuleFixes, Selectors } from '@angular-e
 import type { TSESTree } from '@typescript-eslint/utils';
 import { createESLintRule } from '../../utils/create-eslint-rule/create-eslint-rule';
 
-export type MessageIds = 'useNoneComponentViewEncapsulation'| 'suggestAddViewEncapsulationNone';
+export const RULE_NAME = 'use-none-component-view-encapsulation';
+
+type MessageIds = 'useNoneComponentViewEncapsulation'| 'suggestAddViewEncapsulationNone';
 type DecoratorForClass = TSESTree.Decorator & {
     parent: TSESTree.ClassDeclaration;
 };
@@ -32,9 +34,15 @@ type PropertyInClassDecorator = TSESTree.Property & {
         };
     };
 };
-export const RULE_NAME = 'use-none-component-view-encapsulation';
+
 const metadataPropertyName = 'encapsulation';
 const viewEncapsulationNone = 'ViewEncapsulation.None';
+const nodeToReport = (node: TSESTree.Node) => {
+    if (!ASTUtils.isProperty(node)) {
+        return node;
+    }
+    return ASTUtils.isMemberExpression(node.value) ? node.value.property : node.value;
+};
 
 /**
  * Custom ESLint rule which check if component uses ViewEncapsulation.None. It has been implemented because None encapsulation makes themes styling easier.
@@ -113,10 +121,3 @@ export default createESLintRule<unknown[], MessageIds>({
         };
     }
 });
-
-const nodeToReport = (node: TSESTree.Node) => {
-    if (!ASTUtils.isProperty(node)) {
-        return node;
-    }
-    return ASTUtils.isMemberExpression(node.value) ? node.value.property : node.value;
-};
