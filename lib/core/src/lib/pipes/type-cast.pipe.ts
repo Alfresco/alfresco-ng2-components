@@ -18,8 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'cast',
-    pure: true
+    name: 'cast'
 })
 export class TypeCastPipe implements PipeTransform {
 
