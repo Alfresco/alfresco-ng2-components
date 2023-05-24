@@ -15,61 +15,108 @@
  * limitations under the License.
  */
 
-import { ASTUtils, Selectors } from '@angular-eslint/utils';
+import { ASTUtils, isNotNullOrUndefined, RuleFixes, Selectors } from '@angular-eslint/utils';
 import type { TSESTree } from '@typescript-eslint/utils';
-import { RuleContext } from '@typescript-eslint/utils/dist/ts-eslint/Rule';
 import { createESLintRule } from '../../utils/create-eslint-rule/create-eslint-rule';
 
-type MessageId = 'useNoneComponentViewEncapsulation';
-const VIEW_ENCAPSULATION_NONE = 'ViewEncapsulation.None';
+export type MessageIds = 'useNoneComponentViewEncapsulation'| 'suggestAddViewEncapsulationNone';
+type DecoratorForClass = TSESTree.Decorator & {
+    parent: TSESTree.ClassDeclaration;
+};
+type PropertyInClassDecorator = TSESTree.Property & {
+    parent: TSESTree.CallExpression & {
+        parent: TSESTree.ObjectExpression & {
+            parent: TSESTree.Decorator & {
+                parent: TSESTree.ClassDeclaration;
+            };
+        };
+    };
+};
 export const RULE_NAME = 'use-none-component-view-encapsulation';
+const metadataPropertyName = 'encapsulation';
+const viewEncapsulationNone = 'ViewEncapsulation.None';
 
-export default createESLintRule<unknown[], MessageId>({
+/**
+ * Custom ESLint rule which check if component uses ViewEncapsulation.None. It has been implemented because None encapsulation makes themes styling easier.
+ * It also allows to autofix.
+ */
+export default createESLintRule<unknown[], MessageIds>({
     name: RULE_NAME,
     meta: {
         type: 'suggestion',
         docs: {
-            description: `Disallows using other encapsulation than \`${VIEW_ENCAPSULATION_NONE}\``,
+            description: `Disallows using other encapsulation than \`${viewEncapsulationNone}\``,
             recommended: false
         },
         hasSuggestions: true,
         schema: [],
         messages: {
-            useNoneComponentViewEncapsulation: `Using encapsulation other than \`${VIEW_ENCAPSULATION_NONE}\` makes themes styling harder.`
+            useNoneComponentViewEncapsulation: `Using encapsulation other than '${viewEncapsulationNone}' makes themes styling harder.`,
+            suggestAddViewEncapsulationNone: `Add '${viewEncapsulationNone}'`
         }
     },
     defaultOptions: [],
     create(context) {
+        const encapsulationProperty = Selectors.metadataProperty(
+            metadataPropertyName
+        );
+        const withoutEncapsulationProperty =
+            `${Selectors.COMPONENT_CLASS_DECORATOR}:matches([expression.arguments.length=0], [expression.arguments.0.type='ObjectExpression']:not(:has(${encapsulationProperty})))` as const;
+        const nonNoneViewEncapsulationNoneProperty =
+            // eslint-disable-next-line max-len
+            `${Selectors.COMPONENT_CLASS_DECORATOR} > CallExpression > ObjectExpression > ${encapsulationProperty}:matches([value.type='Identifier'][value.name='undefined'], [value.object.name='ViewEncapsulation'][value.property.name!='None'])` as const;
+        const selectors = [
+            withoutEncapsulationProperty,
+            nonNoneViewEncapsulationNoneProperty
+        ].join(',');
         return {
-            ...checkEncapsulation(context, 'ShadowDom'),
-            ...checkEncapsulation(context, 'Emulated'),
-            [`${Selectors.COMPONENT_CLASS_DECORATOR}`](node: TSESTree.Decorator) {
-                const rawSelectors = ASTUtils.getDecoratorPropertyValue(
-                    node,
-                    'encapsulation'
-                );
-                if (!rawSelectors) {
-                    context.report({
-                        node,
-                        messageId: 'useNoneComponentViewEncapsulation'
-                    });
-                }
+            [selectors](node: DecoratorForClass | PropertyInClassDecorator) {
+                context.report({
+                    node: nodeToReport(node),
+                    messageId: 'useNoneComponentViewEncapsulation',
+                    suggest: [
+                        {
+                            messageId: 'suggestAddViewEncapsulationNone',
+                            fix: (fixer) => {
+                                if (ASTUtils.isProperty(node)) {
+                                    return [
+                                        RuleFixes.getImportAddFix({
+                                            fixer,
+                                            importName: 'ViewEncapsulation',
+                                            moduleName: '@angular/core',
+                                            node: node.parent.parent.parent.parent
+                                        }),
+                                        ASTUtils.isMemberExpression(node.value)
+                                            ? fixer.replaceText(node.value.property, 'None')
+                                            : fixer.replaceText(node.value, viewEncapsulationNone)
+                                    ].filter(isNotNullOrUndefined);
+                                }
+
+                                return [
+                                    RuleFixes.getImportAddFix({
+                                        fixer,
+                                        importName: 'ViewEncapsulation',
+                                        moduleName: '@angular/core',
+                                        node: node.parent
+                                    }),
+                                    RuleFixes.getDecoratorPropertyAddFix(
+                                        node,
+                                        fixer,
+                                        `${metadataPropertyName}: ${viewEncapsulationNone}`
+                                    )
+                                ].filter(isNotNullOrUndefined);
+                            }
+                        }
+                    ]
+                });
             }
         };
     }
 });
 
-const checkEncapsulation = (context: Readonly<RuleContext<MessageId, unknown[]>>, encapsulation: string) => ({
-    [`${Selectors.COMPONENT_CLASS_DECORATOR} ${Selectors.metadataProperty(
-        'encapsulation'
-    )} > MemberExpression[object.name='ViewEncapsulation'] > Identifier[name='${encapsulation}']`](
-        node: TSESTree.Identifier & {
-            parent: TSESTree.MemberExpression & { parent: TSESTree.Property };
-        }
-    ) {
-        context.report({
-            node,
-            messageId: 'useNoneComponentViewEncapsulation'
-        });
+const nodeToReport = (node: TSESTree.Node) => {
+    if (!ASTUtils.isProperty(node)) {
+        return node;
     }
-});
+    return ASTUtils.isMemberExpression(node.value) ? node.value.property : node.value;
+};
