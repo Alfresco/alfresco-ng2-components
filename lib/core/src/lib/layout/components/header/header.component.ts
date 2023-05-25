@@ -65,13 +65,13 @@ export class HeaderLayoutComponent implements OnInit {
         private appConfigService: AppConfigService
     ) {
         this.appConfigService.select('headerTextColor')
-        .pipe(
-            filter((textColor) => !!textColor),
-            take(1)
-        )
-        .subscribe((textColor) => {
-            document.documentElement.style.setProperty('--theme-header-text-color', textColor);
-        });
+            .pipe(
+                filter((textColor) => !!textColor),
+                take(1)
+            )
+            .subscribe((textColor) => {
+                document.documentElement.style.setProperty('--theme-header-text-color', textColor);
+            });
     }
 
     toggleMenu() {
