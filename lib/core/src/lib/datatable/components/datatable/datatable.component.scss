@@ -481,14 +481,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         }
     }
 
-    /* stylelint-disable-next-line no-duplicate-selectors */
-    .adf-datatable-cell,
-    .adf-datatable-cell-header {
-        .adf-datatable-link .adf-datatable-cell-value {
-            padding: 0 10px;
-        }
-    }
-
     .adf-ellipsis-cell {
         position: sticky;
         text-overflow: ellipsis;
