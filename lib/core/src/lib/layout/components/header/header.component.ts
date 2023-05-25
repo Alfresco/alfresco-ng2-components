@@ -17,6 +17,8 @@
 
 import { Component, Input, Output, EventEmitter, ViewEncapsulation, OnInit } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { AppConfigService } from '../../../app-config/app-config.service';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-layout-header',
@@ -58,6 +60,19 @@ export class HeaderLayoutComponent implements OnInit {
 
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
+
+    constructor(
+        private appConfigService: AppConfigService
+    ) {
+        this.appConfigService.select('headerTextColor')
+        .pipe(
+            filter((textColor) => !!textColor),
+            take(1)
+        )
+        .subscribe((textColor) => {
+            document.documentElement.style.setProperty('--theme-header-text-color', textColor);
+        });
+    }
 
     toggleMenu() {
         this.clicked.emit(true);
