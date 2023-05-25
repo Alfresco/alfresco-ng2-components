@@ -138,7 +138,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         this.headerService.headerTextColor
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(headerTextColor => {
-                document.documentElement.style.setProperty('--theme-primary-color-default-contrast', headerTextColor);
+                document.documentElement.style.setProperty('--theme-header-text-color', headerTextColor);
             });
 
         this.headerService.logo

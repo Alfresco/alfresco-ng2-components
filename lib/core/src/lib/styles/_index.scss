@@ -29,6 +29,7 @@
         // theme colors
         --theme-primary-color: mat.get-color-from-palette($primary),
         --theme-primary-color-default-contrast: mat.get-color-from-palette($primary, default-contrast),
+        --theme-header-text-color: mat.get-color-from-palette($primary, default-contrast),
         --adf-theme-primary-50:mat.get-color-from-palette($primary, 50),
         --adf-theme-primary-100:mat.get-color-from-palette($primary, 100),
         --adf-theme-primary-300:mat.get-color-from-palette($primary, 300),
