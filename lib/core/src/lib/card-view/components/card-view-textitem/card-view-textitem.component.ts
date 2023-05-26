@@ -130,12 +130,13 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     update(): void {
+        this.resetErrorMessages();
         if (this.property.isValid(this.editedValue)) {
             this.property.value = this.prepareValueForUpload(this.property, this.editedValue);
             this.cardViewUpdateService.update({ ...this.property } as CardViewTextItemModel, this.property.value);
-            this.resetErrorMessages();
         } else {
             this.errors = this.property.getValidationErrors(this.editedValue);
+            this.cardViewUpdateService.update({ ...this.property } as CardViewTextItemModel, this.editedValue);
         }
     }
 

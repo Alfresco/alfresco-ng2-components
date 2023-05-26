@@ -509,15 +509,14 @@ describe('CardViewTextItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
-        it('should NOT trigger the update event if the editedValue is invalid', async () => {
+        it('should trigger the update event if the editedValue', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
-            component.property.isValid = () => false;
 
             updateTextField(component.property.key, 'updated-value');
             await fixture.whenStable();
 
-            expect(cardViewUpdateService.update).not.toHaveBeenCalled();
+            expect(cardViewUpdateService.update).toHaveBeenCalled();
         });
 
         it('should set the errorMessages properly if the editedValue is invalid', async () => {
@@ -528,6 +527,15 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(component.errors).toBe(expectedErrorMessages);
+        });
+
+        it('should set the errorMessages properly if the editedValue is valid', async () => {
+            component.property.isValid = () => true;
+
+            updateTextField(component.property.key, 'updated-value');
+            await fixture.whenStable();
+
+            expect(component.errors).toEqual([]);
         });
 
         it('should render the error', () => {
@@ -645,7 +653,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.editable = true;
-            component.property.validators.push(new CardViewItemIntValidator());
+            component.property.validators?.push(new CardViewItemIntValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
@@ -776,7 +784,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.editable = true;
-            component.property.validators.push(new CardViewItemFloatValidator());
+            component.property.validators?.push(new CardViewItemFloatValidator());
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
