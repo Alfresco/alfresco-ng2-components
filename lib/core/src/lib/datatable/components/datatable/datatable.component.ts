@@ -501,24 +501,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onRowClick(row: DataRow, mouseEvent: MouseEvent) {
-        if (!mouseEvent.composedPath().some(
-            (element: HTMLElement) => element.id?.startsWith('action_menu_right_') || element.classList?.contains('adf-checkbox-sr-only'))
-        ) {
-            if (mouseEvent) {
-                mouseEvent.preventDefault();
-            }
-
-            if (row) {
-                const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
-                this.clickObserver.next(dataRowEvent);
-            }
+        if (mouseEvent) {
+            mouseEvent.preventDefault();
         }
-    }
 
-    storeActiveRow(row: DataRow) {
         if (row) {
             const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderListVisible() ? 1 : 0);
             this.keyManager.setActiveItem(rowIndex);
+
+            const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
+            this.clickObserver.next(dataRowEvent);
         }
     }
 
