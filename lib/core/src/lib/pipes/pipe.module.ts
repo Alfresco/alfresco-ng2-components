@@ -33,6 +33,7 @@ import { LocalizedRolePipe } from './localized-role.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
+import { MomentDateTimeUtcToLocalPipe } from './moment-datetime-utc-to-local.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
 import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
 
@@ -56,6 +57,7 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
+        MomentDateTimeUtcToLocalPipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ],
@@ -73,6 +75,7 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
+        MomentDateTimeUtcToLocalPipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ],
@@ -91,6 +94,7 @@ import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-pr
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
+        MomentDateTimeUtcToLocalPipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ]

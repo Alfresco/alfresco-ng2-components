@@ -83,7 +83,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     onDateChanged(newDateValue) {
         const date = moment(newDateValue, this.field.dateDisplayFormat, true);
         if (date.isValid()) {
-            this.field.value = moment(date).utc().local().format(this.field.dateDisplayFormat);
+            this.field.value = moment(date).utc();
         } else {
             this.field.value = newDateValue;
         }
