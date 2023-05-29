@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
@@ -38,67 +38,6 @@ describe('TaskListComponent', () => {
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
     let taskListService: TaskListService;
-
-    const testMostRecentCall = (changes: SimpleChanges) => {
-        component.ngAfterContentInit();
-        component.ngOnChanges(changes);
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
-    };
-
-    const testSubscribeForFilteredTaskList = (done: DoneFn) => {
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.rows.length).toEqual(2);
-            expect(component.rows[0]['name']).toEqual('nameFake1');
-            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
-            done();
-        });
-    };
-
-    const testRowSelection = async (selectionMode?: string) => {
-        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
-        const state = new SimpleChange(null, 'open', true);
-        component.multiselect = true;
-        if (selectionMode) {
-            component.selectionMode = selectionMode;
-        }
-        component.ngOnChanges({ sort: state });
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeDefined();
-        expect(component.selectedInstances.length).toBe(2);
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(component.selectedInstances.length).toBe(1);
-        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
-        expect(selectRow1).toBeDefined();
-        expect(selectRow2).toBeNull();
-    };
 
     setupTestBed({
         imports: [
@@ -218,7 +157,15 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['processDefinitionCategory']).toEqual('http://www.activiti.org/processdef');
             done();
         });
-        testMostRecentCall({ state, processDefinitionKey, assignment });
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, processDefinitionKey, assignment });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
@@ -235,7 +182,16 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['name']).toEqual('nameFake1');
             done();
         });
-        testMostRecentCall({ state, processDefinitionKey, assignment });
+
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, processDefinitionKey, assignment });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return the filtered task list by processInstanceId', (done) => {
@@ -252,7 +208,16 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['processInstanceId']).toEqual(2511);
             done();
         });
-        testMostRecentCall({ state, processInstanceId, assignment });
+
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, processInstanceId, assignment });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return the filtered task list by processDefinitionId', (done) => {
@@ -260,15 +225,47 @@ describe('TaskListComponent', () => {
         const processDefinitionId = new SimpleChange(null, 'fakeprocessDefinitionId', true);
         const assignment = new SimpleChange(null, 'fake-assignee', true);
 
-        testSubscribeForFilteredTaskList(done);
-        testMostRecentCall({ state, processDefinitionId, assignment });
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            done();
+        });
+
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, processDefinitionId, assignment });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return the filtered task list by created date', (done) => {
         const state = new SimpleChange(null, 'open', true);
         const afterDate = new SimpleChange(null, '28-02-2017', true);
-        testSubscribeForFilteredTaskList(done);
-        testMostRecentCall({ state, afterDate });
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.rows.length).toEqual(2);
+            expect(component.rows[0]['name']).toEqual('nameFake1');
+            expect(component.rows[0]['processDefinitionId']).toEqual('myprocess:1:4');
+            done();
+        });
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, afterDate });
+        fixture.detectChanges();
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return the filtered task list for all state', (done) => {
@@ -288,7 +285,16 @@ describe('TaskListComponent', () => {
             expect(component.rows[1]['endDate']).toBeUndefined();
             done();
         });
-        testMostRecentCall({ state, processInstanceId });
+
+        component.ngAfterContentInit();
+        component.ngOnChanges({ state, processInstanceId });
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeGlobalTask)
+        });
     });
 
     it('should return a currentId null when the taskList is empty', () => {
@@ -602,16 +608,83 @@ describe('TaskListComponent', () => {
     });
 
     it('should be able to unselect a selected tasks using the checkbox', async () => {
-        await testRowSelection();
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
+        const state = new SimpleChange(null, 'open', true);
+        component.multiselect = true;
+
+        component.ngOnChanges({ sort: state });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
+        selectTask1.click();
+        selectTask1.click();
+        selectTask2.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeDefined();
+        expect(component.selectedInstances.length).toBe(2);
+
+        selectTask2.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.selectedInstances.length).toBe(1);
+        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeNull();
     });
 
     it('should not be able to select different row when selection mode is set to NONE and multiselection is enabled', async () => {
-        await testRowSelection('none');
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
+        const state = new SimpleChange(null, 'open', true);
+        component.multiselect = true;
+        component.selectionMode = 'none';
+
+        component.ngOnChanges({ sort: state });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
+        selectTask1.click();
+        selectTask1.click();
+        selectTask2.click();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        let selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        let selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeDefined();
+        expect(component.selectedInstances.length).toBe(2);
+
+        selectTask2.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.selectedInstances.length).toBe(1);
+        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        expect(selectRow1).toBeDefined();
+        expect(selectRow2).toBeNull();
+
         const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
         selectTask2Row.click();
 
-        const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
-        const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
         expect(selectRow1).toBeDefined();
         expect(selectRow2).toBeNull();
     });
@@ -627,13 +700,25 @@ describe('TaskListComponent', () => {
 
         const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
         const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask1.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        selectTask2.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        selectTask1.click();
+        selectTask1.click();
+        selectTask2.click();
 
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.selectedInstances.length).toBe(2);
+
+        // const selectTask2Row = fixture.nativeElement.querySelector('[data-automation-id="text_No name"]');
+        // selectTask2Row.click();
+
+        // fixture.detectChanges();
+        // await fixture.whenStable();
+
+        // expect(component.selectedInstances.length).toBe(1);
+        // const selectRow1 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-0"]');
+        // const selectRow2 = fixture.nativeElement.querySelector('[class*="adf-is-selected"][data-automation-id="datatable-row-1"]');
+        // expect(selectRow1).toBeNull();
+        // expect(selectRow2).toBeDefined();
     });
 
     it('should change selected row after clicking on different row', async () => {
