@@ -38,9 +38,7 @@ import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { RenditionService } from '../common/services/rendition.service';
-import { format } from 'date-fns';
-import add from 'date-fns/add';
-import endOfDay from 'date-fns/endOfDay';
+import { format, add, endOfDay } from 'date-fns';
 
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
@@ -117,7 +115,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             .subscribe(value => this.onTimeChanged(value));
     }
 
-    onTimeChanged(date: Date | string) {
+    onTimeChanged(date: Date) {
         this.updateNode(date);
     }
 
@@ -160,6 +158,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     onDatetimepickerClosed() {
+        this.dateTimePickerInput.nativeElement.blur();
         if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
@@ -189,10 +188,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createSharedLinks(sharedLinkParams: string | SharedLinkBodyCreate) {
+    private createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.createSharedLinks(sharedLinkParams).subscribe(
+        this.sharedLinksApiService.createSharedLinks(nodeId, sharedLinkWithExpirySettings).subscribe(
             (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
@@ -281,7 +280,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         return expiryDate;
     }
 
-    private updateNode(date: Date | string) {
+    private updateNode(date: Date) {
         let expiryDate: Date | string;
         if (date) {
             if (this.type === 'date') {
@@ -302,7 +301,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                         this.isFileShared = true;
                         this.handleError(response);
                     } else {
-                        this.sharedLinkWithExpirySettings(expiryDate);
+                        this.sharedLinkWithExpirySettings(expiryDate as Date);
                         this.isLinkWithExpiryDate = true;
                         this.updateEntryExpiryDate(date);
                     }
@@ -310,15 +309,15 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    private sharedLinkWithExpirySettings(expiryDate: Date | string) {
+    private sharedLinkWithExpirySettings(expiryDate: Date) {
         const nodeObject: SharedLinkBodyCreate = {
             nodeId: this.data.node.entry.id,
             expiresAt: expiryDate as Date
         };
-        this.createSharedLinks(nodeObject);
+        this.createSharedLinks(this.data.node.entry.id, nodeObject);
     }
 
-    private updateEntryExpiryDate(date: Date | string) {
+    private updateEntryExpiryDate(date: Date) {
         const {properties} = this.data.node.entry;
 
         if (properties) {

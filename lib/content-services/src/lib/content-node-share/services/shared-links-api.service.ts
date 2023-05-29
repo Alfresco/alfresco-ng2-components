@@ -62,11 +62,12 @@ export class SharedLinksApiService {
      * Creates a shared link available to the current user.
      *
      * @param nodeId ID of the node to link to
+     * @param sharedLinkWithExpirySettings shared link with nodeId and expiryDate
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
-    createSharedLinks(nodeId: string | SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink(typeof nodeId === 'string' ? { nodeId } : nodeId, options);
+    createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
+        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings? sharedLinkWithExpirySettings : { nodeId }, options);
 
         return from(promise).pipe(
             catchError((err) => of(err))
