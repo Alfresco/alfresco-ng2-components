@@ -40,7 +40,6 @@ import { takeUntil, debounceTime } from 'rxjs/operators';
 import { RenditionService } from '../common/services/rendition.service';
 import { format, add, endOfDay } from 'date-fns';
 
-
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
 @Component({
