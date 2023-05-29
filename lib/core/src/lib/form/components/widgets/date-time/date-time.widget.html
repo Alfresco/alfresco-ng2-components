@@ -7,7 +7,7 @@
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
             <input matInput
                    [id]="field.id"
-                   [value]="field.value | adfMomentDateTimeUtcToLocal"
+                   [value]="field.value | adfMomentDateTimeUtcToLocal: field.dateDisplayFormat"
                    [required]="isRequired()"
                    [disabled]="field.readOnly"
                    (change)="onDateChanged($any($event).srcElement.value)"
@@ -25,7 +25,7 @@
         <input
             type="hidden"
             [matDatetimepicker]="datetimePicker"
-            [value]="field.value | adfMomentDate: field.dateDisplayFormat"
+            [value]="field.value | adfMomentDateTimeUtcToLocal: field.dateDisplayFormat"
             [min]="minDate"
             [max]="maxDate"
             [disabled]="field.readOnly"

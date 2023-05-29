@@ -64,14 +64,11 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
-        if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = moment.utc(this.field.minValue, 'YYYY-MM-DDTHH:mm:ssZ');
-            }
-
-            if (this.field.maxValue) {
-                this.maxDate = moment.utc(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
-            }
+        if (this.field?.minValue) {
+            this.minDate = moment.utc(this.field.minValue, 'YYYY-MM-DDTHH:mm:ssZ');
+        }
+        if (this.field?.maxValue) {
+            this.maxDate = moment.utc(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
         }
     }
 
@@ -82,11 +79,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     onDateChanged(newDateValue) {
         const date = moment(newDateValue, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = moment(date).utc();
-        } else {
-            this.field.value = newDateValue;
-        }
+        this.field.value = date.isValid() ? moment(date).utc() : newDateValue;
         this.onFieldChanged(this.field);
     }
 }

@@ -20,11 +20,7 @@ import moment, { Moment } from 'moment';
 
 @Pipe({ name: 'adfMomentDateTimeUtcToLocal' })
 export class MomentDateTimeUtcToLocalPipe implements PipeTransform {
-    transform(value: moment.MomentInput): Moment | null {
-        if(value) {
-            return moment(value).utc().local();
-        } else {
-            return null;
-        }
+    transform(value: moment.MomentInput, dateFormat: string): Moment | null {
+        return value ? moment.utc(value, dateFormat).local() : null;
     }
 }
