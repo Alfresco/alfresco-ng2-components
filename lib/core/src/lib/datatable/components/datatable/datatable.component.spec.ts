@@ -1352,7 +1352,7 @@ describe('DataTable', () => {
 
         dataTable.resetSelection();
         const rowClickPromise = dataTable.rowClick.pipe(take(1)).toPromise();
-        const rowElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-0"]`)).nativeElement as HTMLElement;
+        const rowElement = fixture.debugElement.query(By.css(`[data-automation-id="datatable-row-0"] > div`)).nativeElement as HTMLElement;
         rowElement.dispatchEvent(new MouseEvent('click'));
         fixture.detectChanges();
         await rowClickPromise;
