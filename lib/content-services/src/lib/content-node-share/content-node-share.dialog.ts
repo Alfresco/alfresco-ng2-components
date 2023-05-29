@@ -35,10 +35,13 @@ import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate, SharedLinkEntry } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
-import moment from 'moment';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { RenditionService } from '../common/services/rendition.service';
+import { format } from 'date-fns';
+import add from 'date-fns/add';
+import endOfDay from 'date-fns/endOfDay';
+
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -51,7 +54,7 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
 
-    minDate = moment().add(1, 'd');
+    minDate = add(new Date(), { days: 1 });
     sharedId: string;
     fileName: string;
     baseShareUrl: string;
@@ -112,10 +115,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe(value => this.onTimeChanged(value));
-
     }
 
-    onTimeChanged(date: moment.Moment) {
+    onTimeChanged(date: Date | string) {
         this.updateNode(date);
     }
 
@@ -273,19 +275,19 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
-            time: expiryDate ? moment(expiryDate).local() : null
+            time: expiryDate ? new Date(expiryDate) : null
         }, { emitEvent: false });
 
         return expiryDate;
     }
 
-    private updateNode(date: moment.Moment) {
+    private updateNode(date: Date | string) {
         let expiryDate: Date | string;
         if (date) {
             if (this.type === 'date') {
-                expiryDate =  date.endOf('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+                expiryDate = format(endOfDay(date as Date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
             } else {
-                expiryDate = date.utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+                expiryDate = format((new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
             }
         } else {
             expiryDate = null;
@@ -309,24 +311,19 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     private sharedLinkWithExpirySettings(expiryDate: Date | string) {
-        if (typeof expiryDate === 'string') {
-            const lastIndex = expiryDate?.lastIndexOf(':');
-            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
-        }
         const nodeObject: SharedLinkBodyCreate = {
             nodeId: this.data.node.entry.id,
             expiresAt: expiryDate as Date
         };
-
         this.createSharedLinks(nodeObject);
     }
 
-    private updateEntryExpiryDate(date: moment.Moment) {
+    private updateEntryExpiryDate(date: Date | string) {
         const {properties} = this.data.node.entry;
 
         if (properties) {
             properties['qshare:expiryDate'] = date
-                ? date.local()
+                ? new Date(date)
                 : null;
         }
     }

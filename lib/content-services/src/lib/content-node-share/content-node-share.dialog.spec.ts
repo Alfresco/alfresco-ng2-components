@@ -28,9 +28,10 @@ import { RenditionService } from '../common/services/rendition.service';
 
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
-import moment from 'moment';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { format } from 'date-fns';
+import endOfDay from 'date-fns/endOfDay';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -256,7 +257,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        component.form.controls['time'].setValue(moment());
+        component.form.controls['time'].setValue(new Date());
 
         fixture.detectChanges();
 
@@ -305,7 +306,7 @@ describe('ShareDialogComponent', () => {
 
         it('should update node with input date and end of day time when type is `date`', fakeAsync(() => {
             const dateTimePickerType = 'date';
-            const date = moment('2525-01-01 13:00:00');
+            const date = new Date('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
 
             fixture.detectChanges();
@@ -316,9 +317,7 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(500);
 
-            let expiryDate = date.endOf('day').utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-            const lastIndex = expiryDate?.lastIndexOf(':');
-            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
+            const expiryDate = format(endOfDay(date as Date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
 
             expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
             expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
@@ -329,7 +328,7 @@ describe('ShareDialogComponent', () => {
 
         it('should update node with input date and time when type is `datetime`', fakeAsync(() => {
             const dateTimePickerType = 'datetime';
-            const date = moment('2525-01-01 13:00:00');
+            const date = new Date('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
 
             fixture.detectChanges();
@@ -340,9 +339,7 @@ describe('ShareDialogComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            let expiryDate = date.utc().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-            const lastIndex = expiryDate?.lastIndexOf(':');
-            expiryDate = expiryDate?.substring(0, lastIndex) + expiryDate?.substring(lastIndex + 1, expiryDate?.length);
+            const expiryDate = format((new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
 
             expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
             expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
