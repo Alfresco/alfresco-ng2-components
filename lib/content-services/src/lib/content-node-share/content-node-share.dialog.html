@@ -1,8 +1,11 @@
 <div class="adf-share-link__dialog-content">
     <div class="adf-share-link__dialog-container">
         <div class="adf-share-link--row">
-            <div data-automation-id="adf-share-dialog-title" class="adf-share-link__title adf-share-link__label adf-share-link__heading"
-                role="heading" aria-level="1">
+            <div
+                data-automation-id="adf-share-dialog-title"
+                class="adf-share-link__title adf-share-link__label adf-share-link__heading"
+                role="heading"
+                aria-level="1">
                 {{ 'SHARE.DIALOG-TITLE' | translate }} {{ fileName }}
             </div>
             <mat-icon mat-dialog-close class="adf-share-link__close adf-share-link__icon">close</mat-icon>
@@ -12,7 +15,8 @@
             <form [formGroup]="form" class="adf-share-link__form">
                 <div class="adf-share-link--row">
                     <mat-icon class="adf-share-link__icon">timer</mat-icon>
-                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}</div>
+                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.LINK-EXPIRY-DATE' | translate }}
+                    </div>
                     <mat-slide-toggle
                         #slideToggleExpirationDate
                         [disabled]="!canUpdate"
@@ -23,8 +27,10 @@
                         (change)="onToggleExpirationDate($event)">
                     </mat-slide-toggle>
                 </div>
-                <div *ngIf="isExpiryDateToggleChecked" data-automation-id="adf-slide-toggle-checked"
-                class="adf-share-link__date-time-container">
+                <div
+                    *ngIf="isExpiryDateToggleChecked"
+                    data-automation-id="adf-slide-toggle-checked"
+                    class="adf-share-link__date-time-container">
                     <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datetimepicker-toggle
@@ -39,7 +45,8 @@
                             [type]="type"
                             [timeInterval]="1">
                         </mat-datetimepicker>
-                        <input class="adf-share-link__input"
+                        <input
+                            class="adf-share-link__input"
                             #dateTimePickerInput
                             matInput
                             placeholder="{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}"
@@ -52,14 +59,15 @@
                 <p class="adf-share-link__info adf-share-link__para">{{ 'SHARE.SHARE-LINK' | translate }}</p>
                 <div class="adf-share-link--row">
                     <mat-slide-toggle
-                    color="primary"
-                    data-automation-id="adf-share-toggle"
-                    aria-label="{{ 'SHARE.TITLE' | translate }}"
-                    [checked]="isFileShared"
-                    [disabled]="!canUpdate || isDisabled"
-                    (change)="onSlideShareChange($event)">
+                        color="primary"
+                        data-automation-id="adf-share-toggle"
+                        aria-label="{{ 'SHARE.TITLE' | translate }}"
+                        [checked]="isFileShared"
+                        [disabled]="!canUpdate || isDisabled"
+                        (change)="onSlideShareChange($event)">
                     </mat-slide-toggle>
-                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}</div>
+                    <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}
+                    </div>
                 </div>
                 <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                     <input
@@ -76,7 +84,8 @@
                         class="adf-input-action adf-share-link__icon"
                         role="button"
                         matSuffix
-                        [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate" [adf-clipboard]
+                        [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate"
+                        [adf-clipboard]
                         [attr.aria-label]="'SHARE.COPY_BUTTON_LABEL' | translate"
                         [target]="sharedLinkInput"
                         tabindex="0">
@@ -88,7 +97,8 @@
                 </p>
                 <div class="adf-share-link--row">
                     <mat-icon class="adf-share-link__icon">public</mat-icon>
-                    <p class="adf-share-link__info adf-sharable-link adf-share-link__public-content adf-share-link__para">
+                    <p
+                        class="adf-share-link__info adf-sharable-link adf-share-link__public-content adf-share-link__para">
                         {{ 'SHARE.PUBLIC-CONTENT' | translate }}
                     </p>
                 </div>
