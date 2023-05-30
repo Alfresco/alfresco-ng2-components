@@ -30,8 +30,7 @@ import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { format } from 'date-fns';
-import endOfDay from 'date-fns/endOfDay';
+import { format, endOfDay } from 'date-fns';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -270,7 +269,7 @@ describe('ShareDialogComponent', () => {
         await fixture.whenStable();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
-        expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId');
+        expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId', undefined);
     });
 
     it('should not allow expiration date action when node has no update permission', async () => {
@@ -320,7 +319,7 @@ describe('ShareDialogComponent', () => {
             const expiryDate = format(endOfDay(date as Date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
 
             expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
-            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId', {
                 nodeId: 'nodeId',
                 expiresAt: expiryDate
             });
@@ -342,7 +341,7 @@ describe('ShareDialogComponent', () => {
             const expiryDate = format((new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
 
             expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
-            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith({
+            expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId', {
                 nodeId: 'nodeId',
                 expiresAt: expiryDate
             });
