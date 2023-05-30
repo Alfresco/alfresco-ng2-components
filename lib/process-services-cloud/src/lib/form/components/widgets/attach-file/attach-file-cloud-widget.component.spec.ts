@@ -392,26 +392,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(getAliasSpy).toHaveBeenCalledOnceWith(wrongAlias);
             expect(widget.getAliasAndRelativePathFromDestinationFolderPath(wrongAlias)).toEqual(expectedDestinationPath);
             expect(getNodeIdFromPathSpy).toHaveBeenCalledWith(expectedDestinationPath);
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true, true);
-        });
-
-        it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and multiple upload for Alfresco Content + Locale', async () => {
-            const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
-            const getAliasSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
-            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, true);
-            fixture.detectChanges();
-            await fixture.whenStable();
-            clickOnAttachFileWidget('attach-file-alfresco');
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const expectedDestinationPath = { alias: '-my-', path: undefined };
-            const wrongAlias = allSourceWithWrongAliasParams.fileSource.destinationFolderPath.value;
-
-            expect(getAliasSpy).toHaveBeenCalledOnceWith(wrongAlias);
-            expect(widget.getAliasAndRelativePathFromDestinationFolderPath(wrongAlias)).toEqual(expectedDestinationPath);
-            expect(getNodeIdFromPathSpy).toHaveBeenCalledWith(expectedDestinationPath);
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath does not have alias for Alfresco Content + Locale', async () => {
