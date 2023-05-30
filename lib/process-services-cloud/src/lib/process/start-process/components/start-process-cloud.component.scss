@@ -4,13 +4,9 @@
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
-        mat-card-actions {
+        &-cloud-actions {
             display: flex;
-            justify-content: flex-end;
-
-            .mat-button {
-                text-transform: uppercase !important;
-            }
+            place-content: flex-end;
         }
     }
 
