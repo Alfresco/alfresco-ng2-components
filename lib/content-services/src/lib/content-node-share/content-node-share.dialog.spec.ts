@@ -286,7 +286,7 @@ describe('ShareDialogComponent', () => {
 
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]')
         .classList).toContain('mat-disabled');
-        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]')).toBe(null);
+        expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]').style.display).toEqual('none');
     });
 
 
