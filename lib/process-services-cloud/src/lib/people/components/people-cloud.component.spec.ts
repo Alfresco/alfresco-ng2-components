@@ -262,6 +262,14 @@ describe('PeopleCloudComponent', () => {
             const errorIcon = element.querySelector('.adf-error-icon').textContent;
             expect(errorIcon).toEqual('error_outline');
         });
+
+        it('should not search user if typed value is too short', async () => {
+            component.minNrOfCharacters = 2;
+            fixture.detectChanges();
+            await searchUsers('a');
+
+            expect(searchSpy).not.toHaveBeenCalled();
+        });
     });
 
     describe('No preselected users', () => {

@@ -123,6 +123,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
+    @Input()
+    minNrOfCharacters?: number;
+
     /** Emitted when a user is selected. */
     @Output()
     selectUser = new EventEmitter<IdentityUserModel>();
@@ -164,7 +167,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
         private identityUserService: IdentityUserServiceInterface,
-        private logService: LogService) {}
+        private logService: LogService) { }
 
     ngOnInit(): void {
         this.initSearch();
@@ -188,6 +191,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private initSearch(): void {
         this.initializeStream();
         this.typingUniqueValueNotEmpty$.pipe(
+            filter((name: string) => {
+                if (this.minNrOfCharacters !== undefined) {
+                    return name.length >= this.minNrOfCharacters;
+                }
+                return true;
+            }),
             switchMap((name: string) =>
                 this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
@@ -378,8 +387,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
         const indexToRemove = this.selectedUsers.findIndex(user => user.id === id
-                && user.username === username
-                && user.email === email);
+            && user.username === username
+            && user.email === email);
 
         if (indexToRemove !== -1) {
             this.selectedUsers.splice(indexToRemove, 1);
@@ -388,8 +397,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     private removeUserFromValidation({ id, username, email }: IdentityUserModel): void {
         const indexToRemove = this.invalidUsers.findIndex(user => user.id === id
-                && user.username === username
-                && user.email === email);
+            && user.username === username
+            && user.email === email);
 
         if (indexToRemove !== -1) {
             this.invalidUsers.splice(indexToRemove, 1);
