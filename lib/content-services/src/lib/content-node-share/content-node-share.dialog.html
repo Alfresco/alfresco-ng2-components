@@ -28,7 +28,7 @@
                     </mat-slide-toggle>
                 </div>
                 <div
-                    *ngIf="isExpiryDateToggleChecked"
+                    [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
                     data-automation-id="adf-slide-toggle-checked"
                     class="adf-share-link__date-time-container">
                     <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
