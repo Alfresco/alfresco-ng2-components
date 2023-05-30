@@ -4,6 +4,16 @@
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
 
+        mat-card-actions {
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+
+            .mat-button {
+                text-transform: uppercase !important;
+            }
+        }
+
         &-cloud-actions {
             display: flex;
             place-content: flex-end;
