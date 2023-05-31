@@ -141,6 +141,13 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
+    @HostListener('document:fullscreenchange')
+    fullScreenChangeHandler() {
+        if(document.fullscreenElement) {
+            this.reset();
+        }
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {

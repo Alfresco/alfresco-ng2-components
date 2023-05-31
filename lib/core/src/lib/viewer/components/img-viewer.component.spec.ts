@@ -369,6 +369,17 @@ describe('Test Img viewer component ', () => {
             expect(component.isSaving.emit).toHaveBeenCalledWith(true);
             expect(component.isSaving.emit).toHaveBeenCalledWith(false);
         }));
+
+        it('should reset the viewer after going to full screen mode', () => {
+            Object.defineProperty(document, 'fullscreenElement', {
+                value: true
+            });
+            spyOn(component, 'reset');
+
+            document.dispatchEvent(new Event('fullscreenchange'));
+
+            expect(component.reset).toHaveBeenCalled();
+        });
     });
 
 });
