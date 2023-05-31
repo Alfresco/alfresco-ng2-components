@@ -1,0 +1,18 @@
+.adf-search-chip-input {
+    padding-bottom: 15px;
+
+    .mat-chip-list-wrapper {
+        border: 1px solid var(--adf-theme-mat-grey-color-a400);
+        border-radius: 5px;
+        margin-top: 5px;
+
+        .mat-chip {
+            word-break: break-all;
+            height: unset;
+        }
+
+        input {
+            height: 25px;
+        }
+    }
+}
