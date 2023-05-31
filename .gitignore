@@ -32,5 +32,5 @@ out-tsc
 e2e-result-*
 licenses.txt
 .DS_Store
-
 .angular
+NX
