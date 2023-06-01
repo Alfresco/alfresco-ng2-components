@@ -1,7 +1,7 @@
 <mat-label>{{label | translate}}</mat-label>
 <mat-chip-list #chipList>
     <mat-chip *ngFor="let phrase of phrases" (removed)="removePhrase(phrase)">
-      {{phrase}}
+      <span>{{phrase}}</span>
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
       </button>
