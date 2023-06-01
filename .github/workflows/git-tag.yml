@@ -61,7 +61,7 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   NPM_REGISTRY_ADDRESS: ${{ secrets.NPM_REGISTRY_ADDRESS }}
   NPM_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+  BOT_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
   DEMO_SHELL_DIR: "./dist/demo-shell"
@@ -92,7 +92,7 @@ jobs:
     name: "Release tag"
     runs-on: ubuntu-22.04
     env:
-      GITHUB_TOKEN: $GH_TOKEN
+      GITHUB_TOKEN: $BOT_GITHUB_TOKEN
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
