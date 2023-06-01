@@ -37,3 +37,4 @@ The pages linked below contain the licenses for all third party dependencies of 
 - [ADF 6.0.0-A.3](license-info-6.0.0-A.3.md)
 - [ADF 6.0.0-A.4](license-info-6.0.0-A.4.md)
 - [ADF 6.0.0](license-info-6.0.0.md)
+- [ADF 6.1.0](license-info-6.1.0.md)
