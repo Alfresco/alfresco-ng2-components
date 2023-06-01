@@ -71,10 +71,8 @@ describe('SearchLogicalFilterComponent', () => {
     }
 
     it('should update display value on init', () => {
-        spyOn(component, 'updateDisplayValue').and.callThrough();
         spyOn(component.displayValue$, 'next');
         component.ngOnInit();
-        expect(component.updateDisplayValue).toHaveBeenCalled();
         expect(component.displayValue$.next).toHaveBeenCalledOnceWith('');
     });
 

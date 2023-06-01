@@ -104,20 +104,6 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         }
     }
 
-    updateDisplayValue(): void {
-        if (this.hasValidValue()) {
-            const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
-                const fieldIndex = Object.values(LogicalSearchFields).indexOf(key as LogicalSearchFields);
-                const fieldKeyTranslated = this.translationService.instant(`SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[fieldIndex]}`);
-                const stackedPhrases = this.searchCondition[key].reduce((phraseAcc, phrase) => `${phraseAcc === '' ? phraseAcc : phraseAcc + ','} ${phrase}`, '');
-                return stackedPhrases !== '' ? `${acc} ${fieldKeyTranslated}: ${stackedPhrases}` : acc;
-            }, '');
-            this.displayValue$.next(displayValue);
-        } else {
-            this.displayValue$.next('');
-        }
-    }
-
     hasValidValue(): boolean {
         return Object.keys(this.searchCondition).some((key: string) => this.searchCondition[key].length !== 0);
     }
@@ -137,6 +123,20 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
             this.context.queryFragments[this.id] = '';
             this.updateDisplayValue();
             this.context.update();
+        }
+    }
+
+    private updateDisplayValue(): void {
+        if (this.hasValidValue()) {
+            const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
+                const fieldIndex = Object.values(LogicalSearchFields).indexOf(key as LogicalSearchFields);
+                const fieldKeyTranslated = this.translationService.instant(`SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[fieldIndex]}`);
+                const stackedPhrases = this.searchCondition[key].reduce((phraseAcc, phrase) => `${phraseAcc === '' ? phraseAcc : phraseAcc + ','} ${phrase}`, '');
+                return stackedPhrases !== '' ? `${acc} ${fieldKeyTranslated}: ${stackedPhrases}` : acc;
+            }, '');
+            this.displayValue$.next(displayValue);
+        } else {
+            this.displayValue$.next('');
         }
     }
 }

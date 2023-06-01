@@ -44,7 +44,7 @@ export class SearchChipInputComponent implements OnInit {
     readonly separatorKeysCodes = [ENTER] as const;
 
     ngOnInit() {
-        this.onReset.subscribe(() => this.resetChips());
+        this.onReset?.subscribe(() => this.resetChips());
     }
 
     addPhrase(event: MatChipInputEvent) {
