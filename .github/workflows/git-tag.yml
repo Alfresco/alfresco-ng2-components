@@ -3,7 +3,7 @@ name: "git-tag"
 on:
   workflow_call:
     inputs:
-      dry-run-release:
+      dry-run-flag:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
@@ -84,7 +84,7 @@ jobs:
     uses: ./.github/workflows/release.yml
     secrets: inherit
     with:
-      dry-run-release: false
+      dry-run-flag: false
 
   setup:
     needs: release
@@ -99,7 +99,7 @@ jobs:
       - id: set-dryrun
         uses: ./.github/actions/enable-dryrun
         with:
-          dry-run-flag: ${{ inputs.dry-run-release }}
+          dry-run-flag: ${{ inputs.dry-run-flag }}
       - name: install NPM
         uses: actions/setup-node@v3
         with:
