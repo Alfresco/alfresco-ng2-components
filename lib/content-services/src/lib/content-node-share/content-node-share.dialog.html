@@ -33,27 +33,25 @@
                     class="adf-share-link__date-time-container">
                     <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
-                        <mat-datetimepicker-toggle
+                        <mat-datepicker-toggle
                             [disabled]="time.disabled"
-                            [for]="datetimePicker"
+                            [for]="datePicker"
                             matSuffix
                             class="adf-share-link__icon adf-share-link__calender-icon">
-                        </mat-datetimepicker-toggle>
-                        <mat-datetimepicker
-                            #datetimePicker
-                            (closed)="onDatetimepickerClosed()"
-                            [type]="type"
-                            [timeInterval]="1">
-                        </mat-datetimepicker>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker
+                            #datePicker
+                            (closed)="onDatePickerClosed()">
+                        </mat-datepicker>
                         <input
                             class="adf-share-link__input"
-                            #dateTimePickerInput
+                            #datePickerInput
                             matInput
                             placeholder="{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}"
                             [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
                             [min]="minDate"
                             formControlName="time"
-                            [matDatetimepicker]="datetimePicker" />
+                            [matDatepicker]="datePicker" />
                     </mat-form-field>
                 </div>
                 <p class="adf-share-link__info adf-share-link__para">{{ 'SHARE.SHARE-LINK' | translate }}</p>
@@ -69,7 +67,10 @@
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}
                     </div>
                 </div>
-                <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
+                <mat-form-field
+                    class="adf-full-width adf-float-label"
+                    floatLabel='always'
+                    [ngClass]="isLinkWithExpiryDate? 'adf-share-link__border-color' : ''">
                     <input
                         #sharedLinkInput
                         data-automation-id="adf-share-link"

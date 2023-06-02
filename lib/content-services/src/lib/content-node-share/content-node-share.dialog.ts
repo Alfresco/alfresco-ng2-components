@@ -62,15 +62,15 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         sharedUrl: new UntypedFormControl(''),
         time: new UntypedFormControl({value: '', disabled: true})
     });
-    type: DatePickerType = 'datetime';
+    type: DatePickerType = 'date';
     maxDebounceTime = 500;
     isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', {static: true})
     slideToggleExpirationDate;
 
-    @ViewChild('dateTimePickerInput', {static: true})
-    dateTimePickerInput;
+    @ViewChild('datePickerInput', {static: true})
+    datePickerInput;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -86,7 +86,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.type = this.appConfigService.get<DatePickerType>('sharedLinkDateTimePickerType', 'datetime');
+        this.type = this.appConfigService.get<DatePickerType>('sharedLinkDateTimePickerType', 'date');
 
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
@@ -156,8 +156,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    onDatetimepickerClosed() {
-        this.dateTimePickerInput.nativeElement.blur();
+    onDatePickerClosed() {
+        this.datePickerInput.nativeElement.blur();
         if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
@@ -283,7 +283,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         let expiryDate: Date | string;
         if (date) {
             if (this.type === 'date') {
-                expiryDate = format(endOfDay(date as Date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+                expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
             } else {
                 expiryDate = format((new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
             }
