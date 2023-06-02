@@ -22,6 +22,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
+import { OauthConfigModel } from '../auth/models/oauth-config.model';
 
 /* spellchecker: disable */
 // eslint-disable-next-line no-shadow
@@ -227,6 +228,23 @@ export class AppConfigService {
                     }
                 });
         });
+    }
+
+    /**
+     * OAuth2 configuration
+     */
+    get oauth2(): OauthConfigModel {
+        const config = this.get(AppConfigValues.OAUTHCONFIG, {});
+        const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
+        const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
+        const codeFlow = config['codeFlow'] === true || config['codeFlow'] === 'true';
+
+        return {
+            ...(config as OauthConfigModel),
+            implicitFlow,
+            silentLogin,
+            codeFlow
+        };
     }
 
     private formatString(str: string, keywords: Map<string, string>): string {

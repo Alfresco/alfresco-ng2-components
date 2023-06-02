@@ -65,7 +65,8 @@ export class AlfrescoApiService {
     }
 
     private getAuthWithFixedOriginLocation(): OauthConfigModel {
-        const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth = this.appConfig.oauth2;
+
         if (oauth) {
             oauth.redirectUri = window.location.origin + window.location.pathname;
             oauth.redirectUriLogout = window.location.origin + window.location.pathname;

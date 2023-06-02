@@ -18,7 +18,6 @@
 import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { OauthConfigModel } from '../auth/models/oauth-config.model';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApiLoaderService) {
@@ -37,7 +36,7 @@ export class AlfrescoApiLoaderService {
     }
 
     private async initAngularAlfrescoApi() {
-        const oauth: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth = this.appConfig.oauth2;
 
         if (oauth) {
             oauth.redirectUri = window.location.origin + window.location.pathname;

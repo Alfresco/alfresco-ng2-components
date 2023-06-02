@@ -118,13 +118,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected getOauthConfig(): OauthConfigModel {
-        return (
-            this.appConfigService &&
-            this.appConfigService.get<OauthConfigModel>(
-                AppConfigValues.OAUTHCONFIG,
-                null
-            )
-        );
+        return this.appConfigService.oauth2;
     }
 
     protected getLoginRoute(): string {
@@ -148,21 +142,12 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected isOAuthWithoutSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
-        return (
-            this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin
-        );
+        const oauth = this.appConfigService.oauth2;
+        return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
     }
 
     protected isSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(
-            AppConfigValues.OAUTHCONFIG,
-            null
-        );
-
+        const oauth = this.appConfigService.oauth2;;
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 
