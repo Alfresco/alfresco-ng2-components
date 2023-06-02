@@ -91,6 +91,10 @@
         &__date-time-container {
             padding-bottom: 8px;
         }
+
+        &__border-color {
+            border: 1px solid var(--theme-warn-color);
+        }
     }
 
     .adf-input-action {
