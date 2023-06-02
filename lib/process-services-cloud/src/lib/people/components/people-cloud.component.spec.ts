@@ -263,10 +263,8 @@ describe('PeopleCloudComponent', () => {
             expect(errorIcon).toEqual('error_outline');
         });
 
-        it('should not search user if typed value is too short', async () => {
-            component.minNrOfCharacters = 2;
-            fixture.detectChanges();
-            await searchUsers('a');
+        it('should not search user if typed no character', async () => {
+            await searchUsers('');
 
             expect(searchSpy).not.toHaveBeenCalled();
         });

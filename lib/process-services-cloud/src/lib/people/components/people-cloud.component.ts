@@ -123,9 +123,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
-    @Input()
-    minNrOfCharacters?: number;
-
     /** Emitted when a user is selected. */
     @Output()
     selectUser = new EventEmitter<IdentityUserModel>();
@@ -191,12 +188,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     private initSearch(): void {
         this.initializeStream();
         this.typingUniqueValueNotEmpty$.pipe(
-            filter((name: string) => {
-                if (this.minNrOfCharacters !== undefined) {
-                    return name.length >= this.minNrOfCharacters;
-                }
-                return true;
-            }),
+            filter((name: string) => name.length >= 1),
             switchMap((name: string) =>
                 this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
             ),
