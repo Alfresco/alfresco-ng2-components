@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.1.0](#v610)
 -   [v6.0.0](#v600)
 -   [v5.1.0](#v510)
 -   [v4.7.0](#v470)
@@ -41,6 +42,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v6.1.0
+
+<!--v610 start-->
+
+-   [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md)
+
+<!--v610 end-->
+
 ## v6.0.0
 
 <!--v600 start-->
@@ -54,7 +63,6 @@ backend services have been tested with each released version of ADF.
 -   [Process user info component](process-services/components/process-user-info.component.md)
 -   [Task comments service](content-services/services/task-comments.service.md)
 -   [Viewer render component](core/components/viewer-render.component.md)
--   [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md)
 
 <!--v600 end-->
 

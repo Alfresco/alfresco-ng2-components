@@ -1,6 +1,6 @@
 ---
 Title: Use none component view encapsulation
-Added: v6.0.0
+Added: v6.1.0
 Status: Active
 Last reviewed: 2023-05-23
 ---
