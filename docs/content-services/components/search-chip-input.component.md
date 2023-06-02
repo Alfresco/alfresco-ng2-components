@@ -7,7 +7,7 @@ Last reviewed: 2023-06-01
 
 # [Search Chip Input component](../../../lib/content-services/src/lib/search/components/search-chip-input/search-chip-input.component.ts "Defined in search-chip-input.component.ts")
 
-Represents a input with stacked list of chips as phrases added through input.
+Represents an input with stacked list of chips as phrases added through input.
 
 ![Search Chip Input](../../docassets/images/search-chip-input.png)
 

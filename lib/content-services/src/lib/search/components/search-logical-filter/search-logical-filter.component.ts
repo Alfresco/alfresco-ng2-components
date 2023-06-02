@@ -26,11 +26,11 @@ export enum LogicalSearchFields {
     MATCH_ALL = 'matchAll',
     MATCH_ANY = 'matchAny',
     EXCLUDE = 'exclude'
-};
+}
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string[]; };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {};
+export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
 @Component({
     selector: 'adf-search-logical-filter',

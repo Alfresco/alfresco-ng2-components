@@ -101,14 +101,6 @@ describe('SearchLogicalFilterComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalledOnceWith(` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[0]}:  test2`);
     });
 
-    it('should display each phrase in display value', () => {
-        spyOn(component, 'onPhraseChange').and.callThrough();
-        spyOn(component.displayValue$, 'next');
-        enterNewPhrase('test2', 0);
-        expect(component.onPhraseChange).toHaveBeenCalled();
-        expect(component.displayValue$.next).toHaveBeenCalledOnceWith(` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[0]}:  test2`);
-    });
-
     it('should have correct display value after each field has at least one phrase', () => {
         spyOn(component, 'onPhraseChange').and.callThrough();
         spyOn(component.displayValue$, 'next');

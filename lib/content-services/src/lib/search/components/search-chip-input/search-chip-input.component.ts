@@ -16,9 +16,10 @@
  */
 
 import { ENTER } from '@angular/cdk/keycodes';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-chip-input',
@@ -27,7 +28,7 @@ import { Observable } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-chip-input' }
 })
-export class SearchChipInputComponent implements OnInit {
+export class SearchChipInputComponent implements OnInit, OnDestroy {
     @Input()
     label: string;
 
@@ -40,11 +41,17 @@ export class SearchChipInputComponent implements OnInit {
     @Output()
     phrasesChanged: EventEmitter<string[]> = new EventEmitter();
 
+    private onDestroy$ = new Subject<void>();
     phrases: string[] = [];
     readonly separatorKeysCodes = [ENTER] as const;
 
     ngOnInit() {
-        this.onReset?.subscribe(() => this.resetChips());
+        this.onReset?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.resetChips());
+    }
+
+    ngOnDestroy(): void {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     addPhrase(event: MatChipInputEvent) {
@@ -57,12 +64,9 @@ export class SearchChipInputComponent implements OnInit {
         event.chipInput.clear();
     }
 
-    removePhrase(phrase: string) {
-        const index = this.phrases.indexOf(phrase);
-        if (index >= 0) {
-            this.phrases.splice(index, 1);
-            this.phrasesChanged.emit(this.phrases);
-        }
+    removePhrase(index: number) {
+        this.phrases.splice(index, 1);
+        this.phrasesChanged.emit(this.phrases);
     }
 
     private resetChips() {

@@ -7,7 +7,7 @@ Last reviewed: 2023-06-01
 
 # [Search Logical Filter component](../../../lib/content-services/src/lib/search/components/search-logical-filter/search-logical-filter.component.ts "Defined in search-logical-filter.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/search-widget.interface.ts) consisting of 3 chip inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 3 chip inputs representing logical conditions to form search query from.
 
 ![Search Logical Filter](../../docassets/images/search-logical-filter.png)
 
@@ -40,7 +40,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/search
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | field | string | Field/fields to apply the query to. Required value |
-| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false. |
+| hideDefaultAction | boolean | Show/hide the [widget](../../../lib/testing/src/lib/protractor/core/pages/form/widgets/widget.ts) actions. By default is false. |
 
 ## Details
 

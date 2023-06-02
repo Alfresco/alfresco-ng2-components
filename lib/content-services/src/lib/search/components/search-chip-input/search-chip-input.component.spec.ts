@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChip } from '@angular/material/chips';
+import { MatChip, MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -70,6 +70,12 @@ describe('SearchChipInputComponent', () => {
         if (!!chips && chips.length > 0) {
             chips.forEach((chip) => chip.remove());
         }
+    }
+
+    function removeChip(index: number) {
+        const removeBtns = fixture.debugElement.queryAll(By.directive(MatChipRemove)).map((removeBtn) => removeBtn.nativeElement);
+        removeBtns[index].click();
+        fixture.detectChanges();
     }
 
     it('should display label provided as component input', () => {
@@ -142,5 +148,14 @@ describe('SearchChipInputComponent', () => {
         fixture.detectChanges();
         expect(phrasesChangedSpy).toHaveBeenCalledOnceWith([]);
         expect(getChipList()).toEqual([]);
+    });
+
+    it('should remove chip upon clicking remove button', () => {
+        enterNewChip('test1');
+        enterNewChip('test2');
+        const phrasesChangedSpy = spyOn(component.phrasesChanged, 'emit');
+        removeChip(0);
+        expect(phrasesChangedSpy).toHaveBeenCalledOnceWith(['test2']);
+        expect(getChipList().length).toEqual(1);
     });
 });
