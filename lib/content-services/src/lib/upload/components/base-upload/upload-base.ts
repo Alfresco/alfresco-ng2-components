@@ -19,7 +19,7 @@ import { FileInfo, TranslationService } from '@alfresco/adf-core';
 import { FileUploadErrorEvent } from '../../../common/events/file.event';
 import { FileModel } from '../../../common/models/file.model';
 import { UploadService } from '../../../common/services/upload.service';
-import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone, Directive } from '@angular/core';
+import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone, Directive, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UploadFilesEvent } from '../upload-files.event';
 import { takeUntil } from 'rxjs/operators';
@@ -27,6 +27,9 @@ import { takeUntil } from 'rxjs/operators';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class UploadBase implements OnInit, OnDestroy {
+    protected uploadService = inject(UploadService);
+    protected translationService = inject(TranslationService);
+    protected ngZone = inject(NgZone);
 
     /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
      * Has no effect if undefined.
@@ -81,11 +84,6 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     updateFileVersion = new EventEmitter<CustomEvent>();
 
     protected onDestroy$ = new Subject<boolean>();
-
-    constructor(protected uploadService: UploadService,
-                protected translationService: TranslationService,
-                protected ngZone: NgZone) {
-    }
 
     ngOnInit() {
         this.uploadService.fileUploadError

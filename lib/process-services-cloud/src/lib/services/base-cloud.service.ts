@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { Injectable, inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
 
 export interface CallApiParams {
@@ -33,7 +34,11 @@ export interface CallApiParams {
     responseType?: string;
 }
 
+@Injectable()
 export class BaseCloudService {
+    protected apiService = inject(AlfrescoApiService);
+    protected appConfigService = inject(AppConfigService);
+    protected logService = inject(LogService);
 
     protected defaultParams: CallApiParams = {
         path: '',
@@ -41,10 +46,6 @@ export class BaseCloudService {
         contentTypes: ['application/json'],
         accepts: ['application/json']
     };
-
-    constructor(
-        protected apiService: AlfrescoApiService,
-        protected appConfigService: AppConfigService) {}
 
     getBasePath(appName: string): string {
         return appName

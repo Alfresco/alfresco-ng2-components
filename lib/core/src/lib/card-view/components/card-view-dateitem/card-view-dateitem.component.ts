@@ -21,7 +21,6 @@ import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerComponent } fro
 import { MAT_MOMENT_DATETIME_FORMATS, MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import moment, { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
 import { MomentDateAdapter } from '../../../common/utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../common/utils/moment-date-formats.model';
@@ -66,13 +65,12 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(cardViewUpdateService: CardViewUpdateService,
-                private dateAdapter: DateAdapter<Moment>,
+    constructor(private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private appConfig: AppConfigService,
                 private clipboardService: ClipboardService,
                 private translateService: TranslationService) {
-        super(cardViewUpdateService);
+        super();
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
 

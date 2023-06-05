@@ -15,12 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { CookieService } from '../../common/services/cookie.service';
-import { LogService } from '../../common/services/log.service';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { AppConfigValues } from '../../app-config/app-config.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
@@ -30,16 +27,11 @@ import { BaseAuthenticationService } from '../../services/base-authentication.se
     providedIn: 'root'
 })
 export class AuthenticationService extends BaseAuthenticationService {
+    private storageService = inject(StorageService);
     readonly supportCodeFlow = false;
 
-    constructor(
-        alfrescoApi: AlfrescoApiService,
-        appConfig: AppConfigService,
-        cookie: CookieService,
-        logService: LogService,
-        private storageService: StorageService
-    ) {
-        super(alfrescoApi, appConfig, cookie, logService);
+    constructor() {
+        super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
                 this.onLogin.next();

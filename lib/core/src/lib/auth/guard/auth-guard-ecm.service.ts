@@ -16,28 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    ActivatedRouteSnapshot, Router, UrlTree
-} from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { ActivatedRouteSnapshot, UrlTree } from '@angular/router';
 import { AuthGuardBase } from './auth-guard-base';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardEcm extends AuthGuardBase {
-
-    constructor(authenticationService: AuthenticationService,
-                router: Router,
-                appConfigService: AppConfigService,
-                dialog: MatDialog,
-                storageService: StorageService) {
-        super(authenticationService, router, appConfigService, dialog, storageService);
-    }
-
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;

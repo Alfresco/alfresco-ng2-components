@@ -18,26 +18,11 @@
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { CookieService } from '../../common/services/cookie.service';
-import { LogService } from '../../common/services/log.service';
-import { StorageService } from '../../common/services/storage.service';
-import { AppConfigService } from '../../app-config/app-config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationMock extends AuthenticationService {
-    constructor(
-        appConfig: AppConfigService,
-        storageService: StorageService,
-        alfrescoApi: AlfrescoApiService,
-        cookie: CookieService,
-        logService: LogService
-    ) {
-        super(alfrescoApi, appConfig, cookie, logService, storageService);
-    }
-
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
             return of({ type: 'type', ticket: 'ticket' });

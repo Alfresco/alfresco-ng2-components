@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, TranslationService
-} from '@alfresco/adf-core';
+import { EXTENDIBLE_COMPONENT, FileUtils, LogService } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
+    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject
 } from '@angular/core';
-import { UploadService } from '../../common/services/upload.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -43,6 +39,9 @@ import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-o
     encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
+    private contentService = inject(ContentService);
+    private nodesApiService = inject(NodesApiService);
+    protected logService = inject(LogService);
 
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()
@@ -66,20 +65,10 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     /** Emitted when create permission is missing. */
     @Output()
-    permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
+    permissionEvent = new EventEmitter<PermissionModel>();
 
     private hasAllowableOperations: boolean = false;
-
-    protected permissionValue: Subject<boolean> = new Subject<boolean>();
-
-    constructor(protected uploadService: UploadService,
-                private contentService: ContentService,
-                private nodesApiService: NodesApiService,
-                protected translationService: TranslationService,
-                protected logService: LogService,
-                protected ngZone: NgZone) {
-        super(uploadService, translationService, ngZone);
-    }
+    protected permissionValue = new Subject<boolean>();
 
     ngOnInit() {
         this.permissionValue.subscribe((permission: boolean) => {

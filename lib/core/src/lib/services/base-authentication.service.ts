@@ -23,35 +23,34 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CookieService } from '../common/services/cookie.service';
 import { LogService } from '../common/services/log.service';
+import { inject } from '@angular/core';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 
 export abstract class BaseAuthenticationService {
+    protected alfrescoApi = inject(AlfrescoApiService);
+    protected appConfig = inject(AppConfigService);
+    protected cookie = inject(CookieService);
+    private logService = inject(LogService);
+
     protected bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
     protected redirectUrl: RedirectionModel = null;
 
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
 
-    _peopleApi: PeopleApi;
+    private _peopleApi: PeopleApi;
     get peopleApi(): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.alfrescoApi.getInstance());
         return this._peopleApi;
     }
 
-    _profileApi: UserProfileApi;
+    private _profileApi: UserProfileApi;
     get profileApi(): UserProfileApi {
         this._profileApi = this._profileApi ?? new UserProfileApi(this.alfrescoApi.getInstance());
         return this._profileApi;
     }
-
-    constructor(
-        protected alfrescoApi: AlfrescoApiService,
-        protected appConfig: AppConfigService,
-        protected cookie: CookieService,
-        private logService: LogService
-    ) {}
 
     abstract readonly supportCodeFlow: boolean;
     abstract getToken(): string;

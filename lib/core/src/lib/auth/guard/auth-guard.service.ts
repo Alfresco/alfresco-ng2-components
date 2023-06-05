@@ -16,13 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
+import { ActivatedRouteSnapshot,  UrlTree } from '@angular/router';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,13 +27,8 @@ export class AuthGuard extends AuthGuardBase {
 
     ticketChangeBind: any;
 
-    constructor(private jwtHelperService: JwtHelperService,
-                authenticationService: AuthenticationService,
-                router: Router,
-                appConfigService: AppConfigService,
-                dialog: MatDialog,
-                storageService: StorageService) {
-        super(authenticationService, router, appConfigService, dialog, storageService);
+    constructor(private jwtHelperService: JwtHelperService) {
+        super();
         this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChangeBind);

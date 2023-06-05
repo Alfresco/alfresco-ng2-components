@@ -17,7 +17,6 @@
 
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
-import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
@@ -67,11 +66,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(cardViewUpdateService: CardViewUpdateService,
-                private clipboardService: ClipboardService,
+    constructor(private clipboardService: ClipboardService,
                 private translateService: TranslationService,
                 private cd: ChangeDetectorRef) {
-        super(cardViewUpdateService);
+        super();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

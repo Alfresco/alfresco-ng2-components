@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
@@ -25,13 +24,6 @@ import { BaseCloudService } from '../../services/base-cloud.service';
 
 @Injectable({ providedIn: 'root' })
 export class StartTaskCloudService extends BaseCloudService {
-
-    constructor(
-        apiService: AlfrescoApiService,
-        appConfigService: AppConfigService) {
-        super(apiService, appConfigService);
-    }
-
      /**
       * @deprecated in 3.5.0, use TaskCloudService instead.
       * Creates a new standalone task.

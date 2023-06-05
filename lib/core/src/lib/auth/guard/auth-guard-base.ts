@@ -24,31 +24,25 @@ import {
     UrlTree
 } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import {
-    AppConfigService,
-    AppConfigValues
-} from '../../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
+    protected authenticationService = inject(AuthenticationService);
+    protected router = inject(Router);
+    protected appConfigService = inject(AppConfigService);
+    protected dialog = inject(MatDialog);
+    private storageService = inject(StorageService);
 
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>(
             'auth.withCredentials',
             false
         );
-    }
-
-    constructor(
-        protected authenticationService: AuthenticationService,
-        protected router: Router,
-        protected appConfigService: AppConfigService,
-        protected dialog: MatDialog,
-        private storageService: StorageService
-    ) {
     }
 
     abstract checkLogin(

@@ -24,7 +24,8 @@ import {
     SimpleChanges,
     OnInit,
     OnDestroy,
-    OnChanges
+    OnChanges,
+    inject
 } from '@angular/core';
 import {
     WidgetVisibilityService,
@@ -57,6 +58,14 @@ import { FormDefinitionModel } from './model/form-definition.model';
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
+    protected formService = inject(FormService);
+    protected taskFormService = inject(TaskFormService);
+    protected taskService = inject(TaskService);
+    protected editorService = inject(EditorService);
+    protected modelService = inject(ModelService);
+    protected visibilityService = inject(WidgetVisibilityService);
+    protected ecmModelService = inject(EcmModelService);
+    protected nodeService = inject(NodesApiService);
 
     /** Underlying form model instance. */
     @Input()
@@ -92,36 +101,29 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
-    formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formSaved = new EventEmitter<FormModel>();
 
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
-    formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when form content is clicked. */
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     /** Emitted when the form is loaded or reloaded. */
     @Output()
-    formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when form values are refreshed due to a data property change. */
     @Output()
-    formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formDataRefreshed = new EventEmitter<FormModel>();
 
     debugMode: boolean = false;
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(protected formService: FormService,
-                protected taskFormService: TaskFormService,
-                protected taskService: TaskService,
-                protected editorService: EditorService,
-                protected modelService: ModelService,
-                protected visibilityService: WidgetVisibilityService,
-                protected ecmModelService: EcmModelService,
-                protected nodeService: NodesApiService) {
+    constructor() {
         super();
     }
 
