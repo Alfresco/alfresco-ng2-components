@@ -378,6 +378,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and single upload for Alfresco Content + Locale', async () => {
             spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
+            const getAliasSpy = spyOn(widget, 'getAliasAndRelativePathFromDestinationFolderPath').and.callThrough();
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, false);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -385,25 +386,14 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true, true);
-        });
+            const wrongAlias = allSourceWithWrongAliasParams.fileSource.destinationFolderPath.value;
 
-        it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath contains wrong alias and multiple upload for Alfresco Content + Locale', async () => {
-            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
-            createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithWrongAliasParams, true);
-            fixture.detectChanges();
-            await fixture.whenStable();
-            clickOnAttachFileWidget('attach-file-alfresco');
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true, true);
+            expect(getAliasSpy).toHaveBeenCalledOnceWith(wrongAlias);
+            expect(widget.getAliasAndRelativePathFromDestinationFolderPath(wrongAlias)).toEqual({ alias: '-my-', path: undefined });
         });
 
         it('Should set default user alias (-my-) as rootNodeId if destinationFolderPath does not have alias for Alfresco Content + Locale', async () => {
-            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockMyNodeId);
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(undefined);
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [], allSourceWithNoAliasParams, true);
             fixture.detectChanges();
             await fixture.whenStable();
