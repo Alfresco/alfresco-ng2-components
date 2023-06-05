@@ -27,9 +27,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import {
-    AppConfigService
-} from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 
 import { SharedLinksApiService } from './services/shared-links-api.service';
@@ -75,7 +72,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        private appConfigService: AppConfigService,
         private sharedLinksApiService: SharedLinksApiService,
         private dialogRef: MatDialogRef<ShareDialogComponent>,
         private dialog: MatDialog,
@@ -86,8 +82,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.type = this.appConfigService.get<DatePickerType>('sharedLinkDateTimePickerType', 'date');
-
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
             this.baseShareUrl = this.data.baseShareUrl;
