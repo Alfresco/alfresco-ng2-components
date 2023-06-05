@@ -23,6 +23,7 @@ export class DateTimePickerPage {
 
     rootElement: ElementFinder;
     dateTimePicker = $('.mat-datetimepicker-toggle');
+    datePicker = $('.mat-datepicker-toggle');
     dateTime = new DateTimePickerCalendarPage();
 
     constructor(rootElement?: ElementFinder) {
@@ -51,7 +52,7 @@ export class DateTimePickerPage {
     }
 
     async clickDateTimePicker(): Promise<void> {
-        await BrowserActions.click(this.dateTimePicker);
+        await BrowserActions.click(this.datePicker);
     }
 
     async checkCalendarTodayDayIsDisabled(): Promise<void> {
