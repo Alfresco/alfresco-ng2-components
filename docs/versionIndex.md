@@ -47,6 +47,8 @@ backend services have been tested with each released version of ADF.
 <!--v610 start-->
 
 -   [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md)
+-   [Search Chip Input component](content-services/components/search-chip-input.component.md)
+-   [Search Logical Filter component](content-services/components/search-logical-filter.component.md)
 
 <!--v610 end-->
 

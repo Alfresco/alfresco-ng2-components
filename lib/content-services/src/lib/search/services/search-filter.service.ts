@@ -23,6 +23,7 @@ import { SearchNumberRangeComponent } from '../components/search-number-range/se
 import { SearchCheckListComponent } from '../components/search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from '../components/search-date-range/search-date-range.component';
 import { SearchDatetimeRangeComponent } from '../components/search-datetime-range/search-datetime-range.component';
+import { SearchLogicalFilterComponent } from '../components/search-logical-filter/search-logical-filter.component';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +40,8 @@ export class SearchFilterService {
         'number-range': SearchNumberRangeComponent,
         'check-list': SearchCheckListComponent,
         'date-range': SearchDateRangeComponent,
-        'datetime-range': SearchDatetimeRangeComponent
+        'datetime-range': SearchDatetimeRangeComponent,
+        'logical-filter': SearchLogicalFilterComponent
     };
 
 }

@@ -397,6 +397,17 @@
           "TITLE" : "Created Date (range)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Add phrase..."
+      },
+      "MATCH_ALL": "ALL",
+      "MATCH_ALL_LABEL": "Match ALL of these phrases",
+      "MATCH_ANY": "ANY",
+      "MATCH_ANY_LABEL": "Match ANY of these phrases",
+      "EXCLUDE": "EXCLUDE",
+      "EXCLUDE_LABEL": "EXCLUDE these phrases"
     }
   },
   "PERMISSION": {
