@@ -262,6 +262,12 @@ describe('PeopleCloudComponent', () => {
             const errorIcon = element.querySelector('.adf-error-icon').textContent;
             expect(errorIcon).toEqual('error_outline');
         });
+
+        it('should not search user if typed no character', async () => {
+            await searchUsers('');
+
+            expect(searchSpy).not.toHaveBeenCalled();
+        });
     });
 
     describe('No preselected users', () => {
