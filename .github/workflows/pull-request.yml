@@ -3,7 +3,7 @@ name: "pull-request"
 on:
   workflow_call:
     inputs:
-      dry-run-release:
+      dry-run-flag:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
