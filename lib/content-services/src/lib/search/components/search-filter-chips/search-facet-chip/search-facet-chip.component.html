@@ -25,6 +25,7 @@
     <div #menuContainer [attr.data-automation-id]="'search-field-' + field.label">
         <adf-search-filter-menu-card (click)="$event.stopPropagation()"
                                      (keydown.tab)="$event.stopPropagation();"
+                                     (keydown.shift.tab)="$event.stopPropagation()"
                                      (close)="menuTrigger.closeMenu()">
             <ng-container ngProjectAs="filter-title">
                 {{ field.label | translate }}

@@ -23,6 +23,7 @@
     <div #menuContainer [attr.data-automation-id]="'search-field-' + category.name">
         <adf-search-filter-menu-card (click)="$event.stopPropagation()"
                                      (keydown.tab)="$event.stopPropagation();"
+                                     (keydown.shift.tab)="$event.stopPropagation()"
                                      (close)="menuTrigger.closeMenu()">
 
             <ng-container ngProjectAs="filter-title">
