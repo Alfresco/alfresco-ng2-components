@@ -196,6 +196,8 @@ export class AppConfigService {
                         this.onDataLoaded(data);
                     },
                     () => {
+                        // eslint-disable-next-line no-console
+                        console.error('app.config.json contains validation errors');
                         resolve(this.config);
                     }
                 );
