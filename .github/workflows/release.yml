@@ -156,7 +156,7 @@ jobs:
 
   release-npm:
     needs: [setup]
-    timeout-minutes: 15
+    timeout-minutes: 30
     if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     permissions:
