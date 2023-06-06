@@ -509,7 +509,7 @@ describe('CardViewTextItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
-        it('should trigger the update event if the editedValue is NOT invalid', async () => {
+        it('should trigger the update event if the editedValue is NOT valid', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             component.property.isValid = () => false;
