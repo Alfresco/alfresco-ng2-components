@@ -305,7 +305,7 @@ describe('ShareDialogComponent', () => {
 
         it('should update node with input date and end of day time when type is `date`', fakeAsync(() => {
             const dateTimePickerType = 'date';
-            const date = new Date('2525-01-01 13:00:00');
+            const date = new Date('2525-01-01');
             spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
 
             fixture.detectChanges();
@@ -334,6 +334,7 @@ describe('ShareDialogComponent', () => {
             fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
                 .dispatchEvent(new MouseEvent('click'));
 
+            fixture.componentInstance.type = 'datetime';
             fixture.componentInstance.time.setValue(date);
             fixture.detectChanges();
             tick(100);
