@@ -14,7 +14,7 @@ on:
         type: string
         default: false
       cron-run:
-        description: 'disables jobs which shouldn't run when cron runs e2es'
+        description: 'disables jobs which should not run when cron runs e2es'
         required: false
         type: boolean
         default: false
