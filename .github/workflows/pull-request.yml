@@ -13,6 +13,11 @@ on:
         required: false
         type: string
         default: false
+      cron-run:
+        description: 'disables jobs which shouldn't run when cron runs e2es'
+        required: false
+        type: boolean
+        default: false
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
@@ -450,6 +455,7 @@ jobs:
           deps: ${{ matrix.e2e-test.deps }}
 
   PR-forbidden-labels:
+    if: ${{ github.event.inputs.cron-run == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - id: checkoutRepo
