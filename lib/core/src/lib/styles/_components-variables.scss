@@ -1,0 +1,17 @@
+@use './reference-variables' as *;
+
+@mixin adf-components-variables() {
+    $defaults: (
+        --adf-edit-task-filter-mat-expansion-title-color: $adf-ref-edit-task-filter-mat-expansion-title-color,
+        --adf-edit-task-filter-mat-expansion-header-font-family: $adf-ref-edit-task-filter-mat-expansion-header-font-family,            
+        --adf-edit-task-filter-mat-expansion-header-font-size: $adf-ref-edit-task-filter-mat-expansion-header-font-size,            
+        --adf-edit-task-filter-mat-expansion-header-font-weight: $adf-ref-edit-task-filter-mat-expansion-header-font-weight,
+    );
+
+    // propagates SCSS variables into the CSS variables scope
+    :root {
+        @each $name, $value in $defaults {
+            #{$name}: #{$value};
+        }
+    }
+}

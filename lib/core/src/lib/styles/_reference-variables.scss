@@ -1,15 +1,4 @@
-@mixin adf-reference-variables() {
-    $defaults: (
-        --adf-edit-task-filter-mat-expansion-title-color: rgba(0, 0, 0, 0.87),            
-        --adf-edit-task-filter-mat-expansion-header-font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',            
-        --adf-edit-task-filter-mat-expansion-header-font-size: 15px,            
-        --adf-edit-task-filter-mat-expansion-header-font-weight: 400            
-    );
-
-    // propagates SCSS variables into the CSS variables scope
-    :root {
-        @each $name, $value in $defaults {
-            #{$name}: #{$value};
-        }
-    }
-}
+$adf-ref-edit-task-filter-mat-expansion-title-color: rgba(0, 0, 0, 0.87);          
+$adf-ref-edit-task-filter-mat-expansion-header-font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'; 
+$adf-ref-edit-task-filter-mat-expansion-header-font-size: 15px;           
+$adf-ref-edit-task-filter-mat-expansion-header-font-weight: 400;
