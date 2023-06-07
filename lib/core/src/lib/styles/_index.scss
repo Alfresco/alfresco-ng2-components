@@ -10,6 +10,7 @@
 @import '../clipboard/clipboard.theme';
 @import './snackbar.theme';
 @import './material.theme';
+@import './reference-variables';
 @import '../../../../../node_modules/@mat-datetimepicker/core/datetimepicker/datetimepicker-theme';
 
 @mixin alfresco-material-theme($theme) {
@@ -112,6 +113,7 @@
     @include mat-datetimepicker-theme($theme);
     @include adf-snackbar-theme;
     @include adf-material-theme;
+    @include adf-reference-variables;
 }
 
 $adf-custom-theme-sizes: (

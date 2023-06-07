@@ -1,4 +1,4 @@
-<mat-accordion [hideToggle]="isLoading">
+<mat-accordion [hideToggle]="isLoading" class="adf-edit-task-filter-accordion">
     <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
         <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
