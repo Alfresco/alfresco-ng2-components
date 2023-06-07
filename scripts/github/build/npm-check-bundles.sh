@@ -10,7 +10,7 @@ eval projects=( "adf-core"
     "adf-extensions"
     "adf-testing"
     "adf-process-services"
-    "adf-process-services-cloud",
+    "adf-process-services-cloud"
     "eslint-plugin-eslint-angular" )
 
 show_help() {
