@@ -82,7 +82,7 @@ if [ $PACKAGE == 'adf-core' ]; then
 
  fi
 
-if [ $PACKAGE != 'adf-testing' ]; then
+if [ $PACKAGE != 'adf-testing' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
 
  if [ ! -f package/fesm2015/$PACKAGE'.mjs' ]; then
     error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
