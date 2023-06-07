@@ -70,4 +70,6 @@ jobs:
   run-e2e:
     name: run e2e
     uses: ./.github/workflows/pull-request.yml
+    with:
+      cron-run: true
     secrets: inherit
