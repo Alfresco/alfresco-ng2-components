@@ -490,3 +490,12 @@ jobs:
       - name: workflow success
         run: exit 0
         if: ${{ contains(needs.*.result, 'success') }}
+      - uses: slackapi/slack-github-action@v1.23.0
+        name: Nofify QA hxp-studio-testing failure
+        if: ${{ contains(needs.*.result, 'failure') }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: 'C016SMNNL8L' #guild-channel
+          slack-message: "Warning: The daily ADF cronjob failed\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}"
+
