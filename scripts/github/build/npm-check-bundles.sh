@@ -10,8 +10,7 @@ eval projects=( "adf-core"
     "adf-extensions"
     "adf-testing"
     "adf-process-services"
-    "adf-process-services-cloud",
-    "eslint-plugin-eslint-angular" )
+    "adf-process-services-cloud" )
 
 show_help() {
     echo "Usage: npm-check-bundles.sh"

@@ -17,8 +17,7 @@ eval projects=( "cli"
     "process-services-cloud"
     "insights"
     "testing"
-    "extensions"
-    "eslint-angular" )
+    "extensions" )
 
 cd `dirname $0`
 

@@ -213,15 +213,15 @@ jobs:
       matrix:
         unit-tests:
           - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular"
+            exclude: "insights,core,extensions,process-services,process-services-cloud"
           - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
+            exclude: "insights,content-services,process-services,process-services-cloud"
           - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular"
+            exclude: "core,extensions,content-services,process-services-cloud,process-services"
           - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular"
+            exclude: "core,extensions,content-services,process-services-cloud,insights"
           - name: process-cloud
-            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular"
+            exclude: "insights,core,extensions,content-services,process-services"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

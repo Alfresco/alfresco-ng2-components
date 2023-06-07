@@ -51,7 +51,6 @@ A few other pages of information are also available:
 -   [Process Services Cloud API](#process-services-cloud-api)
 -   [Extensions API](#extensions-api)
 -   [Insights API](#insights-api)
--   [ESLint Angular API](#eslint-angular-api)
 
 ## User guide
 
@@ -597,21 +596,5 @@ for more information about installing and using the source code.
 | [Widget component](insights/components/widget.component.md) | Base class for standard and custom widget classes. | [Source](../lib/insights/src/lib/analytics-process/components/widgets/widget.component.ts) |
 
 <!--insights end-->
-
-[(Back to Contents)](#contents)
-
-## ESLint Angular API
-
-Contains all custom rules used by ESLint.
-
-<!--eslint-angular start-->
-
-### Rules
-
-| Name                                                                                                   | Description                                           | Source link                                                                                                              |
-|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| [Use none component view encapsulation](eslint-angular/rules/use-none-component-view-encapsulation.md) | Enforces using ViewEncapsulation.None for components. | [Source](../lib/eslint-angular/src/rules/use-none-component-view-encapsulation/use-none-component-view-encapsulation.ts) |
-
-<!--eslint-angular end-->
 
 [(Back to Contents)](#contents)
