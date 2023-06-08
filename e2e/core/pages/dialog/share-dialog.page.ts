@@ -80,8 +80,8 @@ export class ShareDialogPage {
         await BrowserVisibility.waitUntilElementIsStale(this.shareDialog);
     }
 
-    async clickDateTimePickerButton(): Promise<void> {
-        await this.dateTimePickerPage.clickDateTimePicker();
+    async clickDatePickerButton(): Promise<void> {
+        await this.dateTimePickerPage.clickDatePicker();
     }
 
     async calendarTodayDayIsDisabled(): Promise<void> {
@@ -97,16 +97,8 @@ export class ShareDialogPage {
         await this.dateTimePickerPage.setDate(tomorrow);
     }
 
-    async setDefaultHour(): Promise<void> {
-        await this.dateTimePickerPage.dateTime.setDefaultEnabledHour();
-    }
-
-    async setDefaultMinutes() {
-        await this.dateTimePickerPage.dateTime.setDefaultEnabledMinutes();
-    }
-
-    async dateTimePickerDialogIsClosed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsStale($('mat-datetimepicker-content'));
+    async datePickerDialogIsClosed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsStale($('mat-datepicker-content'));
     }
 
     async getExpirationDate(): Promise<string> {
