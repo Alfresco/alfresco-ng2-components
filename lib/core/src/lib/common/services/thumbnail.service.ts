@@ -158,7 +158,12 @@ export class ThumbnailService {
         'save-as': './assets/images/save-as.svg',
         save: './assets/images/save.svg',
         task: './assets/images/task.svg',
-        'multipart/related': './assets/images/ft_ic_website.svg'
+        'multipart/related': './assets/images/ft_ic_website.svg',
+        side_nav_collapse: './assets/images/icon-expand-navigation.svg',
+        create_new_folder: './assets/images/create_new_folder.svg',
+        file_from_template: './assets/images/draft.svg',
+        create_library: './assets/images/library_add.svg'
+
     };
 
     constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
