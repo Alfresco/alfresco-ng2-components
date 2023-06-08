@@ -1,10 +1,10 @@
-<mat-accordion [hideToggle]="isLoading" class="adf-edit-task-filter-accordion">
+<mat-accordion [hideToggle]="isLoading" class="adf-edit-task-filter">
     <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
-        <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header">
+        <mat-expansion-panel-header *ngIf="taskFilter" id="adf-edit-task-filter-expansion-header" class="adf-edit-task-filter-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <mat-panel-title *ngIf="showTaskFilterName" id="adf-edit-task-filter-title-id"
+                <mat-panel-title *ngIf="showTaskFilterName" id="adf-edit-task-filter-title-id" class="adf-edit-task-filter-header__title"
                     >{{taskFilter.name | translate}}</mat-panel-title>
-                <mat-panel-description class="adf-edit-task-filter-description" id="adf-edit-task-filter-sub-title-id">
+                <mat-panel-description class="adf-edit-task-filter-header__description" id="adf-edit-task-filter-sub-title-id">
                     <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-task-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
