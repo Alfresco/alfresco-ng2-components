@@ -113,30 +113,30 @@ update_component_version() {
    cd -
 }
 
-update_component_dependency_version(){
-   DESTDIR="$DIR/../lib/${1}"
+update_component_dependency_version() {
+    echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
+    DESTDIR="$DIR/../lib/${1}"
 
-   for (( j=0; j<${projectslength}; j++ ));
+    for (( j=0; j<${projectslength}; j++ ));
     do
-       echo "====== UPDATE DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
-
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \".*\"/\"${prefix}${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"~.*\"/\"${prefix}${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"^.*\"/\"${prefix}${projects[$j]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
-
+        PROJECT=${prefix}${projects[$j]}
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
     done
 }
 
-update_total_build_dependency_version(){
-   DESTDIR="$DIR/../"
+update_total_build_dependency_version() {
+    echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} ======"
+    DESTDIR="$DIR/../"
 
-   for (( j=0; j<${projectslength}; j++ ));
+    for (( j=0; j<${projectslength}; j++ ));
     do
-       echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of .* to ~${VERSION} in ${1}======"
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \".*\"/\"${prefix}${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"~.*\"/\"${prefix}${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
-       sed "${sedi[@]}" "s/\"${prefix}${projects[$j]}\": \"^.*\"/\"${prefix}${projects[$j]}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
-     done
+        PROJECT=${prefix}${projects[$j]}
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+    done
 }
 
 update_total_build_dependency_js_version(){
@@ -144,9 +144,9 @@ update_total_build_dependency_js_version(){
     DESTDIR="$DIR/../"
     PACKAGETOCHANGE="@alfresco\/js-api"
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"^${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
@@ -155,9 +155,9 @@ update_component_js_version(){
 
    PACKAGETOCHANGE="@alfresco\/js-api"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"^${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${2}\"/g"  ${DESTDIR}/package.json
 
 }
 
