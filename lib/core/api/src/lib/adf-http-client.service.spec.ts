@@ -234,9 +234,9 @@ describe('AdfHttpClient', () => {
 
         const errorResponse = new Blob();
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((res: AlfrescoApiResponseError) => {
-            expect(res.status).toBe(400);
-            expect(res.error.response.body instanceof Blob).toBeTruthy();
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((err: AlfrescoApiResponseError) => {
+            expect(err.status).toBe(400);
+            expect(err.response.body instanceof Blob).toBeTruthy();
             done();
         });
 
