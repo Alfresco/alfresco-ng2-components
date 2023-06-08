@@ -23,6 +23,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-notification-history',
@@ -55,10 +57,22 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
+    icons: any = {
+        notifications: '../../assets/images/icon-notification-outline-default.svg',
+        pending_notifications: '../../assets/images/icon-notification-outline-pending.svg'
+    };
+
     constructor(
         private notificationService: NotificationService,
         public storageService: StorageService,
-        public cd: ChangeDetectorRef) {
+        public cd: ChangeDetectorRef,
+        private matIconRegistry: MatIconRegistry,
+        private sanitizer: DomSanitizer) {
+            Object.keys(this.icons).forEach((key) => {
+                const url = this.sanitizer.bypassSecurityTrustResourceUrl(this.icons[key]);
+                this.matIconRegistry.addSvgIcon(key, url);
+                this.matIconRegistry.addSvgIconInNamespace('notification', key, url);
+            });
 
     }
 
