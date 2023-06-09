@@ -323,6 +323,51 @@
         }
       },
       {
+        "id": "createdModifiedDateRange",
+        "name": "Date",
+        "enabled": true,
+        "component": {
+          "selector": "widget-composite",
+          "settings": {
+            "verticalMode": false,
+            "useWideMenu": true,
+            "displayLabelSeparator": ";",
+            "tabs":[
+              {
+                "id": "createdDateRange",
+                "name": "Created Date",
+                "tabDisplayLabel": "CREATED",
+                "component": {
+                  "selector": "date-range-advanced",
+                  "settings": {
+                    "allowUpdateOnChange": false,
+                    "hideDefaultAction": true,
+                    "field": "cm:created",
+                    "dateFormat": "DD-MMM-YY",
+                    "maxDate": "today"
+                  }
+                }
+              },
+              {
+                "id": "modifiedDateRange",
+                "name": "Modified Date",
+                "tabDisplayLabel": "MODIFIED",
+                "component": {
+                  "selector": "date-range-advanced",
+                  "settings": {
+                    "allowUpdateOnChange": false,
+                    "hideDefaultAction": true,
+                    "field": "cm:modified",
+                    "dateFormat": "DD-MMM-YY",
+                    "maxDate": "today"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
         "id": "queryType",
         "name": "Type",
         "enabled": true,
