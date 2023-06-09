@@ -18,7 +18,6 @@
 import { createApiService,
     ApiUtil,
     BrowserActions,
-    LocalStorageUtil,
     LoginPage,
     NotificationHistoryPage,
     UploadActions,
