@@ -29,6 +29,8 @@ import { SearchWidgetContainerComponent } from './components/search-widget-conta
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 import { SearchTextComponent } from './components/search-text/search-text.component';
+import { SearchChipsAutocompleteUiComponent } from './components/search-multiselect-chips/search-chips-autocomplete.ui-component';
+import { SearchChipsAutocompleteSmartComponent } from './components/search-multiselect-chips/search-chips-autocomplete.smart-component';
 import { SearchRadioComponent } from './components/search-radio/search-radio.component';
 import { SearchSliderComponent } from './components/search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
@@ -67,6 +69,8 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
+        SearchChipsAutocompleteUiComponent,
+        SearchChipsAutocompleteSmartComponent,
         SearchRadioComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent,
@@ -94,6 +98,8 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
+        SearchChipsAutocompleteUiComponent,
+        SearchChipsAutocompleteSmartComponent,
         SearchRadioComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent,
