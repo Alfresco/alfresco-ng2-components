@@ -415,6 +415,22 @@
       "EXCLUDE_LABEL": "EXCLUDE these words",
       "EXCLUDE_HINT": "Results will exclude matches with these words"
     },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date"
+      }
+    },
     "SEARCH_PROPERTIES": {
       "FILE_SIZE": "File Size",
       "FILE_SIZE_PLACEHOLDER": "Enter file size",
