@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "Ryhmät",
     "MANDATORY": "Pakollinen",
     "ERROR": {
-      "NOT_FOUND": "Nimellä {{groupName}} ei löydy ryhmää"
+      "NOT_FOUND": "Ryhmää ei löydy"
     }
   },
   "ADF_CLOUD_USERS": {

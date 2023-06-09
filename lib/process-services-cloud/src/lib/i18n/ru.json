@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "Группы",
     "MANDATORY": "Обязательно",
     "ERROR": {
-      "NOT_FOUND": "Не найдена группа с именем {{groupName}}"
+      "NOT_FOUND": "Группа не найдена"
     }
   },
   "ADF_CLOUD_USERS": {

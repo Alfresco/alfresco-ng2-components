@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "グループ",
     "MANDATORY": "必須",
     "ERROR": {
-      "NOT_FOUND": "{{groupName}} という名前のグループは見つかりませんでした"
+      "NOT_FOUND": "グループは見つかりませんでした"
     }
   },
   "ADF_CLOUD_USERS": {

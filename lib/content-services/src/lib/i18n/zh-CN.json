@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "搜索筛选器列表"
-      }
+      },
+      "ANY": "任意"
     },
     "ICONS": {
       "ft_ic_raster_image": "图像文件",
@@ -396,6 +397,17 @@
           "TITLE": "创建日期（范围）"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "添加短语..."
+      },
+      "MATCH_ALL": "全部",
+      "MATCH_ALL_LABEL": "匹配所有这些短语",
+      "MATCH_ANY": "任何",
+      "MATCH_ANY_LABEL": "匹配任何这些短语",
+      "EXCLUDE": "排除",
+      "EXCLUDE_LABEL": "排除这些短语"
     }
   },
   "PERMISSION": {

@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "Groupes",
     "MANDATORY": "Obligatoire",
     "ERROR": {
-      "NOT_FOUND": "Aucun groupe nommé {{groupName}} n'a été trouvé"
+      "NOT_FOUND": "Groupe non trouvé"
     }
   },
   "ADF_CLOUD_USERS": {

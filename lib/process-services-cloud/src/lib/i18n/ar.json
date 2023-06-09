@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "مجموعات",
     "MANDATORY": "إلزامي",
     "ERROR": {
-      "NOT_FOUND": "لم يتم العثور على مجموعة بالاسم {{groupName}}"
+      "NOT_FOUND": "المجموعة غير موجودة"
     }
   },
   "ADF_CLOUD_USERS": {

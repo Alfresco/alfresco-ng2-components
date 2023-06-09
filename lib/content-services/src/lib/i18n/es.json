@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "Lista de filtros de búsqueda"
-      }
+      },
+      "ANY": "Cualquier"
     },
     "ICONS": {
       "ft_ic_raster_image": "Fichero de imagen",
@@ -396,6 +397,17 @@
           "TITLE": "Fecha de creación (rango)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Añadir frase..."
+      },
+      "MATCH_ALL": "TODAS",
+      "MATCH_ALL_LABEL": "Coincidir TODAS estas frases",
+      "MATCH_ANY": "CUALQUIERA",
+      "MATCH_ANY_LABEL": "Coincidir CUALQUIERA de estas frases",
+      "EXCLUDE": "EXCLUIR",
+      "EXCLUDE_LABEL": "EXCLUIR estas frases"
     }
   },
   "PERMISSION": {
