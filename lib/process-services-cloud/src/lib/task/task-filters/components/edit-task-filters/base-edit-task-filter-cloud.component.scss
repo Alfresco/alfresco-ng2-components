@@ -72,9 +72,11 @@
     &-edit-task-filter {
         &-header {
             height: var(--adf-edit-task-and-service-filter-header-height);
+
             &__title {
                 color: var(--adf-edit-task-and-service-filter-header-title-color);
             }
+
             &__description {
                 color: var(--adf-edit-task-and-service-filter-header-description-color);
                 place-content: center space-between;
