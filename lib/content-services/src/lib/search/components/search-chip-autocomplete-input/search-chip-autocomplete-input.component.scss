@@ -1,4 +1,4 @@
-adf-search-chips-autocomplete-ui {
+adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
     }
@@ -31,4 +31,16 @@ adf-search-chips-autocomplete-ui {
         height: 13px !important;
         width: 13px !important;
     }
+
+    .mat-chip-list-wrapper{
+        min-height: 40px;
+    }
+
+    .mat-form-field-wrapper {
+        padding: 0;
+    }
+}
+ .adf-autocomplete-added-option {
+    background: #E0E0E0 !important;
+    color: #0E73D8 !important;
 }

@@ -16,36 +16,22 @@
  */
 
 import { Component, ViewEncapsulation, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
-export interface SearchMultiselectChipsOption {
-    name: string;
-    value: string;
-}
-
 @Component({
-    selector: 'adf-search-chips-autocomplete-ui',
-    templateUrl: './search-chips-autocomplete.ui-component.html',
-    styleUrls: ['./search-chips-autocomplete.ui-component.scss'],
+    selector: 'adf-search-chip-autocomplete-input',
+    templateUrl: './search-chip-autocomplete-input.component.html',
+    styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipsAutocompleteUiComponent {
-
-    separatorKeysCodes: number[] = [ENTER, COMMA];
-    formCtrl = new FormControl('', [Validators.required]);
-    filteredOptions$: Observable<string[]>;
-    selectedOptions: string[] = [];
-    private onDestroy$ = new Subject<void>();
-
+export class SearchChipAutocompleteInputComponent {
     @ViewChild('optionInput')
     optionInput: ElementRef<HTMLInputElement>;
-
-    @ViewChild("chipList") chipList;
 
     @Input()
     autocompleteOptions: string[];
@@ -53,13 +39,22 @@ export class SearchChipsAutocompleteUiComponent {
     @Input()
     onReset: Observable<void>;
 
+    @Input()
+    allowOnlyPredefinedValues = true;
+
     @Output()
     optionsChanged: EventEmitter<string[]> = new EventEmitter();
 
-    constructor( ) {
+    readonly separatorKeysCodes = [ENTER] as const;
+    formCtrl = new FormControl('', [Validators.required]);
+    filteredOptions$: Observable<string[]>;
+    selectedOptions: string[] = [];
+    private onDestroy$ = new Subject<void>();
+
+    constructor() {
         this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
             startWith(null),
-            map((value: string | null) => (value ? this._filter(value) : [])),
+            map((value: string | null) => (value ? this.filter(value) : [])),
         );
     }
 
@@ -67,56 +62,31 @@ export class SearchChipsAutocompleteUiComponent {
         this.onReset?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    hasValidValue() {
-        return !!this.selectedOptions;
-    }
-
-    getCurrentValue(){
-        return this.selectedOptions;
-    }
-
-
-    add(event: MatChipInputEvent): void {
+    add(event: MatChipInputEvent) {
         const value = (event.value || '').trim();
 
-        if (this.autocompleteOptions.map(fruit => fruit.toLowerCase()).includes(value.toLowerCase()) && !this.isAdded(value)) {
+        if (value && this.isExists(value) && !this.isAdded(value)) {
             this.selectedOptions.push(value);
             this.optionsChanged.emit(this.selectedOptions);
-
-            // Clear the input value
             event.chipInput!.clear();
-
             this.formCtrl.setValue(null);
         }
-
     }
 
-    private reset() {
-        this.selectedOptions = [];
-        this.optionsChanged.emit(this.selectedOptions);
-        this.formCtrl.setValue(null);
-        this.optionInput.nativeElement.value = '';
-    }
-
-    private isAdded(value): boolean {
-        return this.selectedOptions.includes(value);
-    }
-
-    remove(value: string): void {
+    remove(value: string) {
         const index = this.selectedOptions.indexOf(value);
 
         if (index >= 0) {
             this.selectedOptions.splice(index, 1);
         }
-        this.setError()
     }
 
-    selected(event: MatAutocompleteSelectedEvent): void {
+    selected(event: MatAutocompleteSelectedEvent) {
         if(!this.isAdded(event.option.viewValue)){
             this.selectedOptions.push(event.option.viewValue);
             this.optionInput.nativeElement.value = '';
@@ -125,20 +95,25 @@ export class SearchChipsAutocompleteUiComponent {
         }
     }
 
-    private _filter(value: string): string[] {
+    private filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.autocompleteOptions.filter(option => option.toLowerCase().includes(filterValue)).slice(0, 15);
     }
 
-    getFromValidationMessage(): string {
-        return this.formCtrl.hasError('invalidOnChange') ? 'SEARCH.FILTER.VALIDATION.INVALID-DATE' :
-            this.formCtrl.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE' :
-                this.formCtrl.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
-                    '';
+     isAdded(value): boolean {
+        return this.selectedOptions.includes(value);
     }
 
-    setError() {
-        this.chipList.errorState = true;
+    private isExists(value): boolean {
+        return this.allowOnlyPredefinedValues
+            ? this.autocompleteOptions.map(option => option.toLowerCase()).includes(value.toLowerCase())
+            : true
     }
 
+    private reset() {
+        this.selectedOptions = [];
+        this.optionsChanged.emit(this.selectedOptions);
+        this.formCtrl.setValue(null);
+        this.optionInput.nativeElement.value = '';
+    }
 }

@@ -20,37 +20,22 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { SearchWidget } from '../../models/search-widget.interface';
-import {
-    SearchQueryBuilderService,
-    SearchWidgetSettings,
-    SitesService,
-    TagService
-} from '@alfresco/adf-content-services';
+import { SearchQueryBuilderService, SearchWidgetSettings, TagService } from '@alfresco/adf-content-services';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 
-export interface SearchMultiselectChipsOption {
-    name: string;
-    value: string;
-}
-
 @Component({
-    selector: 'adf-search-chips-autocomplete-smart',
-    templateUrl: './search-chips-autocomplete.smart-component.html',
-    styleUrls: ['search-chips-autocomplete.smart-component.scss'],
+    selector: 'adf-search-filter-autocomplete-chips',
+    templateUrl: './search-filter-autocomplete-chips.component.html',
+    styleUrls: ['search-filter-autocomplete-chips.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipsAutocompleteSmartComponent implements SearchWidget, OnInit {
+export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    options: SearchFilterList<SearchMultiselectChipsOption>;
-    startValue: any = null;
-    operator: string = 'OR';
-    isActive = false;
-    enableChangeUpdate = true;
-    // todo - set type
+    options: SearchFilterList<string[]>;
+    startValue: string[] = null;
     displayValue$: Subject<string> = new Subject<string>();
-
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
     fruitCtrl = new FormControl('');
@@ -59,15 +44,14 @@ export class SearchChipsAutocompleteSmartComponent implements SearchWidget, OnIn
     allOptions: string[] = [];
     selectedOptions: string[] = [];
 
-    constructor( private tagService: TagService, private sitesService: SitesService) {
-        this.options = new SearchFilterList<SearchMultiselectChipsOption>();
+    constructor( private tagService: TagService) {
+        this.options = new SearchFilterList<string[]>();
     }
 
     ngOnInit() {
-
         if (this.settings) {
 
-            this.loadOptions()
+            this.loadOptions();
             if (this.startValue) {
                 this.setValue(this.startValue);
             }
@@ -77,11 +61,11 @@ export class SearchChipsAutocompleteSmartComponent implements SearchWidget, OnIn
     reset() {
         this.selectedOptions = [];
         this.resetSubject$.next();
-        this.updateQuery(null);
+        this.updateQuery();
     }
 
     submitValues() {
-        this.updateQuery(this.selectedOptions);
+        this.updateQuery();
     }
 
     hasValidValue() {
@@ -102,12 +86,10 @@ export class SearchChipsAutocompleteSmartComponent implements SearchWidget, OnIn
         this.submitValues();
     }
 
-    private updateQuery(value: string[]) {
+    private updateQuery() {
         this.displayValue$.next(this.selectedOptions.join(', '));
-        const query = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(` ${this.operator} `);
-        console.log(value)
+        const query = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');
         if (this.context && this.settings && this.settings.field) {
-            console.log(this.context)
             this.context.queryFragments[this.id] = query;
             this.context.update();
         }
@@ -119,7 +101,7 @@ export class SearchChipsAutocompleteSmartComponent implements SearchWidget, OnIn
                 this.tagService.getAllTheTags().subscribe(res => { this.allOptions = res.list.entries.map(tag => tag.entry.tag)})
                 break;
             case 'SITE':
-                this.sitesService.getSites().subscribe(res => { this.allOptions = res.list.entries.map(site => site.entry.title)})
+                this.allOptions = this.settings.options;
                 break;
         }
     }

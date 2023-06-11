@@ -15,18 +15,3 @@
  * limitations under the License.
  */
 
-export interface SearchWidgetSettings {
-    field: string;
-    /* allow the user to update search in every change */
-    allowUpdateOnChange?: boolean;
-    /* allow the user hide default search actions. So widget can have custom actions */
-    hideDefaultAction?: boolean;
-    /* describes the unit of the value i.e byte for better display message */
-    unit?: string;
-    /* describes query format */
-    format?: string;
-    /* allow the user to search only within predefined options */
-    allowOnlyPredefinedValues?: boolean
-
-    [indexer: string]: any;
-}
