@@ -34,7 +34,7 @@ export class SearchChipAutocompleteInputComponent {
     optionInput: ElementRef<HTMLInputElement>;
 
     @Input()
-    autocompleteOptions: string[];
+    autocompleteOptions: string[] = [];
 
     @Input()
     onReset: Observable<void>;
@@ -83,6 +83,7 @@ export class SearchChipAutocompleteInputComponent {
 
         if (index >= 0) {
             this.selectedOptions.splice(index, 1);
+            this.optionsChanged.emit(this.selectedOptions);
         }
     }
 

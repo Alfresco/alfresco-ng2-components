@@ -43,6 +43,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     allOptions: string[] = [];
     selectedOptions: string[] = [];
+    enableChangeUpdate: boolean;
 
     constructor( private tagService: TagService) {
         this.options = new SearchFilterList<string[]>();
@@ -55,6 +56,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             if (this.startValue) {
                 this.setValue(this.startValue);
             }
+
+            this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
     }
 
@@ -78,6 +81,10 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
 
     onOptionsChange(selectedOptions){
         this.selectedOptions = selectedOptions;
+        if (this.enableChangeUpdate) {
+            this.updateQuery();
+            this.context.update();
+        }
     }
 
     setValue(value: string[]) {
