@@ -3,7 +3,7 @@ adf-search-chip-autocomplete-input {
         width: 100%;
     }
 
-    .mat-form-field-appearance-outline .mat-form-field-outline{
+    .mat-form-field-appearance-outline .mat-form-field-outline {
         top: 0;
     }
 
@@ -32,7 +32,7 @@ adf-search-chip-autocomplete-input {
         width: 13px !important;
     }
 
-    .mat-chip-list-wrapper{
+    .mat-chip-list-wrapper {
         min-height: 40px;
     }
 
@@ -40,7 +40,8 @@ adf-search-chip-autocomplete-input {
         padding: 0;
     }
 }
- .adf-autocomplete-added-option {
-    background: #E0E0E0 !important;
-    color: #0E73D8 !important;
+
+.adf-autocomplete-added-option {
+    background: var(--adf-theme-mat-grey-color-a200) !important;
+    color: var(--adf-theme-primary-300) !important;
 }

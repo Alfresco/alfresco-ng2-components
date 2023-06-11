@@ -1,21 +1,22 @@
 <mat-form-field class="adf-chip-list" appearance="outline">
-    <mat-chip-list #chipList  aria-label="Options selection">
+    <mat-chip-list #chipList  [attr.aria-label]="'SEARCH.FILTER.ARIA-LABEL.OPTIONS-SELECTION' | translate">
         <mat-chip
             class="adf-option-chips"
             *ngFor="let option of selectedOptions"
             (removed)="remove(option)">
             {{option}}
-            <button matChipRemove class="adf-option-chips-delete-button">
+            <button matChipRemove class="adf-option-chips-delete-button" [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option">
                 <mat-icon class="adf-option-chips-delete-icon">close</mat-icon>
             </button>
         </mat-chip>
         <input
-            placeholder="Add option..."
+            placeholder="{{ 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate }}"
             #optionInput
             [formControl]="formCtrl"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [attr.aria-label]="'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate"
             (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
