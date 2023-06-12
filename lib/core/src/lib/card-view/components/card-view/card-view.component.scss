@@ -1,9 +1,9 @@
 /* stylelint-disable no-descending-specificity */
 .adf-property-list {
-    background: var(--adf-comp-adf-card-view-background);
-    border: var(--adf-comp-adf-card-view-border);
-    border-color: var(--adf-comp-adf-card-view-border-color);
-    border-radius: var(--adf-comp-adf-card-view-border-radius);
+    background: var(--adf-card-view-background);
+    border: var(--adf-card-view-border);
+    border-color: var(--adf-card-view-border-color);
+    border-radius: var(--adf-card-view-border-radius);
 
     .adf-property {
         margin-bottom: 20px;
