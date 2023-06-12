@@ -6,6 +6,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <adf-search-widget-container [id]="tab.id"
+                                     [disableUpdateOnSubmit]="true"
                                      [value]="tab.component.value"
                                      [selector]="tab.component.selector"
                                      [settings]="tab.component.settings">
@@ -16,6 +17,7 @@
   <mat-tab-group>
     <mat-tab *ngFor="let tab of settings.tabs" [label]="tab.name">
       <adf-search-widget-container [id]="tab.id"
+                                   [disableUpdateOnSubmit]="true"
                                    [value]="tab.component.value"
                                    [selector]="tab.component.selector"
                                    [settings]="tab.component.settings">
