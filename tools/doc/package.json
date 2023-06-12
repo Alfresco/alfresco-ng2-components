@@ -23,7 +23,7 @@
     "rxjs": "^6.6.6",
     "typedoc": "^0.24.8",
     "typescript": "3.9.8",
-    "unist-util-select": "2.0.0"
+    "unist-util-select": "4.0.3"
   },
   "devDependencies": {
     "@paperist/types-remark": "0.1.3",
