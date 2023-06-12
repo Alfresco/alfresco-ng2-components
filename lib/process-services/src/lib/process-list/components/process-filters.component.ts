@@ -73,7 +73,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
-    currentRoute: string= '';
     isProcessRoute: boolean;
     private onDestroy$ = new Subject<boolean>();
 
@@ -92,8 +91,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
             takeUntil(this.onDestroy$)
         )
         .subscribe((navigationStart: NavigationStart) => {
-            this.currentRoute = navigationStart.url;
-            this.isProcessRoute = this.currentRoute.includes('process');
+            const currentRoute = navigationStart.url;
+            this.isProcessRoute = currentRoute.includes('process');
         });
 
     }
