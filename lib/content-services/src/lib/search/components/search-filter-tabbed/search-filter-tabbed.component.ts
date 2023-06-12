@@ -35,9 +35,6 @@ export class SearchFilterTabbedComponent implements SearchWidget, OnInit, AfterV
         if(this.startValue) {
             this.setValue(this.startValue);
         }
-        this.settings.tabs.forEach(tab => {
-            tab.component.settings['disableUpdateOnSubmit'] = true;
-        })
     }
 
     ngAfterViewInit(): void {
