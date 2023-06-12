@@ -489,7 +489,7 @@ jobs:
     steps:
       - uses: slackapi/slack-github-action@v1.23.0
         name: Nofify QA failure
-        if: ${{ contains(needs.*.result, 'failure') }}
+        if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
