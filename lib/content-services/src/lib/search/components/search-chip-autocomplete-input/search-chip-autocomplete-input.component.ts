@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit, OnDestroy, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
+
+@Pipe({
+    name: 'isIncluded'
+})
+export class IsIncludedPipe implements PipeTransform {
+    transform(value: string, array: string[]): boolean {
+        return array.includes(value);
+    }
+}
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',

@@ -20,7 +20,8 @@
             (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option  [disabled]="selectedOptions.includes(option)" *ngFor="let option of filteredOptions$ | async" [ngClass]="isAdded(option) && 'adf-autocomplete-added-option'">
+        <mat-option [disabled]="option | isIncluded: selectedOptions" *ngFor="let option of filteredOptions$ | async"
+                    [ngClass]="(option | isIncluded: selectedOptions) && 'adf-autocomplete-added-option'">
             {{option}}
         </mat-option>
     </mat-autocomplete>

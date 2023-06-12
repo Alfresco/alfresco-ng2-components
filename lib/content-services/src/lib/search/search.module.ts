@@ -29,7 +29,7 @@ import { SearchWidgetContainerComponent } from './components/search-widget-conta
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 import { SearchTextComponent } from './components/search-text/search-text.component';
-import { SearchChipAutocompleteInputComponent } from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
+import { IsIncludedPipe, SearchChipAutocompleteInputComponent } from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
 import { SearchFilterAutocompleteChipsComponent } from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 import { SearchRadioComponent } from './components/search-radio/search-radio.component';
 import { SearchSliderComponent } from './components/search-slider/search-slider.component';
@@ -88,7 +88,8 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFacetChipComponent,
         SearchChipInputComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective
+        ResetSearchDirective,
+        IsIncludedPipe
     ],
     exports: [
         SearchComponent,
@@ -115,7 +116,8 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFacetFieldComponent,
         SearchChipInputComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective
+        ResetSearchDirective,
+        IsIncludedPipe
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }

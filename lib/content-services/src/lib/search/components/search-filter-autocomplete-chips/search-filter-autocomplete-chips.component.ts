@@ -77,7 +77,6 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     onOptionsChange(selectedOptions){
-        console.log('test')
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
@@ -94,7 +93,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private updateQuery() {
         this.displayValue$.next(this.selectedOptions.join(', '));
         if (this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');;
+            this.context.queryFragments[this.id] = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');
             this.context.update();
         }
     }
