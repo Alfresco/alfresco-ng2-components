@@ -74,6 +74,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
     currentRoute: string= '';
+    isProcessRoute: boolean;
     private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
@@ -84,13 +85,15 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.iconsMDL = new IconModel();this.router.events
+        this.iconsMDL = new IconModel();
+        this.router.events
         .pipe(
             filter((event) => event instanceof NavigationStart),
             takeUntil(this.onDestroy$)
         )
         .subscribe((navigationStart: NavigationStart) => {
             this.currentRoute = navigationStart.url;
+            this.isProcessRoute = this.currentRoute.includes('process');
         });
 
     }
@@ -107,10 +110,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectProcessFilter(filter.currentValue);
         }
-    }
-
-    isProcessRoute(filter: ProcessInstanceFilterRepresentation) : boolean {
-        return this.currentRoute.includes('process') && this.currentFilter === filter;
     }
 
     /**
