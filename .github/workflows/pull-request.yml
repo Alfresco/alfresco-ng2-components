@@ -455,7 +455,7 @@ jobs:
           deps: ${{ matrix.e2e-test.deps }}
 
   PR-forbidden-labels:
-    if: ${{ github.event.inputs.cron-run == '' || github.event.inputs.cron-run == 'false' }}
+    if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - id: checkoutRepo
