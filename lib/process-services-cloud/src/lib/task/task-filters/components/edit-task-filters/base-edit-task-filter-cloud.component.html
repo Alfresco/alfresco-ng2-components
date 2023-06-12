@@ -27,30 +27,33 @@
             </ng-template>
         </mat-expansion-panel-header>
         <ng-container *ngIf="!isLoading;">
-            <form *ngIf="editTaskFilterForm" [formGroup]="editTaskFilterForm">
+            <form *ngIf="editTaskFilterForm" [formGroup]="editTaskFilterForm" class="adf-edit-task-filter-content">
                 <div class="adf-edit-task-filter-form">
                     <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
                         <mat-form-field [floatLabel]="'auto'"
-                                        *ngIf="taskFilterProperty.type === 'select'"
-                                        [attr.data-automation-id]="taskFilterProperty.key">
-                            <mat-select placeholder="{{taskFilterProperty.label | translate}}"
-                                        [formControlName]="taskFilterProperty.key"
-                                        [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"
-                                        (selectionChange)="onStatusChange($event)">
-                                <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
-                                            [value]="propertyOption.value"
-                                            [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
-                                    {{ propertyOption.label | translate }}
-                                </mat-option>
+                            *ngIf="taskFilterProperty.type === 'select'"
+                            [attr.data-automation-id]="taskFilterProperty.key">
+                            <mat-label class="adf-edit-task-filter-content__select-label">{{taskFilterProperty.label | translate}}</mat-label>
+                            <mat-select
+                                [formControlName]="taskFilterProperty.key"
+                                class="adf-edit-task-filter-content__select-input"
+                                [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"
+                                (selectionChange)="onStatusChange($event)">
+                                    <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
+                                        [value]="propertyOption.value"
+                                        [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
+                                        {{ propertyOption.label | translate }}
+                                    </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'"
-                                        *ngIf="taskFilterProperty.type === 'text'"
-                                        [attr.data-automation-id]="taskFilterProperty.key">
+                            *ngIf="taskFilterProperty.type === 'text'"
+                            [attr.data-automation-id]="taskFilterProperty.key">
+                            <mat-label class="adf-edit-task-filter-content__text-label">{{taskFilterProperty.label | translate}}</mat-label>
                             <input matInput
                                    [formControlName]="taskFilterProperty.key"
                                    type="text"
-                                   placeholder="{{taskFilterProperty.label | translate}}"
+                                   class="adf-edit-task-filter-content__text-input"
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'"
