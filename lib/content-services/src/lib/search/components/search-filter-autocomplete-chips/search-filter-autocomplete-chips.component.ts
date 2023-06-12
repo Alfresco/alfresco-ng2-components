@@ -16,12 +16,12 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { SearchWidget } from '../../models/search-widget.interface';
-import { SearchQueryBuilderService, SearchWidgetSettings, TagService } from '@alfresco/adf-content-services';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
+import { TagService } from '../../../tag';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
@@ -37,22 +37,19 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     startValue: string[] = null;
     displayValue$: Subject<string> = new Subject<string>();
 
-    separatorKeysCodes: number[] = [ENTER, COMMA];
-    fruitCtrl = new FormControl('');
     private resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
-    allOptions: string[] = [];
+    autocompleteOptions: string[] = [];
     selectedOptions: string[] = [];
     enableChangeUpdate: boolean;
 
-    constructor( private tagService: TagService) {
+    constructor( private tagService: TagService ) {
         this.options = new SearchFilterList<string[]>();
     }
 
     ngOnInit() {
         if (this.settings) {
-
-            this.loadOptions();
+            this.setOptions();
             if (this.startValue) {
                 this.setValue(this.startValue);
             }
@@ -71,8 +68,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         this.updateQuery();
     }
 
-    hasValidValue() {
-        return !!this.selectedOptions;
+    hasValidValue(): boolean {
+        return !!this.selectedOptions
     }
 
     getCurrentValue(){
@@ -80,6 +77,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     onOptionsChange(selectedOptions){
+        console.log('test')
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
@@ -95,20 +93,19 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
 
     private updateQuery() {
         this.displayValue$.next(this.selectedOptions.join(', '));
-        const query = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');
         if (this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = query;
+            this.context.queryFragments[this.id] = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');;
             this.context.update();
         }
     }
 
-    private loadOptions () {
+    private setOptions () {
         switch (this.settings.field) {
             case 'TAG':
-                this.tagService.getAllTheTags().subscribe(res => { this.allOptions = res.list.entries.map(tag => tag.entry.tag)})
+                this.tagService.getAllTheTags().subscribe(res => { this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag)})
                 break;
-            case 'SITE':
-                this.allOptions = this.settings.options;
+            default:
+                this.autocompleteOptions = this.settings.options;
                 break;
         }
     }

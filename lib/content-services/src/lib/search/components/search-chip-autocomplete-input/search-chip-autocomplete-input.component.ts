@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
@@ -29,7 +29,7 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipAutocompleteInputComponent {
+export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     @ViewChild('optionInput')
     optionInput: ElementRef<HTMLInputElement>;
 
@@ -37,7 +37,7 @@ export class SearchChipAutocompleteInputComponent {
     autocompleteOptions: string[] = [];
 
     @Input()
-    onReset: Observable<void>;
+    onReset$: Observable<void>;
 
     @Input()
     allowOnlyPredefinedValues = true;
@@ -46,7 +46,7 @@ export class SearchChipAutocompleteInputComponent {
     optionsChanged: EventEmitter<string[]> = new EventEmitter();
 
     readonly separatorKeysCodes = [ENTER] as const;
-    formCtrl = new FormControl('', [Validators.required]);
+    formCtrl = new FormControl('');
     filteredOptions$: Observable<string[]>;
     selectedOptions: string[] = [];
     private onDestroy$ = new Subject<void>();
@@ -59,7 +59,7 @@ export class SearchChipAutocompleteInputComponent {
     }
 
     ngOnInit() {
-        this.onReset?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
     }
 
     ngOnDestroy() {
