@@ -24,6 +24,7 @@ import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet
 @Component({
   selector: 'adf-search-facet-chip',
   templateUrl: './search-facet-chip.component.html',
+  styleUrls: ['./search-facet-chip.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
@@ -65,10 +66,12 @@ export class SearchFacetChipComponent {
     }
 
     onEnterKeydown(): void {
-        if (!this.menuTrigger.menuOpen) {
-            this.menuTrigger.openMenu();
-        } else {
-            this.menuTrigger.closeMenu();
+        if (this.isPopulated()) {
+            if (!this.menuTrigger.menuOpen) {
+                this.menuTrigger.openMenu();
+            } else {
+                this.menuTrigger.closeMenu();
+            }
         }
     }
 
@@ -76,5 +79,9 @@ export class SearchFacetChipComponent {
         if (this.menuTrigger.menuOpen) {
             this.menuTrigger.closeMenu();
         }
+    }
+
+    isPopulated(): boolean {
+        return this.field.buckets && this.field.buckets.items.length > 0;
     }
 }
