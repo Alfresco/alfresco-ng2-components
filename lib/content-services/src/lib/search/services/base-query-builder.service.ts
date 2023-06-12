@@ -487,12 +487,27 @@ export abstract class BaseQueryBuilderService {
         let query = '';
 
         this.categories.forEach((facet) => {
-            const customQuery = this.queryFragments[facet.id];
-            if (customQuery) {
-                if (query.length > 0) {
-                    query += ' AND ';
+            let customQuery: string;
+
+            if (facet.component.selector === 'widget-composite') {
+                const widgetTabs: any[] = facet.component.settings.tabs;
+                widgetTabs.forEach(tab => {
+                    customQuery = this.queryFragments[tab.id];
+                    if (customQuery) {
+                        if (query.length > 0) {
+                            query += ' AND ';
+                        }
+                        query += `(${customQuery})`;
+                    }
+                });
+            } else {
+                customQuery = this.queryFragments[facet.id];
+                if (customQuery) {
+                    if (query.length > 0) {
+                        query += ' AND ';
+                    }
+                    query += `(${customQuery})`;
                 }
-                query += `(${customQuery})`;
             }
         });
 
