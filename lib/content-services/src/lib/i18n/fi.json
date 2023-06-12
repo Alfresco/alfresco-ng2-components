@@ -172,9 +172,9 @@
     "ASSIGN_CATEGORIES": "Määrää luokkia",
     "UNASSIGN_CATEGORY": "Poista luokan määräys",
     "DELETE_CATEGORY": "Poista luokka",
-    "EXISTING_CATEGORIES": "Olemassa olevat luokkat:",
+    "EXISTING_CATEGORIES": "Olemassa olevat luokat:",
     "SELECT_EXISTING_CATEGORY": "Valitse olemassaoleva luokka:",
-    "NO_EXISTING_CATEGORIES": "Ei olemassaolevialuokkia",
+    "NO_EXISTING_CATEGORIES": "Ei olemassa olevia luokkia",
     "GENERIC_CREATE": "Luo: {{name}}",
     "NAME": "Luokan nimi",
     "LOADING": "Ladataan",
@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "Hakusuodatinluettelo"
-      }
+      },
+      "ANY": "Mikä tahansa"
     },
     "ICONS": {
       "ft_ic_raster_image": "Kuvatiedosto",
@@ -396,6 +397,17 @@
           "TITLE": "Luontipäivämäärä (vaihteluväli)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Lisää lause..."
+      },
+      "MATCH_ALL": "KAIKKI",
+      "MATCH_ALL_LABEL": "Yhdistä KAIKKI nämä lauseet",
+      "MATCH_ANY": "MIKÄ TAHANSA",
+      "MATCH_ANY_LABEL": "Yhdistä MIKÄ TAHANSA näistä lauseista",
+      "EXCLUDE": "POISSULJE",
+      "EXCLUDE_LABEL": "POISSULJE nämä lauseet"
     }
   },
   "PERMISSION": {

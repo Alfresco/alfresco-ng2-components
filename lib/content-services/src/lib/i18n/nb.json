@@ -174,7 +174,7 @@
     "DELETE_CATEGORY": "Slett kategori",
     "EXISTING_CATEGORIES": "Eksisterende kategorier:",
     "SELECT_EXISTING_CATEGORY": "Velg en eksisterende kategori:",
-    "NO_EXISTING_CATEGORIES": "Ingen Eksisterende kategorier",
+    "NO_EXISTING_CATEGORIES": "Ingen eksisterende kategorier",
     "GENERIC_CREATE": "Opprett: {{name}}",
     "NAME": "Kategorinavn",
     "LOADING": "Laster",
@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "Søkefilter-liste"
-      }
+      },
+      "ANY": "Enhver"
     },
     "ICONS": {
       "ft_ic_raster_image": "Bildefil",
@@ -396,6 +397,17 @@
           "TITLE": "Opprettet dato (område)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Legg til frase ..."
+      },
+      "MATCH_ALL": "ALLE",
+      "MATCH_ALL_LABEL": "Match ALLE disse frasene",
+      "MATCH_ANY": "ENHVER",
+      "MATCH_ANY_LABEL": "Match ENHVER av disse frasene",
+      "EXCLUDE": "EKSKLUDER",
+      "EXCLUDE_LABEL": "EKSKLUDER disse frasene"
     }
   },
   "PERMISSION": {

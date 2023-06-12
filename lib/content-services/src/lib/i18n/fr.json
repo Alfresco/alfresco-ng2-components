@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "Liste des filtres de recherche"
-      }
+      },
+      "ANY": "N'importe lequel"
     },
     "ICONS": {
       "ft_ic_raster_image": "Fichier d'image",
@@ -396,6 +397,17 @@
           "TITLE": "Date de création (plage)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "Ajouter une phrase..."
+      },
+      "MATCH_ALL": "TOUT",
+      "MATCH_ALL_LABEL": "Associez TOUTES ces phrases",
+      "MATCH_ANY": "N'IMPORTE LEQUEL",
+      "MATCH_ANY_LABEL": "Associez N'IMPORTE QUELLE de ces phrases",
+      "EXCLUDE": "EXCLURE",
+      "EXCLUDE_LABEL": "EXCLURE ces phrases"
     }
   },
   "PERMISSION": {

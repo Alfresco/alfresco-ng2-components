@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "组",
     "MANDATORY": "强制的",
     "ERROR": {
-      "NOT_FOUND": "未找到具有名称 {{groupName}} 的分组"
+      "NOT_FOUND": "找不到组"
     }
   },
   "ADF_CLOUD_USERS": {

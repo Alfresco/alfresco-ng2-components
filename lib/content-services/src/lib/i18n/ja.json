@@ -332,7 +332,8 @@
       },
       "ARIA-LABEL": {
         "SEARCH_FILTER": "検索フィルタリスト"
-      }
+      },
+      "ANY": "任意"
     },
     "ICONS": {
       "ft_ic_raster_image": "画像ファイル",
@@ -396,6 +397,17 @@
           "TITLE": "作成日 (範囲)"
         }
       }
+    },
+    "LOGICAL_SEARCH": {
+      "SEARCH_CHIP_INPUT": {
+        "ADD_PHRASE": "語句の追加..."
+      },
+      "MATCH_ALL": "すべて",
+      "MATCH_ALL_LABEL": "これらの語句のすべてに一致",
+      "MATCH_ANY": "いずれか",
+      "MATCH_ANY_LABEL": "これらの語句のいずれかに一致",
+      "EXCLUDE": "除外",
+      "EXCLUDE_LABEL": "これらの語句の除外"
     }
   },
   "PERMISSION": {

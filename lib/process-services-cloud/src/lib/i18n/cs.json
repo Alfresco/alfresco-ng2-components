@@ -292,7 +292,7 @@
     "SEARCH-GROUP": "Skupiny",
     "MANDATORY": "Povinné",
     "ERROR": {
-      "NOT_FOUND": "Nenalezena žádná skupina s názvem {{groupName}}"
+      "NOT_FOUND": "Skupina nebyla nalezena"
     }
   },
   "ADF_CLOUD_USERS": {
