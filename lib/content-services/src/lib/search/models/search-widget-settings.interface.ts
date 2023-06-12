@@ -26,7 +26,7 @@ export interface SearchWidgetSettings {
     /* describes query format */
     format?: string;
     /* allow the user to search only within predefined options */
-    allowOnlyPredefinedValues?: boolean
+    allowOnlyPredefinedValues?: boolean;
 
     [indexer: string]: any;
 }

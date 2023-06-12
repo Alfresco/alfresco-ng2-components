@@ -65,7 +65,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     it('should set autocomplete options on init', () => {
         component.settings.options = ['test 1', 'test 2'];
-        component.ngOnInit()
+        component.ngOnInit();
         expect(component.autocompleteOptions).toEqual(['test 1', 'test 2']);
     });
 

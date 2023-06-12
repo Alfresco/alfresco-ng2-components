@@ -26,7 +26,6 @@ import { TagService } from '../../../tag';
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
     templateUrl: './search-filter-autocomplete-chips.component.html',
-    styleUrls: ['search-filter-autocomplete-chips.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
@@ -69,7 +68,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     hasValidValue(): boolean {
-        return !!this.selectedOptions
+        return !!this.selectedOptions;
     }
 
     getCurrentValue(){
@@ -98,10 +97,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
-    private setOptions () {
+    private setOptions() {
         switch (this.settings.field) {
             case 'TAG':
-                this.tagService.getAllTheTags().subscribe(res => { this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag)})
+                this.tagService.getAllTheTags().subscribe(res => {
+                    this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag);
+                });
                 break;
             default:
                 this.autocompleteOptions = this.settings.options;

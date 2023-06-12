@@ -63,7 +63,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     constructor() {
         this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
             startWith(null),
-            map((value: string | null) => (value ? this.filter(value) : [])),
+            map((value: string | null) => (value ? this.filter(value) : []))
         );
     }
 
@@ -82,7 +82,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
         if (value && this.isExists(value) && !this.isAdded(value)) {
             this.selectedOptions.push(value);
             this.optionsChanged.emit(this.selectedOptions);
-            event.chipInput!.clear();
+            event.chipInput.clear();
             this.formCtrl.setValue(null);
         }
     }
@@ -117,7 +117,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     private isExists(value): boolean {
         return this.allowOnlyPredefinedValues
             ? this.autocompleteOptions.map(option => option.toLowerCase()).includes(value.toLowerCase())
-            : true
+            : true;
     }
 
     private reset() {

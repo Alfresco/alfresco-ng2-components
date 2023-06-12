@@ -41,7 +41,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         component = fixture.componentInstance;
         component.onReset$ = onResetSubject.asObservable();
         fixture.detectChanges();
-        component.autocompleteOptions = ['option1', 'option2']
+        component.autocompleteOptions = ['option1', 'option2'];
     });
 
     function enterNewInputValue(value: string) {
@@ -61,8 +61,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
     }
 
     function getChipList(): MatChip[] {
-        return fixture.debugElement.queryAll(By.css('mat-chip')).map((chip) => {
-            return chip.nativeElement});
+        return fixture.debugElement.queryAll(By.css('mat-chip')).map((chip) => chip.nativeElement);
     }
 
     function getChipValue(index: number): string {
@@ -104,7 +103,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         addNewOption('option1');
         enterNewInputValue('op');
 
-        const addedOptions = fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'))
+        const addedOptions = fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
 
         await fixture.whenStable();
 
@@ -128,13 +127,13 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     it('should show autocomplete list if similar predefined values exists', () => {
         enterNewInputValue('op');
-        const matOptions = document.querySelectorAll('mat-option')
+        const matOptions = document.querySelectorAll('mat-option');
         expect(matOptions.length).toBe(2);
     });
 
     it('should not show autocomplete list if there are no similar predefined values', () => {
         enterNewInputValue('test');
-        const matOptions = document.querySelectorAll('mat-option')
+        const matOptions = document.querySelectorAll('mat-option');
         expect(matOptions.length).toBe(0);
     });
 
