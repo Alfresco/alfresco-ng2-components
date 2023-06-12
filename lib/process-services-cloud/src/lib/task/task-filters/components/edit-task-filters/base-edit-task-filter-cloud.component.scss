@@ -42,10 +42,6 @@
         margin-right: calc((100% - 100px) / 2);
     }
 
-    &-edit-task-filter-description {
-        place-content: center space-between;
-    }
-
     &-edit-task-filter-form {
         flex-flow: row wrap;
         display: flex;
@@ -69,6 +65,21 @@
             :not(:last-child) {
                 margin-bottom: 10px;
                 margin-right: 0;
+            }
+        }
+    }
+
+    &-edit-task-filter {
+        &-header {
+            height: var(--adf-edit-task-and-service-filter-header-height);
+
+            &__title {
+                color: var(--adf-edit-task-and-service-filter-header-title-color);
+            }
+
+            &__description {
+                color: var(--adf-edit-task-and-service-filter-header-description-color);
+                place-content: center space-between;
             }
         }
     }

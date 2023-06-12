@@ -1,0 +1,16 @@
+@use './reference-variables' as *;
+
+@mixin adf-components-variables() {
+    $defaults: (
+        --adf-edit-task-and-service-filter-header-title-color: $adf-ref-edit-task-and-service-filter-header-title-color,
+        --adf-edit-task-and-service-filter-header-description-color: $adf-ref-edit-task-and-service-filter-header-description-color,
+        --adf-edit-task-and-service-filter-header-height: $adf-ref-edit-task-and-service-filter-header-height,
+    );
+
+    // propagates SCSS variables into the CSS variables scope
+    :root {
+        @each $name, $value in $defaults {
+            #{$name}: #{$value};
+        }
+    }
+}
