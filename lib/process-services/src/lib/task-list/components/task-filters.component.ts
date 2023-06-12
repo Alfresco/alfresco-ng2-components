@@ -16,12 +16,14 @@
  */
 
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 import { IconModel } from '../../app-list/icon.model';
+import { NavigationStart, Router } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-filters',
@@ -29,7 +31,7 @@ import { IconModel } from '../../app-list/icon.model';
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFiltersComponent implements OnInit, OnChanges {
+export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
@@ -71,15 +73,27 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
+    private onDestroy$ = new Subject<boolean>();
+    currentRoute: string= '';
+
     private iconsMDL: IconModel;
 
     constructor(private taskFilterService: TaskFilterService,
                 private taskListService: TaskListService,
-                private appsProcessService: AppsProcessService) {
+                private appsProcessService: AppsProcessService,
+                private router: Router) {
     }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationStart),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((navigationStart: NavigationStart) => {
+                this.currentRoute = navigationStart.url;
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -93,6 +107,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
         }
+    }
+
+    isTaskRoute(filter: FilterParamsModel) : boolean {
+        return this.currentRoute.includes('task') && this.currentFilter === filter;
     }
 
     /**
@@ -253,5 +271,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }

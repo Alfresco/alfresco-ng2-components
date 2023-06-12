@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
+import { NavigationStart, Router } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -29,7 +31,7 @@ import { IconModel } from '../../app-list/icon.model';
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges {
+export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /** The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -71,15 +73,26 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
+    currentRoute: string= '';
+    private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
 
     constructor(private processFilterService: ProcessFilterService,
-                private appsProcessService: AppsProcessService) {
+                private appsProcessService: AppsProcessService,
+                private router: Router) {
     }
 
     ngOnInit() {
-        this.iconsMDL = new IconModel();
+        this.iconsMDL = new IconModel();this.router.events
+        .pipe(
+            filter((event) => event instanceof NavigationStart),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((navigationStart: NavigationStart) => {
+            this.currentRoute = navigationStart.url;
+        });
+
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -94,6 +107,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectProcessFilter(filter.currentValue);
         }
+    }
+
+    isProcessRoute(filter: ProcessInstanceFilterRepresentation) : boolean {
+        return this.currentRoute.includes('process') && this.currentFilter === filter;
     }
 
     /**
@@ -221,5 +238,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
