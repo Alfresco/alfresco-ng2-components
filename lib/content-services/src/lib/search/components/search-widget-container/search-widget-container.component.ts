@@ -57,6 +57,9 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     @Input()
     value: any;
 
+    @Input()
+    disableUpdateOnSubmit = false;
+
     componentRef: ComponentRef<any>;
 
     constructor(
@@ -89,6 +92,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
             ref.instance.id = this.id;
             ref.instance.settings = {...this.settings};
             ref.instance.context = this.queryBuilder;
+            ref.instance.disableUpdateOnSubmit = this.disableUpdateOnSubmit;
             if (this.value) {
                 ref.instance.isActive = true;
                 ref.instance.startValue = this.value;
