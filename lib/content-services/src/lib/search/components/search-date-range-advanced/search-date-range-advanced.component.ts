@@ -57,6 +57,7 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     startValue: SearchDateRangeAdvanced;
+    disableUpdateOnSubmit: boolean;
     maxDate: any;
     dateRangeTypeValue: DateRangeType = DateRangeType.ANY;
     inLastValue: string;
@@ -69,7 +70,6 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
 
     private enableChangeUpdate: boolean;
     private datePickerFormat: string;
-    private disableUpdateOnSubmit = false;
 
     private onDestroy$ = new Subject<void>();
 
@@ -234,5 +234,5 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
         }
     }
 }
-
 //TODO: Format dates for Between date range type
+
