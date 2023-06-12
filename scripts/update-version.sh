@@ -120,7 +120,7 @@ update_component_dependency_version() {
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g"  ${DESTDIR}/package.json
         sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
         sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
     done
@@ -133,7 +133,7 @@ update_total_build_dependency_version() {
     for (( j=0; j<${projectslength}; j++ ));
     do
         PROJECT=${prefix}${projects[$j]}
-        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+        sed "${sedi[@]}" "s/\"${PROJECT}\": \".*\"/\"${PROJECT}\": \">=${VERSION}\"/g"  ${DESTDIR}/package.json
         sed "${sedi[@]}" "s/\"${PROJECT}\": \"~.*\"/\"${PROJECT}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
         sed "${sedi[@]}" "s/\"${PROJECT}\": \"^.*\"/\"${PROJECT}\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
     done
@@ -144,7 +144,7 @@ update_total_build_dependency_js_version(){
     DESTDIR="$DIR/../"
     PACKAGETOCHANGE="@alfresco\/js-api"
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"^${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \">=${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${1}\"/g"  ${DESTDIR}/package.json
 }
@@ -155,7 +155,7 @@ update_component_js_version(){
 
    PACKAGETOCHANGE="@alfresco\/js-api"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"^${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \">=${2}\"/g"  ${DESTDIR}/package.json
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"^${2}\"/g"  ${DESTDIR}/package.json
 
