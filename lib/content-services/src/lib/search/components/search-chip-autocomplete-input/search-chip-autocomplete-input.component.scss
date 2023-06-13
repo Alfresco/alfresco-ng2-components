@@ -11,25 +11,24 @@ adf-search-chip-autocomplete-input {
         border: none;
     }
 
-    .adf-option-chips {
+    .mat-chip.adf-option-chips {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
-        color: var(--theme-primary-color-default-contrast);
-        background-color: var(--theme-primary-color-default-contrast) !important;
+        background-color: var(--theme-primary-color-default-contrast);
         height: auto;
         word-break: break-word;
     }
 
-    .adf-option-chips-delete-icon {
-        font-size: 13px !important;
-        height: 13px !important;
-        width: 13px !important;
-    }
+    .mat-chip-remove.adf-option-chips-delete-button {
+        font-size: 13px;
+        height: 13px;
+        width: 13px;
 
-    .adf-option-chips-delete-button {
-        font-size: 13px !important;
-        height: 13px !important;
-        width: 13px !important;
+        .adf-option-chips-delete-icon.mat-icon {
+            font-size: 13px;
+            height: 13px;
+            width: 13px;
+        }
     }
 
     .mat-chip-list-wrapper {
@@ -41,7 +40,7 @@ adf-search-chip-autocomplete-input {
     }
 }
 
-.adf-autocomplete-added-option {
-    background: var(--adf-theme-mat-grey-color-a200) !important;
-    color: var(--adf-theme-primary-300) !important;
+.mat-option.adf-autocomplete-added-option {
+    background: var(--adf-theme-mat-grey-color-a200);
+    color: var(--adf-theme-primary-300);
 }
