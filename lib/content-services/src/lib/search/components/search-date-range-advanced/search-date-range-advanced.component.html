@@ -1,30 +1,36 @@
 <mat-radio-group [(ngModel)]="dateRangeTypeValue">
   <span class="adf-search-data-range-horizontal-container">
-    <mat-radio-button [value]="DateRangeType.ANY">
+    <mat-radio-button [value]="DateRangeType.ANY" data-automation-id="date-range-advanced-anytime">
       {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
     </mat-radio-button>
   </span>
   <span class="adf-search-date-range-horizontal-container">
-    <mat-radio-button [value]="DateRangeType.IN_LAST">{{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}</mat-radio-button>
+    <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-advanced-in-last">
+        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
+    </mat-radio-button>
     <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
-      <input matInput type="number" min="1" [(ngModel)]="inLastValue">
+      <input matInput type="number" min="1" [(ngModel)]="inLastValue" data-automation-id="date-range-advanced-in-last-input">
     </mat-form-field>
     <mat-form-field class="adf-search-date-range-form-field">
-      <mat-select [(ngModel)]="inLastValueType">
-        <mat-option [value]="InLastDateType.DAYS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.DAYS' | translate }}</mat-option>
-        <mat-option [value]="InLastDateType.WEEKS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.WEEKS' | translate }}</mat-option>
-        <mat-option [value]="InLastDateType.MONTHS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.MONTHS' | translate }}</mat-option>
+      <mat-select [(ngModel)]="inLastValueType" data-automation-id="date-range-advanced-in-last-dropdown">
+        <mat-option data-automation-id="date-range-advanced-in-last-option-days" [value]="InLastDateType.DAYS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.DAYS' | translate }}</mat-option>
+        <mat-option data-automation-id="date-range-advanced-in-last-option-weeks" [value]="InLastDateType.WEEKS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.WEEKS' | translate }}</mat-option>
+        <mat-option data-automation-id="date-range-advanced-in-last-option-months" [value]="InLastDateType.MONTHS">{{ 'SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.MONTHS' | translate }}</mat-option>
       </mat-select>
     </mat-form-field>
   </span>
   <span class="adf-search-date-range-horizontal-container">
-    <mat-radio-button [value]="DateRangeType.BETWEEN">{{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}</mat-radio-button>
+    <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-advanced-between">
+        {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
+    </mat-radio-button>
     <mat-form-field class="adf-search-date-range-form-field">
       <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-        <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}" [(ngModel)]="betweenStartDate">
-        <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}" [(ngModel)]="betweenEndDate">
+        <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
+               data-automation-id="date-range-advanced-between-start-input" [(ngModel)]="betweenStartDate">
+        <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
+               data-automation-id="date-range-advanced-between-end-input" [(ngModel)]="betweenEndDate">
       </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-advanced-between-datepicker-toggle"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </span>
