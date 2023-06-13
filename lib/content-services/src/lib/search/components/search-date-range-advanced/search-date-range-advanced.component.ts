@@ -80,7 +80,6 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
 
     ngOnInit(): void {
         this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
-        this.disableUpdateOnSubmit = this.settings?.disableUpdateOnSubmit;
         if (this.settings && this.settings.maxDate) {
             if (this.settings.maxDate === 'today') {
                 this.maxDate = this.dateAdapter.today().endOf('day');
