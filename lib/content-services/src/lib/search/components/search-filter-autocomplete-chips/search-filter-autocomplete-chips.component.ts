@@ -34,7 +34,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     context?: SearchQueryBuilderService;
     options: SearchFilterList<string[]>;
     startValue: string[] = null;
-    displayValue$= new Subject<string>();
+    displayValue$ = new Subject<string>();
 
     private resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
