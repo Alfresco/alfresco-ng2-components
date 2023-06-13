@@ -52,7 +52,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
 
     onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
-    paginatedNotifications = [];
+    paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
     constructor(

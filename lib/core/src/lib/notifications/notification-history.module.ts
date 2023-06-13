@@ -21,7 +21,6 @@ import { MaterialModule } from '../material.module';
 import { PipeModule } from '../pipes/pipe.module';
 import { NotificationHistoryComponent } from './components/notification-history.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationIconPipe } from './pipes/notification-icon.pipe';
 import { PaginationModule } from '../pagination/pagination.module';
 import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
@@ -35,8 +34,7 @@ import { AddNotificationStorybookComponent } from './components/add-notification
     ],
     declarations: [
         NotificationHistoryComponent,
-        AddNotificationStorybookComponent,
-        NotificationIconPipe
+        AddNotificationStorybookComponent
     ],
     exports: [
         NotificationHistoryComponent,

@@ -43,8 +43,7 @@
                         </div>
                         <ng-template #no_avatar>
                             <mat-icon mat-list-icon
-                                      class="adf-notification-history-menu-initiator">{{ notification | notificationIcon
-                                }}</mat-icon>
+                                      class="adf-notification-history-menu-initiator">{{notification.icon}}</mat-icon>
                         </ng-template>
                         <p class="adf-notification-history-menu-message"
                            *ngFor="let message of notification.messages"

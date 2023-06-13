@@ -28,6 +28,7 @@ export const rootInitiator: NotificationInitiator  = {
 
 export const info = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
     type: NOTIFICATION_TYPE.INFO,
+    icon: 'info',
     datetime: new Date(),
     initiator,
     messages: [].concat(messages)
@@ -35,6 +36,7 @@ export const info = (messages: string | string[], initiator: NotificationInitiat
 
 export const warning = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
     type: NOTIFICATION_TYPE.WARN,
+    icon: 'warning',
     datetime: new Date(),
     initiator,
     messages: [].concat(messages)
@@ -42,6 +44,7 @@ export const warning = (messages: string | string[], initiator: NotificationInit
 
 export const error = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
     type: NOTIFICATION_TYPE.ERROR,
+    icon: 'error',
     datetime: new Date(),
     initiator,
     messages: [].concat(messages)
