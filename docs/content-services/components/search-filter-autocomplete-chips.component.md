@@ -39,13 +39,13 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 
 ### Settings
 
-| Name | Type     | Description                                                                                                         |
-| ---- |----------|---------------------------------------------------------------------------------------------------------------------|
-| field | `string`   | Field to apply the query to. Required value                                                                         |
-| options | `string[]` | Predifined options for autocomplete                                                                                 |
-| allowOnlyPredefinedValues | `boolean` | Specifies whether the input values should only be from predefined                                                   |
-| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true                                 |
-| hideDefaultAction | `boolean` | Show/hide the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) actions. By default is false |
+| Name | Type     | Description                                                                                                        |
+| ---- |----------|--------------------------------------------------------------------------------------------------------------------|
+| field | `string`   | Field to apply the query to. Required value                                                                        |
+| options | `string[]` | Predefined options for autocomplete                                                                                |
+| allowOnlyPredefinedValues | `boolean` | Specifies whether the input values should only be from predefined                                                  |
+| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true                                |
+| hideDefaultAction | `boolean` | Show/hide the widget actions. By default is false |
 ## Details
 
 This component allows the user to choose filter options for the search query.

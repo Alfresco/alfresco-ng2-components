@@ -97,7 +97,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     selected(event: MatAutocompleteSelectedEvent) {
-        if(!this.isAdded(event.option.viewValue)){
+        if (!this.isAdded(event.option.viewValue)) {
             this.selectedOptions.push(event.option.viewValue);
             this.optionInput.nativeElement.value = '';
             this.formCtrl.setValue(null);
@@ -110,11 +110,11 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
         return this.autocompleteOptions.filter(option => option.toLowerCase().includes(filterValue)).slice(0, 15);
     }
 
-     isAdded(value): boolean {
+     private isAdded(value: string): boolean {
         return this.selectedOptions.includes(value);
     }
 
-    private isExists(value): boolean {
+    private isExists(value: string): boolean {
         return this.allowOnlyPredefinedValues
             ? this.autocompleteOptions.map(option => option.toLowerCase()).includes(value.toLowerCase())
             : true;

@@ -34,7 +34,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     context?: SearchQueryBuilderService;
     options: SearchFilterList<string[]>;
     startValue: string[] = null;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$= new Subject<string>();
 
     private resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
@@ -74,7 +74,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         return this.selectedOptions;
     }
 
-    onOptionsChange(selectedOptions) {
+    onOptionsChange(selectedOptions: string[]) {
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
