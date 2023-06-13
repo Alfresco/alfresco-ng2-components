@@ -73,6 +73,14 @@ describe('SearchFacetChipComponent', () => {
         expect(icon).toEqual('keyboard_arrow_down');
     });
 
+    it('should display arrow up icon when menu is opened',  () => {
+        component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
+        component.onMenuOpen();
+        fixture.detectChanges();
+        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+        expect(icon).toEqual('keyboard_arrow_up');
+    });
+
     it('should display remove icon and disable facet when no items are loaded',  () => {
         const chip = fixture.debugElement.query(By.css('mat-chip'));
         const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;

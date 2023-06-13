@@ -25,7 +25,7 @@
 
     &.adf-search-toggle-chip {
         background: var(--adf-theme-background-card-color);
-        border: 2px solid var(--theme-accent-color);
+        border: 2px solid var(--theme-primary-color);
 
         &.mat-chip::after {
             background: unset;

@@ -1,5 +1,10 @@
 .adf-search-filter-chip {
     &[disabled] {
         pointer-events: none;
+
+        &.mat-chip {
+            background-color: #f5f5f5;
+            color: #757575;
+        }
     }
 }

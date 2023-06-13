@@ -41,6 +41,7 @@ export class SearchWidgetChipComponent  {
     widgetContainerComponent: SearchWidgetContainerComponent;
 
     focusTrap: ConfigurableFocusTrap;
+    chipIcon = 'keyboard_arrow_down';
 
     constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
@@ -48,11 +49,13 @@ export class SearchWidgetChipComponent  {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
         }
+        this.chipIcon = 'keyboard_arrow_up';
     }
 
     onClosed() {
         this.focusTrap.destroy();
         this.focusTrap = null;
+        this.chipIcon = 'keyboard_arrow_down';
     }
 
     onRemove() {
