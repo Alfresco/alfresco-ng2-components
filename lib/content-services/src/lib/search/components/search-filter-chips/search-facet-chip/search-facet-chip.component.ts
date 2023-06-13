@@ -82,6 +82,6 @@ export class SearchFacetChipComponent {
     }
 
     isPopulated(): boolean {
-        return this.field.buckets && this.field.buckets.items.length > 0;
+        return this.field.buckets?.items.length > 0;
     }
 }
