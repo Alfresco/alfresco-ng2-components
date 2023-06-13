@@ -41,6 +41,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
+    disableUpdateOnSubmit: boolean;
 
     field: string;
     format = '[{FROM} TO {TO}]';
@@ -98,7 +99,9 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             const value = this.formatString(this.format, map);
 
             this.context.queryFragments[this.id] = `${this.field}:${value}`;
-            this.context.update();
+            if (!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 
