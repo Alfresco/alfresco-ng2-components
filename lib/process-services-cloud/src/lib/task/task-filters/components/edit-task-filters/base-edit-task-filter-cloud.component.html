@@ -36,7 +36,6 @@
                             <mat-label class="adf-edit-task-filter-content__select-label">{{taskFilterProperty.label | translate}}</mat-label>
                             <mat-select
                                 [formControlName]="taskFilterProperty.key"
-                                class="adf-edit-task-filter-content__select-input"
                                 [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"
                                 (selectionChange)="onStatusChange($event)">
                                     <mat-option *ngFor="let propertyOption of taskFilterProperty.options"
@@ -53,7 +52,6 @@
                             <input matInput
                                    [formControlName]="taskFilterProperty.key"
                                    type="text"
-                                   class="adf-edit-task-filter-content__text-input"
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key" />
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'"
