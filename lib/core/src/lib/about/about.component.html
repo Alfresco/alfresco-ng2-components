@@ -1,8 +1,8 @@
-<mat-accordion [togglePosition]="'before'">
+<mat-accordion [togglePosition]="'before'" class="adf-about-panel">
     <ng-container *ngFor="let panel of panels">
         <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>{{panel.label}}</mat-panel-title>
+            <mat-expansion-panel-header class="adf-about-panel-header">
+                <mat-panel-title class="adf-about-panel-header__title">{{panel.label}}</mat-panel-title>
             </mat-expansion-panel-header>
             <ng-container *ngTemplateOutlet="panel.layoutTemplate"></ng-container>
         </mat-expansion-panel>
