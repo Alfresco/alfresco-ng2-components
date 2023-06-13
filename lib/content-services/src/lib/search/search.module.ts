@@ -120,6 +120,8 @@ import { SearchDateRangeAdvancedComponent } from './components/search-date-range
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
         SearchLogicalFilterComponent,
+        SearchFilterTabbedComponent,
+        SearchDateRangeAdvancedComponent,
         ResetSearchDirective
     ],
     providers: [
