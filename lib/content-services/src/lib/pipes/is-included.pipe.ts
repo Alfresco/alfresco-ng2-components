@@ -20,8 +20,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
     name: 'adfIsIncluded'
 })
-export class IsIncludedPipe implements PipeTransform {
-    transform(value: string | number, array: any[]): boolean {
+export class IsIncludedPipe<T> implements PipeTransform {
+    transform(value: T, array: T[]): boolean {
         return array.includes(value);
     }
 }
