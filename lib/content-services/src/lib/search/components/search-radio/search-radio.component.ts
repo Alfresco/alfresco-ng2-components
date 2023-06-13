@@ -50,6 +50,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
+    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     constructor() {
@@ -97,7 +98,9 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     submitValues() {
         this.setValue(this.value);
         this.updateDisplayValue();
-        this.context.update();
+        if(!this.disableUpdateOnSubmit) {
+            this.context.update();
+        }
     }
 
     hasValidValue() {
