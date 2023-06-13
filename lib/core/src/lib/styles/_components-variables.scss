@@ -7,10 +7,10 @@
         --adf-edit-task-and-service-filter-content-text-label-color: $adf-ref-edit-task-and-service-filter-content-text-label-color,
         --adf-edit-task-and-service-filter-content-select-label-color: $adf-ref-edit-task-and-service-filter-content-select-label-color,
         --adf-edit-task-and-service-filter-header-height: $adf-ref-edit-task-and-service-filter-header-height,
-        --adf-card-view-background: $adf-ref-card-view-background,
-        --adf-card-view-border: $adf-ref-card-view-border,
-        --adf-card-view-border-color: $adf-ref-card-view-border-color,
-        --adf-card-view-border-radius: $adf-ref-card-view-border-radius
+        --adf-card-view-background: $adf-ref-card-background,
+        --adf-card-view-border: $adf-ref-card-border,
+        --adf-card-view-border-color: $adf-ref-card-border-color,
+        --adf-card-view-border-radius: $adf-ref-card-border-radius
     );
 
     // propagates SCSS variables into the CSS variables scope
