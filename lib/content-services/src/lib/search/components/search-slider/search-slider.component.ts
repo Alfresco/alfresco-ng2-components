@@ -41,6 +41,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     max: number;
     thumbLabel = false;
     enableChangeUpdate: boolean;
+    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     /** The numeric value represented by the slider. */
@@ -90,7 +91,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     }
 
     submitValues() {
-        this.updateQuery(this.value);
+        if(!this.disableUpdateOnSubmit) {
+            this.updateQuery(this.value);
+        }
     }
 
     hasValidValue() {

@@ -70,6 +70,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
+    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     private onDestroy$ = new Subject<boolean>();
@@ -151,7 +152,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
 
             this.updateDisplayValue();
-            this.context.update();
+            if(!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 
