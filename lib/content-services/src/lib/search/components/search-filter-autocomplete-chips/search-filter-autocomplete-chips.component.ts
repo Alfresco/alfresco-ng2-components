@@ -52,7 +52,6 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             if (this.startValue) {
                 this.setValue(this.startValue);
             }
-
             this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
     }
@@ -71,11 +70,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         return !!this.selectedOptions;
     }
 
-    getCurrentValue(){
+    getCurrentValue(): string[]{
         return this.selectedOptions;
     }
 
-    onOptionsChange(selectedOptions){
+    onOptionsChange(selectedOptions) {
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();

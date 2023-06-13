@@ -2,10 +2,10 @@
 Title: Search Chip Autocomplete Input component
 Added: v6.1.0
 Status: Active
-Last reviewed: 2023-06-12
+Last reviewed: 2023-06-13
 ---
 
-# [Search Chip Autocomplete Input component](../../../lib/content-services/src/lib/search/components/search-chip-autocomplete-input/search-chip-autocomplete-input.component.ts "Defined in search-chip-input.component.ts")
+# [Search Chip Autocomplete Input component](../../../lib/content-services/src/lib/search/components/search-chip-autocomplete-input/search-chip-autocomplete-input.component.ts "Defined in search-chip-autocomplete-input.component.ts")
 
 Represents an input with autocomplete options.
 
@@ -16,7 +16,7 @@ Represents an input with autocomplete options.
 ```html
 <adf-search-chip-autocomplete-input
     [autocompleteOptions]="allOptions"
-    [onReset]="onResetObservable$"
+    [onReset$]="onResetObservable$"
     [allowOnlyPredefinedValues]="allowOnlyPredefinedValues"
     (optionsChanged)="onOptionsChange($event)">
 </adf-search-chip-autocomplete-input>
@@ -24,11 +24,11 @@ Represents an input with autocomplete options.
 
 ### Properties
 
-| Name | Type                     | Default value | Description                                                                       |
-| ---- |--------------------------|----|-----------------------------------------------------------------------------------|
-| autocompleteOptions | `string[]` | [] | Options for autocomplete  |
-| onReset | [`Observable`](https://rxjs.dev/guide/observable)`<void>` |    | Observable that will listen to any reset event causing component to clear the chips and input |
-| allowOnlyPredefinedValues | boolean | true | Observable that will listen to any reset event causing component to clear the chips and input |
+| Name                      | Type                     | Default value | Description                                                                                   |
+|---------------------------|--------------------------|----|-----------------------------------------------------------------------------------------------|
+| autocompleteOptions       | `string[]` | [] | Options for autocomplete                                                                      |
+| onReset$                  | [`Observable`](https://rxjs.dev/guide/observable)`<void>` |    | Observable that will listen to any reset event causing component to clear the chips and input |
+| allowOnlyPredefinedValues | boolean | true | A flag that indicates whether it is possible to add a value not from the predefined ones      |
 
 ### Events
 

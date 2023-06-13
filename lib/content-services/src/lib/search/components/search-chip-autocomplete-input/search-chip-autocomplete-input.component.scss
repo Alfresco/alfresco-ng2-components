@@ -15,7 +15,7 @@ adf-search-chip-autocomplete-input {
         border: 1px solid var(--theme-text-color);
         border-radius: 10px;
         color: var(--theme-primary-color-default-contrast);
-        background-color: white !important;
+        background-color: var(--theme-primary-color-default-contrast) !important;
         height: auto;
         word-break: break-word;
     }

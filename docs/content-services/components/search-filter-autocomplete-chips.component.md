@@ -2,10 +2,10 @@
 Title: Search Filter Autocomplete Chips component
 Added: v6.1.0
 Status: Active
-Last reviewed: 2023-06-12
+Last reviewed: 2023-06-13
 ---
 
-# [Search Filter Autocomplete Chips component](../../../lib/content-services/src/lib/search/components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component.ts "Defined in search-logical-filter.component.ts")
+# [Search Filter Autocomplete Chips component](../../../lib/content-services/src/lib/search/components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component.ts "Defined in search-filter-autocomplete-chips.component.ts")
 
 Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consists of 1 input with autocomplete options representing conditions to form search query.
 
