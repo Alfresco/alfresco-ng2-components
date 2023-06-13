@@ -72,6 +72,7 @@ Represents a container [search widget](../../../lib/content-services/src/lib/sea
 |-----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | useWideMenu           | boolean                                                                                          | Boolean flag to control whether to use a wider view for the tabbed component or not. This may or may not be required, depending on the widgets used inside the tab |
 | displayLabelSeparator | string                                                                                           | The separator to use to differentiate between the display labels for the different widgets used inside the tab container.                                          |
+| hideDefaultAction     | boolean                                                                                          | Show/hide the widget actions. By default is false.                                                                                  |
 | tabs                  | [SearchWidget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts)[] | Array of search widgets to use inside the tabbed container.                                                                                                        |
 
 #### NOTE: 
