@@ -48,6 +48,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
+    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     constructor(private translationService: TranslationService) {
@@ -142,7 +143,9 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
             this.updateDisplayValue();
-            this.context.update();
+            if(!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 }
