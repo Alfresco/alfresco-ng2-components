@@ -57,9 +57,15 @@ export class SearchFilterTabbedComponent implements SearchWidget, OnInit, AfterV
         this.settings.tabs.forEach(tab => {
             if(this.displayLabelMap.get(tab.id)) {
                 if(displayLabel !== '') {
-                    displayLabel +=`${this.settings.displayLabelSeparator} `;
+                    if (this.settings.displayLabelSeparator) {
+                        displayLabel +=`${this.settings.displayLabelSeparator} `;
+                    }
                 }
-                displayLabel += ` ${tab.tabDisplayLabel} ${this.displayLabelMap.get(tab.id)}`;
+                let tabDisplayLabel: string = ' ';
+                if (tab.tabDisplayLabel) {
+                    tabDisplayLabel = tab.tabDisplayLabel;
+                }
+                displayLabel += ` ${tabDisplayLabel} ${this.displayLabelMap.get(tab.id)}`;
             }
         });
         this.displayValue$.next(displayLabel);
