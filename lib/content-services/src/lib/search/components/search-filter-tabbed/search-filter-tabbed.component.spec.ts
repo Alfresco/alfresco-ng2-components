@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-xdescribe('SearchFilterTabbedComponent', () => {
+describe('SearchFilterTabbedComponent', () => {
     let component: SearchFilterTabbedComponent;
     let fixture: ComponentFixture<SearchFilterTabbedComponent>;
 
@@ -57,8 +57,8 @@ xdescribe('SearchFilterTabbedComponent', () => {
         fixture.detectChanges();
     });
 
-    function getButtonByDataAutomationId(buttonDataAutomtaionId: string) {
-        return fixture.debugElement.query(By.css(`[data-automation-id="${buttonDataAutomtaionId}"]`)).nativeElement;
+    function getButtonByDataAutomationId(buttonDataAutomationId: string) {
+        return fixture.debugElement.query(By.css(`[data-automation-id="${buttonDataAutomationId}"]`)).nativeElement;
     }
 
     it('should update displayLabel when inner widgets display label is updated', async () => {
