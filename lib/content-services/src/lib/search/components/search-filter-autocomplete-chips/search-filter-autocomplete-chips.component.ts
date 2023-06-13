@@ -97,15 +97,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     private setOptions() {
-        switch (this.settings.field) {
-            case 'TAG':
-                this.tagService.getAllTheTags().subscribe(res => {
-                    this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag);
-                });
-                break;
-            default:
-                this.autocompleteOptions = this.settings.options;
-                break;
+        if (this.settings.field === 'TAG') {
+            this.tagService.getAllTheTags().subscribe(res => {
+                this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag);
+            });
+        } else {
+            this.autocompleteOptions = this.settings.options;
         }
     }
 }
