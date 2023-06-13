@@ -100,13 +100,13 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const appId = changes['appId'];
-        const filter = changes['filterParam'];
+        const filterParam = changes['filterParam'];
         if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
         } else if (appId && appId.currentValue !== appId.previousValue) {
             this.getFiltersByAppId(appId.currentValue);
-        } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilterAndEmit(filter.currentValue);
+        } else if (filterParam && filterParam.currentValue !== filterParam.previousValue) {
+            this.selectFilterAndEmit(filterParam.currentValue);
         }
     }
 
@@ -188,11 +188,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      */
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
-            this.currentFilter = this.filters.find( (filter, index) =>
+            this.currentFilter = this.filters.find( (entry, index) =>
                 newFilter.index === index ||
-                newFilter.id === filter.id ||
+                newFilter.id === entry.id ||
                 (newFilter.name &&
-                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
+                    (newFilter.name.toLocaleLowerCase() === entry.name.toLocaleLowerCase())
                 ));
         }
     }
@@ -205,8 +205,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Selects and emits the clicked filter.
      */
-    onFilterClick(filter: FilterParamsModel) {
-        this.selectFilter(filter);
+    onFilterClick(filterParams: FilterParamsModel) {
+        this.selectFilter(filterParams);
         this.filterClicked.emit(this.currentFilter);
     }
 
@@ -218,8 +218,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     public selectFilterWithTask(taskId: string) {
         const filteredFilterList: FilterRepresentationModel[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
-            (filter: FilterRepresentationModel) => {
-                filteredFilterList.push(filter);
+            (filterModel: FilterRepresentationModel) => {
+                filteredFilterList.push(filterModel);
             },
             (err) => {
                 this.error.emit(err);

@@ -100,14 +100,14 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
         const appId = changes['appId'];
         const appName = changes['appName'];
-        const filter = changes['filterParam'];
+        const filterParam = changes['filterParam'];
 
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
         } else if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
-        } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectProcessFilter(filter.currentValue);
+        } else if (filterParam && filterParam.currentValue !== filterParam.previousValue) {
+            this.selectProcessFilter(filterParam.currentValue);
         }
     }
 
@@ -163,12 +163,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Pass the selected filter as next
      *
-     * @param filter
+     * @param filterModel
      */
-    selectFilter(filter: ProcessInstanceFilterRepresentation) {
-        this.currentFilter = filter;
+    selectFilter(filterModel: ProcessInstanceFilterRepresentation) {
+        this.currentFilter = filterModel;
         this.active = true;
-        this.filterClicked.emit(filter);
+        this.filterClicked.emit(filterModel);
     }
 
     /**
