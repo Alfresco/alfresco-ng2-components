@@ -20,7 +20,7 @@ import { IsIncludedPipe } from './is-included.pipe';
 describe('IsIncludedPipe', () => {
 
     let pipe: IsIncludedPipe<any>;
-    const array = [1, 2, 'test', [null], {}]
+    const array = [1, 2, 'test', [null], {}];
 
     beforeEach(() => {
         pipe = new IsIncludedPipe();
