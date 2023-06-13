@@ -61,4 +61,29 @@
             }
         }
     }
+
+    &-edit-process-filter {
+        &-header {
+            height: var(--adf-edit-process-filter-header-height);
+
+            &__title {
+                color: var(--adf-edit-process-filter-header-title-color);
+            }
+
+            &__description {
+                color: var(--adf-edit-process-filter-header-description-color);
+                place-content: center space-between;
+            }
+        }
+
+        &-content {
+            &__text-label {
+                color: var(--adf-edit-process-filter-content-text-label-color);
+            }
+
+            &__select-label {
+                color: var(--adf-edit-process-filter-content-select-label-color);
+            }
+        }
+    }
 }

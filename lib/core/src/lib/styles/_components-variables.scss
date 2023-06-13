@@ -13,6 +13,11 @@
         --adf-edit-task-and-service-filter-header-height: $adf-ref-height-48,
         --adf-about-panel-header-height: $adf-ref-height-48,
         --adf-about-panel-header-title-color: $adf-ref-title-color,
+        --adf-edit-process-filter-header-height: $adf-ref-height-48,
+        --adf-edit-process-filter-header-title-color: $adf-ref-title-color,
+        --adf-edit-process-filter-header-description-color: $adf-ref-description-color,
+        --adf-edit-process-filter-content-text-label-color: $adf-ref-text-field-label-color,
+        --adf-edit-process-filter-content-select-label-color: $adf-ref-select-field-label-color,
     );
 
     // propagates SCSS variables into the CSS variables scope
