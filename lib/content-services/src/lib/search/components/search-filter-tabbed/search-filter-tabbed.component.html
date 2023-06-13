@@ -1,27 +1,10 @@
-<mat-accordion *ngIf="settings.verticalMode; else horizontalMode">
-    <mat-expansion-panel *ngFor="let tab of settings.tabs">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{ tab.name }}
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+<mat-tab-group>
+    <mat-tab *ngFor="let tab of settings.tabs" [label]="tab.name">
         <adf-search-widget-container [id]="tab.id"
                                      [disableUpdateOnSubmit]="true"
                                      [value]="tab.component.value"
                                      [selector]="tab.component.selector"
                                      [settings]="tab.component.settings">
         </adf-search-widget-container>
-    </mat-expansion-panel>
-</mat-accordion>
-<ng-template #horizontalMode>
-  <mat-tab-group>
-    <mat-tab *ngFor="let tab of settings.tabs" [label]="tab.name">
-      <adf-search-widget-container [id]="tab.id"
-                                   [disableUpdateOnSubmit]="true"
-                                   [value]="tab.component.value"
-                                   [selector]="tab.component.selector"
-                                   [settings]="tab.component.settings">
-      </adf-search-widget-container>
     </mat-tab>
-  </mat-tab-group>
-</ng-template>
+</mat-tab-group>
