@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { IsIncludedPipe } from './is-included.pipe';
 
 @NgModule({
     imports: [
@@ -26,13 +27,16 @@ import { TranslateModule } from '@ngx-translate/core';
         TranslateModule
     ],
     declarations: [
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        IsIncludedPipe
     ],
     providers: [
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        IsIncludedPipe
     ],
     exports: [
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        IsIncludedPipe
     ]
 })
 export class ContentPipeModule {

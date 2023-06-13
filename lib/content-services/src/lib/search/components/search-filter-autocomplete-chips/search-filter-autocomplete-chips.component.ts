@@ -21,7 +21,7 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { TagService } from '../../../tag';
+import { TagService } from '../../../tag/services/tag.service';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',

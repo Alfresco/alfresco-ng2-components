@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
+import { ContentPipeModule } from '../pipes/content-pipe.module';
 
 import { CoreModule, SearchTextModule } from '@alfresco/adf-core';
 
@@ -29,7 +30,7 @@ import { SearchWidgetContainerComponent } from './components/search-widget-conta
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { SearchChipListComponent } from './components/search-chip-list/search-chip-list.component';
 import { SearchTextComponent } from './components/search-text/search-text.component';
-import { IsIncludedPipe, SearchChipAutocompleteInputComponent } from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
+import { SearchChipAutocompleteInputComponent } from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
 import { SearchFilterAutocompleteChipsComponent } from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 import { SearchRadioComponent } from './components/search-radio/search-radio.component';
 import { SearchSliderComponent } from './components/search-slider/search-slider.component';
@@ -55,6 +56,7 @@ import { ResetSearchDirective } from './components/reset-search.directive';
 @NgModule({
     imports: [
         CommonModule,
+        ContentPipeModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
@@ -88,8 +90,7 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFacetChipComponent,
         SearchChipInputComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective,
-        IsIncludedPipe
+        ResetSearchDirective
     ],
     exports: [
         SearchComponent,
@@ -116,8 +117,7 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFacetFieldComponent,
         SearchChipInputComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective,
-        IsIncludedPipe
+        ResetSearchDirective
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
