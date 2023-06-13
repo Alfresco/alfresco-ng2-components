@@ -63,4 +63,27 @@ describe('SearchFacetChipComponent', () => {
         applyButton.triggerEventHandler('click', {});
         expect(queryBuilder.update).toHaveBeenCalled();
     });
+
+    it('should display arrow down icon and not disable the chip when items are loaded',  () => {
+        component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
+        fixture.detectChanges();
+        const chip = fixture.debugElement.query(By.css('mat-chip'));
+        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-chip-disabled']).toBeUndefined();
+        expect(icon).toEqual('keyboard_arrow_down');
+    });
+
+    it('should display remove icon and disable facet when no items are loaded',  () => {
+        const chip = fixture.debugElement.query(By.css('mat-chip'));
+        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-chip-disabled']).toBeTrue();
+        expect(icon).toEqual('remove');
+    });
+
+    it('should not open context menu when no items are loaded',  () => {
+        spyOn(component.menuTrigger, 'openMenu');
+        const chip = fixture.debugElement.query(By.css('mat-chip')).nativeElement;
+        chip.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+        expect(component.menuTrigger.openMenu).not.toHaveBeenCalled();
+    });
 });

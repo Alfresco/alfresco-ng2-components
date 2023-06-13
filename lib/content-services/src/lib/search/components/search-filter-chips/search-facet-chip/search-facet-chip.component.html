@@ -2,6 +2,7 @@
           disableRipple
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(facetField.displayValue$ | async) || menuTrigger.menuOpen"
+          [disabled]="!isPopulated()"
           tabIndex="0"
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
@@ -18,7 +19,10 @@
         &nbsp; {{ displayValue | translate }}
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon>keyboard_arrow_down</mat-icon>
+    <mat-icon *ngIf="isPopulated(); else disabledIcon">keyboard_arrow_down</mat-icon>
+    <ng-template #disabledIcon>
+        <mat-icon>remove</mat-icon>
+    </ng-template>
 </mat-chip>
 
 <mat-menu #menu="matMenu" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
