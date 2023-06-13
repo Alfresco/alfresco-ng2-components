@@ -23,7 +23,7 @@ export class SearchFilterTabbedComponent implements SearchWidget, OnInit, AfterV
     startValue: any;
     displayLabelMap: Map<string, string> = new Map<string, string>();
 
-    @ViewChildren(SearchWidgetContainerComponent, {  })
+    @ViewChildren(SearchWidgetContainerComponent)
     widgetContainerComponentList: QueryList<SearchWidgetContainerComponent>;
 
     private onDestroy$ = new Subject<void>();
