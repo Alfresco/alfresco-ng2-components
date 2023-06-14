@@ -22,7 +22,7 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
-import { NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -74,27 +74,32 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
     isProcessRoute: boolean;
+    isRouteActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
 
     constructor(private processFilterService: ProcessFilterService,
                 private appsProcessService: AppsProcessService,
-                private router: Router) {
+                private router: Router,
+                private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();
         this.router.events
-        .pipe(
-            filter((event) => event instanceof NavigationStart),
-            takeUntil(this.onDestroy$)
-        )
-        .subscribe((navigationStart: NavigationStart) => {
-            const currentRoute = navigationStart.url;
-            this.isProcessRoute = currentRoute.includes('process');
-        });
-
+            .pipe(
+                filter((event) => event instanceof NavigationStart),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((navigationStart: NavigationStart) => {
+                const currentRoute = navigationStart.url;
+                this.isRouteActive = currentRoute.includes('process');
+            });
+            this.activatedRoute.url.subscribe((segments) => {
+                const currentRoute = segments.join('/');
+                this.isProcessRoute = currentRoute.includes('process');
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -109,6 +114,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         } else if (filterParam && filterParam.currentValue !== filterParam.previousValue) {
             this.selectProcessFilter(filterParam.currentValue);
         }
+    }
+
+    isActiveRoute(filter: ProcessInstanceFilterRepresentation): boolean {
+        return (this.isRouteActive || this.isProcessRoute) && this.currentFilter === filter;
     }
 
     /**

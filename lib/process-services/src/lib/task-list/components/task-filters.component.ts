@@ -22,7 +22,7 @@ import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.m
 import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 import { IconModel } from '../../app-list/icon.model';
-import { NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -75,13 +75,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
     isTaskRoute: boolean;
+    isRouteActive: boolean;
 
     private iconsMDL: IconModel;
 
     constructor(private taskFilterService: TaskFilterService,
                 private taskListService: TaskListService,
                 private appsProcessService: AppsProcessService,
-                private router: Router) {
+                private router: Router,
+                private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -93,7 +95,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
             )
             .subscribe((navigationStart: NavigationStart) => {
                 const currentRoute = navigationStart.url;
-                this.isTaskRoute = currentRoute.includes('task');
+                this.isRouteActive = currentRoute.includes('tasks')
+            });
+            this.activatedRoute.url.subscribe((segments) => {
+                const currentRoute = segments.join('/');
+                this.isTaskRoute = currentRoute.includes('tasks');
             });
     }
 
@@ -110,11 +116,17 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    isActiveRoute(filter: FilterRepresentationModel): boolean {
+        return (this.isRouteActive || this.isTaskRoute) && this.currentFilter === filter;
+    }
+
     /**
      * Return the task list filtered by appId or by appName
      *
      * @param appId
-     * @param appName
+     
+    
+    * @param appName
      */
     getFilters(appId?: number, appName?: string) {
         if (appName) {

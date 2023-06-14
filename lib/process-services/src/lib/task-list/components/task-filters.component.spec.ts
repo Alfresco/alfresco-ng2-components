@@ -344,18 +344,18 @@ describe('TaskFiltersComponent', () => {
             expect(taskFilterThree.innerText).toBe('default-completed-filter');
         });
 
-        it('should set isTaskRoute to true when current route includes "task"', () => {
-            const navigationStartEvent = new NavigationStart(1, 'task/123');
+        it('should set isRouteActive to true when current route includes "tasks"', () => {
+            const navigationStartEvent = new NavigationStart(1, 'tasks/123');
             spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
             fixture.detectChanges();
-            expect(component.isTaskRoute).toBe(true);
-        });
+            expect(component.isRouteActive).toBe(true);
+          });
 
-        it('should set isTaskRoute to false when current route does not include "task"', () => {
+        it('should set isRouteActive to false when current route does not include "tasks"', () => {
             const navigationStartEvent = new NavigationStart(1, 'other-route');
             spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
             fixture.detectChanges();
-            expect(component.isTaskRoute).toBe(false);
+            expect(component.isRouteActive).toBe(false);
         });
     });
 });

@@ -311,17 +311,17 @@ describe('ProcessFiltersComponent', () => {
         expect(filters.length).toBe(0);
     });
 
-    it('should set isProcessRoute to true when current route includes "process"', () => {
+    it('should set isRouteActive to true when current route includes "process"', () => {
         const navigationStartEvent = new NavigationStart(1, 'process/123');
         spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
         fixture.detectChanges();
-        expect(filterList.isProcessRoute).toBe(true);
+        expect(filterList.isRouteActive).toBe(true);
     });
 
-    it('should set isProcessRoute to false when current route does not include "process"', () => {
+    it('should set isRouteActive to false when current route does not include "process"', () => {
         const navigationStartEvent = new NavigationStart(1, 'other-route');
         spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
         fixture.detectChanges();
-        expect(filterList.isProcessRoute).toBe(false);
+        expect(filterList.isRouteActive).toBe(false);
     });
 });
