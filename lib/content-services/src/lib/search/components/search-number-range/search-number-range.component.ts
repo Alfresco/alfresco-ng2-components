@@ -161,8 +161,10 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
     reset() {
         this.clear();
-        if (this.id && this.context) {
-            this.context.update();
+        if (!this.disableUpdateOnSubmit) {
+            if (this.id && this.context) {
+                this.context.update();
+            }
         }
     }
 }
