@@ -1,0 +1,27 @@
+.adf-package-list-table {
+    background: var(--adf-package-list-table-background);
+
+    &__header-row {
+        border-bottom-color: var(--adf-package-list-table-header-border-bottom-color);
+        border-style: var(--adf-package-list-table-header-border-style);
+        border-width: var(--adf-package-list-table-header-border-width);
+        border-bottom-width: var(--adf-package-list-table-header-border-bottom-width);
+        min-height: var(--adf-package-list-table-header-min-height);
+    }
+
+    &__header-cell {
+        color: var(--adf-package-list-table-header-cell-color);
+    }
+
+    &__row {
+        border-bottom-color: var(--adf-package-list-table-row-border-bottom-color);
+        border-style: var(--adf-package-list-table-row-border-style);
+        border-width: var(--adf-package-list-table-row-border-width);
+        border-bottom-width: var(--adf-package-list-table-row-border-bottom-width);
+        min-height: var(--adf-package-list-table-row-min-height);
+
+        &-cell {
+            color: var(--adf-package-list-table-row-cell-color);
+        }
+    }
+}
