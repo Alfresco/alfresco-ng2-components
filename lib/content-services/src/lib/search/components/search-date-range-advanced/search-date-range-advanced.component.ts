@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    SearchQueryBuilderService,
-    SearchWidget,
-    SearchWidgetSettings
-} from '@alfresco/adf-content-services';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 import {
     MOMENT_DATE_FORMATS,
-    MomentDateAdapter,
+    MomentDateAdapter, TranslationService,
     UserPreferencesService,
     UserPreferenceValues
 } from '@alfresco/adf-core';
@@ -73,7 +70,7 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
     private onDestroy$ = new Subject<void>();
 
     constructor(private dateAdapter: DateAdapter<Moment>,
-                private translate: TranslateService,
+                private translate: TranslationService,
                 private userPreferencesService: UserPreferencesService) {
     }
 
