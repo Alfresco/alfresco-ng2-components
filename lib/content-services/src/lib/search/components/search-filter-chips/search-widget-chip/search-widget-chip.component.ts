@@ -16,10 +16,10 @@
  */
 
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { SearchCategory } from '@alfresco/adf-content-services';
+import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { SearchWidgetContainerComponent } from '@alfresco/adf-content-services';
+import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';;
 
 @Component({
   selector: 'adf-search-widget-chip',
