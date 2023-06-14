@@ -4,6 +4,7 @@ import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.c
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { endOfDay, formatISO, startOfDay } from 'date-fns';
 
 describe('SearchDateRangeAdvancedComponent', () => {
     let component: SearchDateRangeAdvancedComponent;
@@ -21,6 +22,10 @@ describe('SearchDateRangeAdvancedComponent', () => {
         fixture = TestBed.createComponent(SearchDateRangeAdvancedComponent);
         component = fixture.componentInstance;
         component.id = 'date-range-advanced';
+        component.settings = {
+            field: 'test-field',
+            hideDefaultAction: false
+        }
         component.context = {
             queryFragments: {
                 date: ''
@@ -72,7 +77,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await selectDropdownOption('date-range-advanced-in-last-option-days')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
-        let query = '[NOW/DAY-5DAYS TO NOW/DAY+1DAY]';
+        let query = 'test-field:[NOW/DAY-5DAYS TO NOW/DAY+1DAY]';
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
 
@@ -81,7 +86,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await selectDropdownOption('date-range-advanced-in-last-option-weeks');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
-        query = '[NOW/DAY-3WEEKS TO NOW/DAY+1DAY]';
+        query = 'test-field:[NOW/DAY-3WEEKS TO NOW/DAY+1DAY]';
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
 
@@ -90,7 +95,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await selectDropdownOption('date-range-advanced-in-last-option-months');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
-        query = '[NOW/DAY-6MONTHS TO NOW/DAY+1DAY]';
+        query = 'test-field:[NOW/DAY-6MONTHS TO NOW/DAY+1DAY]';
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
     });
@@ -111,13 +116,12 @@ describe('SearchDateRangeAdvancedComponent', () => {
     });
 
     it('should set proper date filter in context when Between option is selected', async () => {
-        // TODO might need to get updated with date-fns
         await clickElementByAutomationId('date-range-advanced-between');
-        await enterValueInInputField('date-range-advanced-between-start-input', '05/06/2023');
-        await enterValueInInputField('date-range-advanced-between-end-input', '10/06/2023');
+        await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
+        await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
-        let query = '[NOW/DAY-5DAYS TO NOW/DAY+1DAY]';
+        let query = `test-field:[${formatISO(startOfDay(component.betweenStartDate))} TO ${formatISO(endOfDay(component.betweenEndDate))}]`;
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
     });
@@ -148,10 +152,9 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         expect(component.displayValue$.next).toHaveBeenCalledWith('In the last 7 months');
 
-        //TODO: Might need to be updated with date-fns
         await clickElementByAutomationId('date-range-advanced-between');
-        await enterValueInInputField('date-range-advanced-between-start-input', '05/06/2023');
-        await enterValueInInputField('date-range-advanced-between-end-input', '10/06/2023');
+        await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
+        await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         expect(component.displayValue$.next).toHaveBeenCalledWith('Between 05-Jun-2023 - 10-Jun-2023');
     });
@@ -197,11 +200,10 @@ describe('SearchDateRangeAdvancedComponent', () => {
         component.ngOnInit();
         expect(component.getCurrentValue()).toBe(value);
 
-        //TODO: Might need to be changed after date-fns
         value = {
             dateRangeType: component.DateRangeType.BETWEEN,
-            betweenStartDate: '05/06/2023',
-            betweenEndDate: '10/06/2023'
+            betweenStartDate: '6/5/2023',
+            betweenEndDate: '6/10/2023'
         }
         component.startValue = value;
         component.ngOnInit();
