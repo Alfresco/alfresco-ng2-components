@@ -116,8 +116,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isActiveRoute(filter: ProcessInstanceFilterRepresentation): boolean {
-        return (this.isRouteActive || this.isProcessRoute) && this.currentFilter === filter;
+    isActiveRoute(filterActive: ProcessInstanceFilterRepresentation): boolean {
+        return (this.isRouteActive || this.isProcessRoute) && this.currentFilter === filterActive;
     }
 
     /**
