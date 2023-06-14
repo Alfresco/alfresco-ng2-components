@@ -82,7 +82,7 @@
     "cropperjs": "1.5.13",
     "date-fns": "^2.30.0",
     "dotenv-expand": "^5.1.0",
-    "editorjs-html": "3.4.2",
+    "editorjs-html": "3.4.3",
     "editorjs-paragraph-with-alignment": "3.0.0",
     "minimatch": "^9.0.0",
     "minimatch-browser": "1.0.0",
