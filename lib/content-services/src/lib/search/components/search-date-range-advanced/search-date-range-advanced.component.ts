@@ -68,7 +68,6 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
     DateRangeType = DateRangeType;
     InLastDateType = InLastDateType;
 
-    private enableChangeUpdate: boolean;
     private datePickerFormat: string;
 
     private onDestroy$ = new Subject<void>();
@@ -87,7 +86,6 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
                 this.maxDate = moment(this.settings.maxDate).endOf('day');
             }
         }
-        this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
 
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
@@ -164,7 +162,7 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
-            if (this.enableChangeUpdate) {
+            if (!this.disableUpdateOnSubmit) {
                 this.updateQuery();
             }
         }

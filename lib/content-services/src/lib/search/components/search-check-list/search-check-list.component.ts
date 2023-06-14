@@ -95,7 +95,9 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         this.clearOptions();
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            if (!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 
