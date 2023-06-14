@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
+import { NodePaging, SharedLinkBodyCreate, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
@@ -62,11 +62,12 @@ export class SharedLinksApiService {
      * Creates a shared link available to the current user.
      *
      * @param nodeId ID of the node to link to
+     * @param sharedLinkWithExpirySettings shared link with nodeId and expiryDate
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
-    createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {
-        const promise = this.sharedLinksApi.createSharedLink({ nodeId }, options);
+    createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
+        const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings? sharedLinkWithExpirySettings : { nodeId }, options);
 
         return from(promise).pipe(
             catchError((err) => of(err))

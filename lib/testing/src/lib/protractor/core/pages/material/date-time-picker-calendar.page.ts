@@ -21,8 +21,8 @@ import { BrowserActions } from '../../utils/browser-actions';
 
 export class DateTimePickerCalendarPage {
 
-    datePicker = $(`.mat-datetimepicker-calendar`);
-    today = $(`.mat-datetimepicker-calendar-body-today`);
+    datePicker = $(`.mat-datepicker-calendar`);
+    today = $(`.mat-calendar-body-today`);
     timePicker = $('.mat-datetimepicker-clock');
     hourTime = $$('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell').first();
     minutesTime = $$('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell').first();
@@ -47,7 +47,7 @@ export class DateTimePickerCalendarPage {
     async setDate(date?: string): Promise<boolean> {
         try {
             if (date) {
-                await BrowserActions.clickScript(element.all(by.cssContainingText(`.mat-datetimepicker-calendar-body-cell-content`, date)).first());
+                await BrowserActions.clickScript(element.all(by.cssContainingText(`.mat-datepicker-calendar-body-cell-content`, date)).first());
             } else {
                 await this.setToday();
             }
@@ -59,7 +59,7 @@ export class DateTimePickerCalendarPage {
     }
 
     async checkCalendarTodayDayIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', await BrowserActions.getText(this.today))));
+        await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-calendar-body-cell-content', await BrowserActions.getText(this.today))));
     }
 
     async setDefaultEnabledHour(): Promise<void> {

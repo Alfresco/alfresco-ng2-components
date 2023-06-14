@@ -23,23 +23,19 @@ import {
     ViewChild,
     OnDestroy
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import {
-    AppConfigService
-} from '@alfresco/adf-core';
-import { NodesApiService } from '../common/services/nodes-api.service';
+import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 
 import { SharedLinksApiService } from './services/shared-links-api.service';
-import { SharedLinkEntry, Node } from '@alfresco/js-api';
+import { SharedLinkBodyCreate, SharedLinkEntry } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
-import moment from 'moment';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { RenditionService } from '../common/services/rendition.service';
+import { format, add, endOfDay } from 'date-fns';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -52,33 +48,33 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
 
-    minDate = moment().add(1, 'd');
+    minDate = add(new Date(), { days: 1 });
     sharedId: string;
     fileName: string;
     baseShareUrl: string;
-    isFileShared: boolean = false;
-    isDisabled: boolean = false;
+    isFileShared = false;
+    isDisabled = false;
+    isLinkWithExpiryDate = false;
     form: UntypedFormGroup = new UntypedFormGroup({
         sharedUrl: new UntypedFormControl(''),
         time: new UntypedFormControl({value: '', disabled: true})
     });
-    type: DatePickerType = 'datetime';
+    type: DatePickerType = 'date';
     maxDebounceTime = 500;
+    isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', {static: true})
     slideToggleExpirationDate;
 
-    @ViewChild('dateTimePickerInput', {static: true})
-    dateTimePickerInput;
+    @ViewChild('datePickerInput', {static: true})
+    datePickerInput;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        private appConfigService: AppConfigService,
         private sharedLinksApiService: SharedLinksApiService,
         private dialogRef: MatDialogRef<ShareDialogComponent>,
         private dialog: MatDialog,
-        private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private renditionService: RenditionService,
         @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
@@ -86,8 +82,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.type = this.appConfigService.get<DatePickerType>('sharedLinkDateTimePickerType', 'datetime');
-
         if (this.data.node && this.data.node.entry) {
             this.fileName = this.data.node.entry.name;
             this.baseShareUrl = this.data.baseShareUrl;
@@ -99,7 +93,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             } else {
                 this.sharedId = properties['qshare:sharedId'];
                 this.isFileShared = true;
-                this.updateForm();
+
+                const expiryDate = this.updateForm();
+                this.isExpiryDateToggleChecked = this.isLinkWithExpiryDate = !!expiryDate;
+                this.isLinkWithExpiryDate ? this.time.enable() : this.time.disable();
             }
         }
 
@@ -111,10 +108,8 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             .subscribe(value => this.onTimeChanged(value));
     }
 
-    onTimeChanged(date: moment.Moment) {
-        this.updateNode(date).subscribe(
-            () => this.updateEntryExpiryDate(date)
-        );
+    onTimeChanged(date: Date) {
+        this.updateNode(date);
     }
 
     get time(): AbstractControl {
@@ -147,15 +142,16 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
             this.time.enable();
+            this.isExpiryDateToggleChecked = true;
         } else {
             this.time.disable();
             this.time.setValue(null);
+            this.deleteSharedLink(this.sharedId, true);
         }
     }
 
-    onDatetimepickerClosed() {
-        this.dateTimePickerInput.nativeElement.blur();
-
+    onDatePickerClosed() {
+        this.datePickerInput.nativeElement.blur();
         if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
@@ -185,10 +181,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createSharedLinks(nodeId: string) {
+    private createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate) {
         this.isDisabled = true;
 
-        this.sharedLinksApiService.createSharedLinks(nodeId).subscribe(
+        this.sharedLinksApiService.createSharedLinks(nodeId, sharedLinkWithExpirySettings).subscribe(
             (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
@@ -215,7 +211,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-    deleteSharedLink(sharedId: string) {
+    deleteSharedLink(sharedId: string, dialogOpenFlag?: boolean) {
         this.isDisabled = true;
 
         this.sharedLinksApiService
@@ -230,7 +226,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                             this.data.node.entry.properties['qshare:sharedId'] = null;
                             this.data.node.entry.properties['qshare:expiryDate'] = null;
                         }
-                        this.dialogRef.close(false);
+                        if (dialogOpenFlag) {
+                            this.createSharedLinks(this.data.node.entry.id);
+                            this.isExpiryDateToggleChecked = false;
+                            this.isLinkWithExpiryDate = false;
+                        } else {
+                            this.dialogRef.close(false);
+                        }
                     }
                 }
             );
@@ -255,7 +257,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         });
     }
 
-    private updateForm() {
+    private updateForm(): Date {
         const {entry} = this.data.node;
         let expiryDate = null;
 
@@ -265,34 +267,55 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.form.setValue({
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
-            time: expiryDate ? moment(expiryDate).local() : null
-        });
+            time: expiryDate ? new Date(expiryDate) : null
+        }, { emitEvent: false });
 
-        if (expiryDate) {
-            this.time.enable();
+        return expiryDate;
+    }
+
+    private updateNode(date: Date) {
+        let expiryDate: Date | string;
+        if (date) {
+            if (this.type === 'date') {
+                expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+            } else {
+                expiryDate = format((new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+            }
         } else {
-            this.time.disable();
+            expiryDate = null;
+        }
+
+        if (this.sharedId && expiryDate) {
+                this.isDisabled = true;
+
+                this.sharedLinksApiService.deleteSharedLink(this.sharedId).subscribe((response: any) => {
+                    if (response instanceof Error) {
+                        this.isDisabled = false;
+                        this.isFileShared = true;
+                        this.handleError(response);
+                    } else {
+                        this.sharedLinkWithExpirySettings(expiryDate as Date);
+                        this.isLinkWithExpiryDate = true;
+                        this.updateEntryExpiryDate(date);
+                    }
+            });
         }
     }
 
-    private updateNode(date: moment.Moment): Observable<Node> {
-        const expiryDate = date
-            ? (this.type === 'date' ? date.endOf('day').utc().format() : date.utc().format())
-            : null;
-
-        return this.nodesApiService.updateNode(this.data.node.entry.id, {
-            properties: {
-                'qshare:expiryDate': expiryDate
-            }
-        });
+    private sharedLinkWithExpirySettings(expiryDate: Date) {
+        const nodeObject: SharedLinkBodyCreate = {
+            nodeId: this.data.node.entry.id,
+            expiresAt: expiryDate as Date
+        };
+        this.createSharedLinks(this.data.node.entry.id, nodeObject);
     }
 
-    private updateEntryExpiryDate(date: moment.Moment) {
+    private updateEntryExpiryDate(date: Date) {
         const {properties} = this.data.node.entry;
 
         if (properties) {
             properties['qshare:expiryDate'] = date
-                ? date.local()
+                ? new Date(date)
                 : null;
         }
     }

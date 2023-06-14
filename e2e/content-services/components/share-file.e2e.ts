@@ -132,23 +132,6 @@ describe('Share file', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286548] Should be possible to set expiry date for link', async () => {
-            await contentServicesPage.clickShareButton();
-            await shareDialog.checkDialogIsDisplayed();
-            await shareDialog.clickExpireToggle();
-            await shareDialog.setDefaultDay();
-            await shareDialog.setDefaultHour();
-            await shareDialog.setDefaultMinutes();
-            await shareDialog.dateTimePickerDialogIsClosed();
-            const value = await shareDialog.getExpirationDate();
-            await shareDialog.clickCloseButton();
-            await shareDialog.dialogIsClosed();
-            await contentServicesPage.clickShareButton();
-            await shareDialog.checkDialogIsDisplayed();
-            await shareDialog.expirationDateInputHasValue(value);
-            await BrowserActions.closeMenuAndDialogs();
-        });
-
         it('[C310329] Should be possible to set expiry date only for link', async () => {
             await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
             await contentServicesPage.clickShareButton();

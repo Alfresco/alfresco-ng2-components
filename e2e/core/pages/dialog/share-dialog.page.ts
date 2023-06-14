@@ -17,8 +17,7 @@
 
 import { $$, $ } from 'protractor';
 import { BrowserVisibility, TogglePage, BrowserActions, DateTimePickerPage } from '@alfresco/adf-testing';
-import * as moment from 'moment';
-
+import { format, add } from 'date-fns';
 export class ShareDialogPage {
 
     togglePage = new TogglePage();
@@ -85,7 +84,7 @@ export class ShareDialogPage {
     }
 
     async calendarTodayDayIsDisabled(): Promise<void> {
-        const tomorrow = moment().add(1, 'days').format('D');
+        const tomorrow = format(add(new Date(), {days: 1}), 'd');
 
         if (tomorrow !== '1') {
             await this.dateTimePickerPage.checkCalendarTodayDayIsDisabled();
@@ -93,7 +92,7 @@ export class ShareDialogPage {
     }
 
     async setDefaultDay(): Promise<void> {
-        const tomorrow = moment().add(1, 'days').format('D');
+        const tomorrow = format(add(new Date(), {days: 1}), 'd');
         await this.dateTimePickerPage.setDate(tomorrow);
     }
 
