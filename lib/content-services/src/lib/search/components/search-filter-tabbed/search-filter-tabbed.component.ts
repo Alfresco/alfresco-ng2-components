@@ -1,10 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
-import {
-    SearchQueryBuilderService,
-    SearchWidget,
-    SearchWidgetContainerComponent,
-    SearchWidgetSettings
-} from '@alfresco/adf-content-services';
+import { SearchWidget } from '../../models/search-widget.interface';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
+import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
