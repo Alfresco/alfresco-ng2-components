@@ -213,7 +213,7 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
         switch (this.dateRangeTypeValue) {
             case DateRangeType.IN_LAST:
                 if (this.hasValidValue()) {
-                    displayLabel = `${this.translate.instant('SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST')} ${this.inLastValue} ${this.translate.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_LABELS.${this.inLastValueType}`)}`;
+                    displayLabel = this.translate.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${this.inLastValueType}`, { value: this.inLastValue });
                 }
                 break;
             case DateRangeType.BETWEEN:
