@@ -426,6 +426,11 @@
         "WEEKS": "Weeks",
         "MONTHS": "Months"
       },
+        "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Start Date",
         "END_DATE": "End Date"
