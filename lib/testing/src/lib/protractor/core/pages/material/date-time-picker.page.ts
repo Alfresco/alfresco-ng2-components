@@ -30,6 +30,7 @@ export class DateTimePickerPage {
         if (rootElement) {
             this.rootElement = rootElement;
             this.dateTimePicker  = this.rootElement.$('.mat-datetimepicker-toggle');
+            this.datePicker  = this.rootElement.$('.mat-datepicker-toggle');
         }
     }
 
@@ -47,7 +48,7 @@ export class DateTimePickerPage {
     }
 
     async setDate(date?: string): Promise<boolean> {
-        await BrowserActions.click(this.dateTimePicker);
+        await BrowserActions.click(this.datePicker);
         return this.dateTime.setDate(date);
     }
 
