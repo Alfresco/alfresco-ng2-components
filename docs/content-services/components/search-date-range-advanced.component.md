@@ -38,13 +38,13 @@ Represents an advanced date range [search widget](../../../lib/content-services/
 
 ### Settings
 
-| Name | Type | Description                                                                                                                                                                                         |
-| ---- | ---- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is false.                                                                                                               |
-| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.                                                                                  |
-| field | string | Field to apply the query to. Required value                                                                                                                                                         |
-| dateFormat | string | Date format. Dates used by the datepicker are [Moment.js](https://momentjs.com/docs/#/parsing/string-format/) instances, so you can use any date format supported by Moment. Default is 'DD/MM/YYYY'. |
-| maxDate | string | A fixed date or the string `"today"` that will set the maximum searchable date. Default is no maximum.                                                                                              |
+| Name | Type | Description                                                                                                                                                                                                                                                    |
+| ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is false.                                                                                                                                                                          |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.                                                                                                                                                                                                             |
+| field | string | Field to apply the query to. Required value                                                                                                                                                                                                                    |
+| dateFormat | string | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yyyy (sample date - 07-Jun-2023) |
+| maxDate | string | A fixed date (in format mentioned above, default format: dd-MMM-yyyy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                     |
 
 ## Details
 
@@ -68,7 +68,7 @@ in a search query.
 ### Custom date format
 
 You can set the date range picker to work with any date format your app requires. You can use
-any date format supported by [Moment.js](https://momentjs.com/docs/#/parsing/string-format/)
+any date format supported by the [date-fns](https://date-fns.org/v2.30.0/docs/format) library
 in the `dateFormat` and in the `maxDate` setting:
 
 ```json

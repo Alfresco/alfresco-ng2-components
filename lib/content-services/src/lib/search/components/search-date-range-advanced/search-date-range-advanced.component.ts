@@ -1,19 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { Moment } from 'moment';
 import { Subject } from 'rxjs';
-import {
-    MOMENT_DATE_FORMATS,
-    MomentDateAdapter, TranslationService,
-    UserPreferencesService,
-    UserPreferenceValues
-} from '@alfresco/adf-core';
-import { takeUntil } from 'rxjs/operators';
-
-declare let moment: any;
+import { TranslationService } from '@alfresco/adf-core';
+import { endOfDay, format, formatISO, parse, startOfDay } from 'date-fns';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 
 enum DateRangeType {
     ANY = 'ANY',
@@ -33,20 +25,19 @@ interface SearchDateRangeAdvanced {
     [indexer: string]: any;
 }
 
-const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
+const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yyyy';
 
 @Component({
     selector: 'adf-search-date-range-advanced',
     templateUrl: './search-date-range-advanced.component.html',
     styleUrls: ['./search-date-range-advanced.component.scss'],
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}
+        {provide: DateAdapter, useClass: NativeDateAdapter},
     ],
     encapsulation: ViewEncapsulation.None,
     host: {class: 'adf-search-date-range-advanced'}
 })
-export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit {
     displayValue$: Subject<string> = new Subject<string>();
     isActive: boolean;
 
@@ -67,41 +58,22 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
 
     private datePickerFormat: string;
 
-    private onDestroy$ = new Subject<void>();
-
-    constructor(private dateAdapter: DateAdapter<Moment>,
-                private translate: TranslationService,
-                private userPreferencesService: UserPreferencesService) {
+    constructor(private translate: TranslationService) {
     }
 
     ngOnInit(): void {
-        this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
-        if (this.settings && this.settings.maxDate) {
-            if (this.settings.maxDate === 'today') {
-                this.maxDate = this.dateAdapter.today().endOf('day');
+        this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_DATE_DISPLAY_FORMAT;
+        if (this.settings) {
+            if (!this.settings.maxDate || this.settings.maxDate === 'today') {
+                this.maxDate = endOfDay(new Date());
             } else {
-                this.maxDate = moment(this.settings.maxDate).endOf('day');
+                this.maxDate = endOfDay(parse(this.settings.maxDate, this.datePickerFormat, new Date()));
             }
         }
-
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.setLocale(locale));
 
         if (this.startValue) {
             this.setValue(this.startValue);
         }
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-    }
-
-    setLocale(locale) {
-        this.dateAdapter.setLocale(locale);
-        moment.locale(locale);
     }
 
     getCurrentValue(): SearchDateRangeAdvanced {
@@ -191,8 +163,8 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
                 break;
             case DateRangeType.BETWEEN:
                 if (this.hasValidValue()) {
-                    const start = moment(this.betweenStartDate).startOf('day').format();
-                    const end = moment(this.betweenEndDate).endOf('day').format();
+                    const start = formatISO(startOfDay(this.betweenStartDate));
+                    const end = formatISO(endOfDay(this.betweenEndDate));
                     query = `${this.settings.field}:['${start}' TO '${end}']`;
                 }
         }
@@ -208,13 +180,13 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
         switch (this.dateRangeTypeValue) {
             case DateRangeType.IN_LAST:
                 if (this.hasValidValue()) {
-                    displayLabel = this.translate.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${this.inLastValueType}`, { value: this.inLastValue });
+                    displayLabel = this.translate.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${this.inLastValueType}`, {value: this.inLastValue});
                 }
                 break;
             case DateRangeType.BETWEEN:
                 if (this.hasValidValue()) {
-                    const start = moment(this.betweenStartDate).startOf('day').format(this.datePickerFormat);
-                    const end = moment(this.betweenEndDate).endOf('day').format(this.datePickerFormat);
+                    const start = format(startOfDay(this.betweenStartDate), this.datePickerFormat);
+                    const end = format(endOfDay(this.betweenEndDate), this.datePickerFormat);
                     displayLabel = `${start} - ${end}`;
                 }
                 break;
@@ -228,5 +200,6 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit, O
         }
     }
 }
+
 //TODO: Format dates for Between date range type
 
