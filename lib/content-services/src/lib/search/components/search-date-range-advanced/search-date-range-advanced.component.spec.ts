@@ -190,7 +190,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
         await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('05-Jun-2023 - 10-Jun-2023');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('05-Jun-23 - 10-Jun-23');
     });
 
     it('should not update display label if anytime option is selected', async() => {
