@@ -159,7 +159,7 @@ export class ThumbnailService {
         save: './assets/images/save.svg',
         task: './assets/images/task.svg',
         'multipart/related': './assets/images/ft_ic_website.svg',
-        'side-nav-collapse': './assets/images/icon-expand-navigation.svg'
+        'side-nav-collapse': './assets/images/icon-collapse-navigation.svg'
     };
 
     constructor(matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
