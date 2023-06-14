@@ -1,11 +1,11 @@
-<mat-table [dataSource]="data">
+<mat-table [dataSource]="data" class="adf-package-list-table">
   <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <mat-header-cell *matHeaderCellDef>
+    <mat-header-cell *matHeaderCellDef class="adf-package-list-table__header-cell">
       {{ column.header | translate }}
     </mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+    <mat-cell *matCellDef="let row" class="adf-package-list-table__row-cell">{{ column.cell(row) }}</mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <mat-header-row *matHeaderRowDef="displayedColumns" class="adf-package-list-table__header-row"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns" class="adf-package-list-table__row"></mat-row>
 </mat-table>

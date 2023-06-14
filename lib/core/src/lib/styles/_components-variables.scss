@@ -22,6 +22,19 @@
         --adf-about-server-settings-color: $adf-ref-card-color,
         --adf-about-server-settings-border-radius: $adf-ref-card-border-radius-4,
         --adf-about-server-settings-padding: $adf-ref-card-padding-16,
+        --adf-package-list-table-background: $adf-ref-table-background,
+        --adf-package-list-table-header-border-bottom-color: $adf-ref-table-header-border-bottom-color,
+        --adf-package-list-table-header-border-style: $adf-ref-table-header-border-style,
+        --adf-package-list-table-header-border-bottom-width: $adf-ref-table-header-border-bottom-width,
+        --adf-package-list-table-header-border-width: $adf-ref-table-header-border-width,
+        --adf-package-list-table-header-min-height: $adf-ref-table-header-min-height,
+        --adf-package-list-table-header-cell-color: $adf-table-header-cell-color,
+        --adf-package-list-table-row-border-bottom-color: $adf-ref-table-row-border-bottom-color,
+        --adf-package-list-table-row-border-style: $adf-ref-table-row-border-style,
+        --adf-package-list-table-row-border-bottom-width: $adf-ref-table-row-border-bottom-width,
+        --adf-package-list-table-row-border-width: $adf-ref-table-row-border-width,
+        --adf-package-list-table-row-min-height: $adf-ref-table-row-min-height,
+        --adf-package-list-table-row-cell-color: $adf-table-row-cell-color,
     );
 
     // propagates SCSS variables into the CSS variables scope
