@@ -26,8 +26,7 @@ describe('SearchFilterTabbedComponent', () => {
                 field1: '',
                 field2: ''
             },
-            update: () => {
-            }
+            update: jasmine.createSpy()
         } as any;
         component.settings = {
             field: undefined,
@@ -79,7 +78,6 @@ describe('SearchFilterTabbedComponent', () => {
         component.widgetContainerComponentList.forEach(widget => {
             spyOn(widget, 'applyInnerWidget');
         });
-        spyOn(component.context, 'update');
         const resetButton = getButtonByDataAutomationId('tab-apply-btn');
         resetButton.dispatchEvent(new Event('click'));
         fixture.detectChanges();
