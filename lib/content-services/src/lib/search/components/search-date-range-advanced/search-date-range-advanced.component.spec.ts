@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.component';
 import { endOfDay, formatISO, startOfDay } from 'date-fns';
 
-fdescribe('SearchDateRangeAdvancedComponent', () => {
+describe('SearchDateRangeAdvancedComponent', () => {
     let component: SearchDateRangeAdvancedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedComponent>;
 
