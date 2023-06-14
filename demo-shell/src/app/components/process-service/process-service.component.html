@@ -245,29 +245,6 @@
             </div>
         </div>
     </mat-tab>
-    <mat-tab id="report-header" href="#report"
-             label="{{'PS-TAB.REPORTS-TAB' | translate}}">
-        <div class="app-grid">
-            <div class="app-grid-item app-reports-menu">
-                <span><h5>Report List</h5></span>
-                <mat-divider></mat-divider>
-            </div>
-            <div class="app-grid-item app-reports-details">
-                <adf-analytics
-                    *ngIf="report"
-                    [appId]="appId"
-                    [reportId]="report.id"
-                    [hideParameters]="false"
-                    (editReport)="onEditReport()"
-                    (reportSaved)="onReportSaved($event)"
-                    (reportDeleted)="onReportDeleted()">
-                </adf-analytics>
-                <div *ngIf="!report">
-                    <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
-                </div>
-            </div>
-        </div>
-    </mat-tab>
     <mat-tab id="settings-header" href="#settings"
              label="{{'PS-TAB.SETTINGS-TAB' | translate}}">
         <div class="app-grid">

@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "Использовать пользовательский шаблон для заголовка «Пользователь»",
     "CUSTOM_COLUMN_HEADER": "Пользовательский шаблон заголовка пользователя"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "Отчет не выбран. Выберите отчет из списка"
-  },
   "PS-TAB": {
     "TASKS-TAB": "Задачи",
     "PROCESSES-TAB": "Процесс",
-    "REPORTS-TAB": "Отчеты",
     "SETTINGS-TAB": "Параметры",
     "START-TASK": "Начать задачу",
     "START-PROCESS": "Начать процесс",

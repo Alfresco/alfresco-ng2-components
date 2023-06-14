@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "استخدم نموذج مخصص للرأس 'المستخدم'",
     "CUSTOM_COLUMN_HEADER": "قالب رأس المستخدم المخصص"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "لم يتم تحديد تقرير. اختر تقريرًا من القائمة"
-  },
   "PS-TAB": {
     "TASKS-TAB": "المهام",
     "PROCESSES-TAB": "العملية",
-    "REPORTS-TAB": "تقارير",
     "SETTINGS-TAB": "إعدادات",
     "START-TASK": "بدء مهمة",
     "START-PROCESS": "بدء العملية",

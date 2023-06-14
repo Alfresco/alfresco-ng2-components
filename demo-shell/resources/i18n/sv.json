@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "Använd anpassad mall för \"Användare\"-rubrik",
     "CUSTOM_COLUMN_HEADER": "Anpassad användarhuvudmall"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "Ingen rapport vald. Välj en rapport från listan"
-  },
   "PS-TAB": {
     "TASKS-TAB": "Uppgifter",
     "PROCESSES-TAB": "Process",
-    "REPORTS-TAB": "Rapporter",
     "SETTINGS-TAB": "Inställningar",
     "START-TASK": "Starta uppgift",
     "START-PROCESS": "Starta process",

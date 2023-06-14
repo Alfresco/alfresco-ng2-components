@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für 'Benutzer'-Kopfzeile verwenden",
     "CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für Benutzer-Kopfzeile"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "Kein Bericht ausgewählt. Wählen Sie einen Bericht aus der Liste"
-  },
   "PS-TAB": {
     "TASKS-TAB": "Aufgaben",
     "PROCESSES-TAB": "Prozess",
-    "REPORTS-TAB": "Berichte",
     "SETTINGS-TAB": "Einstellungen",
     "START-TASK": "Aufgabe starten",
     "START-PROCESS": "Prozess starten",

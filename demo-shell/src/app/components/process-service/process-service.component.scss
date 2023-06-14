@@ -104,13 +104,13 @@
             min-width: 225px;
         }
 
-        .app-reports-menu, .app-settings-menu {
+        .app-settings-menu {
             flex: 1 1 300px;
             max-width: 300px;
             min-width: 300px;
         }
 
-        .app-tasks-details, .app-tasks-start, .app-processes-details, .app-processes-start, .app-reports-details, .app-settings-details {
+        .app-tasks-details, .app-tasks-start, .app-processes-details, .app-processes-start, .app-settings-details {
             flex: 1 1 auto;
             min-width: auto;
         }

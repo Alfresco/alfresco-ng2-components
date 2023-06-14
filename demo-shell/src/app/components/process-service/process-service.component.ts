@@ -38,9 +38,6 @@ import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
     AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
 } from '@alfresco/adf-core';
-
-import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
-
 import {
     ProcessFiltersComponent,
     ProcessInstance,
@@ -109,9 +106,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild('analyticsReportList', { static: true })
-    analyticsReportList: AnalyticsReportListComponent;
-
     @Input()
     appId: number = null;
 
@@ -120,7 +114,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Output()
     changePageSize = new EventEmitter<Pagination>();
 
-    selectFirstReport = false;
     multiSelectTask = false;
     multiSelectProcess = false;
     selectionMode = 'single';
@@ -147,7 +140,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
     taskFilter: FilterRepresentationModel;
-    report: any;
     processFilter: UserProcessInstanceFilterRepresentation;
     blobFile: any;
     flag = true;
@@ -313,10 +305,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.changePageSize.emit(event);
     }
 
-    onReportClick(event: any): void {
-        this.report = event;
-    }
-
     onSuccessTaskFilterList(): void {
         this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
@@ -378,19 +366,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onProcessRowClick(processInstanceId: string): void {
         this.currentProcessInstanceId = processInstanceId;
-    }
-
-    onEditReport(): void {
-        this.analyticsReportList.reload();
-    }
-
-    onReportSaved(reportId: number): void {
-        this.analyticsReportList.reload(reportId);
-    }
-
-    onReportDeleted(): void {
-        this.analyticsReportList.reload();
-        this.analyticsReportList.selectReport(null);
     }
 
     navigateStartProcess(): void {
