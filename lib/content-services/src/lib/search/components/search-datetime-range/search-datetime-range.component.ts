@@ -205,7 +205,9 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     private updateQuery() {
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            if (!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 

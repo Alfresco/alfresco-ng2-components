@@ -217,7 +217,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     private updateQuery() {
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            if (!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 
