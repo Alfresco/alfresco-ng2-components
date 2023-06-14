@@ -87,7 +87,9 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
-            this.context.update();
+            if (!this.disableUpdateOnSubmit) {
+                this.context.update();
+            }
         }
     }
 
