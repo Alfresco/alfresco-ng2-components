@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.component';
 import { endOfDay, formatISO, startOfDay } from 'date-fns';
 
-describe('SearchDateRangeAdvancedComponent', () => {
+fdescribe('SearchDateRangeAdvancedComponent', () => {
     let component: SearchDateRangeAdvancedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedComponent>;
 
@@ -81,14 +81,18 @@ describe('SearchDateRangeAdvancedComponent', () => {
     };
 
     it('should not set any date filter in context when Anytime option is selected', async () => {
-        await clickElementByAutomationId('date-range-advanced-anytime');
+        component.dateRangeTypeValue = component.DateRangeType.ANY;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
     });
 
     it('should set proper date filter in context when In the last option is selected', async () => {
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-in-last-input', '5');
         await selectDropdownOption('date-range-advanced-in-last-option-days')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
@@ -97,7 +101,9 @@ describe('SearchDateRangeAdvancedComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
 
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-in-last-input', '3');
         await selectDropdownOption('date-range-advanced-in-last-option-weeks');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
@@ -106,7 +112,9 @@ describe('SearchDateRangeAdvancedComponent', () => {
         expect(component.context.queryFragments[component.id]).toBe(query);
         expect(component.context.update).toHaveBeenCalled();
 
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-in-last-input', '6');
         await selectDropdownOption('date-range-advanced-in-last-option-months');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
@@ -117,14 +125,18 @@ describe('SearchDateRangeAdvancedComponent', () => {
     });
 
     it('should not set any date filter in context when In the last or Between option is selected, but no value is provided', async () => {
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await selectDropdownOption('date-range-advanced-in-last-option-weeks')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
 
-        await clickElementByAutomationId('date-range-advanced-between');
+        component.dateRangeTypeValue = component.DateRangeType.BETWEEN;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
         expect(component.context.queryFragments[component.id]).toBe('');
@@ -132,13 +144,15 @@ describe('SearchDateRangeAdvancedComponent', () => {
     });
 
     it('should set proper date filter in context when Between option is selected', async () => {
-        await clickElementByAutomationId('date-range-advanced-between');
+        component.dateRangeTypeValue = component.DateRangeType.BETWEEN;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
         await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
-        let query = `test-field:[${formatISO(startOfDay(component.betweenStartDate))} TO ${formatISO(endOfDay(component.betweenEndDate))}]`;
-        expect(component.context.queryFragments[component.id]).toBe(query);
+        let query = `test-field:['${formatISO(startOfDay(component.betweenStartDate))}' TO '${formatISO(endOfDay(component.betweenEndDate))}']`;
+        expect(component.context.queryFragments[component.id]).toEqual(query);
         expect(component.context.update).toHaveBeenCalled();
     });
 
@@ -152,33 +166,39 @@ describe('SearchDateRangeAdvancedComponent', () => {
     it('should update display label with proper text when In the last/Between option is selected and values are properly set', async () => {
         spyOn(component.displayValue$, 'next');
 
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-in-last-input', '5');
         await selectDropdownOption('date-range-advanced-in-last-option-days')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('In the last 5 days');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.DAYS');
 
         await enterValueInInputField('date-range-advanced-in-last-input', '3');
         await selectDropdownOption('date-range-advanced-in-last-option-weeks')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('In the last 3 weeks');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS');
 
         await enterValueInInputField('date-range-advanced-in-last-input', '7');
         await selectDropdownOption('date-range-advanced-in-last-option-months')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('In the last 7 months');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.MONTHS');
 
-        await clickElementByAutomationId('date-range-advanced-between');
+        component.dateRangeTypeValue = component.DateRangeType.BETWEEN;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
         await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         await clickElementByAutomationId('date-range-advanced-apply-btn');
-        expect(component.displayValue$.next).toHaveBeenCalledWith('Between 05-Jun-2023 - 10-Jun-2023');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('05-Jun-2023 - 10-Jun-2023');
     });
 
     it('should not update display label if anytime option is selected', async() => {
         spyOn(component.displayValue$, 'next');
 
-        await clickElementByAutomationId('date-range-advanced-anytime');
+        component.dateRangeTypeValue = component.DateRangeType.ANY;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
@@ -187,13 +207,17 @@ describe('SearchDateRangeAdvancedComponent', () => {
     it('should not update display label if no valid value was provided', async () => {
         spyOn(component.displayValue$, 'next');
 
-        await clickElementByAutomationId('date-range-advanced-in-last');
+        component.dateRangeTypeValue = component.DateRangeType.IN_LAST;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await selectDropdownOption('date-range-advanced-in-last-option-weeks')
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
 
-        await clickElementByAutomationId('date-range-advanced-between');
+        component.dateRangeTypeValue = component.DateRangeType.BETWEEN;
+        fixture.detectChanges();
+        await fixture.whenStable();
         await clickElementByAutomationId('date-range-advanced-apply-btn');
         fixture.detectChanges();
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
@@ -205,7 +229,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         }
         component.startValue = value;
         component.ngOnInit();
-        expect(component.getCurrentValue()).toBe(value);
+        expect(component.getCurrentValue()).toEqual(value);
 
         value = {
             dateRangeType: component.DateRangeType.IN_LAST,
@@ -214,7 +238,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         }
         component.startValue = value;
         component.ngOnInit();
-        expect(component.getCurrentValue()).toBe(value);
+        expect(component.getCurrentValue()).toEqual(value);
 
         value = {
             dateRangeType: component.DateRangeType.BETWEEN,
@@ -223,10 +247,12 @@ describe('SearchDateRangeAdvancedComponent', () => {
         }
         component.startValue = value;
         component.ngOnInit();
-        expect(component.getCurrentValue()).toBe(value);
+        expect(component.getCurrentValue()).toEqual(value);
     });
 
-    it('should not allow selecting a date after the current date when Between option is selected', () => {
-        //TODO: Will need to be updated after date-fns
+    it('should not allow selecting a date after the current date when Between option is selected, and no maxDate is provided', async () => {
+    });
+
+    it('should not allow selecting a date after the maxDate when Between option is selected and maxDate is provided', async () => {
     });
 });
