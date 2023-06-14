@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.component';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchDateRangeAdvancedComponent', () => {
     let component: SearchDateRangeAdvancedComponent;
@@ -9,7 +11,11 @@ describe('SearchDateRangeAdvancedComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SearchDateRangeAdvancedComponent]
+            declarations: [SearchDateRangeAdvancedComponent],
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchDateRangeAdvancedComponent);
@@ -203,6 +209,6 @@ describe('SearchDateRangeAdvancedComponent', () => {
     });
 
     it('should not allow selecting a date after the current date when Between option is selected', () => {
-
+        //TODO: Will need to be updated after date-fns
     });
 });
