@@ -2,15 +2,17 @@
 
 @mixin adf-components-variables() {
     $defaults: (
-        --adf-edit-task-and-service-filter-header-title-color: $adf-ref-edit-task-and-service-filter-header-title-color,
-        --adf-edit-task-and-service-filter-header-description-color: $adf-ref-edit-task-and-service-filter-header-description-color,
-        --adf-edit-task-and-service-filter-content-text-label-color: $adf-ref-edit-task-and-service-filter-content-text-label-color,
-        --adf-edit-task-and-service-filter-content-select-label-color: $adf-ref-edit-task-and-service-filter-content-select-label-color,
-        --adf-edit-task-and-service-filter-header-height: $adf-ref-edit-task-and-service-filter-header-height,
         --adf-card-view-background: $adf-ref-card-background,
         --adf-card-view-border: $adf-ref-card-border,
         --adf-card-view-border-color: $adf-ref-card-border-color,
-        --adf-card-view-border-radius: $adf-ref-card-border-radius
+        --adf-card-view-border-radius: $adf-ref-card-border-radius,
+        --adf-edit-task-and-service-filter-header-title-color: $adf-ref-title-color,
+        --adf-edit-task-and-service-filter-header-description-color: $adf-ref-description-color,
+        --adf-edit-task-and-service-filter-content-text-label-color: $adf-ref-text-field-label-color,
+        --adf-edit-task-and-service-filter-content-select-label-color: $adf-ref-select-field-label-color,
+        --adf-edit-task-and-service-filter-header-height: $adf-ref-height-48,
+        --adf-about-panel-header-height: $adf-ref-height-48,
+        --adf-about-panel-header-title-color: $adf-ref-title-color,
     );
 
     // propagates SCSS variables into the CSS variables scope
