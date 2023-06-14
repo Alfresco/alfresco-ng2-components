@@ -64,12 +64,6 @@ describe('SearchLogicalFilterComponent', () => {
         fixture.detectChanges();
     }
 
-    function clickApplyBtn() {
-        const applyBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="logical-filter-btn-apply"]')).nativeElement;
-        applyBtn.click();
-        fixture.detectChanges();
-    }
-
     it('should update display value on init', () => {
         spyOn(component.displayValue$, 'next');
         component.ngOnInit();
@@ -122,14 +116,13 @@ describe('SearchLogicalFilterComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalled();
     });
 
-    it('should reset value and display value when reset button is clicked', () => {
+    it('should reset value and display value when reset is called', () => {
         const searchCondition: LogicalSearchCondition = { matchAll: ['test1'], matchAny: ['test2'], exclude: ['test3'] };
         component.setValue(searchCondition);
         fixture.detectChanges();
         spyOn(component.context, 'update');
         spyOn(component.displayValue$, 'next');
-        const resetBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="logical-filter-btn-clear"]')).nativeElement;
-        resetBtn.click();
+        component.reset();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
         expect(component.getCurrentValue()).toEqual({ matchAll: [], matchAny: [], exclude: [] });
@@ -140,7 +133,7 @@ describe('SearchLogicalFilterComponent', () => {
         spyOn(component.context, 'update');
         enterNewPhrase('test1', 0);
         enterNewPhrase('test2', 0);
-        clickApplyBtn();
+        component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((field1:"test1" AND field1:"test2") OR (field2:"test1" AND field2:"test2"))');
     });
@@ -149,7 +142,7 @@ describe('SearchLogicalFilterComponent', () => {
         spyOn(component.context, 'update');
         enterNewPhrase('test3', 1);
         enterNewPhrase('test4', 1);
-        clickApplyBtn();
+        component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((field1:"test3" OR field1:"test4") OR (field2:"test3" OR field2:"test4"))');
     });
@@ -158,7 +151,7 @@ describe('SearchLogicalFilterComponent', () => {
         spyOn(component.context, 'update');
         enterNewPhrase('test5', 2);
         enterNewPhrase('test6', 2);
-        clickApplyBtn();
+        component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((NOT field1:"test5" AND NOT field1:"test6") AND (NOT field2:"test5" AND NOT field2:"test6"))');
     });
@@ -168,7 +161,7 @@ describe('SearchLogicalFilterComponent', () => {
         enterNewPhrase('test1', 0);
         enterNewPhrase('test2', 1);
         enterNewPhrase('test3', 2);
-        clickApplyBtn();
+        component.submitValues();
         const subQuery1 = '((field1:"test1") OR (field2:"test1"))';
         const subQuery2 = '((field1:"test2") OR (field2:"test2"))';
         const subQuery3 = '((NOT field1:"test3") AND (NOT field2:"test3"))';

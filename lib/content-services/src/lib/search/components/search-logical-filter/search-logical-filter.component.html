@@ -14,13 +14,4 @@
         [onReset]="resetObservable"
         (phrasesChanged)="onPhraseChange($event, LogicalSearchFields.EXCLUDE)">
     </adf-search-chip-input>
-
-    <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
-        <button mat-button color="primary" data-automation-id="logical-filter-btn-clear" (click)="reset()">
-            {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-        </button>
-        <button mat-button color="primary" data-automation-id="logical-filter-btn-apply" (click)="submitValues()">
-            {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-        </button>
-    </div>
 </div>

@@ -19,7 +19,7 @@
         &nbsp; {{ displayValue | translate }}
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
-    <mat-icon *ngIf="isPopulated(); else disabledIcon">keyboard_arrow_down</mat-icon>
+    <mat-icon *ngIf="isPopulated(); else disabledIcon">{{ chipIcon }}</mat-icon>
     <ng-template #disabledIcon>
         <mat-icon>remove</mat-icon>
     </ng-template>
@@ -38,8 +38,8 @@
                 <adf-search-facet-field [field]="field" #facetField></adf-search-facet-field>
             </ng-container>
             <ng-container ngProjectAs="filter-actions">
-                <button mat-flat-button class="adf-search-action-button" color="accent" (click)="onRemove()" id="cancel-filter-button">
-                    {{ 'SEARCH.FILTER.BUTTONS.REMOVE' | translate }}
+                <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">
+                    {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
                 </button>
                 <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
                     {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}

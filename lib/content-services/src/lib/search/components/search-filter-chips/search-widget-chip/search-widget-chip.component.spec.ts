@@ -30,13 +30,13 @@ describe('SearchWidgetChipComponent', () => {
     let fixture: ComponentFixture<SearchWidgetChipComponent>;
     let queryBuilder: SearchQueryBuilderService;
 
-    setupTestBed(    {
-      imports: [
-          MatMenuModule,
-          TranslateModule.forRoot(),
-          ContentTestingModule
-      ]
-  });
+    setupTestBed({
+        imports: [
+            MatMenuModule,
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
+    });
 
     beforeEach(() => {
       queryBuilder = TestBed.inject(SearchQueryBuilderService);
@@ -46,23 +46,35 @@ describe('SearchWidgetChipComponent', () => {
 
       component.category = simpleCategories[1];
       fixture.detectChanges();
-  });
+    });
 
-    it('should update search query on apply click',  () => {
+    it('should update search query on apply click', () => {
       const chip = fixture.debugElement.query(By.css('mat-chip'));
       chip.triggerEventHandler('click', { stopPropagation: () => null });
       fixture.detectChanges();
       const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
       applyButton.triggerEventHandler('click', {});
       expect(queryBuilder.update).toHaveBeenCalled();
-  });
+    });
 
-    it('should update search query on cancel click',  () => {
+    it('should update search query on cancel click', () => {
       const chip = fixture.debugElement.query(By.css('mat-chip'));
       chip.triggerEventHandler('click', { stopPropagation: () => null });
       fixture.detectChanges();
       const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
       applyButton.triggerEventHandler('click', {});
       expect(queryBuilder.update).toHaveBeenCalled();
-  });
+    });
+
+    it('should display arrow down icon', () => {
+      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+      expect(icon).toEqual('keyboard_arrow_down');
+    });
+
+    it('should display arrow up icon when menu is opened', () => {
+      component.onMenuOpen();
+      fixture.detectChanges();
+      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+      expect(icon).toEqual('keyboard_arrow_up');
+    });
 });
