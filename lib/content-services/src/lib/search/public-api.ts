@@ -34,6 +34,7 @@ export * from './services/search-facet-filters.service';
 export * from './services/search-filter.service';
 export * from './services/search.service';
 export * from './services/search-configuration.service';
+export * from './services/base-query-builder.service';
 
 export * from './mocks/search.service.mock';
 
