@@ -113,10 +113,13 @@ jobs:
         run: |
 
           migrateDependenciesJS() {
-              echo "Update JS dependencies to: ${PACKAGE_VERSION_JS}"
-              echo "Calling migration JS"
-              npx nx migrate @alfresco/js-api@${PACKAGE_VERSION_JS}
-              echo "Migration JS done"
+            echo "Update JS dependencies to: ${PACKAGE_VERSION_JS}"
+            echo "Calling migration JS"
+            npx nx migrate @alfresco/js-api@${PACKAGE_VERSION_JS}
+            cd lib/cli
+            npm i --ignore-scripts -E @alfresco/js-api@${PACKAGE_VERSION_JS}
+            cd ../..
+            echo "Migration JS done"
           }
 
           regeneratePackageLock() {
