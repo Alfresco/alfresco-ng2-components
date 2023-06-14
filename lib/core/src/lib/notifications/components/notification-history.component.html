@@ -6,8 +6,11 @@
             class="adf-notification-history-menu_button"
             id="adf-notification-history-open-button"
             (menuOpened)="onMenuOpened()">
-            <mat-icon *ngIf="notifications.length" svgIcon="notification:pending_notifications"></mat-icon>
-            <mat-icon *ngIf="!notifications.length" svgIcon="notification:notifications"></mat-icon>
+            <mat-icon matBadge="&#8288;"
+                  [matBadgeHidden]="!notifications.length"
+                  matBadgeColor="warn"
+                  matBadgeSize="small"
+                  fontSet="material-icons-outlined">notifications</mat-icon>
     </button>
     <mat-menu #menu="matMenu"
               [xPosition]="menuPositionX"
