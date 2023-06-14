@@ -34,6 +34,7 @@ import { ThemePalette } from '@angular/material/core';
 export class IconComponent {
     private _value = '';
     private _isCustom = false;
+    isOutlined = false;
 
     /** Theme color palette for the component. */
     @Input()
@@ -48,6 +49,7 @@ export class IconComponent {
     set value(value: string) {
         this._value = value || 'settings';
         this._isCustom = this._value.includes(':');
+        this.isOutlined = this._value.includes('_outline');
     }
 
     get isCustom(): boolean {

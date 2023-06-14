@@ -3,5 +3,8 @@
 </ng-container>
 
 <ng-template #default>
-  <mat-icon [color]="color" aria-hidden="true">{{ value }}</mat-icon>
+  <mat-icon *ngIf="isOutlined; else: outlineDefault" [color]="color" aria-hidden="true" fontSet="material-icons-outlined">{{ value }}</mat-icon>
+    <ng-template #outlineDefault>
+        <mat-icon [color]="color" aria-hidden="true">{{ value }}</mat-icon>
+    </ng-template>
 </ng-template>
