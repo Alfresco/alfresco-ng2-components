@@ -342,7 +342,7 @@
                     "allowUpdateOnChange": false,
                     "hideDefaultAction": true,
                     "field": "cm:created",
-                    "dateFormat": "dd-MMM-yyyy",
+                    "dateFormat": "dd-MMM-yy",
                     "maxDate": "today"
                   }
                 }
@@ -357,7 +357,7 @@
                     "allowUpdateOnChange": false,
                     "hideDefaultAction": true,
                     "field": "cm:modified",
-                    "dateFormat": "dd-MMM-yyyy",
+                    "dateFormat": "dd-MMM-yy",
                     "maxDate": "today"
                   }
                 }

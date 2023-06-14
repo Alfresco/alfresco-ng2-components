@@ -26,7 +26,7 @@ Represents an advanced date range [search widget](../../../lib/content-services/
                         "allowUpdateOnChange": false,
                         "hideDefaultAction": true,
                         "field": "cm:created",
-                        "dateFormat": "DD-MMM-YY",
+                        "dateFormat": "dd-MMM-yy",
                         "maxDate": "today"
                     }
                 }
@@ -38,13 +38,13 @@ Represents an advanced date range [search widget](../../../lib/content-services/
 
 ### Settings
 
-| Name | Type | Description                                                                                                                                                                                                                                                    |
-| ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is false.                                                                                                                                                                          |
-| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.                                                                                                                                                                                                             |
-| field | string | Field to apply the query to. Required value                                                                                                                                                                                                                    |
-| dateFormat | string | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yyyy (sample date - 07-Jun-2023) |
-| maxDate | string | A fixed date (in format mentioned above, default format: dd-MMM-yyyy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                     |
+| Name | Type | Description                                                                                                                                                                                                                                              |
+| ---- | ---- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| allowUpdateOnChange | boolean | Enable/Disable the update fire event when text has been changed. By default is false.                                                                                                                                                                    |
+| hideDefaultAction | boolean | Show/hide the widget actions. By default is false.                                                                                                                                                                                                       |
+| field | string | Field to apply the query to. Required value                                                                                                                                                                                                              |
+| dateFormat | string | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yy (sample date - 07-Jun-23) |
+| maxDate | string | A fixed date (in format mentioned above, default format: dd-MMM-yy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                 |
 
 ## Details
 
@@ -83,7 +83,7 @@ in the `dateFormat` and in the `maxDate` setting:
                     "selector": "date-range-advanced",
                     "settings": {
                         "field": "cm:created",
-                        "dateFormat": "DD-MMM-YY",
+                        "dateFormat": "dd-MMM-yy",
                         "maxDate": "02-Mar-20"
                     }
                 }

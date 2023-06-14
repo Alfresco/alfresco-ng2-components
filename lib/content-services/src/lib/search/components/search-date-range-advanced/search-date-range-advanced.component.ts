@@ -42,7 +42,7 @@ interface SearchDateRangeAdvanced {
     [indexer: string]: any;
 }
 
-const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yyyy';
+const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range-advanced',
