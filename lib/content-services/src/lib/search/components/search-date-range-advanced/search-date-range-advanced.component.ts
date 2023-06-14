@@ -164,7 +164,7 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit {
                 break;
             case DateRangeType.BETWEEN:
                 this.betweenStartDate = value.betweenStartDate;
-                this.betweenEndDate = value.betweeenEndDate;
+                this.betweenEndDate = value.betweenEndDate;
                 break;
         }
     }
@@ -219,4 +219,3 @@ export class SearchDateRangeAdvancedComponent implements SearchWidget, OnInit {
 }
 
 //TODO: Format dates for Between date range type
-
