@@ -18,7 +18,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
@@ -151,7 +151,7 @@ registerLocaleData(localeSv);
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         ThemePickerModule,
-        ChartsModule,
+        NgChartsModule,
         AppCloudSharedModule,
         MonacoEditorModule.forRoot()
     ],

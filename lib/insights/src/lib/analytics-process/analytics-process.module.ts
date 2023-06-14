@@ -20,16 +20,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DiagramsModule } from '../diagram/diagram.module';
 import { MaterialModule } from '../material.module';
-
-import { ChartsModule } from 'ng2-charts';
-
+import { NgChartsModule } from 'ng2-charts';
 import { CoreModule } from '@alfresco/adf-core';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from './components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './components/analytics.component';
-
 import { CheckboxWidgetAnalyticsComponent } from './components/widgets/checkbox/checkbox.widget';
 import { DateRangeWidgetComponent } from './components/widgets/date-range/date-range.widget';
 import { DropdownWidgetAnalyticsComponent } from './components/widgets/dropdown/dropdown.widget';
@@ -41,7 +38,7 @@ import { NumberWidgetAnalyticsComponent } from './components/widgets/number/numb
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
-        ChartsModule,
+        NgChartsModule,
         DiagramsModule,
         MaterialModule,
         CoreModule
