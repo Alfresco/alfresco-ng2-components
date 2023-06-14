@@ -124,8 +124,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
      * Return the task list filtered by appId or by appName
      *
      * @param appId
-     
-    * @param appName
+     * @param appName
      */
     getFilters(appId?: number, appName?: string) {
         if (appName) {
