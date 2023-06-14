@@ -5,7 +5,7 @@
         --adf-card-view-background: $adf-ref-card-background,
         --adf-card-view-border: $adf-ref-card-border,
         --adf-card-view-border-color: $adf-ref-card-border-color,
-        --adf-card-view-border-radius: $adf-ref-card-border-radius,
+        --adf-card-view-border-radius: $adf-ref-card-border-radius-0,
         --adf-edit-task-and-service-filter-header-title-color: $adf-ref-title-color,
         --adf-edit-task-and-service-filter-header-description-color: $adf-ref-description-color,
         --adf-edit-task-and-service-filter-content-text-label-color: $adf-ref-text-field-label-color,
@@ -18,6 +18,10 @@
         --adf-edit-process-filter-header-description-color: $adf-ref-description-color,
         --adf-edit-process-filter-content-text-label-color: $adf-ref-text-field-label-color,
         --adf-edit-process-filter-content-select-label-color: $adf-ref-select-field-label-color,
+        --adf-about-server-settings-background: $adf-ref-card-background,
+        --adf-about-server-settings-color: $adf-ref-card-color,
+        --adf-about-server-settings-border-radius: $adf-ref-card-border-radius-4,
+        --adf-about-server-settings-padding: $adf-ref-card-padding-16,
     );
 
     // propagates SCSS variables into the CSS variables scope
