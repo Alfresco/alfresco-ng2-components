@@ -63,5 +63,7 @@ export * from './components/search-facet-field/search-facet-field.component';
 export * from './components/search-chip-input/search-chip-input.component';
 export * from './components/search-logical-filter/search-logical-filter.component';
 export * from './components/reset-search.directive';
+export * from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
+export * from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 
 export * from './search.module';

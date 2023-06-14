@@ -24,6 +24,7 @@ import { SearchCheckListComponent } from '../components/search-check-list/search
 import { SearchDateRangeComponent } from '../components/search-date-range/search-date-range.component';
 import { SearchDatetimeRangeComponent } from '../components/search-datetime-range/search-datetime-range.component';
 import { SearchLogicalFilterComponent } from '../components/search-logical-filter/search-logical-filter.component';
+import { SearchFilterAutocompleteChipsComponent } from '../components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +42,8 @@ export class SearchFilterService {
         'check-list': SearchCheckListComponent,
         'date-range': SearchDateRangeComponent,
         'datetime-range': SearchDatetimeRangeComponent,
-        'logical-filter': SearchLogicalFilterComponent
+        'logical-filter': SearchLogicalFilterComponent,
+        'autocomplete-chips': SearchFilterAutocompleteChipsComponent
     };
 
 }

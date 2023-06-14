@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
-export * from './node-name-tooltip.pipe';
-export * from './is-included.pipe';
-export * from './content-pipe.module';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+    name: 'adfIsIncluded'
+})
+export class IsIncludedPipe<T> implements PipeTransform {
+    transform(value: T, array: T[]): boolean {
+        return array.includes(value);
+    }
+}

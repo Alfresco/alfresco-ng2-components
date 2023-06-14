@@ -1,0 +1,15 @@
+<adf-search-chip-autocomplete-input
+    [autocompleteOptions]="autocompleteOptions"
+    [onReset$]="reset$"
+    [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
+    (optionsChanged)="onOptionsChange($event)">
+</adf-search-chip-autocomplete-input>
+
+<div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
+    <button mat-button color="primary" data-automation-id="adf-search-chip-autocomplete-btn-clear" (click)="reset()">
+        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
+    </button>
+    <button mat-button color="primary" data-automation-id="adf-search-chip-autocomplete-btn-apply" (click)="submitValues()">
+        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
+    </button>
+</div>

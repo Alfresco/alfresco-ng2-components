@@ -297,7 +297,8 @@
         "APPLY": "Apply",
         "CLEAR-ALL": "Clear all",
         "SHOW-MORE": "Show more",
-        "SHOW-LESS": "Show less"
+        "SHOW-LESS": "Show less",
+        "ADD_OPTION": "Add Option..."
       },
       "BUTTONS": {
         "CLOSE": "Close",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Search Filter List"
+        "SEARCH_FILTER": "Search Filter List",
+        "OPTIONS-SELECTION": "Options Selection"
       },
       "ANY": "Any"
     },
