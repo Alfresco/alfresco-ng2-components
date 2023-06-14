@@ -1,9 +1,10 @@
-<mat-accordion [hideToggle]="isLoading">
+<mat-accordion [hideToggle]="isLoading" class="adf-edit-process-filter">
     <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
-        <mat-expansion-panel-header *ngIf="processFilter" id="adf-edit-process-filter-expansion-header">
+        <mat-expansion-panel-header *ngIf="processFilter" id="adf-edit-process-filter-expansion-header" class="adf-edit-process-filter-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <mat-panel-title *ngIf="showProcessFilterName" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
-                <mat-panel-description class="adf-edit-process-filter-description" id="adf-edit-process-filter-sub-title-id">
+                <mat-panel-title *ngIf="showProcessFilterName" id="adf-edit-process-filter-title-id" class="adf-edit-process-filter-header__title">
+                    {{processFilter.name | translate}}</mat-panel-title>
+                <mat-panel-description  class="adf-edit-process-filter-header__description" id="adf-edit-process-filter-sub-title-id">
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
@@ -21,12 +22,12 @@
             </ng-template>
         </mat-expansion-panel-header>
         <ng-container *ngIf="!isLoading">
-            <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm">
+            <form [formGroup]="editProcessFilterForm" *ngIf="editProcessFilterForm" class="adf-edit-process-filter-content">
                 <div class="adf-edit-process-filter-form">
                     <ng-container *ngFor="let processFilterProperty of processFilterProperties">
                         <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'select'" [attr.data-automation-id]="processFilterProperty.key">
+                            <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
                             <mat-select
-                                placeholder="{{processFilterProperty.label | translate}}"
                                 [formControlName]="processFilterProperty.key"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
                                 <mat-option
@@ -48,10 +49,10 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'text'" [attr.data-automation-id]="processFilterProperty.key">
+                            <mat-label class="adf-edit-process-filter-content__text-label">{{processFilterProperty.label | translate}}</mat-label>
                             <input matInput
                                 [formControlName]="processFilterProperty.key"
                                 type="text"
-                                placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                         </mat-form-field>
                         <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'number'" [attr.data-automation-id]="processFilterProperty.key">

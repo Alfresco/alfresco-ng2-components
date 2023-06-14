@@ -31,10 +31,6 @@
         margin-right: calc((100% - 100px) / 2);
     }
 
-    &-edit-process-filter-description {
-        place-content: center space-between;
-    }
-
     &-edit-process-filter-form {
         flex-flow: row wrap;
         display: flex;
@@ -58,6 +54,31 @@
             :not(:last-child) {
                 margin-bottom: 10px;
                 margin-right: 0;
+            }
+        }
+    }
+
+    &-edit-process-filter {
+        &-header {
+            height: var(--adf-edit-process-filter-header-height);
+
+            &__title {
+                color: var(--adf-edit-process-filter-header-title-color);
+            }
+
+            &__description {
+                color: var(--adf-edit-process-filter-header-description-color);
+                place-content: center space-between;
+            }
+        }
+
+        &-content {
+            &__text-label {
+                color: var(--adf-edit-process-filter-content-text-label-color);
+            }
+
+            &__select-label {
+                color: var(--adf-edit-process-filter-content-select-label-color);
             }
         }
     }
