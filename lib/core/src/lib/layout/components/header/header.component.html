@@ -13,10 +13,10 @@
         <mat-icon
             class="mat-icon material-icon"
             role="img"
-            aria-hidden="true">menu</mat-icon>
+            aria-hidden="true">{{ toggleIcon }}</mat-icon>
     </button>
 
-    <a [routerLink]="redirectUrl" title="{{ tooltip }}">
+    <a *ngIf="showLogo" [routerLink]="redirectUrl" title="{{ tooltip }}">
         <img
             src="{{ logo }}"
             class="adf-app-logo"
@@ -48,6 +48,6 @@
         <mat-icon
             class="mat-icon material-icon"
             role="img"
-            aria-hidden="true">menu</mat-icon>
+            aria-hidden="true">{{ toggleIcon }}</mat-icon>
     </button>
 </mat-toolbar>

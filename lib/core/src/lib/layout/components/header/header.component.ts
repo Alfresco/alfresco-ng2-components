@@ -33,6 +33,9 @@ export class HeaderLayoutComponent implements OnInit {
     /** Path to an image file for the application logo. */
     @Input() logo: string;
 
+    /** Toggles whether the logo will be displayed inside the header or not. */
+    @Input() showLogo: boolean = true;
+
     /** The router link for the application logo, when clicked. */
     @Input() redirectUrl: string | any[] = '/';
 
@@ -50,6 +53,9 @@ export class HeaderLayoutComponent implements OnInit {
      * or not.
      */
     @Input() showSidenavToggle: boolean = true;
+
+    /** The toggle icon that will be used inside header. */
+    @Input() toggleIcon = 'menu';
 
     /** Emitted when the sidenav button is clicked. */
     @Output() clicked = new EventEmitter<boolean>();
