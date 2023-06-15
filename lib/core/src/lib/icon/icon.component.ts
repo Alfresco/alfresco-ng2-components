@@ -50,6 +50,7 @@ export class IconComponent {
         this._value = value || 'settings';
         this._isCustom = this._value.includes(':');
         this.isOutlined = this._value.includes('_outline');
+        this._value = this._value.replace('_outline','');
     }
 
     get isCustom(): boolean {
