@@ -63,9 +63,9 @@ export class AppsProcessCloudService {
         const envName = environmentList?.find((env: Environment) => env.id === application.environmentId)?.name;
 
         if (application.environmentId && environmentList && envName) {
-            return `${application.name} (${envName})`;
+            return `${application.displayName} (${envName})`;
         } else {
-            return application.name;
+            return application.displayName;
         }
     }
 

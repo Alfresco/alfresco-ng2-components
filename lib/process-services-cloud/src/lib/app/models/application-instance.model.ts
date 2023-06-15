@@ -20,6 +20,7 @@ export const DEFAULT_APP_INSTANCE_ICON = 'favorite_border';
 
 export interface ApplicationInstanceModel {
     name?: string;
+    displayName?: string;
     createdAt?: any;
     status?: string;
     theme?: string;
@@ -28,10 +29,12 @@ export interface ApplicationInstanceModel {
     connectors?: any;
     descriptor?: Descriptor;
     environmentId?: string;
+    environment?: string;
 }
 
 export interface Descriptor {
     name?: string;
+    displayName?: string;
     projectId?: string;
     releaseId?: string;
     releaseVersion?: number;
@@ -40,6 +43,7 @@ export interface Descriptor {
     variables?: DescriptorVariables;
     version?: string;
     runtimeBundleVersion?: string;
+    enableLocalDevelopment?: boolean;
 }
 
 export interface DescriptorSecurity {
