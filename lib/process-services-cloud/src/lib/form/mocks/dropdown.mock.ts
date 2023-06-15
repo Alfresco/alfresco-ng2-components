@@ -16,6 +16,7 @@
  */
 
 import { FormFieldOption } from '@alfresco/adf-core';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 export const mockConditionalEntries = [
     {
@@ -102,4 +103,59 @@ export const filterOptionList = [
     { id: 'opt_4', name: 'option_4' },
     { id: 'opt_5', name: 'option_5' },
     { id: 'opt_6', name: 'option_6' }
+];
+
+export const mockPlayersResponse = {
+    response: {
+        people: {
+            players:
+                [
+                    {
+                        playerId: 'player-1',
+                        playerFullName: 'Lionel Messi',
+                        totalGoals: 999,
+                        shirtNumber: 10
+                    },
+                    {
+                        playerId: 'player-2',
+                        playerFullName: 'Cristiano Ronaldo',
+                        totalGoals: 15,
+                        shirtNumber: 7
+                    },
+                    {
+                        playerId: 'player-3',
+                        playerFullName: 'Robert Lewandowski',
+                        totalGoals: 500,
+                        shirtNumber: 9
+                    }
+                ]
+        }
+    }
+};
+
+export const mockDefaultResponse = {
+    data:
+    [
+        {
+            id: 'default-pet-1',
+            name: 'Dog'
+        },
+        {
+            id: 'default-pet-2',
+            name: 'Cat'
+        },
+        {
+            id: 'default-pet-3',
+            name: 'Parrot'
+        }
+    ]
+};
+
+export const mockVariablesWithJson = [
+    new TaskVariableCloud({ name: 'json-variable', value: mockPlayersResponse, type: 'json', id: 'json-variable' }),
+    new TaskVariableCloud({ name: 'different-variable', value: 'fake-value', type: 'text', id: '2' })
+];
+
+export const mockVariablesWithDefaultJson = [
+    new TaskVariableCloud({ name: 'json-default-variable', value: mockDefaultResponse, type: 'json', id: 'json-default-variable' })
 ];

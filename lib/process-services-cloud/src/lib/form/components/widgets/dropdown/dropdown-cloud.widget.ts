@@ -30,6 +30,7 @@ import {
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
+import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 
 export const DEFAULT_OPTION = {
     id: 'empty',
@@ -60,6 +61,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
     isRestApiFailed = false;
+    variableOptionsFailed = false;
     restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
@@ -74,23 +76,89 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.field.restUrl && !this.isLinkedWidget()) {
-            this.persistFieldOptionsFromRestApi();
-        }
-
-        if (this.isLinkedWidget()) {
-            this.loadFieldOptionsForLinkedWidget();
-
-            this.formService.formFieldValueChanged
-                .pipe(
-                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
-                    takeUntil(this.onDestroy$))
-                .subscribe((event: FormFieldEvent) => {
-                    const valueOfParentWidget = event.field.value;
-                    this.parentValueChanged(valueOfParentWidget);
-                });
-        }
+        this.checkFieldOptionsSource();
         this.updateOptions();
+    }
+
+    private checkFieldOptionsSource(): void {
+        switch (true) {
+            case this.field.restUrl && !this.isLinkedWidget():
+                this.persistFieldOptionsFromRestApi();
+                break;
+
+            case this.isLinkedWidget():
+                this.loadFieldOptionsForLinkedWidget();
+                break;
+
+            case this.isVariableOptionType():
+                this.persistFieldOptionsFromVariable();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private persistFieldOptionsFromVariable(): void {
+        const optionsId = this.field?.variableConfig?.optionsId ?? 'id';
+        const optionsLabel = this.field?.variableConfig?.optionsLabel ?? 'name';
+        const optionsPath = this.field?.variableConfig?.optionsPath ?? 'data';
+        const variableId = this.field?.variableConfig?.variableId;
+
+        const formVariables: TaskVariableCloud[] = this.field?.form?.variables;
+        const dropdownOptions: TaskVariableCloud = formVariables.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
+
+        if (dropdownOptions) {
+            const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath, optionsId, optionsLabel);
+            this.field.options = formVariableOptions;
+            this.resetInvalidValue();
+            this.field.updateForm();
+        } else {
+            this.handleError(`${variableId} not found in ${JSON.stringify(formVariables)}`);
+            this.resetOptions();
+            this.variableOptionsFailed = true;
+        }
+    }
+
+    private getOptionsFromPath(data: any, path: string, id: string, label: string): FormFieldOption[] {
+        const properties = path.split('.');
+        const currentProperty = properties.shift();
+
+        if (!data.hasOwnProperty(currentProperty)) {
+            this.handleError(`${currentProperty} not found in ${JSON.stringify(data)}`);
+            this.variableOptionsFailed = true;
+            return [];
+        }
+
+        const nestedData = data[currentProperty];
+
+        if (Array.isArray(nestedData)) {
+            const options: FormFieldOption[] = [];
+
+            for (const item of nestedData) {
+                const option: FormFieldOption = {
+                    id: item[id],
+                    name: item[label]
+                };
+
+                if (option.id === undefined || option.name === undefined) {
+                    this.handleError(`'id' or 'label' is not properly defined for ${currentProperty}`);
+                    this.variableOptionsFailed = true;
+                    return [];
+                }
+
+                options.push(option);
+            }
+
+            this.variableOptionsFailed = false;
+            return options;
+        }
+
+        return this.getOptionsFromPath(nestedData, properties.join('.'), id, label);
+    }
+
+    private isVariableOptionType(): boolean {
+        return this.field?.optionType === 'variable';
     }
 
     private persistFieldOptionsFromRestApi() {
@@ -125,6 +193,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private loadFieldOptionsForLinkedWidget() {
         const parentWidgetValue = this.getParentWidgetValue();
         this.parentValueChanged(parentWidgetValue);
+
+        this.formService.formFieldValueChanged
+            .pipe(
+                filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
+                takeUntil(this.onDestroy$))
+            .subscribe((event: FormFieldEvent) => {
+                const valueOfParentWidget = event.field.value;
+                this.parentValueChanged(valueOfParentWidget);
+            });
     }
 
     private getParentWidgetValue(): string {
@@ -317,7 +394,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     showRequiredMessage(): boolean {
-        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) && this.isTouched() && !this.isRestApiFailed;
+        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) &&
+            this.isTouched() &&
+            !this.isRestApiFailed &&
+            !this.variableOptionsFailed;
     }
 
     getDefaultOption(options: FormFieldOption[]): FormFieldOption {
