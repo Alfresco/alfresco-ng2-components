@@ -22,8 +22,9 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -82,24 +83,22 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private processFilterService: ProcessFilterService,
                 private appsProcessService: AppsProcessService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute) {
+                private location: Location) {
     }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();
         this.router.events
-            .pipe(
-                filter((event) => event instanceof NavigationStart),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe((navigationStart: NavigationStart) => {
-                const activeRoute = navigationStart.url;
-                this.isProcessActive = activeRoute.includes('processes');
-            });
-            this.activatedRoute.url.subscribe((segments) => {
-                const currentRoute = segments.join('/');
-                this.isProcessRoute = currentRoute.includes('processes');
-            });
+        .pipe(
+            filter((event) => event instanceof NavigationStart),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((navigationStart: NavigationStart) => {
+            const activeRoute = navigationStart.url;
+            this.isProcessActive = activeRoute.includes('processes');
+        });
+        const currentRoute = this.location.path();
+        this.isProcessRoute = currentRoute.includes('processes');
     }
 
     ngOnChanges(changes: SimpleChanges) {
