@@ -175,6 +175,43 @@ describe('HeaderLayoutComponent', () => {
             expect(buttonStart === null).toBeFalsy();
             expect(buttonEnd === null).toBeTruthy();
         });
+
+        it('should display the logo image when the input is set to true [showLogo=true]', () => {
+            component.showLogo = true;
+            fixture.detectChanges();
+
+            const logo = fixture.debugElement.query(By.css('.adf-app-logo'));
+
+            expect(logo.nativeElement).not.toBeNull();
+        });
+
+        it('should NOT display the logo image when the input is set to false [showLogo=false]', () => {
+            component.showLogo = false;
+            fixture.detectChanges();
+
+            const logo = fixture.debugElement.query(By.css('.adf-app-logo'));
+
+            expect(logo).toBeNull();
+        });
+
+        it('should display the default toggle icon', () => {
+            component.showSidenavToggle = true;
+            fixture.detectChanges();
+
+            const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
+
+            expect(toggleIcon.nativeElement.textContent).toBe('menu');
+        });
+
+        it('should display the correct toggle icon', () => {
+            component.showSidenavToggle = true;
+            component.toggleIcon = 'apps';
+            fixture.detectChanges();
+
+            const toggleIcon = fixture.debugElement.query(By.css('.adf-menu-icon'));
+
+            expect(toggleIcon.nativeElement.textContent).toBe('apps');
+        });
     });
 
     describe('Template transclusion', () => {

@@ -46,6 +46,8 @@ body of the element:
 | showSidenavToggle | `boolean` | true | Toggles whether the sidenav button will be displayed in the header or not. |
 | title | `string` |  | Title of the application. |
 | tooltip | `string` |  | The tooltip text for the application logo. |
+| toggleIcon | `string` | "menu" | The toggle icon that will be used inside header. |
+| showLogo | `boolean` | true | Toggles whether the logo will be displayed inside the header or not. |
 
 ### Events
 
