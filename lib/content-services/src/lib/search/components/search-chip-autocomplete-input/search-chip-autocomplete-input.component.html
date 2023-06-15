@@ -11,6 +11,7 @@
         </mat-chip>
         <input
             placeholder="{{ 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate }}"
+            aria-controls="adf-search-chip-autocomplete"
             #optionInput
             [formControl]="formCtrl"
             [matAutocomplete]="auto"
@@ -19,7 +20,7 @@
             [attr.aria-label]="'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate"
             (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete">
         <mat-option [disabled]="option | adfIsIncluded: selectedOptions" *ngFor="let option of filteredOptions$ | async"
                     [ngClass]="(option | adfIsIncluded: selectedOptions) && 'adf-autocomplete-added-option'">
             {{option}}
