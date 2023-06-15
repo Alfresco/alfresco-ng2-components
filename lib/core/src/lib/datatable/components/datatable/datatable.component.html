@@ -192,7 +192,7 @@
                     </mat-menu>
                 </div>
 
-                <div *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
+                <div *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox" (click)="onRowClick(row, $event)">
                     <mat-checkbox
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
