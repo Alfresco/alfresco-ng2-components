@@ -74,7 +74,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
     isProcessRoute: boolean;
-    isRouteActive: boolean;
+    isProcessActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
@@ -93,12 +93,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe((navigationStart: NavigationStart) => {
-                const currentRoute = navigationStart.url;
-                this.isRouteActive = currentRoute.includes('process');
+                const activeRoute = navigationStart.url;
+                this.isProcessActive = activeRoute.includes('processes');
             });
             this.activatedRoute.url.subscribe((segments) => {
                 const currentRoute = segments.join('/');
-                this.isProcessRoute = currentRoute.includes('process');
+                this.isProcessRoute = currentRoute.includes('processes');
             });
     }
 
@@ -117,7 +117,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isActiveRoute(filterActive: ProcessInstanceFilterRepresentation): boolean {
-        return (this.isRouteActive || this.isProcessRoute) && this.currentFilter === filterActive;
+        return (this.isProcessActive || this.isProcessRoute) && this.currentFilter === filterActive;
     }
 
     /**

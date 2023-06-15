@@ -75,7 +75,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
     isTaskRoute: boolean;
-    isRouteActive: boolean;
+    isTaskActive: boolean;
 
     private iconsMDL: IconModel;
 
@@ -94,8 +94,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe((navigationStart: NavigationStart) => {
-                const currentRoute = navigationStart.url;
-                this.isRouteActive = currentRoute.includes('tasks');
+                const activeRoute = navigationStart.url;
+                this.isTaskActive = activeRoute.includes('tasks');
             });
             this.activatedRoute.url.subscribe((segments) => {
                 const currentRoute = segments.join('/');
@@ -117,7 +117,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isActiveRoute(filterActive: FilterRepresentationModel): boolean {
-        return (this.isRouteActive || this.isTaskRoute) && this.currentFilter === filterActive;
+        return (this.isTaskActive || this.isTaskRoute) && this.currentFilter === filterActive;
     }
 
     /**
