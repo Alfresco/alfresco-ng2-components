@@ -111,7 +111,7 @@ runs:
       run: |
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
-          --oauth "$E2E_HOST" \
+          --oauth "$E2E_IDENTITY_HOST_APA" \
           --host "$E2E_HOST_APA" \
           --modelerUsername "$E2E_MODELER_USERNAME" \
           --modelerPassword "$E2E_MODELER_PASSWORD" \
