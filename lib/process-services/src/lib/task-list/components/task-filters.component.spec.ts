@@ -28,6 +28,8 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { fakeTaskFilters } from '../../mock/task/task-filters.mock';
+import { NavigationStart, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskFiltersComponent', () => {
 
@@ -36,11 +38,13 @@ describe('TaskFiltersComponent', () => {
     let appsProcessService: AppsProcessService;
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
+    let router: Router;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessTestingModule
+            ProcessTestingModule,
+            RouterTestingModule
         ]
     });
 
@@ -54,6 +58,7 @@ describe('TaskFiltersComponent', () => {
         taskListService = TestBed.inject(TaskListService);
         taskFilterService = TestBed.inject(TaskFilterService);
         appsProcessService = TestBed.inject(AppsProcessService);
+        router = TestBed.inject(Router);
     });
 
     it('should emit an error with a bad response', async () => {
@@ -337,6 +342,20 @@ describe('TaskFiltersComponent', () => {
             expect(taskFilterOne.innerText).toBe('default-my-filter');
             expect(taskFilterTwo.innerText).toBe('default-involved-filter');
             expect(taskFilterThree.innerText).toBe('default-completed-filter');
+        });
+
+        it('should set isTaskActive to true when activeRoute includes "tasks"', () => {
+            const navigationStartEvent = new NavigationStart(1, 'tasks/123');
+            spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
+            fixture.detectChanges();
+            expect(component.isTaskActive).toBe(true);
+          });
+
+        it('should set isTaskActive to false when activeRoute does not include "tasks"', () => {
+            const navigationStartEvent = new NavigationStart(1, 'other-route');
+            spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
+            fixture.detectChanges();
+            expect(component.isTaskActive).toBe(false);
         });
     });
 });

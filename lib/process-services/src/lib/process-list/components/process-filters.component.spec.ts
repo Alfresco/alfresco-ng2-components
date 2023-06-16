@@ -27,6 +27,8 @@ import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock/process/process-filters.mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { NavigationStart, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -34,11 +36,13 @@ describe('ProcessFiltersComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersComponent>;
     let processFilterService: ProcessFilterService;
     let appsProcessService: AppsProcessService;
+    let router: Router;
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessTestingModule
+            ProcessTestingModule,
+            RouterTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -48,6 +52,7 @@ describe('ProcessFiltersComponent', () => {
         filterList = fixture.componentInstance;
         processFilterService = TestBed.inject(ProcessFilterService);
         appsProcessService = TestBed.inject(AppsProcessService);
+        router = TestBed.inject(Router);
     });
 
     afterEach(() => {
@@ -304,5 +309,19 @@ describe('ProcessFiltersComponent', () => {
         await fixture.whenStable();
         const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
         expect(filters.length).toBe(0);
+    });
+
+    it('should set isProcessActive to true when activeRoute includes "processes"', () => {
+        const navigationStartEvent = new NavigationStart(1, 'processes/123');
+        spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
+        fixture.detectChanges();
+        expect(filterList.isProcessActive).toBe(true);
+    });
+
+    it('should set isProcessActive to false when activeRoute does not include "processes"', () => {
+        const navigationStartEvent = new NavigationStart(1, 'other-route');
+        spyOn(router.events, 'pipe').and.returnValue(of(navigationStartEvent));
+        fixture.detectChanges();
+        expect(filterList.isProcessActive).toBe(false);
     });
 });

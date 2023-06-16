@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { IconModel } from '../../app-list/icon.model';
+import { NavigationStart, Router } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -29,7 +32,7 @@ import { IconModel } from '../../app-list/icon.model';
     styleUrls: ['./process-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges {
+export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /** The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
@@ -71,29 +74,49 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
     active = false;
+    isProcessRoute: boolean;
+    isProcessActive: boolean;
+    private onDestroy$ = new Subject<boolean>();
 
     private iconsMDL: IconModel;
 
     constructor(private processFilterService: ProcessFilterService,
-                private appsProcessService: AppsProcessService) {
+                private appsProcessService: AppsProcessService,
+                private router: Router,
+                private location: Location) {
     }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();
+        this.router.events
+        .pipe(
+            filter((event) => event instanceof NavigationStart),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((navigationStart: NavigationStart) => {
+            const activeRoute = navigationStart.url;
+            this.isProcessActive = activeRoute.includes('processes');
+        });
+        const currentRoute = this.location.path();
+        this.isProcessRoute = currentRoute.includes('processes');
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appId = changes['appId'];
         const appName = changes['appName'];
-        const filter = changes['filterParam'];
+        const filterParam = changes['filterParam'];
 
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
         } else if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
-        } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectProcessFilter(filter.currentValue);
+        } else if (filterParam && filterParam.currentValue !== filterParam.previousValue) {
+            this.selectProcessFilter(filterParam.currentValue);
         }
+    }
+
+    isActiveRoute(filterActive: ProcessInstanceFilterRepresentation): boolean {
+        return (this.isProcessActive || this.isProcessRoute) && this.currentFilter === filterActive;
     }
 
     /**
@@ -148,12 +171,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Pass the selected filter as next
      *
-     * @param filter
+     * @param filterModel
      */
-    selectFilter(filter: ProcessInstanceFilterRepresentation) {
-        this.currentFilter = filter;
+    selectFilter(filterModel: ProcessInstanceFilterRepresentation) {
+        this.currentFilter = filterModel;
         this.active = true;
-        this.filterClicked.emit(filter);
+        this.filterClicked.emit(filterModel);
     }
 
     /**
@@ -221,5 +244,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
