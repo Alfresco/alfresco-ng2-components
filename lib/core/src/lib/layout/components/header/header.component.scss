@@ -102,7 +102,7 @@ adf-layout-header .mat-toolbar-single-row {
     }
 
     .adf-userinfo-container {
-        margin-right: 16px;
+        margin-right: var(--adf-user-info-container-margin-right);
     }
 
     .adf-userinfo-name {
