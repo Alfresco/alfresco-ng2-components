@@ -80,7 +80,7 @@ async function healthCheck(nameService: string) {
 }
 
 async function getApplicationByStatus(status: string) {
-    const url = `${args.host}/deployment-service/v1/applications/`;
+    const url = `${args.host}/deployment-service/v1/applications`;
 
     const pathParams = {};
     const queryParams = { status };
@@ -250,7 +250,7 @@ function deleteDescriptor(name: string) {
 }
 
 function deploy(model: any) {
-    const url = `${args.host}/deployment-service/v1/applications/`;
+    const url = `${args.host}/deployment-service/v1/applications`;
 
     const pathParams = {};
     const queryParams = {};
