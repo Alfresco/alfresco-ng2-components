@@ -52,6 +52,7 @@ runs:
         if [[ -n "${{ inputs.apa-proxy }}" ]]; then
           echo "APA proxy set."
           echo "PROXY_HOST_BPM=${E2E_HOST_APA}" >> $GITHUB_ENV
+          echo "PROXY_HOST_ECM=${E2E_IDENTITY_HOST_APA}" >> $GITHUB_ENV
           echo "HOST_SSO=${E2E_IDENTITY_HOST_APA}" >> $GITHUB_ENV
         fi
 
