@@ -158,7 +158,6 @@
                 "input": "lib/core/src/lib/styles/prebuilt/adf-purple-green.scss",
                 "bundleName": "adf-purple-green"
               },
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -334,7 +333,7 @@
             "sourceMap": true,
             "codeCoverage": true,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css"
+              "demo-shell/src/styles.scss"
             ]
           }
         },
@@ -361,7 +360,6 @@
             "configDir": "lib/core/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -383,7 +381,6 @@
             "outputDir": "dist/storybook/core",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -501,7 +498,6 @@
             "configDir": "lib/content-services/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -523,7 +519,6 @@
             "outputDir": "dist/storybook/content-services",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -707,7 +702,6 @@
             "configDir": "lib/process-services-cloud/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -729,7 +723,6 @@
             "outputDir": "dist/storybook/process-services-cloud",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -1169,7 +1162,6 @@
             "configDir": "lib/stories/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
@@ -1191,7 +1183,6 @@
             "outputDir": "dist/storybook/stories",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/material-icons/material-icons.css",
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
