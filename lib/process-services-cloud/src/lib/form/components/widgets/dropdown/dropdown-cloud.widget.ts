@@ -133,28 +133,40 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         const nestedData = data[currentProperty];
 
         if (Array.isArray(nestedData)) {
-            const options: FormFieldOption[] = [];
-
-            for (const item of nestedData) {
-                const option: FormFieldOption = {
-                    id: item[id],
-                    name: item[label]
-                };
-
-                if (option.id === undefined || option.name === undefined) {
-                    this.handleError(`'id' or 'label' is not properly defined for ${currentProperty}`);
-                    this.variableOptionsFailed = true;
-                    return [];
-                }
-
-                options.push(option);
-            }
-
-            this.variableOptionsFailed = false;
-            return options;
+            return this.getOptionsFromArray(nestedData, id, label);
         }
 
         return this.getOptionsFromPath(nestedData, properties.join('.'), id, label);
+    }
+
+    private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
+        const options: FormFieldOption[] = [];
+
+        for (const item of nestedData) {
+            const option: FormFieldOption = this.createOption(item, id, label);
+            if (!option) {
+                this.variableOptionsFailed = true;
+                return [];
+            }
+            options.push(option);
+        }
+
+        this.variableOptionsFailed = false;
+        return options;
+    }
+
+    private createOption(item: any, id: string, label: string): FormFieldOption {
+        const option: FormFieldOption = {
+            id: item[id],
+            name: item[label]
+        };
+
+        if (option.id === undefined || option.name === undefined) {
+            this.handleError(`'id' or 'label' is not properly defined`);
+            return undefined;
+        }
+
+        return option;
     }
 
     private isVariableOptionType(): boolean {

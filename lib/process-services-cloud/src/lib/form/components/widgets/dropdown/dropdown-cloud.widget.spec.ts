@@ -905,6 +905,12 @@ describe('DropdownCloudWidgetComponent', () => {
                     optionsLabel
                 }
             });
+        const checkDropdownVariableOptionsFailed = () => {
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
+
+            expect(widget.field.options.length).toEqual(0);
+        };
 
         it('should display options persisted from variable', async () => {
             widget.field = getVariableDropdownWidget(mockVariablesWithJson, 'json-variable', 'response.people.players', 'playerId', 'playerFullName');
@@ -947,10 +953,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const logServiceSpy = spyOn(logService, 'error');
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
-
-            expect(widget.field.options.length).toEqual(0);
+            checkDropdownVariableOptionsFailed();
             expect(logServiceSpy).toHaveBeenCalledWith(`wrongPath not found in ${JSON.stringify(mockPlayersResponse.response)}`);
         });
 
@@ -959,10 +962,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const logServiceSpy = spyOn(logService, 'error');
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
-
-            expect(widget.field.options.length).toEqual(0);
+            checkDropdownVariableOptionsFailed();
             expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined for players`);
         });
 
@@ -971,10 +971,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const logServiceSpy = spyOn(logService, 'error');
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
-
-            expect(widget.field.options.length).toEqual(0);
+            checkDropdownVariableOptionsFailed();
             expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined for players`);
         });
 
@@ -983,10 +980,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const logServiceSpy = spyOn(logService, 'error');
             fixture.detectChanges();
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
-
-            expect(widget.field.options.length).toEqual(0);
+            checkDropdownVariableOptionsFailed();
             expect(logServiceSpy).toHaveBeenCalledWith(`wrong-variable-id not found in ${JSON.stringify(mockVariablesWithJson)}`);
         });
     });
