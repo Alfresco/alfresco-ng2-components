@@ -454,7 +454,6 @@ jobs:
           check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
           apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
           deps: ${{ matrix.e2e-test.deps }}
-          e2e-host : ${{ matrix.e2e-host }}
 
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
