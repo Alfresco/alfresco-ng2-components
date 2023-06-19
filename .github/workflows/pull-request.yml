@@ -392,6 +392,8 @@ jobs:
             check-cs-env: "true"
             check-ps-cloud-env: "true"
             deps: "testing"
+            env:
+              E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
             e2e-host: ${{ env.E2E_IDENTITY_HOST_APA }}
           - description: "Process Cloud: People"
             test-id: "process-services-cloud"
@@ -402,6 +404,8 @@ jobs:
             check-cs-env: "true"
             check-ps-cloud-env: "true"
             deps: "testing"
+            env:
+              E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
             e2e-host: ${{ env.E2E_IDENTITY_HOST_APA }}
           - description: "Process Cloud: Process"
             test-id: "process-services-cloud"
@@ -412,6 +416,8 @@ jobs:
             check-cs-env: "true"
             check-ps-cloud-env: "true"
             deps: "testing"
+            env:
+              E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
             e2e-host: ${{ env.E2E_IDENTITY_HOST_APA }}
           - description: "Process Cloud: Start Task"
             test-id: "process-services-cloud"
@@ -422,6 +428,8 @@ jobs:
             check-cs-env: "true"
             check-ps-cloud-env: "true"
             deps: "testing"
+            env:
+              E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
             e2e-host: ${{ env.E2E_IDENTITY_HOST_APA }}
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
@@ -432,7 +440,9 @@ jobs:
             check-cs-env: "true"
             check-ps-cloud-env: "true"
             deps: "testing"
-            e2e-host : ${{ env.E2E_IDENTITY_HOST_APA }}
+            env:
+              E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
+            e2e-host: ${{ env.E2E_IDENTITY_HOST_APA }}
 
     steps:
       - name: Checkout repository
