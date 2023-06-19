@@ -104,20 +104,29 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         const optionsLabel = this.field?.variableConfig?.optionsLabel ?? 'name';
         const optionsPath = this.field?.variableConfig?.optionsPath ?? 'data';
         const variableId = this.field?.variableConfig?.variableId;
+        const taskId = this.field.form.taskId;
 
-        const formVariables: TaskVariableCloud[] = this.field?.form?.variables;
-        const dropdownOptions: TaskVariableCloud = formVariables.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
+        this.formCloudService.getTaskVariables(this.fetchAppNameFromAppConfig(), taskId)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((formVariables: TaskVariableCloud[]) => {
+                const dropdownOptions: TaskVariableCloud = formVariables.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
 
-        if (dropdownOptions) {
-            const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath, optionsId, optionsLabel);
-            this.field.options = formVariableOptions;
-            this.resetInvalidValue();
-            this.field.updateForm();
-        } else {
-            this.handleError(`${variableId} not found in ${JSON.stringify(formVariables)}`);
-            this.resetOptions();
-            this.variableOptionsFailed = true;
-        }
+                if (dropdownOptions) {
+                    const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath, optionsId, optionsLabel);
+                    this.field.options = formVariableOptions;
+                    this.resetInvalidValue();
+                    this.field.updateForm();
+                } else {
+                    this.handleError(`${variableId} not found in ${JSON.stringify(formVariables)}`);
+                    this.resetOptions();
+                    this.variableOptionsFailed = true;
+                }
+            },
+            (error) => {
+                this.handleError(error);
+                this.resetOptions();
+                this.variableOptionsFailed = true;
+            });
     }
 
     private getOptionsFromPath(data: any, path: string, id: string, label: string): FormFieldOption[] {
@@ -171,6 +180,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private isVariableOptionType(): boolean {
         return this.field?.optionType === 'variable';
+    }
+
+    private fetchAppNameFromAppConfig(): string {
+        return this.appConfig.get('alfresco-deployed-apps')[0]?.name;
     }
 
     private persistFieldOptionsFromRestApi() {
