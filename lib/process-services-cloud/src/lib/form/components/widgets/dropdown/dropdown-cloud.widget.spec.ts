@@ -963,7 +963,7 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined for players`);
+            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
         });
 
         it('should return empty array and display error when label is incorrect', () => {
@@ -972,7 +972,7 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined for players`);
+            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
         });
 
         it('should return empty array and display error when form variable is NOT found', () => {

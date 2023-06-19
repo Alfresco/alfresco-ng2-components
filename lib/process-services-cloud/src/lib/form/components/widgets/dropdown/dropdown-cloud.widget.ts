@@ -161,7 +161,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             name: item[label]
         };
 
-        if (option.id === undefined || option.name === undefined) {
+        if (!option.id || !option.name) {
             this.handleError(`'id' or 'label' is not properly defined`);
             return undefined;
         }
