@@ -38,6 +38,9 @@ inputs:
   apa-proxy: #
     description: "proxy host"
     required: true
+  e2e-host: #
+    description: "e2e host"
+    required: false
   deps:
     description: "Library dependencies"
     required: false
@@ -140,6 +143,7 @@ runs:
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
         DEPS: "${{ inputs.deps }}"
+        HOST_SSO: "${{ inputs.e2e-host || secrets.HOST_SSO }}"
 
       uses: nick-fields/retry@v2.8.2
       with:
