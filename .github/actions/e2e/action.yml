@@ -52,14 +52,8 @@ runs:
         if [[ -n "${{ inputs.apa-proxy }}" ]]; then
           echo "APA proxy set."
           echo "PROXY_HOST_BPM=${E2E_HOST_APA}" >> $GITHUB_ENV
+          echo "HOST_SSO=${E2E_IDENTITY_HOST_APA}" >> $GITHUB_ENV
         fi
-
-    - name: Set E2E HOST
-      if: ${{ env.apa-proxy == 'true' }}
-      shell: bash
-      run: |
-        echo "set E2E host"
-        echo "E2E_HOST=${{ env.E2E_IDENTITY_HOST_APA }}" >> $GITHUB_ENV
 
     - name: install aws cli
       shell: bash
