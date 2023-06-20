@@ -297,7 +297,8 @@
         "APPLY": "Appliquer",
         "CLEAR-ALL": "Supprimer tout",
         "SHOW-MORE": "Afficher plus",
-        "SHOW-LESS": "Afficher moins"
+        "SHOW-LESS": "Afficher moins",
+        "ADD_OPTION": "Ajouter une option..."
       },
       "BUTTONS": {
         "CLOSE": "Fermer",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "La date et l'heure sont postérieures à la limite autorisée."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Liste des filtres de recherche"
+        "SEARCH_FILTER": "Liste des filtres de recherche",
+        "OPTIONS-SELECTION": "Sélection d'options"
       },
       "ANY": "N'importe lequel"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Partager",
     "DESCRIPTION": "Cliquez sur le lien ci-dessous pour le copier dans le Presse-papiers.",
     "TITLE": "Lien à partager",
+    "SHARE-LINK": "Lien de partage",
+    "SHARABLE-LINK-CREATED": "Un lien à partager a été créé",
+    "PUBLIC-CONTENT": "Ce contenu est accessible à tous ceux qui ont ce lien",
+    "LINK-WITH-EXPIRY-SETTINGS": "Un nouveau lien a été généré avec des paramètres d'expiration",
     "EXPIRES": "Expire le",
+    "LINK-EXPIRY-DATE": "Date d'expiration du lien",
     "EXPIRATION-LABEL": "Date d'expiration",
+    "EXPIRATION-PLACEHOLDER": "MM/JJ/AAAA",
     "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
     "CLOSE": "Fermer",
     "COPY_BUTTON_LABEL": "Copier le lien",

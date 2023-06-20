@@ -213,7 +213,7 @@
       }
     },
     "ARIA-LABEL": {
-      "VERSION": "Verze souboru",
+      "VERSION": "Verze souboru {{ version }}",
       "DIALOG": "Odeslat seznam",
       "DIALOG_MAXIMIZE": "Maximalizovat dialog pro odeslání",
       "DIALOG_MINIMIZE": "Minimalizovat dialog pro odeslání",
@@ -297,7 +297,8 @@
         "APPLY": "Použít",
         "CLEAR-ALL": "Vymazat vše",
         "SHOW-MORE": "Zobrazit více",
-        "SHOW-LESS": "Zobrazit méně"
+        "SHOW-LESS": "Zobrazit méně",
+        "ADD_OPTION": "Přidat možnost..."
       },
       "BUTTONS": {
         "CLOSE": "Zavřít",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Datum a čas překračuje maximální datum a čas."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Seznam filtrů vyhledávání"
+        "SEARCH_FILTER": "Seznam filtrů vyhledávání",
+        "OPTIONS-SELECTION": "Výběr možností"
       },
       "ANY": "Jakákoli"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Sdílet",
     "DESCRIPTION": "Kliknutím na následující odkaz jej zkopírujete do schránky.",
     "TITLE": "Odkaz pro sdílení",
+    "SHARE-LINK": "Sdílet odkaz",
+    "SHARABLE-LINK-CREATED": "Je vytvořen odkaz, který lze sdílet",
+    "PUBLIC-CONTENT": "Tento obsah je veřejně přístupný každému, kdo použije tento odkaz",
+    "LINK-WITH-EXPIRY-SETTINGS": "Byl vygenerován nový odkaz s nastavením vypršení platnosti",
     "EXPIRES": "Platnost vyprší k",
+    "LINK-EXPIRY-DATE": "Datum vypršení platnosti odkazu",
     "EXPIRATION-LABEL": "Datum vypršení platnosti",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/RRRR",
     "CLIPBOARD-MESSAGE": "Odkaz zkopírován do schránky",
     "CLOSE": "Zavřít",
     "COPY_BUTTON_LABEL": "Zkopírovat odkaz",

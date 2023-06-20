@@ -311,7 +311,7 @@
   "ADF_CLOUD_TASK_HEADER": {
     "BUTTON": {
       "CLAIM": "Richiedi",
-      "RELEASE": "Rifiuta"
+      "RELEASE": "Rilascia"
     },
     "PROPERTIES": {
       "TASK_NAME": "Compito",
@@ -372,7 +372,7 @@
         "COMPLETE": "Completa",
         "CANCEL": "Annulla",
         "CLAIM": "Richiedi",
-        "UNCLAIM": "Rifiuta"
+        "UNCLAIM": "Rilascia"
       }
     },
     "ERROR": {

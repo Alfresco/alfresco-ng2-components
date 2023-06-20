@@ -297,7 +297,8 @@
         "APPLY": "Käytä",
         "CLEAR-ALL": "Tyhjennä kaikki",
         "SHOW-MORE": "Näytä lisää",
-        "SHOW-LESS": "Näytä vähemmän"
+        "SHOW-LESS": "Näytä vähemmän",
+        "ADD_OPTION": "Lisää vaihtoehto..."
       },
       "BUTTONS": {
         "CLOSE": "Sulje",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Päivä ja aika eivät ole sallitulla alueella."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Hakusuodatinluettelo"
+        "SEARCH_FILTER": "Hakusuodatinluettelo",
+        "OPTIONS-SELECTION": "Vaihtoehtojen valinta"
       },
       "ANY": "Mikä tahansa"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Jaa",
     "DESCRIPTION": "Kopioi se leikepöydälle napsauttamalla alla olevaa linkkiä.",
     "TITLE": "Jakolinkki",
+    "SHARE-LINK": "Jaa linkki",
+    "SHARABLE-LINK-CREATED": "Jaettava linkki luotiin",
+    "PUBLIC-CONTENT": "Tämä sisältö on julkisesti kaikkien tätä linkkiä käyttävien saatavilla",
+    "LINK-WITH-EXPIRY-SETTINGS": "Uusi vanhenemisasetuksella varustettu linkki on luotu",
     "EXPIRES": "Vanhentuu",
+    "LINK-EXPIRY-DATE": "Linkin vanhenemispäivä",
     "EXPIRATION-LABEL": "Voimassaolon päättymispäivä",
+    "EXPIRATION-PLACEHOLDER": "KK.PP.VVVV",
     "CLIPBOARD-MESSAGE": "Linkki kopioitu leikepöydälle",
     "CLOSE": "Sulje",
     "COPY_BUTTON_LABEL": "Kopioi linkki",

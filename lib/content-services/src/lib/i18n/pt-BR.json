@@ -297,7 +297,8 @@
         "APPLY": "Aplicar",
         "CLEAR-ALL": "Limpar tudo",
         "SHOW-MORE": "Mostrar mais",
-        "SHOW-LESS": "Mostrar menos"
+        "SHOW-LESS": "Mostrar menos",
+        "ADD_OPTION": "Adicionar opção..."
       },
       "BUTTONS": {
         "CLOSE": "Fechar",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Data/hora está além da data/hora máxima."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Pesquisar lista de filtros"
+        "SEARCH_FILTER": "Pesquisar lista de filtros",
+        "OPTIONS-SELECTION": "Seleção de opções"
       },
       "ANY": "Qualquer"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Compartilhar",
     "DESCRIPTION": "Clique no link abaixo para copiar na área de transferência.",
     "TITLE": "Link para compartilhar",
+    "SHARE-LINK": "Compartilhar link",
+    "SHARABLE-LINK-CREATED": "Link compartilhável criado",
+    "PUBLIC-CONTENT": "Este conteúdo está disponível publicamente para qualquer pessoa com este link",
+    "LINK-WITH-EXPIRY-SETTINGS": "Novo link gerado com configurações de expiração",
     "EXPIRES": "Expira",
+    "LINK-EXPIRY-DATE": "Data de expiração do link",
     "EXPIRATION-LABEL": "Data de vencimento",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/AAAA",
     "CLIPBOARD-MESSAGE": "Link copiado na área de transferência",
     "CLOSE": "Fechar",
     "COPY_BUTTON_LABEL": "Copiar link",

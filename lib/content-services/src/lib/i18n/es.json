@@ -297,7 +297,8 @@
         "APPLY": "Aplicar",
         "CLEAR-ALL": "Borrar todo",
         "SHOW-MORE": "Mostrar más",
-        "SHOW-LESS": "Mostrar menos"
+        "SHOW-LESS": "Mostrar menos",
+        "ADD_OPTION": "Añadir opción..."
       },
       "BUTTONS": {
         "CLOSE": "Cerrar",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "La fecha y hora son posteriores a la fecha y hora máximas."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Lista de filtros de búsqueda"
+        "SEARCH_FILTER": "Lista de filtros de búsqueda",
+        "OPTIONS-SELECTION": "Selección de opciones"
       },
       "ANY": "Cualquier"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Compartir",
     "DESCRIPTION": "Haga clic en el siguiente enlace para copiar al portapapeles.",
     "TITLE": "Enlace para compartir",
+    "SHARE-LINK": "Compartir enlace",
+    "SHARABLE-LINK-CREATED": "Creación de un enlace compartible",
+    "PUBLIC-CONTENT": "Este contenido está disponible públicamente para cualquier persona con este enlace",
+    "LINK-WITH-EXPIRY-SETTINGS": "Se ha generado un nuevo enlace con la configuración de vencimiento",
     "EXPIRES": "Caduca el",
+    "LINK-EXPIRY-DATE": "Fecha de vencimiento del enlace",
     "EXPIRATION-LABEL": "Fecha de caducidad",
+    "EXPIRATION-PLACEHOLDER": "DD/MM/AAAA",
     "CLIPBOARD-MESSAGE": "Enlace copiado al portapapeles",
     "CLOSE": "Cerrar",
     "COPY_BUTTON_LABEL": "Copiar enlace",

@@ -297,7 +297,8 @@
         "APPLY": "应用",
         "CLEAR-ALL": "全部清除",
         "SHOW-MORE": "显示更多",
-        "SHOW-LESS": "显示更少"
+        "SHOW-LESS": "显示更少",
+        "ADD_OPTION": "添加选项..."
       },
       "BUTTONS": {
         "CLOSE": "关闭",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "日期时间超过了最大日期时间。"
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "搜索筛选器列表"
+        "SEARCH_FILTER": "搜索筛选器列表",
+        "OPTIONS-SELECTION": "选项选择"
       },
       "ANY": "任意"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "共享",
     "DESCRIPTION": "单击下面的链接以将其复制到剪贴板。",
     "TITLE": "要共享的链接",
+    "SHARE-LINK": "共享链接",
+    "SHARABLE-LINK-CREATED": "共享链接已创建",
+    "PUBLIC-CONTENT": "此内容对任何知道此链接的人公开",
+    "LINK-WITH-EXPIRY-SETTINGS": "已生成具有到期设置的新链接",
     "EXPIRES": "到期日期",
+    "LINK-EXPIRY-DATE": "链接到期日期",
     "EXPIRATION-LABEL": "截止日期",
+    "EXPIRATION-PLACEHOLDER": "YYYY/MM/DD",
     "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
     "CLOSE": "关闭",
     "COPY_BUTTON_LABEL": "复制链接",

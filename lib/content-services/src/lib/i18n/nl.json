@@ -297,7 +297,8 @@
         "APPLY": "Toepassen",
         "CLEAR-ALL": "Alles wissen",
         "SHOW-MORE": "Meer weergeven",
-        "SHOW-LESS": "Minder weergeven"
+        "SHOW-LESS": "Minder weergeven",
+        "ADD_OPTION": "Optie toevoegen..."
       },
       "BUTTONS": {
         "CLOSE": "Sluiten",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "De datum/tijd ligt na de laatste datum/tijd."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Zoekfilterlijst"
+        "SEARCH_FILTER": "Zoekfilterlijst",
+        "OPTIONS-SELECTION": "Selectie van opties"
       },
       "ANY": "Elk"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Delen",
     "DESCRIPTION": "Klik op de onderstaande koppeling om deze te kopiëren naar het klembord.",
     "TITLE": "Koppeling om te delen",
+    "SHARE-LINK": "Koppeling voor delen",
+    "SHARABLE-LINK-CREATED": "Deelbare koppeling is gemaakt",
+    "PUBLIC-CONTENT": "Deze content is openbaar toegankelijk voor iedereen met deze koppeling",
+    "LINK-WITH-EXPIRY-SETTINGS": "Nieuwe koppeling is gegenereerd met verloopinstellingen",
     "EXPIRES": "Verloopt op",
+    "LINK-EXPIRY-DATE": "Verloopdatum koppeling",
     "EXPIRATION-LABEL": "Verloopdatum",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/JJJJ",
     "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
     "CLOSE": "Sluiten",
     "COPY_BUTTON_LABEL": "Koppeling kopiëren",

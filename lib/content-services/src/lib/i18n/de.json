@@ -297,7 +297,8 @@
         "APPLY": "Anwenden",
         "CLEAR-ALL": "Alle löschen",
         "SHOW-MORE": "Mehr anzeigen",
-        "SHOW-LESS": "Weniger anzeigen"
+        "SHOW-LESS": "Weniger anzeigen",
+        "ADD_OPTION": "Option hinzufügen..."
       },
       "BUTTONS": {
         "CLOSE": "Schließen",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Datum/Uhrzeit liegt über dem Höchstwert für Datum/Uhrzeit."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Suchfilter-Liste"
+        "SEARCH_FILTER": "Suchfilter-Liste",
+        "OPTIONS-SELECTION": "Optionen Auswahl"
       },
       "ANY": "Alle"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Freigeben",
     "DESCRIPTION": "Auf Link klicken um in die Zwischenablage zu kopieren.",
     "TITLE": "Link zum Teilen",
+    "SHARE-LINK": "Link teilen",
+    "SHARABLE-LINK-CREATED": "Teilbarer Link wird erstellt",
+    "PUBLIC-CONTENT": "Dieser Inhalt ist für alle zugänglich, die diesen Link benutzen",
+    "LINK-WITH-EXPIRY-SETTINGS": "Es wurde ein neuer Link mit Ablaufeinstellungen erstellt",
     "EXPIRES": "Läuft ab am",
+    "LINK-EXPIRY-DATE": "Ablaufdatum des Links",
     "EXPIRATION-LABEL": "Ablaufdatum",
+    "EXPIRATION-PLACEHOLDER": "TT.MM.JJJJ",
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
     "CLOSE": "Schließen",
     "COPY_BUTTON_LABEL": "Link kopieren",
