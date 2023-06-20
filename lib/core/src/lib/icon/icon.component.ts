@@ -39,6 +39,10 @@ export class IconComponent {
     @Input()
     color: ThemePalette;
 
+    /** Icon font set */
+    @Input()
+    fontSet: string;
+
     get value(): string {
         return this._value;
     }
