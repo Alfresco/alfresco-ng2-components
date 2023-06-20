@@ -2,6 +2,7 @@ import { Directive, ElementRef } from "@angular/core";
 
 /** @internal */
 @Directive({
+    standalone: true,
     selector: "[adfBreadcrumbFocus]",
     host: {
         class: "adf-breadcrumb-focus",

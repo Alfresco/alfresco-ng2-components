@@ -1,6 +1,7 @@
 import { Component, TemplateRef, ViewChild } from "@angular/core";
 
 @Component({
+    standalone: true,
     selector: "adf-breadcrumb-item",
     template: `
         <ng-template #breadcrumbItemTemplate>

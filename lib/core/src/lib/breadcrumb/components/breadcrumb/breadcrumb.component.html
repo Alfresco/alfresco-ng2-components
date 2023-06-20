@@ -2,7 +2,7 @@
   <nav
     class="adf-breadcrumb"
     [class.adf-breadcrumb--compact]="compact"
-    [attr.aria-label]="'hy.adf-breadcrumb.breadcrumbs' | transloco"
+    [attr.aria-label]="'hy.adf-breadcrumb.breadcrumbs' | translate"
   >
     <ol>
       <ng-container *ngFor="let breadcrumbTemplate of _selectedBreadcrumbs; last as last">
@@ -20,12 +20,11 @@
             mat-icon-button
             (click)="_toggleCompact()"
             color="primary"
-            [matTooltip]="'hy.adf-breadcrumb.show-all-breadcrumbs' | transloco"
+            [matTooltip]="'hy.adf-breadcrumb.show-all-breadcrumbs' | translate"
             matTooltipClass="adf-tooltip"
-            [attr.aria-label]="'hy.adf-breadcrumb.show-all-breadcrumbs' | transloco"
+            [attr.aria-label]="'hy.adf-breadcrumb.show-all-breadcrumbs' | translate"
           >
-            <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate" hyIcon
-              >more_vert</mat-icon
+            <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate">more_vert</mat-icon
             >
           </button>
           <div

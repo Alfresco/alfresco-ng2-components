@@ -13,16 +13,29 @@ import {
     TemplateRef,
     ViewChildren,
 } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTooltipModule } from "@angular/material/tooltip";
 import { map, startWith } from "rxjs/operators";
+import { TranslateModule } from "@ngx-translate/core";
 
 import { BreadcrumbFocusDirective } from "../../directives/breadcrumb-focus.directive";
 import { BreadcrumbItemComponent } from "../breadcrumb-item/breadcrumb-item.component";
 
 @Component({
+    standalone: true,
     selector: "adf-breadcrumb",
     templateUrl: "./breadcrumb.component.html",
     styleUrls: ["./breadcrumb.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CommonModule,
+        MatIconModule,
+        TranslateModule,
+        MatButtonModule,
+        MatTooltipModule,
+    ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
