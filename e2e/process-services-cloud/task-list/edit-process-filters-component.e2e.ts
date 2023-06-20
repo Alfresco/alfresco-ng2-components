@@ -27,7 +27,7 @@ import { TasksCloudDemoPage } from '../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
-describe('Edit process filters cloud modify', () => {
+describe('Edit process filters cloud', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
