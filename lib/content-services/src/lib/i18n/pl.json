@@ -297,7 +297,8 @@
         "APPLY": "Zastosuj",
         "CLEAR-ALL": "Wyczyść wszystko",
         "SHOW-MORE": "Pokaż więcej",
-        "SHOW-LESS": "Pokaż mniej"
+        "SHOW-LESS": "Pokaż mniej",
+        "ADD_OPTION": "Dodaj opcję..."
       },
       "BUTTONS": {
         "CLOSE": "Zamknij",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Data i godzina wykraczają poza maksymalną datę i godzinę."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Lista filtrów wyszukiwania"
+        "SEARCH_FILTER": "Lista filtrów wyszukiwania",
+        "OPTIONS-SELECTION": "Wybór opcji"
       },
       "ANY": "Dowolny"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Udostępnij",
     "DESCRIPTION": "Kliknij link poniżej, aby skopiować go do schowka.",
     "TITLE": "Link do udostępnienia",
+    "SHARE-LINK": "Udostępnij łącze",
+    "SHARABLE-LINK-CREATED": "Tworzone jest łącze do udostępniania",
+    "PUBLIC-CONTENT": "Ta zawartość jest publicznie dostępna dla każdego, kto skorzysta z tego łącza",
+    "LINK-WITH-EXPIRY-SETTINGS": "Wygenerowano nowy link z ustawieniami wygaśnięcia",
     "EXPIRES": "Wygasa",
+    "LINK-EXPIRY-DATE": "Data wygaśnięcia łącza",
     "EXPIRATION-LABEL": "Data ważności",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/RRRR",
     "CLIPBOARD-MESSAGE": "Link został skopiowany do schowka.",
     "CLOSE": "Zamknij",
     "COPY_BUTTON_LABEL": "Kopiuj link",

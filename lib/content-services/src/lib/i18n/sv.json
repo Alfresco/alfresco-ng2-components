@@ -297,7 +297,8 @@
         "APPLY": "Tillämpa",
         "CLEAR-ALL": "Rensa alla",
         "SHOW-MORE": "Visa mer",
-        "SHOW-LESS": "Visa mindre"
+        "SHOW-LESS": "Visa mindre",
+        "ADD_OPTION": "Lägg till alternativ ..."
       },
       "BUTTONS": {
         "CLOSE": "Stäng",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Datumtiden är bortom den maximala datumtiden."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Lista över sökfilter"
+        "SEARCH_FILTER": "Lista över sökfilter",
+        "OPTIONS-SELECTION": "Val av alternativ"
       },
       "ANY": "Alla"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Dela",
     "DESCRIPTION": "Klicka på länken nedan för att kopiera den till urklipp",
     "TITLE": "Länk att dela",
+    "SHARE-LINK": "Dela länk",
+    "SHARABLE-LINK-CREATED": "Delbar länk skapas",
+    "PUBLIC-CONTENT": "Detta innehåll är offentligt tillgängligt för alla med denna länk",
+    "LINK-WITH-EXPIRY-SETTINGS": "Ny länk har skapats med inställningar för utgångsdatum",
     "EXPIRES": "Löper ut den",
+    "LINK-EXPIRY-DATE": "Länkens utgångsdatum",
     "EXPIRATION-LABEL": "Sista giltighetsdatum",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/ÅÅÅÅ",
     "CLIPBOARD-MESSAGE": "Länk kopierad till urklipp",
     "CLOSE": "Stäng",
     "COPY_BUTTON_LABEL": "Kopiera länk",

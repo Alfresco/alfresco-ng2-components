@@ -297,7 +297,8 @@
         "APPLY": "تطبيق",
         "CLEAR-ALL": "مسح الكل",
         "SHOW-MORE": "إظهار المزيد",
-        "SHOW-LESS": "إظهار أقل"
+        "SHOW-LESS": "إظهار أقل",
+        "ADD_OPTION": "إضافة خيار ..."
       },
       "BUTTONS": {
         "CLOSE": "إغلاق",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "التاريخ والوقت يتجاوزان الحد الأقصى للتاريخ والوقت."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "قائمة تصفية البحث"
+        "SEARCH_FILTER": "قائمة تصفية البحث",
+        "OPTIONS-SELECTION": "اختيار الخيارات"
       },
       "ANY": "أي"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "مشاركة",
     "DESCRIPTION": "انقر فوق الرابط أدناه لنسخه إلى الحافظة.",
     "TITLE": "رابط للمشاركة",
+    "SHARE-LINK": "رابط المشاركة",
+    "SHARABLE-LINK-CREATED": "تم إنشاء رابط قابل للمشاركة",
+    "PUBLIC-CONTENT": "هذا المحتوى متاح للجمهور لأي شخص لديه هذا الرابط",
+    "LINK-WITH-EXPIRY-SETTINGS": "تم إنشاء ارتباط جديد مع إعدادات انتهاء الصلاحية",
     "EXPIRES": "تنتهي الصلاحية في",
+    "LINK-EXPIRY-DATE": "تاريخ انتهاء الارتباط",
     "EXPIRATION-LABEL": "تاريخ الانتهاء",
+    "EXPIRATION-PLACEHOLDER": "MM / DD / YYYY",
     "CLIPBOARD-MESSAGE": "تم نسخ الرابط إلى الحافظة",
     "CLOSE": "إغلاق",
     "COPY_BUTTON_LABEL": "انسخ الرابط",

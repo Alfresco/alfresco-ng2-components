@@ -297,7 +297,8 @@
         "APPLY": "Applica",
         "CLEAR-ALL": "Cancella tutto",
         "SHOW-MORE": "Altro",
-        "SHOW-LESS": "Nascondi"
+        "SHOW-LESS": "Nascondi",
+        "ADD_OPTION": "Aggiungi opzione..."
       },
       "BUTTONS": {
         "CLOSE": "Chiudi",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "La data/ora supera il valore massimo consentito."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Cerca elenco filtri"
+        "SEARCH_FILTER": "Cerca elenco filtri",
+        "OPTIONS-SELECTION": "Selezione opzioni"
       },
       "ANY": "Qualsiasi"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Condividi",
     "DESCRIPTION": "Per copiarlo negli appunti, fai clic sul link seguente.",
     "TITLE": "Link da condividere",
+    "SHARE-LINK": "Condividi link",
+    "SHARABLE-LINK-CREATED": "È stato creato un link condivisibile",
+    "PUBLIC-CONTENT": "Questo contenuto è reso pubblicamente accessibile tramite questo link",
+    "LINK-WITH-EXPIRY-SETTINGS": "Il nuovo link è stato creato con impostazioni di scadenza",
     "EXPIRES": "Scade il",
+    "LINK-EXPIRY-DATE": "Data di scadenza link",
     "EXPIRATION-LABEL": "Data di scadenza",
+    "EXPIRATION-PLACEHOLDER": "MM/GG/AAAA",
     "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
     "CLOSE": "Chiudi",
     "COPY_BUTTON_LABEL": "Copia link",

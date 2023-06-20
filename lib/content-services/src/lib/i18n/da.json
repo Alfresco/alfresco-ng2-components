@@ -297,7 +297,8 @@
         "APPLY": "Anvend",
         "CLEAR-ALL": "Ryd alt",
         "SHOW-MORE": "Vis flere",
-        "SHOW-LESS": "Vis færre"
+        "SHOW-LESS": "Vis færre",
+        "ADD_OPTION": "Tilføj valgmulighed..."
       },
       "BUTTONS": {
         "CLOSE": "Luk",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Maks. dato/klokkeslæt er nået."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Søgefilterliste"
+        "SEARCH_FILTER": "Søgefilterliste",
+        "OPTIONS-SELECTION": "Udvalg af valgmuligheder"
       },
       "ANY": "Enhver"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Del",
     "DESCRIPTION": "Klik på linket nedenfor for at kopiere det til udklipsholderen.",
     "TITLE": "Link til deling",
+    "SHARE-LINK": "Del link",
+    "SHARABLE-LINK-CREATED": "Link, som kan deles, er oprettet",
+    "PUBLIC-CONTENT": "Dette indhold er offentligt tilgængeligt til all med dette link",
+    "LINK-WITH-EXPIRY-SETTINGS": "Nyt link er genereret med udløbsindstillinger",
     "EXPIRES": "Udløber den",
+    "LINK-EXPIRY-DATE": "Udløbsdato for link",
     "EXPIRATION-LABEL": "Udløbsdato",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/ÅÅÅÅ",
     "CLIPBOARD-MESSAGE": "Link kopieret til udklipsholderen",
     "CLOSE": "Luk",
     "COPY_BUTTON_LABEL": "Kopiér link",

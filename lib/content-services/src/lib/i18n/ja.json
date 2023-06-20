@@ -297,7 +297,8 @@
         "APPLY": "適用",
         "CLEAR-ALL": "すべて消去",
         "SHOW-MORE": "続きを表示",
-        "SHOW-LESS": "表示数を減らす"
+        "SHOW-LESS": "表示数を減らす",
+        "ADD_OPTION": "オプションの追加..."
       },
       "BUTTONS": {
         "CLOSE": "閉じる",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "指定した日時は最大日時を超えています"
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "検索フィルタリスト"
+        "SEARCH_FILTER": "検索フィルタリスト",
+        "OPTIONS-SELECTION": "オプション選択"
       },
       "ANY": "任意"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "共有",
     "DESCRIPTION": "下のリンクをクリックすると、リンクがクリップボードにコピーされます。",
     "TITLE": "共有するリンク",
+    "SHARE-LINK": "リンクの共有",
+    "SHARABLE-LINK-CREATED": "共有可能なリンクが作成されました",
+    "PUBLIC-CONTENT": "このコンテンツは、このリンクがあれば、誰にでも公開されます",
+    "LINK-WITH-EXPIRY-SETTINGS": "有効期限を設定した新しいリンクが作成されました",
     "EXPIRES": "有効期限",
+    "LINK-EXPIRY-DATE": "リンク有効期限",
     "EXPIRATION-LABEL": "有効期限",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
     "CLOSE": "閉じる",
     "COPY_BUTTON_LABEL": "リンクのコピー",

@@ -515,7 +515,7 @@
       "CONTENT_SERVICE_HOST": "URL til Alfresco Content Services: {{ value }}",
       "PROCESS_SERVICE_HOST": "URL til Alfresco Process Services: {{ value }}"
     },
-    "REPOSITORY": "Oppbevaringsste",
+    "REPOSITORY": "Datalager",
     "VERSIONS": {
       "TITLE": "Produktversjoner",
       "CONTENT_SERVICE": "Content Services",

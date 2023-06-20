@@ -297,7 +297,8 @@
         "APPLY": "Bruk",
         "CLEAR-ALL": "Fjern alle",
         "SHOW-MORE": "Vis flere",
-        "SHOW-LESS": "Vis mindre"
+        "SHOW-LESS": "Vis mindre",
+        "ADD_OPTION": "Legg til alternativ..."
       },
       "BUTTONS": {
         "CLOSE": "Lukk",
@@ -331,7 +332,8 @@
         "BEYOND-MAX-DATETIME": "Dato/klokkeslett overgår maksimum dato/klokkeslett."
       },
       "ARIA-LABEL": {
-        "SEARCH_FILTER": "Søkefilter-liste"
+        "SEARCH_FILTER": "Søkefilter-liste",
+        "OPTIONS-SELECTION": "Valg av alternativer"
       },
       "ANY": "Enhver"
     },
@@ -456,8 +458,14 @@
     "DIALOG-TITLE": "Del",
     "DESCRIPTION": "Klikk på koblingen nedenfor for å kopiere den til utklippstavlen.",
     "TITLE": "Kobling som skal deles",
+    "SHARE-LINK": "Dele lenke",
+    "SHARABLE-LINK-CREATED": "Delbar lenke er opprettet",
+    "PUBLIC-CONTENT": "Dette innholdet er offentlig tilgjengelig for alle med denne lenken",
+    "LINK-WITH-EXPIRY-SETTINGS": "Ny lenke er opprettet med utløpsinnstillinger",
     "EXPIRES": "Utløper den",
+    "LINK-EXPIRY-DATE": "Utløpsdato for lenke",
     "EXPIRATION-LABEL": "Utløpsdato",
+    "EXPIRATION-PLACEHOLDER": "DD/MM/ÅÅÅÅ",
     "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
     "CLOSE": "Lukk",
     "COPY_BUTTON_LABEL": "Kopier lenke",
