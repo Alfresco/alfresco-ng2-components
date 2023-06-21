@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-06-13
 ---
 
-# [Search date range advanced component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced/search-date-range-advanced.component.ts "Defined in search-date-range.component.ts")
+# [Search date range advanced component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component.ts "Defined in search-date-range.component.ts")
 
 Represents an advanced date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for the [Search Filter component](search-filter.component.md).
 
