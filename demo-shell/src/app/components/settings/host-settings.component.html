@@ -119,7 +119,7 @@
                                       formControlName="implicitFlow">
                     </mat-slide-toggle>
 
-                    <ng-container *ngIf="supportsCodeFlow">
+                    <ng-container *ngIf="isOAUTH">
                         <label for="codeFlow">{{ 'CORE.HOST_SETTINGS.CODE-FLOW'| translate }}</label>
                         <mat-slide-toggle class="adf-full-width" name="codeFlow" [color]="'primary'"
                                           formControlName="codeFlow">
