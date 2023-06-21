@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,15 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot,  UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { JwtHelperService } from '../services/jwt-helper.service';
+import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from '../../common/services/storage.service';
+import { BasicAlfrescoAuthService } from "../basic-auth/basic-alfresco-auth.service";
+import { OidcAuthenticationService } from "../services/oidc-authentication.service";
 
 @Injectable({
     providedIn: 'root'
@@ -27,8 +33,15 @@ export class AuthGuard extends AuthGuardBase {
 
     ticketChangeBind: any;
 
-    constructor(private jwtHelperService: JwtHelperService) {
-        super();
+    constructor(private jwtHelperService: JwtHelperService,
+                authenticationService: AuthenticationService,
+                basicAlfrescoAuthService: BasicAlfrescoAuthService,
+                oidcAuthenticationService: OidcAuthenticationService,
+                router: Router,
+                appConfigService: AppConfigService,
+                dialog: MatDialog,
+                storageService: StorageService) {
+        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
         this.ticketChangeBind = this.ticketChange.bind(this);
 
         window.addEventListener('storage', this.ticketChangeBind);

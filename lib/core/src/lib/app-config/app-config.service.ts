@@ -25,6 +25,7 @@ import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.int
 import { OauthConfigModel } from '../auth/models/oauth-config.model';
 
 /* spellchecker: disable */
+
 // eslint-disable-next-line no-shadow
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
@@ -73,6 +74,10 @@ export class AppConfigService {
     status: Status = Status.INIT;
     protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
+
+    get isLoaded() {
+        return this.status = Status.LOADED;
+    }
 
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
         this.onLoadSubject = new Subject();
@@ -262,4 +267,5 @@ export class AppConfigService {
 
         return result;
     }
+
 }

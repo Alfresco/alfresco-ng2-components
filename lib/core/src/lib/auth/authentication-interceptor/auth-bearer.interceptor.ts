@@ -16,40 +16,37 @@
  */
 
 import { throwError as observableThrowError, Observable } from 'rxjs';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpHandler, HttpInterceptor, HttpRequest,
   HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
 } from '@angular/common/http';
-import { AuthenticationService } from '../services/authentication.service';
 import { catchError, mergeMap } from 'rxjs/operators';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
-  private excludedUrlsRegex: RegExp[];
+    private _bearerExcludedUrls: readonly string[] = ['resources/', 'assets/', 'auth/realms', 'idp/'];
 
-  constructor(private injector: Injector, private authService: AuthenticationService) { }
+    private excludedUrlsRegex: RegExp[];
+
+  constructor(private authenticationService: AuthenticationService) { }
 
   private loadExcludedUrlsRegex() {
-    const excludedUrls = this.authService.getBearerExcludedUrls();
+    const excludedUrls = this.bearerExcludedUrls;
     this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(`^https?://[^/]+/${urlPattern}`, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
-    this.authService = this.injector.get(AuthenticationService);
-
-    if (!this.authService?.getBearerExcludedUrls()) {
-      return next.handle(req);
-    }
 
     if (!this.excludedUrlsRegex) {
       this.loadExcludedUrlsRegex();
     }
 
-    const urlRequest = req.url;
-    const shallPass: boolean = this.excludedUrlsRegex.some((regex) => regex.test(urlRequest));
+    const requestUrl = req.url;
+    const shallPass: boolean = this.excludedUrlsRegex.some((regex) => regex.test(requestUrl));
     if (shallPass) {
       return next.handle(req)
         .pipe(
@@ -57,7 +54,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
         );
     }
 
-    return this.authService.addTokenToHeader(req.headers)
+    return this.authenticationService.addTokenToHeader(requestUrl, req.headers)
       .pipe(
         mergeMap((headersWithBearer) => {
           const headerWithContentType = this.appendJsonContentType(headersWithBearer);
@@ -85,5 +82,9 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
     return headers;
   }
+
+    protected get bearerExcludedUrls(): readonly string[] {
+        return this._bearerExcludedUrls;
+    }
 
 }

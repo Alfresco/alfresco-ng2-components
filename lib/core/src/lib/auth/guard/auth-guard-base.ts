@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,32 @@
 
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import {
+    AppConfigService,
+    AppConfigValues
+} from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { Observable } from 'rxjs';
-import { inject } from '@angular/core';
+import { BasicAlfrescoAuthService } from "../basic-auth/basic-alfresco-auth.service";
+import { OidcAuthenticationService } from "../services/oidc-authentication.service";
 
 export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
-    protected authenticationService = inject(AuthenticationService);
-    protected router = inject(Router);
-    protected appConfigService = inject(AppConfigService);
-    protected dialog = inject(MatDialog);
-    private storageService = inject(StorageService);
 
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
+    }
+
+    constructor(
+        protected authenticationService: AuthenticationService,
+        protected basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        protected oidcAuthenticationService: OidcAuthenticationService,
+        protected router: Router,
+        protected appConfigService: AppConfigService,
+        protected dialog: MatDialog,
+        private storageService: StorageService
+    ) {
     }
 
     abstract checkLogin(
@@ -78,15 +88,17 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
-            this.authenticationService.setRedirect({
+            this.basicAlfrescoAuthService.setRedirect({
                 provider: this.getProvider(),
                 url
             });
 
             urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
             return this.navigate(urlToRedirect);
-        } else if (this.getOauthConfig().silentLogin && !this.authenticationService.isPublicUrl()) {
-            this.authenticationService.ssoImplicitLogin();
+       } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
+            if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
+                this.oidcAuthenticationService.ssoImplicitLogin();
+            }
         } else {
             return this.navigate(urlToRedirect);
         }
@@ -101,7 +113,13 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected getOauthConfig(): OauthConfigModel {
-        return this.appConfigService.oauth2;
+        return (
+            this.appConfigService &&
+            this.appConfigService.get<OauthConfigModel>(
+                AppConfigValues.OAUTHCONFIG,
+                null
+            )
+        );
     }
 
     protected getLoginRoute(): string {
@@ -113,12 +131,21 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected isOAuthWithoutSilentLogin(): boolean {
-        const oauth = this.appConfigService.oauth2;
-        return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+        return (
+            this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin
+        );
     }
 
     protected isSilentLogin(): boolean {
-        const oauth = this.appConfigService.oauth2;
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 }

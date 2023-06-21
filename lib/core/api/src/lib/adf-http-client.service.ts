@@ -42,7 +42,9 @@ import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encod
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
-import ee, { Emitter } from 'event-emitter';
+import { AppConfigService, AppConfigValues } from '../../../src/lib/app-config/app-config.service';
+import ee from 'event-emitter';
+import { Emitter } from 'event-emitter';
 
 export interface Emitters {
     readonly eventEmitter: Emitter;
@@ -59,15 +61,6 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     once: ee.EmitterMethod;
     emit: (type: string, ...args: any[]) => void;
 
-    private _disableCsrf = false;
-
-    private defaultSecurityOptions = {
-        withCredentials: true,
-        isBpmRequest: false,
-        authentications: {},
-        defaultHeaders: {}
-    };
-
     get disableCsrf(): boolean {
         return this._disableCsrf;
     }
@@ -75,9 +68,15 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     set disableCsrf(disableCsrf: boolean) {
         this._disableCsrf = disableCsrf;
     }
+    
+    private defaultSecurityOptions = {
+        withCredentials: true,
+        isBpmRequest: false,
+        authentications: {},
+        defaultHeaders: {}
+    };
 
-    constructor(private httpClient: HttpClient
-        ) {
+    constructor(private httpClient: HttpClient, private appConfig: AppConfigService) {
         ee(this);
     }
 
@@ -241,7 +240,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             takeUntil(abort$)
         ).toPromise();
 
-        (promise as any).abort = function() {
+        (promise as any).abort = function () {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
@@ -275,7 +274,9 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             ...((options.contentType) && {'Content-Type': options.contentType})
         };
 
-        if (!this.disableCsrf) {
+        const disableCsrf = this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
+
+        if (!disableCsrf) {
             this.setCsrfToken(optionsHeaders);
 
         }
@@ -295,8 +296,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private createCSRFToken(a?: any): string {
-        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
-        return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
+        return a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
     private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {

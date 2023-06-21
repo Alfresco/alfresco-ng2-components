@@ -26,7 +26,7 @@ export class ObjectUtils {
      */
     static getValue(target: any, key: string): any {
 
-        if (!target) {
+        if (!target || !key) {
             return undefined;
         }
 

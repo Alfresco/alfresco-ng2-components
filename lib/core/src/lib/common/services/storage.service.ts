@@ -81,7 +81,7 @@ export class StorageService {
      */
     removeItem(key: string) {
         if (this.useLocalStorage) {
-            localStorage.removeItem(this.prefix + key);
+            localStorage.removeItem(`${this.prefix}` + key);
         } else {
             delete this.memoryStore[this.prefix + key];
         }
