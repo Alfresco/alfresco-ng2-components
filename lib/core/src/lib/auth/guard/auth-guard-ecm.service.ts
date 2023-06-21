@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,32 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, UrlTree } from '@angular/router';
+import {
+    ActivatedRouteSnapshot, Router, UrlTree
+} from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
+import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
+import { MatDialog } from '@angular/material/dialog';
+import { StorageService } from '../../common/services/storage.service';
+import { BasicAlfrescoAuthService } from "../basic-auth/basic-alfresco-auth.service";
+import { OidcAuthenticationService } from "../services/oidc-authentication.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuardEcm extends AuthGuardBase {
+
+    constructor(authenticationService: AuthenticationService,
+                basicAlfrescoAuthService: BasicAlfrescoAuthService,
+                oidcAuthenticationService: OidcAuthenticationService,
+                router: Router,
+                appConfigService: AppConfigService,
+                dialog: MatDialog,
+                storageService: StorageService) {
+        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
+    }
+
     async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
         if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
