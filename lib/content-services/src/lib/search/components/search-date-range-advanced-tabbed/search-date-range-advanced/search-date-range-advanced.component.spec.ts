@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.component';
 import { endOfDay, formatISO, startOfDay } from 'date-fns';
 

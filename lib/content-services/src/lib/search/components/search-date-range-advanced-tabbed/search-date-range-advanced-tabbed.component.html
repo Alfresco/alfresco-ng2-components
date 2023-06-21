@@ -1,0 +1,22 @@
+<adf-search-filter-tabbed
+    [settings]="settings"
+    (fieldsChanged)="fields = $event"
+    (displayedLabelsByFieldTranslated)="displayedLabelsByField = $event"
+    [queries]="queries"
+    (queriesCombined)="combinedQuery = $event"
+    [valuesToDisplay]="valuesToDisplay"
+    (valuesToDisplayCombined)="combinedValuesToDisplay = $event">
+    <ng-container *ngFor="let field of fields">
+        <adf-search-date-range-advanced
+            *adf-search-filter-tab="displayedLabelsByField[field]"
+            (updatedDisplayValue)="onDisplayValueUpdate($event, field)"
+            (updatedQuery)="onQueryUpdate($event, field)"
+            [dateFormat]="settings.dateFormat"
+            [maxDate]="settings.maxDate"
+            [field]="field"
+            [initialValue]="startValue"
+            (changed)="getCurrentValue()[field] = $event"
+            (valid)="tabsValidity[field] = $event">
+        </adf-search-date-range-advanced>
+    </ng-container>
+</adf-search-filter-tabbed>

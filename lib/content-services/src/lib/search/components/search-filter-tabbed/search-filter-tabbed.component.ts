@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { SearchWidget } from '../../models/search-widget.interface';
+import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, ViewEncapsulation } from '@angular/core';
+import { SearchFilterTabDirective } from './search-filter-tab.directive';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
-import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'adf-search-filter-tabbed',
@@ -29,92 +26,46 @@ import { SearchWidgetContainerComponent } from '../search-widget-container/searc
   styleUrls: ['./search-filter-tabbed.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterTabbedComponent implements SearchWidget, OnInit, AfterViewInit, OnDestroy {
-    context?: SearchQueryBuilderService;
-    displayValue$: Subject<string> = new Subject<string>();
-    id: string;
-    isActive: boolean;
-    settings?: SearchWidgetSettings;
-    startValue: any;
-    displayLabelMap: Map<string, string> = new Map<string, string>();
-
-    @ViewChildren(SearchWidgetContainerComponent)
-    widgetContainerComponentList: QueryList<SearchWidgetContainerComponent>;
-
-    private onDestroy$ = new Subject<void>();
-
-    constructor() {
+export class SearchFilterTabbedComponent {
+    @Input()
+    set settings(settings: SearchWidgetSettings) {
+        this.fieldsChanged.emit(settings?.field.split(','));
+        this.displayedLabelsByField = Object.entries<string>(settings.displayedLabelsByField)
+            .reduce((displayLabelsByField, displayLabelAndField) => ({
+                [displayLabelAndField[0]]: this.translateService.instant(displayLabelAndField[1]),
+                ...displayLabelsByField
+            }), {});
+        this.displayedLabelsByFieldTranslated.emit(this.displayedLabelsByField);
     }
 
-    ngOnInit(): void {
-        if(this.startValue) {
-            this.setValue(this.startValue);
-        }
+    @Input()
+    set queries(queries: { [key: string]: string }) {
+        this.queriesCombined.emit(Object.values(queries)
+            .reduce((wholeQuery, query) => wholeQuery ? `${wholeQuery} AND ${query}` : query, ''));
     }
 
-    ngAfterViewInit(): void {
-        this.widgetContainerComponentList.forEach(widgetContainer => {
-            const displayLabelSubject: Subject<string> = widgetContainer.componentRef.instance.displayValue$;
-            displayLabelSubject.asObservable().pipe(takeUntil(this.onDestroy$)).subscribe(label => {
-                this.displayLabelMap.set(widgetContainer.id, label);
-                this.updateDisplayLabel();
-            });
-        })
+    @Input()
+    set valuesToDisplay(valuesToDisplay: { [key: string]: string }) {
+        this.valuesToDisplayCombined.emit(Object.values(valuesToDisplay).every((value) => !value) ?
+            '' : Object.entries(valuesToDisplay).reduce((wholeValueToDisplay, valueToDisplayByField) =>
+                wholeValueToDisplay ?
+                    `${wholeValueToDisplay} ${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`
+                    : `${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`, ''));
     }
 
-    ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-    }
+    @Output()
+    fieldsChanged = new EventEmitter<string[]>();
+    @Output()
+    displayedLabelsByFieldTranslated = new EventEmitter<{ [key: string]: string }>();
+    @Output()
+    queriesCombined = new EventEmitter<string>();
+    @Output()
+    valuesToDisplayCombined = new EventEmitter<string>();
 
-    updateDisplayLabel() {
-        let displayLabel = '';
-        this.settings.tabs.forEach(tab => {
-            if(this.displayLabelMap.get(tab.id)) {
-                if(displayLabel !== '') {
-                    if (this.settings.displayLabelSeparator) {
-                        displayLabel +=`${this.settings.displayLabelSeparator} `;
-                    }
-                }
-                let tabDisplayLabel: string = ' ';
-                if (tab.tabDisplayLabel) {
-                    tabDisplayLabel = tab.tabDisplayLabel;
-                }
-                displayLabel += ` ${tabDisplayLabel} ${this.displayLabelMap.get(tab.id)}`;
-            }
-        });
-        this.displayValue$.next(displayLabel);
-    }
+    @ContentChildren(SearchFilterTabDirective)
+    tabsContents: QueryList<SearchFilterTabDirective>;
 
-    getCurrentValue(): any {
-        return this.widgetContainerComponentList.reduce((value, widgetContainer) => {
-            value[widgetContainer.id] = widgetContainer.getCurrentValue();
-            return value;
-        }, {});
-    }
+    private displayedLabelsByField: { [key: string]: string };
 
-    hasValidValue(): boolean {
-        return !this.widgetContainerComponentList.find(widgetContainer => !widgetContainer.hasValueSelected());
-    }
-
-    reset(): void {
-        this.widgetContainerComponentList.forEach(widgetContainer => {
-            widgetContainer.resetInnerWidget();
-        });
-    }
-
-    setValue(value: any) {
-        this.isActive = true;
-        this.widgetContainerComponentList.forEach(widgetContainer => {
-            let widgetValue = value[widgetContainer.id];
-            widgetContainer.setValue(widgetValue);
-        });
-    }
-
-    submitValues(): void {
-        this.widgetContainerComponentList.forEach(widgetContainer => widgetContainer.applyInnerWidget());
-        if (this.id && this.context) {
-            this.context.update();
-        }
-    }
+    constructor(private translateService: TranslateService) {}
 }

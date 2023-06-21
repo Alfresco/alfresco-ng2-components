@@ -1,19 +1,5 @@
 <mat-tab-group>
-    <mat-tab *ngFor="let tab of settings.tabs" [label]="tab.name">
-        <adf-search-widget-container [id]="tab.id"
-                                     [disableUpdateOnSubmit]="true"
-                                     [value]="tab.component.value"
-                                     [selector]="tab.component.selector"
-                                     [settings]="tab.component.settings">
-        </adf-search-widget-container>
+    <mat-tab *ngFor="let tabContent of tabsContents" [label]="tabContent.name">
+        <ng-container *ngTemplateOutlet="tabContent.templateRef"></ng-container>
     </mat-tab>
 </mat-tab-group>
-
-<div class="adf-facet-buttons adf-facet-buttons--topSpace" *ngIf="!settings?.hideDefaultAction">
-    <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="tab-clear-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-    </button>
-    <button mat-button color="primary" (click)="submitValues()" data-automation-id="tab-apply-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-    </button>
-</div>
