@@ -151,6 +151,27 @@ export const mockDefaultResponse = {
     ]
 };
 
+export const mockCountriesResponse = {
+    countries: [
+        {
+            id: 'PL',
+            name: 'Poland'
+        },
+        {
+            id: 'UK',
+            name: 'United Kingdom'
+        },
+        {
+            id: 'GR',
+            name: 'Greece'
+        }
+    ]
+};
+
+export const mockFormVariableWithJson = [
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'json-form-variable' })
+];
+
 export const mockVariablesWithJson = [
     new TaskVariableCloud({ name: 'json-variable', value: mockPlayersResponse, type: 'json', id: 'json-variable' }),
     new TaskVariableCloud({ name: 'different-variable', value: 'fake-value', type: 'text', id: '2' })

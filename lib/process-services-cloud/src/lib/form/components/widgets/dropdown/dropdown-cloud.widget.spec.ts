@@ -36,6 +36,7 @@ import {
     fakeOptionList,
     filterOptionList,
     mockConditionalEntries,
+    mockFormVariableWithJson,
     mockPlayersResponse,
     mockRestDropdownOptions,
     mockSecondRestDropdownOptions,
@@ -43,6 +44,7 @@ import {
     mockVariablesWithJson
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 
 describe('DropdownCloudWidgetComponent', () => {
 
@@ -901,9 +903,10 @@ describe('DropdownCloudWidgetComponent', () => {
                 variableId: string,
                 optionsPath: string,
                 optionsId: string,
-                optionsLabel: string
+                optionsLabel: string,
+                variables?: TaskVariableCloud[]
             ) => new FormFieldModel(
-            new FormModel({ taskId: 'fake-task-id' }), {
+            new FormModel({ taskId: 'fake-task-id', variables }), {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
                 type: 'dropdown',
@@ -930,7 +933,7 @@ describe('DropdownCloudWidgetComponent', () => {
             logServiceSpy = spyOn(logService, 'error');
         });
 
-        it('should display options persisted from variable', async () => {
+        it('should display options persisted from task variable', async () => {
             spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
             widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName');
             fixture.detectChanges();
@@ -947,6 +950,25 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(optTwo.context.viewValue).toBe('Cristiano Ronaldo');
             expect(optThree.context.value).toBe('player-3');
             expect(optThree.context.viewValue).toBe('Robert Lewandowski');
+        });
+
+        it('should display options persisted from form variable if there are NO task variables', async () => {
+            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
+            widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', mockFormVariableWithJson);
+            fixture.detectChanges();
+            await openSelect('variable-dropdown-id');
+
+            const optOne: any = fixture.debugElement.query(By.css('[id="PL"]'));
+            const optTwo: any = fixture.debugElement.query(By.css('[id="UK"]'));
+            const optThree: any = fixture.debugElement.query(By.css('[id="GR"]'));
+
+            expect(widget.field.options.length).toEqual(3);
+            expect(optOne.context.value).toBe('PL');
+            expect(optOne.context.viewValue).toBe('Poland');
+            expect(optTwo.context.value).toBe('UK');
+            expect(optTwo.context.viewValue).toBe('United Kingdom');
+            expect(optThree.context.value).toBe('GR');
+            expect(optThree.context.viewValue).toBe('Greece');
         });
 
         it('should display default options if config options are NOT provided', async () => {
@@ -995,13 +1017,13 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
         });
 
-        it('should return empty array and display error when form variable is NOT found', () => {
+        it('should return empty array and display error when variable is NOT found', () => {
             spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
             widget.field = getVariableDropdownWidget('wrong-variable-id', 'response.people.players', 'playerId', 'playerFullName');
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`wrong-variable-id not found in ${JSON.stringify(mockVariablesWithJson)}`);
+            expect(logServiceSpy).toHaveBeenCalledWith(`wrong-variable-id not found`);
         });
 
         it('should return empty array and display error on getTaskVariables fetch fail', () => {
@@ -1012,6 +1034,15 @@ describe('DropdownCloudWidgetComponent', () => {
 
             checkDropdownVariableOptionsFailed();
             expect(logServiceSpy).toHaveBeenCalledWith(errorMessage);
+        });
+
+        it('should return empty array and display error if there are NO task and form variables', () => {
+            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
+            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName', []);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith('json-variable not found');
         });
     });
 });

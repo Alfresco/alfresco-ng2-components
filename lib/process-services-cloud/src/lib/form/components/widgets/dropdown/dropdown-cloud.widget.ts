@@ -66,6 +66,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
 
+    private readonly defaultVariableOptionId = 'id';
+    private readonly defaultVariableOptionLabel = 'name';
+    private readonly defaultVariableOptionPath = 'data';
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
@@ -100,24 +104,24 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private persistFieldOptionsFromVariable(): void {
-        const optionsId = this.field?.variableConfig?.optionsId ?? 'id';
-        const optionsLabel = this.field?.variableConfig?.optionsLabel ?? 'name';
-        const optionsPath = this.field?.variableConfig?.optionsPath ?? 'data';
+        const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
         const variableId = this.field?.variableConfig?.variableId;
-        const taskId = this.field.form.taskId;
+
+        const taskId = this.field?.form?.taskId;
+        const formVariables = this.field?.form?.variables;
 
         this.formCloudService.getTaskVariables(this.fetchAppNameFromAppConfig(), taskId)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((formVariables: TaskVariableCloud[]) => {
-                const dropdownOptions: TaskVariableCloud = formVariables.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
+            .subscribe((taskVariables: TaskVariableCloud[]) => {
+                const dropdownOptions = this.getOptionsFromVariable(taskVariables, formVariables, variableId);
 
                 if (dropdownOptions) {
-                    const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath, optionsId, optionsLabel);
+                    const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
                     this.field.options = formVariableOptions;
                     this.resetInvalidValue();
                     this.field.updateForm();
                 } else {
-                    this.handleError(`${variableId} not found in ${JSON.stringify(formVariables)}`);
+                    this.handleError(`${variableId} not found`);
                     this.resetOptions();
                     this.variableOptionsFailed = true;
                 }
@@ -129,7 +133,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             });
     }
 
-    private getOptionsFromPath(data: any, path: string, id: string, label: string): FormFieldOption[] {
+    private getOptionsFromPath(data: any, path: string): FormFieldOption[] {
+        const optionsId = this.field?.variableConfig?.optionsId ?? this.defaultVariableOptionId;
+        const optionsLabel = this.field?.variableConfig?.optionsLabel ?? this.defaultVariableOptionLabel;
+
         const properties = path.split('.');
         const currentProperty = properties.shift();
 
@@ -142,10 +149,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         const nestedData = data[currentProperty];
 
         if (Array.isArray(nestedData)) {
-            return this.getOptionsFromArray(nestedData, id, label);
+            return this.getOptionsFromArray(nestedData, optionsId, optionsLabel);
         }
 
-        return this.getOptionsFromPath(nestedData, properties.join('.'), id, label);
+        return this.getOptionsFromPath(nestedData, properties.join('.'));
     }
 
     private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
@@ -176,6 +183,17 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
 
         return option;
+    }
+
+    private getOptionsFromVariable(taskVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[], variableId: string): TaskVariableCloud {
+        const taskVariableDropdownOptions: TaskVariableCloud = this.getVariableValueById(taskVariables, variableId);
+        const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueById(formVariables, variableId);
+
+        return taskVariableDropdownOptions ?? formVariableDropdownOptions;
+    }
+
+    private getVariableValueById(variables: TaskVariableCloud[], variableId: string): any {
+        return variables?.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
     }
 
     private isVariableOptionType(): boolean {
