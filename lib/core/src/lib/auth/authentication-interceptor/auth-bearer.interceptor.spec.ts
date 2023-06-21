@@ -17,9 +17,10 @@
 
 import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { Observable, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { AuthBearerInterceptor } from './auth-bearer.interceptor';
 import { AuthenticationService } from '../services/authentication.service';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 const mockNext: HttpHandler = {
     handle: () => new Observable(subscriber => {
@@ -40,7 +41,8 @@ describe('AuthBearerInterceptor', () => {
                 HttpClient,
                 HttpHandler,
                 AuthBearerInterceptor,
-                AuthenticationService
+                AuthenticationService,
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY } }
             ]
         });
 
@@ -85,7 +87,7 @@ describe('AuthBearerInterceptor', () => {
     });
 
     it('should interceptor add auth token to every URL if excluded URLs array is empty', () => {
-        spyOn(authService, 'getBearerExcludedUrls').and.returnValue([]);
+        spyOnProperty<any>(interceptor, 'bearerExcludedUrls').and.returnValue([]);
 
         const mockUrls = [
             'http://example.com/auth/realms/testpath',

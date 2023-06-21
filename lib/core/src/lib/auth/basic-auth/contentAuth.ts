@@ -1,0 +1,221 @@
+/*!
+* @license
+* Copyright 2018 Alfresco Software, Ltd.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+import { Injectable } from '@angular/core';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { StorageService } from '../../common/services/storage.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { Authentication } from '../interfaces/authentication.interface';
+
+export interface TicketBody {
+    userId?: string;
+    password?: string;
+}
+
+export interface TicketEntry {
+    entry: {
+        id?: string;
+        userId?: string;
+    };
+}
+
+export const CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ContentAuth {
+
+    onLogin = new ReplaySubject<any>(1);
+    onLogout = new ReplaySubject<any>(1);
+    onError = new Subject<any>();
+
+    ticket: string;
+    config = {
+        ticketEcm: null
+    };
+
+    authentications: Authentication = {
+        basicAuth: {
+            ticket: '',
+        },
+        type: 'basic',
+    };
+
+    get basePath(): string {
+        const contextRootEcm = this.appConfigService.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco';
+        return this.appConfigService.get<string>(AppConfigValues.ECMHOST) + '/' + contextRootEcm + '/api/-default-/public/authentication/versions/1';
+    }
+
+    constructor(private appConfigService: AppConfigService,
+                private adfHttpClient: AdfHttpClient,
+                private storageService: StorageService) {
+        this.appConfigService.onLoad.subscribe(() => {
+            this.setConfig();
+        });
+    }
+
+    private setConfig() {
+        if (this.storageService.getItem(CONTENT_TICKET_STORAGE_LABEL)) {
+            this.setTicket(this.storageService.getItem(CONTENT_TICKET_STORAGE_LABEL));
+        }
+
+    }
+
+    saveUsername(username: string) {
+        this.storageService.setItem('ACS_USERNAME', username);
+    }
+
+    /**
+     * login Alfresco API
+     * @param  username:   // Username to login
+     * @param   password:   // Password to login
+     *
+     * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
+     * */
+    login(username: string, password: string): Promise<any> {
+        this.authentications.basicAuth.username = username;
+        this.authentications.basicAuth.password = password;
+
+        let loginRequest: any = {};
+
+        loginRequest.userId = this.authentications.basicAuth.username;
+        loginRequest.password = this.authentications.basicAuth.password;
+
+        return new Promise((resolve, reject) => {
+            this.createTicket(loginRequest)
+                .then((data: any) => {
+                    this.saveUsername(username);
+                    this.setTicket(data.entry.id);
+                    this.adfHttpClient.emit('success');
+                    this.onLogin.next('success');
+                    resolve(data.entry.id);
+                })
+                .catch((error) => {
+                    this.saveUsername('');
+                    if (error.status === 401) {
+                        this.adfHttpClient.emit('unauthorized');
+                        this.onError.next('unauthorized');
+                    } else if (error.status === 403) {
+                        this.adfHttpClient.emit('forbidden');
+                        this.onError.next('forbidden');
+                    } else {
+                        this.adfHttpClient.emit('error');
+                        this.onError.next('error');
+                    }
+                    reject(error);
+                });
+        });
+    }
+
+    /**
+     * logout Alfresco API
+     *
+     * @returns {Promise} A promise that returns { authentication ticket} if resolved and {error} if rejected.
+     * */
+    logout(): Promise<any> {
+        this.saveUsername('');
+        return new Promise((resolve, reject) => {
+            this.deleteTicket().then(
+                () => {
+                    this.adfHttpClient.emit('logout');
+                    this.onLogout.next('logout');
+                    this.invalidateSession();
+                    resolve('logout');
+                },
+                (error) => {
+                    if (error.status === 401) {
+                        this.adfHttpClient.emit('unauthorized');
+                        this.onError.next('unauthorized');
+                    }
+                    this.adfHttpClient.emit('error');
+                    this.onError.next('error');
+                    reject(error);
+                });
+        });
+    }
+
+    /**
+     * Set the current Ticket
+     * */
+    setTicket(ticket: string) {
+        this.authentications.basicAuth.username = 'ROLE_TICKET';
+        this.authentications.basicAuth.password = ticket;
+        this.config.ticketEcm = ticket;
+        this.storageService.setItem(CONTENT_TICKET_STORAGE_LABEL, ticket);
+        this.ticket = ticket;
+    }
+
+    /**
+     * Get the current Ticket
+     * */
+    getTicket(): string {
+        if(!this.ticket){
+            this.onError.next('error');
+        }
+
+        return this.ticket;
+    }
+
+    invalidateSession() {
+        this.storageService.removeItem(CONTENT_TICKET_STORAGE_LABEL);
+        this.authentications.basicAuth.username = null;
+        this.authentications.basicAuth.password = null;
+        this.config.ticketEcm = null;
+        this.ticket = null;
+    }
+
+    /**
+     * If the client is logged in return true
+     */
+    isLoggedIn(): boolean {
+        return !!this.ticket;
+    }
+
+    /**
+     * return the Authentication
+     * */
+    getAuthentication() {
+        return this.authentications;
+    }
+
+    createTicket(ticketBodyCreate: TicketBody): Promise<TicketEntry> {
+        if (ticketBodyCreate === null || ticketBodyCreate === undefined) {
+            this.onError.next((`Missing param ticketBodyCreate`));
+
+            throw new Error(`Missing param '${name}'`);
+        }
+
+        return this.adfHttpClient.post(this.basePath + '/tickets', {bodyParam: ticketBodyCreate});
+    }
+
+    /**
+     * Delete ticket (logout)
+     *
+     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
+
+     Deletes logged in ticket (logout).
+
+     *
+     * @return Promise<{}>
+     */
+    deleteTicket(): Promise<any> {
+        return this.adfHttpClient.delete(this.basePath + '/tickets/-me-');
+    }
+
+}
