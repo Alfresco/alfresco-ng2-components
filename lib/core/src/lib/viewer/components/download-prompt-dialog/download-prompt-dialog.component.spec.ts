@@ -17,10 +17,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoreTestingModule, DownloadPromptDialogComponent, DownloadPromptActions } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { DownloadPromptActions } from '../../models/download-prompt.actions';
 
 const mockDialog = {
     close: jasmine.createSpy('close')

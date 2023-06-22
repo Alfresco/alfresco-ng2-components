@@ -21,7 +21,7 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, 
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { AuthenticationService, AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -40,7 +40,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         ecmHost: 'http://fakeUrl.com'
     };
     let element: HTMLInputElement;
-    let authService: AuthenticationService;
+    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let siteService: SitesService;
     let nodeService: NodesApiService;
     let documentListService: DocumentListService;
@@ -66,7 +66,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        authService = fixture.debugElement.injector.get(AuthenticationService);
+        basicAlfrescoAuthService = fixture.debugElement.injector.get(BasicAlfrescoAuthService);
         siteService = fixture.debugElement.injector.get(SitesService);
         nodeService = fixture.debugElement.injector.get(NodesApiService);
         documentListService = fixture.debugElement.injector.get(DocumentListService);
@@ -106,7 +106,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be able to login', (done) => {
-            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
             isLogged = true;
             let loginButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-login"]');
             const usernameInput: HTMLInputElement = element.querySelector('#username');
@@ -173,7 +173,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     describe('login only', () => {
         beforeEach(() => {
-            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket'}));
             spyOn(matDialogRef, 'close').and.callThrough();
             fixture.detectChanges();
             widget.data.loginOnly = true;
@@ -192,7 +192,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             usernameInput.dispatchEvent(new Event('input'));
             passwordInput.dispatchEvent(new Event('input'));
             loginButton.click();
-            authService.onLogin.next('logged In');
+            basicAlfrescoAuthService.onLogin.next('logged In');
             fixture.detectChanges();
             expect(matDialogRef.close).toHaveBeenCalled();
         });

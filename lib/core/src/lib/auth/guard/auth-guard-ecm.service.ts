@@ -24,8 +24,9 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
-import { BasicAlfrescoAuthService } from "../basic-auth/basic-alfresco-auth.service";
-import { OidcAuthenticationService } from "../services/oidc-authentication.service";
+import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../services/oidc-authentication.service';
+
 
 @Injectable({
     providedIn: 'root'

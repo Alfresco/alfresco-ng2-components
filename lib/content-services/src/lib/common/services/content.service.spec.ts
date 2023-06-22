@@ -21,16 +21,11 @@ import { AppConfigService, AuthenticationService, StorageService, CoreTestingMod
 import { Node, PermissionsInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
-declare let jasmine: any;
-
 describe('ContentService', () => {
 
     let contentService: ContentService;
     let authService: AuthenticationService;
     let storage: StorageService;
-    let node: any;
-
-    const nodeId = 'fake-node-id';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,37 +39,11 @@ describe('ContentService', () => {
         storage = TestBed.inject(StorageService);
         storage.clear();
 
-        node = {
-            entry: {
-                id: nodeId
-            }
-        };
-
-        jasmine.Ajax.install();
-
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             provider: 'ECM'
         };
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
-    it('should return a valid content URL', (done) => {
-        authService.login('fake-username', 'fake-password').subscribe(() => {
-            expect(contentService.getContentUrl(node)).toContain('/ecm/alfresco/api/' +
-                '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=fake-post-ticket');
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 201,
-            contentType: 'application/json',
-            responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-        });
     });
 
     describe('AllowableOperations', () => {

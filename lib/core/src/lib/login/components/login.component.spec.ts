@@ -29,6 +29,7 @@ import { of, throwError } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { LogService } from '../../common/services/log.service';
+import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -39,6 +40,7 @@ describe('LoginComponent', () => {
     let userPreferences: UserPreferencesService;
     let appConfigService: AppConfigService;
     let alfrescoApiService: AlfrescoApiService;
+    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
 
     let usernameInput;
     let passwordInput;
@@ -69,6 +71,7 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
+        basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         authService = TestBed.inject(AuthenticationService);
         router = TestBed.inject(Router);
         userPreferences = TestBed.inject(UserPreferencesService);
@@ -111,7 +114,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(authService, 'login').and.returnValue(
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
             of({ type: 'type', ticket: 'ticket' })
         );
         const redirect = '/home';
@@ -161,10 +164,10 @@ describe('LoginComponent', () => {
         appConfigService.config = {};
         appConfigService.config.providers = 'ECM';
 
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        authService.setRedirect({ provider: 'ECM', url: 'some-route' });
+        basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-route' });
 
         spyOn(router, 'navigateByUrl');
 
@@ -174,7 +177,7 @@ describe('LoginComponent', () => {
 
     it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.success.subscribe(() => {
@@ -206,14 +209,14 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed back to the default after a failed login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError('Fake server error'));
             loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -295,12 +298,12 @@ describe('LoginComponent', () => {
         });
 
         it('should be taken into consideration during login attempt', fakeAsync(() => {
-            spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');
 
-            expect(authService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
+            expect(basicAlfrescoAuthService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
         }));
     });
 
@@ -516,7 +519,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return CORS error when server CORS error occurs', (done) => {
-            spyOn(authService, 'login').and.returnValue(throwError({
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError({
                 error: {
                     crossDomain: true,
                     message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
@@ -537,7 +540,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return CSRF error when server CSRF error occurs', fakeAsync(() => {
-            spyOn(authService, 'login')
+            spyOn(basicAlfrescoAuthService, 'login')
                 .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
 
             component.error.subscribe(() => {
@@ -552,7 +555,7 @@ describe('LoginComponent', () => {
         }));
 
         it('should return ECM read-only error when error occurs', fakeAsync(() => {
-            spyOn(authService, 'login')
+            spyOn(basicAlfrescoAuthService, 'login')
                 .and.returnValue(
                 throwError(
                     {
@@ -600,7 +603,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return success event after the login have succeeded', (done) => {
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
         expect(component.isError).toBe(false);
 
@@ -616,7 +619,7 @@ describe('LoginComponent', () => {
    });
 
     it('should emit success event after the login has succeeded and discard password', fakeAsync(() => {
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
         component.success.subscribe((event) => {
             fixture.detectChanges();
@@ -631,7 +634,7 @@ describe('LoginComponent', () => {
     }));
 
     it('should emit error event after the login has failed', fakeAsync(() => {
-        spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError('Fake server error'));
 
         component.error.subscribe((error) => {
             fixture.detectChanges();
