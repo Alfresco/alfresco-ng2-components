@@ -36,7 +36,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from "../../auth/services/oidc-authentication.service";
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
