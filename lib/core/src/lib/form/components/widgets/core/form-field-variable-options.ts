@@ -16,7 +16,7 @@
  */
 
 export interface VariableConfig {
-    variableId: string;
+    variableName: string;
     optionsPath?: string;
     optionsId?: string;
     optionsLabel?: string;

@@ -26,8 +26,7 @@ import {
     setupTestBed,
     FormFieldEvent,
     FormFieldTypes,
-    LogService,
-    AppConfigService
+    LogService
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -41,7 +40,7 @@ import {
     mockRestDropdownOptions,
     mockSecondRestDropdownOptions,
     mockVariablesWithDefaultJson,
-    mockVariablesWithJson
+    mockProcessVariablesWithJson
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
@@ -52,7 +51,6 @@ describe('DropdownCloudWidgetComponent', () => {
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
     let logService: LogService;
-    let appConfigService: AppConfigService;
     let overlayContainer: OverlayContainer;
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
@@ -81,7 +79,6 @@ describe('DropdownCloudWidgetComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
         overlayContainer = TestBed.inject(OverlayContainer);
         logService = TestBed.inject(LogService);
-        appConfigService = TestBed.inject(AppConfigService);
     });
 
     afterEach(() => fixture.destroy());
@@ -900,20 +897,21 @@ describe('DropdownCloudWidgetComponent', () => {
         const errorIcon: string = 'error_outline';
 
         const getVariableDropdownWidget = (
-                variableId: string,
+                variableName: string,
                 optionsPath: string,
                 optionsId: string,
                 optionsLabel: string,
+                processVariables?: TaskVariableCloud[],
                 variables?: TaskVariableCloud[]
             ) => new FormFieldModel(
-            new FormModel({ taskId: 'fake-task-id', variables }), {
+            new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
                 type: 'dropdown',
                 readOnly: 'false',
                 optionType: 'variable',
                 variableConfig: {
-                    variableId,
+                    variableName,
                     optionsPath,
                     optionsId,
                     optionsLabel
@@ -928,14 +926,11 @@ describe('DropdownCloudWidgetComponent', () => {
         };
 
         beforeEach(() => {
-            appConfigService.config = Object.assign(appConfigService.config, { 'alfresco-deployed-apps': [{ name: 'fakeapp' }] });
-
             logServiceSpy = spyOn(logService, 'error');
         });
 
-        it('should display options persisted from task variable', async () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName');
+        it('should display options persisted from process variable', async () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
             await openSelect('variable-dropdown-id');
 
@@ -952,9 +947,8 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(optThree.context.viewValue).toBe('Robert Lewandowski');
         });
 
-        it('should display options persisted from form variable if there are NO task variables', async () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
-            widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', mockFormVariableWithJson);
+        it('should display options persisted from form variable if there are NO process variables', async () => {
+            widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', [], mockFormVariableWithJson);
             fixture.detectChanges();
             await openSelect('variable-dropdown-id');
 
@@ -972,8 +966,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should display default options if config options are NOT provided', async () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithDefaultJson));
-            widget.field = getVariableDropdownWidget('json-default-variable', null, null, null);
+            widget.field = getVariableDropdownWidget('variables.json-default-variable', null, null, null, mockVariablesWithDefaultJson);
             fixture.detectChanges();
             await openSelect('variable-dropdown-id');
 
@@ -991,8 +984,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when path is incorrect', () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName');
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -1000,8 +992,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when id is incorrect', () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'wrongId', 'playerFullName');
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'wrongId', 'playerFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -1009,8 +1000,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when label is incorrect', () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'wrongFullName');
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'wrongFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
@@ -1018,31 +1008,19 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should return empty array and display error when variable is NOT found', () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of(mockVariablesWithJson));
-            widget.field = getVariableDropdownWidget('wrong-variable-id', 'response.people.players', 'playerId', 'playerFullName');
+            widget.field = getVariableDropdownWidget('variables.wrong-variable-id', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(`wrong-variable-id not found`);
+            expect(logServiceSpy).toHaveBeenCalledWith(`variables.wrong-variable-id not found`);
         });
 
-        it('should return empty array and display error on getTaskVariables fetch fail', () => {
-            const errorMessage = 'API error';
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(throwError((errorMessage)));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName');
+        it('should return empty array and display error if there are NO process and form variables', () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', [], []);
             fixture.detectChanges();
 
             checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith(errorMessage);
-        });
-
-        it('should return empty array and display error if there are NO task and form variables', () => {
-            spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
-            widget.field = getVariableDropdownWidget('json-variable', 'response.people.players', 'playerId', 'playerFullName', []);
-            fixture.detectChanges();
-
-            checkDropdownVariableOptionsFailed();
-            expect(logServiceSpy).toHaveBeenCalledWith('json-variable not found');
+            expect(logServiceSpy).toHaveBeenCalledWith('variables.json-variable not found');
         });
     });
 });

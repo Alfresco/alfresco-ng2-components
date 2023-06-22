@@ -169,14 +169,14 @@ export const mockCountriesResponse = {
 };
 
 export const mockFormVariableWithJson = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'json-form-variable' })
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'fake-id-1' })
 ];
 
-export const mockVariablesWithJson = [
-    new TaskVariableCloud({ name: 'json-variable', value: mockPlayersResponse, type: 'json', id: 'json-variable' }),
-    new TaskVariableCloud({ name: 'different-variable', value: 'fake-value', type: 'text', id: '2' })
+export const mockProcessVariablesWithJson = [
+    new TaskVariableCloud({ name: 'variables.json-variable', value: mockPlayersResponse, type: 'json', id: 'fake-id-1' }),
+    new TaskVariableCloud({ name: 'variables.different-variable', value: 'fake-value', type: 'json', id: 'fake-id-2' })
 ];
 
 export const mockVariablesWithDefaultJson = [
-    new TaskVariableCloud({ name: 'json-default-variable', value: mockDefaultResponse, type: 'json', id: 'json-default-variable' })
+    new TaskVariableCloud({ name: 'variables.json-default-variable', value: mockDefaultResponse, type: 'json', id: 'fake-id-1' })
 ];

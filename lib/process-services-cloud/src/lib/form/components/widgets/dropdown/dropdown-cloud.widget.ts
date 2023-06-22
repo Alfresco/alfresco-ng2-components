@@ -105,32 +105,23 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private persistFieldOptionsFromVariable(): void {
         const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
-        const variableId = this.field?.variableConfig?.variableId;
+        const variableName = this.field?.variableConfig?.variableName;
 
-        const taskId = this.field?.form?.taskId;
+        const processVariables = this.field?.form?.processVariables;
         const formVariables = this.field?.form?.variables;
 
-        this.formCloudService.getTaskVariables(this.fetchAppNameFromAppConfig(), taskId)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((taskVariables: TaskVariableCloud[]) => {
-                const dropdownOptions = this.getOptionsFromVariable(taskVariables, formVariables, variableId);
+        const dropdownOptions = this.getOptionsFromVariable(processVariables, formVariables, variableName);
 
-                if (dropdownOptions) {
-                    const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
-                    this.field.options = formVariableOptions;
-                    this.resetInvalidValue();
-                    this.field.updateForm();
-                } else {
-                    this.handleError(`${variableId} not found`);
-                    this.resetOptions();
-                    this.variableOptionsFailed = true;
-                }
-            },
-            (error) => {
-                this.handleError(error);
-                this.resetOptions();
-                this.variableOptionsFailed = true;
-            });
+        if (dropdownOptions) {
+            const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
+            this.field.options = formVariableOptions;
+            this.resetInvalidValue();
+            this.field.updateForm();
+        } else {
+            this.handleError(`${variableName} not found`);
+            this.resetOptions();
+            this.variableOptionsFailed = true;
+        }
     }
 
     private getOptionsFromPath(data: any, path: string): FormFieldOption[] {
@@ -185,23 +176,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return option;
     }
 
-    private getOptionsFromVariable(taskVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[], variableId: string): TaskVariableCloud {
-        const taskVariableDropdownOptions: TaskVariableCloud = this.getVariableValueById(taskVariables, variableId);
-        const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueById(formVariables, variableId);
+    private getOptionsFromVariable(processVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[], variableName: string): TaskVariableCloud {
+        const processVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(processVariables, variableName);
+        const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(formVariables, variableName);
 
-        return taskVariableDropdownOptions ?? formVariableDropdownOptions;
+        return processVariableDropdownOptions ?? formVariableDropdownOptions;
     }
 
-    private getVariableValueById(variables: TaskVariableCloud[], variableId: string): any {
-        return variables?.find((variable: TaskVariableCloud) => variable?.id === variableId)?.value;
+    private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
+        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)?.value;
     }
 
     private isVariableOptionType(): boolean {
         return this.field?.optionType === 'variable';
-    }
-
-    private fetchAppNameFromAppConfig(): string {
-        return this.appConfig.get('alfresco-deployed-apps')[0]?.name;
     }
 
     private persistFieldOptionsFromRestApi() {
