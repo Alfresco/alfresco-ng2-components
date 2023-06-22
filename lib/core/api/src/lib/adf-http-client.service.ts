@@ -43,8 +43,7 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import { AppConfigService, AppConfigValues } from '../../../src/lib/app-config/app-config.service';
-import ee from 'event-emitter';
-import { Emitter } from 'event-emitter';
+import ee, { Emitter } from 'event-emitter';
 
 export interface Emitters {
     readonly eventEmitter: Emitter;
