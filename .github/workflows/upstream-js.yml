@@ -133,7 +133,7 @@ jobs:
             for (( i=0; i<${projectslength}; i++ ));
             do
               echo "Update JS dependencies in adf-${projects[$i]} to: ${PACKAGE_VERSION_JS}"
-              DESTDIR="../../lib/${projects[$i]}"
+              DESTDIR="lib/${projects[$i]}"
               sed "${sedi[@]}" "s/\"@alfresco\/js-api\": \".*\"/\"@alfresco\/js-api\": \">=${PACKAGE_VERSION_JS}\"/g"  ${DESTDIR}/package.json
             done
           }
