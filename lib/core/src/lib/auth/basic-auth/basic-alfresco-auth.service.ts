@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Authentication } from '../interfaces/authentication.interface';
 import { CookieService } from '../../common/services/cookie.service';
-import { ContentAuth } from './contentAuth';
-import { ProcessAuth } from './processAuth';
+import { ContentAuth } from './content-auth';
+import { ProcessAuth } from './process-auth';
 import { map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
@@ -40,9 +40,9 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     authentications: Authentication = {
         basicAuth: {
-            ticket: '',
+            ticket: ''
         },
-        type: 'basic',
+        type: 'basic'
     };
 
     constructor(
@@ -55,22 +55,22 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         super(appConfig, cookie, logService);
 
         this.contentAuth.onLogout.pipe(map((event) => {
-            this.onLogout.next(event)
+            this.onLogout.next(event);
         }));
         this.contentAuth.onLogin.pipe(map((event) => {
-            this.onLogout.next(event)
+            this.onLogout.next(event);
         }));
         this.contentAuth.onError.pipe(map((event) => {
-            this.onLogout.next(event)
+            this.onLogout.next(event);
         }));
         this.processAuth.onLogout.pipe(map((event) => {
-            this.onLogout.next(event)
+            this.onLogout.next(event);
         }));
         this.processAuth.onLogin.pipe(map((event) => {
-            this.onLogin.next(event)
+            this.onLogin.next(event);
         }));
         this.processAuth.onError.pipe(map((event) => {
-            this.onError.next(event)
+            this.onError.next(event);
         }));
     }
 
@@ -100,7 +100,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      * @param  username:   // Username to login
      * @param  password:   // Password to login
      *
-     * @returns {Promise} A promise that returns {new authentication ticket} if resolved and {error} if rejected.
+     * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      * */
     async executeLogin(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
@@ -115,14 +115,12 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
             try {
                 return await this.processAuth.login(username, password);
             } catch (e) {
-                console.log('login BPM error');
             }
 
         } else if (this.isECMProvider()) {
             try {
                 return await this.contentAuth.login(username, password);
             } catch (e) {
-                console.log('login BPM error');
             }
 
         } else if (this.isALLProvider()) {
@@ -187,7 +185,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     }
 
     getToken(): string {
-        return "";
+        return '';
     }
 
     isBpmLoggedIn(): boolean {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         private authStorage: OAuthStorage,
         private oauthService: OAuthService,
         private readonly authConfig: AuthConfigService,
-        private readonly auth: AuthService,
+        private readonly auth: AuthService
     ) {
         super(appConfig, cookie, logService);
     }

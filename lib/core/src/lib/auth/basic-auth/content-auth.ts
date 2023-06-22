@@ -1,19 +1,19 @@
 /*!
-* @license
-* Copyright 2018 Alfresco Software, Ltd.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import { Injectable } from '@angular/core';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
@@ -52,9 +52,9 @@ export class ContentAuth {
 
     authentications: Authentication = {
         basicAuth: {
-            ticket: '',
+            ticket: ''
         },
-        type: 'basic',
+        type: 'basic'
     };
 
     get basePath(): string {
@@ -126,7 +126,7 @@ export class ContentAuth {
     /**
      * logout Alfresco API
      *
-     * @returns {Promise} A promise that returns { authentication ticket} if resolved and {error} if rejected.
+     * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
      * */
     logout(): Promise<any> {
         this.saveUsername('');
@@ -204,16 +204,6 @@ export class ContentAuth {
         return this.adfHttpClient.post(this.basePath + '/tickets', {bodyParam: ticketBodyCreate});
     }
 
-    /**
-     * Delete ticket (logout)
-     *
-     * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-
-     Deletes logged in ticket (logout).
-
-     *
-     * @return Promise<{}>
-     */
     deleteTicket(): Promise<any> {
         return this.adfHttpClient.delete(this.basePath + '/tickets/-me-');
     }
