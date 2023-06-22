@@ -22,7 +22,7 @@ import {
   HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
 } from '@angular/common/http';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { AuthenticationService } from "../services/authentication.service";
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
 export class AuthBearerInterceptor implements HttpInterceptor {
