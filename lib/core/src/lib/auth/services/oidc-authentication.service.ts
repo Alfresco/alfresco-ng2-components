@@ -27,8 +27,8 @@ import { JwtHelperService } from './jwt-helper.service';
 import { LogService } from '../../common/services/log.service';
 import { AuthConfigService } from '../oidc/auth-config.service';
 import { AuthService } from '../oidc/auth.service';
-import { Minimatch } from "minimatch";
-import { HttpHeaders } from "@angular/common/http";
+import { Minimatch } from 'minimatch';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'

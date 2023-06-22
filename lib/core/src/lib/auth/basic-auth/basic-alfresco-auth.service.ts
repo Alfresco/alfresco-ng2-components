@@ -23,10 +23,10 @@ import { ContentAuth } from './contentAuth';
 import { ProcessAuth } from './processAuth';
 import { map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
-import { RedirectionModel } from "../index";
-import { BaseAuthenticationService } from "../services/base-authentication.service";
-import { LogService } from "../../common";
-import { HttpHeaders } from "@angular/common/http";
+import { RedirectionModel } from '../models/redirection.model';
+import { BaseAuthenticationService } from '../services/base-authentication.service';
+import { LogService } from '../../common';
+import { HttpHeaders } from '@angular/common/http';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;

@@ -23,11 +23,16 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../services/oidc-authentication.service'
 
 describe('AuthGuardService BPM', () => {
 
     let authGuard: AuthGuardBpm;
     let authService: AuthenticationService;
+    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
+    let oidcAuthenticationService: OidcAuthenticationService;
+
     let router: Router;
     let appConfigService: AppConfigService;
 
@@ -39,6 +44,7 @@ describe('AuthGuardService BPM', () => {
             ]
         });
         localStorage.clear();
+        basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         authService = TestBed.inject(AuthenticationService);
         authGuard = TestBed.inject(AuthGuardBpm);
         router = TestBed.inject(Router);
@@ -53,8 +59,8 @@ describe('AuthGuardService BPM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
-        spyOn(authService, 'isPublicUrl').and.returnValue(false);
-        spyOn(authService, 'ssoImplicitLogin').and.stub();
+        spyOn(oidcAuthenticationService, 'isPublicUrl').and.returnValue(false);
+        spyOn(oidcAuthenticationService, 'ssoImplicitLogin').and.stub();
 
         appConfigService.config.oauth2 = {
             silentLogin: true,
@@ -69,7 +75,7 @@ describe('AuthGuardService BPM', () => {
         const route = { url: 'abc' } as RouterStateSnapshot;
 
         expect(await authGuard.canActivate(null, route)).toBeFalsy();
-        expect(authService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
+        expect(oidcAuthenticationService.ssoImplicitLogin).toHaveBeenCalledTimes(1);
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
@@ -130,53 +136,53 @@ describe('AuthGuardService BPM', () => {
     });
 
     it('should set redirect url', () => {
-        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
-        expect(authService.setRedirect).toHaveBeenCalledWith({
+        expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM', url: 'some-url'
         });
-        expect(authService.getRedirect()).toEqual('some-url');
+        expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
 
     it('should set redirect navigation commands with query params', () => {
-        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url;q=123' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
-        expect(authService.setRedirect).toHaveBeenCalledWith({
+        expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM', url: 'some-url;q=123'
         });
-        expect(authService.getRedirect()).toEqual('some-url;q=123');
+        expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
 
     it('should set redirect navigation commands with query params', () => {
-        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: '/' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
-        expect(authService.setRedirect).toHaveBeenCalledWith({
+        expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM', url: '/'
         });
-        expect(authService.getRedirect()).toEqual('/');
+        expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
 
     it('should get redirect url from config if there is one configured', () => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
-        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
-        expect(authService.setRedirect).toHaveBeenCalledWith({
+        expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM', url: 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
@@ -187,13 +193,13 @@ describe('AuthGuardService BPM', () => {
 
         spyOn(materialDialog, 'closeAll');
 
-        spyOn(authService, 'setRedirect').and.callThrough();
+        spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
         authGuard.canActivate(null, route);
 
-        expect(authService.setRedirect).toHaveBeenCalledWith({
+        expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM', url: 'some-url'
         });
 
