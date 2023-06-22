@@ -59,6 +59,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     on: ee.EmitterMethod;
     off: ee.EmitterMethod;
     once: ee.EmitterMethod;
+    _disableCsrf: boolean;
+
     emit: (type: string, ...args: any[]) => void;
 
     get disableCsrf(): boolean {
@@ -68,7 +70,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     set disableCsrf(disableCsrf: boolean) {
         this._disableCsrf = disableCsrf;
     }
-    
+
     private defaultSecurityOptions = {
         withCredentials: true,
         isBpmRequest: false,
