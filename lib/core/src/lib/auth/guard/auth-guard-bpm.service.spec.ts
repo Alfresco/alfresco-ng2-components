@@ -24,7 +24,7 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../services/oidc-authentication.service'
+import { OidcAuthenticationService } from '../services/oidc-authentication.service';
 
 describe('AuthGuardService BPM', () => {
 
