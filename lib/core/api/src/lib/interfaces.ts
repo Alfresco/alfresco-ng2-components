@@ -16,8 +16,6 @@
  */
 
 export interface SecurityOptions {
-    // readonly isBpmRequest: boolean;
-    // readonly enableCsrf?: boolean;
     readonly withCredentials?: boolean;
     readonly authentications?: Authentication;
     readonly defaultHeaders?: Record<string, string>;
