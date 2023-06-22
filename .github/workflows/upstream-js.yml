@@ -115,9 +115,27 @@ jobs:
           migrateDependenciesJS() {
             echo "Update JS dependencies to: ${PACKAGE_VERSION_JS}"
             echo "Calling migration JS"
-            npx nx migrate @alfresco/js-api@^${PACKAGE_VERSION_JS}
-            (cd lib/cli && npx nx migrate @alfresco/js-api@^${PACKAGE_VERSION_JS})
+            npx nx migrate @alfresco/js-api@${PACKAGE_VERSION_JS}
             echo "Migration JS done"
+          }
+
+          migrateLibDependenciesJS() {
+            eval projects=( "cli"
+              "core"
+              "content-services"
+              "process-services"
+              "process-services-cloud"
+              "insights"
+              "testing"
+              "extensions" )
+
+            projectslength=${#projects[@]}
+            for (( i=0; i<${projectslength}; i++ ));
+            do
+              echo "Update JS dependencies in adf-${projects[$i]} to: ${PACKAGE_VERSION_JS}"
+              DESTDIR="../../lib/${projects[$i]}"
+              sed "${sedi[@]}" "s/\"@alfresco\/js-api\": \".*\"/\"@alfresco\/js-api\": \">=${PACKAGE_VERSION_JS}\"/g"  ${DESTDIR}/package.json
+            done
           }
 
           regeneratePackageLock() {
@@ -133,6 +151,7 @@ jobs:
 
           if [[ "$IS_JS_AFFECTED" == "true" ]]; then
             migrateDependenciesJS
+            migrateLibDependenciesJS
           fi
 
           regeneratePackageLock
