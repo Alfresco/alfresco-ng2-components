@@ -235,7 +235,12 @@ adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu
 The following command is in charge of Initializing the activiti cloud env with the default apps:
 
 ```bash
-adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword" 
+adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword"
+```
+
+You can also specify the environment ids of the envs where to deploy the app adding the `--envs` option:
+```bash
+adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devopsusername" --devopsPassword "devopspassword" --envs envId1 envId2
 ```
 
 If you want to add a new app the schema needs to be:
