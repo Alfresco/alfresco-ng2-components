@@ -106,7 +106,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private persistFieldOptionsFromVariable(): void {
         const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
         const variableName = this.field?.variableConfig?.variableName;
-
         const processVariables = this.field?.form?.processVariables;
         const formVariables = this.field?.form?.variables;
 
@@ -147,15 +146,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
-        const options: FormFieldOption[] = [];
+        const options = nestedData.map(item => this.createOption(item, id, label));
+        const hasInvalidOption = options.some(option => !option);
 
-        for (const item of nestedData) {
-            const option: FormFieldOption = this.createOption(item, id, label);
-            if (!option) {
-                this.variableOptionsFailed = true;
-                return [];
-            }
-            options.push(option);
+        if (hasInvalidOption) {
+            this.variableOptionsFailed = true;
+            return [];
         }
 
         this.variableOptionsFailed = false;
