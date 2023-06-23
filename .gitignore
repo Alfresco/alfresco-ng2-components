@@ -1,7 +1,6 @@
 /.angular/cache
 *.log
-/node_modules
-!.github/actions/print-affected-libs/dist
+node_modules
 bundles
 workspace.xml
 .idea/
