@@ -1,18 +1,10 @@
 <ng-container>
-  <nav
-    class="adf-breadcrumb"
-    [class.adf-breadcrumb--compact]="compact"
-    [attr.aria-label]="'hy.adf-breadcrumb.breadcrumbs' | translate"
-  >
+  <nav class="adf-breadcrumb" [class.adf-breadcrumb--compact]="compact" [attr.aria-label]="'CORE.BREADCRUMBS.TITLE' | translate" >
     <ol>
       <ng-container *ngFor="let breadcrumbTemplate of _selectedBreadcrumbs; last as last">
-        <li adfBreadcrumbFocus class="adf-breadcrumb__item-wrapper">
+        <li adf-breadcrumb-focus class="adf-breadcrumb__item-wrapper">
           <ng-container *ngTemplateOutlet="breadcrumbTemplate"></ng-container>
-          <div
-            *ngIf="!last"
-            class="adf-breadcrumb__chevron"
-            [class.adf-breadcrumb__chevron-before--compact]="compact"
-          ></div>
+          <div *ngIf="!last" class="adf-breadcrumb__chevron" [class.adf-breadcrumb__chevron-before--compact]="compact" ></div>
         </li>
 
         <li *ngIf="!last && compact === true" class="adf-breadcrumb__show-all-button-wrapper">
@@ -20,17 +12,13 @@
             mat-icon-button
             (click)="_toggleCompact()"
             color="primary"
-            [matTooltip]="'hy.adf-breadcrumb.show-all-breadcrumbs' | translate"
+            [matTooltip]="'CORE.BREADCRUMBS.SHOWALL' | translate"
             matTooltipClass="adf-tooltip"
-            [attr.aria-label]="'hy.adf-breadcrumb.show-all-breadcrumbs' | translate"
+            [attr.aria-label]="'CORE.BREADCRUMBS.SHOWALL' | translate"
           >
-            <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate">more_vert</mat-icon
-            >
+            <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate">more_vert</mat-icon >
           </button>
-          <div
-            class="adf-breadcrumb__chevron"
-            [class.adf-breadcrumb__chevron-after--compact]="compact"
-          ></div>
+          <div class="adf-breadcrumb__chevron" [class.adf-breadcrumb__chevron-after--compact]="compact" ></div>
         </li>
       </ng-container>
     </ol>

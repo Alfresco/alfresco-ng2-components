@@ -1,40 +1,43 @@
-import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChildren,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    QueryList,
-    SimpleChanges,
-    TemplateRef,
-    ViewChildren,
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { map, startWith } from "rxjs/operators";
-import { TranslateModule } from "@ngx-translate/core";
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import { BreadcrumbFocusDirective } from "../../directives/breadcrumb-focus.directive";
-import { BreadcrumbItemComponent } from "../breadcrumb-item/breadcrumb-item.component";
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef, ViewChildren } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { map, startWith } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { BreadcrumbFocusDirective } from '../../directives/breadcrumb-focus.directive';
+import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.component';
 
 @Component({
     standalone: true,
-    selector: "adf-breadcrumb",
-    templateUrl: "./breadcrumb.component.html",
-    styleUrls: ["./breadcrumb.component.scss"],
+    selector: 'adf-breadcrumb',
+    templateUrl: './breadcrumb.component.html',
+    styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         CommonModule,
         MatIconModule,
         TranslateModule,
         MatButtonModule,
-        MatTooltipModule,
+        MatTooltipModule
     ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
@@ -98,6 +101,6 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     ) {
         return breadcrumbItems
             .toArray()
-            .map((breadcrumbItem) => breadcrumbItem._templateRef);
+            .map((breadcrumbItem) => breadcrumbItem.templateRef);
     }
 }

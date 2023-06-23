@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-@mixin theme($theme) {
+@mixin adf-breadcrumb-theme($theme) {
     $config: mat.get-color-config($theme);
     $foreground-palette: map.get($config, foreground);
     $primary-palette: map.get($config, primary);
@@ -18,11 +18,5 @@
 
     .adf-breadcrumb .adf-breadcrumb__item-wrapper:last-child a:hover {
         text-decoration: none;
-    }
-}
-
-@mixin typography($config) {
-    .adf-breadcrumb__item-wrapper {
-        @include mat.typograpadf-level($config, button);
     }
 }
