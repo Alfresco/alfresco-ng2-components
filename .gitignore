@@ -1,13 +1,14 @@
 /.angular/cache
 *.log
 /node_modules
+!.github/actions/print-affected-libs/dist
 bundles
 workspace.xml
 .idea/
 *.iml
 .env.*
 .env
-/dist/
+/dist
 e2e/.env.cloud
 tmp
 temp
