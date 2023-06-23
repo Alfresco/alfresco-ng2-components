@@ -1,6 +1,6 @@
 /.angular/cache
 *.log
-node_modules
+/node_modules
 bundles
 workspace.xml
 .idea/
