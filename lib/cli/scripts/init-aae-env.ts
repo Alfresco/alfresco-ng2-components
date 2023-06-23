@@ -400,7 +400,10 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
         environmentId: envId
     };
 
-    deploy(deployPayload);
+    logger.info(`Deploying ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : '' }`);
+    await deploy(deployPayload);
+    logger.info(`Deployed ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : '' }`);
+
 }
 
 async function checkDescriptorExist(name: string) {
