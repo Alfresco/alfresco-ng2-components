@@ -44,7 +44,7 @@ export class HighlightTransformService {
             pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
 
             const regex = new RegExp(pattern, 'gi');
-            result = text.replace(/<[^>]+>/g, '').replace(regex, (match) => {
+            result = text.replace(/<[^>]*>*/g, '').replace(regex, (match) => {
                 isMatching = true;
                 return `<span class="${wrapperClass}">${match}</span>`;
             });
