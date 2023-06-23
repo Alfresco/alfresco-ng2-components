@@ -207,6 +207,16 @@ jobs:
           npx nx run testing:bundle
       - run: npx nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-node-modules-and-artifacts
+      - name: determine affected code
+        id: affected-libs
+        uses: ./.github/actions/print-affected-libs
+        with:
+          base: HEAD~1
+          head: HEAD
+      - name: check values
+        run: |
+          echo ${{ steps.affected-libs.outputs.affected_is_empty }}
+          echo ${{ steps.affected-libs.outputs.affected }}
 
   unit-tests:
     timeout-minutes: 30
