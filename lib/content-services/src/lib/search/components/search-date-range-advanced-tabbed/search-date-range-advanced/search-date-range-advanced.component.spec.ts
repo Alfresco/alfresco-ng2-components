@@ -110,19 +110,22 @@ describe('SearchDateRangeAdvancedComponent', () => {
         expect(component.updatedQuery.emit).toHaveBeenCalledWith(query);
     });
 
-    it('should not set any date filter in context when In the last or Between option is selected, but no value is provided', async () => {
+    it('should not set any date filter in context and set error on field when In the last or Between option is selected, but no value is provided', async () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
         fixture.detectChanges();
         await fixture.whenStable();
         await selectDropdownOption('date-range-advanced-in-last-option-weeks')
         fixture.detectChanges();
         expect(component.updatedQuery.emit).toHaveBeenCalledWith('');
+        expect(component.form.controls.inLastValue.errors['required']).toBe(true);
 
         component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
         expect(component.updatedQuery.emit).toHaveBeenCalledWith('');
+        expect(component.form.controls.betweenStartDate.errors['required']).toBe(true);
+        expect(component.form.controls.betweenEndDate.errors['required']).toBe(true );
     });
 
     it('should set proper date filter in context when Between option is selected', async () => {
