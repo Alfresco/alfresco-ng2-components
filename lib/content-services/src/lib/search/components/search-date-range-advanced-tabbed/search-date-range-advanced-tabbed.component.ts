@@ -168,4 +168,20 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
             }
         });
     }
+
+    onQueriesCombined(query: string) {
+        this.combinedQuery = query;
+    }
+
+    onValuesToDisplayCombined(valuesToDisplay: string) {
+        this.combinedValuesToDisplay = valuesToDisplay;
+    }
+
+    onTabValid(tabValid: boolean, field: string) {
+        this.tabsValidity[field] = tabValid;
+    }
+
+    onDateRangedValueChanged(value: Partial<SearchDateRangeAdvanced>, field: string) {
+        this.value[field] = value;
+    }
 }
