@@ -23,6 +23,7 @@ import {
     Input,
     OnChanges,
     Output,
+    SecurityContext,
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
@@ -30,6 +31,7 @@ import { Observable, Observer } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-comments',
@@ -60,7 +62,7 @@ export class CommentsComponent implements OnChanges {
     private commentObserver: Observer<CommentModel>;
     comment$: Observable<CommentModel>;
 
-    constructor(@Inject(ADF_COMMENTS_SERVICE) private commentsService: CommentsService) {
+    constructor(@Inject(ADF_COMMENTS_SERVICE) private commentsService: CommentsService, private sanitizer: DomSanitizer) {
         this.comment$ = new Observable<CommentModel>((observer) => this.commentObserver = observer)
             .pipe(
                 share()
@@ -112,7 +114,6 @@ export class CommentsComponent implements OnChanges {
         }
 
         const comment: string = this.sanitize(this.message);
-
         this.beingAdded = true;
 
         this.commentsService.add(this.id, comment)
@@ -175,8 +176,9 @@ export class CommentsComponent implements OnChanges {
     }
 
     private sanitize(input: string): string {
-        return input.replace(/<[^>]+>/g, '')
+        return this.sanitizer.sanitize(SecurityContext.HTML, input)
+            .replace(/<[^>]+>/g, '')
             .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
-            .replace(/\r?\n/g, '<br/>');
+            .replace(/\r?\n?&#10;/g, '<br/>');
     }
 }
