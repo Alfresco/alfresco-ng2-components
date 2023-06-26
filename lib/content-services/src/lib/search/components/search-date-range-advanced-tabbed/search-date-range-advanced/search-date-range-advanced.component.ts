@@ -48,7 +48,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     @Input()
     set initialValue(value: SearchDateRangeAdvanced) {
         if (value) {
-            this._form.patchValue(value);
+            this.form.patchValue(value);
         }
     }
 
@@ -61,24 +61,18 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     @Output()
     valid = new EventEmitter<boolean>();
 
-    private _form = this.formBuilder.group<SearchDateRangeAdvanced>({
+    form = this.formBuilder.group<SearchDateRangeAdvanced>({
         dateRangeType: DateRangeType.ANY,
         inLastValueType: InLastDateType.DAYS,
         inLastValue: undefined,
         betweenStartDate: undefined,
         betweenEndDate: undefined
     });
-    private _convertedMaxDate: Date;
+    betweenStartDateFormControl = this.form.controls.betweenStartDate;
+    betweenEndDateFormControl = this.form.controls.betweenEndDate;
+    convertedMaxDate: Date;
     private datePickerFormat: string;
     private destroy$ = new Subject<void>();
-
-    get form(): SearchDateRangeAdvancedComponent['_form'] {
-        return this._form;
-    }
-
-    get convertedMaxDate(): Date {
-        return this._convertedMaxDate;
-    }
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
@@ -87,7 +81,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.datePickerFormat = this.dateFormat ? this.dateFormat : DEFAULT_DATE_DISPLAY_FORMAT;
-        this._convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
+        this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
             parse(this.maxDate, this.datePickerFormat, new Date()) : new Date());
         this.form.controls.dateRangeType.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
@@ -102,16 +96,20 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
 
     private updateValidators(dateRangeType: DateRangeType) {
         if (dateRangeType === DateRangeType.BETWEEN) {
-            this.form.controls.betweenStartDate.setValidators(Validators.required);
-            this.form.controls.betweenEndDate.setValidators(Validators.required);
+            this.betweenStartDateFormControl.setValidators(Validators.required);
+            this.betweenEndDateFormControl.setValidators(Validators.required);
             this.form.controls.inLastValue.clearValidators();
         } else if (dateRangeType === DateRangeType.IN_LAST) {
             this.form.controls.inLastValue.setValidators(Validators.required);
-            this.form.controls.betweenStartDate.clearValidators();
-            this.form.controls.betweenEndDate.clearValidators();
+            this.betweenStartDateFormControl.clearValidators();
+            this.betweenEndDateFormControl.clearValidators();
+        } else if (dateRangeType === DateRangeType.ANY) {
+            this.form.controls.inLastValue.clearValidators();
+            this.betweenStartDateFormControl.clearValidators();
+            this.betweenEndDateFormControl.clearValidators();
         }
-        this.form.controls.betweenStartDate.updateValueAndValidity();
-        this.form.controls.betweenEndDate.updateValueAndValidity();
+        this.betweenStartDateFormControl.updateValueAndValidity();
+        this.betweenEndDateFormControl.updateValueAndValidity();
         this.form.controls.inLastValue.updateValueAndValidity();
     }
 
@@ -142,7 +140,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 displayLabel = `${format(startOfDay(searchDateRangeAdvanced.betweenStartDate), this.datePickerFormat)} - ${format(endOfDay(searchDateRangeAdvanced.betweenEndDate), this.datePickerFormat)}`;
             }
         }
-        this.updatedDisplayValue.next(displayLabel);
+        this.updatedDisplayValue.emit(displayLabel);
     }
 }
 
