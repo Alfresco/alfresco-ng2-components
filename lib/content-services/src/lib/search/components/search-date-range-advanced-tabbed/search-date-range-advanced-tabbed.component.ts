@@ -43,23 +43,11 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     displayedLabelsByField: { [key: string]: string } = {};
     queries: { [key: string]: string } = {};
     valuesToDisplay: { [key: string]: string } = {};
+    tabsValidity: { [key: string]: boolean } = {};
+    combinedQuery: string;
+    combinedValuesToDisplay: string;
 
     private value: { [key: string]: Partial<SearchDateRangeAdvanced> } = {};
-    private _tabsValidity: { [key: string]: boolean } = {};
-    private _combinedQuery: string;
-    private _combinedValuesToDisplay: string;
-
-    get tabsValidity(): { [key: string]: boolean } {
-        return this._tabsValidity;
-    }
-
-    set combinedQuery(query: string) {
-        this._combinedQuery = query;
-    }
-
-    set combinedValuesToDisplay(combinedValuesToDisplay: string) {
-        this._combinedValuesToDisplay = combinedValuesToDisplay;
-    }
 
     getCurrentValue(): { [key: string]: Partial<SearchDateRangeAdvanced> } {
         return this.value;
@@ -85,8 +73,8 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     }
 
     submitValues(): void {
-        this.context.queryFragments[this.id] = this._combinedQuery;
-        this.displayValue$.next(this._combinedValuesToDisplay);
+        this.context.queryFragments[this.id] = this.combinedQuery;
+        this.displayValue$.next(this.combinedValuesToDisplay);
         if (!this.disableUpdateOnSubmit && this.id && this.context) {
             this.context.update();
         }
