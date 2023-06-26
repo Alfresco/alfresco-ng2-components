@@ -176,9 +176,9 @@ export class CommentsComponent implements OnChanges {
     }
 
     private sanitize(input: string): string {
-        return this.sanitizer.sanitize(SecurityContext.HTML, input)
-            .replace(/<[^>]+>/g, '')
+        let string = input.replace(/<[^>]+>/g, '')
             .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
-            .replace(/\r?\n?&#10;/g, '<br/>');
+            .replace(/\r?\n/g, '<br/>');
+        return this.sanitizer.sanitize(SecurityContext.HTML, string);
     }
 }
