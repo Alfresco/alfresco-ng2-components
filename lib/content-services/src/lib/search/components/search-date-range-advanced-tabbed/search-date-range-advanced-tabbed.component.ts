@@ -41,21 +41,13 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     disableUpdateOnSubmit?: boolean;
     fields: string[];
     displayedLabelsByField: { [key: string]: string } = {};
+    queries: { [key: string]: string } = {};
+    valuesToDisplay: { [key: string]: string } = {};
 
-    private _queries: { [key: string]: string } = {};
-    private _valuesToDisplay: { [key: string]: string } = {};
     private value: { [key: string]: Partial<SearchDateRangeAdvanced> } = {};
     private _tabsValidity: { [key: string]: boolean } = {};
     private _combinedQuery: string;
     private _combinedValuesToDisplay: string;
-
-    get queries(): { [key: string]: string } {
-        return this._queries;
-    }
-
-    get valuesToDisplay(): { [key: string]: string } {
-        return this._valuesToDisplay;
-    }
 
     get tabsValidity(): { [key: string]: boolean } {
         return this._tabsValidity;
@@ -78,8 +70,8 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     }
 
     reset(): void {
-        this._queries = {};
-        this._valuesToDisplay = {};
+        this.queries = {};
+        this.valuesToDisplay = {};
         this.startValue = {
             ...this.startValue
         };
@@ -101,15 +93,15 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     }
 
     onDisplayValueUpdate(valueToDisplay: string, field: string) {
-        this._valuesToDisplay = {
+        this.valuesToDisplay = {
             ...this.valuesToDisplay,
             [field]: valueToDisplay
         };
     }
 
     onQueryUpdate(query: string, field: string) {
-        this._queries = {
-            ...this._queries,
+        this.queries = {
+            ...this.queries,
             [field]: query
         };
     }
