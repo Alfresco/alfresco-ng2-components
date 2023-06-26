@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchFilterTabbedComponent } from './search-filter-tabbed.component';
@@ -26,122 +25,73 @@ describe('SearchFilterTabbedComponent', () => {
     let fixture: ComponentFixture<SearchFilterTabbedComponent>;
 
     beforeEach(async () => {
-        TestBed.configureTestingModule({
+        await TestBed.configureTestingModule({
             declarations: [SearchFilterTabbedComponent],
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
             ]
         });
-
         fixture = TestBed.createComponent(SearchFilterTabbedComponent);
         component = fixture.componentInstance;
-        component.id = 'tabbed';
-        component.context = {
-            queryFragments: {
-                field1: '',
-                field2: ''
-            },
-            update: jasmine.createSpy()
-        } as any;
-        component.settings = {
-            field: undefined,
-            hideDefaultAction: true,
-            displayLabelSeparator: ';',
-            tabs: [
-                {
-                    id: 'widget1',
-                    tabDisplayLabel: 'Widget1',
-                    component: {
-                        settings: {
-                            field: 'field1'
-                        }
-                    }
-                },
-                {
-                    id: 'widget2',
-                    tabDisplayLabel: 'Widget2',
-                    component: {
-                        settings: {
-                            field: 'field2'
-                        }
-                    }
-                }
-            ]
+        fixture.detectChanges();
+    });
+
+    it('should emit a single combined query when multiple queries are provided', () => {
+        spyOn(component.queriesCombined, 'emit');
+        component.queries = {
+            testField1: 'test-query-1',
+            testField2: 'test-query-2',
+            testField3: 'test-query-3'
         };
         fixture.detectChanges();
+        expect(component.queriesCombined.emit).toHaveBeenCalledWith('test-query-1 AND test-query-2 AND test-query-3');
     });
 
-    function getButtonByDataAutomationId(buttonDataAutomationId: string) {
-        return fixture.debugElement.query(By.css(`[data-automation-id="${buttonDataAutomationId}"]`)).nativeElement;
-    }
-
-    it('should update displayLabel when inner widgets display label is updated', async () => {
-        spyOn(component.displayValue$, 'next');
-        fixture.detectChanges();
-        component.widgetContainerComponentList.get(0).componentRef.instance.displayValue$.next('test-label-1');
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(component.displayValue$.next).toHaveBeenCalledWith('Widget1 test-label-1');
-
-        component.widgetContainerComponentList.get(1).componentRef.instance.displayValue$.next('test-label-2');
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(component.displayValue$.next).toHaveBeenCalledWith('Widget1 test-label-1; Widget2 test-label-2');
-    });
-
-    it('should call submitValues for inner widgets and update context when apply button is clicked', () => {
-        component.widgetContainerComponentList.forEach(widget => {
-            spyOn(widget, 'applyInnerWidget');
-        });
-        const resetButton = getButtonByDataAutomationId('tab-apply-btn');
-        resetButton.dispatchEvent(new Event('click'));
-        fixture.detectChanges();
-        component.widgetContainerComponentList.forEach(widget => {
-            expect(widget.applyInnerWidget).toHaveBeenCalled();
-        });
-        expect(component.context.update).toHaveBeenCalled();
-    });
-
-    it('should reset inner widgets when clear button is clicked', () => {
-        component.widgetContainerComponentList.forEach(widget => {
-            spyOn(widget, 'resetInnerWidget');
-        });
-        const resetButton = getButtonByDataAutomationId('tab-clear-btn');
-        resetButton.dispatchEvent(new Event('click'));
-        fixture.detectChanges();
-        component.widgetContainerComponentList.forEach(widget => {
-            expect(widget.resetInnerWidget).toHaveBeenCalled();
-        });
-    });
-
-    it('should have valid value when inner widgets have valid values', () => {
-        component.widgetContainerComponentList.forEach(widget => {
-            spyOn(widget, 'hasValueSelected').and.returnValue(true);
-        });
-        expect(component.hasValidValue()).toBe(true);
-    });
-
-    it('should set values on init for inner widgets if initial value is provided', () => {
-        component.widgetContainerComponentList.forEach(widget => {
-            spyOn(widget, 'setValue');
-        });
-        const valueForWidget1 = {
-            testStringValue: 'test value',
-            testNumberValue: 28
+    it ('should emit a single combined value to display when multiple display values are provided', () => {
+       spyOn(component.valuesToDisplayCombined, 'emit');
+        component.settings = {
+            field: 'testField1, testField2, testField3',
+            displayedLabelsByField: {
+                testField1: 'Field 1',
+                testField2: 'Field 2',
+                testField3: 'Field 3'
+            }
         }
-        const valueForWidget2 = {
-            testBooleanValue: false,
-            testStringValue: 'test value'
+        component.valuesToDisplay = {
+           testField1: 'test-display-value-1',
+           testField2: 'test-display-value-2',
+           testField3: 'test-display-value-3'
+       };
+       fixture.detectChanges();
+       expect(component.valuesToDisplayCombined.emit).toHaveBeenCalledWith('FIELD 1: test-display-value-1 FIELD 2: test-display-value-2 FIELD 3: test-display-value-3');
+    });
+
+    it('should emit translated display labels by field when settings are set', () => {
+        spyOn(component.displayedLabelsByFieldTranslated, 'emit');
+        component.settings = {
+            field: 'testField1, testField2, testField3',
+            displayedLabelsByField: {
+                testField1: 'Field 1',
+                testField2: 'Field 2',
+                testField3: 'Field 3'
+            }
         }
-        component.startValue = {
-            widget1: valueForWidget1,
-            widget2: valueForWidget2
+        fixture.detectChanges();
+        const displayedLabelsMap = {
+            testField1: 'Field 1',
+            testField2: 'Field 2',
+            testField3: 'Field 3'
         }
-        component.ngOnInit();
-        component.widgetContainerComponentList.forEach(widget => {
-            const value = component.startValue[widget.id];
-            expect(widget.setValue).toHaveBeenCalledWith(value);
-        });
+        expect(component.displayedLabelsByFieldTranslated.emit).toHaveBeenCalledWith(displayedLabelsMap);
+    });
+
+    it('should emit an array of fields when all the fields are provided in a combined string via settings', () => {
+        spyOn(component.fieldsChanged, 'emit');
+       component.settings = {
+           field: 'testField1, testField2, testField3'
+       };
+       fixture.detectChanges();
+       expect(component.fieldsChanged.emit).toHaveBeenCalledWith(['testField1', 'testField2', 'testField3']);
     });
 });
