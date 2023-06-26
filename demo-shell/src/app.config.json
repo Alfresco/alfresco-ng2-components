@@ -327,42 +327,15 @@
         "name": "Date",
         "enabled": true,
         "component": {
-          "selector": "widget-composite",
+          "selector": "date-range-advanced",
           "settings": {
-            "useWideMenu": true,
-            "displayLabelSeparator": ";",
-            "tabs":[
-              {
-                "id": "createdDateRange",
-                "name": "Created Date",
-                "tabDisplayLabel": "CREATED",
-                "component": {
-                  "selector": "date-range-advanced",
-                  "settings": {
-                    "allowUpdateOnChange": false,
-                    "hideDefaultAction": true,
-                    "field": "cm:created",
-                    "dateFormat": "dd-MMM-yy",
-                    "maxDate": "today"
-                  }
-                }
-              },
-              {
-                "id": "modifiedDateRange",
-                "name": "Modified Date",
-                "tabDisplayLabel": "MODIFIED",
-                "component": {
-                  "selector": "date-range-advanced",
-                  "settings": {
-                    "allowUpdateOnChange": false,
-                    "hideDefaultAction": true,
-                    "field": "cm:modified",
-                    "dateFormat": "dd-MMM-yy",
-                    "maxDate": "today"
-                  }
-                }
-              }
-            ]
+            "dateFormat": "dd-MMM-yy",
+            "maxDate": "today",
+            "field": "cm:created, cm:modified",
+            "displayedLabelsByField": {
+              "cm:created": "Created Date",
+              "cm:modified": "Modified Date"
+            }
           }
         }
       },
