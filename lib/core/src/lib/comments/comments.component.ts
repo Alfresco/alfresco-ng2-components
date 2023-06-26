@@ -114,6 +114,8 @@ export class CommentsComponent implements OnChanges {
         }
 
         const comment: string = this.sanitize(this.message);
+        console.log(comment)
+
         this.beingAdded = true;
 
         this.commentsService.add(this.id, comment)
@@ -176,9 +178,9 @@ export class CommentsComponent implements OnChanges {
     }
 
     private sanitize(input: string): string {
-        let string = input.replace(/<[^>]+>/g, '')
+        return this.sanitizer.sanitize(SecurityContext.HTML, input)
+            .replace(/<[^>]+>/g, '')
             .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
-            .replace(/\r?\n/g, '<br/>');
-        return this.sanitizer.sanitize(SecurityContext.HTML, string);
+            .replace(/\b&#10;/g, '<br/>');
     }
 }
