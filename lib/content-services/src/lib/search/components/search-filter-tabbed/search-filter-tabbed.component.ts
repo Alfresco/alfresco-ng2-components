@@ -29,12 +29,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class SearchFilterTabbedComponent {
     @Input()
     set settings(settings: SearchWidgetSettings) {
-        this.fieldsChanged.emit(settings?.field.split(','));
-        this.displayedLabelsByField = Object.entries<string>(settings.displayedLabelsByField)
+        this.fieldsChanged.emit(settings?.field.split(',').map(field => field.trim()));
+        this.displayedLabelsByField = settings.displayedLabelsByField ? Object.entries<string>(settings.displayedLabelsByField)
             .reduce((displayLabelsByField, displayLabelAndField) => ({
                 [displayLabelAndField[0]]: this.translateService.instant(displayLabelAndField[1]),
                 ...displayLabelsByField
-            }), {});
+            }), {}) : {};
         this.displayedLabelsByFieldTranslated.emit(this.displayedLabelsByField);
     }
 
