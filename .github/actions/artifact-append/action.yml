@@ -24,6 +24,7 @@ runs:
       with:
         name: ${{ inputs.artifact-name }}
     - name: Append content
+      shell: bash
       run: |
         if [ -f "${{ inputs.file-name }}" ]; then
         valueFile=`cat ${{ inputs.file-name }}`  
