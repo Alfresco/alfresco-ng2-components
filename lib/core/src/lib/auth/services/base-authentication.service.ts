@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { PeopleApi, UserProfileApi, UserRepresentation } from '@alfresco/js-api';
+import { PeopleApi, UserProfileApi } from '@alfresco/js-api';
 import { HttpHeaders } from '@angular/common/http';
-import { RedirectionModel } from '../auth/models/redirection.model';
-import { from, Observable, Observer, ReplaySubject, throwError } from 'rxjs';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { CookieService } from '../common/services/cookie.service';
-import { LogService } from '../common/services/log.service';
+import { RedirectionModel } from '../models/redirection.model';
+import { Observable, Observer, ReplaySubject, throwError } from 'rxjs';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { CookieService } from '../../common/services/cookie.service';
+import { LogService } from '../../common/services/log.service';
 import { inject } from '@angular/core';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
@@ -57,14 +57,15 @@ export abstract class BaseAuthenticationService {
     abstract isLoggedIn(): boolean;
     abstract isLoggedInWith(provider: string): boolean;
     abstract isOauth(): boolean;
-    abstract isImplicitFlow(): boolean;
-    abstract isAuthCodeFlow(): boolean;
     abstract login(username: string, password: string, rememberMe?: boolean): Observable<{ type: string; ticket: any }>;
     abstract ssoImplicitLogin(): void;
     abstract logout(): Observable<any>;
     abstract isEcmLoggedIn(): boolean;
     abstract isBpmLoggedIn(): boolean;
+    abstract getEcmUsername(): string;
+    abstract getBpmUsername(): string;
     abstract reset(): void;
+    abstract once(event: string): Observable<any>;
 
     getBearerExcludedUrls(): readonly string[] {
         return this.bearerExcludedUrls;
@@ -124,24 +125,6 @@ export abstract class BaseAuthenticationService {
         }
 
         return header.set('Authorization', ticket);
-    }
-
-    /**
-     * Gets the ECM username.
-     *
-     * @returns The ECM username
-     */
-    getEcmUsername(): string {
-        return this.alfrescoApi.getInstance().getEcmUsername();
-    }
-
-    /**
-     * Gets the BPM username
-     *
-     * @returns The BPM username
-     */
-    getBpmUsername(): string {
-        return this.alfrescoApi.getInstance().getBpmUsername();
     }
 
     isPublicUrl(): boolean {
@@ -204,15 +187,6 @@ export abstract class BaseAuthenticationService {
             return 'Basic ' + btoa(ticket);
         }
         return null;
-    }
-
-    /**
-     * Gets information about the user currently logged into APS.
-     *
-     * @returns User information
-     */
-    getBpmLoggedUser(): Observable<UserRepresentation> {
-        return from(this.profileApi.getProfile());
     }
 
     /**

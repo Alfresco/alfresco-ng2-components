@@ -24,20 +24,15 @@ import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from 
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { fakeEnvironmentList } from '../../common/mock/environment.mock';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('AppsProcessCloudService', () => {
 
     let service: AppsProcessCloudService;
     let appConfigService: AppConfigService;
-    let apiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
 
-    const apiMock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }})
-        },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
-    };
+    const apiMockResponse: any = Promise.resolve({list : { entries: [ {entry: fakeApplicationInstance[0]}, {entry: fakeApplicationInstance[1]}] }});
 
     setupTestBed({
         imports: [
@@ -52,8 +47,8 @@ describe('AppsProcessCloudService', () => {
     });
 
     beforeEach(() => {
-        apiService = TestBed.inject(AlfrescoApiService);
-        spyOn(apiService, 'getInstance').and.returnValue(apiMock);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        spyOn(adfHttpClient, 'request').and.returnValue(apiMockResponse);
 
         service = TestBed.inject(AppsProcessCloudService);
         appConfigService = TestBed.inject(AppConfigService);

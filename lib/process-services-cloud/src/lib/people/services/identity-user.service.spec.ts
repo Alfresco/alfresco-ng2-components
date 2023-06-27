@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, JwtHelperService, setupTestBed } from '@alfresco/adf-core';
+import { JwtHelperService, setupTestBed } from '@alfresco/adf-core';
 import { IdentityUserService } from './identity-user.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -28,16 +28,17 @@ import {
     mockSearchUserByGroupsAndRoles,
     mockSearchUserByGroupsAndRolesAndApp,
     mockSearchUserByRoles,
-    mockSearchUserByRolesAndApp,
-    oAuthMockApiWithError,
-    oAuthMockApiWithIdentityUsers
+    mockSearchUserByRolesAndApp
 } from '../mock/identity-user.service.mock';
 import { mockFoodUsers } from '../mock/people-cloud.mock';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { mockHttpErrorResponse } from '../../group/mock/identity-group.service.mock';
 
 describe('IdentityUserService', () => {
 
     let service: IdentityUserService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -48,7 +49,8 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(IdentityUserService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
+        requestSpy = spyOn(adfHttpClient, 'request');
     });
 
     describe('Current user info (JWT token)', () => {
@@ -85,7 +87,7 @@ describe('IdentityUserService', () => {
     describe('Search', () => {
 
         it('should fetch users', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake').subscribe(
@@ -101,7 +103,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should not fetch users if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError as any);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
@@ -121,7 +123,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users by roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByRoles).subscribe(
@@ -138,7 +140,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should not fetch users by roles if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
             service.search('fake', mockSearchUserByRoles)
                 .subscribe(
@@ -155,7 +157,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users by groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroups).subscribe(
@@ -172,7 +174,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users by roles with groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroupsAndRoles).subscribe(
@@ -190,7 +192,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users by roles with groups and appName', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByGroupsAndRolesAndApp).subscribe(
@@ -209,7 +211,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should not fetch users by groups if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
             service.search('fake', mockSearchUserByGroups)
                 .subscribe(
@@ -226,7 +228,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users within app', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
 
             service.search('fake', mockSearchUserByApp).subscribe(
                 res => {
@@ -241,7 +243,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users within app with roles', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
 
             service.search('fake', mockSearchUserByRolesAndApp).subscribe(
                 res => {
@@ -257,7 +259,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should fetch users within app with groups', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithIdentityUsers(mockFoodUsers));
+            requestSpy.and.returnValue(Promise.resolve(mockFoodUsers));
             const searchSpy = spyOn(service, 'search').and.callThrough();
 
             service.search('fake', mockSearchUserByAppAndGroups).subscribe(
@@ -275,7 +277,7 @@ describe('IdentityUserService', () => {
         });
 
         it('should not fetch users within app if error occurred', (done) => {
-            spyOn(alfrescoApiService, 'getInstance').and.returnValue(oAuthMockApiWithError);
+            requestSpy.and.returnValue(Promise.reject(mockHttpErrorResponse));
 
             service.search('fake', mockSearchUserByApp)
                 .subscribe(

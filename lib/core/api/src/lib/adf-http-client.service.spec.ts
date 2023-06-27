@@ -19,8 +19,8 @@ import { Emitters, RequestOptions, ResultListDataRepresentationTaskRepresentatio
 import { HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiHttpClient } from './alfresco-api.http-client';
-import { AlfrescoApiResponseError } from './alfresco-api.response-error';
+import { AdfHttpClient } from './adf-http-client.service';
+import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 
 const securityOptions: SecurityOptions = {
     authentications: {},
@@ -52,8 +52,8 @@ const mockResponse =  {
     ]
 };
 
-describe('AlfrescoApiHttpClient', () => {
-    let angularHttpClient: AlfrescoApiHttpClient;
+describe('AdfHttpClient', () => {
+    let angularHttpClient: AdfHttpClient;
     let controller: HttpTestingController;
 
     beforeEach(() => {
@@ -62,7 +62,7 @@ describe('AlfrescoApiHttpClient', () => {
                 HttpClientTestingModule
             ]
         });
-        angularHttpClient = TestBed.inject(AlfrescoApiHttpClient);
+        angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);
     });
 
@@ -90,7 +90,7 @@ describe('AlfrescoApiHttpClient', () => {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 expect(res.data![0].created instanceof Date).toBeTruthy();
                 done();
-            });
+            }).catch(error=> fail(error));
 
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
@@ -110,7 +110,7 @@ describe('AlfrescoApiHttpClient', () => {
             angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
                 expect(res).toEqual(mockResponse);
                 done();
-            });
+            }).catch(error=> fail(error));
 
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
@@ -177,7 +177,9 @@ describe('AlfrescoApiHttpClient', () => {
                 returnType: null
             };
 
-            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters);
+            angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters).catch(error =>
+                fail(error)
+            );
             const req = controller.expectOne('http://example.com?autoRename=true&include=allowableOperations');
             expect(req.request.method).toEqual('POST');
 
@@ -232,9 +234,9 @@ describe('AlfrescoApiHttpClient', () => {
 
         const errorResponse = new Blob();
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((res: AlfrescoApiResponseError) => {
-            expect(res.status).toBe(400);
-            expect(res.error.response.body instanceof Blob).toBeTruthy();
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((err: AlfrescoApiResponseError) => {
+            expect(err.status).toBe(400);
+            expect(err.response.body instanceof Blob).toBeTruthy();
             done();
         });
 
@@ -257,7 +259,9 @@ describe('AlfrescoApiHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters);
+        angularHttpClient.request('http://example.com/candidatebaseapp/query/v1/process-instances', options, securityOptions, emitters).catch(error =>
+            fail(error)
+        );
 
         const req = controller.expectOne('http://example.com/candidatebaseapp/query/v1/process-instances?skipCount=0&status=RUNNING&status=SUSPENDED&sort=startDate%2CDESC');
         expect(req.request.method).toEqual('POST');
@@ -274,7 +278,7 @@ describe('AlfrescoApiHttpClient', () => {
         angularHttpClient.request('http://example.com', options, securityOptions, emitters).then((res) => {
             expect(res).toEqual('');
             done();
-        });
+        }).catch(error=> fail(error));
 
         const req = controller.expectOne('http://example.com');
 
@@ -290,7 +294,9 @@ describe('AlfrescoApiHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters);
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
+            fail(error)
+        );
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
@@ -306,7 +312,9 @@ describe('AlfrescoApiHttpClient', () => {
             }
         };
 
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters);
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
+            fail(error)
+        );
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 

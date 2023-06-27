@@ -17,34 +17,20 @@
 
 import { TestBed } from '@angular/core/testing';
 import { UserPreferenceCloudService } from './user-preference-cloud.service';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
-  let alfrescoApiMock: AlfrescoApiService;
-  let getInstanceSpy: jasmine.Spy;
+  let adfHttpClient: AdfHttpClient;
+  let requestSpy: jasmine.Spy;
 
   const errorResponse = {
     error: 'Mock Error',
     state: 404, stateText: 'Not Found'
-  };
-
-  const apiMock = (mockResponse): any => ({
-    oauth2Auth: {
-        callCustomApi: () => Promise.resolve(mockResponse)
-    },
-    isEcmLoggedIn: () => false,
-    reply: jasmine.createSpy('reply')
-  });
-
-  const apiErrorMock: any = {
-    oauth2Auth: {
-      callCustomApi: () => Promise.reject(errorResponse)
-    },
-    isEcmLoggedIn:() => false
   };
 
   setupTestBed({
@@ -56,8 +42,8 @@ describe('PreferenceService', () => {
 
   beforeEach(() => {
     service = TestBed.inject(UserPreferenceCloudService);
-    alfrescoApiMock = TestBed.inject(AlfrescoApiService);
-    getInstanceSpy = spyOn(alfrescoApiMock, 'getInstance').and.returnValue(apiMock(mockPreferences));
+    adfHttpClient = TestBed.inject(AdfHttpClient);
+    requestSpy = spyOn(adfHttpClient, 'request').and.returnValue(Promise.resolve(mockPreferences));
   });
 
   it('should return the preferences', (done) => {
@@ -81,7 +67,7 @@ describe('PreferenceService', () => {
   });
 
   it('Should not fetch preferences if error occurred', (done) => {
-    getInstanceSpy.and.returnValue(apiErrorMock);
+    requestSpy.and.returnValue(Promise.reject(errorResponse));
     service.getPreferences('mock-app-name')
       .subscribe(
         () => fail('expected an error, not preferences'),
@@ -95,7 +81,7 @@ describe('PreferenceService', () => {
   });
 
   it('should return the preference by key', (done) => {
-    getInstanceSpy.and.returnValue(apiMock(getMockPreference));
+    requestSpy.and.returnValue(Promise.resolve(getMockPreference));
     service.getPreferenceByKey('mock-app-name', 'mock-preference-key').subscribe((res: any) => {
       expect(res).toBeDefined();
       expect(res).not.toBeNull();
@@ -109,7 +95,7 @@ describe('PreferenceService', () => {
   });
 
   it('Should not fetch preference by key if error occurred', (done) => {
-    getInstanceSpy.and.returnValue(apiErrorMock);
+    requestSpy.and.returnValue(Promise.reject(errorResponse));
     service.getPreferenceByKey('mock-app-name', 'mock-preference-key')
       .subscribe(
         () => fail('expected an error, not preference'),
@@ -123,7 +109,7 @@ describe('PreferenceService', () => {
   });
 
   it('should create preference', (done) => {
-    getInstanceSpy.and.returnValue(apiMock(createMockPreference));
+    requestSpy.and.returnValue(Promise.resolve(createMockPreference));
     service.createPreference('mock-app-name', 'mock-preference-key', createMockPreference).subscribe((res: any) => {
       expect(res).toBeDefined();
       expect(res).not.toBeNull();
@@ -135,7 +121,7 @@ describe('PreferenceService', () => {
   });
 
   it('Should not create preference if error occurred', (done) => {
-    getInstanceSpy.and.returnValue(apiErrorMock);
+    requestSpy.and.returnValue(Promise.reject(errorResponse));
     service.createPreference('mock-app-name', 'mock-preference-key', createMockPreference)
       .subscribe(
         () => fail('expected an error, not to create preference'),
@@ -149,7 +135,7 @@ describe('PreferenceService', () => {
   });
 
   it('should update preference', (done) => {
-    getInstanceSpy.and.returnValue(apiMock(updateMockPreference));
+    requestSpy.and.returnValue(Promise.resolve(updateMockPreference));
     service.updatePreference('mock-app-name', 'mock-preference-key', updateMockPreference).subscribe((res: any) => {
       expect(res).toBeDefined();
       expect(res).not.toBeNull();
@@ -161,7 +147,7 @@ describe('PreferenceService', () => {
   });
 
   it('Should not update preference if error occurred', (done) => {
-    getInstanceSpy.and.returnValue(apiErrorMock);
+    requestSpy.and.returnValue(Promise.reject(errorResponse));
     service.createPreference('mock-app-name', 'mock-preference-key', updateMockPreference)
       .subscribe(
         () => fail('expected an error, not to update preference'),
@@ -175,7 +161,7 @@ describe('PreferenceService', () => {
   });
 
   it('should delete preference', (done) => {
-    getInstanceSpy.and.returnValue(apiMock(''));
+    requestSpy.and.returnValue(Promise.resolve(''));
     service.deletePreference('mock-app-name', 'mock-preference-key').subscribe((res: any) => {
       expect(res).toBeDefined();
       done();
@@ -183,7 +169,7 @@ describe('PreferenceService', () => {
   });
 
   it('Should not delete preference if error occurred', (done) => {
-    getInstanceSpy.and.returnValue(apiErrorMock);
+    requestSpy.and.returnValue(Promise.reject(errorResponse));
     service.deletePreference('mock-app-name', 'mock-preference-key')
       .subscribe(
         () => fail('expected an error, not to delete preference'),

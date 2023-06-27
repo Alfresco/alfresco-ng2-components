@@ -16,8 +16,6 @@
  */
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
-import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
 
 export const mockSearchGroupByRoles: IdentityGroupFilterInterface = {
@@ -35,23 +33,7 @@ export const mockSearchGroupByApp: IdentityGroupFilterInterface = {
     withinApplication: 'fake-app-name'
 };
 
-export function oAuthMockApiWithIdentityGroups(groups: IdentityGroupModel[]) {
-    return {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve(groups)
-        },
-        reply: jasmine.createSpy('reply')
-    };
-}
-
-const errorResponse = new HttpErrorResponse({
+export const mockHttpErrorResponse = new HttpErrorResponse({
     error: 'Mock Error',
     status: 404, statusText: 'Not Found'
 });
-
-export const oAuthMockApiWithError = {
-    oauth2Auth: {
-        callCustomApi: () => throwError(errorResponse)
-    },
-    reply: jasmine.createSpy('reply')
-};

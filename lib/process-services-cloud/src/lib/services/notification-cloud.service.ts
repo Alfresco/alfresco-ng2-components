@@ -22,7 +22,9 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { BaseCloudService } from './base-cloud.service';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +32,12 @@ import { BaseCloudService } from './base-cloud.service';
 export class NotificationCloudService extends BaseCloudService {
     appsListening = [];
 
-    constructor(public apollo: Apollo, private http: HttpLink) {
-        super();
+    constructor(
+        public apollo: Apollo,
+        private http: HttpLink,
+        private authService: AuthenticationService,
+        protected adfHttpClient: AdfHttpClient) {
+        super(adfHttpClient);
     }
 
     private get webSocketHost() {
@@ -57,7 +63,7 @@ export class NotificationCloudService extends BaseCloudService {
                     connectionParams: {
                         kaInterval: 2000,
                         // eslint-disable-next-line @typescript-eslint/naming-convention
-                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
+                        'X-Authorization': 'Bearer ' + this.authService.getToken()
                     }
                 }
             });
@@ -81,7 +87,7 @@ export class NotificationCloudService extends BaseCloudService {
                                     headers: {
                                         ...oldHeaders,
                                         // eslint-disable-next-line @typescript-eslint/naming-convention
-                                        'X-Authorization': 'Bearer ' + this.apiService.getInstance().oauth2Auth.token
+                                        'X-Authorization': 'Bearer ' + this.authService.getToken()
                                     }
                                 });
                                 forward(operation);

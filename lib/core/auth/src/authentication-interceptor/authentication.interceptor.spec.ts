@@ -48,6 +48,7 @@ describe('AuthenticationInterceptor', () => {
   });
 
   it('should call add auth token method when SHOULD_ADD_AUTH_TOKEN context is set to true', () => {
+    addTokenToHeaderSpy.and.callThrough();
     request.context.set(SHOULD_ADD_AUTH_TOKEN, true);
     interceptor.intercept(request, mockNext);
     expect(addTokenToHeaderSpy).toHaveBeenCalled();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiHttpClient } from '@alfresco/adf-core/api';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { StorageService } from '../common/services/storage.service';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
@@ -23,16 +23,19 @@ import { AppConfigService } from '../app-config';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Injectable()
-export class AlfrescoApiServiceWithAngularBasedHttpClient extends AlfrescoApiService {
+export class AlfrescoApiNoAuthService extends AlfrescoApiService {
     constructor(
         storage: StorageService,
         appConfig: AppConfigService,
-        private readonly alfrescoApiHttpClient: AlfrescoApiHttpClient
+        private readonly adfHttpClient: AdfHttpClient
     ) {
         super(appConfig, storage);
     }
 
     override createInstance(config: AlfrescoApiConfig) {
-        return new AlfrescoApi(config, this.alfrescoApiHttpClient);
+        return new AlfrescoApi({
+            ...config,
+            oauthInit: false
+        }, this.adfHttpClient);
     }
 }

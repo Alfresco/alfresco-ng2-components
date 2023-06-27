@@ -56,8 +56,7 @@ export class AppNotificationsService {
     ) {
         this.alfrescoApiService.alfrescoApiInitialized.subscribe(() => {
             if (this.isProcessServicesEnabled() && this.notificationsEnabled) {
-                this.alfrescoApiService.getInstance().oauth2Auth.once('token_issued', () => {
-
+                this.authenticationService.once('token_received').subscribe(() => {
                     const deployedApps = this.appConfigService.get('alfresco-deployed-apps', []);
                     if (deployedApps?.length) {
                         deployedApps.forEach((app) => {
@@ -69,11 +68,8 @@ export class AppNotificationsService {
                                 });
                         });
                     }
-
                 });
-
             }
-
         });
     }
 

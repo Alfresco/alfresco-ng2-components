@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { AppConfigService, AppConfigValues } from './app-config.service';
-import { StorageService } from '../common/services/storage.service';
-import { AdfHttpClient } from '@alfresco/adf-core/api';
+export interface RequestOptions {
+    httpMethod?: string;
+    queryParams?: any;
+    headerParams?: any;
+    formParams?: any;
+    bodyParam?: any;
+    returnType?: any;
+    responseType?: string;
+    readonly accept?: string;
+    readonly contentType?: string;
+}
 
-export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService, adfHttpClient: AdfHttpClient) {
-    return () => appConfigService.load().then(() => {
-        adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF);
-        storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-    });
+export interface SecurityOptions {
+    readonly isBpmRequest: boolean;
+    readonly enableCsrf?: boolean;
+    readonly withCredentials?: boolean;
+    readonly authentications: any;
+    readonly defaultHeaders: Record<string, string>;
 }

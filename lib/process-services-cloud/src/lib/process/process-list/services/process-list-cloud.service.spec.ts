@@ -16,42 +16,24 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
-    let alfrescoApiService: AlfrescoApiService;
+    let adfHttpClient: AdfHttpClient;
+    let requestSpy: jasmine.Spy;
 
-    const returnCallQueryParameters = (): any => ({
-        oauth2Auth: {
-            callCustomApi: (_queryUrl, _operation, _context, queryParams) => Promise.resolve(queryParams)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnCallQueryParameters = (_queryUrl, options) => Promise.resolve(options.queryParams);
 
-    const returnCallUrl = (): any => ({
-        oauth2Auth: {
-            callCustomApi: (queryUrl) => Promise.resolve(queryUrl)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnCallUrl = (queryUrl) => Promise.resolve(queryUrl);
 
-    const returnCallOperation = (): any => ({
-        oauth2Auth: {
-            callCustomApi: (_queryUrl, operation, _context, _queryParams) => Promise.resolve(operation)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnCallOperation = (_queryUrl, options) => Promise.resolve(options);
 
-    const returnCallBody = (): any => ({
-        oauth2Auth: {
-            callCustomApi: (_queryUrl, _operation, _context, _queryParams, _headerParams, _formParams, bodyParam) => Promise.resolve(bodyParam)
-        },
-        isEcmLoggedIn: () => false
-    });
+    const returnCallBody = (_queryUrl, options) => Promise.resolve(options.bodyParam);
 
     setupTestBed({
         imports: [
@@ -60,13 +42,14 @@ describe('ProcessListCloudService', () => {
     });
 
     beforeEach(fakeAsync(() => {
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ProcessListCloudService);
+        requestSpy = spyOn(adfHttpClient, 'request');
     }));
 
     it('should append to the call all the parameters', (done) => {
         const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+        requestSpy.and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -79,7 +62,7 @@ describe('ProcessListCloudService', () => {
 
     it('should concat the app name to the request url', (done) => {
         const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+        requestSpy.and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
@@ -93,7 +76,7 @@ describe('ProcessListCloudService', () => {
             appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
             sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
         } as ProcessQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+        requestSpy.and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
@@ -104,7 +87,7 @@ describe('ProcessListCloudService', () => {
 
     it('should return an error when app name is not specified', (done) => {
         const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
-        spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+        requestSpy.and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe(
             () => { },
             (error) => {
@@ -118,7 +101,7 @@ describe('ProcessListCloudService', () => {
 
         it('should append to the call all the parameters', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            requestSpy.and.callFake(returnCallQueryParameters);
             const request = await service.getAdminProcessByRequest(processRequest).toPromise();
 
             expect(request).toBeDefined();
@@ -130,7 +113,7 @@ describe('ProcessListCloudService', () => {
 
         it('should concat the app name to the request url', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+            requestSpy.and.callFake(returnCallUrl);
             const requestUrl = await service.getAdminProcessByRequest(processRequest).toPromise();
 
             expect(requestUrl).toBeDefined();
@@ -143,7 +126,7 @@ describe('ProcessListCloudService', () => {
                 appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
                 sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
             } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            requestSpy.and.callFake(returnCallQueryParameters);
             const request = await service.getAdminProcessByRequest(processRequest).toPromise();
 
             expect(request).toBeDefined();
@@ -153,7 +136,7 @@ describe('ProcessListCloudService', () => {
 
         it('should return an error when app name is not specified', async () => {
             const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallUrl);
+            requestSpy.and.callFake(returnCallUrl);
 
             try {
                 await service.getAdminProcessByRequest(processRequest).toPromise();
@@ -166,16 +149,16 @@ describe('ProcessListCloudService', () => {
 
         it('should make post request', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallOperation);
-            const requestMethod = await service.getAdminProcessByRequest(processRequest).toPromise();
-            expect(requestMethod).toBeDefined();
-            expect(requestMethod).not.toBeNull();
-            expect(requestMethod).toBe('POST');
+            requestSpy.and.callFake(returnCallOperation);
+            const adminProcessResponse = await service.getAdminProcessByRequest(processRequest).toPromise();
+            expect(adminProcessResponse).toBeDefined();
+            expect(adminProcessResponse).not.toBeNull();
+            expect(adminProcessResponse.httpMethod).toBe('POST');
         });
 
         it('should not have variable keys as part of query parameters', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallQueryParameters);
+            requestSpy.and.callFake(returnCallQueryParameters);
             const requestParams = await service.getAdminProcessByRequest(processRequest).toPromise();
 
             expect(requestParams).toBeDefined();
@@ -185,7 +168,7 @@ describe('ProcessListCloudService', () => {
 
         it('should send right variable keys as post body', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
-            spyOn(alfrescoApiService, 'getInstance').and.callFake(returnCallBody);
+            requestSpy.and.callFake(returnCallBody);
             const requestBodyParams = await service.getAdminProcessByRequest(processRequest).toPromise();
 
             expect(requestBodyParams).toBeDefined();

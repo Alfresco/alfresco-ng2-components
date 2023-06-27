@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { LogService, InfiniteSelectScrollDirective } from '@alfresco/adf-core';
+import { LogService, InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -81,7 +81,8 @@ export class DropdownSitesComponent implements OnInit {
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
 
-    constructor(private sitesService: SitesService,
+    constructor(private authService: AuthenticationService,
+                private sitesService: SitesService,
                 private logService: LogService,
                 private liveAnnouncer: LiveAnnouncer,
                 private translateService: TranslateService) {
@@ -174,7 +175,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
-        const loggedUserName = this.sitesService.getEcmCurrentLoggedUserName();
+        const loggedUserName = this.authService.getEcmUsername();
         sites.list.entries = sites.list.entries.filter((site) => this.isCurrentUserMember(site, loggedUserName));
         return sites;
     }

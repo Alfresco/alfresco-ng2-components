@@ -45,7 +45,8 @@ export class SitesService {
         return this._sitesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService,
+        private logService: LogService) {
     }
 
     /**
@@ -138,15 +139,6 @@ export class SitesService {
      */
     listSiteMemberships(siteId: string, opts: any): Observable<SiteMemberPaging> {
         return from(this.sitesApi.listSiteMemberships(siteId, opts));
-    }
-
-    /**
-     * Gets the username of the user currently logged into ACS.
-     *
-     * @returns Username string
-     */
-    getEcmCurrentLoggedUserName(): string {
-        return this.apiService.getInstance().getEcmUsername();
     }
 
     /**

@@ -45,7 +45,6 @@ import { BlankPageModule } from './blank-page/blank-page.module';
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
-import { AlfrescoApiService } from './services/alfresco-api.service';
 import { TranslationService } from './translation/translation.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
@@ -54,7 +53,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
 import { DirectionalityConfigService } from './common/services/directionality-config.service';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { AdfHttpClient, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -65,13 +64,6 @@ import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
-import { AlfrescoApiServiceWithAngularBasedHttpClient } from './api-factories/alfresco-api-service-with-angular-based-http-client';
-
-interface Config {
-    readonly useAngularBasedHttpClientInAlfrescoJs: boolean;
-}
-
-const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
 
 @NgModule({
     imports: [
@@ -149,7 +141,7 @@ const defaultConfig: Config = { useAngularBasedHttpClientInAlfrescoJs: false };
     ]
 })
 export class CoreModule {
-    static forRoot(config: Config = defaultConfig): ModuleWithProviders<CoreModule> {
+    static forRoot(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -159,7 +151,7 @@ export class CoreModule {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,
-                    deps: [ AppConfigService, StorageService ], multi: true
+                    deps: [ AppConfigService, StorageService, AdfHttpClient ], multi: true
                 },
                 {
                     provide: APP_INITIALIZER,
@@ -180,11 +172,7 @@ export class CoreModule {
                     useFactory: createAlfrescoApiInstance,
                     deps: [ AlfrescoApiLoaderService ],
                     multi: true
-                },
-                ...(config.useAngularBasedHttpClientInAlfrescoJs
-                    ? [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceWithAngularBasedHttpClient }]
-                    : []
-                )
+                }
             ]
         };
     }

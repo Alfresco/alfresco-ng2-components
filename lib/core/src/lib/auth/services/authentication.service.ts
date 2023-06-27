@@ -21,7 +21,7 @@ import { AppConfigValues } from '../../app-config/app-config.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from './jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
-import { BaseAuthenticationService } from '../../services/base-authentication.service';
+import { BaseAuthenticationService } from './base-authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -152,6 +152,24 @@ export class AuthenticationService extends BaseAuthenticationService {
         return false;
     }
 
+    /**
+     * Gets the ECM username.
+     *
+     * @returns The ECM username
+     */
+    getEcmUsername(): string {
+        return this.alfrescoApi.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Gets the BPM username
+     *
+     * @returns The BPM username
+     */
+    getBpmUsername(): string {
+        return this.alfrescoApi.getInstance().getBpmUsername();
+    }
+
     isImplicitFlow(): boolean {
         return !!this.appConfig.oauth2?.implicitFlow;
     }
@@ -169,5 +187,12 @@ export class AuthenticationService extends BaseAuthenticationService {
         return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
     }
 
-    reset() {}
+    reset() { }
+
+    once(event: string): Observable<any> {
+        const alfrescoApiEvent = event === 'token_received' ? 'token_issued' : event;
+        return new Observable((subscriber) => {
+            this.alfrescoApi.getInstance().oauth2Auth.once(alfrescoApiEvent, () => subscriber.next());
+        });
+    }
 }
