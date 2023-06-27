@@ -18,25 +18,25 @@
     }
 
     &-userinfo-pic {
-        background: var(--adf-theme-primary-300);
+        background: var(--adf-identity-user-info-background);
         display: inline-block;
-        width: 40px;
-        height: 40px;
+        width: var(--adf-identity-user-info-width);
+        height: var(--adf-identity-user-info-height);
         border-radius: 100px;
         text-align: center;
         font-weight: bolder;
-        font-size: var(--theme-adf-picture-1-font-size);
+        font-size: var(--adf-identity-user-info-font-size);
         text-transform: uppercase;
         vertical-align: middle;
-        line-height: 40px;
+        line-height: var(--adf-identity-user-info-line-height);
     }
 
     &-userinfo-profile-image {
-        background: var(--adf-theme-primary-300);
+        background: var(--adf-identity-user-info-background);
         text-align: center;
         border-radius: 90%;
-        width: 40px;
-        height: 40px;
+        width: var(--adf-identity-user-info-width);
+        height: var(--adf-identity-user-info-height);
         margin-right: 0;
         cursor: pointer;
         vertical-align: middle;
@@ -132,7 +132,7 @@
     }
 
     &-userinfo-profile-picture {
-        background: var(--adf-theme-primary-300);
+        background: var(--adf-identity-user-info-background);
         background-size: cover;
         border-radius: 50%;
         height: 80px;
@@ -144,7 +144,7 @@
     &-userinfo-profile-initials {
         text-transform: uppercase;
         background-size: cover;
-        background-color: var(--adf-theme-primary-300);
+        background-color: var(--adf-identity-user-info-background);
         border-radius: 50%;
         height: 80px;
         width: 80px;
