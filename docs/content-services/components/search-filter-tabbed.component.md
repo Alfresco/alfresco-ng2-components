@@ -7,92 +7,56 @@ Last reviewed: 2023-06-13
 
 # [Search filter tabbed component](../../../lib/content-services/src/lib/search/components/search-filter-tabbed/search-filter-tabbed.component.ts "Defined in search-filter-tabbed.component.ts")
 
-Represents a container [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for [Search Filters](search-filter.component.md) to provide a tabbed user interface for the filters. 
+Represents a container [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts)
+for [Search Filters](search-filter.component.md) to provide a tabbed user interface for the filters.
 
 ![Search Filter Tabbed Widget](../../docassets/images/search-filter-tabbed.png)
 
 ## Basic Usage
 
-```json
-{
-    "search": {
-        "categories": [
-            {
-                "id": "createdModifiedDateRange",
-                "name": "Date",
-                "enabled": true,
-                "component": {
-                    "selector": "widget-composite",
-                    "settings": {
-                        "useWideMenu": true,
-                        "displayLabelSeparator": ";",
-                        "tabs":[
-                            {
-                                "id": "createdDateRange",
-                                "name": "Created Date",
-                                "tabDisplayLabel": "CREATED",
-                                "component": {
-                                    "selector": "date-range-advanced",
-                                    "settings": {
-                                        "allowUpdateOnChange": false,
-                                        "hideDefaultAction": true,
-                                        "field": "cm:created",
-                                        "dateFormat": "DD-MMM-YY",
-                                        "maxDate": "today"
-                                    }
-                                }
-                            },
-                            {
-                                "id": "modifiedDateRange",
-                                "name": "Modified Date",
-                                "tabDisplayLabel": "MODIFIED",
-                                "component": {
-                                    "selector": "date-range-advanced",
-                                    "settings": {
-                                        "allowUpdateOnChange": false,
-                                        "hideDefaultAction": true,
-                                        "field": "cm:modified",
-                                        "dateFormat": "DD-MMM-YY",
-                                        "maxDate": "today"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        ]
-    }
-}
+```html
+
+<adf-search-filter-tabbed>
+    <ng-container *ngFor="let field of fields">
+        <my-search-filter *adf-search-filter-tab="MyTabLabel"></my-search-filter>
+    </ng-container>
+</adf-search-filter-tabbed>
 ```
 
-### Settings
+In order to generate a tabbed widget for multiple search filters, you can pass in the search filter widget component as a content child of the adf-search-filter-tabbed component as shown above.
 
-| Name                  | Type                                                                                             | Description                                                                                                                                                        |
-|-----------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| useWideMenu           | boolean                                                                                          | Boolean flag to control whether to use a wider view for the tabbed component or not. This may or may not be required, depending on the widgets used inside the tab |
-| displayLabelSeparator | string                                                                                           | The separator to use to differentiate between the display labels for the different widgets used inside the tab container.                                          |
-| hideDefaultAction     | boolean                                                                                          | Show/hide the widget actions. By default is false.                                                                                  |
-| tabs                  | [SearchWidget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts)[] | Array of search widgets to use inside the tabbed container.                                                                                                        |
+Additionally, you also have to make sure that the search filter being passed as a content child of the adf-search-filter-tabbed component, also has the adf-search-filter-tabbed directive applied on it,
+with the name input property being assigned the value of whatever name should be displayed for that particular tab
 
-#### NOTE: 
-The tabs property inside the settings object, can take an additional property called `tabDisplayLabel`. This property is used to define the display label for the different widgets once their values are selected. 
-It is not a required property, and will be blank by default. Refer [basic usage](#basic-usage) section above for more details.
+## Class Members
 
-## Details
-This component allows grouping of multiple, related search filter widgets together. This can be useful for saving space when multiple filters can have similar values/filtering rules. The e.g. used in the screenshot above groups date related filters for created and modified dates
-together under a single filter widget.
+### Properties
+
+| Name            | Type                                                                                                            | Description                                                                                                                                                                                                   |
+|-----------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| settings        | [SearchWidgetSettings](../../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) | The settings object for the search filter widget. This is mainly used to evaluate the fields and display labels for the different tabs.                                                                       |
+| queries         | { [key: string]: string }                                                                                       | A Javascript object containing all the queries for the different tabs, identified by the fields of the tabs. This is used to generate a single query by combining all the provided queries using their fields |
+| valuesToDisplay | { [key: string]: string }                                                                                       | A Javascript object containing the display values for all the different tabs. This is used to generate a single display label for all the tabs.                                                               |
+
+### Events
+
+| Name                             | Type                                                                                    | Description                                                                                                 |
+|----------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| fieldsChanged                    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                    | Emitted when all the fields for the different tabs have been evaluated                                      |
+| displayedLabelsByFieldTranslated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<{ [key: string]: string }>` | Emitted when the display labels for the different tabs have been evaluated from the settings input property |
+| queriesCombined                  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                    | Emitted when a single query has been generated using the queries input property                             |
+| valuesToDisplayCombined          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                    | Emitted when a single display label has been generated using the valuesToDisplay input property             |
 
 ## See also
 
--   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
--   [Search Query Builder service](../services/search-query-builder.service.md)
--   [Search Widget Interface](../interfaces/search-widget.interface.md)
--   [Search Chip Input component](search-chip-input.component.md)
--   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
--   [Search date range advanced component](search-date-range-advanced.component.md)
--   [Search number range component](search-number-range.component.md)
--   [Search radio component](search-radio.component.md)
--   [Search slider component](search-slider.component.md)
--   [Search text component](search-text.component.md)
+- [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
+- [Search Query Builder service](../services/search-query-builder.service.md)
+- [Search Widget Interface](../interfaces/search-widget.interface.md)
+- [Search Chip Input component](search-chip-input.component.md)
+- [Search check list component](search-check-list.component.md)
+- [Search date range component](search-date-range.component.md)
+- [Search date range advanced component](search-date-range-advanced.component.md)
+- [Search number range component](search-number-range.component.md)
+- [Search radio component](search-radio.component.md)
+- [Search slider component](search-slider.component.md)
+- [Search text component](search-text.component.md)
