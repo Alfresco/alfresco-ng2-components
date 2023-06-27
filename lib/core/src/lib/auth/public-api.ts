@@ -32,8 +32,8 @@ export * from './services/oauth2.service';
 export * from './services/user-access.service';
 
 export * from './basic-auth/basic-alfresco-auth.service';
-export * from './basic-auth/processAuth';
-export * from './basic-auth/contentAuth';
+export * from './basic-auth/process-auth';
+export * from './basic-auth/content-auth';
 
 export * from './interfaces/identity-user.service.interface';
 export * from './interfaces/identity-group.interface';
