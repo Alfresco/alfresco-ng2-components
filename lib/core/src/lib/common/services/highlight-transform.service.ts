@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, SecurityContext } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Injectable } from '@angular/core';
 
 export interface HighlightTransformResult {
     text: string;
@@ -28,7 +27,7 @@ export interface HighlightTransformResult {
 })
 export class HighlightTransformService {
 
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor() {}
 
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
@@ -47,7 +46,7 @@ export class HighlightTransformService {
             pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
 
             const regex = new RegExp(pattern, 'gi');
-            result = this.sanitizer.sanitize(SecurityContext.HTML, text).replace(regex, (match) => {
+            result = text.split('>').pop().split('<')[0].replace(regex, (match) => {
                 isMatching = true;
                 return `<span class="${wrapperClass}">${match}</span>`;
             });
