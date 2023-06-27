@@ -47,7 +47,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     searchCondition: LogicalSearchCondition;
     fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: Subject<string> = new Subject();
 
     constructor(private translationService: TranslationService) {}
 
