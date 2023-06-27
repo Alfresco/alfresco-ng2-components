@@ -19,6 +19,7 @@ runs:
   using: "composite"
 
   steps:
+    - uses: actions/checkout@v3
     - name: Create empty artifact
       run: 
         echo "${{inputs.content}}" > ${{ inputs.file-name }}

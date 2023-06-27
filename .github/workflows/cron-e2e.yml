@@ -73,6 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Initialize artifacts
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/artifact-initialize
         with:
           artifact-name: 'global-e2e-result'
