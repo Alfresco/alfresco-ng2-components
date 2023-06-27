@@ -27,8 +27,6 @@ export interface HighlightTransformResult {
 })
 export class HighlightTransformService {
 
-    constructor() {}
-
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
      *
