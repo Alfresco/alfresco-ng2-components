@@ -86,7 +86,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
                         subQuery += subQuery === '' ? '' : key === LogicalSearchFields.EXCLUDE ? ' AND ' : ' OR ';
                         let fieldQuery = '(';
                         if (key === LogicalSearchFields.MATCH_EXACT) {
-                            fieldQuery += field + '\"' + this.searchCondition[key].trim() + '\"';
+                            fieldQuery += field + '"' + this.searchCondition[key].trim() + '"';
                         } else {
                             this.searchCondition[key].split(' ').filter((condition: string) => condition !== '').forEach((phrase: string) => {
                                 const refinedPhrase = '\"' + phrase + '\"';
