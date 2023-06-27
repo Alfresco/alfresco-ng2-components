@@ -157,8 +157,13 @@ runs:
         else
           bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
         fi
+    - name: debub
+      shell: bash
+      run: |
+        echo "steps ${{ fromJSON(steps) }} "
+        echo "result ${{ contains(steps.*.result, 'failure') }} "
     - name: Trace failing e2e
-      if: ${{ steps.e2e_run.outcome == 'failure' }}
+      if: failure()
       uses: ./.github/actions/artifact-append
       with:
         artifact-name: "global-e2e-result"
