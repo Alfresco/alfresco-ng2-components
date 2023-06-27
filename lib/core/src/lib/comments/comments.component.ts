@@ -176,8 +176,8 @@ export class CommentsComponent implements OnChanges {
 
     private sanitize(input: string): string {
         return input.replace(/^\s+|\s+$|\s+(?=\s)/g, '')
-            .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;").replace(/\r?\n/g, '<br/>');
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;').replace(/\r?\n/g, '<br/>');
     }
 }
