@@ -16,7 +16,7 @@
     <button mat-button color="primary" data-automation-id="date-range-advanced-btn-clear" (click)="reset()">
         {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
     </button>
-    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-apply" [disabled]="hasValidValue()" (click)="submitValues()">
+    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-apply" [disabled]="!hasValidValue()" (click)="submitValues()">
         {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
     </button>
 </div>

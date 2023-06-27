@@ -82,7 +82,6 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeAdvancedTabbedComponent);
-
         component = fixture.componentInstance;
         component.id = 'dateRangeAdvanced';
         component.context = {
