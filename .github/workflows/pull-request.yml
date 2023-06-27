@@ -194,7 +194,7 @@ jobs:
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
-    needs: [check-if-pr-is-approved, check-package-lock]
+    needs: [check-package-lock]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
