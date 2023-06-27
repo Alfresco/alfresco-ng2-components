@@ -75,7 +75,7 @@
     "@mat-datetimepicker/moment": "^10.1.1",
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "^6.5.16",
-    "angular-oauth2-oidc": "^13.0.1",
+    "angular-oauth2-oidc": "^15.0.1",
     "angular-oauth2-oidc-jwks": "^15.0.1",
     "apollo-angular": "^4.2.1",
     "chart.js": "^4.3.0",
