@@ -283,7 +283,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private getDomainHost(urlToCheck: string): string {
-        const result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)');
+        const result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\\.)?([^:\/?\n]+)');
         return result[1];
     }
 
