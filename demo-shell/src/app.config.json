@@ -1433,13 +1433,16 @@
   ],
   "alfresco-deployed-apps": [
     {
-      "name": "candidatebaseapp"
+      "name": "candidatebaseapp",
+      "displayName": "candidatebaseapp"
     },
     {
-      "name": "simpleapp"
+      "name": "simpleapp",
+      "displayName": "simpleapp"
     },
     {
-      "name": "subprocessapp"
+      "name": "subprocessapp",
+      "displayName": "subprocessapp"
     }
   ],
   "aspect-visible": {
