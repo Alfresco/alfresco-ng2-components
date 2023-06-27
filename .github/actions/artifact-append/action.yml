@@ -19,6 +19,8 @@ runs:
   using: "composite"
 
   steps:
+    - run: echo "Artifact Append"
+      shell: bash
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:

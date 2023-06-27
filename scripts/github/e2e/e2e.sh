@@ -37,6 +37,7 @@ if [ ${AFFECTED_LIB} == true ]; then
         echo "CRON running everything "
     fi;
 
+    ./scripts/test-e2e-lib.sh --use-dist $e2eParams
     if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$BASE_DIRECTORY" ||  "${GITHUB_EVENT_NAME}" == "push" ||  "${GITHUB_EVENT_NAME}" == "$REGEX" ||  "${GITHUB_EVENT_NAME}" == "schedule" ]]; then
         echo "Run all e2e $FOLDER"
         ./scripts/test-e2e-lib.sh --use-dist $e2eParams
