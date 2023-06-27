@@ -488,14 +488,20 @@ jobs:
     name: Final Results
     needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
+      - name: Log e2e result
+        id: e2e-result
+        uses: ./.github/actions/artifact-extract
+        with:
+          artifact-name: "global-e2e-result"
+          file-name: "e2e-failures.txt"
       - uses: slackapi/slack-github-action@v1.23.0
         name: Nofify QA failure
-        if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
+        if: ${{ contains(needs.*.result, 'failure') }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
-          channel-id: 'C016SMNNL8L' #guild-channel
-          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n"
+          channel-id: 'D056HA6MP6Y' #guild-channel
+          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}"
       - name: workflow failure
         run: exit 1
         if: ${{ contains(needs.*.result, 'failure') }}

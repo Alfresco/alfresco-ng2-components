@@ -78,6 +78,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-external-cs-env == 'true' }}
       run: |
+        echo "running: check EXTERNAL-CS is UP"
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
           check-cs-env \
@@ -89,6 +90,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-cs-env == 'true' }}
       run: |
+        echo "Running: Check CS is UP"
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli \
           check-cs-env \
@@ -100,6 +102,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-ps-env == 'true' }}
       run: |
+        echo "Running: check PS is UP"
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
           --host "$E2E_HOST" \
@@ -111,6 +114,7 @@ runs:
       shell: bash
       if: ${{ inputs.check-ps-cloud-env == 'true' }}
       run: |
+        echo "running: check PS-CLOUD is UP"
         set -u;
         ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
           --oauth "$E2E_IDENTITY_HOST_APA" \
@@ -144,6 +148,7 @@ runs:
         DEPS: "${{ inputs.deps }}"
 
       uses: nick-fields/retry@v2.8.2
+      id: e2e-run
       with:
         timeout_minutes: 40
         max_attempts: 2
@@ -161,6 +166,14 @@ runs:
           else
             bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
           fi
+      - name: Trace failing e2e
+        if: ${{ steps.e2e-run.outcome == 'failure' }} 
+        uses: ./.github/actions/artifact-append
+        with:
+          artifact-name: "global-e2e-result"
+          file-name: "e2e-failures.txt"
+          content: "${{ inputs.e2e-test-id }}"
+      
 
     - name: upload artifacts on gh
       id: upload_gh

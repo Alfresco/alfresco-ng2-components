@@ -1,0 +1,42 @@
+name: Append content to Artifact
+description: 'Allow the user to append content to an existing artifact'
+
+inputs:
+  artifact-name:
+    description: 'The name of the artifact'
+    required: true
+    type: string
+  file-name:
+    description: 'The name of the file with extension created in the artifact'
+    required: true
+    type: string
+  content:
+    description: 'The content to append'
+    type: string
+    default: ""
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+    - name: Append content
+      run: |
+        if [ -f "${{ inputs.file-name }}" ]; then
+        valueFile=`cat ${{ inputs.file-name }}`  
+        IFS=',' read -ra failed_array <<< "$valueFile"
+        failed_array+=("${{ inputs.content }}")
+        else 
+            failed_array=("${{ inputs.content }}")
+        fi
+        appendFailure=$( IFS=','; echo "${failed_array[*]}" )
+        echo $appendFailure > ${{ inputs.file-name }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.file-name }}
+
