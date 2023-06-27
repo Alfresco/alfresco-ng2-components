@@ -106,6 +106,10 @@
         "UPDATE": "Update"
       }
     },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
+    },
     "FILE_DIALOG": {
       "FILE_LOCK": "Lock file",
       "ALLOW_OTHERS_CHECKBOX": "Allow the owner to modify this file",

@@ -1,0 +1,50 @@
+ol {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 40px;
+}
+
+.adf-breadcrumb__item-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.adf-breadcrumb__chevron {
+    background-image: url("breadcrumb-chevron.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 5px;
+    height: 8px;
+    margin: 0 8px;
+
+    :host-context([dir="rtl"]) & {
+        transform: scaleX(-1);
+    }
+}
+
+.adf-breadcrumb__chevron-before--compact {
+    margin: 0 4px 0 8px;
+
+    :host-context([dir="rtl"]) & {
+        margin: 0 8px 0 4px;
+    }
+}
+
+.adf-breadcrumb__chevron-after--compact {
+    margin: 0 8px 0 4px;
+
+    :host-context([dir="rtl"]) & {
+        margin: 0 4px 0 8px;
+    }
+}
+
+.adf-breadcrumb__show-all-button-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.adf-breadcrumb__show-all-button-icon--rotate {
+    transform: rotate(90deg);
+}

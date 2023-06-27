@@ -1,0 +1,26 @@
+<ng-container>
+  <nav class="adf-breadcrumb" [class.adf-breadcrumb--compact]="compact" [attr.aria-label]="'CORE.BREADCRUMBS.TITLE' | translate" >
+    <ol>
+      <ng-container *ngFor="let breadcrumbTemplate of selectedBreadcrumbs; last as last">
+        <li adf-breadcrumb-focus class="adf-breadcrumb__item-wrapper">
+          <ng-container *ngTemplateOutlet="breadcrumbTemplate"></ng-container>
+          <div *ngIf="!last" class="adf-breadcrumb__chevron" [class.adf-breadcrumb__chevron-before--compact]="compact" ></div>
+        </li>
+
+        <li *ngIf="!last && compact === true" class="adf-breadcrumb__show-all-button-wrapper">
+          <button
+            mat-icon-button
+            (click)="toggleCompact()"
+            color="primary"
+            [matTooltip]="'CORE.BREADCRUMBS.SHOWALL' | translate"
+            matTooltipClass="adf-tooltip"
+            [attr.aria-label]="'CORE.BREADCRUMBS.SHOWALL' | translate"
+          >
+            <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate">more_vert</mat-icon >
+          </button>
+          <div class="adf-breadcrumb__chevron" [class.adf-breadcrumb__chevron-after--compact]="compact" ></div>
+        </li>
+      </ng-container>
+    </ol>
+  </nav>
+</ng-container>
