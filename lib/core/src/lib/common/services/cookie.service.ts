@@ -51,7 +51,7 @@ export class CookieService {
      * @returns The cookie data or null if it is not found
      */
     getItem(key: string): string | null {
-        const regexp = new RegExp('(?:' + key + '|;\s*' + key + ')=(.*?)(?:;|$)', 'g');
+        const regexp = new RegExp('(?:' + key + '|;\\s*' + key + ')=(.*?)(?:;|$)', 'g');
         const result = regexp.exec(document.cookie);
         return (result === null) ? null : result[1];
     }
