@@ -32,13 +32,7 @@ import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.comp
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        CommonModule,
-        MatIconModule,
-        TranslateModule,
-        MatButtonModule,
-        MatTooltipModule
-    ]
+    imports: [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
@@ -50,55 +44,53 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     compactChange: EventEmitter<boolean> = new EventEmitter();
 
     @ViewChildren(BreadcrumbFocusDirective)
-    _breadcrumbFocusItems!: QueryList<BreadcrumbFocusDirective>;
+    breadcrumbFocusItems!: QueryList<BreadcrumbFocusDirective>;
 
     @ContentChildren(BreadcrumbItemComponent)
-    _breadcrumbItems!: QueryList<BreadcrumbItemComponent>;
+    breadcrumbItems!: QueryList<BreadcrumbItemComponent>;
 
-    _selectedBreadcrumbs: Array<TemplateRef<unknown>> = [];
+    selectedBreadcrumbs: Array<TemplateRef<unknown>> = [];
 
-    constructor(private _cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) {}
 
     ngAfterContentInit() {
-        this._breadcrumbItems.changes
+        this.breadcrumbItems.changes
             .pipe(
-                startWith(this._breadcrumbItems),
+                startWith(this.breadcrumbItems),
                 map((breadcrumbItems: QueryList<BreadcrumbItemComponent>) =>
-                    this._mapToTemplateRefs(breadcrumbItems)
+                    this.mapToTemplateRefs(breadcrumbItems)
                 )
             )
             .subscribe((templateRefs) => {
                 this._breadcrumbTemplateRefs = templateRefs;
-                this._setBreadcrumbs(templateRefs);
+                this.setBreadcrumbs(templateRefs);
             });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.compact) {
-            this._setBreadcrumbs(this._breadcrumbTemplateRefs);
+            this.setBreadcrumbs(this._breadcrumbTemplateRefs);
         }
     }
 
-    _toggleCompact(compact = false) {
+    toggleCompact(compact = false) {
         this.compact = compact;
-        this._setBreadcrumbs(this._breadcrumbTemplateRefs);
+        this.setBreadcrumbs(this._breadcrumbTemplateRefs);
         this.compactChange.emit(this.compact);
         if (!compact) {
-            this._breadcrumbFocusItems.get(1)?.focusOnFirstFocusableElement();
+            this.breadcrumbFocusItems.get(1)?.focusOnFirstFocusableElement();
         }
     }
 
-    private _setBreadcrumbs(breadcrumbs: Array<TemplateRef<unknown>>) {
-        this._selectedBreadcrumbs =
+    private setBreadcrumbs(breadcrumbs: Array<TemplateRef<unknown>>) {
+        this.selectedBreadcrumbs =
             this.compact && breadcrumbs.length > 2
                 ? [breadcrumbs[0], breadcrumbs[breadcrumbs.length - 1]]
                 : [...breadcrumbs];
-        this._cdr.detectChanges();
+        this.cdr.detectChanges();
     }
 
-    private _mapToTemplateRefs(
-        breadcrumbItems: QueryList<BreadcrumbItemComponent>
-    ) {
+    private mapToTemplateRefs( breadcrumbItems: QueryList<BreadcrumbItemComponent> ) {
         return breadcrumbItems
             .toArray()
             .map((breadcrumbItem) => breadcrumbItem.templateRef);

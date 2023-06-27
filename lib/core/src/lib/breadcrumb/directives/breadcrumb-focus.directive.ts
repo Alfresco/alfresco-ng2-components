@@ -26,13 +26,13 @@ import { Directive, ElementRef } from '@angular/core';
     }
 })
 export class BreadcrumbFocusDirective {
-    constructor(private _elementRef: ElementRef) {}
+    constructor(private elementRef: ElementRef) {}
 
     focusOnFirstFocusableElement() {
-        this._getFocusableElements(this._elementRef.nativeElement)[0].focus();
+        this.getFocusableElements(this.elementRef.nativeElement)[0].focus();
     }
 
-    private _getFocusableElements(root: HTMLElement): HTMLElement[] {
+    private getFocusableElements(root: HTMLElement): HTMLElement[] {
         const allFocusableElements = `button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])`;
         return Array.from(
             root.querySelectorAll(
