@@ -173,7 +173,7 @@ describe('CommentsComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const sanitizedStr = '&lt;div class=&quot;text-class&quot;&gt;&lt;button onclick=&quot;&quot;&gt;&lt;h1&gt;action&lt;/h1&gt;&lt;/button&gt;&lt;/div&gt;'
+            const sanitizedStr = '&lt;div class=&quot;text-class&quot;&gt;&lt;button onclick=&quot;&quot;&gt;&lt;h1&gt;action&lt;/h1&gt;&lt;/button&gt;&lt;/div&gt;';
             expect(addCommentSpy).toHaveBeenCalledWith('123', sanitizedStr);
         });
 
