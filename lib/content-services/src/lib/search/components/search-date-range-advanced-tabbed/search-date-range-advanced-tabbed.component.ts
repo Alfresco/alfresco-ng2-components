@@ -184,4 +184,12 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
     onDateRangedValueChanged(value: Partial<SearchDateRangeAdvanced>, field: string) {
         this.value[field] = value;
     }
+
+    onFieldsChanged(fields: string[]) {
+        this.fields = fields;
+    }
+
+    onDisplayLabelsByFieldsTranslated(displayedLabelsByField: { [p: string]: string }) {
+        this.displayedLabelsByField = displayedLabelsByField;
+    }
 }
