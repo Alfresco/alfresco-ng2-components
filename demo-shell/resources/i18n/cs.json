@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "Použít vlastní šablonu pro záhlaví ,Uživatel‘",
     "CUSTOM_COLUMN_HEADER": "Vlastní šablona záhlaví Uživatel"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "Nebyly zvoleny žádné zprávy. Vyberte zprávu ze seznamu"
-  },
   "PS-TAB": {
     "TASKS-TAB": "Úkoly",
     "PROCESSES-TAB": "Proces",
-    "REPORTS-TAB": "Protokoly",
     "SETTINGS-TAB": "Nastavení",
     "START-TASK": "Zahájit úkol",
     "START-PROCESS": "Zahájit proces",

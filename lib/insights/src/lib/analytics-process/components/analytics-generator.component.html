@@ -18,9 +18,10 @@
                     <div *ngIf="report.hasData()">
                         <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
                         <canvas baseChart *ngIf="!report.hasZeroValues()" class="adf-chart"
-                                [data]="report.data"
+                                [datasets]="report.datasets"
                                 [labels]="report.labels"
-                                [chartType]="'pie'">
+                                [type]="'pie'"
+                                [options]="report.options">
                         </canvas>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
                             [datasets]="report.datasets"
                             [labels]="report.labels"
                             [options]="report.options"
-                            [chartType]="'bar'">
+                            [type]="'bar'">
                     </canvas>
                 </div>
             </div>
@@ -95,7 +96,7 @@
                                 [datasets]="report.datasets"
                                 [labels]="report.labels"
                                 [options]="report.options"
-                                [chartType]="'bar'">
+                                [type]="'bar'">
                         </canvas>
                     </div>
                 </div>

@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "「ユーザー」ヘッダーにカスタムテンプレートを使用",
     "CUSTOM_COLUMN_HEADER": "カスタムユーザーヘッダーテンプレート"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "レポートが選択されていません。リストからレポートを選択してください。"
-  },
   "PS-TAB": {
     "TASKS-TAB": "タスク",
     "PROCESSES-TAB": "プロセス",
-    "REPORTS-TAB": "レポート",
     "SETTINGS-TAB": "設定",
     "START-TASK": "タスクの開始",
     "START-PROCESS": "プロセスの開始",

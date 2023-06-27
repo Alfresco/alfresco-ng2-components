@@ -20,7 +20,7 @@ import { ConfigEditorComponent } from './config-editor.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '@alfresco/adf-core';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 const routes: Routes = [
     {

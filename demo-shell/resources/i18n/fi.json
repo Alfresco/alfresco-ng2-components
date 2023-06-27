@@ -224,13 +224,9 @@
     "USE_CUSTOM_COLUMN_HEADER": "Käytä mukautettua mallia \"Käyttäjä\"-otsikolle",
     "CUSTOM_COLUMN_HEADER": "Mukautettu käyttäjäotsikon malli"
   },
-  "ANALYTICS_REPORT": {
-    "NO_REPORT_MESSAGE": "Yhtään raporttia ei ole valittuna. Valitse raportti luettelosta."
-  },
   "PS-TAB": {
     "TASKS-TAB": "Tehtävät",
     "PROCESSES-TAB": "Prosessi",
-    "REPORTS-TAB": "Raportit",
     "SETTINGS-TAB": "Asetukset",
     "START-TASK": "Aloita tehtävä",
     "START-PROCESS": "Käynnistä prosessi",

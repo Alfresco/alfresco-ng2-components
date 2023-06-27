@@ -18,9 +18,9 @@
     "@angular/material": ">=14.1.2",
     "@alfresco/adf-core": ">=6.2.0",
     "@ngx-translate/core": ">=14.0.0",
-    "chart.js": ">=2.9.4",
+    "chart.js": "^4.3.0",
     "moment": ">=2.22.2",
-    "ng2-charts": ">=2.3.2",
+    "ng2-charts": "^4.1.1",
     "raphael": ">=2.3.0"
   },
   "keywords": [
