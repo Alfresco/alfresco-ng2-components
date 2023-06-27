@@ -148,7 +148,6 @@ runs:
         DEPS: "${{ inputs.deps }}"
 
       uses: nick-fields/retry@v2.8.2
-      id: e2e-run
       with:
         timeout_minutes: 40
         max_attempts: 2
@@ -167,7 +166,7 @@ runs:
             bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
           fi
       - name: Trace failing e2e
-        if: ${{ steps.e2e-run.outcome == 'failure' }} 
+        if: ${{ steps.retry_run.outcome == 'failure' }}
         uses: ./.github/actions/artifact-append
         with:
           artifact-name: "global-e2e-result"
