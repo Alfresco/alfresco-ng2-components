@@ -32,6 +32,7 @@ export class JwtHelperService {
     static REALM_ACCESS = 'realm_access';
     static RESOURCE_ACCESS = 'resource_access';
     static USER_PREFERRED_USERNAME = 'preferred_username';
+    static HXP_AUTHORIZATION = 'hxp_authorization';
 
     constructor(private storageService: StorageService) {
     }

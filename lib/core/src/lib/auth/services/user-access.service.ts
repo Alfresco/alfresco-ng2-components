@@ -18,13 +18,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from './jwt-helper.service';
 import { ApplicationAccessModel } from '../models/application-access.model';
-import { UserAccessModel } from '../models/user-access.model';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { OAuth2Service } from './oauth2.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 
 @Injectable({
     providedIn: 'root'
@@ -34,60 +28,43 @@ export class UserAccessService {
     private applicationAccess: ApplicationAccessModel[];
 
     constructor(private jwtHelperService: JwtHelperService,
-                private appConfigService: AppConfigService,
-                private oAuth2Service: OAuth2Service) {
+                private appConfigService: AppConfigService) {
     }
 
-    async fetchUserAccess() {
-        if (!this.hasFetchedAccess()) {
-            if (this.hasRolesInJwt()) {
-                this.fetchAccessFromJwt();
-            } else if (this.isOauth()) {
-                await this.fetchAccessFromApi();
-            }
+    fetchUserAccess() {
+        if (this.hasRolesInRealmAccess()) {
+            this.fetchAccessFromRealmAccess();
+        } else if (this.hasRolesInHxpAuthorization()) {
+            this.fetchAccessFromHxpAuthorization();
         }
     }
 
-    private fetchAccessFromJwt() {
+    private fetchAccessFromRealmAccess() {
         this.globalAccess = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.REALM_ACCESS).roles;
         this.applicationAccess = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.RESOURCE_ACCESS);
     }
 
-    private async fetchAccessFromApi() {
-        const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/roles`;
-        const appkey = this.appConfigService.get('application.key');
-        const opts = appkey ? { url, queryParams: { appkey } } : { url };
-
-        await this.oAuth2Service.get(opts)
-            .pipe(
-                catchError(() => of({
-                    globalAccess: {
-                        roles: []
-                    },
-                    applicationAccess: []
-                }))
-            )
-            .toPromise()
-            .then((response: UserAccessModel) => {
-                this.globalAccess = response.globalAccess.roles;
-                this.applicationAccess = response.applicationAccess;
-            });
+    private fetchAccessFromHxpAuthorization() {
+        this.globalAccess = [];
+        const hxpAuthorization = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.HXP_AUTHORIZATION);
+        if (hxpAuthorization?.appkey && hxpAuthorization?.role) {
+            this.applicationAccess = [
+                {
+                    name: hxpAuthorization.appkey,
+                    roles: hxpAuthorization.role
+                }
+            ];
+        } else {
+            this.applicationAccess = [];
+        }
     }
 
-    private hasRolesInJwt(): boolean {
+    private hasRolesInRealmAccess(): boolean {
         return !!this.jwtHelperService.getValueFromLocalToken(JwtHelperService.REALM_ACCESS);
     }
 
-    private hasFetchedAccess(): boolean {
-        return !!this.globalAccess && !!this.applicationAccess;
-    }
-
-    private get identityHost(): string {
-        return `${this.appConfigService.get('bpmHost')}`;
-    }
-
-    private isOauth(): boolean {
-        return this.appConfigService.get('authType') === 'OAUTH';
+    private hasRolesInHxpAuthorization(): boolean {
+        return !!this.jwtHelperService.getValueFromLocalToken(JwtHelperService.HXP_AUTHORIZATION);
     }
 
     /**
@@ -98,9 +75,20 @@ export class UserAccessService {
      */
     hasGlobalAccess(rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
-            return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
+            if (this.hasRolesInRealmAccess()) {
+                return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
+            } else if (this.hasRolesInHxpAuthorization()) {
+                return this.isCurrentAppKeyInToken() ? this.applicationAccess[0]?.roles.some((role: string) => rolesToCheck.includes(role)) : false;
+            }
+        } else {
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    private isCurrentAppKeyInToken(): boolean {
+        const currentAppKey = this.appConfigService.get('application.key');
+        return this.applicationAccess?.length ? currentAppKey === this.applicationAccess[0]?.name : false;
     }
 
     /**
@@ -112,17 +100,9 @@ export class UserAccessService {
      */
     hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
-            const appAccess = this.hasRolesInJwt() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
+            const appAccess = this.hasRolesInRealmAccess() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
             return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
         }
         return true;
-    }
-
-    /**
-     * Resets the cached user access
-     */
-    resetAccess() {
-        this.globalAccess = undefined;
-        this.applicationAccess = undefined;
     }
 }

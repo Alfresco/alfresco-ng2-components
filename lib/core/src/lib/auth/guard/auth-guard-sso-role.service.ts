@@ -29,8 +29,8 @@ export class AuthGuardSsoRoleService implements CanActivate {
                 private dialog: MatDialog) {
     }
 
-    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-        await this.userAccessService.fetchUserAccess();
+    canActivate(route: ActivatedRouteSnapshot): boolean {
+        this.userAccessService.fetchUserAccess();
         let hasRealmRole = false;
         let hasClientRole = true;
         if (route.data) {
@@ -40,7 +40,7 @@ export class AuthGuardSsoRoleService implements CanActivate {
                     hasRealmRole = true;
                 } else {
                     const excludedRoles = route.data['excludedRoles'] || [];
-                    hasRealmRole = await this.validateRoles(rolesToCheck, excludedRoles);
+                    hasRealmRole = this.validateRoles(rolesToCheck, excludedRoles);
                 }
             }
 
@@ -63,14 +63,14 @@ export class AuthGuardSsoRoleService implements CanActivate {
         return hasRole;
     }
 
-    private async validateRoles(rolesToCheck: string[], excludedRoles?: string[]): Promise<boolean> {
+    private validateRoles(rolesToCheck: string[], excludedRoles?: string[]): boolean {
         if (excludedRoles?.length > 0) {
-            return await this.hasRoles(rolesToCheck) && !await this.hasRoles(excludedRoles);
+            return this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
         }
         return this.hasRoles(rolesToCheck);
     }
 
-    private async hasRoles(roles: string[] = []): Promise<boolean> {
+    private hasRoles(roles: string[] = []): boolean {
         return this.userAccessService.hasGlobalAccess(roles);
     }
 

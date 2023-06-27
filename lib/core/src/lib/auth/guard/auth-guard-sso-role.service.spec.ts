@@ -23,14 +23,12 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserAccessService } from '../services/user-access.service';
 
 describe('Auth Guard SSO role service', () => {
 
     let authGuard: AuthGuardSsoRoleService;
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
-    let userAccessService: UserAccessService;
 
     setupTestBed({
         imports: [
@@ -44,8 +42,6 @@ describe('Auth Guard SSO role service', () => {
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         routerService = TestBed.inject(Router);
-        userAccessService = TestBed.inject(UserAccessService);
-        userAccessService.resetAccess();
     });
 
     function spyUserAccess(realmRoles: string[], resourceAccess: any) {
