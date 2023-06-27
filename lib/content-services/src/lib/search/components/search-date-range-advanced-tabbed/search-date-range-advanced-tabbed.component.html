@@ -1,9 +1,9 @@
 <adf-search-filter-tabbed
     [settings]="settings"
-    (fieldsChanged)="fields = $event"
-    (displayedLabelsByFieldTranslated)="displayedLabelsByField = $event"
     [queries]="queries"
     [valuesToDisplay]="valuesToDisplay"
+    (fieldsChanged)="onFieldsChanged($event)"
+    (displayedLabelsByFieldTranslated)="onDisplayLabelsByFieldsTranslated($event)"
     (queriesCombined)="onQueriesCombined($event)"
     (valuesToDisplayCombined)="onValuesToDisplayCombined($event)">
     <ng-container *ngFor="let field of fields">
@@ -25,7 +25,7 @@
     <button mat-button color="primary" data-automation-id="date-range-advanced-btn-clear" (click)="reset()">
         {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
     </button>
-    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-apply" [disabled]="hasValidValue()" (click)="submitValues()">
+    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-apply" [disabled]="!hasValidValue()" (click)="submitValues()">
         {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
     </button>
 </div>
