@@ -1,17 +1,10 @@
 <div class="adf-search-logical-filter-container">
-    <adf-search-chip-input
-        [label]="'SEARCH.LOGICAL_SEARCH.MATCH_ALL_LABEL' | translate"
-        [onReset]="resetObservable"
-        (phrasesChanged)="onPhraseChange($event, LogicalSearchFields.MATCH_ALL)">
-    </adf-search-chip-input>
-    <adf-search-chip-input
-        [label]="'SEARCH.LOGICAL_SEARCH.MATCH_ANY_LABEL' | translate"
-        [onReset]="resetObservable"
-        (phrasesChanged)="onPhraseChange($event, LogicalSearchFields.MATCH_ANY)">
-    </adf-search-chip-input>
-    <adf-search-chip-input
-        [label]="'SEARCH.LOGICAL_SEARCH.EXCLUDE_LABEL' | translate"
-        [onReset]="resetObservable"
-        (phrasesChanged)="onPhraseChange($event, LogicalSearchFields.EXCLUDE)">
-    </adf-search-chip-input>
+    <div *ngFor="let field of fields" class="adf-search-input">
+        <mat-label>{{('SEARCH.LOGICAL_SEARCH.' + field + '_LABEL') | translate}}</mat-label>
+        <input type="text"
+            [(ngModel)]="searchCondition[LogicalSearchFields[field]]"
+            placeholder="{{ ('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate }}"
+            [attr.aria-label]="('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate"
+            (change)="onInputChange()"/>
+    </div>
 </div>

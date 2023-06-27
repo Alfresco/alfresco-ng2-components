@@ -401,15 +401,18 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Add phrase..."
-      },
       "MATCH_ALL": "ALL",
-      "MATCH_ALL_LABEL": "Match ALL of these phrases",
+      "MATCH_ALL_LABEL": "Match ALL of these words",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
       "MATCH_ANY": "ANY",
-      "MATCH_ANY_LABEL": "Match ANY of these phrases",
+      "MATCH_ANY_LABEL": "Match ANY of these words",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
       "EXCLUDE": "EXCLUDE",
-      "EXCLUDE_LABEL": "EXCLUDE these phrases"
+      "EXCLUDE_LABEL": "EXCLUDE these words",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
     }
   },
   "PERMISSION": {

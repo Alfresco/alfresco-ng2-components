@@ -25,10 +25,11 @@ import { TranslationService } from '@alfresco/adf-core';
 export enum LogicalSearchFields {
     MATCH_ALL = 'matchAll',
     MATCH_ANY = 'matchAny',
-    EXCLUDE = 'exclude'
+    EXCLUDE = 'exclude',
+    MATCH_EXACT = 'matchExact'
 }
 
-export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string[]; };
+export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string; };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
@@ -39,26 +40,22 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     encapsulation: ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
-    private searchCondition: LogicalSearchCondition;
-    private reset$ = new Subject<void>();
-
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     startValue: string;
-    displayValue$: Subject<string> = new Subject<string>();
-    resetObservable = this.reset$.asObservable();
+    searchCondition: LogicalSearchCondition;
+    fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
+    displayValue$: Subject<string> = new Subject<string>();
 
     constructor(private translationService: TranslationService) {}
 
     ngOnInit(): void {
-        this.searchCondition = { matchAll: [], matchAny: [], exclude: [] };
-        this.updateDisplayValue();
+        this.clearSearchInputs();
     }
 
-    onPhraseChange(phrases: string[], field: LogicalSearchFields) {
-        this.searchCondition[field] = phrases;
+    onInputChange() {
         this.updateDisplayValue();
     }
 
@@ -68,11 +65,12 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
             const fields = this.settings.field.split(',').map((field) => field += ':');
             let query = '';
             Object.keys(this.searchCondition).forEach((key) => {
-                if (this.searchCondition[key].length > 0) {
+                if (this.searchCondition[key] !== '') {
                     let connector = '';
                     let subQuery = '';
                     switch(key) {
                         case LogicalSearchFields.MATCH_ALL:
+                        case LogicalSearchFields.MATCH_EXACT:
                             connector = 'AND';
                             break;
                         case LogicalSearchFields.MATCH_ANY:
@@ -87,12 +85,16 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
                     fields.forEach((field) => {
                         subQuery += subQuery === '' ? '' : key === LogicalSearchFields.EXCLUDE ? ' AND ' : ' OR ';
                         let fieldQuery = '(';
-                        this.searchCondition[key].forEach((phrase: string) => {
-                            const refinedPhrase = '\"' + phrase + '\"';
-                            fieldQuery += fieldQuery === '(' ?
-                                `${key === LogicalSearchFields.EXCLUDE ? 'NOT ' : ''}${field}${refinedPhrase}` :
-                                ` ${connector} ${field}${refinedPhrase}`;
-                        });
+                        if (key === LogicalSearchFields.MATCH_EXACT) {
+                            fieldQuery += field + '\"' + this.searchCondition[key].trim() + '\"';
+                        } else {
+                            this.searchCondition[key].split(' ').filter((condition: string) => condition !== '').forEach((phrase: string) => {
+                                const refinedPhrase = '\"' + phrase + '\"';
+                                fieldQuery += fieldQuery === '(' ?
+                                    `${key === LogicalSearchFields.EXCLUDE ? 'NOT ' : ''}${field}${refinedPhrase}` :
+                                    ` ${connector} ${field}${refinedPhrase}`;
+                            });
+                        }
                         subQuery += `${fieldQuery})`;
                     });
                     query += query === '' ? `(${subQuery})` : ` AND (${subQuery})`;
@@ -105,7 +107,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     }
 
     hasValidValue(): boolean {
-        return Object.keys(this.searchCondition).some((key: string) => this.searchCondition[key].length !== 0);
+        return Object.keys(this.searchCondition).some((key: string) => this.searchCondition[key] !== '');
     }
 
     getCurrentValue(): LogicalSearchCondition {
@@ -119,9 +121,8 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
 
     reset() {
         if (this.id && this.context) {
-            this.reset$.next();
             this.context.queryFragments[this.id] = '';
-            this.updateDisplayValue();
+            this.clearSearchInputs();
             this.context.update();
         }
     }
@@ -130,13 +131,17 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         if (this.hasValidValue()) {
             const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
                 const fieldIndex = Object.values(LogicalSearchFields).indexOf(key as LogicalSearchFields);
-                const fieldKeyTranslated = this.translationService.instant(`SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[fieldIndex]}`);
-                const stackedPhrases = this.searchCondition[key].reduce((phraseAcc, phrase) => `${phraseAcc === '' ? phraseAcc : phraseAcc + ','} ${phrase}`, '');
-                return stackedPhrases !== '' ? `${acc} ${fieldKeyTranslated}: ${stackedPhrases}` : acc;
+                const fieldKeyTranslated = this.translationService.instant(`SEARCH.LOGICAL_SEARCH.${this.fields[fieldIndex]}`);
+                return this.searchCondition[key] !== '' ? `${acc} ${fieldKeyTranslated}: ${this.searchCondition[key]}` : acc;
             }, '');
             this.displayValue$.next(displayValue);
         } else {
             this.displayValue$.next('');
         }
+    }
+
+    private clearSearchInputs(): void {
+        this.searchCondition = { matchAll: '', matchAny: '', matchExact: '', exclude: '' };
+        this.updateDisplayValue();
     }
 }

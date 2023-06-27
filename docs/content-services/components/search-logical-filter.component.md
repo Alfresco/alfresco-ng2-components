@@ -7,7 +7,7 @@ Last reviewed: 2023-06-01
 
 # [Search Logical Filter component](../../../lib/content-services/src/lib/search/components/search-logical-filter/search-logical-filter.component.ts "Defined in search-logical-filter.component.ts")
 
-Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 3 chip inputs representing logical conditions to form search query from.
+Implements a [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) consisting of 4  inputs representing logical conditions to form search query from.
 
 ![Search Logical Filter](../../docassets/images/search-logical-filter.png)
 
@@ -45,14 +45,12 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 ## Details
 
 This component lets the user provide logical conditions to apply to each `field` in the search query.
-See the [Search chip input component](search-chip-input.component.md) for full details of how to use chip inputs.
 
 ## See also
 
 -   [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
--   [Search Chip Input component](search-chip-input.component.md)
 -   [Search check list component](search-check-list.component.md)
 -   [Search date range component](search-date-range.component.md)
 -   [Search number range component](search-number-range.component.md)
