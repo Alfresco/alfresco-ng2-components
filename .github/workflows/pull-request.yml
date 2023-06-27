@@ -489,6 +489,7 @@ jobs:
     name: Final Results
     needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
+      - uses: actions/checkout@v3
       - name: Log e2e result
         id: e2e-result
         uses: ./.github/actions/artifact-extract

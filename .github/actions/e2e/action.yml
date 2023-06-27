@@ -138,35 +138,27 @@ runs:
         echo $PROXY_HOST_BPM
         echo "GIT_HASH=$GIT_HASH" >> $GITHUB_ENV
 
-    - name: run test with retries
-      id: retry_run
+    - name: run test 
+      id: e2e_run
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
         DEPS: "${{ inputs.deps }}"
-
-      uses: nick-fields/retry@v2.8.2
-      with:
-        timeout_minutes: 40
-        max_attempts: 2
-        retry_wait_seconds: 30
-        shell: bash
-        command: |
-          set -u;
-          export GH_ACTION_RETRY_COUNT=$(cat ${GITHUB_OUTPUT} | grep -E '^[0-9]{1,2}$' | tail -n1)
-          echo "RETRY GH_ACTION_RETRY_COUNT = <$GH_ACTION_RETRY_COUNT>"
-          if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
-            export DISPLAY=:99
-            chromedriver --url-base=/wd/hub &
-            sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" "browser" || exit 1
-          else
-            bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
-          fi
+      shell: bash
+      run: |
+        set -u;
+        if [[ ${{ inputs.e2e-test-folder }} == 'content-services/upload' ]]; then
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+          bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" "browser" || exit 1
+        else
+          bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
+        fi
     - name: Trace failing e2e
-      if: ${{ steps.retry_run.outcome == 'failure' }}
+      if: ${{ steps.e2e_run.outcome == 'failure' }}
       uses: ./.github/actions/artifact-append
       with:
         artifact-name: "global-e2e-result"
