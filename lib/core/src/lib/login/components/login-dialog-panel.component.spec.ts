@@ -21,6 +21,7 @@ import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
@@ -35,9 +36,14 @@ describe('LoginDialogPanelComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                { provide: OidcAuthenticationService, useValue: {}}
             ]
         });
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
+        basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
+
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 

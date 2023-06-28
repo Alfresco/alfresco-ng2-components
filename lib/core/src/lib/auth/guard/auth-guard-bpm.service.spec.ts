@@ -41,10 +41,21 @@ describe('AuthGuardService BPM', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: OidcAuthenticationService, useValue: {
+                        ssoImplicitLogin: () => { },
+                        isPublicUrl: () => false,
+                        hasValidIdToken: () => false,
+                        isLoggedIn: () => false
+                    }
+                }
             ]
         });
         localStorage.clear();
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
+        oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
         authService = TestBed.inject(AuthenticationService);
         authGuard = TestBed.inject(AuthGuardBpm);
         router = TestBed.inject(Router);

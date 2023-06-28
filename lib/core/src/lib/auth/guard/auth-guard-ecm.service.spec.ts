@@ -40,6 +40,16 @@ describe('AuthGuardService ECM', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: OidcAuthenticationService, useValue: {
+                        ssoImplicitLogin: () => { },
+                        isPublicUrl: () => false,
+                        hasValidIdToken: () => false,
+                        isLoggedIn: () => false
+                    }
+                }
             ]
         });
         localStorage.clear();
