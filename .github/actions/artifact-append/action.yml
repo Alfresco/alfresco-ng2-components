@@ -32,7 +32,8 @@ runs:
       with:
         script: |
           const fs = require('fs');
-          
+          core.info(`${process.env}`);
+
           const affectedLib = core.getInput('content', { required: true });
           const fileName = core.getInput('file-name', { required: true });
           core.info(`Input Filename: ${fileName}`);
