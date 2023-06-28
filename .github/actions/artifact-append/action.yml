@@ -35,7 +35,7 @@ runs:
         const fileName = core.getInput('file-name');
 
         const content = read(fileName)
-        core.info('File content:', content);
+        core.info(`File content: ${content}`);
         appendContent(content, affectedLib);
 
         function read(filename) {
