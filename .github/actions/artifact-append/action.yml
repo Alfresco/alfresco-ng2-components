@@ -25,6 +25,8 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}
+    - run: ls
+      shell: bash
     - name: Append content
       uses: actions/github-script@v6
       with:
@@ -33,6 +35,8 @@ runs:
 
           const affectedLib = core.getInput('content');
           const fileName = core.getInput('file-name');
+          core.info(`Input Filename: ${fileName}`);
+          core.info(`Input content: ${affectedLib}`);
 
           const content = read(fileName)
           core.info(`File content: ${content}`);
