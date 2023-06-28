@@ -19,7 +19,7 @@ import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@ang
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';;
+import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 
 @Component({
   selector: 'adf-search-widget-chip',
