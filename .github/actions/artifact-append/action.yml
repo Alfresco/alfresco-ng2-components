@@ -32,7 +32,7 @@ runs:
       with:
         script: |
           const fs = require('fs');
-
+          const core = require('@actions/core');
           const affectedLib = core.getInput('content');
           const fileName = core.getInput('file-name');
           core.info(`Input Filename: ${fileName}`);
