@@ -29,15 +29,16 @@ runs:
       shell: bash
     - name: Append content
       uses: actions/github-script@v6
+      env:
+        contentFile: ${{ inputs.content }}
+        fileName: ${{ inputs.file-name }}
       with:
         script: |
           const fs = require('fs');
-          core.info(JSON.stringify(process.env));
 
-          const affectedLib = core.getInput('content', { required: true });
-          const fileName = core.getInput('file-name', { required: true });
+          const affectedLib = process.env.contentFile;
+          const fileName = process.env.fileName;
           core.info(`Input Filename: ${fileName}`);
-          core.info(`${process.env['INPUT_CONTENT']}`);
           core.info(`Input content: ${affectedLib}`);
 
           const content = read(fileName)
