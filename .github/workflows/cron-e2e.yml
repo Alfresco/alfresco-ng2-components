@@ -76,15 +76,67 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/artifact-initialize
         with:
-          artifact-name: 'global-e2e-result'
-          file-name: 'e2e-failures.txt'
-          content: 'empty'
+          artifact-name: global-e2e-result
+          file-name: e2e-failures.txt
+          content: empty
       - name: Trace failing e2e
         uses: ./.github/actions/artifact-append
         with:
-          artifact-name: "global-e2e-result"
-          file-name: "e2e-failures.txt"
-          content: "process-cloud-test"
+          artifact-name: global-e2e-result
+          file-name: e2e-failures.txt
+          content: process-cloud-test
+      - name: Append content
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+
+            const affectedLib = 'process';
+            const fileName = 'e2e-failures.txt';
+
+            const content = read(fileName)
+            core.info('File content:', content);
+            appendContent(content, affectedLib);
+
+            function read(filename) {
+              try {
+                const contentFile = fs.readFileSync(filename, 'utf8').replace('\n','');
+                return contentFile;
+              } catch (err) {
+                core.error(err);
+              }
+            }
+
+            function write(filename, content) {
+              try {
+                fs.writeFileSync(filename, content);
+              } catch (err) {
+                core.error(err);
+              }
+            }
+
+            function appendContent(content, append) {
+              core.info(`File contains ${content} append ${append}`)
+              let changedContent;
+              const libs = content.split(',');
+              if (libs?.length>0) {
+                if (libs.length === 1 && libs[0] === '') {
+                  core.info('Found file empty occurrence.')
+                  libs[0] = append;
+                  changedContent = libs[0];
+                }
+                else if (!libs.includes(append)) {
+                  libs.push(append);
+                  changedContent = libs.join(',');
+                } else {
+                  core.info(`Lib ${append} already affected`);
+                }
+              }
+              if (changedContent != undefined){
+                core.info(`File content append: ${changedContent}`)
+                write(fileName, changedContent);
+              }
+            }
   run-e2e:
     name: run e2e
     uses: ./.github/workflows/pull-request.yml

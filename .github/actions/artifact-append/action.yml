@@ -32,10 +32,11 @@ runs:
       with:
         script: |
           const fs = require('fs');
-          const core = require('@actions/core');
-          const affectedLib = core.getInput('content');
-          const fileName = core.getInput('file-name');
+          
+          const affectedLib = core.getInput('content', { required: true });
+          const fileName = core.getInput('file-name', { required: true });
           core.info(`Input Filename: ${fileName}`);
+          core.info(`${process.env['INPUT_CONTENT']}`);
           core.info(`Input content: ${affectedLib}`);
 
           const content = read(fileName)
