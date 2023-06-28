@@ -38,7 +38,6 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     };
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    disableUpdateOnSubmit?: boolean;
     fields: string[];
     displayedLabelsByField: { [key: string]: string } = {};
     queries: { [key: string]: string } = {};
@@ -75,7 +74,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     submitValues(): void {
         this.context.queryFragments[this.id] = this.combinedQuery;
         this.displayValue$.next(this.combinedValuesToDisplay);
-        if (!this.disableUpdateOnSubmit && this.id && this.context) {
+        if (this.id && this.context) {
             this.context.update();
         }
     }

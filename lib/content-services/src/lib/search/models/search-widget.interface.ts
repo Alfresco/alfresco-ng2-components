@@ -25,7 +25,6 @@ export interface SearchWidget {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     isActive?: boolean;
-    disableUpdateOnSubmit?: boolean;
     startValue: any;
     /* stream emit value on changes */
     displayValue$: Subject<string>;

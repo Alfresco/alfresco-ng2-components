@@ -65,7 +65,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     private onDestroy$ = new Subject<boolean>();
@@ -139,9 +138,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.updateDisplayValue();
-            if(!this.disableUpdateOnSubmit) {
-                this.context.update();
-            }
+            this.context.update();
         }
     }
 
@@ -205,9 +202,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     private updateQuery() {
         if (this.id && this.context) {
             this.updateDisplayValue();
-            if (!this.disableUpdateOnSubmit) {
-                this.context.update();
-            }
+            this.context.update();
         }
     }
 
