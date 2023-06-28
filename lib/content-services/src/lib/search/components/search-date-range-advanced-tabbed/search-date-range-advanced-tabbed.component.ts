@@ -34,7 +34,10 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     id: string;
     startValue: SearchDateRangeAdvanced = {
         dateRangeType: DateRangeType.ANY,
-        inLastValueType: InLastDateType.DAYS
+        inLastValueType: InLastDateType.DAYS,
+        inLastValue: undefined,
+        betweenStartDate: undefined,
+        betweenEndDate: undefined
     };
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
