@@ -69,7 +69,11 @@ export class SearchFilterTabbedComponent {
     private getWholeDisplayValue(wholeValueToDisplay, valueToDisplayByField): string {
         let displayValue = '';
         if(valueToDisplayByField && valueToDisplayByField[1] !== '') {
-            displayValue = wholeValueToDisplay.concat(`${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]} `);
+            if(wholeValueToDisplay && wholeValueToDisplay !== '') {
+                displayValue = wholeValueToDisplay.concat(' ').concat(`${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`);
+            } else {
+                displayValue = `${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`;
+            }
         }
         return displayValue;
     }

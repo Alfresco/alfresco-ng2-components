@@ -19,14 +19,14 @@ import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewE
 import { Subject } from 'rxjs';
 import { endOfDay, format, formatISO, parse, startOfDay } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { TranslationService } from '@alfresco/adf-core';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced';
 import { FormBuilder, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { enUS } from "date-fns/locale";
+import { enUS } from 'date-fns/locale';
 
 const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yy';
 

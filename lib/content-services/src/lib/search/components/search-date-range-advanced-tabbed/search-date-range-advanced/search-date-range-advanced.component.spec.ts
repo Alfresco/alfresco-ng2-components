@@ -54,7 +54,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
 
     const getElementByDataAutomationId = (dataAutomationId) => {
         return fixture.debugElement.query(By.css(`[data-automation-id="${dataAutomationId}"]`)).nativeElement;
-    }
+    };
 
     const enterValueInInputField = async (inputElementId: string, value: string) => {
         const inputField = getElementByDataAutomationId(inputElementId);
@@ -62,7 +62,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         inputField.dispatchEvent(new Event('input'));
         await fixture.whenStable();
         fixture.detectChanges();
-    }
+    };
 
     const selectDropdownOption = async (itemId: string) => {
         const matSelect = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-in-last-dropdown"]')).nativeElement;
@@ -114,7 +114,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
         fixture.detectChanges();
         await fixture.whenStable();
-        await selectDropdownOption('date-range-advanced-in-last-option-weeks')
+        await selectDropdownOption('date-range-advanced-in-last-option-weeks');
         fixture.detectChanges();
         expect(component.updatedQuery.emit).toHaveBeenCalledWith('');
         expect(component.form.controls.inLastValue.errors['required']).toBe(true);
@@ -135,7 +135,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         await enterValueInInputField('date-range-advanced-between-start-input', '6/5/2023');
         await enterValueInInputField('date-range-advanced-between-end-input', '6/10/2023');
         fixture.detectChanges();
-        let query = `test-field:['${formatISO(startOfDay(component.form.controls.betweenStartDate.value))}' TO '${formatISO(endOfDay(component.form.controls.betweenEndDate.value))}']`;
+        const query = `test-field:['${formatISO(startOfDay(component.form.controls.betweenStartDate.value))}' TO '${formatISO(endOfDay(component.form.controls.betweenEndDate.value))}']`;
         expect(component.updatedQuery.emit).toHaveBeenCalledWith(query);
     });
 
@@ -164,7 +164,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         expect(component.updatedDisplayValue.emit).toHaveBeenCalledWith('05-Jun-23 - 10-Jun-23');
     });
 
-    it('should not update display label if anytime option is selected', async() => {
+    it('should not update display label if anytime option is selected', async () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.ANY);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -176,7 +176,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
         fixture.detectChanges();
         await fixture.whenStable();
-        await selectDropdownOption('date-range-advanced-in-last-option-weeks')
+        await selectDropdownOption('date-range-advanced-in-last-option-weeks');
         fixture.detectChanges();
         expect(component.updatedDisplayValue.emit).toHaveBeenCalledWith('');
 
@@ -190,7 +190,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
     it('should set values if initial value is provided', () => {
         let value: any = {
             dateRangeType: component.DateRangeType.ANY
-        }
+        };
         component.initialValue = value;
         component.ngOnInit();
         expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.ANY);
@@ -199,7 +199,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
             dateRangeType: component.DateRangeType.IN_LAST,
             inLastValueType: component.InLastDateType.WEEKS,
             inLastValue: '5'
-        }
+        };
         component.initialValue = value;
         component.ngOnInit();
         expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.IN_LAST);
@@ -210,7 +210,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
             dateRangeType: component.DateRangeType.BETWEEN,
             betweenStartDate: startOfYesterday(),
             betweenEndDate: endOfToday()
-        }
+        };
         component.initialValue = value;
         component.ngOnInit();
         expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.BETWEEN);

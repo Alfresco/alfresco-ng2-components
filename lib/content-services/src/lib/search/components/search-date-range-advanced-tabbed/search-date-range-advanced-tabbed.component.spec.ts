@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
@@ -97,14 +114,14 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         } as any;
         component.settings = {
             hideDefaultAction: false,
-            dateFormat: "dd-MMM-yy",
-            maxDate: "today",
+            dateFormat: 'dd-MMM-yy',
+            maxDate: 'oday',
             field: 'test-field-1, test-field-2',
             displayedLabelsByField: {
-                "test-field-1": "Test Field 1",
-                "test-field-2": "Test Field 2"
+                'test-field-1': 'Test Field 1',
+                'test-field-2': 'Test Field 2'
             }
-        }
+        };
         component.tabsValidity = {
             'test-field-1': true,
             'test-field-2': true
@@ -141,8 +158,8 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         component.settings = {
             field: 'test-field-1, test-field-2',
             displayedLabelsByField: {
-                "test-field-1": "Test Field 1",
-                "test-field-2": "Test Field 2"
+                'test-field-1': 'Test Field 1',
+                'test-field-2': 'Test Field 2'
             }
         };
         fixture.detectChanges();

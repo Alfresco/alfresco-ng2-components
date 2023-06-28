@@ -26,8 +26,7 @@ import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
 
 @Component({
   selector: 'adf-search-date-range-advanced-tabbed',
-  templateUrl: './search-date-range-advanced-tabbed.component.html',
-  styleUrls: ['./search-date-range-advanced-tabbed.component.scss']
+  templateUrl: './search-date-range-advanced-tabbed.component.html'
 })
 export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     displayValue$ = new Subject<string>();
