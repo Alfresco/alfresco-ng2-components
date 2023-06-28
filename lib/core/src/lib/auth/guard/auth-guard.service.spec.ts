@@ -41,6 +41,15 @@ describe('AuthGuardService', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: OidcAuthenticationService, useValue: {
+                        ssoImplicitLogin: () => { },
+                        isPublicUrl: () => false,
+                        hasValidIdToken: () => false
+                    }
+                }
             ]
         });
         localStorage.clear();

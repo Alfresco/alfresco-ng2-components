@@ -25,11 +25,11 @@ import { AuthenticationService } from '../../auth/services/authentication.servic
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
-import { of, throwError } from 'rxjs';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { EMPTY, of, throwError } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { LogService } from '../../common/services/log.service';
 import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -39,7 +39,6 @@ describe('LoginComponent', () => {
     let router: Router;
     let userPreferences: UserPreferencesService;
     let appConfigService: AppConfigService;
-    let alfrescoApiService: AlfrescoApiService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
 
     let usernameInput;
@@ -62,6 +61,16 @@ describe('LoginComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: OidcAuthenticationService, useValue: {
+                        ssoImplicitLogin: () => { },
+                        isPublicUrl: () => false,
+                        hasValidIdToken: () => false,
+                        isLoggedIn: () => false
+                    }
+                }
             ]
         });
         fixture = TestBed.createComponent(LoginComponent);
@@ -76,7 +85,6 @@ describe('LoginComponent', () => {
         router = TestBed.inject(Router);
         userPreferences = TestBed.inject(UserPreferencesService);
         appConfigService = TestBed.inject(AppConfigService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         const logService = TestBed.inject(LogService);
         spyOn(logService, 'error');
@@ -178,7 +186,6 @@ describe('LoginComponent', () => {
     it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
         spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
-        spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
 
         component.success.subscribe(() => {
             expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
@@ -472,7 +479,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError(new Error()));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -487,7 +494,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError(new Error()));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -503,7 +510,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username and password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError(new Error()));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -671,7 +678,7 @@ describe('LoginComponent', () => {
     });
 
     it('should emit only the username and not the password as part of the executeSubmit', fakeAsync(() => {
-        spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.resolve());
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(EMPTY);
 
         component.executeSubmit.subscribe((res) => {
             fixture.detectChanges();
@@ -691,7 +698,6 @@ describe('LoginComponent', () => {
             beforeEach(() => {
                 appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: false };
                 appConfigService.load();
-                alfrescoApiService.reset();
             });
 
             it('should not show login username and password if SSO implicit flow is active', fakeAsync(() => {

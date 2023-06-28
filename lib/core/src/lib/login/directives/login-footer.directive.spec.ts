@@ -20,6 +20,7 @@ import { LoginComponent } from '../components/login.component';
 import { LoginFooterDirective } from './login-footer.directive';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginFooterDirective', () => {
     let fixture: ComponentFixture<LoginComponent>;
@@ -31,6 +32,11 @@ describe('LoginFooterDirective', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: OidcAuthenticationService, useValue: {}
+                }
             ]
         });
         fixture = TestBed.createComponent(LoginComponent);
