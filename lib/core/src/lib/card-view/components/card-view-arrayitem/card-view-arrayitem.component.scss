@@ -40,10 +40,10 @@
         display: flex;
         place-content: center space-between;
         align-items: center;
-        background: var(--adf-card-view-array-background);
-        border: var(--adf-card-view-array-border);
-        border-color: var(--adf-card-view-array-border-color);
-        border-radius: var(--adf-card-view-array-border-radius);
+        background: var(--adf-card-view-array-item-background);
+        border: var(--adf-card-view-array-item-border);
+        border-color: var(--adf-card-view-array-item-border-color);
+        border-radius: var(--adf-card-view-array-item-border-radius);
 
         .mat-chip:hover {
             cursor: pointer;
