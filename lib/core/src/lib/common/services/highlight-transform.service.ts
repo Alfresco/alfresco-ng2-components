@@ -44,14 +44,17 @@ export class HighlightTransformService {
             pattern = pattern.split(' ').filter((t) => t.length > 0).join('|');
 
             const regex = new RegExp(pattern, 'gi');
-            result = text.split('>').pop().split('<')[0].replace(regex, (match) => {
+            result = this.removeHtmlTags(text).replace(regex, (match) => {
                 isMatching = true;
                 return `<span class="${wrapperClass}">${match}</span>`;
             });
-
             return { text: result, changed: isMatching };
         } else {
             return { text: result, changed: isMatching };
         }
+    }
+
+    private removeHtmlTags(text: string): string {
+        return text.split('>').pop().split('<')[0];
     }
 }

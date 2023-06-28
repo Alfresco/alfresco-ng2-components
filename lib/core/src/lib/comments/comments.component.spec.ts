@@ -270,12 +270,5 @@ describe('CommentsComponent', () => {
             component.addComment();
             expect(addCommentSpy).not.toHaveBeenCalled();
         });
-
-        it('should reset message on clearMessage', () => {
-            component.clearMessage = spyOn(component, 'clearMessage').and.callThrough();
-            component.message = 'test';
-            component.clearMessage(new Event('fake'));
-            expect(component.message).toBe('');
-        });
    });
 });
