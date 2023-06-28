@@ -15,16 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import { Subject } from 'rxjs';
 import { endOfDay, format, formatISO, parse, startOfDay } from 'date-fns';
-import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from "@angular/material-date-fns-adapter";
 import { TranslationService } from '@alfresco/adf-core';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced';
 import { FormBuilder, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
+import { enUS } from "date-fns/locale";
 
 const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yy';
 
@@ -33,7 +35,9 @@ const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yy';
     templateUrl: './search-date-range-advanced.component.html',
     styleUrls: ['./search-date-range-advanced.component.scss'],
     providers: [
-        {provide: DateAdapter, useClass: NativeDateAdapter}
+        { provide: DateAdapter, useClass: DateFnsAdapter, deps: [ MAT_DATE_LOCALE ] },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
+        { provide: MAT_DATE_LOCALE, useValue: enUS }
     ],
     encapsulation: ViewEncapsulation.None,
     host: {class: 'adf-search-date-range-advanced'}
@@ -77,10 +81,13 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
 
-    constructor(private translate: TranslationService, private formBuilder: FormBuilder) {}
+    constructor(private translate: TranslationService,
+                private formBuilder: FormBuilder,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig) {}
 
     ngOnInit(): void {
         this.datePickerFormat = this.dateFormat ? this.dateFormat : DEFAULT_DATE_DISPLAY_FORMAT;
+        this.dateFormatConfig.display.dateInput = this.datePickerFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
             parse(this.maxDate, this.datePickerFormat, new Date()) : new Date());
         this.form.controls.dateRangeType.valueChanges.pipe(takeUntil(this.destroy$))
@@ -143,5 +150,3 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         this.updatedDisplayValue.emit(displayLabel);
     }
 }
-
-//TODO: Format dates for Between date range type
