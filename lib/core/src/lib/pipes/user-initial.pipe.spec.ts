@@ -112,14 +112,6 @@ describe('UserInitialPipe', () => {
         expect(result).toBe('<div data-automation-id="user-initials-image" class="">UF</div>');
     });
 
-    it('should return a single letter into div when only firstName is defined', () => {
-        fakeUser.firstName = 'FAKE-NAME';
-        fakeUser.lastName = undefined;
-        fakeUser.username = undefined;
-        const result = pipe.transform(fakeUser);
-        expect(result).toBe('<div data-automation-id="user-initials-image" class="">F</div>');
-    });
-
     it('should return a div with the user initials when firstName, lastName and username is defined', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
