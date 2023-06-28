@@ -57,7 +57,7 @@ describe('SearchFilterTabbedComponent', () => {
                 testField2: 'Field 2',
                 testField3: 'Field 3'
             }
-        }
+        };
         component.valuesToDisplay = {
            testField1: 'test-display-value-1',
            testField2: 'test-display-value-2',
@@ -76,13 +76,13 @@ describe('SearchFilterTabbedComponent', () => {
                 testField2: 'Field 2',
                 testField3: 'Field 3'
             }
-        }
+        };
         fixture.detectChanges();
         const displayedLabelsMap = {
             testField1: 'Field 1',
             testField2: 'Field 2',
             testField3: 'Field 3'
-        }
+        };
         expect(component.displayedLabelsByFieldTranslated.emit).toHaveBeenCalledWith(displayedLabelsMap);
     });
 
