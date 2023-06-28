@@ -88,7 +88,7 @@ jobs:
             const fileName = 'e2e-failures.txt';
 
             const content = read(fileName)
-            core.info('File content:' content);
+            core.info('File content:', content);
             appendContent(content, affectedLib);
 
             function read(filename) {
