@@ -49,7 +49,6 @@ import { SearchFilterMenuCardComponent } from './components/search-filter-chips/
 import { SearchFacetFieldComponent } from './components/search-facet-field/search-facet-field.component';
 import { SearchWidgetChipComponent } from './components/search-filter-chips/search-widget-chip/search-widget-chip.component';
 import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
-import { SearchChipInputComponent } from './components/search-chip-input/search-chip-input.component';
 import { SearchLogicalFilterComponent } from './components/search-logical-filter/search-logical-filter.component';
 import { ResetSearchDirective } from './components/reset-search.directive';
 
@@ -88,7 +87,6 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFacetFieldComponent,
         SearchWidgetChipComponent,
         SearchFacetChipComponent,
-        SearchChipInputComponent,
         SearchLogicalFilterComponent,
         ResetSearchDirective
     ],
@@ -115,7 +113,6 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchFilterChipsComponent,
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
-        SearchChipInputComponent,
         SearchLogicalFilterComponent,
         ResetSearchDirective
     ],

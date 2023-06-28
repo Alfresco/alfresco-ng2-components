@@ -1,4 +1,21 @@
 .adf-search-logical-filter-container {
-    display: flex;
-    flex-direction: column;
+    .adf-search-input {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 15px;
+
+        &:last-child {
+            padding: 0;
+        }
+
+        input {
+            height: 25px;
+            border: 1px solid var(--adf-theme-mat-grey-color-a400);
+            border-radius: 5px;
+            margin-top: 5px;
+            padding: 5px;
+            font-size: 14px;
+            color: var(--adf-theme-foreground-text-color);
+        }
+    }
 }
