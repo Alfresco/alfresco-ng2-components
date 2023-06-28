@@ -86,6 +86,8 @@ jobs:
     if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     name: "Setup"
     runs-on: ubuntu-22.04
+    outputs:
+      AFFECTED_IS_EMPTY: ${{ steps.affected-libs.outputs.affected_is_empty }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -101,11 +103,18 @@ jobs:
           npx nx run cli:bundle
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
+      - name: determine affected code
+        id: affected-libs
+        uses: ./.github/actions/print-affected-libs
+        if: github.event.pull_request.merged == true
+        with:
+          base: HEAD~1
+          head: HEAD
 
   release-demoshell:
     needs: [setup]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: (github.event.pull_request.merged == true && ${{ needs.setup.outputs.AFFECTED_IS_EMPTY == 'false' }} ) || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -131,7 +140,7 @@ jobs:
   release-storybook:
     needs: [setup]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: (github.event.pull_request.merged == true && ${{ needs.setup.outputs.AFFECTED_IS_EMPTY == 'false' }} ) || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -158,7 +167,7 @@ jobs:
   release-npm:
     needs: [setup]
     timeout-minutes: 30
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
+    if: (github.event.pull_request.merged == true && ${{ needs.setup.outputs.AFFECTED_IS_EMPTY == 'false' }} ) || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
