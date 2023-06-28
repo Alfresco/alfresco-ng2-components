@@ -1,11 +1,11 @@
 ---
 Title: Search date range advanced component
-Added: v6.1.0
+Added: v6.2.0
 Status: Active
-Last reviewed: 2023-06-13
+Last reviewed: 2023-06-28
 ---
 
-# [Search date range advanced component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component.ts "Defined in search-date-range.component.ts")
+# [Search date range advanced component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component.ts "Defined in search-date-range-advanced.component.ts")
 
 Represents an advanced date range component for
 the [SearchAdvancedDateRangeTabbedComponent](search-date-range-advanced-tabbed.component.md).
@@ -15,6 +15,7 @@ the [SearchAdvancedDateRangeTabbedComponent](search-date-range-advanced-tabbed.c
 ## Basic usage
 
 ```html
+
 <adf-search-date-range-advanced></adf-search-date-range-advanced>
 ```
 
@@ -34,7 +35,7 @@ the [SearchAdvancedDateRangeTabbedComponent](search-date-range-advanced-tabbed.c
 | Name                | Type                                                                                           | Description                                                                                                                                    |
 |---------------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | updatedQuery        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                           | Emitted whenever a change is made in the component values. Emits the updated query based on the change made.                                   |
-| updatedDisplayValue | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<{ [key: string]: string }>`        | Emitted whenever a change is made in the component values. Emits the displayLabel based on the changes made                                    |
+| updatedDisplayValue | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                           | Emitted whenever a change is made in the component values. Emits the displayLabel based on the changes made                                    |
 | changed             | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Partial<SearchDateRangeAdvanced>>` | Emitted whenever a change is made in the component values. Emits the changes being made in the component.                                      |
 | valid               | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>`                          | Emitted whenever a change is made in the component values. Emits a flag indicating whether the current state of the component is valid or not. |
 
