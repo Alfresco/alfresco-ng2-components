@@ -268,8 +268,6 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: npx nx build demoshell --configuration production
-      - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   build-demoshell:
