@@ -31,8 +31,8 @@ runs:
         script: |
         const fs = require('fs');
 
-        const affectedLib = core.getInput('content', { required: true });
-        const fileName = core.getInput('file-name', { required: true });
+        const affectedLib = core.getInput('content');
+        const fileName = core.getInput('file-name');
 
         const content = read(fileName)
         core.info('File content:' content);
