@@ -138,12 +138,12 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     private updateDisplayValue(searchDateRangeAdvanced: Partial<SearchDateRangeAdvanced>): void {
         let displayLabel = '';
         if (this.form.valid) {
-            if (searchDateRangeAdvanced.dateRangeType === DateRangeType.IN_LAST) {
+            if (searchDateRangeAdvanced.dateRangeType === DateRangeType.IN_LAST && searchDateRangeAdvanced.inLastValue) {
                 displayLabel = this.translate
                     .instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${searchDateRangeAdvanced.inLastValueType}`, {
                         value: searchDateRangeAdvanced.inLastValue
                     });
-            } else if (searchDateRangeAdvanced.dateRangeType === DateRangeType.BETWEEN) {
+            } else if (searchDateRangeAdvanced.dateRangeType === DateRangeType.BETWEEN && searchDateRangeAdvanced.betweenStartDate && searchDateRangeAdvanced.betweenEndDate) {
                 displayLabel = `${format(startOfDay(searchDateRangeAdvanced.betweenStartDate), this.datePickerFormat)} - ${format(endOfDay(searchDateRangeAdvanced.betweenEndDate), this.datePickerFormat)}`;
             }
         }

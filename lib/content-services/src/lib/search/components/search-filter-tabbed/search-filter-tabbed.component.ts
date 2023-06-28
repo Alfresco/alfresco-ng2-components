@@ -47,10 +47,7 @@ export class SearchFilterTabbedComponent {
     @Input()
     set valuesToDisplay(valuesToDisplay: { [key: string]: string }) {
         this.valuesToDisplayCombined.emit(Object.values(valuesToDisplay).every((value) => !value) ?
-            '' : Object.entries(valuesToDisplay).reduce((wholeValueToDisplay, valueToDisplayByField) =>
-                wholeValueToDisplay ?
-                    `${wholeValueToDisplay} ${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`
-                    : `${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]}`, ''));
+            '' : Object.entries(valuesToDisplay).reduce((wholeValueToDisplay, valueToDisplayByField) => this.getWholeDisplayValue(wholeValueToDisplay, valueToDisplayByField), ''));
     }
 
     @Output()
@@ -68,4 +65,12 @@ export class SearchFilterTabbedComponent {
     private displayedLabelsByField: { [key: string]: string };
 
     constructor(private translateService: TranslateService) {}
+
+    private getWholeDisplayValue(wholeValueToDisplay, valueToDisplayByField): string {
+        let displayValue = '';
+        if(valueToDisplayByField && valueToDisplayByField[1] !== '') {
+            displayValue = wholeValueToDisplay.concat(`${this.displayedLabelsByField[valueToDisplayByField[0]].toUpperCase()}: ${valueToDisplayByField[1]} `);
+        }
+        return displayValue;
+    }
 }
