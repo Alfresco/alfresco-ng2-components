@@ -1,11 +1,11 @@
 ---
-Title: Search date range advanced component
-Added: v6.1.0
+Title: Search date range advanced tabbed component
+Added: v6.2.0
 Status: Active
-Last reviewed: 2023-06-13
+Last reviewed: 2023-06-28
 ---
 
-# [Search date range advanced tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component.ts "Defined in search-date-range.component.ts")
+# [Search date range advanced tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component.ts "Defined in search-date-range-advanced-tabbed.component.ts")
 
 Represents a tabbed advanced date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for
 the [Search Filter component](search-filter.component.md).
@@ -93,7 +93,6 @@ in the `dateFormat` and in the `maxDate` setting:
 - [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 - [Search Query Builder service](../services/search-query-builder.service.md)
 - [Search Widget Interface](../interfaces/search-widget.interface.md)
-- [Search Chip Input component](search-chip-input.component.md)
 - [Search check list component](search-check-list.component.md)
 - [Search date range component](search-date-range.component.md)
 - [Search number range component](search-number-range.component.md)

@@ -16,18 +16,15 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-    SearchDateRangeAdvancedComponent,
-    SearchFilterTabbedComponent,
-    SearchWidgetSettings
-} from '@alfresco/adf-content-services';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
+import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
+import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
+import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced/search-date-range-advanced.component';
+import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
