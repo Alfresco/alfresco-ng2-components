@@ -324,10 +324,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         msg: string,
         params?: any
     ) {
-        this._message[field][ruleId] = {
-            value: msg,
-            params
-        };
+        if (field !== '__proto__' && field !== 'constructor' && field !== 'prototype') {
+            this._message[field][ruleId] = {
+                value: msg,
+                params
+            };
+        }
     }
 
     /**
