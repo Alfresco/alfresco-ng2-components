@@ -27,7 +27,8 @@ runs:
         name: ${{ inputs.artifact-name }}
     - name: Append content
       uses: actions/github-script@v6
-      script: |
+      with:
+        script: |
         const fs = require('fs');
 
         const affectedLib = core.getInput('content', { required: true });
