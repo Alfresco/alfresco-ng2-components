@@ -11,6 +11,7 @@
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
         <input matInput type="number" min="1" formControlName="inLastValue" data-automation-id="date-range-advanced-in-last-input">
+        <mat-error *ngIf="form.controls.inLastValue.hasError('required')">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
       <mat-form-field class="adf-search-date-range-form-field">
         <mat-select formControlName="inLastValueType" data-automation-id="date-range-advanced-in-last-dropdown">
@@ -33,6 +34,9 @@
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-advanced-between-datepicker-toggle"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="betweenStartDateFormControl.hasError('required')">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE' | translate }}</mat-error>
+        <mat-error *ngIf="betweenEndDateFormControl.hasError('required')">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE' | translate }}</mat-error>
       </mat-form-field>
     </span>
   </mat-radio-group>

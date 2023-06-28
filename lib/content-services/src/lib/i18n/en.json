@@ -434,6 +434,11 @@
       "BETWEEN_PLACEHOLDERS": {
         "START_DATE": "Start Date",
         "END_DATE": "End Date"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": "Start Date required",
+        "END_DATE": "End Date required"
       }
     },
     "SEARCH_PROPERTIES": {
