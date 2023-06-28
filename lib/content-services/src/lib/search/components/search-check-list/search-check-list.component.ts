@@ -48,7 +48,6 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
-    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     constructor(private translationService: TranslationService) {
@@ -95,9 +94,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         this.clearOptions();
         if (this.id && this.context) {
             this.updateDisplayValue();
-            if (!this.disableUpdateOnSubmit) {
-                this.context.update();
-            }
+            this.context.update();
         }
     }
 
@@ -145,9 +142,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
             this.updateDisplayValue();
-            if(!this.disableUpdateOnSubmit) {
-                this.context.update();
-            }
+            this.context.update();
         }
     }
 }

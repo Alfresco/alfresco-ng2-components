@@ -40,7 +40,6 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     startValue: string;
     isActive = false;
     enableChangeUpdate = true;
-    disableUpdateOnSubmit: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
     ngOnInit() {
@@ -87,16 +86,12 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
-            if (!this.disableUpdateOnSubmit) {
-                this.context.update();
-            }
+            this.context.update();
         }
     }
 
     submitValues() {
-        if(!this.disableUpdateOnSubmit) {
-            this.updateQuery(this.value);
-        }
+        this.updateQuery(this.value);
     }
 
     hasValidValue() {
