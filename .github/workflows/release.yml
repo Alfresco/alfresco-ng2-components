@@ -99,7 +99,7 @@ jobs:
           enable-node-modules-cache: false
       - name: install
         run: |
-          npm ci
+          npm ci 
           npx nx run cli:bundle
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
