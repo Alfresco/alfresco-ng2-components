@@ -94,7 +94,7 @@ jobs:
 
             function read(filename) {
               try {
-                const contentFile = fs.readFileSync(filename, 'utf8');
+                const contentFile = fs.readFileSync(filename, 'utf8').replace('\n','');
                 return contentFile;
               } catch (err) {
                 core.error(err);
@@ -115,6 +115,7 @@ jobs:
               const libs = content.split(',');
               if (libs?.length>0) {
                 if (libs.length === 1 && libs[0] === '') {
+                  core.info('Found file empty occurrence.')
                   libs[0] = append;
                   changedContent = libs[0];
                 }
@@ -126,7 +127,7 @@ jobs:
                 }
               }
               if (changedContent != undefined){
-                core.info('File content append:', changedContent)
+                core.info(`File content append: ${changedContent}`)
                 write(fileName, changedContent);
               }
             }
