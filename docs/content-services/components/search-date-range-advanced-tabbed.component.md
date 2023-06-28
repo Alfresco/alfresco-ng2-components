@@ -10,7 +10,7 @@ Last reviewed: 2023-06-13
 Represents a tabbed advanced date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for
 the [Search Filter component](search-filter.component.md).
 
-![Date Range Advanced Widget](../../docassets/images/search-date-range-advanced.png)
+![Date Range Advanced Widget](../../docassets/images/search-date-range-advanced-tabbed.png)
 
 ## Basic usage
 
@@ -52,24 +52,9 @@ the [Search Filter component](search-filter.component.md).
 
 ## Details
 
-This component creates a tabbed layout where each tab lets the user choose a variety of options to apply date related filters through on the particular field.
-Currently, 3 different kinds of date filters are supported
+This component creates a tabbed layout where each tab consists of the [SearchDateRangeAdvanced](./search-date-range-advanced-tabbed.component.md) component, which allows user to create a query containing multiple date related queries in one go. 
 
-- Anytime - No date filters are applied on the `field`. This option is selected by default
-- In the last - Allows to user to apply a filter to only show results from the last 'n' unit of time. User can set the
-  number as well as the unit of time on the filter. Currently, 3 units are supported - Days, Weeks, and Months.
-    - The search query created while using this option has the following format
-      `<field>:[NOW/DAY-n<unit> TO NOW/DAY+1DAY]`
-    - For e.g., a search query for fetching results created in the last 4 weeks would be
-      `cm:created:[NOW/DAY-4WEEKS TO NOW/DAY+1DAY]`
-- Between - Allows the user to select a range of dates to filter the search results.
-    - The search query created while using this options has the following format
-      `<field>:[<from_date> TO <to_date>]`
-    - For e.g., a search query for fetching the results created between 6 June, 2023 to 10 June, 2023 would be -
-      `cm:created:['2023-06-06T00:00:00+05:30' TO '2023-06-10T23:59:59+05:30']`
-
-See the [Search filter component](search-filter.component.md) for full details of how to use widgets
-in a search query.
+See the [Search filter component](search-filter.component.md) for full details of how to use widgets in a search query.
 
 ### Custom date format
 
