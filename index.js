@@ -2,6 +2,7 @@ const fs = require('fs');
 
             const affectedLib = 'process';
             const fileName = 'text.txt';
+            console.log(JSON.stringify(process.env))
 
             const content = read(fileName)
             console.log('File content:', content);

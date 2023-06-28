@@ -32,7 +32,7 @@ runs:
       with:
         script: |
           const fs = require('fs');
-          core.info(`JSON.stringify(${process.env})`);
+          core.info(JSON.stringify(process.env));
 
           const affectedLib = core.getInput('content', { required: true });
           const fileName = core.getInput('file-name', { required: true });
