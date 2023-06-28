@@ -21,12 +21,13 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, 
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { AlfrescoApiService, BasicAlfrescoAuthService } from '@alfresco/adf-core';
+import { AlfrescoApiService, BasicAlfrescoAuthService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
+import { OidcAuthenticationService } from 'lib/core/src/lib/auth/services/oidc-authentication.service';
 
 describe('AttachFileWidgetDialogComponent', () => {
 
@@ -46,6 +47,7 @@ describe('AttachFileWidgetDialogComponent', () => {
     let documentListService: DocumentListService;
     let apiService: AlfrescoApiService;
     let matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>;
+    let authService: AuthenticationService;
 
     let isLogged = false;
     const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
@@ -58,6 +60,7 @@ describe('AttachFileWidgetDialogComponent', () => {
                 ProcessTestingModule
             ],
             providers: [
+                { provide: OidcAuthenticationService, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 { provide: MatDialogRef, useValue: { close: () => of() } }
             ],
@@ -72,6 +75,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         documentListService = fixture.debugElement.injector.get(DocumentListService);
         matDialogRef = fixture.debugElement.injector.get(MatDialogRef);
         apiService = fixture.debugElement.injector.get(AlfrescoApiService);
+        authService = fixture.debugElement.injector.get(AuthenticationService);
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -192,7 +196,8 @@ describe('AttachFileWidgetDialogComponent', () => {
             usernameInput.dispatchEvent(new Event('input'));
             passwordInput.dispatchEvent(new Event('input'));
             loginButton.click();
-            basicAlfrescoAuthService.onLogin.next('logged In');
+
+            authService.onLogin.next('logged In');
             fixture.detectChanges();
             expect(matDialogRef.close).toHaveBeenCalled();
         });
