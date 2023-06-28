@@ -2,4 +2,9 @@ adf-search-filter-tabbed {
     .mat-tab-label {
         flex: 1;
     }
+
+    .mat-tab-body.mat-tab-body-active .mat-tab-body-content {
+        display: block;
+        visibility: visible !important;
+    }
 }
