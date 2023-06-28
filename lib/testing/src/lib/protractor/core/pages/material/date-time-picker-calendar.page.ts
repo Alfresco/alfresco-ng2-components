@@ -21,8 +21,8 @@ import { BrowserActions } from '../../utils/browser-actions';
 
 export class DateTimePickerCalendarPage {
 
-    datePicker = $(`.mat-datepicker-calendar`);
-    today = $(`.mat-calendar-body-today`);
+    datePicker = $(`[class*='picker-content']`);
+    today = $(`[class*='calendar-body-today']`);
     timePicker = $('.mat-datetimepicker-clock');
     hourTime = $$('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell').first();
     minutesTime = $$('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell').first();
