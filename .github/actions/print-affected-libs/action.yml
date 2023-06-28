@@ -18,4 +18,4 @@ output:
    description: 'true or false accondingly'
 runs:
   using: "node16"
-  main: 'index.js'
+  main: 'dist/index.js'
