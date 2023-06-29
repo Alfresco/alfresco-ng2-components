@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-
 import { Observable, from, throwError, of } from 'rxjs';
 import { AlfrescoApiService, LogService, GroupModel } from '@alfresco/adf-core';
 import { BpmUserModel } from '../models/bpm-user.model';
