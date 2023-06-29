@@ -161,8 +161,8 @@ runs:
       if: failure()
       uses: ./.github/actions/artifact-append
       with:
-        artifact-name: "global-e2e-result"
-        file-name: "e2e-failures.txt"
+        artifact-name: global-e2e-result
+        file-name: e2e-failures.txt
         content: "${{ inputs.e2e-test-id }}"
 
     - name: upload artifacts on gh
