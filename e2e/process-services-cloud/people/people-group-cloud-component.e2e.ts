@@ -119,7 +119,7 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.searchAssignee(apsUser.lastName);
             await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.searchAssignee(testUser.lastName);
-            await peopleCloudComponent.checkUserIsDisplayed(`fake ${testUser.lastName}`);
+            await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
         });
 
         it('One role filtering', async () => {
@@ -243,6 +243,6 @@ describe('People Groups Cloud Component', () => {
             `{"id":"TestId3","firstName":"TestFirstName3","lastName":"TestLastName3"}]`);
         await peopleCloudComponent.checkSelectedPeople('TestFirstName1 TestLastName1');
         await peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
-        await peopleCloudComponent.checkSelectedPeople('fake TestLastName3');
+        await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
     });
 });

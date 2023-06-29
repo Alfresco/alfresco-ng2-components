@@ -111,7 +111,6 @@ jobs:
 
   check-if-pr-is-approved:
     runs-on: ubuntu-22.04
-    if: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -194,7 +193,7 @@ jobs:
     timeout-minutes: 30
     name: "Setup"
     runs-on: ubuntu-22.04
-    needs: [check-package-lock]
+    needs: [check-if-pr-is-approved, check-package-lock]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -494,8 +493,8 @@ jobs:
         id: e2e-result
         uses: ./.github/actions/artifact-extract
         with:
-          artifact-name: "global-e2e-result"
-          file-name: "e2e-failures.txt"
+          artifact-name: global-e2e-result
+          file-name: e2e-failures.txt
       - name: identify-slack-group
         id: groups
         uses: ./.github/actions/slack-group-area
@@ -503,7 +502,7 @@ jobs:
           affected: ${{ steps.e2e-result.outputs.result }}
       - uses: slackapi/slack-github-action@v1.23.0
         name: Nofify QA failure
-        if: ${{ contains(needs.*.result, 'failure') }}
+        if: ${{ github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:

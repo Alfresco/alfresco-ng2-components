@@ -329,7 +329,7 @@ describe('Process filters cloud', () => {
         await editProcessFilter.setProcessName(runningProcessInstance.entry.name);
         await processList.getDataTable().waitTillContentLoaded();
         await editProcessFilter.setProperty('lastModifiedFrom', afterDate);
-        await processList.checkContentIsNotDisplayedByName('fake');
+        await processList.checkContentIsNotDisplayedByName(runningProcessInstance.entry.name);
     });
 
     it('[C311319] Should be able to filter by lastModifiedTo - displays record when date = currentDate', async () => {

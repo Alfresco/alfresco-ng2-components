@@ -182,7 +182,7 @@ describe('content type', () => {
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
-        await expect(defaultType).toBe(false, 'Content type not found');
+        await expect(defaultType).toBe(true, 'Content type not found');
         await viewerPage.clickCloseButton();
     });
 });
