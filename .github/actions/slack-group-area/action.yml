@@ -24,6 +24,7 @@ runs:
       with:
         script: |
           const affectedLib = process.env.affectedLib;
+          core.info(`Input ${affectedLib}`);
 
           const slackGroups = new Set();
           const AlfrescoQAGroup = '@alfresco-testing-qa';
@@ -43,5 +44,6 @@ runs:
           }
 
           const result = Array.from(slackGroups.values()).join(',');
+          core.info(`Result ${result}`);
           core.setOutput('result', result);
 
