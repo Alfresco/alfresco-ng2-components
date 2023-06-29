@@ -506,7 +506,7 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
-          channel-id: 'D056HA6MP6Y' #guild-channel
+          channel-id: 'C016SMNNL8L' #guild-channel
           slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}\nArea: ${{ steps.groups.outputs.groups}}"
       - name: workflow failure
         run: exit 1
