@@ -42,7 +42,6 @@ import { AlfrescoApiParamEncoder } from './alfresco-api/alfresco-api.param-encod
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
-import { AppConfigService, AppConfigValues } from '../../../src/lib/app-config/app-config.service';
 import ee, { Emitter } from 'event-emitter';
 
 export interface Emitters {
@@ -77,7 +76,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         defaultHeaders: {}
     };
 
-    constructor(private httpClient: HttpClient, private appConfig: AppConfigService) {
+    constructor(private httpClient: HttpClient) {
         ee(this);
     }
 
@@ -275,11 +274,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             ...((options.contentType) && {'Content-Type': options.contentType})
         };
 
-        const disableCsrf = this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
-
-        if (!disableCsrf) {
+        if (!this.disableCsrf) {
             this.setCsrfToken(optionsHeaders);
-
         }
 
         return new HttpHeaders(optionsHeaders);
