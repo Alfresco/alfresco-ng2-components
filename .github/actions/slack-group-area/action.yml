@@ -8,7 +8,7 @@ inputs:
     type: string
 
 outputs:
-  result:
+  groups:
     description: "the slack groups"
     value: ${{ steps.group.outputs.result }}
 
@@ -45,5 +45,5 @@ runs:
 
           const result = Array.from(slackGroups.values()).join(',');
           core.info(`Result ${result}`);
-          core.setOutput('result', result);
+          return result;
 
