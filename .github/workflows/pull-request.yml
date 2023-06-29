@@ -496,6 +496,11 @@ jobs:
         with:
           artifact-name: "global-e2e-result"
           file-name: "e2e-failures.txt"
+      - name: identify-slack-group
+        id: groups
+        uses: ./.github/actions/slack-group-area
+        with:
+          affected: ${{ steps.e2e-result.outputs.result }}
       - uses: slackapi/slack-github-action@v1.23.0
         name: Nofify QA failure
         if: ${{ contains(needs.*.result, 'failure') }}
@@ -503,7 +508,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: 'D056HA6MP6Y' #guild-channel
-          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}"
+          slack-message: "🔴 Warning: The daily ADF cronjob failed\nWorkflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\nDetails: ${{ steps.e2e-result.outputs.result }}\nArea: ${{ steps.groups.outputs.groups}}"
       - name: workflow failure
         run: exit 1
         if: ${{ contains(needs.*.result, 'failure') }}
