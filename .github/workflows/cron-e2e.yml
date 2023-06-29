@@ -74,10 +74,37 @@ jobs:
     name: Initialize artifacts
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/artifact-initialize
+      - name: identify-group
+        id: core
+        uses: ./.github/actions/slack-group-area
         with:
-          artifact-name: global-e2e-result
-          file-name: e2e-failures.txt
+          affected: core
+      - run: echo "${{ steps.core.outputs.result}}"
+      - name: identify-group
+        id: content
+        uses: ./.github/actions/slack-group-area
+        with:
+          affected: content-services
+      - run: echo "${{ steps.content.outputs.result}}"
+      - name: identify-group
+        id: process
+        uses: ./.github/actions/slack-group-area
+        with:
+          affected: process-services
+      - run: echo "${{ steps.process.outputs.result}}"
+      - name: identify-group
+        id: cloud
+        uses: ./.github/actions/slack-group-area
+        with:
+          affected: process-services-cloud
+      - run: echo "${{ steps.cloud.outputs.result}}"
+      - name: identify-group
+        id: mix
+        uses: ./.github/actions/slack-group-area
+        with:
+          affected: core,content-services,process-services-cloud
+      - run: echo "${{ steps.mix.outputs.result}}"
+
   run-e2e:
     name: run e2e
     uses: ./.github/workflows/pull-request.yml
