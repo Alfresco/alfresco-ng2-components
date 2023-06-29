@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
-    AlfrescoApiService,
     DataColumnListComponent,
     DataColumnComponent,
     DataColumn,
@@ -27,7 +26,8 @@ import {
     ObjectDataTableAdapter,
     ShowHeaderMode,
     ThumbnailService,
-    AppConfigService
+    AppConfigService,
+    AuthenticationService
 } from '@alfresco/adf-core';
 import { ContentService } from '../../common/services/content.service';
 import { Subject, of, throwError } from 'rxjs';
@@ -69,7 +69,6 @@ const mockDialog = {
 describe('DocumentList', () => {
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
-    let apiService: AlfrescoApiService;
     let customResourcesService: CustomResourcesService;
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
@@ -81,6 +80,7 @@ describe('DocumentList', () => {
     let spyFavorite: any;
     let spyFolder: any;
     let spyFolderNode: any;
+    let authenticationService: AuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -98,11 +98,11 @@ describe('DocumentList', () => {
         documentList = fixture.componentInstance;
 
         documentListService = TestBed.inject(DocumentListService);
-        apiService = TestBed.inject(AlfrescoApiService);
         customResourcesService = TestBed.inject(CustomResourcesService);
         thumbnailService = TestBed.inject(ThumbnailService);
         contentService = TestBed.inject(ContentService);
         appConfigService = TestBed.inject(AppConfigService);
+        authenticationService = TestBed.inject(AuthenticationService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
@@ -622,7 +622,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('lockOwner');
+        spyOn(authenticationService, 'getEcmUsername').and.returnValue('lockOwner');
 
         documentList.actions = [documentMenu];
 
@@ -653,7 +653,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('jerryTheKillerCow');
+        spyOn(authenticationService, 'getEcmUsername').and.returnValue('jerryTheKillerCow');
 
         documentList.actions = [documentMenu];
 
