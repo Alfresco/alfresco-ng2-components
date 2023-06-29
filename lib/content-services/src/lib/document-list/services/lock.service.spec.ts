@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
-import { CoreTestingModule, AlfrescoApiService } from '@alfresco/adf-core';
+import { CoreTestingModule, AuthenticationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { addDays, subDays } from 'date-fns';
@@ -25,7 +25,7 @@ import { addDays, subDays } from 'date-fns';
 describe('PeopleProcessService', () => {
 
     let service: LockService;
-    let apiService: AlfrescoApiService;
+    let authenticationService: AuthenticationService;
 
     const fakeNodeUnlocked: Node = { name: 'unlocked', isLocked: false, isFile: true } as Node;
     const fakeFolderNode: Node = { name: 'unlocked', isLocked: false, isFile: false, isFolder: true } as Node;
@@ -39,7 +39,7 @@ describe('PeopleProcessService', () => {
             ]
         });
         service = TestBed.inject(LockService);
-        apiService = TestBed.inject(AlfrescoApiService);
+        authenticationService = TestBed.inject(AuthenticationService);
     });
 
     it('should return false when no lock is configured', () => {
@@ -145,22 +145,22 @@ describe('PeopleProcessService', () => {
         } as Node;
 
         it('should return false when the user is the lock owner', () => {
-            spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('lock-owner-user');
+            spyOn(authenticationService, 'getEcmUsername').and.returnValue('lock-owner-user');
             expect(service.isLocked(nodeOwnerAllowedLock)).toBeFalsy();
         });
 
         it('should return true when the user is not the lock owner', () => {
-            spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLock)).toBeTruthy();
         });
 
         it('should return false when the user is not the lock owner but the lock is expired', () => {
-            spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithExpiredDate)).toBeFalsy();
         });
 
         it('should return true when is not the lock owner and the expiration date is valid', () => {
-            spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithActiveExpiration)).toBeTruthy();
         });
    });
