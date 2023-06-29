@@ -1,0 +1,90 @@
+name: Append content to Artifact
+description: 'Allow the user to append content to an existing artifact'
+
+inputs:
+  artifact-name:
+    description: 'The name of the artifact'
+    required: true
+    type: string
+  file-name:
+    description: 'The name of the file with extension created in the artifact'
+    required: true
+    type: string
+  content:
+    description: 'The content to append'
+    type: string
+    default: ""
+
+runs:
+  using: "composite"
+
+  steps:
+    - run: echo "Artifact Append"
+      shell: bash
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+    - run: ls
+      shell: bash
+    - name: Append content
+      uses: actions/github-script@v6
+      env:
+        contentFile: ${{ inputs.content }}
+        fileName: ${{ inputs.file-name }}
+      with:
+        script: |
+          const fs = require('fs');
+
+          const affectedLib = process.env.contentFile;
+          const fileName = process.env.fileName;
+          core.info(`Input Filename: ${fileName}`);
+          core.info(`Input content: ${affectedLib}`);
+
+          const content = read(fileName)
+          core.info(`File content: ${content}`);
+          appendContent(content, affectedLib);
+
+          function read(filename) {
+            try {
+              const contentFile = fs.readFileSync(filename, 'utf8').replace('\n','');
+              return contentFile;
+            } catch (err) {
+              core.error(err);
+            }
+          }
+
+          function write(filename, content) {
+            try {
+              fs.writeFileSync(filename, content);
+            } catch (err) {
+              core.error(err);
+            }
+          }
+
+          function appendContent(content, append) {
+            let changedContent;
+            const libs = content.split(' ');
+            if (libs?.length>0) {
+              if (libs.length === 1 && libs[0] === '') {
+                libs[0] = append;
+                changedContent = libs[0];
+              }
+              else if (!libs.includes(append)) {
+                libs.push(append);
+                changedContent = libs.join(' ');
+              } else {
+                core.info(`Lib ${append} already affected`);
+              }
+            }
+            if (changedContent != undefined){
+              core.info(`File content append: ${changedContent}`)
+              write(fileName, changedContent);
+            }
+          }
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.file-name }}
+

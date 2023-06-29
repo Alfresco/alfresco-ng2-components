@@ -1,0 +1,40 @@
+name: Extract Artifact
+description: 'Allow the user to extract content from an artifact'
+
+inputs:
+  artifact-name:
+    description: 'The name of the artifact'
+    required: true
+    type: string
+  file-name:
+    description: 'The name of the file with extension created in the artifact'
+    required: true
+    type: string
+  content:
+    description: 'The init content the file should have'
+    type: string
+    default: ""
+
+outputs:
+  result:
+    description: "the value extrated from the file inside the artifact"
+    value: ${{ steps.extract.outputs.result }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/checkout@v3
+    - run: echo "Artifact Extract"
+      shell: bash
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+    - id: extract
+      shell: bash
+      run: |
+        value=`cat ${{ inputs.file-name }}`
+        echo "print $value"
+        echo "result=$value" >> $GITHUB_OUTPUT
+

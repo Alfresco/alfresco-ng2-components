@@ -1,0 +1,32 @@
+name: Initialize Artifact
+description: 'Allow the user to initialize an empty artifact used globally'
+
+inputs:
+  artifact-name:
+    description: 'The name of the artifact'
+    required: true
+    type: string
+  file-name:
+    description: 'The name of the file with extension created in the artifact'
+    required: true
+    type: string
+  content:
+    description: 'The init content the file should have'
+    type: string
+    default: ""
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/checkout@v3
+    - name: Create empty artifact
+      shell: bash
+      run: 
+        echo "${{inputs.content}}" > ${{ inputs.file-name }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.file-name }}

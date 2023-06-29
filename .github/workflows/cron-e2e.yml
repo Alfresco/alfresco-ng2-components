@@ -1,6 +1,7 @@
 name: "cron e2e daily"
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 12 * * *'
 
@@ -68,6 +69,16 @@ env:
   PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
+  init-artifact:
+    runs-on: ubuntu-latest
+    name: Initialize artifacts
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/artifact-initialize
+        with:
+          artifact-name: global-e2e-result
+          file-name: e2e-failures.txt
+
   run-e2e:
     name: run e2e
     uses: ./.github/workflows/pull-request.yml
