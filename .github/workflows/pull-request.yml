@@ -268,44 +268,14 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  build-demoshell:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Build demoshell"
-    runs-on: ubuntu-22.04
-    needs: [setup]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx build demoshell --configuration production
+      - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  build-storybook:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Build storybook"
-    runs-on: ubuntu-22.04
-    needs: [setup]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-    
   e2e-storybook:
     timeout-minutes: 20
     name: "e2e: storybook"
-    needs: [build-storybook]
+    needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -324,7 +294,7 @@ jobs:
   e2e:
     timeout-minutes: 90
     name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [build-libs]
+    needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -516,7 +486,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [unit-tests, lint, build-demoshell, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
     steps:
       - uses: slackapi/slack-github-action@v1.23.0
         name: Nofify QA failure
