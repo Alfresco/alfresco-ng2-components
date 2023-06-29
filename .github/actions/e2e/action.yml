@@ -158,7 +158,7 @@ runs:
           bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
         fi
     - name: Trace failing e2e
-      if: failure()
+      if: ${{ github.event_name == 'schedule' && failure() }}
       uses: ./.github/actions/artifact-append
       with:
         artifact-name: global-e2e-result
