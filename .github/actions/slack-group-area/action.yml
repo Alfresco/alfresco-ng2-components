@@ -43,7 +43,7 @@ runs:
             slackGroups.add(HxpQAGroup);
           }
 
-          const result = Array.from(slackGroups.values()).join(',');
+          const result = Array.from(slackGroups.values()).join(' ');
           core.info(`Result ${result}`);
           return result;
 
