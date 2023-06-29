@@ -64,7 +64,7 @@ runs:
 
           function appendContent(content, append) {
             let changedContent;
-            const libs = content.split(',');
+            const libs = content.split(' ');
             if (libs?.length>0) {
               if (libs.length === 1 && libs[0] === '') {
                 libs[0] = append;
@@ -72,7 +72,7 @@ runs:
               }
               else if (!libs.includes(append)) {
                 libs.push(append);
-                changedContent = libs.join(',');
+                changedContent = libs.join(' ');
               } else {
                 core.info(`Lib ${append} already affected`);
               }

@@ -30,7 +30,7 @@ runs:
           const AlfrescoQAGroup = '@alfresco-testing-qa';
           const HxpQAGroup = '@hxp-studio-qa-group';
 
-          const libs = affectedLib.split(',')
+          const libs = affectedLib.split(' ')
 
           if (libs.includes('content-services') || libs.includes('process-services')) {
             slackGroups.add(AlfrescoQAGroup);
