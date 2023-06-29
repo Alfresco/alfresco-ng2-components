@@ -109,7 +109,7 @@ function getCommits(options: DiffOptions): Array<Commit> {
     let log = shell.exec(command, { cwd: options.dir, silent: true }).toString();
 
     // https://stackoverflow.com/a/13928240/14644447
-    log = log.trim().replace(/"/gm, '\\"').replace(/\^@\^/gm, '"');
+    log = JSON.stringify(log.trim()).slice(1, -1).replace(/\^@\^/gm, '"');
     if (log.endsWith(',')) {
         log = log.substring(0, log.length - 1);
     }
