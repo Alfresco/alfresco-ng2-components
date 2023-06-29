@@ -51,8 +51,8 @@ runs:
       id: determine-affected
       run: |
         isAffected=false
-        echo "affectedLibs=$(npx nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain)";
-        if [[  $affectedLibs =~ ${{ inputs.e2e-test-id }} ]]; then
+        affectedLibs=$(npx nx print-affected --type=lib --select=projects ${NX_CALCULATION_FLAGS} --plain)
+        if [[  $affectedLibs =~ "${{ inputs.e2e-test-id }}" ]]; then
           isAffected=true
         fi;
         echo "Determine if ${{ inputs.e2e-test-id }} is affected: $isAffected";
