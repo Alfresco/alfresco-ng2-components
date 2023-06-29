@@ -30,6 +30,7 @@ import {
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
+import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 
 export const DEFAULT_OPTION = {
     id: 'empty',
@@ -60,9 +61,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
     isRestApiFailed = false;
+    variableOptionsFailed = false;
     restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
+
+    private readonly defaultVariableOptionId = 'id';
+    private readonly defaultVariableOptionLabel = 'name';
+    private readonly defaultVariableOptionPath = 'data';
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -74,23 +80,111 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        if (this.field.restUrl && !this.isLinkedWidget()) {
-            this.persistFieldOptionsFromRestApi();
-        }
-
-        if (this.isLinkedWidget()) {
-            this.loadFieldOptionsForLinkedWidget();
-
-            this.formService.formFieldValueChanged
-                .pipe(
-                    filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
-                    takeUntil(this.onDestroy$))
-                .subscribe((event: FormFieldEvent) => {
-                    const valueOfParentWidget = event.field.value;
-                    this.parentValueChanged(valueOfParentWidget);
-                });
-        }
+        this.checkFieldOptionsSource();
         this.updateOptions();
+    }
+
+    private checkFieldOptionsSource(): void {
+        switch (true) {
+            case this.field.restUrl && !this.isLinkedWidget():
+                this.persistFieldOptionsFromRestApi();
+                break;
+
+            case this.isLinkedWidget():
+                this.loadFieldOptionsForLinkedWidget();
+                break;
+
+            case this.isVariableOptionType():
+                this.persistFieldOptionsFromVariable();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private persistFieldOptionsFromVariable(): void {
+        const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultVariableOptionPath;
+        const variableName = this.field?.variableConfig?.variableName;
+        const processVariables = this.field?.form?.processVariables;
+        const formVariables = this.field?.form?.variables;
+
+        const dropdownOptions = this.getOptionsFromVariable(processVariables, formVariables, variableName);
+
+        if (dropdownOptions) {
+            const formVariableOptions: FormFieldOption[] = this.getOptionsFromPath(dropdownOptions, optionsPath);
+            this.field.options = formVariableOptions;
+            this.resetInvalidValue();
+            this.field.updateForm();
+        } else {
+            this.handleError(`${variableName} not found`);
+            this.resetOptions();
+            this.variableOptionsFailed = true;
+        }
+    }
+
+    private getOptionsFromPath(data: any, path: string): FormFieldOption[] {
+        const optionsId = this.field?.variableConfig?.optionsId ?? this.defaultVariableOptionId;
+        const optionsLabel = this.field?.variableConfig?.optionsLabel ?? this.defaultVariableOptionLabel;
+
+        const properties = path.split('.');
+        const currentProperty = properties.shift();
+
+        if (!data.hasOwnProperty(currentProperty)) {
+            this.handleError(`${currentProperty} not found in ${JSON.stringify(data)}`);
+            this.variableOptionsFailed = true;
+            return [];
+        }
+
+        const nestedData = data[currentProperty];
+
+        if (Array.isArray(nestedData)) {
+            return this.getOptionsFromArray(nestedData, optionsId, optionsLabel);
+        }
+
+        return this.getOptionsFromPath(nestedData, properties.join('.'));
+    }
+
+    private getOptionsFromArray(nestedData: any[], id: string, label: string): FormFieldOption[] {
+        const options = nestedData.map(item => this.createOption(item, id, label));
+        const hasInvalidOption = options.some(option => !option);
+
+        if (hasInvalidOption) {
+            this.variableOptionsFailed = true;
+            return [];
+        }
+
+        this.variableOptionsFailed = false;
+        return options;
+    }
+
+    private createOption(item: any, id: string, label: string): FormFieldOption {
+        const option: FormFieldOption = {
+            id: item[id],
+            name: item[label]
+        };
+
+        if (!option.id || !option.name) {
+            this.handleError(`'id' or 'label' is not properly defined`);
+            return undefined;
+        }
+
+        return option;
+    }
+
+    private getOptionsFromVariable(processVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[], variableName: string): TaskVariableCloud {
+        const processVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(processVariables, variableName);
+        const formVariableDropdownOptions: TaskVariableCloud = this.getVariableValueByName(formVariables, variableName);
+
+        return processVariableDropdownOptions ?? formVariableDropdownOptions;
+    }
+
+    private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
+        return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)?.value;
+    }
+
+    private isVariableOptionType(): boolean {
+        return this.field?.optionType === 'variable';
     }
 
     private persistFieldOptionsFromRestApi() {
@@ -125,6 +219,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private loadFieldOptionsForLinkedWidget() {
         const parentWidgetValue = this.getParentWidgetValue();
         this.parentValueChanged(parentWidgetValue);
+
+        this.formService.formFieldValueChanged
+            .pipe(
+                filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
+                takeUntil(this.onDestroy$))
+            .subscribe((event: FormFieldEvent) => {
+                const valueOfParentWidget = event.field.value;
+                this.parentValueChanged(valueOfParentWidget);
+            });
     }
 
     private getParentWidgetValue(): string {
@@ -317,7 +420,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     showRequiredMessage(): boolean {
-        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) && this.isTouched() && !this.isRestApiFailed;
+        return (this.isInvalidFieldRequired() || (this.isNoneValueSelected(this.field.value) && this.isRequired())) &&
+            this.isTouched() &&
+            !this.isRestApiFailed &&
+            !this.variableOptionsFailed;
     }
 
     getDefaultOption(options: FormFieldOption[]): FormFieldOption {

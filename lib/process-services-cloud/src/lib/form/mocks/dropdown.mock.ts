@@ -16,6 +16,7 @@
  */
 
 import { FormFieldOption } from '@alfresco/adf-core';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 export const mockConditionalEntries = [
     {
@@ -102,4 +103,80 @@ export const filterOptionList = [
     { id: 'opt_4', name: 'option_4' },
     { id: 'opt_5', name: 'option_5' },
     { id: 'opt_6', name: 'option_6' }
+];
+
+export const mockPlayersResponse = {
+    response: {
+        people: {
+            players:
+                [
+                    {
+                        playerId: 'player-1',
+                        playerFullName: 'Lionel Messi',
+                        totalGoals: 999,
+                        shirtNumber: 10
+                    },
+                    {
+                        playerId: 'player-2',
+                        playerFullName: 'Cristiano Ronaldo',
+                        totalGoals: 15,
+                        shirtNumber: 7
+                    },
+                    {
+                        playerId: 'player-3',
+                        playerFullName: 'Robert Lewandowski',
+                        totalGoals: 500,
+                        shirtNumber: 9
+                    }
+                ]
+        }
+    }
+};
+
+export const mockDefaultResponse = {
+    data:
+    [
+        {
+            id: 'default-pet-1',
+            name: 'Dog'
+        },
+        {
+            id: 'default-pet-2',
+            name: 'Cat'
+        },
+        {
+            id: 'default-pet-3',
+            name: 'Parrot'
+        }
+    ]
+};
+
+export const mockCountriesResponse = {
+    countries: [
+        {
+            id: 'PL',
+            name: 'Poland'
+        },
+        {
+            id: 'UK',
+            name: 'United Kingdom'
+        },
+        {
+            id: 'GR',
+            name: 'Greece'
+        }
+    ]
+};
+
+export const mockFormVariableWithJson = [
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'fake-id-1' })
+];
+
+export const mockProcessVariablesWithJson = [
+    new TaskVariableCloud({ name: 'variables.json-variable', value: mockPlayersResponse, type: 'json', id: 'fake-id-1' }),
+    new TaskVariableCloud({ name: 'variables.different-variable', value: 'fake-value', type: 'json', id: 'fake-id-2' })
+];
+
+export const mockVariablesWithDefaultJson = [
+    new TaskVariableCloud({ name: 'variables.json-default-variable', value: mockDefaultResponse, type: 'json', id: 'fake-id-1' })
 ];

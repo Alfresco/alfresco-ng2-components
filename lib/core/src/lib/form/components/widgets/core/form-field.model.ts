@@ -27,6 +27,7 @@ import { FormWidgetModel } from './form-widget.model';
 import { FormFieldRule } from './form-field-rule';
 import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
+import { VariableConfig } from './form-field-variable-options';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -66,7 +67,7 @@ export class FormFieldModel extends FormWidgetModel {
     restLabelProperty: string;
     hasEmptyValue: boolean;
     className: string;
-    optionType: 'rest' | 'manual' ;
+    optionType: 'rest' | 'manual' | 'variable';
     params: FormFieldMetadata = {};
     hyperlinkUrl: string;
     displayText: string;
@@ -81,6 +82,7 @@ export class FormFieldModel extends FormWidgetModel {
     selectLoggedUser: boolean;
     groupsRestriction: string[];
     leftLabels: boolean = false;
+    variableConfig: VariableConfig;
 
     // container model members
     numberOfColumns: number = 1;
@@ -194,6 +196,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.rule = json.rule;
             this.selectLoggedUser = json.selectLoggedUser;
             this.groupsRestriction = json.groupsRestriction?.groups;
+            this.variableConfig = json.variableConfig;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

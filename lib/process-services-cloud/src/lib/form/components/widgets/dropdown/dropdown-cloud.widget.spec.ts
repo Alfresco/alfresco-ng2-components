@@ -19,7 +19,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
-import { FormFieldModel, FormModel, FormService, setupTestBed, FormFieldEvent, FormFieldTypes } from '@alfresco/adf-core';
+import {
+    FormFieldModel,
+    FormModel,
+    FormService,
+    setupTestBed,
+    FormFieldEvent,
+    FormFieldTypes,
+    LogService
+} from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,16 +35,22 @@ import {
     fakeOptionList,
     filterOptionList,
     mockConditionalEntries,
+    mockFormVariableWithJson,
+    mockPlayersResponse,
     mockRestDropdownOptions,
-    mockSecondRestDropdownOptions
+    mockSecondRestDropdownOptions,
+    mockVariablesWithDefaultJson,
+    mockProcessVariablesWithJson
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 
 describe('DropdownCloudWidgetComponent', () => {
 
     let formService: FormService;
     let widget: DropdownCloudWidgetComponent;
     let formCloudService: FormCloudService;
+    let logService: LogService;
     let overlayContainer: OverlayContainer;
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
@@ -64,6 +78,7 @@ describe('DropdownCloudWidgetComponent', () => {
         formService = TestBed.inject(FormService);
         formCloudService = TestBed.inject(FormCloudService);
         overlayContainer = TestBed.inject(OverlayContainer);
+        logService = TestBed.inject(LogService);
     });
 
     afterEach(() => fixture.destroy());
@@ -874,6 +889,138 @@ describe('DropdownCloudWidgetComponent', () => {
                 const adfLeftLabel = element.querySelector('.adf-left-label');
                 expect(adfLeftLabel).toBeNull();
             });
+        });
+    });
+
+    describe('variable options', () => {
+        let logServiceSpy: jasmine.Spy;
+        const errorIcon: string = 'error_outline';
+
+        const getVariableDropdownWidget = (
+                variableName: string,
+                optionsPath: string,
+                optionsId: string,
+                optionsLabel: string,
+                processVariables?: TaskVariableCloud[],
+                variables?: TaskVariableCloud[]
+            ) => new FormFieldModel(
+            new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
+                id: 'variable-dropdown-id',
+                name: 'variable-options-dropdown',
+                type: 'dropdown',
+                readOnly: 'false',
+                optionType: 'variable',
+                variableConfig: {
+                    variableName,
+                    optionsPath,
+                    optionsId,
+                    optionsLabel
+                }
+            });
+
+        const checkDropdownVariableOptionsFailed = () => {
+            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
+            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
+
+            expect(widget.field.options.length).toEqual(0);
+        };
+
+        beforeEach(() => {
+            logServiceSpy = spyOn(logService, 'error');
+        });
+
+        it('should display options persisted from process variable', async () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            fixture.detectChanges();
+            await openSelect('variable-dropdown-id');
+
+            const optOne: any = fixture.debugElement.query(By.css('[id="player-1"]'));
+            const optTwo: any = fixture.debugElement.query(By.css('[id="player-2"]'));
+            const optThree: any = fixture.debugElement.query(By.css('[id="player-3"]'));
+
+            expect(widget.field.options.length).toEqual(3);
+            expect(optOne.context.value).toBe('player-1');
+            expect(optOne.context.viewValue).toBe('Lionel Messi');
+            expect(optTwo.context.value).toBe('player-2');
+            expect(optTwo.context.viewValue).toBe('Cristiano Ronaldo');
+            expect(optThree.context.value).toBe('player-3');
+            expect(optThree.context.viewValue).toBe('Robert Lewandowski');
+        });
+
+        it('should display options persisted from form variable if there are NO process variables', async () => {
+            widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', [], mockFormVariableWithJson);
+            fixture.detectChanges();
+            await openSelect('variable-dropdown-id');
+
+            const optOne: any = fixture.debugElement.query(By.css('[id="PL"]'));
+            const optTwo: any = fixture.debugElement.query(By.css('[id="UK"]'));
+            const optThree: any = fixture.debugElement.query(By.css('[id="GR"]'));
+
+            expect(widget.field.options.length).toEqual(3);
+            expect(optOne.context.value).toBe('PL');
+            expect(optOne.context.viewValue).toBe('Poland');
+            expect(optTwo.context.value).toBe('UK');
+            expect(optTwo.context.viewValue).toBe('United Kingdom');
+            expect(optThree.context.value).toBe('GR');
+            expect(optThree.context.viewValue).toBe('Greece');
+        });
+
+        it('should display default options if config options are NOT provided', async () => {
+            widget.field = getVariableDropdownWidget('variables.json-default-variable', null, null, null, mockVariablesWithDefaultJson);
+            fixture.detectChanges();
+            await openSelect('variable-dropdown-id');
+
+            const optOne: any = fixture.debugElement.query(By.css('[id="default-pet-1"]'));
+            const optTwo: any = fixture.debugElement.query(By.css('[id="default-pet-2"]'));
+            const optThree: any = fixture.debugElement.query(By.css('[id="default-pet-3"]'));
+
+            expect(widget.field.options.length).toEqual(3);
+            expect(optOne.context.value).toBe('default-pet-1');
+            expect(optOne.context.viewValue).toBe('Dog');
+            expect(optTwo.context.value).toBe('default-pet-2');
+            expect(optTwo.context.viewValue).toBe('Cat');
+            expect(optThree.context.value).toBe('default-pet-3');
+            expect(optThree.context.viewValue).toBe('Parrot');
+        });
+
+        it('should return empty array and display error when path is incorrect', () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith(`wrongPath not found in ${JSON.stringify(mockPlayersResponse.response)}`);
+        });
+
+        it('should return empty array and display error when id is incorrect', () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'wrongId', 'playerFullName', mockProcessVariablesWithJson);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
+        });
+
+        it('should return empty array and display error when label is incorrect', () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'wrongFullName', mockProcessVariablesWithJson);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith(`'id' or 'label' is not properly defined`);
+        });
+
+        it('should return empty array and display error when variable is NOT found', () => {
+            widget.field = getVariableDropdownWidget('variables.wrong-variable-id', 'response.people.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith(`variables.wrong-variable-id not found`);
+        });
+
+        it('should return empty array and display error if there are NO process and form variables', () => {
+            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.people.players', 'playerId', 'playerFullName', [], []);
+            fixture.detectChanges();
+
+            checkDropdownVariableOptionsFailed();
+            expect(logServiceSpy).toHaveBeenCalledWith('variables.json-variable not found');
         });
     });
 });
