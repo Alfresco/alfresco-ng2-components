@@ -46,6 +46,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Determine if affected
+      shell: bash
+      id: determine-affected
+      run: |
+        echo "isAffected=$(./scripts/github/affected-contains.sh ${{ inputs.e2e-test-id }} ${{ inputs.deps }})";
+        echo "Determine if ${{ inputs.e2e-test-id }} with deps ${{ inputs.deps }} is affected: $isAffected";
+        echo "isAffected=$isAffected" >> $GITHUB_OUTPUT
     - name: use APA as PROXY host if apa-proxy is set
       shell: bash
       run: |
@@ -76,7 +83,7 @@ runs:
 
     - name: check EXTERNAL-CS is UP
       shell: bash
-      if: ${{ inputs.check-external-cs-env == 'true' }}
+      if: ${{ inputs.check-external-cs-env == 'true' && steps.determine-affected.isAffected == 'true' }}
       run: |
         echo "running: check EXTERNAL-CS is UP"
         set -u;
@@ -88,7 +95,7 @@ runs:
 
     - name: Check CS is UP
       shell: bash
-      if: ${{ inputs.check-cs-env == 'true' }}
+      if: ${{ inputs.check-cs-env == 'true' && steps.determine-affected.isAffected == 'true' }}
       run: |
         echo "Running: Check CS is UP"
         set -u;
@@ -100,7 +107,7 @@ runs:
 
     - name: check PS is UP
       shell: bash
-      if: ${{ inputs.check-ps-env == 'true' }}
+      if: ${{ inputs.check-ps-env == 'true' && steps.determine-affected.isAffected == 'true' }}
       run: |
         echo "Running: check PS is UP"
         set -u;
@@ -112,7 +119,7 @@ runs:
 
     - name: check PS-CLOUD is UP
       shell: bash
-      if: ${{ inputs.check-ps-cloud-env == 'true' }}
+      if: ${{ inputs.check-ps-cloud-env == 'true' && steps.determine-affected.isAffected == 'true' }}
       run: |
         echo "running: check PS-CLOUD is UP"
         set -u;
@@ -140,6 +147,7 @@ runs:
 
     - name: run test 
       id: e2e_run
+      if: ${{ steps.determine-affected.isAffected == 'true' }}
       env:
         FOLDER: "${{ inputs.e2e-test-folder }}"
         PROVIDER: "${{ inputs.e2e-test-provider }}"
@@ -158,7 +166,7 @@ runs:
           bash ./scripts/github/e2e/e2e.sh "$E2E_TEST_ID" "$DEPS" || exit 1
         fi
     - name: Trace failing e2e
-      if: ${{ github.event_name == 'schedule' && failure() }}
+      if: ${{ steps.determine-affected.isAffected == 'true' && github.event_name == 'schedule' && failure() }}
       uses: ./.github/actions/artifact-append
       with:
         artifact-name: global-e2e-result
@@ -167,6 +175,7 @@ runs:
 
     - name: upload artifacts on gh
       id: upload_gh
+      if: ${{ steps.determine-affected.isAffected == 'true' }}
       uses: actions/upload-artifact@v3
       with:
         name: e2e-artifact-output
