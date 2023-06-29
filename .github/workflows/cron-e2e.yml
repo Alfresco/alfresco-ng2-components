@@ -3,7 +3,7 @@ name: "cron e2e daily"
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 12 * * *'
 
 env:
   BASE_REF: ${{ github.base_ref }}
