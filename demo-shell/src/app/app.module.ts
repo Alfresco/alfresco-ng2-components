@@ -74,7 +74,7 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
-        ...(environment.oidc ? [AuthModule.forRoot({ useHash: true })] : []),
+        AuthModule.forRoot({ useHash: true }),
         FormsModule,
         HttpClientModule,
         MaterialModule,
