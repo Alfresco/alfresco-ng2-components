@@ -295,8 +295,8 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
 
         if (retry < MAX_RETRY) {
             retry++;
-            await forceUndeployFailedApps(failingApps, environmentId)
-            await sleep(TIME);
+            await Promise.all(envs?.map(envId => forceUndeployFailedApps(failingApps, envId)) || [forceUndeployFailedApps(failingApps)]);
+            await sleep(5000);
             await deployMissingApps(tag);
         } else {
             process.exit(1);
@@ -368,18 +368,15 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string, envs?: st
         }
 
         if (noError) {
-            await checkDescriptorExist(currentAbsentApp.name);
-            await sleep(TIME);
-
-            if (envs && envs.length > 0) {
-                for (const envId of envs){
-                    await deployWithPayload(currentAbsentApp, projectRelease, envId);
-                }
-            } else {
-                await deployWithPayload(currentAbsentApp, projectRelease);
-            }
+            await Promise.all(envs?.map(envId => processEnv(TIME, currentAbsentApp, projectRelease, envId)) || [processEnv(TIME, currentAbsentApp, projectRelease)]);
         }
     }
+}
+
+async function processEnv(time: any, currentAbsentApp: any, projectRelease: any, envId?: string) {
+    await checkDescriptorExist(currentAbsentApp.name, envId);
+    await sleep(time);
+    await deployWithPayload(currentAbsentApp, projectRelease, envId);
 }
 
 async function deployWithPayload(currentAbsentApp: any, projectRelease: any, envId?: string) {
@@ -392,13 +389,13 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
         environmentId: envId
     };
 
-    logger.info(`Deploying ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : '' }`);
+    logger.info(`Deploying ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : ''}`);
     await deploy(deployPayload);
-    logger.info(`Deployed ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : '' }`);
+    logger.info(`Deployed ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : ''}`);
 
 }
 
-async function deleteDescriptor(appName: any [], environmentId?: string) {
+async function deleteDescriptor(appName: any [], envId?: string) {
     const url = `${args.host}/deployment-service/v1/descriptors/${appName}`;
 
     const pathParams = {};
@@ -406,7 +403,7 @@ async function deleteDescriptor(appName: any [], environmentId?: string) {
     const headerParams = {};
     const formParams = {};
     const bodyParam = {
-        environmentId: environmentId
+        environmentId: envId
     };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
@@ -419,7 +416,7 @@ async function deleteDescriptor(appName: any [], environmentId?: string) {
     });
 }
 
-async function forceUndeployFailedApps(failedApps: any [], environmentId?: string) {
+async function forceUndeployFailedApps(failedApps: any [], envId?: string) {
 
     for (const appName in failedApps) {
         logger.error(`Force undeploy app in failed status ${appName}`);
@@ -431,7 +428,7 @@ async function forceUndeployFailedApps(failedApps: any [], environmentId?: strin
         const headerParams = {};
         const formParams = {};
         const bodyParam = {
-            environmentId: environmentId
+            environmentId: envId
         };
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
@@ -444,7 +441,7 @@ async function forceUndeployFailedApps(failedApps: any [], environmentId?: strin
     }
 }
 
-async function checkDescriptorExist(name: string) {
+async function checkDescriptorExist(name: string, envId?: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
     const descriptorList = await getDescriptors();
 
@@ -452,7 +449,7 @@ async function checkDescriptorExist(name: string) {
         for (const descriptor of descriptorList.list.entries) {
             if (descriptor.entry.name === name) {
                 if (descriptor.entry.deployed === false) {
-                    await deleteDescriptor(descriptor.entry.name);
+                    await deleteDescriptor(descriptor.entry.name, envId);
                 }
             }
         }
