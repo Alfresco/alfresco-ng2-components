@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <ng-template #initialTemplate>
-                    <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'" data-automation-id="user-initials-image"></div>
+                    <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
                 </ng-template>
             </div>
             <ng-template #showEcmUserImage>
@@ -29,7 +29,7 @@
                              class="adf-userinfo-profile-image"/>
                     </div>
                     <ng-template #initialTemplate>
-                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'" data-automation-id="user-initials-image"></div>
+                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
                     </ng-template>
                 </div>
             </ng-template>

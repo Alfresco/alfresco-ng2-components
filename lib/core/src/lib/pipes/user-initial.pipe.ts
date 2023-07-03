@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserLike } from './user-like.interface';
 
@@ -31,7 +31,12 @@ export class InitialUsernamePipe implements PipeTransform {
         let safeHtml: SafeHtml = '';
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);
-            safeHtml = this.sanitized.sanitize(SecurityContext.HTML,`<div data-automation-id="user-initials-image" class="${className}">${initialResult}</div>`);
+            const div = document.createElement('div');
+            div.innerText = initialResult;
+            div.dataset.automationId = 'user-initials-image';
+            div.className = className;
+
+            safeHtml = this.sanitized.bypassSecurityTrustHtml(div.outerHTML);
         }
         return safeHtml;
     }
