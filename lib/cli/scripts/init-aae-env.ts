@@ -368,12 +368,12 @@ async function checkIfAppIsReleased(missingApps: any [], tag?: string, envs?: st
         }
 
         if (noError) {
-            await Promise.all(envs?.map(envId => processEnv(TIME, currentAbsentApp, projectRelease, envId)) || [processEnv(TIME, currentAbsentApp, projectRelease)]);
+            await Promise.all(envs?.map(envId => deployApps(TIME, currentAbsentApp, projectRelease, envId)) || [deployApps(TIME, currentAbsentApp, projectRelease)]);
         }
     }
 }
 
-async function processEnv(time: any, currentAbsentApp: any, projectRelease: any, envId?: string) {
+async function deployApps(time: any, currentAbsentApp: any, projectRelease: any, envId?: string) {
     await checkDescriptorExist(currentAbsentApp.name, envId);
     await sleep(time);
     await deployWithPayload(currentAbsentApp, projectRelease, envId);
