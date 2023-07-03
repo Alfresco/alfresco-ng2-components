@@ -1,8 +1,8 @@
-<div 
-    id="userinfo_container" 
-    [class.adf-userinfo-name-right]="showOnRight" 
+<div
+    id="userinfo_container"
+    [class.adf-userinfo-name-right]="showOnRight"
     (keyup)="onKeyPress($event)"
-    class="adf-userinfo-container" 
+    class="adf-userinfo-container"
     *ngIf="canShow"
 >
     <span *ngIf="showName" id="adf-userinfo-ecm-name-display" class="adf-userinfo-name">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <ng-template #initialTemplate>
-                    <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
+                    <div [innerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'" data-automation-id="user-initials-image"></div>
                 </ng-template>
             </div>
             <ng-template #showEcmUserImage>
@@ -29,7 +29,7 @@
                              class="adf-userinfo-profile-image"/>
                     </div>
                     <ng-template #initialTemplate>
-                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'" data-automation-id="user-initials-image"></div>
                     </ng-template>
                 </div>
             </ng-template>
