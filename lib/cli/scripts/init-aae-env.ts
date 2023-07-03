@@ -22,7 +22,10 @@ import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
+const MAX_RETRY = 3;
+let retry = 0;
 
 let alfrescoJsApiModeler: any;
 let alfrescoJsApiDevops: any;
@@ -30,6 +33,7 @@ let args: ConfigArgs;
 let isValid = true;
 const absentApps: any [] = [];
 const failingApps: any [] = [];
+
 export interface ConfigArgs {
     modelerUsername: string;
     modelerPassword: string;
@@ -83,7 +87,7 @@ async function getApplicationByStatus(status: string) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
     const pathParams = {};
-    const queryParams = { status };
+    const queryParams = {status};
     const headerParams = {};
     const formParams = {};
     const bodyParam = {};
@@ -129,7 +133,7 @@ function getProjects() {
     const url = `${args.host}/modeling-service/v1/projects`;
 
     const pathParams = {};
-    const queryParams = { maxItems: 1000 };
+    const queryParams = {maxItems: 1000};
     const headerParams = {};
     const formParams = {};
     const bodyParam = {};
@@ -214,7 +218,7 @@ async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = await fs.createReadStream(absoluteFilePath);
 
     try {
-        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
+        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, {file: fileContent}, {}, ['multipart/form-data'], ['application/json']);
         logger.info(`Project imported`);
         logger.info(`Create release`);
         const release = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
@@ -225,27 +229,6 @@ async function importAndReleaseProject(absoluteFilePath: string) {
         logger.error(`Not able to import the project/create the release ${absoluteFilePath} with status: ${error}`);
         isValid = false;
         throw(error);
-    }
-}
-
-function deleteDescriptor(name: string) {
-    const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
-
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
-    const contentTypes = ['application/json'];
-    const accepts = ['application/json'];
-
-    try {
-        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-
-    } catch (error) {
-        logger.error('Delete descriptor' + error.status);
-        isValid = false;
     }
 }
 
@@ -277,13 +260,13 @@ function initializeDefaultToken(options) {
 
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     let ssoHost = configArgs.oauth;
-    ssoHost =  ssoHost ?? configArgs.host;
+    ssoHost = ssoHost ?? configArgs.host;
 
     const config = {
         provider: 'BPM',
         hostBpm: `${configArgs.host}`,
         authType: 'OAUTH',
-        oauth2  : {
+        oauth2: {
             host: `${ssoHost}`,
             tokenUrl: `${ssoHost}/${configArgs.tokenEndpoint}`,
             clientId: `${configArgs.clientId}`,
@@ -303,13 +286,22 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
     findFailingApps(deployedApps.list.entries);
 
     if (failingApps.length > 0) {
-        failingApps.forEach( app => {
+        failingApps.forEach(app => {
             const reset = '\x1b[0m';
             const bright = '\x1b[1m';
             const red = '\x1b[31m';
             logger.error(`${red}${bright}ERROR: App ${app.entry.name} down or inaccessible ${reset}${red} with status ${app.entry.status}${reset}`);
         });
-        process.exit(1);
+
+        if (retry < MAX_RETRY) {
+            retry++;
+            await forceUndeployFailedApps(failingApps, environmentId)
+            await sleep(TIME);
+            await deployMissingApps(tag);
+        } else {
+            process.exit(1);
+        }
+
     } else if (absentApps.length > 0) {
         logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
         await checkIfAppIsReleased(absentApps, tag, envs);
@@ -406,6 +398,52 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
 
 }
 
+async function deleteDescriptor(appName: any [], environmentId?: string) {
+    const url = `${args.host}/deployment-service/v1/descriptors/${appName}`;
+
+    const pathParams = {};
+    const queryParams = {status};
+    const headerParams = {};
+    const formParams = {};
+    const bodyParam = {
+        environmentId: environmentId
+    };
+    const contentTypes = ['application/json'];
+    const accepts = ['application/json'];
+
+    await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
+
+    return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
+        contentTypes, accepts).on('error', (error) => {
+        logger.error(`Delete descriptor ${error} `);
+    });
+}
+
+async function forceUndeployFailedApps(failedApps: any [], environmentId?: string) {
+
+    for (const appName in failedApps) {
+        logger.error(`Force undeploy app in failed status ${appName}`);
+
+        const url = `${args.host}/deployment-service/v1/applications/${appName}`;
+
+        const pathParams = {};
+        const queryParams = {status};
+        const headerParams = {};
+        const formParams = {};
+        const bodyParam = {
+            environmentId: environmentId
+        };
+        const contentTypes = ['application/json'];
+        const accepts = ['application/json'];
+
+        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts).on('error', (error) => {
+            logger.error(`Delete application ${appName} ${error} `);
+        });
+
+    }
+}
+
 async function checkDescriptorExist(name: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
     const descriptorList = await getDescriptors();
@@ -479,7 +517,7 @@ async function sleep(time: number) {
     return;
 }
 
-export default async function() {
+export default async function () {
     await main();
 }
 
@@ -519,7 +557,7 @@ async function main() {
         oauth: options.oauth,
         tokenEndpoint: options.tokenEndpoint,
         scope: options.scope,
-        secret:  options.secret,
+        secret: options.secret,
         tag: options.tag,
         envs: options.envs
     };
