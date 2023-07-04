@@ -1023,18 +1023,9 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(logServiceSpy).toHaveBeenCalledWith('variables.json-variable not found');
         });
 
-        it('should NOT display errors if field is in the preview state', () => {
-            widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
-            widget.field.preview = true;
-            fixture.detectChanges();
-
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(failedErrorMsgElement).toBeNull();
-        });
-
         it('should NOT display errors if form is in the preview state', () => {
             widget.field = getVariableDropdownWidget('variables.json-variable', 'response.wrongPath.players', 'playerId', 'playerFullName', mockProcessVariablesWithJson);
-            widget.field.form.preview = true;
+            spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
             fixture.detectChanges();
 
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));

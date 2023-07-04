@@ -90,7 +90,6 @@ export class FormModel implements ProcessFormModel {
     isValid = true;
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
-    preview: boolean = false;
 
     constructor(
         json?: any,

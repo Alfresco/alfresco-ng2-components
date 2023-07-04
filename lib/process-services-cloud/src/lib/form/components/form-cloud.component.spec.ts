@@ -1093,30 +1093,6 @@ describe('FormCloudComponent', () => {
         expect(formComponent.disableSaveButton).toBeTrue();
     });
 
-    it('should set form preview state', () => {
-        const formModel = new FormModel();
-        formComponent.form = formModel;
-        formComponent.preview = true;
-        formComponent.ngOnChanges({
-            preview: {
-                currentValue: true,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: () => false
-            }
-        });
-
-        expect(formComponent.form.preview).toBe(true);
-    });
-
-    it('should form preview state be false as default', () => {
-        const formModel = new FormModel();
-        formComponent.form = formModel;
-        fixture.detectChanges();
-
-        expect(formComponent.form.preview).toBe(false);
-    });
-
     describe('form validations', () => {
         it('should be able to set visibility conditions for Attach File widget', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));

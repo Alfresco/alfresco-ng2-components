@@ -83,7 +83,6 @@ export class FormFieldModel extends FormWidgetModel {
     groupsRestriction: string[];
     leftLabels: boolean = false;
     variableConfig: VariableConfig;
-    preview: boolean = false;
 
     // container model members
     numberOfColumns: number = 1;

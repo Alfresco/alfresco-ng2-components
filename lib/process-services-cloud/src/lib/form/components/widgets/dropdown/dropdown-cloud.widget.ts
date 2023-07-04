@@ -375,11 +375,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private setPreviewState(): void {
-        this.previewState = this.field?.form?.preview ||this.field?.preview;
+        this.previewState = this.formCloudService.getPreviewState();
     }
 
     private handleError(error: any) {
-        this.logService.error(error);
+        if (!this.previewState) {
+            this.logService.error(error);
+        }
     }
 
     isReadOnlyType(): boolean {
