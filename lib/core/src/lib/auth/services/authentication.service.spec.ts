@@ -16,7 +16,6 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -28,7 +27,6 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 declare let jasmine: any;
 
 describe('AuthenticationService', () => {
-    let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
@@ -44,7 +42,6 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         sessionStorage.clear();
         localStorage.clear();
-        apiService = TestBed.inject(AlfrescoApiService);
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
 
@@ -86,7 +83,6 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('should not require cookie service enabled for ECM check', () => {
@@ -103,10 +99,8 @@ describe('AuthenticationService', () => {
             spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
         it('[ECM] should return an ECM ticket after the login done', (done) => {
@@ -138,7 +132,7 @@ describe('AuthenticationService', () => {
             });
         }));
 
-        fit('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
+        it('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
@@ -205,7 +199,6 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('should require remember me set for BPM check', () => {
@@ -213,20 +206,16 @@ describe('AuthenticationService', () => {
             spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
         it('should not require cookie service enabled for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
             spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).toHaveBeenCalled();
         });
 
         it('[BPM] should return an BPM ticket after the login done', (done) => {
@@ -317,7 +306,6 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
@@ -381,7 +369,6 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
