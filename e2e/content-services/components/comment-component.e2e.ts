@@ -150,7 +150,8 @@ describe('Comment', () => {
             await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
 
-        it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
+        it('[C280022] Should treat HTML code as a regular string', async () => {
+            const resultStr = comments.codeType.replace(/\s\s+/g, ' ');
             await viewerPage.viewFile(pngFileModel.name);
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
@@ -160,7 +161,7 @@ describe('Comment', () => {
             await commentsPage.checkUserIconIsDisplayed();
 
             await commentsPage.getTotalNumberOfComments('Comments (1)');
-            await expect(await commentsPage.getMessage(0)).toEqual('First name: Last name:');
+            await expect(await commentsPage.getMessage(0)).toEqual(resultStr);
             await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
             await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });
