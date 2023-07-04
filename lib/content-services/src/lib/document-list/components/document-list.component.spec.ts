@@ -247,7 +247,6 @@ describe('DocumentList', () => {
     });
 
     it('should not reset the selection when preselectNodes input changes', () => {
-        const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
         documentList.selection = [{ entry: mockNode3 }];
         const changes: SimpleChanges = {
             preselectNodes: {
@@ -261,12 +260,10 @@ describe('DocumentList', () => {
         };
         documentList.ngOnChanges(changes);
 
-        expect(resetSelectionSpy).not.toHaveBeenCalled();
         expect(documentList.selection).toEqual([{ entry: mockNode3 }]);
     });
 
     it('should reset the selection for every change other than preselectNodes', () => {
-        const resetSelectionSpy = spyOn(documentList, 'resetSelection').and.callThrough();
         documentList.selection = [{ entry: mockNode3 }];
         const changes: SimpleChanges = {
             mockChange: {
@@ -280,7 +277,6 @@ describe('DocumentList', () => {
         };
         documentList.ngOnChanges(changes);
 
-        expect(resetSelectionSpy).toHaveBeenCalled();
         expect(documentList.selection).toEqual([]);
     });
 
@@ -1714,12 +1710,10 @@ describe('DocumentList', () => {
             fakeDatatableRows[1].isSelected = false;
             documentList.data.setRows(fakeDatatableRows);
 
-            const getSelectionFromAdapterSpy = spyOn(documentList.data, 'getSelectedRows').and.callThrough();
             documentList.selectionMode = 'multiple';
             documentList.preselectedRows = fakeDatatableRows;
             const selection = documentList.getSelectionBasedOnSelectionMode();
 
-            expect(getSelectionFromAdapterSpy).toHaveBeenCalled();
             expect(selection.length).toEqual(1);
             expect(selection[0]).toEqual(fakeDatatableRows[0]);
         });
@@ -1754,7 +1748,6 @@ describe('DocumentList', () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
             const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
             const onNodeUnselectSpy = spyOn(documentList, 'onNodeUnselect');
-            const getSelectionSpy = spyOn(documentList, 'getSelectionBasedOnSelectionMode').and.callThrough();
 
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
             fakeDatatableRows[0].isSelected = true;
@@ -1767,7 +1760,6 @@ describe('DocumentList', () => {
             selection = documentList.data.getSelectedRows() as ShareDataRow[];
 
             expect(selection).toEqual([]);
-            expect(getSelectionSpy).toHaveBeenCalled();
             expect(getRowByNodeIdSpy).toHaveBeenCalledWith(mockPreselectedNodes[0].entry.id);
             expect(datatableSelectRowSpy).toHaveBeenCalledWith(fakeDatatableRows[0], false);
             expect(onNodeUnselectSpy).toHaveBeenCalledWith({ row: undefined, selection });
@@ -1775,7 +1767,6 @@ describe('DocumentList', () => {
 
         it('should preselect the rows of the preselected nodes', () => {
             const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
-            const getPreselectedNodesSpy = spyOn(documentList, 'getPreselectedNodesBasedOnSelectionMode').and.callThrough();
 
             const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
             documentList.data.setRows(fakeDatatableRows);
@@ -1786,7 +1777,6 @@ describe('DocumentList', () => {
             documentList.preselectRowsOfPreselectedNodes();
             const selectedRows = documentList.data.getSelectedRows();
 
-            expect(getPreselectedNodesSpy).toHaveBeenCalled();
             expect(selectedRows.length).toEqual(2);
             expect(selectedRows[0].isSelected).toEqual(true);
             expect(selectedRows[1].isSelected).toEqual(true);
@@ -1799,9 +1789,6 @@ describe('DocumentList', () => {
         });
 
         it('should select the rows of the preselected nodes and emit the new combined selection', () => {
-            const hasPreselectedNodesSpy = spyOn(documentList, 'hasPreselectedNodes').and.callThrough();
-            const preselectRowsOfPreselectedNodesSpy = spyOn(documentList, 'preselectRowsOfPreselectedNodes').and.callThrough();
-            const getPreselectedRowsBasedOnSelectionModeSpy = spyOn(documentList, 'getPreselectedRowsBasedOnSelectionMode').and.callThrough();
             const onNodeSelectSpy = spyOn(documentList, 'onNodeSelect').and.callThrough();
 
             const fakeDatatableRows = [
@@ -1818,9 +1805,6 @@ describe('DocumentList', () => {
             documentList.onPreselectNodes();
             const selection = documentList.data.getSelectedRows() as ShareDataRow[];
 
-            expect(hasPreselectedNodesSpy).toHaveBeenCalled();
-            expect(preselectRowsOfPreselectedNodesSpy).toHaveBeenCalled();
-            expect(getPreselectedRowsBasedOnSelectionModeSpy).toHaveBeenCalled();
             expect(selection.length).toEqual(3);
             expect(selection[0].id).toEqual(mockNode1.id);
             expect(selection[1].id).toEqual(mockNode2.id);

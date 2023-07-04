@@ -298,38 +298,38 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Emitted when the user clicks a list node */
     @Output()
-    nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
+    nodeClick = new EventEmitter<NodeEntityEvent>();
 
     /** Emitted when the user double-clicks a list node */
     @Output()
-    nodeDblClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
+    nodeDblClick = new EventEmitter<NodeEntityEvent>();
 
     /** Emitted when the current display folder changes */
     @Output()
-    folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
+    folderChange = new EventEmitter<NodeEntryEvent>();
 
     /** Emitted when the user acts upon files with either single or double click
      * (depends on `navigation-mode`). Useful for integration with the
      * Viewer component.
      */
     @Output()
-    preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
+    preview = new EventEmitter<NodeEntityEvent>();
 
     /** Emitted when the Document List has loaded all items and is ready for use */
     @Output()
-    ready: EventEmitter<NodePaging> = new EventEmitter();
+    ready = new EventEmitter<NodePaging>();
 
     /** Emitted when the API fails to get the Document List data */
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter<any>();
 
     /** Emitted when the node selection change */
     @Output()
-    nodeSelected: EventEmitter<NodeEntry[]> = new EventEmitter<NodeEntry[]>();
+    nodeSelected = new EventEmitter<NodeEntry[]>();
 
     /** Emitted when a filter value is selected */
     @Output()
-    filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
+    filterSelection = new EventEmitter<FilterSearch[]>();
 
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
@@ -356,7 +356,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private loadingTimeout;
     private onDestroy$ = new Subject<boolean>();
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
         return this._nodesApi;
@@ -400,7 +400,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return null;
     }
 
-    get hasCustomLayout(): boolean {
+    private get hasCustomLayout(): boolean {
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
     }
 
@@ -653,7 +653,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             node.properties['cm:destination'];
     }
 
-    updateCustomSourceData(nodeId: string): void {
+    private updateCustomSourceData(nodeId: string): void {
         this.currentFolderId = nodeId;
     }
 
@@ -754,7 +754,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /**
      * Creates a set of predefined columns.
      */
-    setupDefaultColumns(preset: string = 'default'): void {
+    private setupDefaultColumns(preset: string = 'default'): void {
         if (this.data) {
             const columns = this.getLayoutPreset(preset);
             this.data.setColumns(columns);
@@ -938,7 +938,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.filterSelection.emit(activeFilters);
     }
 
-    resetNewFolderPagination() {
+    private resetNewFolderPagination() {
         this._pagination.skipCount = 0;
         this._pagination.maxItems = this.maxItems;
     }
@@ -986,7 +986,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    preserveExistingSelection() {
+    private preserveExistingSelection() {
         if (this.isMultipleSelectionMode()) {
             for (const selection of this.selection) {
                 const rowOfSelection = this.data.getRowByNodeId(selection.entry.id);
@@ -1020,19 +1020,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    isSingleSelectionMode(): boolean {
+    private isSingleSelectionMode(): boolean {
         return this.selectionMode === 'single';
     }
 
-    isMultipleSelectionMode(): boolean {
+    private isMultipleSelectionMode(): boolean {
         return this.selectionMode === 'multiple';
     }
 
-    hasPreselectedNodes(): boolean {
+    private hasPreselectedNodes(): boolean {
         return this.preselectNodes?.length > 0;
     }
 
-    hasPreselectedRows(): boolean {
+    private hasPreselectedRows(): boolean {
         return this.preselectedRows?.length > 0;
     }
 }
