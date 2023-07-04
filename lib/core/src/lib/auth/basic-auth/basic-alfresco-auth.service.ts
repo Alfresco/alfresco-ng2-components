@@ -54,14 +54,20 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     ) {
         super(appConfig, cookie, logService);
 
+        this.appConfig.onLoad.subscribe(() => {
+            if (this.isLoggedIn()) {
+                this.onLogin.next('logged-in');
+            }
+        });
+
         this.contentAuth.onLogout.pipe(map((event) => {
             this.onLogout.next(event);
         }));
         this.contentAuth.onLogin.pipe(map((event) => {
-            this.onLogout.next(event);
+            this.onLogin.next(event);
         }));
         this.contentAuth.onError.pipe(map((event) => {
-            this.onLogout.next(event);
+            this.onError.next(event);
         }));
         this.processAuth.onLogout.pipe(map((event) => {
             this.onLogout.next(event);
@@ -185,7 +191,25 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     }
 
     getToken(): string {
-        return '';
+        if (this.isBPMProvider()) {
+            return this.processAuth.getToken();
+        } else if (this.isECMProvider()) {
+            return this.contentAuth.getToken();
+        } else if (this.isALLProvider()) {
+            return this.contentAuth.getToken();
+        }else{
+            return '';
+        }
+    }
+
+    /** @deprecated */
+    getTicketEcm(): string{
+        return this.contentAuth.getToken();
+    }
+
+    /** @deprecated */
+    getTicketBpm(): string{
+        return this.processAuth.getToken();
     }
 
     isBpmLoggedIn(): boolean {
@@ -213,17 +237,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     /**
      * logout Alfresco API
      * */
-    logout(): Promise<any> {
+    async logout(): Promise<any> {
         if (this.isBPMProvider()) {
             return this.processAuth.logout();
         } else if (this.isECMProvider()) {
-            const contentPromise = this.contentAuth.logout();
-            contentPromise.then(
-                () => this.contentAuth.ticket = undefined,
-                () => {
-                }
-            );
-            return contentPromise;
+            return this.contentAuth.logout();
         } else if (this.isALLProvider()) {
             return this.logoutBPMECM();
         }
@@ -321,9 +339,9 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         const contextRoot = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM);
 
         if (contextRoot && requestUrl.indexOf(contextRoot) !== -1) {
-            ticket = 'Basic ' + btoa(this.contentAuth.getTicket());
+            ticket = 'Basic ' + btoa(this.contentAuth.getToken());
         } else if (contextRootBpm && requestUrl.indexOf(contextRootBpm) !== -1) {
-            ticket = 'Basic ' + this.processAuth.getTicket();
+            ticket = 'Basic ' + this.processAuth.getToken();
         }
 
         return ticket;

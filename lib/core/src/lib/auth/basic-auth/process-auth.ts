@@ -91,11 +91,11 @@ export class ProcessAuth {
             accept: 'application/json'
         };
 
-        let promise: any = new Promise((resolve, reject) => {
+        const promise: any = new Promise((resolve, reject) => {
             this.adfHttpClient.post(this.basePath + '/app/authentication', options).then(
                 () => {
                     this.saveUsername(username);
-                    let ticket = this.basicAuth(this.authentications.basicAuth.username, this.authentications.basicAuth.password);
+                    const ticket = this.basicAuth(this.authentications.basicAuth.username, this.authentications.basicAuth.password);
                     this.setTicket(ticket);
                     this.onLogin.next('success');
                     this.adfHttpClient.emit('success');
@@ -188,7 +188,7 @@ export class ProcessAuth {
     /**
      * Get the current Ticket
      * */
-    getTicket(): string {
+    getToken(): string {
         if(!this.ticket){
             this.onError.next('error');
             return null;

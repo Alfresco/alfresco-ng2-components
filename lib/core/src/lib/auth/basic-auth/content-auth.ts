@@ -133,9 +133,9 @@ export class ContentAuth {
         return new Promise((resolve, reject) => {
             this.deleteTicket().then(
                 () => {
+                    this.invalidateSession();
                     this.adfHttpClient.emit('logout');
                     this.onLogout.next('logout');
-                    this.invalidateSession();
                     resolve('logout');
                 },
                 (error) => {
@@ -164,7 +164,7 @@ export class ContentAuth {
     /**
      * Get the current Ticket
      * */
-    getTicket(): string {
+    getToken(): string {
         if(!this.ticket){
             this.onError.next('error');
         }
