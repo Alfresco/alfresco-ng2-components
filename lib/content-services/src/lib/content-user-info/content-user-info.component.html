@@ -1,8 +1,8 @@
-<div 
-    id="userinfo_container" 
-    [class.adf-userinfo-name-right]="showOnRight" 
+<div
+    id="userinfo_container"
+    [class.adf-userinfo-name-right]="showOnRight"
     (keyup)="onKeyPress($event)"
-    class="adf-userinfo-container" 
+    class="adf-userinfo-container"
     *ngIf="canShow"
 >
     <span *ngIf="showName" id="adf-userinfo-ecm-name-display" class="adf-userinfo-name">
