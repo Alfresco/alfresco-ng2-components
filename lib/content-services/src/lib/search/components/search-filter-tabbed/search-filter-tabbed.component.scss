@@ -18,8 +18,7 @@ adf-search-filter-tabbed {
         display: none;
     }
 
-    .mat-tab-body.mat-tab-body-active .mat-tab-body-content {
-        display: block;
-        visibility: visible !important;
+    .mat-ink-bar {
+        display: none;
     }
 }

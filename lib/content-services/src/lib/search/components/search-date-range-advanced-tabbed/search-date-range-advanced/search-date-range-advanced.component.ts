@@ -177,4 +177,27 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 return true;
         }
     }
+
+    // dateChanged(event: Event, formControl: FormControl<Date | null>) {
+    //     clearTimeout(this.dateChangeDebounce);
+    //     this.dateChangeDebounce = window.setTimeout(() => {
+    //         if (!event?.target['value']) {
+    //             formControl.errors.required = true;
+    //             formControl.errors.dateFormatInvalid = false;
+    //         } else {
+    //             const date = parse(event.target['value'], this.datePickerFormat, new Date());
+    //             if(!isValid(date)) {
+    //                 formControl.errors.dateFormatInvalid = true;
+    //             } else {
+    //                 formControl.errors.dateFormatInvalid = false;
+    //                 formControl.setValue(date);
+    //             }
+    //         }
+    //     }, 500);
+    // }
+
+    onLastDateValueChanged(event: Event) {
+        let value: string = event.target['value'];
+        event.target['value'] = value.replace(/[-.]*0*([1-9]*[0-9]*)/g, '$1');
+    }
 }

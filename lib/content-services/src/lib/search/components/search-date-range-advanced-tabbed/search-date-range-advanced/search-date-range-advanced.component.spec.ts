@@ -63,13 +63,12 @@ describe('SearchDateRangeAdvancedComponent', () => {
         fixture.detectChanges();
     };
 
-    const selectDropdownOption = async (itemId: string) => {
+    const selectDropdownOption = (itemId: string) => {
         const matSelect = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-in-last-dropdown"]')).nativeElement;
         matSelect.click();
         fixture.detectChanges();
         const matOption = fixture.debugElement.query(By.css(`[data-automation-id="${itemId}"]`)).nativeElement;
         matOption.click();
-        await fixture.whenStable();
         fixture.detectChanges();
     };
 

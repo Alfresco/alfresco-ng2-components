@@ -57,7 +57,6 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     @Input()
     value: any;
 
-
     componentRef: ComponentRef<any>;
 
     constructor(
