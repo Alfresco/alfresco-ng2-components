@@ -18,7 +18,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { Observable, of } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { BaseAuthenticationService } from './base-authentication.service';
 import { AppConfigService } from '../../app-config';
 import { CookieService, LogService } from '../../common';
@@ -70,7 +70,7 @@ export class AuthenticationService extends BaseAuthenticationService {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.logout();
         } else {
-            return of(this.basicAlfrescoAuthService.logout());
+            return from(this.basicAlfrescoAuthService.logout());
         }
     }
 
