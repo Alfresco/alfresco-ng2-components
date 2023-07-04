@@ -192,7 +192,7 @@
                     </mat-menu>
                 </div>
 
-                <div *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
+                <label *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
                     <mat-checkbox
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
@@ -201,7 +201,7 @@
                         class="adf-checkbox-sr-only">
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
-                </div>
+                </label>
                 <div *ngFor="let col of (data.getColumns() | filterOutEvery:'isHidden':true);"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"

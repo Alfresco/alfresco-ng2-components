@@ -296,8 +296,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
     .adf-datatable-row {
         display: flex;
         align-items: center;
-        padding-left: 15px;
-        padding-right: 15px;
 
         .adf-datatable-checkbox {
             max-width: $data-table-thumbnail-width;
@@ -384,6 +382,16 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         align-items: center;
         display: flex;
         min-height: inherit;
+
+        &:first-child {
+            padding-left: 15px;
+            box-sizing: content-box;
+        }
+
+        &:last-child {
+            padding-right: 15px;
+            box-sizing: content-box;
+        }
 
         .adf-datatable-cell-container {
             overflow: hidden;
