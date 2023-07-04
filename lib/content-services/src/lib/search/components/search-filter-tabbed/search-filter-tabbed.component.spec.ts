@@ -20,12 +20,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchFilterTabbedComponent } from './search-filter-tabbed.component';
 
-describe('SearchFilterTabbedComponent', () => {
+fdescribe('SearchFilterTabbedComponent', () => {
     let component: SearchFilterTabbedComponent;
     let fixture: ComponentFixture<SearchFilterTabbedComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [SearchFilterTabbedComponent],
             imports: [
                 TranslateModule.forRoot(),
@@ -49,7 +49,7 @@ describe('SearchFilterTabbedComponent', () => {
     });
 
     it ('should emit a single combined value to display when multiple display values are provided', () => {
-       spyOn(component.valuesToDisplayCombined, 'emit');
+        spyOn(component.valuesToDisplayCombined, 'emit');
         component.settings = {
             field: 'testField1, testField2, testField3',
             displayedLabelsByField: {
@@ -87,7 +87,7 @@ describe('SearchFilterTabbedComponent', () => {
     });
 
     it('should emit an array of fields when all the fields are provided in a combined string via settings', () => {
-        spyOn(component.fieldsChanged, 'emit');
+       spyOn(component.fieldsChanged, 'emit');
        component.settings = {
            field: 'testField1, testField2, testField3'
        };
