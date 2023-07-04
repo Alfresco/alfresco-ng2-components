@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
 import { DateRangeType } from './search-date-range-advanced/date-range-type';
@@ -26,7 +26,8 @@ import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
 
 @Component({
   selector: 'adf-search-date-range-advanced-tabbed',
-  templateUrl: './search-date-range-advanced-tabbed.component.html'
+  templateUrl: './search-date-range-advanced-tabbed.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     displayValue$ = new Subject<string>();
@@ -64,9 +65,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
         this.startValue = {
             ...this.startValue
         };
-        setTimeout(() => {
-            this.submitValues();
-        });
+        this.submitValues();
     }
 
     setValue(value: { [key: string]: SearchDateRangeAdvanced }) {

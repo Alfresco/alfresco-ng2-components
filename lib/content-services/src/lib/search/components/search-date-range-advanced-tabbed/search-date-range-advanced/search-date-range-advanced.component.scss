@@ -2,6 +2,7 @@
     .mat-radio-group {
         display: flex;
         flex-direction: column;
+        padding: 5px;
     }
 
     .mat-radio-button {
@@ -20,6 +21,15 @@
         .adf-search-date-range-form-field {
             padding-left: 10px;
             flex: 1;
+
+            &.mat-form-field-disabled .mat-form-field-underline {
+                background-size: 0;
+                border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
+            }
+
+            .mat-date-range-input-inner {
+                color: var(--adf-theme-foreground-text-color);
+            }
         }
     }
 }

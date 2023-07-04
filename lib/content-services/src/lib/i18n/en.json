@@ -437,8 +437,14 @@
       },
       "ERROR": {
         "IN_LAST": "Value required",
-        "START_DATE": "Start Date required",
-        "END_DATE": "End Date required"
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid"
+        }
       }
     },
     "SEARCH_PROPERTIES": {

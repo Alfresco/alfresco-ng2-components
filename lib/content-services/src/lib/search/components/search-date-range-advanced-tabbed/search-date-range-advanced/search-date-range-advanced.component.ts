@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { endOfDay, format, formatISO, parse, startOfDay } from 'date-fns';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { TranslationService } from '@alfresco/adf-core';
 import { InLastDateType } from './in-last-date-type';
@@ -28,7 +28,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { enUS } from 'date-fns/locale';
 
-const DEFAULT_DATE_DISPLAY_FORMAT: string = 'dd-MMM-yy';
+const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range-advanced',
@@ -83,7 +83,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
 
     constructor(private translate: TranslationService,
                 private formBuilder: FormBuilder,
-                @Inject(MAT_DATE_FORMATS) private dateFormatConfig) {}
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig:MatDateFormats) {}
 
     ngOnInit(): void {
         this.datePickerFormat = this.dateFormat ? this.dateFormat : DEFAULT_DATE_DISPLAY_FORMAT;
@@ -102,18 +102,22 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     }
 
     private updateValidators(dateRangeType: DateRangeType) {
-        if (dateRangeType === DateRangeType.BETWEEN) {
-            this.betweenStartDateFormControl.setValidators(Validators.required);
-            this.betweenEndDateFormControl.setValidators(Validators.required);
-            this.form.controls.inLastValue.clearValidators();
-        } else if (dateRangeType === DateRangeType.IN_LAST) {
-            this.form.controls.inLastValue.setValidators(Validators.required);
-            this.betweenStartDateFormControl.clearValidators();
-            this.betweenEndDateFormControl.clearValidators();
-        } else if (dateRangeType === DateRangeType.ANY) {
-            this.form.controls.inLastValue.clearValidators();
-            this.betweenStartDateFormControl.clearValidators();
-            this.betweenEndDateFormControl.clearValidators();
+        switch(dateRangeType) {
+            case DateRangeType.BETWEEN:
+                this.betweenStartDateFormControl.setValidators(Validators.required);
+                this.betweenEndDateFormControl.setValidators(Validators.required);
+                this.form.controls.inLastValue.clearValidators();
+                break;
+            case DateRangeType.IN_LAST:
+                this.form.controls.inLastValue.setValidators(Validators.required);
+                this.betweenStartDateFormControl.clearValidators();
+                this.betweenEndDateFormControl.clearValidators();
+                break;
+            case DateRangeType.ANY:
+                this.form.controls.inLastValue.clearValidators();
+                this.betweenStartDateFormControl.clearValidators();
+                this.betweenEndDateFormControl.clearValidators();
+                break;
         }
         this.betweenStartDateFormControl.updateValueAndValidity();
         this.betweenEndDateFormControl.updateValueAndValidity();
@@ -148,5 +152,28 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
             }
         }
         this.updatedDisplayValue.emit(displayLabel);
+    }
+
+    // dateChanged(event: Event, formControl: FormControl<Date | null>) {
+    //     clearTimeout(this.dateChangeDebounce);
+    //     this.dateChangeDebounce = window.setTimeout(() => {
+    //         if (!event?.target['value']) {
+    //             formControl.errors.required = true;
+    //             formControl.errors.dateFormatInvalid = false;
+    //         } else {
+    //             const date = parse(event.target['value'], this.datePickerFormat, new Date());
+    //             if(!isValid(date)) {
+    //                 formControl.errors.dateFormatInvalid = true;
+    //             } else {
+    //                 formControl.errors.dateFormatInvalid = false;
+    //                 formControl.setValue(date);
+    //             }
+    //         }
+    //     }, 500);
+    // }
+
+    onLastDateValueChanged(event: Event) {
+        let value: string = event.target['value'];
+        event.target['value'] = value.replace(/[-.]*0*([1-9]*[0-9]*)/g, '$1');
     }
 }

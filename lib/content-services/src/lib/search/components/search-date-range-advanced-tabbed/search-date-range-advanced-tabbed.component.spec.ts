@@ -70,26 +70,24 @@ export class MockSearchDateRangeAdvancedComponent {
     @Output()
     valid = new EventEmitter<boolean>();
 }
-describe('SearchDateRangeAdvancedTabbedComponent', () => {
+fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
     let component: SearchDateRangeAdvancedTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
 
-    async function clickApplyBtn() {
+    function clickApplyBtn() {
         const applyBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-btn-apply"]')).nativeElement;
         applyBtn.click();
         fixture.detectChanges();
-        await fixture.whenStable();
     }
 
-    async function clickResetBtn() {
+    function clickResetBtn() {
         const clearBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-btn-clear"]')).nativeElement;
         clearBtn.click();
         fixture.detectChanges();
-        await fixture.whenStable();
     }
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach( () => {
+        TestBed.configureTestingModule({
             declarations: [SearchDateRangeAdvancedTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeAdvancedComponent],
             imports: [
                 TranslateModule.forRoot(),
@@ -112,7 +110,7 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         component.settings = {
             hideDefaultAction: false,
             dateFormat: 'dd-MMM-yy',
-            maxDate: 'oday',
+            maxDate: 'today',
             field: 'test-field-1, test-field-2',
             displayedLabelsByField: {
                 'test-field-1': 'Test Field 1',
@@ -126,18 +124,18 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should update displayValue when values are submitted', async () => {
+    it('should update displayValue when values are submitted', () => {
         spyOn(component.displayValue$, 'next');
         component.combinedValuesToDisplay = 'test-combined-values-to-display';
-        await clickApplyBtn();
+        clickApplyBtn();
         expect(component.displayValue$.next).toHaveBeenCalledWith('test-combined-values-to-display');
     });
 
-    it('should clear values when widget is reset', async () => {
+    it('should clear values when widget is reset', () => {
         spyOn(component.displayValue$, 'next');
         component.combinedValuesToDisplay = 'test-combined-values-to-display';
-        await clickResetBtn();
-        await fixture.whenStable();
+        component.context.queryFragments[component.id] = 'test';
+        clickResetBtn();
         expect(component.queries).toEqual({'test-field-1': '', 'test-field-2': ''});
         expect(component.valuesToDisplay).toEqual({'test-field-1': '', 'test-field-2': ''});
         expect(component.context.queryFragments[component.id]).toEqual('');
@@ -145,9 +143,9 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
     });
 
-    it('should trigger context.update() when when values are submitted', async () => {
+    it('should trigger context.update() when when values are submitted', () => {
         component.combinedQuery = 'test-combined-query';
-        await clickApplyBtn();
+        clickApplyBtn();
         expect(component.context.update).toHaveBeenCalled();
     });
 
