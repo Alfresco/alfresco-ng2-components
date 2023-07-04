@@ -62,6 +62,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     showInputFilter = false;
     isRestApiFailed = false;
     variableOptionsFailed = false;
+    previewState = false;
     restApiHostName: string;
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
@@ -80,6 +81,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
+        this.setPreviewState();
         this.checkFieldOptionsSource();
         this.updateOptions();
     }
@@ -372,8 +374,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return this.field.optionType === 'rest' && !!this.field.restUrl;
     }
 
+    private setPreviewState(): void {
+        this.previewState = this.formCloudService.getPreviewState();
+    }
+
     private handleError(error: any) {
-        this.logService.error(error);
+        if (!this.previewState) {
+            this.logService.error(error);
+        }
     }
 
     isReadOnlyType(): boolean {

@@ -229,4 +229,8 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         }
         return null;
     }
+
+    getPreviewState(): boolean {
+        return false;
+    }
 }
