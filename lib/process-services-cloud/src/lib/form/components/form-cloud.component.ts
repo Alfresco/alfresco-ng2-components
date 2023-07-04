@@ -82,9 +82,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
-    @Input()
-    preview: boolean = false;
-
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -178,10 +175,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (data && data.currentValue) {
             this.refreshFormData();
             return;
-        }
-
-        if (changes?.preview?.currentValue) {
-            this.setFormPreviewState();
         }
     }
 
@@ -362,10 +355,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.form = this.parseForm(this.formCloudRepresentationJSON);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
-    }
-
-    private setFormPreviewState(): void {
-        this.form.preview = this.preview;
     }
 
     protected onFormLoaded(form: FormModel) {

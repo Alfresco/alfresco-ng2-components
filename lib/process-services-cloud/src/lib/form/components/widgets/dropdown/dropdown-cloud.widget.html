@@ -32,14 +32,12 @@
                 <mat-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div *ngIf="!previewState">
-            <error-widget [error]="field.validationSummary"></error-widget>
-            <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage()"
-                        required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-            <error-widget class="adf-dropdown-failed-message" *ngIf="isRestApiFailed"
-                        required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"></error-widget>
-            <error-widget class="adf-dropdown-failed-message" *ngIf="variableOptionsFailed"
-                        required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"></error-widget>
-        </div>
+        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage()"
+                    required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+        <error-widget class="adf-dropdown-failed-message" *ngIf="isRestApiFailed"
+                    required="{{ 'FORM.FIELD.REST_API_FAILED' | translate: { hostname: restApiHostName } }}"></error-widget>
+        <error-widget class="adf-dropdown-failed-message" *ngIf="variableOptionsFailed"
+                    required="{{ 'FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED' | translate }}"></error-widget>
     </div>
 </div>

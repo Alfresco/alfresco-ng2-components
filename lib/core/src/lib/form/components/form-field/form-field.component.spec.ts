@@ -103,29 +103,6 @@ describe('FormFieldComponent', () => {
         });
     });
 
-    it('should set field preview state', () => {
-        const field = new FormFieldModel(form, {
-            type: FormFieldTypes.DROPDOWN,
-            id: 'FAKE-DROPDOWN-WIDGET'
-        });
-        component.field = field;
-        component.preview = true;
-        fixture.detectChanges();
-
-        expect(component.field.preview).toBe(true);
-    });
-
-    it('should field preview state be false as default', () => {
-        const field = new FormFieldModel(form, {
-            type: FormFieldTypes.DROPDOWN,
-            id: 'FAKE-DROPDOWN-WIDGET'
-        });
-        component.field = field;
-        fixture.detectChanges();
-
-        expect(component.field.preview).toBe(false);
-    });
-
     it('should hide the field when it is not visible', (done) => {
         const field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT,

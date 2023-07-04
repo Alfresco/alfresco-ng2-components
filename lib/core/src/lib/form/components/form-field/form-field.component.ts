@@ -63,9 +63,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     @Input()
     field: FormFieldModel = null;
 
-    @Input()
-    preview: boolean = false;
-
     componentRef: ComponentRef<any>;
 
     focus: boolean = false;
@@ -83,7 +80,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
         const originalField = this.getField();
         if (originalField) {
-            this.setFieldPreviewState();
             const customTemplate = this.field.form.customFieldTemplates[originalField.type];
             if (customTemplate && this.hasController(originalField.type)) {
                 const factory = this.getComponentFactorySync(originalField.type, customTemplate);
@@ -156,10 +152,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         const module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);
-    }
-
-    private setFieldPreviewState(): void {
-        this.field.preview = this.preview;
     }
 
     focusToggle() {
