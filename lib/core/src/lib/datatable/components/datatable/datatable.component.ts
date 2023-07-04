@@ -896,7 +896,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
-    datatableLayoutFix() {
+    private datatableLayoutFix() {
         const maxGalleryRows = 25;
 
         if (this.display === 'gallery') {
