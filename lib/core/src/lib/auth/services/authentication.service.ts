@@ -23,6 +23,7 @@ import { BaseAuthenticationService } from './base-authentication.service';
 import { AppConfigService } from '../../app-config';
 import { CookieService, LogService } from '../../common';
 import { HttpHeaders } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +35,11 @@ export class AuthenticationService extends BaseAuthenticationService {
                 logService: LogService,
                 private injector: Injector) {
         super(appConfig, cookie, logService);
+
+        (this.isOauth() ? this.oidcAuthenticationService.onLogin : this.basicAlfrescoAuthService.onLogin)
+            .pipe(
+                tap(() => this.onLogin.next())
+            ).subscribe();
     }
 
     private get oidcAuthenticationService(): OidcAuthenticationService {

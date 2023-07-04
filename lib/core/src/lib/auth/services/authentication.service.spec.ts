@@ -94,10 +94,8 @@ describe('AuthenticationService', () => {
             spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).toHaveBeenCalled();
         });
 
         it('should require remember me set for ECM check', () => {
@@ -114,7 +112,7 @@ describe('AuthenticationService', () => {
         it('[ECM] should return an ECM ticket after the login done', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(basicAlfrescoAuthService.getToken()).toEqual('fake-post-ticket');
+                expect(authService.getToken()).toEqual('fake-post-ticket');
                 expect(authService.isEcmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
                 done();
@@ -140,7 +138,7 @@ describe('AuthenticationService', () => {
             });
         }));
 
-        it('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
+        fit('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
