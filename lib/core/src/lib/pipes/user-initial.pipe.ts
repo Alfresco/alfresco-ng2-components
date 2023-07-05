@@ -32,7 +32,7 @@ export class InitialUsernamePipe implements PipeTransform {
         if (user) {
             const initialResult = this.getInitialUserName(user.firstName || user.displayName || user.username, user.lastName, delimiter);
             const div = document.createElement('div');
-            div.innerText = initialResult;
+            div.textContent = initialResult;
             div.dataset.automationId = 'user-initials-image';
             div.className = className;
 
