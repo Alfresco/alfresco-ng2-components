@@ -65,7 +65,7 @@
                     [ngClass]="{ 'adf-datatable-cell-header-content--hovered':
                         hoveredHeaderColumnIndex === columnIndex &&
                         !isDraggingHeaderColumn &&
-                        !isResizing }"
+                        !isResizing && col.sortable}"
                 >
                     <span
                         *ngIf="hoveredHeaderColumnIndex === columnIndex && col.draggable && !isResizing"
