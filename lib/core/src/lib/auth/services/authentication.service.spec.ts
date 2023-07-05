@@ -261,7 +261,7 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(authService.getToken()).toBe(undefined);
+                    expect(authService.getToken()).toBe(null);
                     done();
                 });
 
@@ -374,9 +374,9 @@ describe('AuthenticationService', () => {
         it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getToken()).toEqual('fake-post-ticket');
+                expect(basicAlfrescoAuthService.getTicketEcm()).toEqual('fake-post-ticket');
                 // cspell: disable-next
-                expect(authService.getToken()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(basicAlfrescoAuthService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 expect(authService.isEcmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();

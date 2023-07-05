@@ -121,12 +121,14 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
             try {
                 return await this.processAuth.login(username, password);
             } catch (e) {
+                return Promise.reject(e);
             }
 
         } else if (this.isECMProvider()) {
             try {
                 return await this.contentAuth.login(username, password);
             } catch (e) {
+                return Promise.reject(e);
             }
 
         } else if (this.isALLProvider()) {
