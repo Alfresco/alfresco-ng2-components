@@ -158,7 +158,7 @@ export class ProcessAuth {
             base64 = btoa(str);
         }
 
-        return base64;
+        return `Basic ${base64}`;
     }
 
     /**
