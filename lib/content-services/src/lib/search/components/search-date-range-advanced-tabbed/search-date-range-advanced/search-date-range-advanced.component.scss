@@ -12,7 +12,7 @@
     .adf-search-date-range-horizontal-container {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        padding-bottom: 15px;
 
         .adf-search-date-range-input-field {
             width: 75px;
@@ -22,13 +22,16 @@
             padding-left: 10px;
             flex: 1;
 
-            &.mat-form-field-disabled .mat-form-field-underline {
-                background-size: 0;
-                border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
-            }
+            .mat-form-field-wrapper {
+                .mat-form-field-infix {
+                    border: 1px solid var(--adf-theme-mat-grey-color-a400);
+                    border-radius: 5px;
+                    color: var(--adf-theme-foreground-text-color);
+                }
 
-            .mat-date-range-input-inner {
-                color: var(--adf-theme-foreground-text-color);
+                .mat-form-field-underline {
+                    display: none;
+                }
             }
         }
     }
