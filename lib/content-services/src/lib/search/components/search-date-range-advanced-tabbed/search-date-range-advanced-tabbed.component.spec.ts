@@ -47,7 +47,7 @@ export class MockSearchFilterTabbedComponent {}
     selector: 'adf-search-date-range-advanced',
     template: ``
 })
-class MockSearchDateRangeAdvancedComponent {
+export class MockSearchDateRangeAdvancedComponent {
     @Input()
     dateFormat: string;
     @Input()
@@ -237,6 +237,4 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         expect(component.context.queryFragments['dateRangeAdvanced']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
     });
-
-
 });
