@@ -16,42 +16,29 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
-import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced/search-date-range-advanced.component';
 import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
+import { DateRangeType } from "./search-date-range-advanced/date-range-type";
+import { InLastDateType } from "./search-date-range-advanced/in-last-date-type";
+import { endOfDay, formatISO, parse, startOfDay } from "date-fns";
+import { By } from '@angular/platform-browser';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
     template: ``
 })
-export class MockSearchFilterTabbedComponent {
-    @Input()
-    settings: SearchWidgetSettings;
-    @Input()
-    queries: { [key: string]: string } = {};
-    @Input()
-    valuesToDisplay: { [key: string]: string } = {};
-    @Output()
-    fieldsChanged = new EventEmitter<string[]>();
-    @Output()
-    displayedLabelsByFieldTranslated = new EventEmitter<{ [key: string]: string }>();
-    @Output()
-    queriesCombined = new EventEmitter<string>();
-    @Output()
-    valuesToDisplayCombined = new EventEmitter<string>();
-}
+class MockSearchFilterTabbedComponent {}
 
 @Component({
     selector: 'adf-search-date-range-advanced',
     template: ``
 })
-export class MockSearchDateRangeAdvancedComponent {
+class MockSearchDateRangeAdvancedComponent {
     @Input()
     dateFormat: string;
     @Input()
@@ -62,31 +49,24 @@ export class MockSearchDateRangeAdvancedComponent {
     initialValue: SearchDateRangeAdvanced;
 
     @Output()
-    updatedQuery = new EventEmitter<string>();
-    @Output()
-    updatedDisplayValue = new EventEmitter<string>();
-    @Output()
     changed = new EventEmitter<Partial<SearchDateRangeAdvanced>>();
     @Output()
     valid = new EventEmitter<boolean>();
 }
-fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
+describe('SearchDateRangeAdvancedTabbedComponent', () => {
     let component: SearchDateRangeAdvancedTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
-
-    function clickApplyBtn() {
-        const applyBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-btn-apply"]')).nativeElement;
-        applyBtn.click();
-        fixture.detectChanges();
+    let createdDateRangeComponent: SearchDateRangeAdvancedComponent;
+    // let modifiedDateRangeComponent: SearchDateRangeAdvancedComponent;
+    let mockData = {
+        dateRangeType: DateRangeType.BETWEEN,
+        inLastValueType: InLastDateType.DAYS,
+        inLastValue: undefined,
+        betweenStartDate: parse('05-Jun-23', 'dd-MMM-yy', new Date()),
+        betweenEndDate: parse('07-Jun-23', 'dd-MMM-yy', new Date())
     }
 
-    function clickResetBtn() {
-        const clearBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="date-range-advanced-btn-clear"]')).nativeElement;
-        clearBtn.click();
-        fixture.detectChanges();
-    }
-
-    beforeEach( () => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchDateRangeAdvancedTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeAdvancedComponent],
             imports: [
@@ -99,6 +79,7 @@ fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeAdvancedTabbedComponent);
+
         component = fixture.componentInstance;
         component.id = 'dateRangeAdvanced';
         component.context = {
@@ -111,66 +92,129 @@ fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
             hideDefaultAction: false,
             dateFormat: 'dd-MMM-yy',
             maxDate: 'today',
-            field: 'test-field-1, test-field-2',
+            field: 'createdDate, modifiedDate',
             displayedLabelsByField: {
-                'test-field-1': 'Test Field 1',
-                'test-field-2': 'Test Field 2'
+                'createdDate': 'Created Date',
+                'modifiedDate': 'Modified Date'
             }
         };
         component.tabsValidity = {
-            'test-field-1': true,
-            'test-field-2': true
+            'createdDate': true,
+            'modifiedDate': true
         };
         fixture.detectChanges();
+
+        const searchDateRangeAdvancedComponentList = fixture.debugElement.queryAll(By.directive(SearchDateRangeAdvancedComponent));
+        createdDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => (searchDateRangeAdvancedComponent.componentInstance as SearchDateRangeAdvancedComponent).field === 'createdDate').componentInstance;
+        // modifiedDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => searchDateRangeAdvancedComponent.attributes['field'] === 'modifiedDate').componentInstance;
     });
 
     it('should update displayValue when values are submitted', () => {
         spyOn(component.displayValue$, 'next');
-        component.combinedValuesToDisplay = 'test-combined-values-to-display';
-        clickApplyBtn();
-        expect(component.displayValue$.next).toHaveBeenCalledWith('test-combined-values-to-display');
-    });
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        component.submitValues();
+        expect(component.displayValue$.next).toHaveBeenCalledWith('CREATED DATE: 05-Jun-23 - 07-Jun-23');
 
-    it('should clear values when widget is reset', () => {
-        spyOn(component.displayValue$, 'next');
-        component.combinedValuesToDisplay = 'test-combined-values-to-display';
-        component.context.queryFragments[component.id] = 'test';
-        clickResetBtn();
-        expect(component.queries).toEqual({'test-field-1': '', 'test-field-2': ''});
-        expect(component.valuesToDisplay).toEqual({'test-field-1': '', 'test-field-2': ''});
-        expect(component.context.queryFragments[component.id]).toEqual('');
+        mockData = {
+            dateRangeType: DateRangeType.IN_LAST,
+            inLastValueType: InLastDateType.WEEKS,
+            inLastValue: 5,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        component.submitValues();
+        expect(component.displayValue$.next).toHaveBeenCalledWith('CREATED DATE: SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS');
+
+        mockData = {
+            dateRangeType: DateRangeType.ANY,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: null,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        component.submitValues();
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
+    });
+
+    it('should update query when values are changed', () => {
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        let query = `createdDate:['${formatISO(startOfDay(mockData.betweenStartDate))}' TO '${formatISO(endOfDay(mockData.betweenEndDate))}']`;
+        expect(component.combinedQuery).toEqual(query);
+
+        mockData = {
+            dateRangeType: DateRangeType.IN_LAST,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: 5,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        query = `createdDate:[NOW/DAY-5DAYS TO NOW/DAY+1DAY]`;
+        expect(component.combinedQuery).toEqual(query);
+
+        mockData = {
+            dateRangeType: DateRangeType.IN_LAST,
+            inLastValueType: InLastDateType.WEEKS,
+            inLastValue: 7,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        query = `createdDate:[NOW/DAY-7WEEKS TO NOW/DAY+1DAY]`;
+        expect(component.combinedQuery).toEqual(query);
+
+        mockData = {
+            dateRangeType: DateRangeType.IN_LAST,
+            inLastValueType: InLastDateType.MONTHS,
+            inLastValue: 9,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        query = `createdDate:[NOW/DAY-9MONTHS TO NOW/DAY+1DAY]`;
+        expect(component.combinedQuery).toEqual(query);
+
+        mockData = {
+            dateRangeType: DateRangeType.ANY,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: null,
+            betweenStartDate: null,
+            betweenEndDate: null
+        }
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        expect(component.combinedQuery).toEqual('');
+    });
+
+    it('should trigger context.update() when values are submitted', () => {
+        createdDateRangeComponent.changed.emit(mockData);
+        fixture.detectChanges();
+        component.submitValues();
+        fixture.detectChanges();
+        const query = `createdDate:['${formatISO(startOfDay(mockData.betweenStartDate))}' TO '${formatISO(endOfDay(mockData.betweenEndDate))}']`;
+        expect(component.context.queryFragments['dateRangeAdvanced']).toEqual(query);
         expect(component.context.update).toHaveBeenCalled();
     });
 
-    it('should trigger context.update() when when values are submitted', () => {
-        component.combinedQuery = 'test-combined-query';
-        clickApplyBtn();
+    it('should clear values and search filter when widget is reset', () => {
+        spyOn(component.displayValue$, 'next');
+        component.reset();
+        fixture.detectChanges();
+        expect(component.combinedQuery).toBe('');
+        expect(component.combinedDisplayValue).toBe('');
+        expect(component.displayValue$.next).toHaveBeenCalledWith('');
+        expect(component.context.queryFragments['dateRangeAdvanced']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
     });
 
-    it('should update displayLabels by field from settings object', () => {
-        component.settings = {
-            field: 'test-field-1, test-field-2',
-            displayedLabelsByField: {
-                'test-field-1': 'Test Field 1',
-                'test-field-2': 'Test Field 2'
-            }
-        };
-        fixture.detectChanges();
-        expect(component.displayedLabelsByField).not.toBeNull();
-        expect(component.displayedLabelsByField['test-field-1']).toBe('Test Field 1');
-        expect(component.displayedLabelsByField['test-field-2']).toBe('Test Field 2');
-    });
 
-    it('should update array of fields from settings object', () => {
-        component.settings = {
-            field: 'test-field-1, test-field-2, test-field-3'
-        };
-        fixture.detectChanges();
-        expect(component.fields.length).toBe(3);
-        expect(component.fields).toContain('test-field-1');
-        expect(component.fields).toContain('test-field-2');
-        expect(component.fields).toContain('test-field-3');
-    });
 });

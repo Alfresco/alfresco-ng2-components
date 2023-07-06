@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
 import { DateRangeType } from './search-date-range-advanced/date-range-type';
@@ -23,13 +23,15 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
+import { TranslationService } from '@alfresco/adf-core';
+import { endOfDay, format, formatISO, startOfDay } from "date-fns";
 
 @Component({
   selector: 'adf-search-date-range-advanced-tabbed',
   templateUrl: './search-date-range-advanced-tabbed.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
+export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new Subject<string>();
     id: string;
     startValue: SearchDateRangeAdvanced = {
@@ -42,26 +44,31 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     fields: string[];
-    displayedLabelsByField: { [key: string]: string } = {};
-    queries: { [key: string]: string } = {};
-    valuesToDisplay: { [key: string]: string } = {};
     tabsValidity: { [key: string]: boolean } = {};
     combinedQuery: string;
-    combinedValuesToDisplay: string;
+    combinedDisplayValue: string;
 
     private value: { [key: string]: Partial<SearchDateRangeAdvanced> } = {};
+    private queryMapByField: Map<string, string> = new Map<string, string>();
+    private displayValueMapByField: Map<string, string> = new Map<string, string>();
+
+    constructor(private translateService: TranslationService) {}
+
+    ngOnInit(): void {
+        this.fields = this.settings?.field.split(',').map(field => field.trim());
+    }
 
     getCurrentValue(): { [key: string]: Partial<SearchDateRangeAdvanced> } {
         return this.value;
     }
 
     hasValidValue(): boolean {
-        return !Object.values(this.tabsValidity).some((valid) => !valid);
+        return Object.values(this.tabsValidity).every((valid) => valid);
     }
 
-    reset(): void {
-        this.queries = {};
-        this.valuesToDisplay = {};
+    reset() {
+        this.combinedQuery = '';
+        this.combinedDisplayValue = '';
         this.startValue = {
             ...this.startValue
         };
@@ -72,49 +79,59 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget {
         this.value = value;
     }
 
-    submitValues(): void {
+    submitValues() {
         this.context.queryFragments[this.id] = this.combinedQuery;
-        this.displayValue$.next(this.combinedValuesToDisplay);
+        this.displayValue$.next(this.combinedDisplayValue);
         if (this.id && this.context) {
             this.context.update();
         }
     }
-
-    onDisplayValueUpdate(valueToDisplay: string, field: string) {
-        this.valuesToDisplay = {
-            ...this.valuesToDisplay,
-            [field]: valueToDisplay
-        };
-    }
-
-    onQueryUpdate(query: string, field: string) {
-        this.queries = {
-            ...this.queries,
-            [field]: query
-        };
-    }
-
-    onQueriesCombined(query: string) {
-        this.combinedQuery = query;
-    }
-
-    onValuesToDisplayCombined(valuesToDisplay: string) {
-        this.combinedValuesToDisplay = valuesToDisplay;
-    }
-
-    onTabValid(tabValid: boolean, field: string) {
-        this.tabsValidity[field] = tabValid;
-    }
-
     onDateRangedValueChanged(value: Partial<SearchDateRangeAdvanced>, field: string) {
         this.value[field] = value;
+        this.updateQuery(value, field);
+        this.updateDisplayValue(value, field);
     }
 
-    onFieldsChanged(fields: string[]) {
-        this.fields = fields;
+    private generateQuery(value: Partial<SearchDateRangeAdvanced>, field: string): string {
+        let query = '';
+        if (value.dateRangeType === DateRangeType.IN_LAST) {
+            query = `${field}:[NOW/DAY-${value.inLastValue}${value.inLastValueType} TO NOW/DAY+1DAY]`;
+        } else if (value.dateRangeType === DateRangeType.BETWEEN) {
+            query = `${field}:['${formatISO(startOfDay(value.betweenStartDate))}' TO '${formatISO(endOfDay(value.betweenEndDate))}']`;
+        }
+        return query;
     }
 
-    onDisplayLabelsByFieldsTranslated(displayedLabelsByField: { [p: string]: string }) {
-        this.displayedLabelsByField = displayedLabelsByField;
+    private generateDisplayValue(value: Partial<SearchDateRangeAdvanced>): string {
+        let displayValue = '';
+        if (value.dateRangeType === DateRangeType.IN_LAST && value.inLastValue) {
+            displayValue = this.translateService.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${value.inLastValueType}`, {
+                value: value.inLastValue
+            });
+        } else if (value.dateRangeType === DateRangeType.BETWEEN && value.betweenStartDate && value.betweenEndDate) {
+            displayValue = `${format(startOfDay(value.betweenStartDate), this.settings.dateFormat)} - ${format(endOfDay(value.betweenEndDate), this.settings.dateFormat)}`;
+        }
+        return displayValue;
+    }
+
+    private updateQuery(value: Partial<SearchDateRangeAdvanced>, field: string) {
+        this.combinedQuery = '';
+        this.queryMapByField.set(field, this.generateQuery(value, field));
+        this.queryMapByField.forEach((query: string) => {
+            if (query) {
+                this.combinedQuery = this.combinedQuery ? `${this.combinedQuery} AND ${query}` : `${query}`;
+            }
+        });
+    }
+
+    private updateDisplayValue(value: Partial<SearchDateRangeAdvanced>, field: string) {
+        this.combinedDisplayValue = '';
+        this.displayValueMapByField.set(field, this.generateDisplayValue(value));
+        this.displayValueMapByField.forEach((displayValue: string, field: string) => {
+            if (displayValue) {
+                const displayLabelForField = `${this.translateService.instant(this.settings.displayedLabelsByField[field]).toUpperCase()}: ${displayValue}`;
+                this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`
+            }
+        });
     }
 }
