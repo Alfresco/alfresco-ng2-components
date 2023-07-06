@@ -47,7 +47,7 @@ export class MockSearchFilterTabbedComponent {}
     selector: 'adf-search-date-range-advanced',
     template: ``
 })
-export class MockSearchDateRangeAdvancedComponent {
+class MockSearchDateRangeAdvancedComponent {
     @Input()
     dateFormat: string;
     @Input()
@@ -62,7 +62,7 @@ export class MockSearchDateRangeAdvancedComponent {
     @Output()
     valid = new EventEmitter<boolean>();
 }
-fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
+describe('SearchDateRangeAdvancedTabbedComponent', () => {
     let component: SearchDateRangeAdvancedTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
     let betweenMockData: SearchDateRangeAdvanced;
@@ -82,6 +82,7 @@ fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeAdvancedTabbedComponent);
+
         component = fixture.componentInstance;
         component.id = 'dateRangeAdvanced';
         component.context = {
@@ -128,6 +129,10 @@ fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
         };
 
         fixture.detectChanges();
+
+        const searchDateRangeAdvancedComponentList = fixture.debugElement.queryAll(By.directive(SearchDateRangeAdvancedComponent));
+        createdDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => (searchDateRangeAdvancedComponent.componentInstance as SearchDateRangeAdvancedComponent).field === 'createdDate').componentInstance;
+        // modifiedDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => searchDateRangeAdvancedComponent.attributes['field'] === 'modifiedDate').componentInstance;
     });
 
     it('should be able to generate separate fields on init', () => {
@@ -232,4 +237,6 @@ fdescribe('SearchDateRangeAdvancedTabbedComponent', () => {
         expect(component.context.queryFragments['dateRangeAdvanced']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
     });
+
+
 });

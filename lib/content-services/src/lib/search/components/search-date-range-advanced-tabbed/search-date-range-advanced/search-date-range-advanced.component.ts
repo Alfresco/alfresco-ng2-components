@@ -185,7 +185,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     //             formControl.errors.required = true;
     //             formControl.errors.dateFormatInvalid = false;
     //         } else {
-    //             const date = parse(event.target['value'], this.datePickerFormat, new Date());
+    //             const date = parse(event.target['value'], this.dateFormat, new Date());
     //             if(!isValid(date)) {
     //                 formControl.errors.dateFormatInvalid = true;
     //             } else {

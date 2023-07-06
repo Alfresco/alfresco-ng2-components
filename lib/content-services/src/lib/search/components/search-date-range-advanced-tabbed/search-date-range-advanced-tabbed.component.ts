@@ -177,19 +177,46 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         this.combinedValuesToDisplay = valuesToDisplay;
     }
 
-    onTabValid(tabValid: boolean, field: string) {
-        this.tabsValidity[field] = tabValid;
+    private generateQuery(value: Partial<SearchDateRangeAdvanced>, field: string): string {
+        let query = '';
+        if (value.dateRangeType === DateRangeType.IN_LAST) {
+            query = `${field}:[NOW/DAY-${value.inLastValue}${value.inLastValueType} TO NOW/DAY+1DAY]`;
+        } else if (value.dateRangeType === DateRangeType.BETWEEN) {
+            query = `${field}:['${formatISO(startOfDay(value.betweenStartDate))}' TO '${formatISO(endOfDay(value.betweenEndDate))}']`;
+        }
+        return query;
     }
 
-    onDateRangedValueChanged(value: Partial<SearchDateRangeAdvanced>, field: string) {
-        this.value[field] = value;
+    private generateDisplayValue(value: Partial<SearchDateRangeAdvanced>): string {
+        let displayValue = '';
+        if (value.dateRangeType === DateRangeType.IN_LAST && value.inLastValue) {
+            displayValue = this.translateService.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${value.inLastValueType}`, {
+                value: value.inLastValue
+            });
+        } else if (value.dateRangeType === DateRangeType.BETWEEN && value.betweenStartDate && value.betweenEndDate) {
+            displayValue = `${format(startOfDay(value.betweenStartDate), this.settings.dateFormat)} - ${format(endOfDay(value.betweenEndDate), this.settings.dateFormat)}`;
+        }
+        return displayValue;
     }
 
-    onFieldsChanged(fields: string[]) {
-        this.fields = fields;
+    private updateQuery(value: Partial<SearchDateRangeAdvanced>, field: string) {
+        this.combinedQuery = '';
+        this.queryMapByField.set(field, this.generateQuery(value, field));
+        this.queryMapByField.forEach((query: string) => {
+            if (query) {
+                this.combinedQuery = this.combinedQuery ? `${this.combinedQuery} AND ${query}` : `${query}`;
+            }
+        });
     }
 
-    onDisplayLabelsByFieldsTranslated(displayedLabelsByField: { [p: string]: string }) {
-        this.displayedLabelsByField = displayedLabelsByField;
+    private updateDisplayValue(value: Partial<SearchDateRangeAdvanced>, field: string) {
+        this.combinedDisplayValue = '';
+        this.displayValueMapByField.set(field, this.generateDisplayValue(value));
+        this.displayValueMapByField.forEach((displayValue: string, field: string) => {
+            if (displayValue) {
+                const displayLabelForField = `${this.translateService.instant(this.settings.displayedLabelsByField[field]).toUpperCase()}: ${displayValue}`;
+                this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`
+            }
+        });
     }
 }

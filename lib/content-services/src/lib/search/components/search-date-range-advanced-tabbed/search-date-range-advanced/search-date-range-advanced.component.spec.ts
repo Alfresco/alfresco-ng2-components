@@ -278,4 +278,125 @@ describe('SearchDateRangeAdvancedComponent', () => {
         fixture.detectChanges();
         expect(component.changed.emit).toHaveBeenCalledWith(value);
     });
+
+    it('should not be able to set zero or negative values in In the last input field', () => {
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
+        fixture.detectChanges();
+        enterValueInInputField('date-range-advanced-in-last-input', '-5');
+        fixture.detectChanges();
+        let inLastInputFieldValue = getElementBySelector('[data-automation-id="date-range-advanced-in-last-input"]').value;
+        expect(inLastInputFieldValue).toBe('5');
+
+        enterValueInInputField('date-range-advanced-in-last-input', '0');
+        fixture.detectChanges();
+        inLastInputFieldValue = getElementBySelector('[data-automation-id="date-range-advanced-in-last-input"]').value;
+        expect(inLastInputFieldValue).toBe('');
+    });
+
+    it('should emit valid as false when form is invalid', () => {
+        spyOn(component.valid, 'emit');
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
+        fixture.detectChanges();
+        enterValueInInputField('date-range-advanced-in-last-input', '');
+        selectDropdownOption('date-range-advanced-in-last-option-weeks');
+        fixture.detectChanges();
+        expect(component.valid.emit).toHaveBeenCalledWith(false);
+
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
+        fixture.detectChanges();
+        expect(component.valid.emit).toHaveBeenCalledWith(false);
+    });
+
+    it('should emit valid as true when form is valid', () => {
+        spyOn(component.valid, 'emit');
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.IN_LAST);
+        fixture.detectChanges();
+        enterValueInInputField('date-range-advanced-in-last-input', '5');
+        selectDropdownOption('date-range-advanced-in-last-option-weeks');
+        fixture.detectChanges();
+        expect(component.valid.emit).toHaveBeenCalledWith(true);
+
+        component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
+        fixture.detectChanges();
+        component.betweenStartDateFormControl.setValue(startDateSampleValue);
+        component.betweenEndDateFormControl.setValue(endDateSampleValue);
+        fixture.detectChanges();
+        expect(component.valid.emit).toHaveBeenCalledWith(true);
+    });
+
+    it('should not emit values when form is invalid', () => {
+        spyOn(component.changed, 'emit');
+        let value = {
+            dateRangeType: component.DateRangeType.IN_LAST,
+            inLastValueType: component.InLastDateType.WEEKS,
+            inLastValue: '',
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        };
+        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-in-last"] .mat-radio-input');
+        dateRangeTypeRadioButton.click();
+        selectDropdownOption('date-range-advanced-in-last-option-weeks');
+        enterValueInInputField('date-range-advanced-in-last-input', '');
+        fixture.detectChanges();
+        expect(component.changed.emit).not.toHaveBeenCalledWith(value);
+
+        component.form.patchValue({
+            dateRangeType: component.DateRangeType.ANY,
+            inLastValueType: component.InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        });
+
+        value = {
+            dateRangeType: component.DateRangeType.BETWEEN,
+            inLastValueType: component.InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: '',
+            betweenEndDate: ''
+        }
+        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mat-radio-input');
+        dateRangeTypeRadioButton.click();
+        fixture.detectChanges();
+        expect(component.changed.emit).not.toHaveBeenCalledWith(value);
+    });
+
+    it('should emit values when form is valid', () => {
+        spyOn(component.changed, 'emit');
+        let value = {
+            dateRangeType: component.DateRangeType.IN_LAST,
+            inLastValueType: component.InLastDateType.WEEKS,
+            inLastValue: 5,
+            betweenStartDate: null,
+            betweenEndDate: null
+        };
+        let dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-in-last"] .mat-radio-input');
+        dateRangeTypeRadioButton.click();
+        selectDropdownOption('date-range-advanced-in-last-option-weeks');
+        enterValueInInputField('date-range-advanced-in-last-input', '5');
+        fixture.detectChanges();
+        expect(component.changed.emit).toHaveBeenCalledWith(value);
+
+        component.form.patchValue({
+            dateRangeType: component.DateRangeType.ANY,
+            inLastValueType: component.InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: undefined,
+            betweenEndDate: undefined
+        });
+
+        value = {
+            dateRangeType: component.DateRangeType.BETWEEN,
+            inLastValueType: component.InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: startDateSampleValue,
+            betweenEndDate: endDateSampleValue
+        }
+        dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mat-radio-input');
+        dateRangeTypeRadioButton.click();
+        component.betweenStartDateFormControl.setValue(startDateSampleValue);
+        component.betweenEndDateFormControl.setValue(endDateSampleValue);
+        fixture.detectChanges();
+        expect(component.changed.emit).toHaveBeenCalledWith(value);
+    });
 });
