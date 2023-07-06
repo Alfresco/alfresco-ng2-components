@@ -17,16 +17,15 @@
 
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
-import { endOfDay, format, formatISO, parse, startOfDay } from 'date-fns';
+import { endOfDay, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
-import { TranslationService } from '@alfresco/adf-core';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced';
 import { FormBuilder, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { enUS } from 'date-fns/locale';
+import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from "@alfresco/adf-core";
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -36,15 +35,14 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     styleUrls: ['./search-date-range-advanced.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: DateFnsAdapter, deps: [ MAT_DATE_LOCALE ] },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS },
-        { provide: MAT_DATE_LOCALE, useValue: enUS }
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None,
     host: {class: 'adf-search-date-range-advanced'}
 })
 export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     @Input()
-    dateFormat: string;
+    dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
     maxDate: string;
     @Input()
@@ -56,10 +54,6 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         }
     }
 
-    @Output()
-    updatedQuery = new EventEmitter<string>();
-    @Output()
-    updatedDisplayValue = new EventEmitter<string>();
     @Output()
     changed = new EventEmitter<Partial<SearchDateRangeAdvanced>>();
     @Output()
@@ -75,25 +69,28 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
-    private datePickerFormat: string;
     private destroy$ = new Subject<void>();
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
 
-    constructor(private translate: TranslationService,
-                private formBuilder: FormBuilder,
+    constructor(private formBuilder: FormBuilder,
+                private userPreferencesService: UserPreferencesService,
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig:MatDateFormats) {}
 
     ngOnInit(): void {
-        this.datePickerFormat = this.dateFormat ? this.dateFormat : DEFAULT_DATE_DISPLAY_FORMAT;
-        this.dateFormatConfig.display.dateInput = this.datePickerFormat;
+        this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
-            parse(this.maxDate, this.datePickerFormat, new Date()) : new Date());
+            parse(this.maxDate, this.dateFormat, new Date()) : new Date());
+        this.userPreferencesService
+            .select(UserPreferenceValues.Locale)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.form.controls.dateRangeType.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
         this.form.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe((searchDateRangeAdvanced) => this.onChange(searchDateRangeAdvanced));
+            .subscribe(() => this.onChange());
     }
 
     ngOnDestroy() {
@@ -124,34 +121,11 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         this.form.controls.inLastValue.updateValueAndValidity();
     }
 
-    private onChange(searchDateRangeAdvanced: Partial<SearchDateRangeAdvanced>): void {
-        let query = '';
+    private onChange(): void {
         if (this.form.valid) {
-            if (searchDateRangeAdvanced.dateRangeType === DateRangeType.IN_LAST) {
-                query = `${this.field}:[NOW/DAY-${searchDateRangeAdvanced.inLastValue}${searchDateRangeAdvanced.inLastValueType} TO NOW/DAY+1DAY]`;
-            } else if (searchDateRangeAdvanced.dateRangeType === DateRangeType.BETWEEN) {
-                query = `${this.field}:['${formatISO(startOfDay(searchDateRangeAdvanced.betweenStartDate))}' TO '${formatISO(endOfDay(searchDateRangeAdvanced.betweenEndDate))}']`;
-            }
+            this.changed.emit(this.form.value);
         }
-        this.updateDisplayValue(searchDateRangeAdvanced);
-        this.updatedQuery.emit(query);
-        this.changed.emit(searchDateRangeAdvanced);
         this.valid.emit(this.form.valid);
-    }
-
-    private updateDisplayValue(searchDateRangeAdvanced: Partial<SearchDateRangeAdvanced>): void {
-        let displayLabel = '';
-        if (this.form.valid) {
-            if (searchDateRangeAdvanced.dateRangeType === DateRangeType.IN_LAST && searchDateRangeAdvanced.inLastValue) {
-                displayLabel = this.translate
-                    .instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${searchDateRangeAdvanced.inLastValueType}`, {
-                        value: searchDateRangeAdvanced.inLastValue
-                    });
-            } else if (searchDateRangeAdvanced.dateRangeType === DateRangeType.BETWEEN && searchDateRangeAdvanced.betweenStartDate && searchDateRangeAdvanced.betweenEndDate) {
-                displayLabel = `${format(startOfDay(searchDateRangeAdvanced.betweenStartDate), this.datePickerFormat)} - ${format(endOfDay(searchDateRangeAdvanced.betweenEndDate), this.datePickerFormat)}`;
-            }
-        }
-        this.updatedDisplayValue.emit(displayLabel);
     }
 
     // dateChanged(event: Event, formControl: FormControl<Date | null>) {
@@ -161,7 +135,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     //             formControl.errors.required = true;
     //             formControl.errors.dateFormatInvalid = false;
     //         } else {
-    //             const date = parse(event.target['value'], this.datePickerFormat, new Date());
+    //             const date = parse(event.target['value'], this.dateFormat, new Date());
     //             if(!isValid(date)) {
     //                 formControl.errors.dateFormatInvalid = true;
     //             } else {

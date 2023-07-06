@@ -1,32 +1,20 @@
-<adf-search-filter-tabbed
-    [settings]="settings"
-    [queries]="queries"
-    [valuesToDisplay]="valuesToDisplay"
-    (fieldsChanged)="onFieldsChanged($event)"
-    (displayedLabelsByFieldTranslated)="onDisplayLabelsByFieldsTranslated($event)"
-    (queriesCombined)="onQueriesCombined($event)"
-    (valuesToDisplayCombined)="onValuesToDisplayCombined($event)">
-    <ng-container *ngFor="let field of fields">
-        <adf-search-date-range-advanced
-            *adf-search-filter-tab="displayedLabelsByField[field]"
-            [dateFormat]="settings.dateFormat"
-            [maxDate]="settings.maxDate"
-            [field]="field"
-            [initialValue]="startValue"
-            (updatedDisplayValue)="onDisplayValueUpdate($event, field)"
-            (updatedQuery)="onQueryUpdate($event, field)"
-            (changed)="onDateRangedValueChanged($event, field)"
-            (valid)="onTabValid($event, field)">
-        </adf-search-date-range-advanced>
-    </ng-container>
+<adf-search-filter-tabbed>
+    <adf-search-date-range-advanced
+        *adf-search-filter-tab="settings.displayedLabelsByField[fields[0]]"
+        [dateFormat]="settings.dateFormat"
+        [maxDate]="settings.maxDate"
+        [field]="fields[0]"
+        [initialValue]="startValue"
+        (changed)="onDateRangedValueChanged($event, fields[0])"
+        (valid)="tabsValidity[fields[0]]=$event">
+    </adf-search-date-range-advanced>
+    <adf-search-date-range-advanced
+        *adf-search-filter-tab="settings.displayedLabelsByField[fields[1]]"
+        [dateFormat]="settings.dateFormat"
+        [maxDate]="settings.maxDate"
+        [field]="fields[1]"
+        [initialValue]="startValue"
+        (changed)="onDateRangedValueChanged($event, fields[1])"
+        (valid)="tabsValidity[fields[1]]=$event">
+    </adf-search-date-range-advanced>
 </adf-search-filter-tabbed>
-
-<div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
-    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-clear" (click)="reset()">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-    </button>
-    <button mat-button color="primary" data-automation-id="date-range-advanced-btn-apply" [disabled]="!hasValidValue()" (click)="submitValues()">
-        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-    </button>
-</div>
-
