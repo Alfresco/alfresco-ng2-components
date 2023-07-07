@@ -981,11 +981,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
             headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
                 if (allColumns[index]) {
-                    if(index === 0 || index === headerContainerColumns.length - 1) {
-                        allColumns[index].width = column.clientWidth - DataTableComponent.FIRST_AND_LAST_ELEMENT_PADDING ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
-                    } else {
-                        allColumns[index].width = column.clientWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
-                    }
+                    allColumns[index].width = 
+                        (index === 0 || index === headerContainerColumns.length - 1) ?
+                            (column.clientWidth - DataTableComponent.FIRST_AND_LAST_ELEMENT_PADDING) ?? DataTableComponent.MINIMUM_COLUMN_SIZE :
+                            column.clientWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE
                 }
             });
         }
