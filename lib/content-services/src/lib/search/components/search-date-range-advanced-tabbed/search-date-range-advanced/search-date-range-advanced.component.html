@@ -28,17 +28,17 @@
       <mat-form-field class="adf-search-date-range-form-field">
         <mat-date-range-input [rangePicker]="$any(picker)" [max]="convertedMaxDate">
           <input matStartDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.START_DATE' | translate }}"
-                 data-automation-id="date-range-advanced-between-start-input" [formControl]="betweenStartDateFormControl">
+                 data-automation-id="date-range-advanced-between-start-input" [formControl]="betweenStartDateFormControl" (change)="dateChanged($event, betweenStartDateFormControl)">
           <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
-                 data-automation-id="date-range-advanced-between-end-input" [formControl]="betweenEndDateFormControl">
+                 data-automation-id="date-range-advanced-between-end-input" [formControl]="betweenEndDateFormControl" (change)="dateChanged($event, betweenEndDateFormControl)">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-advanced-between-datepicker-toggle"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
 
+        <mat-error *ngIf="betweenStartDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.INVALID_FORMAT' | translate }}</mat-error>
         <mat-error *ngIf="betweenStartDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.REQUIRED' | translate }}</mat-error>
-        <mat-error *ngIf="betweenStartDateFormControl.errors?.matStartDateInvalid">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.INVALID_FORMAT' | translate }}</mat-error>
+        <mat-error *ngIf="betweenEndDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.INVALID_FORMAT' | translate }}</mat-error>
         <mat-error *ngIf="betweenEndDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.REQUIRED' | translate }}</mat-error>
-        <mat-error *ngIf="betweenEndDateFormControl.errors?.matEndDateInvalid">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.END_DATE.INVALID_FORMAT' | translate }}</mat-error>
       </mat-form-field>
     </span>
   </mat-radio-group>
