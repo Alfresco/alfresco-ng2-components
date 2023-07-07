@@ -79,6 +79,15 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig:MatDateFormats) {}
 
+    readonly endDateValidator = (formControl: UntypedFormControl): ({ [key: string]: boolean } | null) => {
+        if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
+            return {
+                invalidDate: true
+            };
+        }
+        return {};
+    }
+
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
@@ -102,7 +111,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         switch(dateRangeType) {
             case DateRangeType.BETWEEN:
                 this.betweenStartDateFormControl.setValidators(Validators.required);
-                this.betweenEndDateFormControl.setValidators([Validators.required, this.endDateValidator.bind(this)]);
+                this.betweenEndDateFormControl.setValidators([Validators.required, this.endDateValidator]);
                 this.form.controls.inLastValue.clearValidators();
                 break;
             case DateRangeType.IN_LAST:
@@ -132,23 +141,19 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         if (event?.target['value']?.trim()) {
             const date = parse(event.target['value'], this.dateFormat, new Date());
             if(!isValid(date)) {
-                formControl.errors.required = false;
-                formControl.errors.invalidDate = true;
+                formControl.setErrors({
+                    ...formControl.errors,
+                    required: false,
+                    invalidDate: true
+                });
             } else {
-                formControl.errors.invalidDate = false;
+                formControl.setErrors({
+                    ...formControl.errors,
+                    invalidDate: false
+                });
                 formControl.setValue(date);
             }
         }
-    }
-
-    endDateValidator(formControl: UntypedFormControl): { [key: string]: boolean } | null {
-        if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
-            console.log('in end date validator true');
-            return {
-                invalidDate: true
-            };
-        }
-        return {};
     }
 
     onLastDateValueChanged(event: Event) {
