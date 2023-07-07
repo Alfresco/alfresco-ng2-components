@@ -17,13 +17,13 @@
 
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
-import { endOfDay, parse } from 'date-fns';
+import { endOfDay, parse, isValid, isBefore, isAfter } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from "@alfresco/adf-core";
 
@@ -102,7 +102,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         switch(dateRangeType) {
             case DateRangeType.BETWEEN:
                 this.betweenStartDateFormControl.setValidators(Validators.required);
-                this.betweenEndDateFormControl.setValidators(Validators.required);
+                this.betweenEndDateFormControl.setValidators([Validators.required, this.endDateValidator.bind(this)]);
                 this.form.controls.inLastValue.clearValidators();
                 break;
             case DateRangeType.IN_LAST:
@@ -128,23 +128,28 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         this.valid.emit(this.form.valid);
     }
 
-    // dateChanged(event: Event, formControl: FormControl<Date | null>) {
-    //     clearTimeout(this.dateChangeDebounce);
-    //     this.dateChangeDebounce = window.setTimeout(() => {
-    //         if (!event?.target['value']) {
-    //             formControl.errors.required = true;
-    //             formControl.errors.dateFormatInvalid = false;
-    //         } else {
-    //             const date = parse(event.target['value'], this.dateFormat, new Date());
-    //             if(!isValid(date)) {
-    //                 formControl.errors.dateFormatInvalid = true;
-    //             } else {
-    //                 formControl.errors.dateFormatInvalid = false;
-    //                 formControl.setValue(date);
-    //             }
-    //         }
-    //     }, 500);
-    // }
+    dateChanged(event: Event, formControl: UntypedFormControl) {
+        if (event?.target['value']?.trim()) {
+            const date = parse(event.target['value'], this.dateFormat, new Date());
+            if(!isValid(date)) {
+                formControl.errors.required = false;
+                formControl.errors.invalidDate = true;
+            } else {
+                formControl.errors.invalidDate = false;
+                formControl.setValue(date);
+            }
+        }
+    }
+
+    endDateValidator(formControl: UntypedFormControl): { [key: string]: boolean } | null {
+        if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
+            console.log('in end date validator true');
+            return {
+                invalidDate: true
+            };
+        }
+        return {};
+    }
 
     onLastDateValueChanged(event: Event) {
         let value: string = event.target['value'];
