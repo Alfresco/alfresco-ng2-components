@@ -137,6 +137,6 @@ describe('ResizableDirective', () => {
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
         directive.mousemove.next(mouseMoveEvent);
 
-        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 120, width: 120 } });
+        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
     });
 });

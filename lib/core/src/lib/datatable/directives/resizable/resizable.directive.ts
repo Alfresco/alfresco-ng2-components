@@ -64,6 +64,8 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
+  private static COVER_LEFT_AND_RIGHT_PADDING = 10;
+
   constructor(
     private readonly renderer: Renderer2,
     private readonly element: ElementRef<HTMLElement>,
@@ -151,7 +153,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     mousedrag
       .pipe(
-        map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX))
+        map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX + ResizableDirective.COVER_LEFT_AND_RIGHT_PADDING))
       )
       .subscribe((rectangle: BoundingRectangle) => {
         if (this.resizing.observers.length > 0) {

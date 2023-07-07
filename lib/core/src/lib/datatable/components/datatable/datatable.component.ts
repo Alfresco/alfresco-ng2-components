@@ -67,6 +67,7 @@ export enum ShowHeaderMode {
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
     private static MINIMUM_COLUMN_SIZE = 100;
+    private static FIRST_AND_LAST_ELEMENT_PADDING = 15;
 
     @ViewChildren(DataTableRowComponent)
     rowsList: QueryList<DataTableRowComponent>;
@@ -980,7 +981,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
             headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
                 if (allColumns[index]) {
-                    allColumns[index].width = column.offsetWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
+                    if(index === 0 || index === headerContainerColumns.length - 1) {
+                        allColumns[index].width = column.clientWidth - DataTableComponent.FIRST_AND_LAST_ELEMENT_PADDING ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
+                    } else {
+                        allColumns[index].width = column.clientWidth ?? DataTableComponent.MINIMUM_COLUMN_SIZE;
+                    }
                 }
             });
         }
