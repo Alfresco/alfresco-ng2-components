@@ -21,7 +21,7 @@ import { Authentication } from '../interfaces/authentication.interface';
 import { CookieService } from '../../common/services/cookie.service';
 import { ContentAuth } from './content-auth';
 import { ProcessAuth } from './process-auth';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 import { BaseAuthenticationService } from '../services/base-authentication.service';
@@ -97,7 +97,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
                     type: this.appConfig.get(AppConfigValues.PROVIDERS),
                     ticket: response
                 };
-            })
+            }),
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -337,8 +338,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     private getTicketEcmBase64(requestUrl: string): string | null {
         let ticket = null;
 
-        const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM);
-        const contextRoot = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM);
+        const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';
+        const contextRoot = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco';
 
         if (contextRoot && requestUrl.indexOf(contextRoot) !== -1) {
             ticket = 'Basic ' + btoa(this.contentAuth.getToken());
