@@ -24,7 +24,18 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import { endOfDay, format, formatISO, startOfDay } from 'date-fns';
+import {
+    endOfDay,
+    endOfToday,
+    format,
+    formatISO,
+    startOfDay,
+    startOfMonth,
+    startOfWeek,
+    subDays,
+    subMonths,
+    subWeeks
+} from 'date-fns';
 
 @Component({
   selector: 'adf-search-date-range-advanced-tabbed',
@@ -94,10 +105,29 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
 
     private generateQuery(value: Partial<SearchDateRangeAdvanced>, field: string): string {
         let query = '';
+        let startDate: Date;
+        let endDate: Date;
         if (value.dateRangeType === DateRangeType.IN_LAST) {
-            query = `${field}:[NOW/DAY-${value.inLastValue}${value.inLastValueType} TO NOW/DAY+1DAY]`;
+            switch(value.inLastValueType) {
+                case InLastDateType.DAYS:
+                    startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue)));
+                    break;
+                case InLastDateType.WEEKS:
+                    startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue)));
+                    break;
+                case InLastDateType.MONTHS:
+                    startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue)));
+                    break;
+                default:
+                    break;
+            }
+            endDate = endOfToday();
         } else if (value.dateRangeType === DateRangeType.BETWEEN) {
-            query = `${field}:['${formatISO(startOfDay(value.betweenStartDate))}' TO '${formatISO(endOfDay(value.betweenEndDate))}']`;
+            startDate = startOfDay(value.betweenStartDate);
+            endDate = endOfDay(value.betweenEndDate);
+        }
+        if (startDate && endDate) {
+            query = `${field}:['${formatISO(startDate)}' TO '${formatISO(endDate)}']`;
         }
         return query;
     }
