@@ -22,7 +22,7 @@ import { Authentication } from '../authentication';
 import { AuthenticationInterceptor, SHOULD_ADD_AUTH_TOKEN } from './authentication.interceptor';
 
 class MockAuthentication extends Authentication {
-  addTokenToHeader(httpHeaders: HttpHeaders): Observable<HttpHeaders> {
+  addTokenToHeader(_: string, httpHeaders: HttpHeaders): Observable<HttpHeaders> {
     return of(httpHeaders);
   }
 }

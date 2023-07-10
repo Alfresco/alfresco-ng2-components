@@ -105,13 +105,13 @@ export class ProcessAuth {
                 (error) => {
                     this.saveUsername('');
                     if (error.status === 401) {
-                        this.adfHttpClient.emit('unauthorized');
+                        this.adfHttpClient.emit('unauthorized', error);
                         this.onError.next('unauthorized');
                     } else if (error.status === 403) {
-                        this.adfHttpClient.emit('forbidden');
+                        this.adfHttpClient.emit('forbidden', error);
                         this.onError.next('forbidden');
                     } else {
-                        this.adfHttpClient.emit('error');
+                        this.adfHttpClient.emit('error', error);
                         this.onError.next('error');
                     }
                     reject(error);

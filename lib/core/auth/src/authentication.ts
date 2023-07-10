@@ -19,5 +19,5 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export abstract class Authentication {
-    public abstract addTokenToHeader(headers: HttpHeaders): Observable<HttpHeaders>;
+    public abstract addTokenToHeader(requestUrl: string, headers: HttpHeaders): Observable<HttpHeaders>;
 }
