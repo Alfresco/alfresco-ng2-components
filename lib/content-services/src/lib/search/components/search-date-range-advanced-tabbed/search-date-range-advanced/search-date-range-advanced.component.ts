@@ -124,6 +124,11 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 this.betweenStartDateFormControl.clearValidators();
                 this.betweenEndDateFormControl.clearValidators();
                 break;
+            default:
+                this.form.controls.inLastValue.clearValidators();
+                this.betweenStartDateFormControl.clearValidators();
+                this.betweenEndDateFormControl.clearValidators();
+                break;
         }
         this.betweenStartDateFormControl.updateValueAndValidity();
         this.betweenEndDateFormControl.updateValueAndValidity();
@@ -197,7 +202,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     // }
 
     onLastDateValueChanged(event: Event) {
-        let value: string = event.target['value'];
+        const value: string = event.target['value'];
         event.target['value'] = value.replace(/[-.]*0*([1-9]*\d*)/g, '$1');
     }
 }
