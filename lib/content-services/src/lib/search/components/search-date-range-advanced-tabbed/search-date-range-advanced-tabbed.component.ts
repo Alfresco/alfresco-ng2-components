@@ -195,8 +195,10 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
             }
             endDate = endOfToday();
         } else if (value.dateRangeType === DateRangeType.BETWEEN) {
-            startDate = startOfDay(value.betweenStartDate);
-            endDate = endOfDay(value.betweenEndDate);
+            if (value.betweenStartDate && value.betweenEndDate) {
+                startDate = startOfDay(value.betweenStartDate);
+                endDate = endOfDay(value.betweenEndDate);
+            }
         }
         if (startDate && endDate) {
             query = `${field}:['${formatISO(startDate)}' TO '${formatISO(endDate)}']`;
