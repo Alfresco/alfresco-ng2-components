@@ -8,7 +8,7 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
         @include mat.overridable-elevation(2);
 
         min-width: $mat-menu-overlay-min-width;
-        max-width: $mat-menu-overlay-max-width;
+        max-width: 900px;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         transform-origin: top left;

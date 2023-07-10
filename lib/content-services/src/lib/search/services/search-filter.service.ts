@@ -25,6 +25,7 @@ import { SearchDateRangeComponent } from '../components/search-date-range/search
 import { SearchDatetimeRangeComponent } from '../components/search-datetime-range/search-datetime-range.component';
 import { SearchLogicalFilterComponent } from '../components/search-logical-filter/search-logical-filter.component';
 import { SearchFilterAutocompleteChipsComponent } from '../components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
+import { SearchPropertiesComponent } from '../components/search-properties/search-properties.component';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,7 @@ export class SearchFilterService {
         text: SearchTextComponent,
         radio: SearchRadioComponent,
         slider: SearchSliderComponent,
+        properties: SearchPropertiesComponent,
         'number-range': SearchNumberRangeComponent,
         'check-list': SearchCheckListComponent,
         'date-range': SearchDateRangeComponent,
