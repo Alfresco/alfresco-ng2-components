@@ -18,7 +18,7 @@
 import { Subject, Observable, Observer, merge } from 'rxjs';
 import { BoundingRectangle, ResizeEvent, IResizeMouseEvent, ICoordinateX } from './types';
 import { map, take, share, filter, pairwise, mergeMap, takeUntil } from 'rxjs/operators';
-import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter } from '@angular/core';
+import { OnInit, Output, NgZone, OnDestroy, Directive, Renderer2, ElementRef, EventEmitter, Input } from '@angular/core';
 
 @Directive({
   selector: '[adf-resizable]',
@@ -39,6 +39,11 @@ export class ResizableDirective implements OnInit, OnDestroy {
    * Emitted when the mouse is released after a resize event.
    */
   @Output() resizeEnd = new EventEmitter<ResizeEvent>();
+
+  /**
+   * This is to cover sum of the left and right padding between resize handler and its parent.
+   */
+  @Input() coverPadding = 0;
 
   mouseup = new Subject<IResizeMouseEvent>();
 
@@ -63,8 +68,6 @@ export class ResizableDirective implements OnInit, OnDestroy {
   private unlistenMouseUp: () => void;
 
   private destroy$ = new Subject<void>();
-
-  private static COVER_LEFT_AND_RIGHT_PADDING = 10;
 
   constructor(
     private readonly renderer: Renderer2,
@@ -153,7 +156,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     mousedrag
       .pipe(
-        map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX + ResizableDirective.COVER_LEFT_AND_RIGHT_PADDING))
+        map(({ clientX }) => this.getNewBoundingRectangle(this.startingRect, clientX + this.coverPadding))
       )
       .subscribe((rectangle: BoundingRectangle) => {
         if (this.resizing.observers.length > 0) {
