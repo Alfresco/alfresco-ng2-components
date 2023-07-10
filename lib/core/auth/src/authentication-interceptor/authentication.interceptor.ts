@@ -43,7 +43,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
       if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
-          return this.authService.addTokenToHeader(req.headers).pipe(
+          return this.authService.addTokenToHeader(req.url, req.headers).pipe(
               mergeMap((headersWithBearer) => {
                   const headerWithContentType = this.appendJsonContentType(headersWithBearer);
                   const kcReq = req.clone({ headers: headerWithContentType});
