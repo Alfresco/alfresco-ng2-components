@@ -108,23 +108,27 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         let startDate: Date;
         let endDate: Date;
         if (value.dateRangeType === DateRangeType.IN_LAST) {
-            switch(value.inLastValueType) {
-                case InLastDateType.DAYS:
-                    startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue)));
-                    break;
-                case InLastDateType.WEEKS:
-                    startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue)));
-                    break;
-                case InLastDateType.MONTHS:
-                    startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue)));
-                    break;
-                default:
-                    break;
+            if (value.inLastValue) {
+                switch(value.inLastValueType) {
+                    case InLastDateType.DAYS:
+                        startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue)));
+                        break;
+                    case InLastDateType.WEEKS:
+                        startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue)));
+                        break;
+                    case InLastDateType.MONTHS:
+                        startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue)));
+                        break;
+                    default:
+                        break;
+                }
             }
             endDate = endOfToday();
         } else if (value.dateRangeType === DateRangeType.BETWEEN) {
-            startDate = startOfDay(value.betweenStartDate);
-            endDate = endOfDay(value.betweenEndDate);
+            if (value.betweenStartDate && value.betweenEndDate) {
+                startDate = startOfDay(value.betweenStartDate);
+                endDate = endOfDay(value.betweenEndDate);
+            }
         }
         if (startDate && endDate) {
             query = `${field}:['${formatISO(startDate)}' TO '${formatISO(endDate)}']`;
