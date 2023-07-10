@@ -2,7 +2,7 @@
 Title: Search filter tabbed component
 Added: v6.2.0
 Status: Active
-Last reviewed: 2023-06-28
+Last reviewed: 2023-07-10
 ---
 
 # [Search filter tabbed component](../../../lib/content-services/src/lib/search/components/search-filter-tabbed/search-filter-tabbed.component.ts "Defined in search-filter-tabbed.component.ts")

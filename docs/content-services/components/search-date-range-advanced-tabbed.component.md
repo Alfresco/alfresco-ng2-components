@@ -2,7 +2,7 @@
 Title: Search date range advanced tabbed component
 Added: v6.2.0
 Status: Active
-Last reviewed: 2023-06-28
+Last reviewed: 2023-07-10
 ---
 
 # [Search date range advanced tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component.ts "Defined in search-date-range-advanced-tabbed.component.ts")
