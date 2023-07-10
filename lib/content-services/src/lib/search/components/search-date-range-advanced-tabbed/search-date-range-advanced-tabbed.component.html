@@ -1,20 +1,13 @@
 <adf-search-filter-tabbed>
-    <adf-search-date-range-advanced
-        *adf-search-filter-tab="settings.displayedLabelsByField[fields[0]]"
-        [dateFormat]="settings.dateFormat"
-        [maxDate]="settings.maxDate"
-        [field]="fields[0]"
-        [initialValue]="startValue"
-        (changed)="onDateRangedValueChanged($event, fields[0])"
-        (valid)="tabsValidity[fields[0]]=$event">
-    </adf-search-date-range-advanced>
-    <adf-search-date-range-advanced
-        *adf-search-filter-tab="settings.displayedLabelsByField[fields[1]]"
-        [dateFormat]="settings.dateFormat"
-        [maxDate]="settings.maxDate"
-        [field]="fields[1]"
-        [initialValue]="startValue"
-        (changed)="onDateRangedValueChanged($event, fields[1])"
-        (valid)="tabsValidity[fields[1]]=$event">
-    </adf-search-date-range-advanced>
+    <ng-container *ngFor="let field of fields">
+        <adf-search-date-range-advanced
+            *adf-search-filter-tab="settings.displayedLabelsByField[field]"
+            [dateFormat]="settings.dateFormat"
+            [maxDate]="settings.maxDate"
+            [field]="field"
+            [initialValue]="startValue"
+            (changed)="onDateRangedValueChanged($event, field)"
+            (valid)="tabsValidity[field]=$event">
+        </adf-search-date-range-advanced>
+    </ng-container>
 </adf-search-filter-tabbed>
