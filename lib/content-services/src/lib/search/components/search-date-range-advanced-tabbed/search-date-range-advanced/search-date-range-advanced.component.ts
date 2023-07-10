@@ -158,6 +158,6 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
 
     onLastDateValueChanged(event: Event) {
         let value: string = event.target['value'];
-        event.target['value'] = value.replace(/[-.]*0*([1-9]*[0-9]*)/g, '$1');
+        event.target['value'] = value.replace(/[-.]*0*([1-9]*\d*)/g, '$1');
     }
 }
