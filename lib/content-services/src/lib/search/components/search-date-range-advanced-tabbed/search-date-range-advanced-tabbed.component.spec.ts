@@ -55,7 +55,9 @@ export class MockSearchDateRangeAdvancedComponent {
 describe('SearchDateRangeAdvancedTabbedComponent', () => {
     let component: SearchDateRangeAdvancedTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
-    let betweenMockData: SearchDateRangeAdvanced; let inLastMockData: SearchDateRangeAdvanced; let anyMockDate: SearchDateRangeAdvanced;
+    let betweenMockData: SearchDateRangeAdvanced;
+    let inLastMockData: SearchDateRangeAdvanced;
+    let anyMockDate: SearchDateRangeAdvanced;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
