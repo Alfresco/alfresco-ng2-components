@@ -119,11 +119,6 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 this.betweenStartDateFormControl.clearValidators();
                 this.betweenEndDateFormControl.clearValidators();
                 break;
-            case DateRangeType.ANY:
-                this.form.controls.inLastValue.clearValidators();
-                this.betweenStartDateFormControl.clearValidators();
-                this.betweenEndDateFormControl.clearValidators();
-                break;
             default:
                 this.form.controls.inLastValue.clearValidators();
                 this.betweenStartDateFormControl.clearValidators();
