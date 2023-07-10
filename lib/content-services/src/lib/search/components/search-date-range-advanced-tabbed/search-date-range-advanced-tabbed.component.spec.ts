@@ -23,9 +23,9 @@ import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-dat
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced/search-date-range-advanced.component';
 import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
-import { DateRangeType } from "./search-date-range-advanced/date-range-type";
-import { InLastDateType } from "./search-date-range-advanced/in-last-date-type";
-import { endOfDay, formatISO, parse, startOfDay } from "date-fns";
+import { DateRangeType } from './search-date-range-advanced/date-range-type';
+import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
+import { endOfDay, formatISO, parse, startOfDay } from 'date-fns';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
@@ -55,7 +55,7 @@ export class MockSearchDateRangeAdvancedComponent {
 describe('SearchDateRangeAdvancedTabbedComponent', () => {
     let component: SearchDateRangeAdvancedTabbedComponent;
     let fixture: ComponentFixture<SearchDateRangeAdvancedTabbedComponent>;
-    let betweenMockData: SearchDateRangeAdvanced, inLastMockData: SearchDateRangeAdvanced, anyMockDate: SearchDateRangeAdvanced;
+    let betweenMockData: SearchDateRangeAdvanced; let inLastMockData: SearchDateRangeAdvanced; let anyMockDate: SearchDateRangeAdvanced;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -85,13 +85,13 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
             maxDate: 'today',
             field: 'createdDate, modifiedDate',
             displayedLabelsByField: {
-                'createdDate': 'Created Date',
-                'modifiedDate': 'Modified Date'
+                createdDate: 'Created Date',
+                modifiedDate: 'Modified Date'
             }
         };
         component.tabsValidity = {
-            'createdDate': true,
-            'modifiedDate': true
+            createdDate: true,
+            modifiedDate: true
         };
 
         betweenMockData = {
@@ -100,21 +100,21 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
             inLastValue: undefined,
             betweenStartDate: parse('05-Jun-23', 'dd-MMM-yy', new Date()),
             betweenEndDate: parse('07-Jun-23', 'dd-MMM-yy', new Date())
-        }
+        };
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
             inLastValueType: InLastDateType.WEEKS,
             inLastValue: '5',
             betweenStartDate: undefined,
             betweenEndDate: undefined
-        }
+        };
         anyMockDate = {
             dateRangeType: DateRangeType.ANY,
             inLastValueType: InLastDateType.DAYS,
             inLastValue: null,
             betweenStartDate: null,
             betweenEndDate: null
-        }
+        };
 
         fixture.detectChanges();
     });
@@ -167,7 +167,7 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
             inLastValue: '9',
             betweenStartDate: null,
             betweenEndDate: null
-        }
+        };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-9DAYS TO NOW/DAY+1DAY]`;
@@ -179,7 +179,7 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
             inLastValue: '7',
             betweenStartDate: null,
             betweenEndDate: null
-        }
+        };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
         query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-7MONTHS TO NOW/DAY+1DAY]`;

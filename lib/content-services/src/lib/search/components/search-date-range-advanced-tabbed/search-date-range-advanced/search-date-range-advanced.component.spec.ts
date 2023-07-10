@@ -28,7 +28,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeAdvancedComponent>;
 
     const startDateSampleValue = parse('05-Jun-23', 'dd-MMM-yy', new Date());
-    const endDateSampleValue = parse('07-Jun-23', 'dd-MMM-yy', new Date())
+    const endDateSampleValue = parse('07-Jun-23', 'dd-MMM-yy', new Date());
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -233,7 +233,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
             inLastValue: undefined,
             betweenStartDate: '',
             betweenEndDate: ''
-        }
+        };
         dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mat-radio-input');
         dateRangeTypeRadioButton.click();
         fixture.detectChanges();
@@ -270,7 +270,7 @@ describe('SearchDateRangeAdvancedComponent', () => {
             inLastValue: undefined,
             betweenStartDate: startDateSampleValue,
             betweenEndDate: endDateSampleValue
-        }
+        };
         dateRangeTypeRadioButton = getElementBySelector('[data-automation-id="date-range-advanced-between"] .mat-radio-input');
         dateRangeTypeRadioButton.click();
         component.betweenStartDateFormControl.setValue(startDateSampleValue);
