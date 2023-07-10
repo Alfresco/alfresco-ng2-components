@@ -25,7 +25,7 @@ import { DateRangeType } from './date-range-type';
 import { SearchDateRangeAdvanced } from './search-date-range-advanced';
 import { FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from "@alfresco/adf-core";
+import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alfresco/adf-core';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -77,7 +77,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     constructor(private formBuilder: FormBuilder,
                 private userPreferencesService: UserPreferencesService,
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
-                @Inject(MAT_DATE_FORMATS) private dateFormatConfig:MatDateFormats) {}
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {}
 
     readonly endDateValidator = (formControl: UntypedFormControl): ({ [key: string]: boolean } | null) => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
@@ -86,7 +86,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
             };
         }
         return {};
-    }
+    };
 
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
@@ -124,6 +124,11 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 this.betweenStartDateFormControl.clearValidators();
                 this.betweenEndDateFormControl.clearValidators();
                 break;
+            default:
+                this.form.controls.inLastValue.clearValidators();
+                this.betweenStartDateFormControl.clearValidators();
+                this.betweenEndDateFormControl.clearValidators();
+                break;
         }
         this.betweenStartDateFormControl.updateValueAndValidity();
         this.betweenEndDateFormControl.updateValueAndValidity();
@@ -157,7 +162,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     }
 
     onLastDateValueChanged(event: Event) {
-        let value: string = event.target['value'];
+        const value: string = event.target['value'];
         event.target['value'] = value.replace(/[-.]*0*([1-9]*\d*)/g, '$1');
     }
 }

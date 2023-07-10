@@ -24,7 +24,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import { endOfDay, format, formatISO, startOfDay } from "date-fns";
+import { endOfDay, format, formatISO, startOfDay } from 'date-fns';
 
 @Component({
   selector: 'adf-search-date-range-advanced-tabbed',
@@ -127,10 +127,10 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
     private updateDisplayValue(value: Partial<SearchDateRangeAdvanced>, field: string) {
         this.combinedDisplayValue = '';
         this.displayValueMapByField.set(field, this.generateDisplayValue(value));
-        this.displayValueMapByField.forEach((displayValue: string, field: string) => {
+        this.displayValueMapByField.forEach((displayValue: string, fieldForDisplayLabel: string) => {
             if (displayValue) {
-                const displayLabelForField = `${this.translateService.instant(this.settings.displayedLabelsByField[field]).toUpperCase()}: ${displayValue}`;
-                this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`
+                const displayLabelForField = `${this.translateService.instant(this.settings.displayedLabelsByField[fieldForDisplayLabel]).toUpperCase()}: ${displayValue}`;
+                this.combinedDisplayValue = this.combinedDisplayValue ? `${this.combinedDisplayValue} ${displayLabelForField}` : `${displayLabelForField}`;
             }
         });
     }
