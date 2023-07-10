@@ -25,7 +25,17 @@ import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced/s
 import { SearchDateRangeAdvancedTabbedComponent } from './search-date-range-advanced-tabbed.component';
 import { DateRangeType } from './search-date-range-advanced/date-range-type';
 import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
-import { endOfDay, formatISO, parse, startOfDay } from 'date-fns';
+import {
+    endOfDay,
+    endOfToday,
+    formatISO,
+    parse,
+    startOfDay, startOfMonth,
+    startOfWeek,
+    subDays,
+    subMonths,
+    subWeeks
+} from 'date-fns';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
@@ -122,23 +132,23 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
     });
 
     it('should be able to generate separate fields on init', () => {
-       fixture.detectChanges();
-       expect(component.fields.length).toBe(2);
-       expect(component.fields).toEqual(['createdDate', 'modifiedDate']);
+        fixture.detectChanges();
+        expect(component.fields.length).toBe(2);
+        expect(component.fields).toEqual(['createdDate', 'modifiedDate']);
     });
 
     it('should return hasValidValue as false if any of the fields has an invalid value', () => {
-       component.tabsValidity['createdDate'] = false;
-       fixture.detectChanges();
-       expect(component.hasValidValue()).toBeFalse();
-       fixture.detectChanges();
-       component.tabsValidity['modifiedDate'] = false;
-       fixture.detectChanges();
-       expect(component.hasValidValue()).toBeFalse();
-       component.tabsValidity['createdDate'] = true;
-       component.tabsValidity['modifiedDate'] = true;
-       fixture.detectChanges();
-       expect(component.hasValidValue()).toBeTrue();
+        component.tabsValidity['createdDate'] = false;
+        fixture.detectChanges();
+        expect(component.hasValidValue()).toBeFalse();
+        fixture.detectChanges();
+        component.tabsValidity['modifiedDate'] = false;
+        fixture.detectChanges();
+        expect(component.hasValidValue()).toBeFalse();
+        component.tabsValidity['createdDate'] = true;
+        component.tabsValidity['modifiedDate'] = true;
+        fixture.detectChanges();
+        expect(component.hasValidValue()).toBeTrue();
     });
 
     it('should update displayValue when values are submitted', () => {
@@ -160,7 +170,8 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         component.onDateRangedValueChanged(betweenMockData, 'createdDate');
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
-        let query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-5WEEKS TO NOW/DAY+1DAY]`;
+        let inLastStartDate = startOfWeek(subWeeks(new Date(), 5));
+        let query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
 
         inLastMockData = {
@@ -172,7 +183,8 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
-        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-9DAYS TO NOW/DAY+1DAY]`;
+        inLastStartDate = startOfDay(subDays(new Date(), 9));
+        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
 
         inLastMockData = {
@@ -184,7 +196,9 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
-        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-7MONTHS TO NOW/DAY+1DAY]`;
+        inLastStartDate = startOfMonth(subMonths(new Date(), 7));
+        query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
+        expect(component.combinedQuery).toEqual(query);
         expect(component.combinedQuery).toEqual(query);
 
         component.onDateRangedValueChanged(anyMockDate, 'createdDate');
@@ -199,7 +213,8 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         fixture.detectChanges();
         component.submitValues();
         fixture.detectChanges();
-        const query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:[NOW/DAY-5WEEKS TO NOW/DAY+1DAY]`;
+        const inLastStartDate = startOfWeek(subWeeks(new Date(), 5));
+        const query = `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}'] AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.context.queryFragments['dateRangeAdvanced']).toEqual(query);
         expect(component.context.update).toHaveBeenCalled();
     });
