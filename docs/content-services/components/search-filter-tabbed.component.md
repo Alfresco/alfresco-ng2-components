@@ -27,31 +27,11 @@ In order to generate a tabbed widget for multiple search filters, you can pass i
 Additionally, you also have to make sure that the search filter being passed as a content child of the adf-search-filter-tabbed component, also has the adf-search-filter-tabbed directive applied on it,
 with the name input property being assigned the value of whatever name should be displayed for that particular tab
 
-## Class Members
-
-### Properties
-
-| Name            | Type                                                                                                            | Description                                                                                                                                                                                                   |
-|-----------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| settings        | [SearchWidgetSettings](../../../lib/content-services/src/lib/search/models/search-widget-settings.interface.ts) | The settings object for the search filter widget. This is mainly used to evaluate the fields and display labels for the different tabs.                                                                       |
-| queries         | { [key: string]: string }                                                                                       | A Javascript object containing all the queries for the different tabs, identified by the fields of the tabs. This is used to generate a single query by combining all the provided queries using their fields |
-| valuesToDisplay | { [key: string]: string }                                                                                       | A Javascript object containing the display values for all the different tabs. This is used to generate a single display label for all the tabs.                                                               |
-
-### Events
-
-| Name                             | Type                                                                                    | Description                                                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| fieldsChanged                    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>`                  | Emitted when all the fields for the different tabs have been evaluated                                      |
-| displayedLabelsByFieldTranslated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<{ [key: string]: string }>` | Emitted when the display labels for the different tabs have been evaluated from the settings input property |
-| queriesCombined                  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                    | Emitted when a single query has been generated using the queries input property                             |
-| valuesToDisplayCombined          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>`                    | Emitted when a single display label has been generated using the valuesToDisplay input property             |
-
 ## See also
 
 - [Search Configuration Guide](../../user-guide/search-configuration-guide.md)
 - [Search Query Builder service](../services/search-query-builder.service.md)
 - [Search Widget Interface](../interfaces/search-widget.interface.md)
-- [Search Chip Input component](search-chip-input.component.md)
 - [Search check list component](search-check-list.component.md)
 - [Search date range component](search-date-range.component.md)
 - [Search date range advanced component](search-date-range-advanced.component.md)

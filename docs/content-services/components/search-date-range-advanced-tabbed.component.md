@@ -44,7 +44,6 @@ the [Search Filter component](search-filter.component.md).
 
 | Name                   | Type                      | Description                                                                                                                                                                                                                                                |
 |------------------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| hideDefaultAction      | boolean                   | Show/hide the widget actions. By default is false.                                                                                                                                                                                                         |
 | field                  | string                    | Fields to apply the query to. Multiple, comma separated fields can be passed, to create multiple tabs per field. Required value                                                                                                                            |
 | dateFormat             | string                    | Date format. Dates used by the datepicker are Javascript Date objects, using [date-fns](https://date-fns.org/v2.30.0/docs/format) for formatting, so you can use any date format supported by the library. Default is 'dd-MMM-yy (sample date - 07-Jun-23) |
 | maxDate                | string                    | A fixed date (in format mentioned above, default format: dd-MMM-yy) or the string `"today"` that will set the maximum searchable date. Default is today.                                                                                                   |
@@ -74,7 +73,7 @@ in the `dateFormat` and in the `maxDate` setting:
                     "selector": "date-range-advanced",
                     "settings": {
                         "dateFormat": "dd-MMM-yy",
-                        "maxDate": "02-May-2023",
+                        "maxDate": "02-May-23",
                         "field": "cm:created, cm:modified",
                         "displayedLabelsByField": {
                             "cm:created": "Created Date",
@@ -87,6 +86,20 @@ in the `dateFormat` and in the `maxDate` setting:
     }
 }
 ```
+
+The [SearchDateRangeAdvanced](./search-date-range-advanced-tabbed.component.md) component allows 3 different kinds of date related operations to be performed.
+Based on what information is provided to that component, this component will create different kinds of queries - 
+- Anytime - No date filters are applied on the `field`. This option is selected by default
+- In the last - Allows to user to apply a filter to only show results from the last 'n' unit of time.
+    - The search query created while using this option has the following format
+      `<field>:[NOW/DAY-n<unit> TO NOW/DAY+1DAY]`
+    - For e.g., a search query for fetching results created in the last 4 months would be
+      `cm:created:[NOW/DAY-4MONTHS TO NOW/DAY+1DAY]`
+- Between - Allows the user to select a range of dates to filter the search results.
+    - The search query created while using this options has the following format
+      `<field>:[<from_date> TO <to_date>]`
+    - For e.g., a search query for fetching the results created between 6 June, 2023 to 10 June, 2023 would be -
+      `cm:created:['2023-06-06T00:00:00+05:30' TO '2023-06-10T23:59:59+05:30']`
 
 ## See also
 
