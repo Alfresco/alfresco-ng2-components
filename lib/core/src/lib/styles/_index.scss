@@ -8,7 +8,6 @@
 @import '../styles/mixins';
 @import '../form/components/widgets/form.theme';
 @import '../clipboard/clipboard.theme';
-@import '../breadcrumb/breadcrumb.theme';
 @import './snackbar.theme';
 @import './material.theme';
 @import './components-variables';
@@ -112,7 +111,6 @@
     }
 
     @include mat-datetimepicker-theme($theme);
-    @include adf-breadcrumb-theme($theme);
     @include adf-snackbar-theme;
     @include adf-material-theme;
     @include adf-components-variables;

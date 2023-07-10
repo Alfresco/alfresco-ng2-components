@@ -6,17 +6,28 @@
     $foreground-palette: map.get($config, foreground);
     $primary-palette: map.get($config, primary);
     $text-color: mat.get-color-from-palette($foreground-palette, text);
+    $primary: mat.get-color-from-palette($primary-palette, text);
 
-    .adf-breadcrumb__show-all-button-icon--rotate {
-        color: mat.get-color-from-palette($primary-palette, 500);
-    }
+    adf-breadcrumb {
+        .adf-breadcrumb__show-all-button-icon--rotate {
+            color: mat.get-color-from-palette($primary-palette, 500);
+        }
 
-    .adf-breadcrumb .adf-breadcrumb__item-wrapper:last-child a {
-        text-decoration: none;
-        color: $text-color;
-    }
+        .adf-breadcrumb__item-wrapper {
+            a,
+            a:active,
+            a:visited {
+                color: $primary;
+            }
 
-    .adf-breadcrumb .adf-breadcrumb__item-wrapper:last-child a:hover {
-        text-decoration: none;
+            &:last-child a {
+                text-decoration: none;
+                color: $text-color;
+            }
+
+            &:last-child a:hover {
+                text-decoration: none;
+            }
+        }
     }
 }
