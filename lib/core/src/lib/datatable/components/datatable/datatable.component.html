@@ -56,6 +56,7 @@
                 <div
                     adf-resizable
                     #resizableElement="adf-resizable"
+                    [coverPadding]="10"
                     (resizing)="onResizing($event, columnIndex)"
                     (resizeStart)="isResizing = true"
                     (resizeEnd)="onResizingEnd()"

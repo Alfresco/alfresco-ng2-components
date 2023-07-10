@@ -139,4 +139,18 @@ describe('ResizableDirective', () => {
 
         expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 120, width: 120 } });
     });
+
+    it('should emit resizing on mousemove considering cover padding', () => {
+        spyOn(directive.resizing, 'emit');
+        directive.coverPadding = 10;
+        directive.resizing.subscribe();
+
+        const mouseDownEvent = new MouseEvent('mousedown');
+        const mouseMoveEvent = new MouseEvent('mousemove', { clientX: 120 });
+
+        directive.mousedown.next({ ...mouseDownEvent, resize: true });
+        directive.mousemove.next(mouseMoveEvent);
+
+        expect(directive.resizing.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, bottom: 0, right: 130, width: 130 } });
+    });
 });
