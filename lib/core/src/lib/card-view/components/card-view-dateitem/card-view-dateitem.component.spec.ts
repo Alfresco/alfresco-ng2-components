@@ -192,6 +192,7 @@ describe('CardViewDateItemComponent', () => {
         const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
         component.editable = true;
         component.property.editable = true;
+        component.property.value = moment('Jul 10 2017', 'MMM DD YYYY').endOf('day').toDate();
         const expectedDate = moment('Jul 10 2017', 'MMM DD YYYY');
         fixture.detectChanges();
         const property = { ...component.property };
@@ -200,7 +201,7 @@ describe('CardViewDateItemComponent', () => {
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
             target: property,
             changed: {
-                dateKey: expectedDate.toDate()
+                dateKey: expectedDate.endOf('day').toDate()
             }
         });
     });
@@ -215,7 +216,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
 
         await fixture.whenStable();
-        expect(component.property.value).toEqual(expectedDate.toDate());
+        expect(component.property.value).toEqual(expectedDate.endOf('day').toDate());
     });
 
     it('should copy value to clipboard on double click', () => {
@@ -332,7 +333,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
 
         fixture.detectChanges();
-        expect(component.property.value).toEqual(expectedDate.toDate());
+        expect(component.property.value).toEqual(expectedDate.endOf('day').toDate());
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {
