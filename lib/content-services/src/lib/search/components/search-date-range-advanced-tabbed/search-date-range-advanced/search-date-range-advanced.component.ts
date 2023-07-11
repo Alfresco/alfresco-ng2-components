@@ -156,8 +156,25 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
         }
     }
 
-    onLastDateValueChanged(event: Event) {
-        const value: string = event.target['value'];
-        event.target['value'] = value.replace(/\D*0*([1-9]*\d*)/g, '$1');
+    narrowDownAllowedCharacters(event: Event) {
+        if (parseInt((event.target as HTMLInputElement).value) === 0) {
+            (event.target as HTMLInputElement).value = '';
+        } else {
+            (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value.replace(/\D/g, '');
+        }
+    }
+
+    preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
+        switch(event.key) {
+            case '.':
+            case '-':
+            case 'e':
+            case '+':
+                return false;
+            case '0':
+                return !!(event.target as HTMLInputElement).value;
+            default:
+                return true;
+        }
     }
 }
