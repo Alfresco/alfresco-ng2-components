@@ -10,7 +10,7 @@
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
-        <input matInput type="number" min="1" formControlName="inLastValue" data-automation-id="date-range-advanced-in-last-input" (input)="onLastDateValueChanged($event)">
+        <input matInput type="text" formControlName="inLastValue" data-automation-id="date-range-advanced-in-last-input" (input)="onLastDateValueChanged($event)">
         <mat-error *ngIf="form.controls.inLastValue.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
       <mat-form-field class="adf-search-date-range-form-field">
