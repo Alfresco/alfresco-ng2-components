@@ -1,19 +1,38 @@
 <form [formGroup]="form">
     <p>File Size</p>
-    <mat-form-field [style.width.px]="fileSizeOperatorsMaxWidth" class="adf-search-properties-file-size-operator">
-        <mat-select [formControl]="form.controls.fileSizeOperator" #fileSizeOperatorSelect>
-            <mat-option *ngFor="let fileSizeOperator of fileSizeOperators" [value]="fileSizeOperator">{{fileSizeOperator}}</mat-option>
+    <mat-form-field
+        [style.width.px]="fileSizeOperatorsMaxWidth"
+        class="adf-search-properties-file-size-operator">
+        <mat-select
+            [formControl]="form.controls.fileSizeOperator"
+            #fileSizeOperatorSelect>
+            <mat-option
+                *ngFor="let fileSizeOperator of fileSizeOperators"
+                [value]="fileSizeOperator">
+                {{fileSizeOperator}}
+            </mat-option>
         </mat-select>
     </mat-form-field>
-    <input [formControl]="form.controls.fileSize" />
+    <input
+        [formControl]="form.controls.fileSize"
+        type="number"
+        min="0"
+        (input)="narrowDownAllowedCharacters($event)"
+        (keydown)="preventIncorrectNumberCharacters($event)" />
     <mat-form-field class="adf-search-properties-file-size-unit">
         <mat-select [formControl]="form.controls.fileSizeUnit">
-            <mat-option *ngFor="let fileSizeUnit of fileSizeUnits" [value]="fileSizeUnit">{{fileSizeUnit.abbreviation}}</mat-option>
+            <mat-option
+                *ngFor="let fileSizeUnit of fileSizeUnits"
+                [value]="fileSizeUnit">
+                {{fileSizeUnit.abbreviation}}
+            </mat-option>
         </mat-select>
     </mat-form-field>
     <p>File Type</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="settings?.fileExtensions"
-        (optionsChanged)="setSelectedFileExtensions($event)">
+        (optionsChanged)="setSelectedFileExtensions($event)"
+        [onReset$]="reset$"
+        [allowOnlyPredefinedValues]="false">
     </adf-search-chip-autocomplete-input>
 </form>

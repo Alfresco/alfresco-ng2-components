@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SearchProperties } from './search-properties';
 import { FileSizeOperator } from './file-size-operator.enum';
@@ -31,8 +31,8 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
-    private _form = this.formBuilder.group<SearchProperties>({
+export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget {
+    private _form = this.formBuilder.nonNullable.group<SearchProperties>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
         fileSizeUnit: FileSizeUnit.KB
@@ -42,6 +42,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private canvas = document.createElement('canvas');
     private _fileSizeOperatorsMaxWidth: number;
     private selectedExtensions: string[];
+    private _reset$ = new Subject<void>();
 
     @ViewChild('fileSizeOperatorSelect', {read: ElementRef})
     fileSizeOperatorSelectElement: ElementRef;
@@ -62,8 +63,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         return this._fileSizeOperatorsMaxWidth;
     }
 
-    constructor(private formBuilder: FormBuilder) {
+    get reset$(): Subject<void> {
+        return this._reset$;
     }
+
+    constructor(private formBuilder: FormBuilder) {}
 
     id: string;
     settings?: SearchWidgetSettings;
@@ -71,10 +75,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     isActive?: boolean;
     startValue: any;
     displayValue$ = new Subject<string>();
-
-    ngOnInit() {
-        this.displayValue$.next('asdasd');
-    }
 
     ngAfterViewChecked() {
         if (this.fileSizeOperatorSelectElement?.nativeElement.clientWidth && !this._fileSizeOperatorsMaxWidth) {
@@ -88,32 +88,51 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         }
     }
 
-    reset(): void {
-        throw new Error('Method not implemented.');
+    narrowDownAllowedCharacters(event: Event) {
+        if (!(event.target as HTMLInputElement).value) {
+            return;
+        }
+        if ((event as InputEvent).data !== '.') {
+            (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value.replace(/[^0-9.]/g, '');
+        }
     }
 
-    submitValues(): void {
+    preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
+        return event.key !== '-' && event.key !== 'e' && event.key !== '+';
+    }
+
+    reset() {
+        this.form.reset();
+        this.reset$.next();
+        this.displayValue$.next('');
+    }
+
+    submitValues() {
         let query = '';
-        this.displayValue$.next(`${this.form.value.fileSizeOperator} ${this.form.value.fileSize} ${this.form.value.fileSizeUnit.abbreviation}`);
-        const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
-        console.log(size);
-        /*switch(this.form.value.fileSizeOperator) {
-            case FileSizeOperator.AT_MOST:
-                query = `content.size:[0 TO ${size}]`;
-                break;
-            case FileSizeOperator.AT_LEAST:
-                query = `content.size:[${size} TO MAX]`;
-                break;
-            default:
-                query = `content.size:[${size} TO ${size}]`;
-        }*/
-        if (this.selectedExtensions) {
+        let displayedValue = '';
+        if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
+            displayedValue = `${this.form.value.fileSizeOperator} ${this.form.value.fileSize} ${this.form.value.fileSizeUnit.abbreviation}`;
+            const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
+            switch (this.form.value.fileSizeOperator) {
+                case FileSizeOperator.AT_MOST:
+                    query = `content.size:[0 TO ${size}]`;
+                    break;
+                case FileSizeOperator.AT_LEAST:
+                    query = `content.size:[${size} TO MAX]`;
+                    break;
+                default:
+                    query = `content.size:[${size} TO ${size}]`;
+            }
+        }
+        if (this.selectedExtensions?.length) {
             if (query) {
                 query += ' AND ';
+                displayedValue += ', ';
             }
-            query += `content.mimetype:("${this.selectedExtensions.join('" AND "')}")`;
-
+            query += `cm:name:("*.${this.selectedExtensions.join('" OR "*.')}")`;
+            displayedValue += this.selectedExtensions.join(', ');
         }
+        this.displayValue$.next(displayedValue);
         this.context.queryFragments[this.id] = query;
         this.context.update();
     }
