@@ -42,6 +42,9 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     @Input()
     allowOnlyPredefinedValues = true;
 
+    @Input()
+    compareOption?: (option1: string, option2: string) => boolean;
+
     @Output()
     optionsChanged: EventEmitter<string[]> = new EventEmitter();
 

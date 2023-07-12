@@ -1,5 +1,9 @@
 <form [formGroup]="form">
-    <p>File Size</p>
+    <label
+        for="adf-search-properties-file-size"
+        class="adf-search-properties-file-size-label">
+        File Size
+    </label>
     <mat-form-field
         [style.width.px]="fileSizeOperatorsMaxWidth"
         class="adf-search-properties-file-size-operator">
@@ -18,7 +22,8 @@
         type="number"
         min="0"
         (input)="narrowDownAllowedCharacters($event)"
-        (keydown)="preventIncorrectNumberCharacters($event)" />
+        (keydown)="preventIncorrectNumberCharacters($event)"
+        id="adf-search-properties-file-size"/>
     <mat-form-field class="adf-search-properties-file-size-unit">
         <mat-select [formControl]="form.controls.fileSizeUnit">
             <mat-option
@@ -28,11 +33,12 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <p>File Type</p>
+    <p class="adf-search-properties-file-type-label">File Type</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="settings?.fileExtensions"
         (optionsChanged)="setSelectedFileExtensions($event)"
         [onReset$]="reset$"
-        [allowOnlyPredefinedValues]="false">
+        [allowOnlyPredefinedValues]="false"
+        [compareOption]="compareFileExtensions">
     </adf-search-chip-autocomplete-input>
 </form>

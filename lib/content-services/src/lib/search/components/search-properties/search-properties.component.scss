@@ -1,4 +1,9 @@
 adf-search-properties {
+    .adf-search-properties-file-size-label {
+        display: block;
+        margin-top: 4px;
+    }
+
     input {
         height: 25px;
         border: 1px solid var(--adf-theme-mat-grey-color-a400);
@@ -36,8 +41,13 @@ adf-search-properties {
     adf-search-chip-autocomplete-input {
         display: block;
     }
+
+    .adf-search-properties-file-type-label {
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
 }
 
-.mat-menu-panel {
+.adf-search-filter-chip-menu-panel-properties {
     max-width: unset;
 }

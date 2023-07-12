@@ -17,13 +17,14 @@
 
 import { AfterViewChecked, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SearchProperties } from './search-properties';
+import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { FileSizeUnit } from './file-size-unit.enum';
 import { SearchWidget } from '@alfresco/adf-content-services';
 import { Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { SearchProperties } from './search-properties';
 
 @Component({
     selector: 'adf-search-properties',
@@ -32,7 +33,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
     encapsulation: ViewEncapsulation.None
 })
 export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget {
-    private _form = this.formBuilder.nonNullable.group<SearchProperties>({
+    private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
         fileSizeUnit: FileSizeUnit.KB
@@ -101,6 +102,10 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
         return event.key !== '-' && event.key !== 'e' && event.key !== '+';
     }
 
+    compareFileExtensions(extension1: string, extension2: string): boolean {
+        return extension1.toUpperCase() === extension2.toUpperCase();
+    };
+
     reset() {
         this.form.reset();
         this.reset$.next();
@@ -141,13 +146,17 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
         throw new Error('Method not implemented.');
     }
 
-    getCurrentValue() {
-        throw new Error('Method not implemented.');
+    getCurrentValue(): SearchProperties {
+        return {
+            fileSizeCondition: this.form.getRawValue(),
+            fileExtensions: this.selectedExtensions
+        };
     }
 
-    setValue(value: any) {
-        console.log(value);
-        throw new Error('Method not implemented.');
+    setValue(searchProperties: SearchProperties) {
+        this.form.patchValue(searchProperties.fileSizeCondition);
+        this.selectedExtensions = searchProperties.fileExtensions;
+        this.submitValues();
     }
 
     setSelectedFileExtensions(extensions: string[]) {

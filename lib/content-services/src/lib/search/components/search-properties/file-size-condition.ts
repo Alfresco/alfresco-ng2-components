@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { FileSizeOperator } from './file-size-operator.enum';
+import { FileSizeUnit } from './file-size-unit.enum';
 
-@Pipe({
-    name: 'adfIsIncluded'
-})
-export class IsIncludedPipe<T> implements PipeTransform {
-    transform(value: T, array: T[], compare?: (value1: T, value2: T) => boolean): boolean {
-        return compare ? array.some((arrayValue) => compare(value, arrayValue)) : array.includes(value);
-    }
+export interface FileSizeCondition {
+    fileSizeOperator: FileSizeOperator;
+    fileSize?: number;
+    fileSizeUnit: FileSizeUnit;
 }
