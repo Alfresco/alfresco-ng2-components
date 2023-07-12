@@ -19,13 +19,16 @@ import { Inject, Injectable } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthService, OAuthStorage, TokenResponse } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
 @Injectable()
 export class RedirectAuthService extends AuthService {
+
+  onLogin: Observable<any>;
+
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
   /** Subscribe to whether the user has valid Id/Access tokens.  */
@@ -52,29 +55,32 @@ export class RedirectAuthService extends AuthService {
   ) {
     super();
     this.authConfig = authConfig;
-  }
 
-  init() {
     this.oauthService.clearHashAfterLogin = true;
 
     this.authenticated$ = this.oauthService.events.pipe(
-      startWith(undefined),
       map(() => this.authenticated),
       distinctUntilChanged(),
       shareReplay(1)
+    );
+
+    this.onLogin = this.authenticated$.pipe(
+        filter((authenticated) => authenticated),
+        map(() => undefined)
     );
 
     this.idpUnreachable$ = this.oauthService.events.pipe(
       filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
       map((event) => event.reason as Error)
     );
+  }
 
+  init() {
     if (isPromise(this.authConfig)) {
         return this.authConfig.then((config) => this.configureAuth(config));
     }
 
     return this.configureAuth(this.authConfig);
-
   }
 
   logout() {

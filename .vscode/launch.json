@@ -10,7 +10,7 @@
           "name": "e2e",
           "program": "${workspaceFolder}/node_modules/protractor/bin/protractor",
           "args": [
-              "`${workspaceFolder}/.vscode/closest-config-finder.sh ${file} e2e/protractor.conf.js`",
+              "./e2e/protractor.conf.js",
               "--specs=${file}"
           ],
           "envFile": "${workspaceFolder}/.env",

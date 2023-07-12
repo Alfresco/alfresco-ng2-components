@@ -22,6 +22,8 @@ import { Observable } from 'rxjs';
  * Provide authentication/authorization through OAuth2/OIDC protocol.
  */
 export abstract class AuthService {
+  abstract onLogin: Observable<any>;
+
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   abstract authenticated$: Observable<boolean>;
 
