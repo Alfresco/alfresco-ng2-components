@@ -22,7 +22,7 @@ import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 
 export class CardViewDatetimeItemModel extends CardViewDateItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'datetime';
-    format: string = 'MMM d, y, H:mm';
+    format: string = 'MMM d, y';
 
     constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
