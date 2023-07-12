@@ -17,6 +17,7 @@
 
 import { HttpHeaders } from '@angular/common/http';
 import ee from 'event-emitter';
+import { Observable } from 'rxjs';
 
 export interface AuthenticationServiceInterface {
 
@@ -52,6 +53,8 @@ export interface AuthenticationServiceInterface {
     getBpmUsername(): string;
 
     getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
+
+    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders>;
 
     reset(): void;
 }

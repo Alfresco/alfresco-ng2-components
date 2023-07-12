@@ -18,28 +18,64 @@
 import { Injectable, Injector } from '@angular/core';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { Observable, from } from 'rxjs';
-import { BaseAuthenticationService } from './base-authentication.service';
-import { AppConfigService } from '../../app-config';
-import { CookieService, LogService } from '../../common';
+import { Observable, from, merge } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
+import ee from 'event-emitter';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService extends BaseAuthenticationService {
+export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
-    constructor(appConfig: AppConfigService,
-                cookie: CookieService,
-                logService: LogService,
-                private injector: Injector) {
-        super(appConfig, cookie, logService);
+    onLogin: Observable<any>;
 
-        (this.isOauth() ? this.oidcAuthenticationService.onLogin : this.basicAlfrescoAuthService.onLogin)
-            .pipe(
-                tap(() => this.onLogin.next())
-            ).subscribe();
+    constructor(
+        private injector: Injector,
+        private redirectAuthService: RedirectAuthService
+    ) {
+        this.onLogin = merge(this.redirectAuthService.onLogin, this.basicAlfrescoAuthService.onLogin);
+    }
+
+    get on(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.on : this.basicAlfrescoAuthService.on;
+    }
+
+    get off(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.off : this.basicAlfrescoAuthService.off;
+    }
+
+    get once(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.once : this.basicAlfrescoAuthService.once;
+    }
+
+    get emit(): (type: string, ...args: any[]) => void {
+        return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
+    }
+
+    get onLogout(): Observable<any> {
+        return this.isOauth() ? this.oidcAuthenticationService.onLogout : this.basicAlfrescoAuthService.onLogout;
+    }
+
+    get onError(): Observable<any> {
+        return this.isOauth() ? this.oidcAuthenticationService.onError : this.basicAlfrescoAuthService.onError;
+    }
+
+    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
+        return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : from([headersArg]);
+    }
+
+    isECMProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isECMProvider() : this.basicAlfrescoAuthService.isECMProvider();
+    }
+
+    isBPMProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isBPMProvider() : this.basicAlfrescoAuthService.isBPMProvider();
+    }
+
+    isALLProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isALLProvider() : this.basicAlfrescoAuthService.isALLProvider();
     }
 
     private get oidcAuthenticationService(): OidcAuthenticationService {
@@ -120,5 +156,9 @@ export class AuthenticationService extends BaseAuthenticationService {
         } else {
             return this.basicAlfrescoAuthService.getAuthHeaders(requestUrl, headers);
         }
+    }
+
+    isOauth(): boolean {
+        return this.basicAlfrescoAuthService.isOauth();
     }
 }

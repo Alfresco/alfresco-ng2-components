@@ -24,7 +24,7 @@ import { LogService } from '../../common/services/log.service';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import ee from 'event-emitter';
 
-export abstract class BaseAuthenticationService  implements AuthenticationServiceInterface, ee.Emitter {
+export abstract class BaseAuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
     on: ee.EmitterMethod;
     off: ee.EmitterMethod;
