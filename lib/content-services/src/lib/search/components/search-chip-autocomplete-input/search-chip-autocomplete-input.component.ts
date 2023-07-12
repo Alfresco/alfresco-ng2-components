@@ -43,7 +43,19 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     allowOnlyPredefinedValues = true;
 
     @Input()
+    placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
+
+    @Input()
     compareOption?: (option1: string, option2: string) => boolean;
+
+    @Input()
+    formatChipValue?: (option: string) => string;
+
+    @Input()
+    filter = (options: string[], value: string): string[] => {
+        const filterValue = value.toLowerCase();
+        return options.filter(option => option.toLowerCase().includes(filterValue));
+    };
 
     @Output()
     optionsChanged: EventEmitter<string[]> = new EventEmitter();
@@ -57,7 +69,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     constructor() {
         this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
             startWith(null),
-            map((value: string | null) => (value ? this.filter(value) : []))
+            map((value: string | null) => (value ? this.filter(this.autocompleteOptions, value).slice(0, 15) : []))
         );
     }
 
@@ -71,7 +83,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     add(event: MatChipInputEvent) {
-        const value = (event.value || '').trim();
+        let value = (event.value || '').trim();
+        if (this.formatChipValue) {
+            value = this.formatChipValue(value);
+        }
 
         if (value && this.isExists(value) && !this.isAdded(value)) {
             this.selectedOptions.push(value);
@@ -97,11 +112,6 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
             this.formCtrl.setValue(null);
             this.optionsChanged.emit(this.selectedOptions);
         }
-    }
-
-    private filter(value: string): string[] {
-        const filterValue = value.toLowerCase();
-        return this.autocompleteOptions.filter(option => option.toLowerCase().includes(filterValue)).slice(0, 15);
     }
 
      private isAdded(value: string): boolean {

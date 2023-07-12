@@ -413,6 +413,22 @@
       "EXCLUDE": "EXCLUDE",
       "EXCLUDE_LABEL": "EXCLUDE these words",
       "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type"
     }
   },
   "PERMISSION": {

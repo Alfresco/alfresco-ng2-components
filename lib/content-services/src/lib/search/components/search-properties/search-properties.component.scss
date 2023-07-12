@@ -40,6 +40,40 @@ adf-search-properties {
 
     adf-search-chip-autocomplete-input {
         display: block;
+
+        .mat-form-field-outline {
+            .mat-form-field-outline {
+                &-start, &-end {
+                    border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
+                    border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+
+                &-start {
+                    border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
+
+                }
+
+                &-end {
+                    border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+            }
+        }
+
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline-thick {
+                .mat-form-field-outline {
+                    &-start, &-end {
+                        border-width: 1px;
+                    }
+                }
+            }
+        }
+
+        .mat-focused {
+            .mat-form-field-outline {
+                outline: 2px auto -webkit-focus-ring-color;
+            }
+        }
     }
 
     .adf-search-properties-file-type-label {

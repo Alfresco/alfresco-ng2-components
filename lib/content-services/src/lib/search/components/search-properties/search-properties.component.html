@@ -2,7 +2,7 @@
     <label
         for="adf-search-properties-file-size"
         class="adf-search-properties-file-size-label">
-        File Size
+        {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
     </label>
     <mat-form-field
         [style.width.px]="fileSizeOperatorsMaxWidth"
@@ -13,7 +13,7 @@
             <mat-option
                 *ngFor="let fileSizeOperator of fileSizeOperators"
                 [value]="fileSizeOperator">
-                {{fileSizeOperator}}
+                {{ fileSizeOperator | translate }}
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -23,22 +23,26 @@
         min="0"
         (input)="narrowDownAllowedCharacters($event)"
         (keydown)="preventIncorrectNumberCharacters($event)"
-        id="adf-search-properties-file-size"/>
+        id="adf-search-properties-file-size"
+        [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate" />
     <mat-form-field class="adf-search-properties-file-size-unit">
         <mat-select [formControl]="form.controls.fileSizeUnit">
             <mat-option
                 *ngFor="let fileSizeUnit of fileSizeUnits"
                 [value]="fileSizeUnit">
-                {{fileSizeUnit.abbreviation}}
+                {{ fileSizeUnit.abbreviation | translate }}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <p class="adf-search-properties-file-type-label">File Type</p>
+    <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="settings?.fileExtensions"
         (optionsChanged)="setSelectedFileExtensions($event)"
         [onReset$]="reset$"
         [allowOnlyPredefinedValues]="false"
-        [compareOption]="compareFileExtensions">
+        [compareOption]="compareFileExtensions"
+        [formatChipValue]="getExtensionWithoutDot"
+        [filter]="filterExtensions"
+        placeholder="SEARCH.SEARCH_PROPERTIES.FILE_TYPE">
     </adf-search-chip-autocomplete-input>
 </form>

@@ -25,6 +25,7 @@ import { Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchProperties } from './search-properties';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-properties',
@@ -68,7 +69,7 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
         return this._reset$;
     }
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     id: string;
     settings?: SearchWidgetSettings;
@@ -104,6 +105,20 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
 
     compareFileExtensions(extension1: string, extension2: string): boolean {
         return extension1.toUpperCase() === extension2.toUpperCase();
+    }
+
+    getExtensionWithoutDot(extension: string): string {
+        const extensionSplitByDot = extension.split('.');
+        return extensionSplitByDot[extensionSplitByDot.length - 1];
+    }
+
+    filterExtensions = (extensions: string[], filterValue: string): string[] => {
+        const filterValueLowerCase = this.getExtensionWithoutDot(filterValue).toLowerCase();
+        const extensionWithDot = filterValue.startsWith('.');
+        return extensions.filter((option) => {
+            const optionLowerCase = option.toLowerCase();
+            return extensionWithDot && filterValueLowerCase ? optionLowerCase.startsWith(filterValueLowerCase) : optionLowerCase.includes(filterValue);
+        });
     };
 
     reset() {
@@ -116,7 +131,7 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
         let query = '';
         let displayedValue = '';
         if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
-            displayedValue = `${this.form.value.fileSizeOperator} ${this.form.value.fileSize} ${this.form.value.fileSizeUnit.abbreviation}`;
+            displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${this.form.value.fileSize} ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
             const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
             switch (this.form.value.fileSizeOperator) {
                 case FileSizeOperator.AT_MOST:
@@ -166,7 +181,7 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
     private getOperatorNameWidth(operator: string, font: string): number {
         const context = this.canvas.getContext('2d');
         context.font = font;
-        return context.measureText(operator).width;
+        return context.measureText(this.translateService.instant(operator)).width;
     }
 
     private getCssStyle(element: HTMLElement, property: string): string {

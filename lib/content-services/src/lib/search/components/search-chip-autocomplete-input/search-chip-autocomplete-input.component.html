@@ -10,14 +10,14 @@
             </button>
         </mat-chip>
         <input
-            placeholder="{{ 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate }}"
+            placeholder="{{ placeholder | translate }}"
             aria-controls="adf-search-chip-autocomplete"
             #optionInput
             [formControl]="formCtrl"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [attr.aria-label]="'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate"
+            [attr.aria-label]="placeholder | translate"
             (matChipInputTokenEnd)="add($event)">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete">
