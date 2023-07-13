@@ -263,7 +263,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "executor": "nx:run-commands",
           "options": {
             "main": "lib/core/test.ts",
             "tsConfig": "lib/core/tsconfig.spec.json",
@@ -420,7 +420,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "executor": "nx:run-commands",
           "options": {
             "main": "lib/content-services/src/test.ts",
             "tsConfig": "lib/content-services/tsconfig.spec.json",
@@ -541,7 +541,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "executor": "nx:run-commands",
           "options": {
             "main": "lib/process-services/src/test.ts",
             "tsConfig": "lib/process-services/tsconfig.spec.json",
@@ -612,7 +612,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "executor": "nx:run-commands",
           "options": {
             "main": "lib/process-services-cloud/src/test.ts",
             "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
@@ -744,7 +744,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "executor": "nx:run-commands",
           "options": {
             "main": "lib/insights/src/test.ts",
             "tsConfig": "lib/insights/tsconfig.spec.json",
