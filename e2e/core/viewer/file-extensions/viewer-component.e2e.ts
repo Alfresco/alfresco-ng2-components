@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService, LocalStorageUtil,
+import { BrowserActions, createApiService, LocalStorageUtil,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -57,6 +57,7 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
+        await BrowserActions.getUrl(`${browser.baseUrl}/settings`);
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
         await LocalStorageUtil.setStorageItem('authType', 'BASIC');
 
