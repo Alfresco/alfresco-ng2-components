@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
@@ -65,10 +65,16 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     filteredOptions$: Observable<string[]>;
     selectedOptions: string[] = [];
     private onDestroy$ = new Subject<void>();
+    private _activeAnyOption = false;
+
+    set activeAnyOption(active: boolean) {
+        this._activeAnyOption = active;
+    }
 
     constructor() {
         this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
             startWith(null),
+            tap(() => this.activeAnyOption = false),
             map((value: string | null) => (value ? this.filter(this.autocompleteOptions, value).slice(0, 15) : []))
         );
     }
@@ -83,16 +89,18 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     add(event: MatChipInputEvent) {
-        let value = (event.value || '').trim();
-        if (this.formatChipValue) {
-            value = this.formatChipValue(value);
-        }
+        if (!this._activeAnyOption) {
+            let value = (event.value || '').trim();
+            if (this.formatChipValue) {
+                value = this.formatChipValue(value);
+            }
 
-        if (value && this.isExists(value) && !this.isAdded(value)) {
-            this.selectedOptions.push(value);
-            this.optionsChanged.emit(this.selectedOptions);
-            event.chipInput.clear();
-            this.formCtrl.setValue(null);
+            if (value && this.isExists(value) && !this.isAdded(value)) {
+                this.selectedOptions.push(value);
+                this.optionsChanged.emit(this.selectedOptions);
+                event.chipInput.clear();
+                this.formCtrl.setValue(null);
+            }
         }
     }
 

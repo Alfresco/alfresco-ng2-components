@@ -158,7 +158,7 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
     }
 
     hasValidValue(): boolean {
-        throw new Error('Method not implemented.');
+        return true;
     }
 
     getCurrentValue(): SearchProperties {
