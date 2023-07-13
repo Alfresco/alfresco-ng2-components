@@ -63,7 +63,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
-        return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : from([headersArg]);
+        return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : this.basicAlfrescoAuthService.addTokenToHeader(requestUrl, headersArg);
     }
 
     isECMProvider(): boolean {
