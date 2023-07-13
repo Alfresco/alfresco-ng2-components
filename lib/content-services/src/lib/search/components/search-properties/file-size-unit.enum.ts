@@ -16,9 +16,9 @@
  */
 
 export class FileSizeUnit {
-    static readonly KB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB', 1000);
-    static readonly MB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB', 1000000);
-    static readonly GB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB', 1000000000);
+    static readonly KB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB', 1024);
+    static readonly MB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB', 1048576);
+    static readonly GB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB', 1073741824);
 
     private constructor(readonly abbreviation: string, readonly bytes: number) {}
 }

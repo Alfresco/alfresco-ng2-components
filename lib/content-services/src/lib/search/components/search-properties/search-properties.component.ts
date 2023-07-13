@@ -99,6 +99,12 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
         }
     }
 
+    clearNumberFieldWhenInvalid(event: FocusEvent) {
+        if (!(event.target as HTMLInputElement).validity.valid) {
+            this.form.controls.fileSize.setValue(undefined);
+        }
+    }
+
     preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
         return event.key !== '-' && event.key !== 'e' && event.key !== '+';
     }
