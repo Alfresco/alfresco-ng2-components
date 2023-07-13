@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
@@ -33,7 +33,13 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget {
+export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
+    id: string;
+    settings?: SearchWidgetSettings;
+    context?: SearchQueryBuilderService;
+    startValue: SearchProperties;
+    displayValue$ = new Subject<string>();
+
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
@@ -45,6 +51,8 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
     private _fileSizeOperatorsMaxWidth: number;
     private selectedExtensions: string[];
     private _reset$ = new Subject<void>();
+    private sizeField: string;
+    private nameField: string;
 
     @ViewChild('fileSizeOperatorSelect', {read: ElementRef})
     fileSizeOperatorSelectElement: ElementRef;
@@ -71,12 +79,17 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
 
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
-    id: string;
-    settings?: SearchWidgetSettings;
-    context?: SearchQueryBuilderService;
-    isActive?: boolean;
-    startValue: any;
-    displayValue$ = new Subject<string>();
+    ngOnInit() {
+        if (this.settings) {
+            if (!this.settings.fileExtensions) {
+                this.settings.fileExtensions = [];
+            }
+            [this.sizeField, this.nameField] = this.settings.field.split(',');
+        }
+        if (this.startValue) {
+            this.setValue(this.startValue);
+        }
+    }
 
     ngAfterViewChecked() {
         if (this.fileSizeOperatorSelectElement?.nativeElement.clientWidth && !this._fileSizeOperatorsMaxWidth) {
@@ -134,33 +147,35 @@ export class SearchPropertiesComponent implements AfterViewChecked, SearchWidget
     }
 
     submitValues() {
-        let query = '';
-        let displayedValue = '';
-        if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
-            displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${this.form.value.fileSize} ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
-            const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
-            switch (this.form.value.fileSizeOperator) {
-                case FileSizeOperator.AT_MOST:
-                    query = `content.size:[0 TO ${size}]`;
-                    break;
-                case FileSizeOperator.AT_LEAST:
-                    query = `content.size:[${size} TO MAX]`;
-                    break;
-                default:
-                    query = `content.size:[${size} TO ${size}]`;
+        if (this.settings && this.context) {
+            let query = '';
+            let displayedValue = '';
+            if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
+                displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${this.form.value.fileSize} ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
+                const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
+                switch (this.form.value.fileSizeOperator) {
+                    case FileSizeOperator.AT_MOST:
+                        query = `${this.sizeField}:[0 TO ${size}]`;
+                        break;
+                    case FileSizeOperator.AT_LEAST:
+                        query = `${this.sizeField}:[${size} TO MAX]`;
+                        break;
+                    default:
+                        query = `${this.sizeField}:[${size} TO ${size}]`;
+                }
             }
-        }
-        if (this.selectedExtensions?.length) {
-            if (query) {
-                query += ' AND ';
-                displayedValue += ', ';
+            if (this.selectedExtensions?.length) {
+                if (query) {
+                    query += ' AND ';
+                    displayedValue += ', ';
+                }
+                query += `${this.nameField}:("*.${this.selectedExtensions.join('" OR "*.')}")`;
+                displayedValue += this.selectedExtensions.join(', ');
             }
-            query += `cm:name:("*.${this.selectedExtensions.join('" OR "*.')}")`;
-            displayedValue += this.selectedExtensions.join(', ');
+            this.displayValue$.next(displayedValue);
+            this.context.queryFragments[this.id] = query;
+            this.context.update();
         }
-        this.displayValue$.next(displayedValue);
-        this.context.queryFragments[this.id] = query;
-        this.context.update();
     }
 
     hasValidValue(): boolean {

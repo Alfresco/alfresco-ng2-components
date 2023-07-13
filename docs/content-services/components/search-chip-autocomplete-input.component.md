@@ -29,6 +29,10 @@ Represents an input with autocomplete options.
 | autocompleteOptions       | `string[]` | [] | Options for autocomplete                                                                      |
 | onReset$                  | [`Observable`](https://rxjs.dev/guide/observable)`<void>` |    | Observable that will listen to any reset event causing component to clear the chips and input |
 | allowOnlyPredefinedValues | boolean | true | A flag that indicates whether it is possible to add a value not from the predefined ones      |
+| placeholder               | string | 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | Placeholder which should be displayed in input. |
+| compareOption             | (option1: string, option2: string) => boolean |  | Function which is used to selected options with all options so it allows to detect which options are already selected. |
+| formatChipValue           | (option: string) => string |  | Function which is used to format custom typed options. |
+| filter                    | (options: string[], value: string) => string[] |  | Function which is used to filter out possibile options from hint. By default it checks if option includes typed value and is case insensitive. |
 
 ### Events
 
