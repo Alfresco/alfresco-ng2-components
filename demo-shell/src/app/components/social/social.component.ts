@@ -17,6 +17,9 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 
+/**
+ * @deprecated This component uses Like and Rating components that are not used in ACA/ADW/ACC and can be removed.
+ */
 @Component({
     selector: 'app-social',
     templateUrl: './social.component.html',

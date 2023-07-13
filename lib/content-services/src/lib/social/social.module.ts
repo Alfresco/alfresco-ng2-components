@@ -22,6 +22,9 @@ import { MaterialModule } from '../material.module';
 import { LikeComponent } from './like.component';
 import { RatingComponent } from './rating.component';
 
+/**
+ * @deprecated This module uses Like and Rating components are not used in ACA/ADW/ACC and can be removed.
+ */
 @NgModule({
     imports: [
         CommonModule,

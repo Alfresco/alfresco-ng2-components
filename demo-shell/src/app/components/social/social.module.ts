@@ -29,6 +29,9 @@ const routes: Routes = [
     }
 ];
 
+/**
+ * @deprecated This module uses Like and Rating components that are not used in ACA/ADW/ACC and can be removed.
+ */
 @NgModule({
     imports: [
         CommonModule,
