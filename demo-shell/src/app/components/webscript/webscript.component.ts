@@ -18,6 +18,9 @@
 import { Component } from '@angular/core';
 import { LogService } from '@alfresco/adf-core';
 
+/**
+ * @deprecated Webscript component has never been turned into a product and has no UI/UX and no use cases in ACA/ADW/ACC.
+ */
 @Component({
     selector: 'app-webscript',
     templateUrl: './webscript.component.html'

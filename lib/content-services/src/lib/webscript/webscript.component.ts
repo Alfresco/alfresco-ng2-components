@@ -39,6 +39,10 @@ import { WebscriptApi } from '@alfresco/js-api';
  * @Output - success - The event is emitted when the data are received
  *
  */
+
+/**
+ * @deprecated Webscript component has never been turned into a product and has no UI/UX and no use cases in ACA/ADW/ACC.
+ */
 @Component({
     selector: 'adf-webscript-get',
     templateUrl: './webscript.component.html'

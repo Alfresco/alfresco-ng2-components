@@ -22,6 +22,9 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { WebscriptComponent } from './webscript.component';
 
+/**
+ * @deprecated Webscript component has never been turned into a product and has no UI/UX and no use cases in ACA/ADW/ACC.
+ */
 @NgModule({
     imports: [
         CommonModule,
