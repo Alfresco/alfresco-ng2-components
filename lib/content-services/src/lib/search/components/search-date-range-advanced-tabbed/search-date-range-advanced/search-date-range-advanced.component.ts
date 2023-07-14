@@ -157,7 +157,7 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     }
 
     narrowDownAllowedCharacters(event: Event) {
-        if (parseInt((event.target as HTMLInputElement).value) === 0) {
+        if (parseInt((event.target as HTMLInputElement).value, 10) === 0) {
             (event.target as HTMLInputElement).value = '';
         } else {
             (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value.replace(/\D/g, '');

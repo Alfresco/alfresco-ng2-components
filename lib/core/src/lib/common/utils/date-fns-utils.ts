@@ -72,6 +72,9 @@ export class DateFnsUtils {
             case 'zh-CN':
                 dateFnsLocale = zhCN;
                 break;
+            default:
+                dateFnsLocale = enUS;
+                break;
         }
         return dateFnsLocale;
     }
