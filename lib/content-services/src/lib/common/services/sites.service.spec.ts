@@ -23,7 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 declare let jasmine: any;
 
 describe('Sites service', () => {
-    let service: SitesService
+    let service: SitesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
