@@ -18,7 +18,7 @@
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush, discardPeriodicTasks } from '@angular/core/testing';
 import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -111,7 +111,6 @@ describe('TaskHeaderCloudComponent', () => {
             await fixture.whenStable();
             expect(getTaskByIdSpy).toHaveBeenCalled();
             expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
-
         });
 
         it('should display assignee', async () => {
@@ -213,6 +212,8 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(description.nativeElement.value.trim()).toEqual('This is the description');
                 expect(taskCloudService.updateTask).toHaveBeenCalled();
             });
+            flush();
+            discardPeriodicTasks();
         }));
 
         it('should show spinner before loading task details', () => {
@@ -228,9 +229,9 @@ describe('TaskHeaderCloudComponent', () => {
             const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(priorityEditIcon).toBeNull();
+            expect(descriptionEditIcon).toBeNull();
+            expect(dueDateEditIcon).toBeNull();
         });
     });
 
@@ -241,7 +242,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should fectch parent task details if the task has parent id', async () => {
+        it('should fetch parent task details if the task has parent id', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
             expect(getTaskByIdSpy).toHaveBeenCalledTimes(2);
@@ -329,8 +330,8 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-description"] [class*="adf-textitem-edit-icon"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(descriptionEditIcon).not.toBeNull('Description edit icon should be shown');
-            expect(dueDateEditIcon).not.toBeNull('Due date edit icon should be shown');
+            expect(descriptionEditIcon).not.toBeNull();
+            expect(dueDateEditIcon).not.toBeNull();
         });
 
         it('should not render defined clickable edit icon for assignee property if the task in assigned state and assingned user is different from current logged-in user', () => {
@@ -338,7 +339,7 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
+            expect(value).toBeNull();
         });
     });
 
@@ -369,7 +370,7 @@ describe('TaskHeaderCloudComponent', () => {
         it('should not render defined clickable edit icon for assignee property if the task in created state and not assigned', () => {
             fixture.detectChanges();
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
+            expect(value).toBeNull();
         });
 
         it('should not render edit icon if the task in created state and not assigned', () => {
@@ -377,9 +378,9 @@ describe('TaskHeaderCloudComponent', () => {
             const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(priorityEditIcon).toBeNull();
+            expect(descriptionEditIcon).toBeNull();
+            expect(dueDateEditIcon).toBeNull();
         });
     });
 
@@ -409,9 +410,9 @@ describe('TaskHeaderCloudComponent', () => {
             const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon shouaaa`zld NOT be shown');
-            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(priorityEditIcon).toBeNull();
+            expect(descriptionEditIcon).toBeNull();
+            expect(dueDateEditIcon).toBeNull();
         });
     });
 
@@ -433,7 +434,7 @@ describe('TaskHeaderCloudComponent', () => {
         it('should not render defined clickable edit icon for assignee property if the task in suspended state', () => {
             fixture.detectChanges();
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
+            expect(value).toBeNull();
         });
 
         it('should not render edit icon if the task in suspended state', () => {
@@ -441,9 +442,9 @@ describe('TaskHeaderCloudComponent', () => {
             const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(priorityEditIcon).toBeNull();
+            expect(descriptionEditIcon).toBeNull();
+            expect(dueDateEditIcon).toBeNull();
         });
     });
 
