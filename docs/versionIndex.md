@@ -64,9 +64,6 @@ backend services have been tested with each released version of ADF.
 -   [Search Chip Autocomplete Input component](content-services/components/search-chip-autocomplete-input.component.md)
 -   [Search Filter Autocomplete Chips component](content-services/components/search-filter-autocomplete-chips.component.md)
 -   [Is Included pipe](content-services/pipes/is-included.pipe.md)
--   [Search Date Range Advanced Component](content-services/components/search-date-range-advanced.component.md)
--   [Search Date Range Advanced Tabbed Component](content-services/components/search-date-range-advanced-tabbed.component.md)
--   [Search Filter Tabbed Component](content-services/components/search-filter-tabbed.component.md)
 
 <!--v610 end-->
 
