@@ -215,7 +215,7 @@ describe('UserPreferencesService', () => {
             let lastValue;
 
             preferences.onChange.subscribe((userPreferenceStatus) => {
-                lastValue = userPreferenceStatus['textOrientation']
+                lastValue = userPreferenceStatus['textOrientation'];
             });
 
             expect(lastValue).toBe('rtl');
