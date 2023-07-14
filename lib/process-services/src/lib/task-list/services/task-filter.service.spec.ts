@@ -253,30 +253,30 @@ describe('Activiti Task filter Service', () => {
    });
 
     describe('isFilterAlreadyExisting', () => {
-        let dummyFilter;
+        let dummyTaskFilters;
 
         beforeEach(() => {
-            dummyFilter = [
-                { name: 'filter1' },
-                { name: 'filter2' }
+            dummyTaskFilters = [
+                { name: 'taskFilter1' },
+                { name: 'taskFilter2' }
             ];
         });
 
         it('should return true if the filter already exists', () => {
-            const filterName = 'filter2';
+            const taskFilterName = 'taskFilter2';
             const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
-            const result = service.isFilterAlreadyExisting(dummyFilter, filterName);
+            const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
 
             expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
             expect(result).toBe(true);
         });
 
         it('should return false if the filter does not exist', () => {
-            const filterName = 'filter3';
+            const taskFilterName = 'taskFilter3';
             const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
-            const result = service.isFilterAlreadyExisting(dummyFilter, filterName);
+            const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
 
             expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
             expect(result).toBe(false);
