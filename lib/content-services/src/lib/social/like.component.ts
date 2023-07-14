@@ -19,6 +19,9 @@ import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } 
 import { RatingService } from './services/rating.service';
 import { RatingEntry } from '@alfresco/js-api';
 
+/**
+ * @deprecated Like component is not used in ACA/ADW/ACC, can be removed.
+ */
 @Component({
     selector: 'adf-like',
     styleUrls: ['./like.component.scss'],

@@ -21,6 +21,9 @@ import { RatingEntry } from '@alfresco/js-api';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+/**
+ * @deprecated Rating component is not used in ACA/ADW/ACC, can be removed.
+ */
 @Component({
     selector: 'adf-rating',
     styleUrls: ['./rating.component.scss'],
