@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,22 +37,21 @@ describe('VersionCompatibilityService', () => {
         }
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        providers: [
-            {
-                provide: DiscoveryApiService,
-                useValue: {
-                    ecmProductInfo$: mockProductInfo
-                }
-            }
-        ]
-    });
-
     beforeEach(async () => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [
+                {
+                    provide: DiscoveryApiService,
+                    useValue: {
+                        ecmProductInfo$: mockProductInfo
+                    }
+                }
+            ]
+        });
         discoveryApiService = TestBed.inject(DiscoveryApiService);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         mockProductInfo.next(acsResponceMock as RepositoryInfo);

@@ -19,14 +19,11 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-
 import { TaskDetailsModel } from '../../task-list';
-
 import { taskDetailsMock } from '../../mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -39,15 +36,13 @@ describe('ProcessInstanceTasksComponent', () => {
 
     const exampleProcessInstance = new ProcessInstance({ id: '123' });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
-
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(ProcessService);

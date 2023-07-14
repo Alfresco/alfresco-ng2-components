@@ -20,7 +20,6 @@ import { FormRenderingService } from '../../services/form-rendering.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../widgets/core';
 import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets';
 import { FormFieldComponent } from './form-field.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../form-base.module';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,15 +32,14 @@ describe('FormFieldComponent', () => {
 
     let formRenderingService: FormRenderingService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            FormBaseModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                FormBaseModule
+            ]
+        });
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);

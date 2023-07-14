@@ -16,7 +16,6 @@
  */
 
 import { SearchDatetimeRangeComponent } from './search-datetime-range.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,14 +30,13 @@ describe('SearchDatetimeRangeComponent', () => {
     const maxDatetime = '10-Mar-20 20:00';
     const datetimeFormatFixture = 'DD-MMM-YY HH:mm';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
         component = fixture.componentInstance;
     });

@@ -17,7 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
@@ -38,18 +37,17 @@ describe('Confirm Dialog Component', () => {
         noLabel: 'MAYBE NO'
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef },
-            { provide: MAT_DIALOG_DATA, useValue: data }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef },
+                { provide: MAT_DIALOG_DATA, useValue: data }
+            ]
+        });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(ConfirmDialogComponent);
         component = fixture.componentInstance;

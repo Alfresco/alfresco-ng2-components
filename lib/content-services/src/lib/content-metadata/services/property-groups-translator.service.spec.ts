@@ -29,7 +29,6 @@ import {
     CardViewBoolItemModel,
     CardViewDatetimeItemModel,
     CardViewSelectItemModel,
-    setupTestBed,
     CardViewSelectItemProperties
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -45,14 +44,13 @@ describe('PropertyGroupTranslatorService', () => {
     let propertyValues: { [key: string]: any };
     let logService: LogService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         logService = TestBed.inject(LogService);
         service = TestBed.inject(PropertyGroupTranslatorService);
 

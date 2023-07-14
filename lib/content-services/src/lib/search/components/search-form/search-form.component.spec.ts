@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFormComponent } from './search-form.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
@@ -35,23 +34,22 @@ describe('SearchFormComponent', () => {
         { default: false, index: 2, name: 'Second', selected: false }
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
-        ]
-    });
-
     beforeEach(() => {
-    fixture = TestBed.createComponent(SearchFormComponent);
-    component = fixture.componentInstance;
-    queryBuilder = TestBed.inject<SearchQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
-    queryBuilder.searchForms.next(mockSearchForms);
-    fixture.detectChanges();
-  });
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
+            ]
+        });
+        fixture = TestBed.createComponent(SearchFormComponent);
+        component = fixture.componentInstance;
+        queryBuilder = TestBed.inject<SearchQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
+        queryBuilder.searchForms.next(mockSearchForms);
+        fixture.detectChanges();
+    });
 
     it('should show search forms', () => {
         const title = fixture.debugElement.query(By.css('.adf-search-form-title'));

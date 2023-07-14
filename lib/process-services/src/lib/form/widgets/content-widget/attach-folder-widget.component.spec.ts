@@ -18,11 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFolderWidgetComponent } from './attach-folder-widget.component';
-import {
-    FormFieldModel,
-    FormModel,
-    setupTestBed
-} from '@alfresco/adf-core';
+import { FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
@@ -53,14 +49,13 @@ describe('AttachFolderWidgetComponent', () => {
     let contentNodeDialogService: ContentNodeDialogService;
     let nodeService: NodesApiService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

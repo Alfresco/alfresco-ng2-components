@@ -16,9 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
@@ -40,15 +38,14 @@ describe('IdentityUserInfoComponent', () => {
         fixture.detectChanges();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatMenuModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatMenuModule
+            ]
+        });
         fixture = TestBed.createComponent(IdentityUserInfoComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

@@ -17,7 +17,6 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ToggleIconDirective } from './toggle-icon.directive';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Component({
@@ -35,14 +34,13 @@ describe('ToggleIconDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
-    setupTestBed({
-        declarations: [
-            TestComponent,
-            ToggleIconDirective
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                TestComponent,
+                ToggleIconDirective
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

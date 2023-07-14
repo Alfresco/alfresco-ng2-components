@@ -17,7 +17,6 @@
 
 import { TaskStandaloneComponent } from './task-standalone.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -26,14 +25,13 @@ describe('TaskStandaloneComponent', () => {
     let fixture: ComponentFixture<TaskStandaloneComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(TaskStandaloneComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

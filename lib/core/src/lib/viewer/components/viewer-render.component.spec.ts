@@ -19,10 +19,8 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -60,25 +58,24 @@ describe('ViewerComponent', () => {
 
     let extensionService: AppExtensionService;
 
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatButtonModule,
-            MatIconModule
-        ],
-        declarations: [
-            DoubleViewerComponent
-        ],
-        providers: [
-            RenderingQueueServices,
-            {provide: Location, useClass: SpyLocation},
-            MatDialog
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatButtonModule,
+                MatIconModule
+            ],
+            declarations: [
+                DoubleViewerComponent
+            ],
+            providers: [
+                RenderingQueueServices,
+                {provide: Location, useClass: SpyLocation},
+                MatDialog
+            ]
+        });
         fixture = TestBed.createComponent(ViewerRenderComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;

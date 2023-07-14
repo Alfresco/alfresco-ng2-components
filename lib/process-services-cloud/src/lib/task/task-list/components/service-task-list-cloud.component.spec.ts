@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, User } from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, User } from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
 import { fakeServiceTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
@@ -76,17 +76,16 @@ describe('ServiceTaskListCloudComponent', () => {
     let appConfig: AppConfigService;
     let serviceTaskListCloudService: ServiceTaskListCloudService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            EmptyTemplateComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                EmptyTemplateComponent
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
         fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
@@ -358,18 +357,17 @@ describe('ServiceTaskListCloudComponent', () => {
         let customCopyComponent: CustomCopyContentTaskListComponent;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                CustomTaskListComponent,
-                CustomCopyContentTaskListComponent
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ProcessServiceCloudTestingModule
+                ],
+                declarations: [
+                    CustomTaskListComponent,
+                    CustomCopyContentTaskListComponent
+                ]
+            });
             spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
             copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
@@ -420,14 +418,13 @@ describe('ServiceTaskListCloudComponent', () => {
     describe('Copy cell content directive from app.config specifications', () => {
         let taskSpy: jasmine.Spy;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ProcessServiceCloudTestingModule
+                ]
+            });
             appConfig = TestBed.inject(AppConfigService);
             serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {

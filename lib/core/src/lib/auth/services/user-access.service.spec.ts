@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CoreTestingModule, setupTestBed } from '../../testing';
+import { CoreTestingModule } from '../../testing';
 import { TestBed } from '@angular/core/testing';
 import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
@@ -26,12 +26,11 @@ describe('UserAccessService', () => {
     let jwtHelperService: JwtHelperService;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [CoreTestingModule],
-        providers: [UserAccessService]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreTestingModule],
+            providers: [UserAccessService]
+        });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);
         appConfigService = TestBed.inject(AppConfigService);

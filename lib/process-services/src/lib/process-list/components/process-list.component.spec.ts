@@ -21,7 +21,7 @@ import { of, throwError, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
 import {
-    AppConfigService, setupTestBed, DataRow, DataColumn,
+    AppConfigService, DataRow, DataColumn,
     DataRowEvent, ObjectDataRow, ObjectDataTableAdapter, DataCellEvent, ObjectDataColumn
 } from '@alfresco/adf-core';
 import {
@@ -50,14 +50,13 @@ describe('ProcessInstanceListComponent', () => {
         return value;
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.inject(AppConfigService);
@@ -482,15 +481,14 @@ describe('CustomProcessListComponent', () => {
     let fixture: ComponentFixture<CustomProcessListComponent>;
     let component: CustomProcessListComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [CustomProcessListComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [CustomProcessListComponent]
+        });
         fixture = TestBed.createComponent(CustomProcessListComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
@@ -520,15 +518,14 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
     let processService: ProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [EmptyTemplateComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [EmptyTemplateComponent]
+        });
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         processService = TestBed.inject(ProcessService);
         spyOn(processService, 'getProcessInstances').and.returnValue(of(fakeProcessInstancesEmpty));
@@ -622,15 +619,14 @@ describe('ProcessListContextMenuComponent', () => {
     let processService: ProcessService;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [ProcessListContextMenuComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [ProcessListContextMenuComponent]
+        });
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;

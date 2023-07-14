@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import * as diagramsActivitiesMock from '../../mock/diagram/diagram-activities.mock';
 import { DiagramComponent } from './diagram.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,14 +30,13 @@ describe('Diagrams activities', () => {
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

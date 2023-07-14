@@ -30,7 +30,6 @@ import {
 import { mockGroups, mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from './identity-user.service';
 import { JwtHelperService } from './jwt-helper.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -51,20 +50,17 @@ describe('IdentityUserService', () => {
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');
-    });
 
-    beforeEach(() => {
         const store = {};
 
         spyOn(localStorage, 'getItem').and.callFake( (key: string): string => store[key] || null);

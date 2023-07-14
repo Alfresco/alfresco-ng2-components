@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,14 +27,13 @@ describe('PermissionContainerComponent', () => {
     let component: PermissionContainerComponent;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(PermissionContainerComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

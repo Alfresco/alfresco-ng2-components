@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from './content.service';
-import { AppConfigService, AuthenticationService, StorageService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { AppConfigService, AuthenticationService, StorageService, CoreTestingModule } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,14 +32,13 @@ describe('ContentService', () => {
 
     const nodeId = 'fake-node-id';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         authService = TestBed.inject(AuthenticationService);
         contentService = TestBed.inject(ContentService);
         storage = TestBed.inject(StorageService);

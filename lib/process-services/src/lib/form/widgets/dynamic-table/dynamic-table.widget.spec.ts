@@ -22,7 +22,6 @@ import {
     FormModel,
     LogService,
     FormService,
-    setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { DynamicTableColumn } from './editors/models/dynamic-table-column.model';
@@ -81,14 +80,13 @@ describe('DynamicTableWidgetComponent', () => {
     let logService: LogService;
     let formService: FormService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         const field = new FormFieldModel(new FormModel());
         logService = TestBed.inject(LogService);
         formService = TestBed.inject(FormService);

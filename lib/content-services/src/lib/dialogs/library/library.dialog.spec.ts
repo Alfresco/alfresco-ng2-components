@@ -19,7 +19,6 @@ import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush, ComponentFixture, flushMicrotasks } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
@@ -37,18 +36,17 @@ describe('LibraryDialogComponent', () => {
         close: jasmine.createSpy('close')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef }
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(LibraryDialogComponent);
         component = fixture.componentInstance;
         sitesService = TestBed.inject(SitesService);

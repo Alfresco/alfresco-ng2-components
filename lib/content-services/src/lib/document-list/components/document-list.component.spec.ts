@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList, Component, ViewChild, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
-    setupTestBed,
     AlfrescoApiService,
     DataColumnListComponent,
     DataColumnComponent,
@@ -86,18 +85,17 @@ describe('DocumentList', () => {
     let spyFolder: any;
     let spyFolderNode: any;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers: [
-            { provide: MatDialog, useValue: mockDialog }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            providers: [
+                { provide: MatDialog, useValue: mockDialog }
+            ]
+        });
         eventMock = {
             preventDefault: () => {}
         };
@@ -1839,17 +1837,16 @@ describe('DocumentListComponent rendering', () => {
     let component: CustomTemplateComponent;
     let element: HTMLElement;
 
-    setupTestBed({
-        declarations: [CustomTemplateComponent],
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule,
-            DataTableModule,
-            DocumentListModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [CustomTemplateComponent],
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule,
+                DataTableModule,
+                DocumentListModule
+            ]
+        });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

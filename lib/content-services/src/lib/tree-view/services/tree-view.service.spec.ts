@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { TreeViewService } from './tree-view.service';
 import { TestBed } from '@angular/core/testing';
@@ -39,14 +38,13 @@ describe('TreeViewService', () => {
         { entry: { id: 'fake-file-id', name: 'fake-file-name', isFolder: false } }
     ] } });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(TreeViewService);
         nodeService = TestBed.inject(NodesApiService);
     });

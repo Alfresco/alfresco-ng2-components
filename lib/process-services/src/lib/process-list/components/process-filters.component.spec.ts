@@ -16,7 +16,6 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
@@ -38,16 +37,15 @@ describe('ProcessFiltersComponent', () => {
     let appsProcessService: AppsProcessService;
     let router: Router;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule,
-            RouterTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule,
+                RouterTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(ProcessFiltersComponent);
         filterList = fixture.componentInstance;
         processFilterService = TestBed.inject(ProcessFilterService);

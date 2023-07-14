@@ -26,8 +26,7 @@ import {
     DataRowEvent,
     DataTableModule,
     getDataColumnMock,
-    ObjectDataRow,
-    setupTestBed
+    ObjectDataRow
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -73,14 +72,13 @@ describe('ProcessListCloudComponent', () => {
     const fakeCustomSchemaName = 'fakeCustomSchema';
     const schemaWithVariable = 'schemaWithVariableId';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
         preferencesService = TestBed.inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
@@ -581,19 +579,17 @@ describe('ProcessListCloudComponent', () => {
     });
 
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
-
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
         let componentCustom: CustomTaskListComponent;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [CustomTaskListComponent]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ProcessServiceCloudTestingModule
+                ],
+                declarations: [CustomTaskListComponent]
+            });
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
             fixtureCustom.detectChanges();
             componentCustom = fixtureCustom.componentInstance;
@@ -635,19 +631,18 @@ describe('ProcessListCloudComponent', () => {
             updatePreference: of({})
         });
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                HttpClientModule,
-                NoopAnimationsModule,
-                DataTableModule,
-                MatProgressSpinnerModule
-            ],
-            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    HttpClientModule,
+                    NoopAnimationsModule,
+                    DataTableModule,
+                    MatProgressSpinnerModule
+                ],
+                providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
+                declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
+            });
             fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
             fixtureEmpty.detectChanges();
         });

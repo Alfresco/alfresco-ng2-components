@@ -19,7 +19,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../translation/translation.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,15 +42,16 @@ describe('ErrorContentComponent', () => {
     });
 
     describe(' with an undefined error', () => {
-
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: ActivatedRoute, useValue: { params: of() } }
-            ]
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ],
+                providers: [
+                    { provide: ActivatedRoute, useValue: { params: of() } }
+                ]
+            });
         });
 
         it('should render error code', async () => {
@@ -108,15 +108,16 @@ describe('ErrorContentComponent', () => {
     });
 
     describe(' with a specific error', () => {
-
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
-            ]
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ],
+                providers: [
+                    { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
+                ]
+            });
         });
 
         it('should navigate to an error given by the route params', async () => {

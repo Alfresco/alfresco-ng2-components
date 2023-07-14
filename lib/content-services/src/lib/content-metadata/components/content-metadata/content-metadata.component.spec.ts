@@ -23,7 +23,7 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
     CardViewBaseItemModel, CardViewComponent,
-    LogService, setupTestBed, AppConfigService, UpdateNotification
+    LogService, AppConfigService, UpdateNotification
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { throwError, of, EMPTY } from 'rxjs';
@@ -100,37 +100,37 @@ describe('ContentMetadataComponent', () => {
         return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            {
-                provide: LogService,
-                useValue: {
-                    error: jasmine.createSpy('error')
-                }
-            },
-            {
-                provide: TagService,
-                useValue: {
-                    getTagsByNodeId: () => EMPTY,
-                    removeTag: () => EMPTY,
-                    assignTagsToNode: () => EMPTY
-                }
-            },
-            {
-                provide: CategoryService,
-                useValue: {
-                    getCategoryLinksForNode: () => EMPTY,
-                    linkNodeToCategory: () => EMPTY,
-                    unlinkNodeFromCategory: () => EMPTY
-                }
-            }]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                {
+                    provide: LogService,
+                    useValue: {
+                        error: jasmine.createSpy('error')
+                    }
+                },
+                {
+                    provide: TagService,
+                    useValue: {
+                        getTagsByNodeId: () => EMPTY,
+                        removeTag: () => EMPTY,
+                        assignTagsToNode: () => EMPTY
+                    }
+                },
+                {
+                    provide: CategoryService,
+                    useValue: {
+                        getCategoryLinksForNode: () => EMPTY,
+                        linkNodeToCategory: () => EMPTY,
+                        unlinkNodeFromCategory: () => EMPTY
+                    }
+                }
+            ]
+        });
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         contentMetadataService = TestBed.inject(ContentMetadataService);

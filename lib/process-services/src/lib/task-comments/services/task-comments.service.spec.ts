@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CommentModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
 import { fakeTasksComment, fakeUser1 } from '../mocks/task-comments.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskCommentsService } from './task-comments.service';
@@ -24,17 +24,15 @@ import { TaskCommentsService } from './task-comments.service';
 declare let jasmine: any;
 
 describe('TaskCommentsService', () => {
-
     let service: TaskCommentsService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(TaskCommentsService);
     });
 

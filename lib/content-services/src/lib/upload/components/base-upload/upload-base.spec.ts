@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -42,17 +41,16 @@ describe('UploadBase', () => {
     let fixture: ComponentFixture<UploadTestComponent>;
     let uploadService: UploadService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [
-            UploadTestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [
+                UploadTestComponent
+            ]
+        });
         fixture = TestBed.createComponent(UploadTestComponent);
         uploadService = TestBed.inject(UploadService);
 

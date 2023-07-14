@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -55,15 +55,14 @@ describe('AppListCloudComponent', () => {
     class CustomEmptyAppListCloudTemplateComponent {
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [CustomEmptyAppListCloudTemplateComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [CustomEmptyAppListCloudTemplateComponent]
+        });
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
         alfrescoApiService = TestBed.inject(AlfrescoApiService);

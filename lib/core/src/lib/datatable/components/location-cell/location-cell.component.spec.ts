@@ -18,9 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
-
 import { LocationCellComponent } from './location-cell.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,14 +29,13 @@ describe('LocationCellComponent', () => {
     let rowData: any;
     let columnData: any;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(LocationCellComponent);
         component = fixture.componentInstance;
     });

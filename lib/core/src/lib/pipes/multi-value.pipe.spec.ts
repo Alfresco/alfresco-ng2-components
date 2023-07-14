@@ -17,7 +17,6 @@
 
 import { MultiValuePipe } from './multi-value.pipe';
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -25,14 +24,13 @@ describe('FullNamePipe', () => {
 
     let pipe: MultiValuePipe;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         pipe = TestBed.inject(MultiValuePipe);
    });
 

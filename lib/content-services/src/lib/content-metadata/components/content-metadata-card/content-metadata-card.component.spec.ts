@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,14 +37,13 @@ describe('ContentMetadataCardComponent', () => {
     const preset = 'custom-preset';
     let nodeAspectService: NodeAspectService = null;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
         component = fixture.componentInstance;

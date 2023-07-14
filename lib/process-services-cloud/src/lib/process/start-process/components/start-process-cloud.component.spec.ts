@@ -17,7 +17,7 @@
 
 import { SimpleChange, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormModel, setupTestBed } from '@alfresco/adf-core';
+import { FormModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -81,25 +81,24 @@ describe('StartProcessCloudComponent', () => {
         inputElement.nativeElement.dispatchEvent(new Event('input'));
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            FormsModule,
-            MatCommonModule,
-            ReactiveFormsModule,
-            MatCardModule,
-            MatIconModule,
-            MatAutocompleteModule,
-            MatOptionModule,
-            MatButtonModule,
-            MatFormFieldModule,
-            MatInputModule,
-            MatRippleModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                FormsModule,
+                MatCommonModule,
+                ReactiveFormsModule,
+                MatCardModule,
+                MatIconModule,
+                MatAutocompleteModule,
+                MatOptionModule,
+                MatButtonModule,
+                MatFormFieldModule,
+                MatInputModule,
+                MatRippleModule
+            ]
+        });
         processService = TestBed.inject(StartProcessCloudService);
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(StartProcessCloudComponent);

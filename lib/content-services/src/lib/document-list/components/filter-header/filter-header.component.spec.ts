@@ -18,7 +18,7 @@
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { setupTestBed, DataTableComponent, DataSorting } from '@alfresco/adf-core';
+import { DataTableComponent, DataSorting } from '@alfresco/adf-core';
 import { SearchService  } from '../../../search/services/search.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
@@ -48,21 +48,20 @@ describe('FilterHeaderComponent', () => {
         reload: () => jasmine.createSpy('reload')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
-            { provide: SearchService, useValue: searchMock },
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService },
-            { provide: DocumentListComponent, useValue: documentListMock },
-            DataTableComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
+                { provide: SearchService, useValue: searchMock },
+                { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService },
+                { provide: DocumentListComponent, useValue: documentListMock },
+                DataTableComponent
+            ]
+        });
         fixture = TestBed.createComponent(FilterHeaderComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];

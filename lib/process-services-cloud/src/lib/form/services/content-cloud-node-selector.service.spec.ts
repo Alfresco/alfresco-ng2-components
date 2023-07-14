@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoApiServiceMock, NotificationService, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, NotificationService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -49,14 +49,13 @@ describe('ContentCloudNodeSelectorService', () => {
         }
     };
 
-    setupTestBed({
-        imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, MatDialogModule],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, MatDialogModule],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ]
+        });
         service = TestBed.inject(ContentCloudNodeSelectorService);
         notificationService = TestBed.inject(NotificationService);
         dialog = TestBed.inject(MatDialog);

@@ -20,8 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
-
-import { setupTestBed } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -52,24 +50,21 @@ describe('FolderEditDirective', () => {
         preventDefault: () => null
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
         dialog = TestBed.inject(MatDialog);
         contentService = TestBed.inject(ContentService);
-    });
 
-    beforeEach(() => {
         dialogRefMock = {
             afterClosed: (val) =>  of(val),
             componentInstance: {

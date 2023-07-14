@@ -19,7 +19,7 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
-import { setupTestBed, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -56,16 +56,15 @@ describe('TaskHeaderCloudComponent', () => {
         reply: jasmine.createSpy('reply')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule,
-            MatSelectModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                TaskHeaderCloudModule,
+                MatSelectModule
+            ]
+        });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
             'adf-cloud-task-header': {

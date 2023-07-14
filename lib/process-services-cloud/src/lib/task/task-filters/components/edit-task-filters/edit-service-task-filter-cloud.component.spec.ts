@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -50,20 +49,19 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     let taskService: TaskCloudService;
     const afterClosedSubject = new Subject<any>();
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule,
-            MatIconTestingModule
-        ],
-        providers: [
-            MatDialog,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                TaskFiltersCloudModule,
+                MatIconTestingModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(ServiceTaskFilterCloudService);

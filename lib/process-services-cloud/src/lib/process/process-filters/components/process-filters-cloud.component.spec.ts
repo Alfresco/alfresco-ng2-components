@@ -17,7 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
@@ -35,18 +34,17 @@ describe('ProcessFiltersCloudComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
     let getProcessFiltersSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            ProcessFiltersCloudModule
-        ],
-        providers: [
-            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                ProcessFiltersCloudModule
+            ],
+            providers: [
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
         component = fixture.componentInstance;
 

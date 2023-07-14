@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { AuthenticationService, setupTestBed } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { getFakeSitePaging,
     getFakeSitePagingNoMoreItems,
@@ -59,11 +59,13 @@ describe('DropdownSitesComponent', () => {
     let siteService: SitesService;
     let authService: AuthenticationService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
     });
 
     describe('Rendering tests', () => {

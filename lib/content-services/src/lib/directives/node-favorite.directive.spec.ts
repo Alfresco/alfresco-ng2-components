@@ -19,21 +19,20 @@ import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { AlfrescoApiService, CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 
 describe('NodeFavoriteDirective', () => {
 
     let directive: NodeFavoriteDirective;
     let alfrescoApiService: AlfrescoApiService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         directive = new NodeFavoriteDirective( alfrescoApiService);
     });

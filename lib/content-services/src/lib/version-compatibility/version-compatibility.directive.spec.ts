@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
 import { VersionCompatibilityModule } from './version-compatibility.module';
@@ -59,16 +59,15 @@ describe('VersionCompatibilityDirective', () => {
         patch: '1'
     });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            VersionCompatibilityModule
-        ],
-        declarations: [TestComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                VersionCompatibilityModule
+            ],
+            declarations: [TestComponent]
+        });
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponceMock);

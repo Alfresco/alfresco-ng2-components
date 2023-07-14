@@ -18,7 +18,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -59,21 +58,20 @@ describe('ButtonsMenuComponent', () => {
         let component: CustomContainerComponent;
         let element: HTMLElement;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                CustomContainerComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                    MaterialModule
+                ],
+                declarations: [
+                    CustomContainerComponent
+                ],
+                schemas: [
+                    CUSTOM_ELEMENTS_SCHEMA
+                ]
+            });
             fixture = TestBed.createComponent(CustomContainerComponent);
             element = fixture.debugElement.nativeElement;
             component = fixture.componentInstance;
@@ -111,21 +109,20 @@ describe('ButtonsMenuComponent', () => {
         let fixture: ComponentFixture<CustomEmptyContainerComponent>;
         let element: HTMLElement;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MaterialModule
-            ],
-            declarations: [
-                CustomEmptyContainerComponent
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                    MaterialModule
+                ],
+                declarations: [
+                    CustomEmptyContainerComponent
+                ],
+                schemas: [
+                    CUSTOM_ELEMENTS_SCHEMA
+                ]
+            });
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;
         });

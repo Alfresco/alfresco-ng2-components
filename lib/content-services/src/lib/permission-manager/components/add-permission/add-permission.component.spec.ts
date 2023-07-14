@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionComponent } from './add-permission.component';
@@ -33,14 +32,13 @@ describe('AddPermissionComponent', () => {
     let element: HTMLElement;
     let nodePermissionService: NodePermissionService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         nodePermissionService = TestBed.inject(NodePermissionService);
         const response: any = { node: { id: 'fake-node', allowableOperations: ['updatePermissions']}, roles: [{ label: 'Test' , role: 'test'}] };
         spyOn(nodePermissionService, 'getNodeWithRoles').and.returnValue(of(response));

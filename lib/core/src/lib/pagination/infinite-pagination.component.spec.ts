@@ -21,7 +21,6 @@ import { PaginationModel } from '../models/pagination.model';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
@@ -59,17 +58,16 @@ describe('InfinitePaginationComponent', () => {
     let pagination: PaginationModel;
     let changeDetectorRef: ChangeDetectorRef;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestPaginatedComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestPaginatedComponent
+            ]
+        });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
         changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);

@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DiagramTooltipComponent } from './diagram-tooltip.component';
-import { setupTestBed } from '@alfresco/adf-core';
 
 @Component({
     template: `
@@ -40,11 +39,10 @@ describe('DiagramTooltipComponent', () => {
         let component: DiagramTooltipComponent;
         let data;
 
-        setupTestBed({
-            declarations: [DiagramTooltipComponent]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                declarations: [DiagramTooltipComponent]
+            });
             fixture = TestBed.createComponent(DiagramTooltipComponent);
             component = fixture.componentInstance;
             data = {
@@ -123,16 +121,13 @@ describe('DiagramTooltipComponent', () => {
     });
 
     describe('Tooltip functionality', () => {
-
         let fixture: ComponentFixture<TestHostComponent>;
 
-        setupTestBed({
-            declarations: [DiagramTooltipComponent, TestHostComponent]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                declarations: [DiagramTooltipComponent, TestHostComponent]
+            });
             fixture = TestBed.createComponent(TestHostComponent);
-
             fixture.detectChanges();
         });
 

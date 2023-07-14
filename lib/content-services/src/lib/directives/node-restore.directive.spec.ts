@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { TranslationService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { TranslationService, CoreTestingModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from './content-directive.module';
 
 @Component({
@@ -44,18 +44,17 @@ describe('NodeRestoreDirective', () => {
     let restoreNodeSpy: any;
     let translationService: TranslationService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            ContentDirectiveModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                ContentDirectiveModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeRestoreDirective));

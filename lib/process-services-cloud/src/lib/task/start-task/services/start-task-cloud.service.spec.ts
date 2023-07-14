@@ -16,12 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
@@ -31,14 +29,13 @@ describe('StartTaskCloudService', () => {
     let service: TaskCloudService;
     const fakeAppName: string = 'fake-app';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         service = TestBed.inject(TaskCloudService);
     });
 

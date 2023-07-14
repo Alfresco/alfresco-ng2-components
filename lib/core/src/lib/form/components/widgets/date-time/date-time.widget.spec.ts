@@ -20,7 +20,6 @@ import moment from 'moment';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -33,15 +32,14 @@ describe('DateTimeWidgetComponent', () => {
     let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatTooltipModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatTooltipModule
+            ]
+        });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
         element = fixture.nativeElement;

@@ -17,7 +17,6 @@
 
 import { Component, ContentChildren, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { of, throwError } from 'rxjs';
 import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
@@ -48,17 +47,16 @@ describe('UnClaimTaskCloudDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let taskCloudService: TaskCloudService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
@@ -158,20 +156,19 @@ describe('UnClaim Task Directive validation errors', () => {
 
     let fixture: ComponentFixture<any>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            ClaimTestMissingTaskIdDirectiveComponent,
-            ClaimTestInvalidAppNameUndefinedDirectiveComponent,
-            ClaimTestInvalidAppNameNullDirectiveComponent,
-            ClaimTestMissingInputDirectiveComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                ClaimTestMissingTaskIdDirectiveComponent,
+                ClaimTestInvalidAppNameUndefinedDirectiveComponent,
+                ClaimTestInvalidAppNameNullDirectiveComponent,
+                ClaimTestMissingInputDirectiveComponent
+            ]
+        });
         fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });
 

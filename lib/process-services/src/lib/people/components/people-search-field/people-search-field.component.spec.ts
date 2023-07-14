@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { setupTestBed } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from './people-search-field.component';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -30,14 +29,13 @@ describe('PeopleSearchFieldComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(PeopleSearchFieldComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;

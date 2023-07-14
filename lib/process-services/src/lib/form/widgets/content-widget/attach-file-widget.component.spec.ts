@@ -24,7 +24,6 @@ import {
     FormFieldTypes,
     FormService,
     FormFieldMetadata,
-    setupTestBed,
     DownloadService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
@@ -152,15 +151,14 @@ describe('AttachFileWidgetComponent', () => {
     let formService: FormService;
     let attachFileWidgetDialogService: AttachFileWidgetDialogService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule,
-            ContentModule.forRoot()
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule,
+                ContentModule.forRoot()
+            ]
+        });
         fixture = TestBed.createComponent(AttachFileWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

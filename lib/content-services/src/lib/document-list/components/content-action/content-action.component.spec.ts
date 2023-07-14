@@ -17,7 +17,6 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { FileNode } from '../../../mock';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
@@ -39,15 +38,14 @@ describe('ContentAction', () => {
     let contentService: ContentService;
     let nodeActionsService: NodeActionsService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         contentService = TestBed.inject(ContentService);
         nodeActionsService = new NodeActionsService(null, null, null);
         documentActions = new DocumentActionsService(nodeActionsService, null, null, null);

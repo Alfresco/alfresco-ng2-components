@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,15 +31,14 @@ describe('StorageService', () => {
     const value = 'test_value';
 
     describe('StorageService', () => {
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreModule.forRoot(),
-                CoreTestingModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreModule.forRoot(),
+                    CoreTestingModule
+                ]
+            });
             appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
                 application: {
@@ -81,14 +79,13 @@ describe('StorageService', () => {
     });
 
     describe('StorageService', () => {
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ]
+            });
             appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
                 application: {

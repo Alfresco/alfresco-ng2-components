@@ -23,7 +23,6 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    setupTestBed,
     LogService,
     CommentModel
 } from '@alfresco/adf-core';
@@ -73,15 +72,14 @@ describe('TaskDetailsComponent', () => {
     let taskCommentsService: TaskCommentsService;
     let peopleProcessService: PeopleProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         logService = TestBed.inject(LogService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 

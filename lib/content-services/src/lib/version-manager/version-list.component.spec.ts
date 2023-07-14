@@ -19,7 +19,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { Node, VersionPaging, VersionEntry, NodeEntry } from '@alfresco/js-api';
@@ -41,20 +40,19 @@ describe('VersionListComponent', () => {
         { entry: { name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' } } as VersionEntry
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
     });
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(VersionListComponent);
         dialog = TestBed.inject(MatDialog);
         contentVersionService = TestBed.inject(ContentVersionService);

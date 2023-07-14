@@ -18,7 +18,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -43,17 +42,16 @@ describe('EmptyContentComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
     let translateService: TranslateService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         translateService = TestBed.inject(TranslateService);
     });

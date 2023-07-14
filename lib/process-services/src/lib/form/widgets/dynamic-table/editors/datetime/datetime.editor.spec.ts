@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import moment from 'moment';
-import { FormFieldModel, FormModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
@@ -31,14 +31,13 @@ describe('DateTimeEditorComponent', () => {
     let column: DynamicTableColumn;
     let table: DynamicTableModel;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DateTimeEditorComponent);
         component = fixture.componentInstance;
 

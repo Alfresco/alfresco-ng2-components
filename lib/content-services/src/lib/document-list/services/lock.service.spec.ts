@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
-import { CoreTestingModule, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { CoreTestingModule, AlfrescoApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,14 +31,13 @@ describe('PeopleProcessService', () => {
     const fakeFolderNode: Node = { name: 'unlocked', isLocked: false, isFile: false, isFolder: true } as Node;
     const fakeNodeNoProperty: Node = { name: 'unlocked', isLocked: true, isFile: true, properties: {} } as Node;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(LockService);
         apiService = TestBed.inject(AlfrescoApiService);
     });

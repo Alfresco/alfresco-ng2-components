@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -36,19 +35,18 @@ describe('TaskFilterDialogCloudComponent', () => {
         data: {name: 'Mock-Title'}
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: mockDialogRef },
-            { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-          ]
-      });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                TaskFiltersCloudModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: mockDialogRef },
+                { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+            ]
+        });
         fixture = TestBed.createComponent(TaskFilterDialogCloudComponent);
         component = fixture.componentInstance;
     });

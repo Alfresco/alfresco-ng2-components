@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,14 +28,13 @@ describe('SidebarActionMenuComponent', () => {
     let component: SidebarActionMenuComponent;
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -86,18 +84,17 @@ describe('Custom SidebarActionMenuComponent', () => {
     let component: CustomSidebarActionMenuComponent;
     let element: HTMLElement;
 
-    setupTestBed({
-        declarations: [
-            SidebarActionMenuComponent,
-            CustomSidebarActionMenuComponent
-        ],
-        imports: [
-            MaterialModule,
-            NoopAnimationsModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                SidebarActionMenuComponent,
+                CustomSidebarActionMenuComponent
+            ],
+            imports: [
+                MaterialModule,
+                NoopAnimationsModule
+            ]
+        });
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;

@@ -18,7 +18,6 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,12 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
-import {
-    CoreTestingModule,
-    setupTestBed,
-    EventMock,
-    ViewUtilService, ViewerComponent
-} from '@alfresco/adf-core';
+import { CoreTestingModule, EventMock, ViewUtilService, ViewerComponent } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
@@ -152,35 +146,34 @@ describe('AlfrescoViewerComponent', () => {
     let viewUtilService: ViewUtilService;
     let nodeActionsService: NodeActionsService;
 
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatButtonModule,
-            MatIconModule
-        ],
-        declarations: [
-            ViewerWithCustomToolbarComponent,
-            ViewerWithCustomSidebarComponent,
-            ViewerWithCustomOpenWithComponent,
-            ViewerWithCustomMoreActionsComponent,
-            ViewerWithCustomToolbarActionsComponent
-        ],
-        providers: [
-            {
-                provide: RenditionService, useValue: {
-                    getNodeRendition: () => throwError('thrown'),
-                    generateMediaTracksRendition: () => {}
-                }
-            },
-            {provide: Location, useClass: SpyLocation},
-            MatDialog
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatButtonModule,
+                MatIconModule
+            ],
+            declarations: [
+                ViewerWithCustomToolbarComponent,
+                ViewerWithCustomSidebarComponent,
+                ViewerWithCustomOpenWithComponent,
+                ViewerWithCustomMoreActionsComponent,
+                ViewerWithCustomToolbarActionsComponent
+            ],
+            providers: [
+                {
+                    provide: RenditionService, useValue: {
+                        getNodeRendition: () => throwError('thrown'),
+                        generateMediaTracksRendition: () => {}
+                    }
+                },
+                {provide: Location, useClass: SpyLocation},
+                MatDialog
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(AlfrescoViewerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;

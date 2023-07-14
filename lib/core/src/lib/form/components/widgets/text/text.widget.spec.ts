@@ -20,7 +20,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -40,17 +39,16 @@ describe('TextWidgetComponent', () => {
     let element: HTMLElement;
     let errorWidget: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatInputModule,
-            FormsModule,
-            MatIconModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatInputModule,
+                FormsModule,
+                MatIconModule
+            ]
+        });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

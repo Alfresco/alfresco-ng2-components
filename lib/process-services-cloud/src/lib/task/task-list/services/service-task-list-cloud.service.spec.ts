@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { ServiceTaskListCloudService } from './service-task-list-cloud.service';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -34,13 +34,12 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
     const returnCallUrl = (queryUrl) => Promise.resolve(queryUrl);
 
-    setupTestBed({
-        imports: [
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ProcessServiceCloudTestingModule
+            ]
+        });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ServiceTaskListCloudService);
         logService = TestBed.inject(LogService);

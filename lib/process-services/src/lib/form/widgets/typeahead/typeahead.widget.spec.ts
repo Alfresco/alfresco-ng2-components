@@ -25,7 +25,6 @@ import {
     FormFieldTypes,
     FormFieldModel,
     FormModel,
-    setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
@@ -41,14 +40,13 @@ describe('TypeaheadWidgetComponent', () => {
     let taskFormService: TaskFormService;
     let processDefinitionService: ProcessDefinitionService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         translationService = TestBed.inject(TranslateService);
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);

@@ -17,7 +17,7 @@
 
 import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { DebugElement, SimpleChange } from '@angular/core';
@@ -83,16 +83,15 @@ describe('PeopleCloudComponent', () => {
         return element.querySelector('[data-automation-id="adf-people-cloud-row"]');
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            ProcessServiceCloudTestingModule,
-            PeopleCloudModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                ProcessServiceCloudTestingModule,
+                PeopleCloudModule
+            ]
+        });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
 

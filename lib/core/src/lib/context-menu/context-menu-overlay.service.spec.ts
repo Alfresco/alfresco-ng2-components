@@ -19,7 +19,6 @@ import { Overlay } from '@angular/cdk/overlay';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -35,15 +34,14 @@ describe('ContextMenuOverlayService', () => {
         } as MouseEvent
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        providers: [ Overlay ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [ Overlay ]
+        });
         overlay = TestBed.inject(Overlay);
         injector = TestBed.inject(Injector);
     });

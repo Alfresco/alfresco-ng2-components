@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -50,18 +49,17 @@ describe('TaskFilterCloudService', () => {
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
-    setupTestBed({
-        imports: [
-            HttpClientTestingModule,
-            ProcessServiceCloudTestingModule,
-            ApolloModule
-        ],
-        providers: [
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                ProcessServiceCloudTestingModule,
+                ApolloModule
+            ],
+            providers: [
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
+            ]
+        });
         service = TestBed.inject(TaskFilterCloudService);
         notificationCloudService = TestBed.inject(NotificationCloudService);
 
@@ -232,14 +230,13 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
-    setupTestBed({
-        imports: [HttpClientTestingModule, ApolloModule],
-        providers: [
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, ApolloModule],
+            providers: [
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.inject(IdentityUserService);

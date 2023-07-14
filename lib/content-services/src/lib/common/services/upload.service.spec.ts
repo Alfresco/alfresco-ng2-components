@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigModule, AppConfigService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { AppConfigModule, AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,23 +34,22 @@ describe('UploadService', () => {
 
     const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            AppConfigModule
-        ],
-        providers: [
-            {
-                provide: DiscoveryApiService,
-                useValue: {
-                    ecmProductInfo$: mockProductInfo
-                }
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                AppConfigModule
+            ],
+            providers: [
+                {
+                    provide: DiscoveryApiService,
+                    useValue: {
+                        ecmProductInfo$: mockProductInfo
+                    }
+                }
+            ]
+        });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
             ecmHost: 'http://localhost:9876/ecm',

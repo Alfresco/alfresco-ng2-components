@@ -17,7 +17,6 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,17 +33,16 @@ describe('InheritPermissionDirective', () => {
     let component: SimpleInheritedPermissionTestComponent;
     let nodeService: NodesApiService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [
-            SimpleInheritedPermissionTestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [
+                SimpleInheritedPermissionTestComponent
+            ]
+        });
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

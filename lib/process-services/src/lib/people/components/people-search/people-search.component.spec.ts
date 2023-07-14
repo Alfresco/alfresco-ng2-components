@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { PeopleSearchComponent } from './people-search.component';
@@ -45,14 +44,13 @@ describe('PeopleSearchComponent', () => {
     const userArray = [fakeUser, fakeSecondUser];
     let searchInput: any;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;
         element = fixture.nativeElement;

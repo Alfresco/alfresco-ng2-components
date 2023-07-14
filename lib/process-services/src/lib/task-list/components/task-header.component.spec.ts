@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     completedTaskDetailsMock,
@@ -58,14 +58,13 @@ describe('TaskHeaderComponent', () => {
         groups: []
     });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(TaskListService);

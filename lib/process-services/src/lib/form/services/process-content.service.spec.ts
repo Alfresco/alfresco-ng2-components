@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
@@ -63,17 +63,15 @@ const createFakeBlob = () => {
 };
 
 describe('ProcessContentService', () => {
-
     let service: ProcessContentService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(ProcessContentService);
     });
 

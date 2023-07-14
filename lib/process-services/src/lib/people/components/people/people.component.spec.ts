@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { LogService, setupTestBed } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -49,14 +49,13 @@ describe('PeopleComponent', () => {
     let logService: LogService;
     let peopleProcessService: PeopleProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         logService = TestBed.inject(LogService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
         fixture = TestBed.createComponent(PeopleComponent);

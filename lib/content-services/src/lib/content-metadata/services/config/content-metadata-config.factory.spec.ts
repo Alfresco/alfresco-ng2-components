@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, LogService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService, LogService } from '@alfresco/adf-core';
 import { IndifferentConfigService } from './indifferent-config.service';
 import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
@@ -30,20 +30,19 @@ describe('ContentMetadataConfigFactory', () => {
     let appConfig: AppConfigService;
     let config: ContentMetadataConfig;
 
-    setupTestBed({
-        imports: [
-            HttpClientModule
-        ],
-        providers: [
-            {
-                provide: LogService, useValue: {
-                    error: () => {}
-                }
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule
+            ],
+            providers: [
+                {
+                    provide: LogService, useValue: {
+                        error: () => {}
+                    }
+                }
+            ]
+        });
         factory = TestBed.inject(ContentMetadataConfigFactory);
         appConfig = TestBed.inject(AppConfigService);
     });

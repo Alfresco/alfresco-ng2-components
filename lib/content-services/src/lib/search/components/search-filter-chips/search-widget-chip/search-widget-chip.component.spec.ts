@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchWidgetChipComponent } from './search-widget-chip.component';
 import { simpleCategories } from '../../../../mock';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,22 +29,21 @@ describe('SearchWidgetChipComponent', () => {
     let fixture: ComponentFixture<SearchWidgetChipComponent>;
     let queryBuilder: SearchQueryBuilderService;
 
-    setupTestBed({
-        imports: [
-            MatMenuModule,
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
-      queryBuilder = TestBed.inject(SearchQueryBuilderService);
-      fixture = TestBed.createComponent(SearchWidgetChipComponent);
-      component = fixture.componentInstance;
-      spyOn(queryBuilder, 'update').and.stub();
+        TestBed.configureTestingModule({
+            imports: [
+                MatMenuModule,
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
+        queryBuilder = TestBed.inject(SearchQueryBuilderService);
+        fixture = TestBed.createComponent(SearchWidgetChipComponent);
+        component = fixture.componentInstance;
+        spyOn(queryBuilder, 'update').and.stub();
 
-      component.category = simpleCategories[1];
-      fixture.detectChanges();
+        component.category = simpleCategories[1];
+        fixture.detectChanges();
     });
 
     it('should update search query on apply click', () => {

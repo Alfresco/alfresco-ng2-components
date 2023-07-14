@@ -16,8 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
-
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -30,15 +28,14 @@ describe('AppDetailsCloudComponent', () => {
     let component: AppDetailsCloudComponent;
     let fixture: ComponentFixture<AppDetailsCloudComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            AppListCloudModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                AppListCloudModule
+            ]
+        });
         fixture = TestBed.createComponent(AppDetailsCloudComponent);
         component = fixture.componentInstance;
         component.applicationInstance = fakeApplicationInstance[0];

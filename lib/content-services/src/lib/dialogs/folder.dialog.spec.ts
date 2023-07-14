@@ -17,7 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { setupTestBed } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
 import { FolderDialogComponent } from './folder.dialog';
@@ -34,17 +33,16 @@ describe('FolderDialogComponent', () => {
         close: jasmine.createSpy('close')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef }
+            ]
+        });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;

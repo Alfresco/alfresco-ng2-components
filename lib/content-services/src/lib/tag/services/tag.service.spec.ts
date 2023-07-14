@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, setupTestBed, UserPreferencesService } from '@alfresco/adf-core';
+import { LogService, UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -41,14 +41,13 @@ describe('TagService', () => {
         return tagPaging;
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(TagService);
         logService = TestBed.inject(LogService);
         userPreferencesService = TestBed.inject(UserPreferencesService);

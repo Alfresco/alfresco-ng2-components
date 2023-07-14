@@ -19,7 +19,6 @@ import moment from 'moment';
 
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
-import { setupTestBed } from '@alfresco/adf-core';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,17 +32,16 @@ describe('NodeLockDialogComponent', () => {
         close: jasmine.createSpy('close')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef }
+            ]
+        });
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
     });

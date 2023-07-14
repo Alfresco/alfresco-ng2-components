@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DialogAspectListService } from '@alfresco/adf-content-services';
@@ -27,14 +26,13 @@ describe('DialogAspectListService', () => {
     let dialogAspectListService: DialogAspectListService;
     let dialog: MatDialog;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         dialog = TestBed.inject(MatDialog);
     });

@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from './../services/tasklist.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -70,15 +69,14 @@ describe('TaskAuditDirective', () => {
         return new Blob([pdfData], {type: 'application/pdf'});
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [BasicButtonComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [BasicButtonComponent]
+        });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(TaskListService);

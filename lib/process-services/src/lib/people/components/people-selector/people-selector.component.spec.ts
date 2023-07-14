@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogService, setupTestBed } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { PeopleSelectorComponent } from './people-selector.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -29,14 +29,13 @@ describe('PeopleSelectorComponent', () => {
     let component: PeopleSelectorComponent;
     let fixture: ComponentFixture<PeopleSelectorComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(PeopleSelectorComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

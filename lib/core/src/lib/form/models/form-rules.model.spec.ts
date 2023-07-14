@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { FormBaseModule } from '../form-base.module';
 import { CoreTestingModule } from '../../testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,21 +44,20 @@ describe('Form Rules', () => {
     let formService: FormService;
 
     describe('Injection token provided', () => {
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ],
-            providers: [
-                {
-                    provide: FORM_RULES_MANAGER,
-                    useValue: customRuleManager
-                }
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                    FormBaseModule
+                ],
+                providers: [
+                    {
+                        provide: FORM_RULES_MANAGER,
+                        useValue: customRuleManager
+                    }
+                ]
+            });
             injector = TestBed.inject(Injector);
             formService = TestBed.inject(FormService);
         });
@@ -115,15 +113,14 @@ describe('Form Rules', () => {
         let rulesManager: FormRulesManager<any>;
         let getRulesSpy: jasmine.Spy;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                    FormBaseModule
+                ]
+            });
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory<any>(injector);
             getRulesSpy = spyOn<any>(rulesManager, 'getRules');

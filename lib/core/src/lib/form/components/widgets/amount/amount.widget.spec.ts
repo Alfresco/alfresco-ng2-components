@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from '../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../../form-base.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
@@ -32,15 +31,14 @@ describe('AmountWidgetComponent', () => {
     let fixture: ComponentFixture<AmountWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            FormBaseModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                FormBaseModule
+            ]
+        });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -157,15 +155,14 @@ describe('AmountWidgetComponent - rendering', () => {
     let fixture: ComponentFixture<AmountWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            FormBaseModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                FormBaseModule
+            ]
+        });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
@@ -380,23 +377,22 @@ describe('AmountWidgetComponent settings', () => {
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            FormBaseModule
-        ],
-        providers: [
-            {
-                provide: ADF_AMOUNT_SETTINGS,
-                useValue: {
-                    showReadonlyPlaceholder: true
-                }
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                FormBaseModule
+            ],
+            providers: [
+                {
+                    provide: ADF_AMOUNT_SETTINGS,
+                    useValue: {
+                        showReadonlyPlaceholder: true
+                    }
+                }
+            ]
+        });
         fixture = TestBed.createComponent(AmountWidgetComponent);
 
         widget = fixture.componentInstance;

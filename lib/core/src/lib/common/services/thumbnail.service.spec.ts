@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -25,14 +24,13 @@ describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(ThumbnailService);
     });
 

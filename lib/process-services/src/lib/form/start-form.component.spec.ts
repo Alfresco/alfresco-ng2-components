@@ -25,7 +25,7 @@ import {
     taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleeNode
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
-import { WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { ProcessService } from '../process-list/services/process.service';
@@ -42,15 +42,14 @@ describe('StartFormComponent', () => {
     const exampleId1 = 'my:process1';
     const exampleId2 = 'my:process2';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
         processService = TestBed.inject(ProcessService);

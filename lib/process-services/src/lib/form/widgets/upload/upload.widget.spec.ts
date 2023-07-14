@@ -24,7 +24,6 @@ import {
     FormFieldTypes,
     FormModel,
     FormFieldModel,
-    setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { UploadWidgetComponent } from './upload.widget';
@@ -81,11 +80,13 @@ describe('UploadWidgetComponent', () => {
     const filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
     const filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
     });
 
     describe('when template is ready', () => {

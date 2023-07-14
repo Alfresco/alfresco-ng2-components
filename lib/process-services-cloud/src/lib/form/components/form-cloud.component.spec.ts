@@ -24,7 +24,7 @@ import {
     FormFieldTypes,
     FormModel,
     FormOutcomeEvent,
-    FormOutcomeModel, FormRenderingService, FormService, setupTestBed,
+    FormOutcomeModel, FormRenderingService, FormService,
     TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
@@ -92,20 +92,19 @@ describe('FormCloudComponent', () => {
         return componentRef.instance;
     };
 
-    setupTestBed({
-        imports: [
-            ProcessServiceCloudTestingModule
-        ],
-        providers: [
-            {
-                provide: VersionCompatibilityService,
-                useValue: {}
-            },
-            { provide: FormRenderingService, useClass: CloudFormRenderingService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ProcessServiceCloudTestingModule
+            ],
+            providers: [
+                {
+                    provide: VersionCompatibilityService,
+                    useValue: {}
+                },
+                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+            ]
+        });
         const apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 
@@ -1148,25 +1147,24 @@ describe('Multilingual Form', () => {
     let formComponent: FormCloudComponent;
     let fixture: ComponentFixture<FormCloudComponent>;
 
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreModule.forRoot()
-        ],
-        providers: [
-            {
-                provide: TRANSLATION_PROVIDER,
-                multi: true,
-                useValue: {
-                    name: 'app',
-                    source: 'resources'
-                }
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreModule.forRoot()
+            ],
+            providers: [
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'app',
+                        source: 'resources'
+                    }
+                }
+            ]
+        });
         translateService = TestBed.inject(TranslateService);
         formCloudService = TestBed.inject(FormCloudService);
 
@@ -1214,30 +1212,6 @@ describe('Multilingual Form', () => {
 });
 
 describe('retrieve metadata on submit', () => {
-
-    setupTestBed({
-        imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
-            CoreModule.forRoot(),
-            FormCloudModule
-        ],
-        providers: [
-            {
-                provide: TRANSLATION_PROVIDER,
-                multi: true,
-                useValue: {
-                    name: 'app',
-                    source: 'resources'
-                }
-            },
-            {
-                provide: VersionCompatibilityService,
-                useValue: {}
-            }
-        ]
-    });
-
     let formComponent: FormCloudComponent;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formService: FormService;
@@ -1255,6 +1229,28 @@ describe('retrieve metadata on submit', () => {
     } as Node;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreModule.forRoot(),
+                FormCloudModule
+            ],
+            providers: [
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'app',
+                        source: 'resources'
+                    }
+                },
+                {
+                    provide: VersionCompatibilityService,
+                    useValue: {}
+                }
+            ]
+        });
         const apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(mockOauth2Auth);
 

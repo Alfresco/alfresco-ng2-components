@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator } from '../../validators/card-view-item-float.validator';
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
@@ -89,15 +88,14 @@ describe('CardViewTextItemComponent', () => {
         expect(valueChips[2].nativeElement.innerText.trim()).toBe(param3);
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatChipsModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatChipsModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
     });

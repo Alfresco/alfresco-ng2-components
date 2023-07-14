@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -37,14 +36,13 @@ describe('AnalyticsReportHeatMapComponent', () => {
     const totalTimeValues: any = { 'sid-fake-id': 1, 'fake-start-event': 4 };
     const avgTimeValues: any = { 'sid-fake-id': 4, 'fake-start-event': 5 };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AnalyticsReportHeatMapComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

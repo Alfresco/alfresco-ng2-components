@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { FormListComponent } from './form-list.component';
 import { ModelService } from '../services/model.service';
 
@@ -28,13 +28,12 @@ describe('TaskAttachmentList', () => {
     let modelService: ModelService;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;

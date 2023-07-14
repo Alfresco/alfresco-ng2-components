@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import {
     fakeCompletedTaskList,
@@ -40,17 +40,15 @@ import { UserProcessModel } from '../../common/models/user-process.model';
 declare let jasmine: any;
 
 describe('Activiti TaskList Service', () => {
-
     let service: TaskListService;
 
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         service = TestBed.inject(TaskListService);
         jasmine.Ajax.install();
     });

@@ -19,7 +19,6 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService,
-         setupTestBed,
          DataRowEvent,
          ObjectDataRow,
          User,
@@ -102,24 +101,23 @@ describe('TaskListCloudComponent', () => {
         updatePreference: of({})
     });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        providers: [
-            {
-                provide: TASK_LIST_CLOUD_TOKEN,
-                useClass: TaskListCloudService
-            },
-            {
-                provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
-                useValue: preferencesService
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            providers: [
+                {
+                    provide: TASK_LIST_CLOUD_TOKEN,
+                    useClass: TaskListCloudService
+                },
+                {
+                    provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+                    useValue: preferencesService
+                }
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
@@ -504,18 +502,17 @@ describe('TaskListCloudComponent', () => {
         let customCopyComponent: CustomCopyContentTaskListComponent;
         let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                CustomTaskListComponent,
-                CustomCopyContentTaskListComponent
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ProcessServiceCloudTestingModule
+                ],
+                declarations: [
+                    CustomTaskListComponent,
+                    CustomCopyContentTaskListComponent
+                ]
+            });
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
             copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
@@ -566,21 +563,20 @@ describe('TaskListCloudComponent', () => {
     describe('Creating an empty custom template - EmptyTemplateComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
-        setupTestBed({
-            imports: [
-                HttpClientModule,
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                TaskListCloudModule
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    HttpClientModule,
+                    NoopAnimationsModule,
+                    TranslateModule.forRoot(),
+                    TaskListCloudModule
+                ],
+                providers: [
+                    { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                    { provide: AppConfigService, useClass: AppConfigServiceMock },
+                    { provide: TranslationService, useClass: TranslationMock }
+                ]
+            });
             const emptyList = { list: { entries: [] } };
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
 
@@ -604,14 +600,13 @@ describe('TaskListCloudComponent', () => {
     describe('Copy cell content directive from app.config specifications', () => {
         let taskSpy: jasmine.Spy;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    ProcessServiceCloudTestingModule
+                ]
+            });
             appConfig = TestBed.inject(AppConfigService);
             taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
             appConfig.config = Object.assign(appConfig.config, {

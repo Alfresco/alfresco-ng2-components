@@ -21,7 +21,6 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget.component';
 import {
-    setupTestBed,
     FormFieldModel,
     FormModel,
     FormFieldTypes,
@@ -133,17 +132,16 @@ describe('AttachFileCloudWidgetComponent', () => {
         attachButton.click();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            FormCloudModule,
-            ContentModule.forRoot()
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                FormCloudModule,
+                ContentModule.forRoot()
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         downloadService = TestBed.inject(DownloadService);
         fixture = TestBed.createComponent(AttachFileCloudWidgetComponent);
         widget = fixture.componentInstance;

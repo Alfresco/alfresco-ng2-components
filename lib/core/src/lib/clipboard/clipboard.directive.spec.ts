@@ -17,7 +17,6 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -41,17 +40,16 @@ describe('ClipboardDirective', () => {
     let fixture: ComponentFixture<TestTargetClipboardComponent>;
     let clipboardService: ClipboardService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestTargetClipboardComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestTargetClipboardComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
         fixture.detectChanges();
@@ -92,17 +90,16 @@ describe('CopyClipboardDirective', () => {
     let fixture: ComponentFixture<TestCopyClipboardComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestCopyClipboardComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestCopyClipboardComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         element = fixture.debugElement.nativeElement;
         fixture.detectChanges();

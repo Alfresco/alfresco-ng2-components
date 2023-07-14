@@ -28,7 +28,6 @@ import {
     SiteEntry,
     SitePaging
 } from '@alfresco/js-api';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -83,12 +82,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
         component.queryBuilderService.executed.next(searchResults);
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    beforeEach(() => {
+       TestBed.configureTestingModule({
+           imports: [
+               TranslateModule.forRoot(),
+               ContentTestingModule
+           ],
+           schemas: [CUSTOM_ELEMENTS_SCHEMA]
+       });
     });
 
     describe('General component features', () => {

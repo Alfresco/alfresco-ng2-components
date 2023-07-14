@@ -17,8 +17,7 @@
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -69,21 +68,20 @@ describe('EditTaskFilterCloudComponent', () => {
     let taskService: TaskCloudService;
     const afterClosedSubject = new Subject<any>();
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule,
-            PeopleCloudModule,
-            MatIconTestingModule
-        ],
-        providers: [
-            MatDialog,
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                TaskFiltersCloudModule,
+                PeopleCloudModule,
+                MatIconTestingModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(TaskFilterCloudService);

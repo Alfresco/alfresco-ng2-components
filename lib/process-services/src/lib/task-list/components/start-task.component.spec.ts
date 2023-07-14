@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, LogService } from '@alfresco/adf-core';
+import { LogService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
@@ -49,14 +49,13 @@ describe('StartTaskComponent', () => {
 
     const testUser = { id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com' };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

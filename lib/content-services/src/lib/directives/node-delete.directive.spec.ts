@@ -19,7 +19,7 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentDirectiveModule } from './content-directive.module';
 
@@ -88,20 +88,19 @@ describe('NodeDeleteDirective', () => {
     let deleteNodePermanentSpy: any;
     let purgeDeletedNodePermanentSpy: any;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            ContentDirectiveModule
-        ],
-        declarations: [
-            TestComponent,
-            TestWithPermissionsComponent,
-            TestDeletePermanentComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                ContentDirectiveModule
+            ],
+            declarations: [
+                TestComponent,
+                TestWithPermissionsComponent,
+                TestDeletePermanentComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
         fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);

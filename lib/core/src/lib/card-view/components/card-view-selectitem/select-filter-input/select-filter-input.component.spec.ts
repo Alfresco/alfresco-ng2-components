@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { SelectFilterInputComponent } from './select-filter-input.component';
@@ -73,18 +72,20 @@ describe('SelectFilterInputComponent', () => {
     let component: SelectFilterInputComponent;
     let matSelect: MatSelect;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            NoopAnimationsModule
-        ],
-        declarations: [
-            TestComponent
-        ],
-        providers: [
-            MatSelect
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                NoopAnimationsModule
+            ],
+            declarations: [
+                TestComponent
+            ],
+            providers: [
+                MatSelect
+            ]
+        });
     });
 
     describe('component', () => {

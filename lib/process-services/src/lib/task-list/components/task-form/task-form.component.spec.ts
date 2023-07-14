@@ -18,12 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFormComponent } from './task-form.component';
-import {
-    FormModel,
-    FormOutcomeEvent,
-    FormOutcomeModel,
-    setupTestBed
-} from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
@@ -66,15 +61,14 @@ describe('TaskFormComponent', () => {
     let peopleProcessService: PeopleProcessService;
     let getBpmLoggedUserSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(TaskFormComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

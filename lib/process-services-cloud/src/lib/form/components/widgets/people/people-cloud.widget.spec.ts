@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityUserModel } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleCloudWidgetComponent } from './people-cloud.widget';
@@ -31,20 +31,19 @@ describe('PeopleCloudWidgetComponent', () => {
     let element: HTMLElement;
     let identityUserService: IdentityUserService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            PeopleCloudWidgetComponent
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                PeopleCloudWidgetComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
+        });
         identityUserService = TestBed.inject(IdentityUserService);
         fixture = TestBed.createComponent(PeopleCloudWidgetComponent);
         widget = fixture.componentInstance;

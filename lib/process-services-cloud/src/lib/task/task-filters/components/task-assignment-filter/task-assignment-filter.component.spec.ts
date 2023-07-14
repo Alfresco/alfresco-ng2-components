@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { TranslationService, TranslationMock } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
 import { GroupCloudModule } from '../../../../group/group-cloud.module';
@@ -48,16 +48,18 @@ describe('TaskAssignmentFilterComponent', () => {
         expect(assignmentTypeChangeSpy).toHaveBeenCalledWith(type);
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            GroupCloudModule,
-            TaskFiltersCloudModule,
-            NoopAnimationsModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                GroupCloudModule,
+                TaskFiltersCloudModule,
+                NoopAnimationsModule
+            ],
+            providers: [
+                { provide: TranslationService, useClass: TranslationMock }
+            ]
+        });
     });
 
     describe('inputs', () => {

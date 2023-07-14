@@ -16,7 +16,6 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { IdentityGroupService } from './identity-group.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
@@ -37,14 +36,13 @@ describe('IdentityGroupService', () => {
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');
