@@ -67,30 +67,33 @@ export class TaskFilterService {
                 (res) => {
                     const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        if (filter.name === involvedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: involvedTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === myTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: myTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === queuedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: queuedTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === completedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: completedTasksFilter.filter,
-                                appId
-                            }));
+                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
+                        if (!isFilterAlreadyExisting) {
+                            if (filter.name === involvedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: involvedTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === myTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: myTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === queuedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: queuedTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === completedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: completedTasksFilter.filter,
+                                    appId
+                                }));
+                            }
                         }
                     });
                     observer.next(filters);
@@ -114,8 +117,11 @@ export class TaskFilterService {
                 map((response: any) => {
                     const filters: FilterRepresentationModel[] = [];
                     response.data.forEach((filter: FilterRepresentationModel) => {
-                        const filterModel = new FilterRepresentationModel(filter);
-                        filters.push(filterModel);
+                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
+                        if (!isFilterAlreadyExisting) {
+                            const filterModel = new FilterRepresentationModel(filter);
+                            filters.push(filterModel);
+                        }
                     });
                     return filters;
                 }),

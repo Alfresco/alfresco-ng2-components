@@ -51,8 +51,11 @@ export class ProcessFilterService {
                 map((response) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     response.data.forEach((filter) => {
-                        const filterModel = new FilterProcessRepresentationModel(filter);
-                        filters.push(filterModel);
+                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
+                        if (!isFilterAlreadyExisting) {
+                            const filterModel = new FilterProcessRepresentationModel(filter);
+                            filters.push(filterModel);
+                        }
                     });
                     return filters;
                 }),
@@ -116,12 +119,15 @@ export class ProcessFilterService {
                 (res) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        if (filter.name === runningFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
-                        } else if (filter.name === completedFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
-                        } else if (filter.name === allFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
+                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
+                        if (!isFilterAlreadyExisting) {
+                            if (filter.name === runningFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
+                            } else if (filter.name === completedFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
+                            } else if (filter.name === allFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
+                            }
                         }
                     });
                     observer.next(filters);
