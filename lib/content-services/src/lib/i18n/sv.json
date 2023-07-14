@@ -268,9 +268,6 @@
       "ERROR": "Uppladdningsfel"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "Kunde inte slutföra åtgärden. Dela det här meddelandet med din IT-avdelning: Fel under deserialisering av {{data}} som {{contentType}}"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {

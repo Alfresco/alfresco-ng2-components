@@ -400,11 +400,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
-                path: 'webscript',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
-            },
-            {
                 path: 'tag',
                 canActivate: [AuthGuardEcm],
                 loadChildren: () => import('./components/tag/tag.module').then(m => m.AppTagModule)

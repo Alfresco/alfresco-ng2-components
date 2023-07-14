@@ -24,7 +24,6 @@ import { MaterialModule } from './material.module';
 
 import { SocialModule } from './social/social.module';
 import { TagModule } from './tag/tag.module';
-import { WebScriptModule } from './webscript/webscript.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
@@ -59,7 +58,6 @@ import { CategoriesModule } from './category/category.module';
         SocialModule,
         TagModule,
         CommonModule,
-        WebScriptModule,
         FormsModule,
         ReactiveFormsModule,
         DialogModule,
@@ -102,7 +100,6 @@ import { CategoriesModule } from './category/category.module';
         ContentPipeModule,
         SocialModule,
         TagModule,
-        WebScriptModule,
         DocumentListModule,
         ContentUserInfoModule,
         UploadModule,

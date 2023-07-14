@@ -317,7 +317,6 @@ for more information about installing and using the source code.
 | [Version List component](content-services/components/version-list.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node in a Version Manager component. | [Source](../lib/content-services/src/lib/version-manager/version-list.component.ts) |
 | [Version Manager Component](content-services/components/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/src/lib/version-manager/version-manager.component.ts) |
 | [Version Upload component](content-services/components/version-upload.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the new version's minor/major changes and the optional comment of a node in a Version Manager component. | [Source](../lib/content-services/src/lib/version-manager/version-upload.component.ts) |
-| [Webscript component](content-services/components/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/src/lib/webscript/webscript.component.ts) |
 
 ### Directives
 

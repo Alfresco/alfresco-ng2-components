@@ -268,9 +268,6 @@
       "ERROR": "Carica errore"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "Impossibile completare l'azione. Condividi il messaggio con il team IT: Errore durante la deserializzazione di {{data}} come {{contentType}}"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {

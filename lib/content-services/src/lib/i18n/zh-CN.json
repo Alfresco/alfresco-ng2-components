@@ -268,9 +268,6 @@
       "ERROR": "上传错误"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "无法完成该操作。将此信息告知您的 IT 团队：将 {{data}} 反序列化为 {{contentType}} 过程中出错"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {

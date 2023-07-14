@@ -268,9 +268,6 @@
       "ERROR": "Fehler beim Hochladen"
     }
   },
-  "WEBSCRIPT": {
-    "ERROR": "Vorgang konnte nicht durchgeführt werden. Geben Sie diese Meldung an Ihr IT-Team weiter: Fehler bei Deserialisierung von {{data}} als {{contentType}}"
-  },
   "SEARCH": {
     "CONTROL": {},
     "BUTTON": {
