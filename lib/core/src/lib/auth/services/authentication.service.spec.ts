@@ -20,6 +20,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
+import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,13 +32,14 @@ describe('AuthenticationService', () => {
     let appConfigService: AppConfigService;
     let cookie: CookieService;
 
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
+    });
+
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
-        });
         sessionStorage.clear();
         localStorage.clear();
         apiService = TestBed.inject(AlfrescoApiService);

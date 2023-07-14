@@ -57,7 +57,8 @@ import { DirectionalityConfigService } from '../common/services/directionality-c
     exports: [
         NoopAnimationsModule,
         CoreModule,
-        TranslateModule
+        TranslateModule,
+        RouterTestingModule
     ]
 })
 export class CoreTestingModule {}

@@ -31,6 +31,15 @@ describe('ErrorContentComponent', () => {
     let translateService: TranslationService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: ActivatedRoute, useValue: { params: of() } }
+            ]
+        });
         fixture = TestBed.createComponent(ErrorContentComponent);
         element = fixture.nativeElement;
         errorContentComponent = fixture.debugElement.componentInstance;
@@ -39,21 +48,10 @@ describe('ErrorContentComponent', () => {
 
     afterEach(() => {
         fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     describe(' with an undefined error', () => {
-        beforeEach(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ],
-                providers: [
-                    { provide: ActivatedRoute, useValue: { params: of() } }
-                ]
-            });
-        });
-
         it('should render error code', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
@@ -108,19 +106,9 @@ describe('ErrorContentComponent', () => {
     });
 
     describe(' with a specific error', () => {
-        beforeEach(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ],
-                providers: [
-                    { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
-                ]
-            });
-        });
-
         it('should navigate to an error given by the route params', async () => {
+            const route = TestBed.inject(ActivatedRoute);
+            route.params = of({ id: '404' });
             spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
             await fixture.whenStable();
