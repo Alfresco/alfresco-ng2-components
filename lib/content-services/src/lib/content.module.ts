@@ -22,7 +22,6 @@ import { CoreModule, TRANSLATION_PROVIDER, SearchTextModule } from '@alfresco/ad
 
 import { MaterialModule } from './material.module';
 
-import { SocialModule } from './social/social.module';
 import { TagModule } from './tag/tag.module';
 import { WebScriptModule } from './webscript/webscript.module';
 import { DocumentListModule } from './document-list/document-list.module';
@@ -56,7 +55,6 @@ import { CategoriesModule } from './category/category.module';
     imports: [
         ContentPipeModule,
         CoreModule,
-        SocialModule,
         TagModule,
         CommonModule,
         WebScriptModule,
@@ -100,7 +98,6 @@ import { CategoriesModule } from './category/category.module';
     ],
     exports: [
         ContentPipeModule,
-        SocialModule,
         TagModule,
         WebScriptModule,
         DocumentListModule,

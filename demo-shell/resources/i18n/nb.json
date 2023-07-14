@@ -109,7 +109,6 @@
     "TAG": "Tagg",
     "PIPES": "Rør",
     "TRASHCAN": "Søppelkurv",
-    "SOCIAL": "Sosial",
     "SETTINGS": "Innstillinger",
     "CONFIG-EDITOR": "Konfigurasjonsredigering",
     "OVERLAY_VIEWER": "Overleggsfremviser",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Størrelse: xtra large",
       "XXTRALARGE": "8.Størrelse: XX large"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Like komponent",
-    "RATING": "Rangering komponent"
   },
   "TAG": {
     "LIST": "Liste med tagger Innholdstjenester",

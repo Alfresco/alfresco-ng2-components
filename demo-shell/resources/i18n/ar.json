@@ -109,7 +109,6 @@
     "TAG": "علامة",
     "PIPES": "أنابيب",
     "TRASHCAN": "سلة المحذوفات",
-    "SOCIAL": "اجتماعي",
     "SETTINGS": "إعدادات",
     "CONFIG-EDITOR": "محرر التكوين",
     "OVERLAY_VIEWER": "عارض مركّب",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.الحجم: فائق الكبر",
       "XXTRALARGE": "8.الحجم: كبير XX"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "مكون الإعجاب",
-    "RATING": "مكون التقييم"
   },
   "TAG": {
     "LIST": "Content Services علامات القائمة",

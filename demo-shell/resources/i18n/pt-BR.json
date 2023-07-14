@@ -109,7 +109,6 @@
     "TAG": "Marca",
     "PIPES": "Tubos",
     "TRASHCAN": "Lixeira",
-    "SOCIAL": "Social",
     "SETTINGS": "Configurações",
     "CONFIG-EDITOR": "Editor de configuração",
     "OVERLAY_VIEWER": "Visualizador de sobreposição",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Tamanho: muito grande",
       "XXTRALARGE": "8.Tamanho: extragrande"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Componente Like",
-    "RATING": "Componente de classificação"
   },
   "TAG": {
     "LIST": "Lista de Marcas do Content Services",

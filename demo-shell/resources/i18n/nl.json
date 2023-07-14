@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Prullenbak",
-    "SOCIAL": "Sociaal",
     "SETTINGS": "Instellingen",
     "CONFIG-EDITOR": "Configuratie-editor",
     "OVERLAY_VIEWER": "Overlay-viewer",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Grootte: extra groot",
       "XXTRALARGE": "8.Grootte: XX groot"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "'Vind ik leuk'-component",
-    "RATING": "Beoordelingscomponent"
   },
   "TAG": {
     "LIST": "Taglijst Content Services",

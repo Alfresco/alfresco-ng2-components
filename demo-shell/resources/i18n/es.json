@@ -109,7 +109,6 @@
     "TAG": "Etiqueta",
     "PIPES": "Pipes",
     "TRASHCAN": "Papelera",
-    "SOCIAL": "Social",
     "SETTINGS": "Configuración",
     "CONFIG-EDITOR": "Editor de configuración",
     "OVERLAY_VIEWER": "Visor de superposición",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Tamaño: extragrande",
       "XXTRALARGE": "8.Tamaño: extraextragrande"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Componente Me gusta",
-    "RATING": "Componente de calificación"
   },
   "TAG": {
     "LIST": "Lista de etiquetas de Content Services",

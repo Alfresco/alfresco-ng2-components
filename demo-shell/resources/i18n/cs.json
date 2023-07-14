@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Potrubí",
     "TRASHCAN": "Koš",
-    "SOCIAL": "Sociální",
     "SETTINGS": "Nastavení",
     "CONFIG-EDITOR": "Editor konfigurace",
     "OVERLAY_VIEWER": "Zobrazení překrytí",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Velikost: extra velké",
       "XXTRALARGE": "8.Velikost: XX velké"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Komponenta pro Líbí se mi",
-    "RATING": "Komponenta pro Hodnocení"
   },
   "TAG": {
     "LIST": "Uvádět tagy Content Services",

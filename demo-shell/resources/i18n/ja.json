@@ -109,7 +109,6 @@
     "TAG": "タグ",
     "PIPES": "パイプ",
     "TRASHCAN": "ごみ箱",
-    "SOCIAL": "ソーシャル",
     "SETTINGS": "設定",
     "CONFIG-EDITOR": "設定エディター",
     "OVERLAY_VIEWER": "オーバーレイビューア",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.サイズ: 特大",
       "XXTRALARGE": "8.サイズ: 超特大"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "[いいね!] コンポーネント",
-    "RATING": "評価付けコンポーネント"
   },
   "TAG": {
     "LIST": "Content Services のタグリスト",

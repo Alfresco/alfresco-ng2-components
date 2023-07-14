@@ -109,7 +109,6 @@
     "TAG": "标记",
     "PIPES": "管道",
     "TRASHCAN": "垃圾桶",
-    "SOCIAL": "社交",
     "SETTINGS": "设置",
     "CONFIG-EDITOR": "配置编辑器",
     "OVERLAY_VIEWER": "重叠查看器",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7. 字号：特大",
       "XXTRALARGE": "8. 字号：超大"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "点赞组件",
-    "RATING": "评分组件"
   },
   "TAG": {
     "LIST": "列表标记 Content Services",

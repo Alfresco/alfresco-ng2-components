@@ -109,7 +109,6 @@
     "TAG": "Znacznik",
     "PIPES": "Rury",
     "TRASHCAN": "Kosz",
-    "SOCIAL": "Społecznościowy",
     "SETTINGS": "Ustawienia",
     "CONFIG-EDITOR": "Edytor konfiguracji",
     "OVERLAY_VIEWER": "Przeglądarka nakładek",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7. Rozmiar: bardzo duży",
       "XXTRALARGE": "8. Rozmiar: wyjątkowo duży"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Składnik Like",
-    "RATING": "Składnik Rating"
   },
   "TAG": {
     "LIST": "Wyświetl znaczniki Content Services",

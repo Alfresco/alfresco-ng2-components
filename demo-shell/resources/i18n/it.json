@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Tubi",
     "TRASHCAN": "Cestino",
-    "SOCIAL": "Social",
     "SETTINGS": "Impostazioni",
     "CONFIG-EDITOR": "Editor configurazione",
     "OVERLAY_VIEWER": "Visualizzatore overlay",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7. Dimensioni: extra grande",
       "XXTRALARGE": "8. Dimensioni: extra extra grande"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Componente Like",
-    "RATING": "Componente valutazione"
   },
   "TAG": {
     "LIST": "Elenco tag Content Services",

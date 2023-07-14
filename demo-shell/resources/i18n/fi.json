@@ -109,7 +109,6 @@
     "TAG": "Tunniste",
     "PIPES": "Putket",
     "TRASHCAN": "Roskakori",
-    "SOCIAL": "Sosiaalinen",
     "SETTINGS": "Asetukset",
     "CONFIG-EDITOR": "Määrityseditori",
     "OVERLAY_VIEWER": "Peittokatselutoiminto",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7. Koko: XL",
       "XXTRALARGE": "8. Koko: XXL"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Tykkäyskomponentti",
-    "RATING": "Arviokomponentti"
   },
   "TAG": {
     "LIST": "Luettelotunnisteet – Content Services",

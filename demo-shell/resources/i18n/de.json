@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Papierkorb",
-    "SOCIAL": "Soziale Funktionen",
     "SETTINGS": "Einstellungen",
     "CONFIG-EDITOR": "Konfigurations-Editor",
     "OVERLAY_VIEWER": "Overlay-Viewer",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Größe: sehr groß",
       "XXTRALARGE": "8.Größe: extrem groß"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Like-Komponente",
-    "RATING": "Bewertungskomponente"
   },
   "TAG": {
     "LIST": "Content Services-Tagliste",

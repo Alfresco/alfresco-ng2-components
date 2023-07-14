@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Rør",
     "TRASHCAN": "Papirkurv",
-    "SOCIAL": "Social",
     "SETTINGS": "Indstillinger",
     "CONFIG-EDITOR": "Konfigurationseditor",
     "OVERLAY_VIEWER": "Overlejringsfremviser",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7. Størrelse: xtra large",
       "XXTRALARGE": "8. Størrelse: XX large"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Synes om-komponent",
-    "RATING": "Bedømmelse-komponent"
   },
   "TAG": {
     "LIST": "Listetags Content Services",

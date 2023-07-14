@@ -109,7 +109,6 @@
     "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Trashcan",
-    "SOCIAL": "Social",
     "SETTINGS": "Settings",
     "CONFIG-EDITOR": "Configuration Editor",
     "OVERLAY_VIEWER": "Overlay Viewer",
@@ -284,10 +283,6 @@
       "XTRALARGE": "7.Size: xtra large",
       "XXTRALARGE": "8.Size: XX large"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Like component",
-    "RATING": "Rating component"
   },
   "TAG": {
     "LIST": "List Tags Content Services",
