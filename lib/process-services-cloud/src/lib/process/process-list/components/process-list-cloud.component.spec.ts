@@ -26,7 +26,7 @@ import {
     DataRowEvent,
     DataTableModule,
     getDataColumnMock,
-    ObjectDataRow
+    ObjectDataRow, User
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -62,8 +62,8 @@ class CustomTaskListComponent {
     @ViewChild(ProcessListCloudComponent)
     processListCloud: ProcessListCloudComponent;
 
-    getFullName(_startedBy: any) {
-        return '';
+    getFullName(person: User): string {
+        return `${person.firstName} ${person.lastName}`;
     }
 }
 
@@ -585,7 +585,7 @@ describe('ProcessListCloudComponent', () => {
 
 });
 
-describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
+describe('ProcessListCloudComponent: Injecting custom columns for task list - CustomTaskListComponent', () => {
     let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
     let componentCustom: CustomTaskListComponent;
 
@@ -615,7 +615,7 @@ describe('Injecting custom colums for tasklist - CustomTaskListComponent', () =>
     });
 });
 
-describe('Creating an empty custom template - EmptyTemplateComponent', () => {
+describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     let preferencesService: PreferenceCloudServiceInterface;
     @Component({
         template: `
