@@ -219,7 +219,8 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should call endpoint when a column visibility gets changed', () => {
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
+        const emptyList = { list: { entries: [] } };
+        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
         component.ngAfterContentInit();
         spyOn(component, 'createDatatableSchema');
         component.appName = 'fake-app-name';
