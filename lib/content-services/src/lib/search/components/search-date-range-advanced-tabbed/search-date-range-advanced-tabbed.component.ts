@@ -111,13 +111,13 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
             if (value.inLastValue) {
                 switch(value.inLastValueType) {
                     case InLastDateType.DAYS:
-                        startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue)));
+                        startDate = startOfDay(subDays(new Date(), parseInt(value.inLastValue, 10)));
                         break;
                     case InLastDateType.WEEKS:
-                        startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue)));
+                        startDate = startOfWeek(subWeeks(new Date(), parseInt(value.inLastValue, 10)));
                         break;
                     case InLastDateType.MONTHS:
-                        startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue)));
+                        startDate = startOfMonth(subMonths(new Date(), parseInt(value.inLastValue, 10)));
                         break;
                     default:
                         break;
