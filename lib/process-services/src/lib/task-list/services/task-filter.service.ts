@@ -67,8 +67,7 @@ export class TaskFilterService {
                 (res) => {
                     const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
-                        if (!isFilterAlreadyExisting) {
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                             if (filter.name === involvedTasksFilter.name) {
                                 filters.push(new FilterRepresentationModel({
                                     ...filter,
@@ -117,8 +116,7 @@ export class TaskFilterService {
                 map((response: any) => {
                     const filters: FilterRepresentationModel[] = [];
                     response.data.forEach((filter: FilterRepresentationModel) => {
-                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
-                        if (!isFilterAlreadyExisting) {
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                             const filterModel = new FilterRepresentationModel(filter);
                             filters.push(filterModel);
                         }
@@ -127,6 +125,10 @@ export class TaskFilterService {
                 }),
                 catchError((err) => this.handleError(err))
             );
+    }
+
+    isFilterAlreadyExisting(filters: FilterRepresentationModel[], filterName: string): boolean {
+        return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**

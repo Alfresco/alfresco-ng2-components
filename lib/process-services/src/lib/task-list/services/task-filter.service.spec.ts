@@ -251,4 +251,35 @@ describe('Activiti Task filter Service', () => {
             });
         });
    });
+
+    describe('isFilterAlreadyExisting', () => {
+        let dummyFilter;
+
+        beforeEach(() => {
+            dummyFilter = [
+                { name: 'filter1' },
+                { name: 'filter2' }
+            ];
+        });
+
+        it('should return true if the filter already exists', () => {
+            const filterName = 'filter2';
+            const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
+
+            const result = service.isFilterAlreadyExisting(dummyFilter, filterName);
+
+            expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
+            expect(result).toBe(true);
+        });
+
+        it('should return false if the filter does not exist', () => {
+            const filterName = 'filter3';
+            const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
+
+            const result = service.isFilterAlreadyExisting(dummyFilter, filterName);
+
+            expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
+            expect(result).toBe(false);
+        });
+    });
 });

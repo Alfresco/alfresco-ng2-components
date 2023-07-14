@@ -51,8 +51,7 @@ export class ProcessFilterService {
                 map((response) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     response.data.forEach((filter) => {
-                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
-                        if (!isFilterAlreadyExisting) {
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                             const filterModel = new FilterProcessRepresentationModel(filter);
                             filters.push(filterModel);
                         }
@@ -119,8 +118,7 @@ export class ProcessFilterService {
                 (res) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        const isFilterAlreadyExisting = filters.some((existingFilter) => existingFilter.name === filter.name);
-                        if (!isFilterAlreadyExisting) {
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                             if (filter.name === runningFilter.name) {
                                 filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
                             } else if (filter.name === completedFilter.name) {
@@ -137,6 +135,10 @@ export class ProcessFilterService {
                     this.handleProcessError(err);
                 });
         });
+    }
+
+    isFilterAlreadyExisting(filters: any, filterName: string): boolean {
+        return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**
