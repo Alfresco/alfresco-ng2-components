@@ -237,8 +237,8 @@ describe('Process filter', () => {
         });
 
         describe('isFilterAlreadyExisting', () => {
-            let dummyProcessFilters : FilterProcessRepresentationModel[];
-            let filterRepresentationData : ProcessInstanceFilterRepresentation;
+            let dummyProcessFilters: FilterProcessRepresentationModel[];
+            let filterRepresentationData: ProcessInstanceFilterRepresentation;
 
             beforeEach(() => {
                 dummyProcessFilters = [
@@ -254,13 +254,13 @@ describe('Process filter', () => {
                             return true;
                         }
                     }
-                ]
+                ];
 
                 filterRepresentationData = {
                     name : '',
                     sort : 'created-desc',
                     state : 'running'
-                }
+                };
             });
 
             it('should return true if the process filter already exists', () => {

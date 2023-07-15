@@ -254,8 +254,8 @@ describe('Activiti Task filter Service', () => {
    });
 
     describe('isFilterAlreadyExisting', () => {
-        let dummyTaskFilters : FilterRepresentationModel[];
-        let filterRepresentationData : TaskFilterRepresentation;
+        let dummyTaskFilters: FilterRepresentationModel[];
+        let filterRepresentationData: TaskFilterRepresentation;
         ;
 
 
@@ -273,13 +273,13 @@ describe('Activiti Task filter Service', () => {
                         return true;
                     }
                 }
-            ]
+            ];
 
             filterRepresentationData = {
                 name : '',
                 sort : 'created-desc',
                 state : 'running'
-            }
+            };
         });
 
         it('should return true if the task filter already exists', () => {
