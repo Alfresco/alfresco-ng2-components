@@ -262,7 +262,6 @@ describe('Process filter', () => {
                     sort : 'created-desc',
                     state : 'running'
                 }
-
             });
 
             it('should return true if the process filter already exists', () => {
