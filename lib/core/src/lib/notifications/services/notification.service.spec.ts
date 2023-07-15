@@ -19,11 +19,9 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -93,21 +91,20 @@ describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            OverlayModule,
-            MatSnackBarModule
-        ],
-        declarations: [ProvidesNotificationServiceComponent],
-        providers: [
-            MatSnackBar,
-            LiveAnnouncer
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                OverlayModule,
+                MatSnackBarModule
+            ],
+            declarations: [ProvidesNotificationServiceComponent],
+            providers: [
+                MatSnackBar,
+                LiveAnnouncer
+            ]
+        });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();

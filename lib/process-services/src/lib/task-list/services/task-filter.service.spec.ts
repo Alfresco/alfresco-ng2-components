@@ -20,7 +20,7 @@ import { fakeAppPromise } from '../../mock';
 import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
@@ -29,14 +29,13 @@ describe('Activiti Task filter Service', () => {
 
     let service: TaskFilterService;
 
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         service = TestBed.inject(TaskFilterService);
         jasmine.Ajax.install();
     });

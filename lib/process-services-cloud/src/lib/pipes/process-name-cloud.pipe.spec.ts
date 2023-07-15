@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment';
 import { ProcessNameCloudPipe } from './process-name-cloud.pipe';
-import { setupTestBed, LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
+import { LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../process/start-process/models/process-instance-cloud.model';
 
 describe('ProcessNameCloudPipe', () => {
@@ -35,14 +35,13 @@ describe('ProcessNameCloudPipe', () => {
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
     const fakeProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: 'my-process-definition' };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNameCloudPipe(localizedDatePipe);
     });

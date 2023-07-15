@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -38,14 +37,13 @@ describe('UserIconColumnComponent', () => {
         displayName: 'fake authority'
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture =  TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

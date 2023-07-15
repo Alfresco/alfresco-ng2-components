@@ -19,7 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { setupTestBed, AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentDirectiveModule } from '@alfresco/adf-content-services';
@@ -51,18 +51,17 @@ describe('NodeDownloadDirective', () => {
         reply: jasmine.createSpy('reply')
     };
 
-    setupTestBed({
-        imports: [
-            ContentDirectiveModule,
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ContentDirectiveModule,
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));

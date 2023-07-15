@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { setupTestBed } from '@alfresco/adf-core';
 import { AppsProcessService } from './services/apps-process.service';
 import { deployedApps } from '../mock/apps-list.mock';
 import { of } from 'rxjs';
@@ -58,34 +57,33 @@ describe('Select app dialog', () => {
     let overlayContainerElement: HTMLElement;
     let service: AppsProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [DialogSelectAppTestComponent],
-        providers: [
-            {
-                provide: OverlayContainer,
-                useFactory: () => {
-                    overlayContainerElement = document.createElement('div');
-                    return {
-                        getContainerElement: () => overlayContainerElement
-                    };
-                }
-            },
-            {
-                provide: MatDialogRef,
-                useValue: dialogRef
-            },
-            {
-                provide: MAT_DIALOG_DATA,
-                useValue: {}
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [DialogSelectAppTestComponent],
+            providers: [
+                {
+                    provide: OverlayContainer,
+                    useFactory: () => {
+                        overlayContainerElement = document.createElement('div');
+                        return {
+                            getContainerElement: () => overlayContainerElement
+                        };
+                    }
+                },
+                {
+                    provide: MatDialogRef,
+                    useValue: dialogRef
+                },
+                {
+                    provide: MAT_DIALOG_DATA,
+                    useValue: {}
+                }
+            ]
+        });
         fixture = TestBed.createComponent(DialogSelectAppTestComponent);
         component = fixture.componentInstance;
 

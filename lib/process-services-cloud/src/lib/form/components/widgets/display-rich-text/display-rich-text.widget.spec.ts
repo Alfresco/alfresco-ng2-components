@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 import { DisplayRichTextWidgetComponent } from './display-rich-text.widget';
 
@@ -61,13 +61,12 @@ describe('DisplayRichTextWidgetComponent', () => {
         }
     };
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
         debugEl = fixture.debugElement;

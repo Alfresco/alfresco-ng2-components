@@ -16,24 +16,22 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
 import { SitesService } from './sites.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
 describe('Sites service', () => {
-
-    let service;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
+    let service: SitesService;
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',

@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
@@ -50,15 +50,14 @@ describe('StartTaskCloudComponent', () => {
 
     const mockUser: IdentityUserModel = {username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'};
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        });
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

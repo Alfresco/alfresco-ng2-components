@@ -16,7 +16,6 @@
  */
 
 import { SearchTextComponent } from './search-text.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,14 +24,13 @@ describe('SearchTextComponent', () => {
     let fixture: ComponentFixture<SearchTextComponent>;
     let component: SearchTextComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;
         component.id = 'text';

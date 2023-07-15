@@ -16,7 +16,6 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -35,13 +34,12 @@ describe('ProcessListCloudService', () => {
 
     const returnCallBody = (_queryUrl, options) => Promise.resolve(options.bodyParam);
 
-    setupTestBed({
-        imports: [
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ProcessServiceCloudTestingModule
+            ]
+        });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ProcessListCloudService);
         requestSpy = spyOn(adfHttpClient, 'request');

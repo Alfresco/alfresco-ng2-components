@@ -21,7 +21,6 @@ import {
     FormFieldTypes,
     FormFieldModel,
     FormModel,
-    setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
@@ -38,14 +37,13 @@ describe('PeopleWidgetComponent', () => {
     let translationService: TranslateService;
     let peopleProcessService: PeopleProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 

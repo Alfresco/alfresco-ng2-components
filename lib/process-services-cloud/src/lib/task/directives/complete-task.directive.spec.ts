@@ -18,7 +18,6 @@
 import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
@@ -52,17 +51,16 @@ describe('CompleteTaskDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let taskCloudService: TaskCloudService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
@@ -178,20 +176,19 @@ describe('Complete Task Directive validation errors', () => {
 
     let fixture: ComponentFixture<any>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            TestMissingTaskIdDirectiveComponent,
-            TestInvalidAppNameUndefinedDirectiveComponent,
-            TestInvalidAppNameNullDirectiveComponent,
-            TestMissingInputDirectiveComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                TestMissingTaskIdDirectiveComponent,
+                TestInvalidAppNameUndefinedDirectiveComponent,
+                TestInvalidAppNameNullDirectiveComponent,
+                TestMissingInputDirectiveComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestMissingInputDirectiveComponent);
     });
 

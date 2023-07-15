@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { LibraryRoleColumnComponent } from './library-role-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -26,15 +25,14 @@ describe('LibraryRoleColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
     let component: LibraryRoleColumnComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);
         component = fixture.componentInstance;
     });

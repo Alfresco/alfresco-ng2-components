@@ -19,21 +19,19 @@ import { TestBed } from '@angular/core/testing';
 import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 
 describe('Process filter', () => {
-
     let service: ProcessFilterService;
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(ProcessFilterService);
     });
 

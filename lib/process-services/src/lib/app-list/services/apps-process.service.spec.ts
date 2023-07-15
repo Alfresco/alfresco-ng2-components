@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeApps } from '../mocks/apps-service.mock';
 import { AppsProcessService } from './apps-process.service';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
@@ -27,18 +27,14 @@ describe('AppsProcessService', () => {
 
     let service: AppsProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(AppsProcessService);
-    });
-
-    beforeEach(() => {
         jasmine.Ajax.install();
     });
 

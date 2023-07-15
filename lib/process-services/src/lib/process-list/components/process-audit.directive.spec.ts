@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
-import { setupTestBed, DownloadService } from '@alfresco/adf-core';
+import { DownloadService } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -71,17 +71,16 @@ describe('ProcessAuditDirective', () => {
 
     const blob = createFakePdfBlob();
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [
-            BasicButtonComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [
+                BasicButtonComponent
+            ]
+        });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(ProcessService);

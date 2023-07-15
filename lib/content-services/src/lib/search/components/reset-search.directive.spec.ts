@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
@@ -34,15 +33,14 @@ describe('Directive: ResetSearchDirective', () => {
     let searchFacetFiltersService: SearchFacetFiltersService;
     let queryBuilder: SearchQueryBuilderService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [TestComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [TestComponent]
+        });
         fixture = TestBed.createComponent(TestComponent);
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -61,14 +60,13 @@ describe('DocumentListService', () => {
         }
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(DocumentListService);
         jasmine.Ajax.install();
     });

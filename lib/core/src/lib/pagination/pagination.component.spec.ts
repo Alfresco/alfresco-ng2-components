@@ -20,10 +20,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
+import { setupTestBed } from '@alfresco/adf-core';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;

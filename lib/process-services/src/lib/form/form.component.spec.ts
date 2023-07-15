@@ -30,7 +30,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormService, WidgetVisibilityService, ContainerModel, fakeForm, setupTestBed
+    FormService, WidgetVisibilityService, ContainerModel, fakeForm
 } from '@alfresco/adf-core';
 import{ NodeMetadata, NodesApiService } from '@alfresco/adf-content-services';
 import { FormComponent } from './form.component';
@@ -72,14 +72,6 @@ describe('FormComponent', () => {
     class CustomUploadModule {
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule,
-            CustomUploadModule
-        ]
-    });
-
     const buildWidget = (type: string, injector: Injector): any => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
         const widgetType = resolver(null);
@@ -92,6 +84,13 @@ describe('FormComponent', () => {
     };
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule,
+                CustomUploadModule
+            ]
+        });
         visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
 
@@ -1011,15 +1010,14 @@ describe('FormWithCustomOutComesComponent', () => {
     let customComponent: FormWithCustomOutComesComponent;
     let debugElement: DebugElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [FormWithCustomOutComesComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [FormWithCustomOutComesComponent]
+        });
         fixture = TestBed.createComponent(FormWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;
         debugElement = fixture.debugElement;

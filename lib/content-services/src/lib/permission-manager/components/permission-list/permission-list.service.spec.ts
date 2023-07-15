@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NotificationService, setupTestBed } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,14 +38,13 @@ describe('PermissionListService', () => {
     })
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(PermissionListService);
         nodePermissionService = TestBed.inject(NodePermissionService);
         notificationService = TestBed.inject(NotificationService);

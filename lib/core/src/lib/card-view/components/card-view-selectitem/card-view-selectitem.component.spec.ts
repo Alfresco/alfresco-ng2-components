@@ -20,7 +20,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { By } from '@angular/platform-browser';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -48,14 +47,13 @@ describe('CardViewSelectItemComponent', () => {
         editable: true
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
         overlayContainer = TestBed.inject(OverlayContainer);

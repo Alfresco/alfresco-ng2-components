@@ -17,7 +17,7 @@
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Node, NodeEntry } from '@alfresco/js-api';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
@@ -40,17 +40,16 @@ describe('NodeActionsService', () => {
         open: jasmine.createSpy('open')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef }
+            ]
+        });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 

@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { JwtHelperService, setupTestBed } from '@alfresco/adf-core';
+import { JwtHelperService } from '@alfresco/adf-core';
 import { IdentityUserService } from './identity-user.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -40,14 +40,13 @@ describe('IdentityUserService', () => {
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');

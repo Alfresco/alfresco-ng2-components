@@ -18,7 +18,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
-import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { DownloadZipService } from './services/download-zip.service';
 import { Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -39,18 +39,17 @@ describe('DownloadZipDialogComponent', () => {
         ]
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef },
-            { provide: MAT_DIALOG_DATA, useValue: dataMock }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef },
+                { provide: MAT_DIALOG_DATA, useValue: dataMock }
+            ]
+        });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(DownloadZipDialogComponent);
         downloadZipService = TestBed.inject(DownloadZipService);

@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { IdentityGroupService } from './identity-group.service';
 import {
@@ -35,14 +34,13 @@ describe('IdentityGroupService', () => {
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');

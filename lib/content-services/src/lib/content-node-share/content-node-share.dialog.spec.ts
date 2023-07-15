@@ -18,11 +18,7 @@
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import {
-    setupTestBed,
-    NotificationService,
-    AppConfigService
-} from '@alfresco/adf-core';
+import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { RenditionService } from '../common/services/rendition.service';
 
@@ -52,24 +48,23 @@ describe('ShareDialogComponent', () => {
     const clickShareToggleButton = () => fixture.nativeElement.querySelector(`${shareToggleId} label`)
     .dispatchEvent(new MouseEvent('click'));
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            {provide: NotificationService, useValue: notificationServiceMock},
-            {
-                provide: MatDialogRef, useValue: {
-                    close: () => {
-                    }
-                }
-            },
-            {provide: MAT_DIALOG_DATA, useValue: {}}
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                {provide: NotificationService, useValue: notificationServiceMock},
+                {
+                    provide: MatDialogRef, useValue: {
+                        close: () => {
+                        }
+                    }
+                },
+                {provide: MAT_DIALOG_DATA, useValue: {}}
+            ]
+        });
         fixture = TestBed.createComponent(ShareDialogComponent);
         component = fixture.componentInstance;
         component.maxDebounceTime = 0;

@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
@@ -32,21 +31,20 @@ describe('CommentsComponent', () => {
     let addCommentSpy: jasmine.Spy;
     let commentsService: CommentsService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers: [
-            {
-                provide: ADF_COMMENTS_SERVICE,
-                useClass: CommentsServiceMock
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            providers: [
+                {
+                    provide: ADF_COMMENTS_SERVICE,
+                    useClass: CommentsServiceMock
+                }
+            ]
+        });
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
 

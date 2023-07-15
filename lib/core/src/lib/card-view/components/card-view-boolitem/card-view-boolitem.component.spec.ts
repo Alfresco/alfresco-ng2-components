@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
@@ -30,14 +29,13 @@ describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;
     let component: CardViewBoolItemComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewBoolItemComponent);
         component = fixture.componentInstance;
         component.property = new CardViewBoolItemModel({

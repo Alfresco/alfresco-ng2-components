@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedTaskAttachments, mockTaskAttachments } from '../mock/task/task-attachments.mock';
@@ -37,16 +36,14 @@ describe('TaskAttachmentList', () => {
     let getContentPreviewSpy: jasmine.Spy;
     let disposableSuccess: any;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
-
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
 
@@ -292,16 +289,15 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [CustomEmptyTemplateComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [CustomEmptyTemplateComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
         fixture.detectChanges();
     });

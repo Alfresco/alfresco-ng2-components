@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { SearchService } from '../services/search.service';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
@@ -30,15 +29,14 @@ describe('SearchComponent', () => {
     let component: SimpleSearchTestComponent;
     let searchService: SearchService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [SimpleSearchTestComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [SimpleSearchTestComponent]
+        });
         fixture = TestBed.createComponent(SimpleSearchTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

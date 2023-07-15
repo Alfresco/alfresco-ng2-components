@@ -17,7 +17,6 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -36,18 +35,17 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     let component: ServiceTaskFiltersCloudComponent;
     let fixture: ComponentFixture<ServiceTaskFiltersCloudComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskFiltersCloudModule
-        ],
-        providers: [
-            { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                TaskFiltersCloudModule
+            ],
+            providers: [
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);
         component = fixture.componentInstance;
 

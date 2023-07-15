@@ -21,7 +21,6 @@ import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ViewerRenderComponent } from '../components/viewer-render.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -34,21 +33,20 @@ describe('ExtensionViewerDirective', () => {
         }
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        providers: [
-            { provide: Location, useClass: SpyLocation },
-            ViewerExtensionDirective,
-            {provide: ElementRef, useClass: MockElementRef},
-            ViewerRenderComponent,
-            { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: Location, useClass: SpyLocation },
+                ViewerExtensionDirective,
+                {provide: ElementRef, useClass: MockElementRef},
+                ViewerRenderComponent,
+                { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } }
+            ]
+        });
         extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     });

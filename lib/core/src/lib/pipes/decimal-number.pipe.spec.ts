@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService } from '../common/services/user-preferences.service';
 import { of } from 'rxjs';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { DecimalNumberPipe } from './decimal-number.pipe';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,14 +28,13 @@ describe('DecimalNumberPipe', () => {
     let pipe: DecimalNumberPipe;
     let userPreferences: UserPreferencesService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new DecimalNumberPipe(userPreferences, TestBed.inject(AppConfigService));

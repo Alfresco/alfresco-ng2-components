@@ -18,10 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-
-import { setupTestBed } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
-
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { mockProcessInstanceComments } from '../mock/process/process-comments.mock';
@@ -34,15 +31,13 @@ describe('ProcessCommentsComponent', () => {
     let getCommentsSpy: jasmine.Spy;
     let commentProcessService: CommentProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
-
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
         commentProcessService = TestBed.inject(CommentProcessService);

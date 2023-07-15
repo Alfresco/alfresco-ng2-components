@@ -20,8 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
-
-import { setupTestBed } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -63,25 +61,22 @@ describe('FolderCreateDirective', () => {
 
     const event = { type: 'click', preventDefault: () => null };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        declarations: [
-            TestTypeComponent,
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            declarations: [
+                TestTypeComponent,
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderCreateDirective));
         dialog = TestBed.inject(MatDialog);
         contentService = TestBed.inject(ContentService);
-    });
 
-    beforeEach(() => {
         dialogRefMock = {
             afterClosed: (val) =>  of(val),
             componentInstance: {
@@ -92,7 +87,6 @@ describe('FolderCreateDirective', () => {
     });
 
     describe('With overrides', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(TestTypeComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));

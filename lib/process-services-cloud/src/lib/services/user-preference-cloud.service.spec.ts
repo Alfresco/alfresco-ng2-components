@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { UserPreferenceCloudService } from './user-preference-cloud.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,17 +32,16 @@ describe('PreferenceService', () => {
     state: 404, stateText: 'Not Found'
   };
 
-  setupTestBed({
-    imports: [
-        TranslateModule.forRoot(),
-        ProcessServiceCloudTestingModule
-    ]
-  });
-
   beforeEach(() => {
-    service = TestBed.inject(UserPreferenceCloudService);
-    adfHttpClient = TestBed.inject(AdfHttpClient);
-    requestSpy = spyOn(adfHttpClient, 'request').and.returnValue(Promise.resolve(mockPreferences));
+      TestBed.configureTestingModule({
+          imports: [
+              TranslateModule.forRoot(),
+              ProcessServiceCloudTestingModule
+          ]
+      });
+      service = TestBed.inject(UserPreferenceCloudService);
+      adfHttpClient = TestBed.inject(AdfHttpClient);
+      requestSpy = spyOn(adfHttpClient, 'request').and.returnValue(Promise.resolve(mockPreferences));
   });
 
   it('should return the preferences', (done) => {

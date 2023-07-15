@@ -20,7 +20,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -31,15 +30,14 @@ describe('HyperlinkWidgetComponent', () => {
     let fixture: ComponentFixture<HyperlinkWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatTooltipModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatTooltipModule
+            ]
+        });
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

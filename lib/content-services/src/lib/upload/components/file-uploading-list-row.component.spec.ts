@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,14 +27,13 @@ describe('FileUploadingListRowComponent', () => {
     let component: FileUploadingListRowComponent;
     const file = new FileModel({ name: 'fake-name' } as File);
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(FileUploadingListRowComponent);
         component = fixture.componentInstance;
     });

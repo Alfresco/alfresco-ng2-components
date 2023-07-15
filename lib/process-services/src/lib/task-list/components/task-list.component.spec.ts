@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
@@ -100,14 +100,13 @@ describe('TaskListComponent', () => {
         expect(selectRow2).toBeNull();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
@@ -686,15 +685,14 @@ describe('CustomTaskListComponent', () => {
     let fixture: ComponentFixture<CustomTaskListComponent>;
     let component: CustomTaskListComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [CustomTaskListComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [CustomTaskListComponent]
+        });
         fixture = TestBed.createComponent(CustomTaskListComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
@@ -730,15 +728,14 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     let translateService: TranslateService;
     let taskListService: TaskListService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [EmptyTemplateComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [EmptyTemplateComponent]
+        });
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);
         spyOn(translateService, 'get').and.callFake((key: string) => of(key));
@@ -830,17 +827,16 @@ describe('TaskListContextMenuComponent', () => {
     let taskListService: TaskListService;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [
-            TaskListContextMenuComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [
+                TaskListContextMenuComponent
+            ]
+        });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;

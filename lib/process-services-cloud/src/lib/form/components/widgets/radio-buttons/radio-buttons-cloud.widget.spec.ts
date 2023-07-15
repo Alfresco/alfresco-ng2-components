@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldOption, FormFieldTypes, FormModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { RadioButtonsCloudWidgetComponent } from './radio-buttons-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -40,14 +40,13 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         }
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;

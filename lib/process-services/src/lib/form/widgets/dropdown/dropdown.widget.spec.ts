@@ -24,8 +24,7 @@ import {
     FormFieldModel,
     FormModel,
     FormFieldTypes,
-    CoreTestingModule,
-    setupTestBed
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { TranslateModule } from '@ngx-translate/core';
@@ -51,14 +50,13 @@ describe('DropdownWidgetComponent', () => {
         {id: 'opt_2', name: 'option_2'},
         {id: 'opt_3', name: 'option_3'}];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

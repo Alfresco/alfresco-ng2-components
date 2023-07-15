@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
@@ -40,15 +40,14 @@ describe('TaskFiltersComponent', () => {
     let fixture: ComponentFixture<TaskFiltersComponent>;
     let router: Router;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule,
-            RouterTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule,
+                RouterTestingModule
+            ]
+        });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -41,14 +40,13 @@ describe('Notification History Component', () => {
         fixture.detectChanges();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

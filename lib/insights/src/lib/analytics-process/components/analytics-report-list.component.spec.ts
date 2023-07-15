@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsReportListComponent, LAYOUT_GRID, LAYOUT_LIST } from '../components/analytics-report-list.component';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -40,14 +39,13 @@ describe('AnalyticsReportListComponent', () => {
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AnalyticsReportListComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

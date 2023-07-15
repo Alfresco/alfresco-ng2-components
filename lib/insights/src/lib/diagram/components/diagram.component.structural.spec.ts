@@ -16,10 +16,8 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import * as structuralMock from '../../mock/diagram/diagram-structural.mock';
 import { DiagramComponent } from './diagram.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,21 +29,18 @@ describe('Diagrams structural', () => {
     let fixture: ComponentFixture<DiagramComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DiagramComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
-    });
 
-    beforeEach(() => {
         jasmine.Ajax.install();
         component.processInstanceId = '38399';
         component.processDefinitionId = 'fakeprocess:24:38399';

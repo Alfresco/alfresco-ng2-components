@@ -21,7 +21,6 @@ import { ContentTestingModule } from '../../../../testing/content.testing.module
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { SearchFilterList } from '../../../models/search-filter-list.model';
 
 describe('SearchFacetChipComponent', () => {
@@ -29,14 +28,13 @@ describe('SearchFacetChipComponent', () => {
   let fixture: ComponentFixture<SearchFacetChipComponent>;
   let queryBuilder: SearchQueryBuilderService;
 
-  setupTestBed({
-      imports: [
-          TranslateModule.forRoot(),
-          ContentTestingModule
-      ]
-  });
-
   beforeEach(() => {
+      TestBed.configureTestingModule({
+          imports: [
+              TranslateModule.forRoot(),
+              ContentTestingModule
+          ]
+      });
       fixture = TestBed.createComponent(SearchFacetChipComponent);
       component = fixture.componentInstance;
       queryBuilder = TestBed.inject(SearchQueryBuilderService);

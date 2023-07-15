@@ -18,12 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    ContentLinkModel,
-    CoreTestingModule,
-    setupTestBed,
-    DownloadService
-} from '@alfresco/adf-core';
+import { ContentLinkModel, CoreTestingModule, DownloadService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentWidgetComponent } from './content.widget';
 import { TranslateModule } from '@ngx-translate/core';
@@ -63,14 +58,13 @@ describe('ContentWidgetComponent', () => {
         return new Blob([pdfData], {type: 'application/pdf'});
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);
     });

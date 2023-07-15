@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -50,19 +50,18 @@ describe('NodeSharedDirective', () => {
     let shareButtonElement;
     let selection;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreModule.forRoot(),
-            ContentTestingModule,
-            ContentNodeShareModule
-        ],
-        declarations: [
-            NodeShareTestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreModule.forRoot(),
+                ContentTestingModule,
+                ContentNodeShareModule
+            ],
+            declarations: [
+                NodeShareTestComponent
+            ]
+        });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);
         component = fixture.componentInstance;

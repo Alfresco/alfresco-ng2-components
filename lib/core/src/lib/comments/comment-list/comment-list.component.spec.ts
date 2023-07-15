@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -39,21 +38,20 @@ describe('CommentListComponent', () => {
     let fixture: ComponentFixture<CommentListComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers: [
-            {
-                provide: ADF_COMMENTS_SERVICE,
-                useClass: CommentListServiceMock
-            }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            providers: [
+                {
+                    provide: ADF_COMMENTS_SERVICE,
+                    useClass: CommentListServiceMock
+                }
+            ]
+        });
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
 

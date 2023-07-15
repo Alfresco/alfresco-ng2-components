@@ -26,7 +26,6 @@ import {
 } from '../components/widgets/core';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import {
     fakeFormJson,
     formTest, formValues, complexVisibilityJsonVisible,
@@ -44,14 +43,13 @@ describe('WidgetVisibilityCloudService', () => {
     let booleanResult: boolean;
     const stubFormWithFields = new FormModel(fakeFormJson);
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(WidgetVisibilityService);
         jasmine.Ajax.install();
     });

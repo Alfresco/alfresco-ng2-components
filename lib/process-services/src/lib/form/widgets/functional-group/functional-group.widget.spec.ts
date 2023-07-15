@@ -21,7 +21,6 @@ import {
     FormModel,
     GroupModel,
     CoreTestingModule,
-    setupTestBed,
     FormFieldTypes
 } from '@alfresco/adf-core';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
@@ -40,14 +39,13 @@ describe('FunctionalGroupWidgetComponent', () => {
         {id: '2', name: 'group 2'}
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         peopleProcessService = TestBed.inject(PeopleProcessService);
         getWorkflowGroupsSpy = spyOn(peopleProcessService, 'getWorkflowGroups').and.returnValue(of([]));
 

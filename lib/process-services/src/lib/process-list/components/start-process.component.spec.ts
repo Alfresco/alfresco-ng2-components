@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
@@ -54,11 +54,13 @@ describe('StartProcessComponent', () => {
     let applyAlfrescoNodeSpy: jasmine.Spy;
     let getDeployedApplicationsSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
     });
 
     const selectOptionByName = (name: string) => {

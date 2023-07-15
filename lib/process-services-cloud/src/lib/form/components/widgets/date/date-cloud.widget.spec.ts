@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { setupTestBed, FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,14 +30,13 @@ describe('DateWidgetComponent', () => {
     let fixture: ComponentFixture<DateCloudWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DateCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

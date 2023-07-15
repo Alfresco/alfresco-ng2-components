@@ -23,7 +23,6 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    setupTestBed,
     LogService,
     CommentModel
 } from '@alfresco/adf-core';
@@ -73,15 +72,14 @@ describe('TaskDetailsComponent', () => {
     let taskCommentsService: TaskCommentsService;
     let peopleProcessService: PeopleProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         logService = TestBed.inject(LogService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 
@@ -148,19 +146,19 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a form when the task has an associated form', fakeAsync(() => {
+    it('should display a form when the task has an associated form', () => {
         component.taskId = '123';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
-    }));
+    });
 
-    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', fakeAsync(() => {
+    it('should display a form in readonly when the task has an associated form and readOnlyForm is true', () => {
         component.readOnlyForm = true;
         component.taskId = '123';
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
         expect(fixture.debugElement.query(By.css('.adf-readonly-form'))).not.toBeNull();
-    }));
+    });
 
     it('should not display a form when the task does not have an associated form', async () => {
         component.taskId = '123';

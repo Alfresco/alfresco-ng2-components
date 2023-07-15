@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
@@ -47,14 +46,13 @@ describe('TagActionsComponent', () => {
     let element: HTMLElement;
     let tagService: TagService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(TagActionsComponent);
         tagService = TestBed.inject(TagService);
         spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));

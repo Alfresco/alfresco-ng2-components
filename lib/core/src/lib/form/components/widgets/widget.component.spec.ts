@@ -19,7 +19,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
 import { WidgetComponent } from './widget.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
@@ -30,14 +29,13 @@ describe('WidgetComponent', () => {
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(WidgetComponent);
 
         element = fixture.nativeElement;

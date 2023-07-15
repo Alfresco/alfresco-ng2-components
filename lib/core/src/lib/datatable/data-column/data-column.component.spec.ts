@@ -16,17 +16,18 @@
  */
 
 import { DataColumnComponent } from './data-column.component';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TestBed } from '@angular/core/testing';
 
 describe('DataColumnListComponent', () => {
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
     });
 
     it('should setup screen reader title for thumbnails', () => {

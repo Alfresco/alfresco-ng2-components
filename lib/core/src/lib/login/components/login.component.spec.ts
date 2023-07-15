@@ -27,7 +27,6 @@ import { LoginSuccessEvent } from '../models/login-success.event';
 import { LoginComponent } from './login.component';
 import { of, throwError } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { LogService } from '../../common/services/log.service';
 
@@ -57,13 +56,12 @@ describe('LoginComponent', () => {
         return errorMessage;
     };
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(LoginComponent);
 
         element = fixture.nativeElement;

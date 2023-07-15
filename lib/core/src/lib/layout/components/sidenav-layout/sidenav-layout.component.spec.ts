@@ -29,7 +29,6 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 
 @Component({
     selector: 'adf-layout-container',
@@ -81,30 +80,29 @@ describe('SidenavLayoutComponent', () => {
     let mediaQueryList: any;
     let component: SidenavLayoutComponent;
 
-    setupTestBed({
-        imports: [
-            CommonModule,
-            PlatformModule,
-            LayoutModule,
-            MaterialModule
-        ],
-        declarations: [
-            DummyLayoutContainerComponent,
-            SidenavLayoutComponent,
-            SidenavLayoutContentDirective,
-            SidenavLayoutHeaderDirective,
-            SidenavLayoutNavigationDirective
-        ],
-        providers: [
-            MediaMatcher,
-            { provide: UserPreferencesService, useValue: { select: () => of() } }
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                PlatformModule,
+                LayoutModule,
+                MaterialModule
+            ],
+            declarations: [
+                DummyLayoutContainerComponent,
+                SidenavLayoutComponent,
+                SidenavLayoutContentDirective,
+                SidenavLayoutHeaderDirective,
+                SidenavLayoutNavigationDirective
+            ],
+            providers: [
+                MediaMatcher,
+                { provide: UserPreferencesService, useValue: { select: () => of() } }
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
+        });
         mediaQueryList = {
             mediaFn: null,
             matches: false,
@@ -239,28 +237,27 @@ describe('Template transclusion', () => {
             removeListener: () => {}
     };
 
-    setupTestBed({
-        imports: [
-            CommonModule,
-            PlatformModule,
-            LayoutModule,
-            MaterialModule
-        ],
-        declarations: [
-            DummyLayoutContainerComponent,
-            SidenavLayoutTesterComponent,
-            SidenavLayoutComponent,
-            SidenavLayoutContentDirective,
-            SidenavLayoutHeaderDirective,
-            SidenavLayoutNavigationDirective
-        ],
-        providers: [
-            MediaMatcher,
-            { provide: UserPreferencesService, useValue: { select: () => of() } }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                PlatformModule,
+                LayoutModule,
+                MaterialModule
+            ],
+            declarations: [
+                DummyLayoutContainerComponent,
+                SidenavLayoutTesterComponent,
+                SidenavLayoutComponent,
+                SidenavLayoutContentDirective,
+                SidenavLayoutHeaderDirective,
+                SidenavLayoutNavigationDirective
+            ],
+            providers: [
+                MediaMatcher,
+                { provide: UserPreferencesService, useValue: { select: () => of() } }
+            ]
+        });
         mediaMatcher = TestBed.inject(MediaMatcher);
         spyOn(mediaMatcher, 'matchMedia').and.callFake(() => {
             spyOn(mediaQueryList, 'addListener').and.stub();

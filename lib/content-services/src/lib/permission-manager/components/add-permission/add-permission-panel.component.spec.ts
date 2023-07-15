@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -34,15 +33,14 @@ describe('AddPermissionPanelComponent', () => {
     let searchApiService: SearchService;
     let debugElement: DebugElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule,
-            MatIconTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule,
+                MatIconTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
         searchApiService = fixture.componentRef.injector.get(SearchService);
 

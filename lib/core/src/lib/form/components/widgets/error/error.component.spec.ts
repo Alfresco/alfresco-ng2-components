@@ -17,7 +17,6 @@
 
 import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { ErrorWidgetComponent } from './error.component';
 import { CoreTestingModule } from '../../../../testing';
 import { ErrorMessageModel } from '../index';
@@ -28,13 +27,12 @@ describe('ErrorWidgetComponent', () => {
     let fixture: ComponentFixture<ErrorWidgetComponent>;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ErrorWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

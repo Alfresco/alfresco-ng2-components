@@ -18,7 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, User } from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
 import { fakeServiceTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
@@ -40,10 +40,6 @@ import { ServiceTaskListCloudService } from '../services/service-task-list-cloud
 class CustomTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent)
     taskList: ServiceTaskListCloudComponent;
-
-    getFullName(person: User): string {
-        return `${person.firstName} ${person.lastName}`;
-    }
 }
 @Component({
     template: `
@@ -76,17 +72,16 @@ describe('ServiceTaskListCloudComponent', () => {
     let appConfig: AppConfigService;
     let serviceTaskListCloudService: ServiceTaskListCloudService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            EmptyTemplateComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                EmptyTemplateComponent
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
         fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
@@ -224,7 +219,8 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     it('should call endpoint when a column visibility gets changed', () => {
-        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest');
+        const emptyList = { list: { entries: [] } };
+        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
         component.ngAfterContentInit();
         spyOn(component, 'createDatatableSchema');
         component.appName = 'fake-app-name';
@@ -351,14 +347,17 @@ describe('ServiceTaskListCloudComponent', () => {
             component.updatePagination(pagination);
         });
     });
+});
 
-    describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
-        let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
-        let componentCustom: CustomTaskListComponent;
-        let customCopyComponent: CustomCopyContentTaskListComponent;
-        let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
+describe('ServiceTaskListCloudComponent: Injecting custom columns for task list - CustomTaskListComponent', () => {
+    let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
+    let componentCustom: CustomTaskListComponent;
+    let customCopyComponent: CustomCopyContentTaskListComponent;
+    let copyFixture: ComponentFixture<CustomCopyContentTaskListComponent>;
+    let serviceTaskListCloudService: ServiceTaskListCloudService;
 
-        setupTestBed({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule
@@ -369,127 +368,130 @@ describe('ServiceTaskListCloudComponent', () => {
             ]
         });
 
-        beforeEach(() => {
-            spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-            fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
-            copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
-            fixtureCustom.detectChanges();
-            componentCustom = fixtureCustom.componentInstance;
-            customCopyComponent = copyFixture.componentInstance;
-            customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
-        });
+        serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
+        spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
-        afterEach(() => {
-            fixtureCustom.destroy();
-            copyFixture.destroy();
-        });
-
-        it('should fetch custom schemaColumn from html', () => {
-            fixture.detectChanges();
-            expect(componentCustom.taskList.columnList).toBeDefined();
-            expect(componentCustom.taskList.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-            expect(componentCustom.taskList.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
-            expect(componentCustom.taskList.columns.length).toEqual(2);
-        });
-
-        it('it should show copy tooltip when key is present in data-column', () => {
-            customCopyComponent.taskList.reload();
-            copyFixture.detectChanges();
-
-            copyFixture.debugElement
-                    .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
-                    .triggerEventHandler('mouseenter');
-
-            copyFixture.detectChanges();
-            expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
-        });
-
-        it('it should not show copy tooltip when key is not present in data-column', () => {
-            customCopyComponent.taskList.reload();
-            copyFixture.detectChanges();
-
-            copyFixture.debugElement
-                .query(By.css('span[title="serviceTaskName"]'))
-                .triggerEventHandler('mouseenter');
-
-            copyFixture.detectChanges();
-            expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
-        });
+        fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
+        copyFixture = TestBed.createComponent(CustomCopyContentTaskListComponent);
+        fixtureCustom.detectChanges();
+        componentCustom = fixtureCustom.componentInstance;
+        customCopyComponent = copyFixture.componentInstance;
+        customCopyComponent.taskList.isColumnSchemaCreated$ = of(true);
     });
 
-    describe('Copy cell content directive from app.config specifications', () => {
-        let taskSpy: jasmine.Spy;
+    afterEach(() => {
+        fixtureCustom.destroy();
+        copyFixture.destroy();
+    });
 
-        setupTestBed({
+    it('should fetch custom schemaColumn from html', () => {
+        fixtureCustom.detectChanges();
+        expect(componentCustom.taskList.columnList).toBeDefined();
+        expect(componentCustom.taskList.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
+        expect(componentCustom.taskList.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+        expect(componentCustom.taskList.columns.length).toEqual(2);
+    });
+
+    it('it should show copy tooltip when key is present in data-column', () => {
+        customCopyComponent.taskList.reload();
+        copyFixture.detectChanges();
+
+        copyFixture.debugElement
+            .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
+            .triggerEventHandler('mouseenter');
+
+        copyFixture.detectChanges();
+        expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
+    });
+
+    it('it should not show copy tooltip when key is not present in data-column', () => {
+        customCopyComponent.taskList.reload();
+        copyFixture.detectChanges();
+
+        copyFixture.debugElement
+            .query(By.css('span[title="serviceTaskName"]'))
+            .triggerEventHandler('mouseenter');
+
+        copyFixture.detectChanges();
+        expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
+    });
+});
+
+describe('ServiceTaskListCloudComponent: Copy cell content directive from app.config specifications', () => {
+    let taskSpy: jasmine.Spy;
+    let appConfig: AppConfigService;
+    let serviceTaskListCloudService: ServiceTaskListCloudService;
+    let fixture: ComponentFixture<ServiceTaskListCloudComponent>;
+    let component: ServiceTaskListCloudComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule
             ]
         });
-
-        beforeEach(() => {
-            appConfig = TestBed.inject(AppConfigService);
-            serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
-            appConfig.config = Object.assign(appConfig.config, {
-                'adf-cloud-service-task-list': {
-                    presets: {
-                        fakeCustomSchema: [
-                            {
-                                key: 'id',
-                                type: 'text',
-                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                                sortable: true,
-                                copyContent: true
-                            },
-                            {
-                                key: 'activityName',
-                                type: 'text',
-                                title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                                sortable: true
-                            }
-                        ]
-                    }
+        appConfig = TestBed.inject(AppConfigService);
+        serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
+        appConfig.config = Object.assign(appConfig.config, {
+            'adf-cloud-service-task-list': {
+                presets: {
+                    fakeCustomSchema: [
+                        {
+                            key: 'id',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                            sortable: true,
+                            copyContent: true
+                        },
+                        {
+                            key: 'activityName',
+                            type: 'text',
+                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            sortable: true
+                        }
+                    ]
                 }
-            });
-            fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
-            component = fixture.componentInstance;
-            taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-
+            }
         });
-        afterEach(() => {
-            fixture.destroy();
-        });
+        fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
+        component = fixture.componentInstance;
+        taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
 
-        it('shoud show tooltip if config copyContent flag is true', () => {
-            taskSpy.and.returnValue(of(fakeServiceTask));
-            component.presetColumn = 'fakeCustomSchema';
+    });
+    afterEach(() => {
+        fixture.destroy();
+    });
 
-            component.reload();
-            fixture.detectChanges();
+    it('shoud show tooltip if config copyContent flag is true', () => {
+        taskSpy.and.returnValue(of(fakeServiceTask));
+        component.presetColumn = 'fakeCustomSchema';
 
-            const columnWithCopyContentFlagTrue = fixture.debugElement
-                .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'));
+        component.reload();
+        fixture.detectChanges();
 
-            columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
+        const columnWithCopyContentFlagTrue = fixture.debugElement
+            .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'));
 
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
-        });
+        columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
-        it('shoud not show tooltip if config copyContent flag is NOT true', () => {
-            taskSpy.and.returnValue(of(fakeServiceTask));
-            component.presetColumn = 'fakeCustomSchema';
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
+    });
 
-            component.reload();
-            fixture.detectChanges();
+    it('shoud not show tooltip if config copyContent flag is NOT true', () => {
+        taskSpy.and.returnValue(of(fakeServiceTask));
+        component.presetColumn = 'fakeCustomSchema';
 
-            const columnWithCopyContentFlagNotTrue = fixture.debugElement
-                .query(By.css('span[title="serviceTaskName"]'));
+        component.reload();
+        fixture.detectChanges();
 
-            columnWithCopyContentFlagNotTrue.triggerEventHandler('mouseenter');
+        const columnWithCopyContentFlagNotTrue = fixture.debugElement
+            .query(By.css('span[title="serviceTaskName"]'));
 
-            fixture.detectChanges();
-            expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
-        });
+        columnWithCopyContentFlagNotTrue.triggerEventHandler('mouseenter');
+
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
     });
 });

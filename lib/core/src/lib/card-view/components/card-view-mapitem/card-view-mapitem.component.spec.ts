@@ -21,7 +21,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -33,14 +32,13 @@ describe('CardViewMapItemComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewMapItemComponent);
         service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;

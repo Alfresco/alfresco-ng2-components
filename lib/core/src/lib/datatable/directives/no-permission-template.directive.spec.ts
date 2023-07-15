@@ -18,7 +18,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { NoPermissionTemplateDirective } from './no-permission-template.directive';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,14 +27,13 @@ describe('NoPermissionTemplateDirective', () => {
     let dataTable: DataTableComponent;
     let directive: NoPermissionTemplateDirective;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         directive = new NoPermissionTemplateDirective(dataTable);

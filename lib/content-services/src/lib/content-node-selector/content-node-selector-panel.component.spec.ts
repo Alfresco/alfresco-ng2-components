@@ -30,7 +30,6 @@ import {
 } from '@alfresco/js-api';
 import {
     AppConfigService,
-    setupTestBed,
     DataRow,
     ThumbnailService,
     DataColumn
@@ -90,12 +89,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
         component.queryBuilderService.executed.next(searchResults);
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    beforeEach(() => {
+       TestBed.configureTestingModule({
+           imports: [
+               TranslateModule.forRoot(),
+               ContentTestingModule
+           ],
+           schemas: [CUSTOM_ELEMENTS_SCHEMA]
+       });
     });
 
     describe('General component features', () => {

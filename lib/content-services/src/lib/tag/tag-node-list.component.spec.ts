@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
@@ -66,14 +65,13 @@ describe('TagNodeList', () => {
         return element.querySelectorAll('.adf-tag-chips');
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(TagNodeListComponent);
 

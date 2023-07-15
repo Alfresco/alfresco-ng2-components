@@ -21,7 +21,6 @@ import { Chart } from '../../diagram/models/chart/chart.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,14 +31,13 @@ describe('AnalyticsGeneratorComponent', () => {
     let component: any;
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);
         component = fixture.componentInstance;
 

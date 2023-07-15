@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { SearchService } from '../../search/services/search.service';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of, throwError } from 'rxjs';
@@ -51,14 +50,13 @@ describe('NodePermissionService', () => {
         }
     ];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
         nodeService = TestBed.inject(NodesApiService);

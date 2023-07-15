@@ -22,7 +22,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { LogService } from './log.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 
 @Component({
     template: '',
@@ -60,13 +59,12 @@ describe('LogService', () => {
     let providesLogComponent: ComponentFixture<ProvidesLogComponent>;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [HttpClientModule],
-        declarations: [ProvidesLogComponent],
-        providers: [LogService, AppConfigService]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientModule],
+            declarations: [ProvidesLogComponent],
+            providers: [LogService, AppConfigService]
+        });
         appConfigService = TestBed.inject(AppConfigService);
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
     });

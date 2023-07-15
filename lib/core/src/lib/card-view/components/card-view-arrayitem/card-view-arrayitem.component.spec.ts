@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
@@ -45,22 +44,21 @@ describe('CardViewArrayItemComponent', () => {
         icon: 'edit'
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewArrayItemModel(mockDefaultProps);
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Click event', () => {

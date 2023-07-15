@@ -18,20 +18,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NameLocationCellComponent } from './name-location-cell.component';
 import { By } from '@angular/platform-browser';
-import { DataRow, setupTestBed } from '@alfresco/adf-core';
+import { DataRow } from '@alfresco/adf-core';
 
 describe('NameLocationCellComponent', () => {
     let component: NameLocationCellComponent;
     let fixture: ComponentFixture<NameLocationCellComponent>;
     let rowData: DataRow;
 
-    setupTestBed({
-        declarations: [
-            NameLocationCellComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                NameLocationCellComponent
+            ]
+        });
         fixture = TestBed.createComponent(NameLocationCellComponent);
         component = fixture.componentInstance;
 

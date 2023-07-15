@@ -24,7 +24,6 @@ import {
     FormFieldOption,
     FormFieldModel,
     FormModel,
-    setupTestBed,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
@@ -42,17 +41,16 @@ describe('RadioButtonsWidgetComponent', () => {
     let taskFormService: TaskFormService;
     let processDefinitionService: ProcessDefinitionService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            MatRadioModule,
-            FormsModule,
-            MatIconModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                MatRadioModule,
+                FormsModule,
+                MatIconModule
+            ]
+        });
         taskFormService = TestBed.inject(TaskFormService);
         processDefinitionService = TestBed.inject(ProcessDefinitionService);
 

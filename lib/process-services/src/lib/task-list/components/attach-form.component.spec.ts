@@ -17,7 +17,6 @@
 
 import { AttachFormComponent } from './attach-form.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
@@ -30,14 +29,13 @@ describe('AttachFormComponent', () => {
     let element: HTMLElement;
     let taskService: TaskListService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

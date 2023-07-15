@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
@@ -29,14 +29,13 @@ describe('ProcessInstanceHeaderComponent', () => {
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
 

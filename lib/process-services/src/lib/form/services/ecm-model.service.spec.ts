@@ -16,7 +16,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { FormModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { EcmModelService } from './ecm-model.service';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,17 +24,15 @@ import { TranslateModule } from '@ngx-translate/core';
 declare let jasmine: any;
 
 describe('EcmModelService', () => {
-
     let service: EcmModelService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(EcmModelService);
         jasmine.Ajax.install();
     });

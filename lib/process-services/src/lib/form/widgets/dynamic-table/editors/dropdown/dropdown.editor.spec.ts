@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { Observable, throwError } from 'rxjs';
 import {
     AlfrescoApiService,
-    setupTestBed,
     CoreTestingModule,
     FormFieldModel,
     FormModel,
@@ -47,14 +46,13 @@ describe('DropdownEditorComponent', () => {
     let column: DynamicTableColumn;
     let row: DynamicTableRow;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         formService = new FormService();

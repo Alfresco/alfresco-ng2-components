@@ -18,8 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-
-import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
@@ -75,20 +74,19 @@ describe('EditProcessFilterCloudComponent', () => {
         reply: jasmine.createSpy('reply')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessFiltersCloudModule,
-            ProcessServiceCloudTestingModule,
-            MatIconTestingModule
-        ],
-        providers: [
-            MatDialog,
-            { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessFiltersCloudModule,
+                ProcessServiceCloudTestingModule,
+                MatIconTestingModule
+            ],
+            providers: [
+                MatDialog,
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+            ]
+        });
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(ProcessFilterCloudService);

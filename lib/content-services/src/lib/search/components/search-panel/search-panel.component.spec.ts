@@ -17,7 +17,6 @@
 
 import { SearchCheckListComponent, SearchListOption } from '../search-check-list/search-check-list.component';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
@@ -28,14 +27,13 @@ describe('SearchCheckListComponent', () => {
     let fixture: ComponentFixture<SearchCheckListComponent>;
     let component: SearchCheckListComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;
     });

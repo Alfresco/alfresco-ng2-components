@@ -18,7 +18,6 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -42,17 +41,16 @@ describe('PdfThumbComponent', () => {
         getHeight: jasmine.createSpy('getHeight').and.returnValue(height)
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        providers: [
-            { provide: DomSanitizer, useValue: domSanitizer }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: DomSanitizer, useValue: domSanitizer }
+            ]
+        });
         fixture = TestBed.createComponent(PdfThumbComponent);
         component = fixture.componentInstance;
     });

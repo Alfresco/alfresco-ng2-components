@@ -18,7 +18,7 @@
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { UserProcessModel } from '../models/user-process.model';
 import { PeopleProcessService } from './people-process.service';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
@@ -45,14 +45,13 @@ describe('PeopleProcessService', () => {
 
     let service: PeopleProcessService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(PeopleProcessService);
     });
 

@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationCloudService } from './notification-cloud.service';
@@ -43,14 +42,13 @@ describe('NotificationCloudService', () => {
         }
     `;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);
 

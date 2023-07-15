@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     MinimalNode,
@@ -28,7 +28,6 @@ import {
     SiteEntry,
     SitePaging
 } from '@alfresco/js-api';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -83,12 +82,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
         component.queryBuilderService.executed.next(searchResults);
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    beforeEach(() => {
+       TestBed.configureTestingModule({
+           imports: [
+               TranslateModule.forRoot(),
+               ContentTestingModule
+           ],
+           schemas: [CUSTOM_ELEMENTS_SCHEMA]
+       });
     });
 
     describe('General component features', () => {
@@ -518,6 +519,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
                 expect(component.clearSearch).toHaveBeenCalled();
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
+                flush();
             }));
 
             it('should folderIdToShow equal the folder node id when navigation changes', async () => {
@@ -692,6 +694,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku');
+                flush();
             }));
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {

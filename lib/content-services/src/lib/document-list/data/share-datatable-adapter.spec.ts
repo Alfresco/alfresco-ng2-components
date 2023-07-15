@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, ThumbnailService } from '@alfresco/adf-core';
 import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
 import { ERR_OBJECT_NOT_FOUND, ShareDataRow } from './share-data-row.model';
 import { ERR_COL_NOT_FOUND, ERR_ROW_NOT_FOUND, ShareDataTableAdapter } from './share-datatable-adapter';
@@ -29,14 +29,13 @@ describe('ShareDataTableAdapter', () => {
     let thumbnailService: ThumbnailService;
     let contentService: ContentService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         const imageUrl: string = 'http://<addresss>';
 
         contentService = TestBed.inject(ContentService);

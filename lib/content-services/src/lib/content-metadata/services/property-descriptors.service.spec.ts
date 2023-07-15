@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { PropertyDescriptorsService } from './property-descriptors.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ClassesApi } from '@alfresco/js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -28,14 +27,13 @@ describe('PropertyDescriptorLoaderService', () => {
     let service: PropertyDescriptorsService;
     let classesApi: ClassesApi;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         service = TestBed.inject(PropertyDescriptorsService);
         classesApi = service['classesApi'];
     });

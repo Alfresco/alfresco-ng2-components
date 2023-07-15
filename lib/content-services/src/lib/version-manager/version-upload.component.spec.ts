@@ -19,7 +19,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { VersionUploadComponent } from './version-upload.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
 import { UploadService } from '../common/services/upload.service';
@@ -48,16 +47,15 @@ describe('VersionUploadComponent', () => {
         }
     });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [UploadService],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [UploadService],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(VersionUploadComponent);
         component = fixture.componentInstance;
         uploadService = TestBed.inject(UploadService);

@@ -26,8 +26,7 @@ import {
     DataRowEvent,
     DataTableModule,
     getDataColumnMock,
-    ObjectDataRow,
-    setupTestBed
+    ObjectDataRow, User
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -62,6 +61,10 @@ import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-
 class CustomTaskListComponent {
     @ViewChild(ProcessListCloudComponent)
     processListCloud: ProcessListCloudComponent;
+
+    getFullName(person: User): string {
+        return `${person.firstName} ${person.lastName}`;
+    }
 }
 
 describe('ProcessListCloudComponent', () => {
@@ -73,14 +76,13 @@ describe('ProcessListCloudComponent', () => {
     const fakeCustomSchemaName = 'fakeCustomSchema';
     const schemaWithVariable = 'schemaWithVariableId';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
         preferencesService = TestBed.inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
@@ -580,62 +582,64 @@ describe('ProcessListCloudComponent', () => {
         });
     });
 
-    describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
 
-        let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
-        let componentCustom: CustomTaskListComponent;
+});
 
-        setupTestBed({
+describe('ProcessListCloudComponent: Injecting custom columns for task list - CustomTaskListComponent', () => {
+    let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
+    let componentCustom: CustomTaskListComponent;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule
             ],
             declarations: [CustomTaskListComponent]
         });
-
-        beforeEach(() => {
-            fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
-            fixtureCustom.detectChanges();
-            componentCustom = fixtureCustom.componentInstance;
-        });
-
-        afterEach(() => {
-            fixtureCustom.destroy();
-        });
-
-        it('should fetch custom schemaColumn from html', () => {
-            fixture.detectChanges();
-            expect(componentCustom.processListCloud.columnList).toBeDefined();
-            expect(componentCustom.processListCloud.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-            expect(componentCustom.processListCloud.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
-            expect(componentCustom.processListCloud.columns.length).toEqual(3);
-        });
+        fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
+        fixtureCustom.detectChanges();
+        componentCustom = fixtureCustom.componentInstance;
     });
 
-    describe('Creating an empty custom template - EmptyTemplateComponent', () => {
+    afterEach(() => {
+        fixtureCustom.destroy();
+    });
 
-        @Component({
-            template: `
+    it('should fetch custom schemaColumn from html', () => {
+        fixtureCustom.detectChanges();
+        expect(componentCustom.processListCloud.columnList).toBeDefined();
+        expect(componentCustom.processListCloud.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
+        expect(componentCustom.processListCloud.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+        expect(componentCustom.processListCloud.columns.length).toEqual(3);
+    });
+});
+
+describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
+    let preferencesService: PreferenceCloudServiceInterface;
+    @Component({
+        template: `
                  <adf-cloud-process-list #processListCloud>
                      <adf-custom-empty-content-template>
                          <p id="custom-id">TEST</p>
                      </adf-custom-empty-content-template>
                  </adf-cloud-process-list>
             `
-        })
+    })
 
-        class EmptyTemplateComponent {
-            @ViewChild(ProcessListCloudComponent)
-            processListCloud: ProcessListCloudComponent;
-        }
+    class EmptyTemplateComponent {
+        @ViewChild(ProcessListCloudComponent)
+        processListCloud: ProcessListCloudComponent;
+    }
 
-        let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
-        preferencesService = jasmine.createSpyObj('preferencesService', {
-            getPreferences: of({}),
-            updatePreference: of({})
-        });
+    let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
+    preferencesService = jasmine.createSpyObj('preferencesService', {
+        getPreferences: of({}),
+        updatePreference: of({})
+    });
 
-        setupTestBed({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 HttpClientModule,
@@ -646,24 +650,21 @@ describe('ProcessListCloudComponent', () => {
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
             declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
         });
+        fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
+        fixtureEmpty.detectChanges();
+    });
 
-        beforeEach(() => {
-            fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
-            fixtureEmpty.detectChanges();
-        });
+    afterEach(() => {
+        fixtureEmpty.destroy();
+    });
 
-        afterEach(() => {
-            fixtureEmpty.destroy();
-        });
+    it('should render the custom template', () => {
+        fixtureEmpty.componentInstance.processListCloud.isLoading = false;
 
-        it('should render the custom template', () => {
-            fixtureEmpty.componentInstance.processListCloud.isLoading = false;
+        fixtureEmpty.detectChanges();
 
-            fixtureEmpty.detectChanges();
+        expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+        expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
 
-            expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-            expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
-
-        });
     });
 });

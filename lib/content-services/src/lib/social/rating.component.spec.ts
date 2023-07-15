@@ -17,8 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RatingComponent } from './rating.component';
-import { setupTestBed } from '@alfresco/adf-core';
-
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
@@ -31,14 +29,13 @@ describe('Rating component', () => {
     let element: HTMLElement;
     let service: RatingService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(RatingComponent);
         service = TestBed.inject(RatingService);
 

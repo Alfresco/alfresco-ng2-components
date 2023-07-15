@@ -18,7 +18,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LoginComponent } from '../components/login.component';
 import { LoginHeaderDirective } from './login-header.directive';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -27,14 +26,13 @@ describe('LoginHeaderDirective', () => {
     let component: LoginComponent;
     let directive: LoginHeaderDirective;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         directive = new LoginHeaderDirective(component);

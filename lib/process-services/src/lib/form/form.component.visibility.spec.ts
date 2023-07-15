@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 
 import {
     formDefinitionDropdownField, formDefinitionTwoTextFields,
-    formDefinitionRequiredField, setupTestBed,
+    formDefinitionRequiredField,
     formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne,
     formReadonlyTwoTextFields
 } from '@alfresco/adf-core';
@@ -45,15 +45,14 @@ describe('FormComponent UI and visibility', () => {
         dropdown.click();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
         taskService = TestBed.inject(TaskService);

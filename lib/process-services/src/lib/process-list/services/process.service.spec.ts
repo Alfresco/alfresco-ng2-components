@@ -20,23 +20,21 @@ import { exampleProcess, mockError, fakeProcessDef, fakeTasksList } from '../../
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let moment: any;
 
 describe('ProcessService', () => {
-
     let service: ProcessService;
 
-    setupTestBed({
-        imports: [
-            CoreModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         service = TestBed.inject(ProcessService);
     });
 

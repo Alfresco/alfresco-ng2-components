@@ -17,7 +17,6 @@
 
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatSelectChange } from '@angular/material/select';
@@ -31,14 +30,13 @@ describe('DateRangeFilterComponent', () => {
     let fixture: ComponentFixture<DateRangeFilterComponent>;
     let service: DateRangeFilterService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(DateRangeFilterService);

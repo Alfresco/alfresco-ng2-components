@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    FormModel, setupTestBed
-} from '@alfresco/adf-core';
-import {
-    Component,
-    DebugElement, ViewChild
-} from '@angular/core';
+import { FormModel } from '@alfresco/adf-core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
@@ -60,15 +55,14 @@ describe('FormCloudWithCustomOutComesComponent', () => {
     let customComponent: FormCloudWithCustomOutComesComponent;
     let debugElement: DebugElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [FormCloudWithCustomOutComesComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [FormCloudWithCustomOutComesComponent]
+        });
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;
         debugElement = fixture.debugElement;

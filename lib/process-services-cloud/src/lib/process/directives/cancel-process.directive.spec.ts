@@ -17,7 +17,6 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,17 +42,16 @@ describe('CancelProcessDirective', () => {
     let identityUserService: IdentityUserService;
     let component: TestComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            TestComponent
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                TestComponent
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         identityUserService = TestBed.inject(IdentityUserService);

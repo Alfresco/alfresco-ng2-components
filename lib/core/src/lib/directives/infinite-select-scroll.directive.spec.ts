@@ -18,7 +18,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import { setupTestBed } from '../testing/setup-test-bed';
 import {  MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -49,18 +48,17 @@ describe('InfiniteSelectScrollDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
-    setupTestBed({
-        imports: [
-            MatSelectModule,
-            NoopAnimationsModule
-        ],
-        declarations: [
-            TestComponent,
-            InfiniteSelectScrollDirective
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                MatSelectModule,
+                NoopAnimationsModule
+            ],
+            declarations: [
+                TestComponent,
+                InfiniteSelectScrollDirective
+            ]
+        });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
     });

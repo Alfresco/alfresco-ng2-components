@@ -23,7 +23,6 @@ import {
     FormFieldModel,
     FormModel,
     FormService,
-    setupTestBed,
     FormFieldEvent,
     FormFieldTypes,
     LogService
@@ -63,14 +62,13 @@ describe('DropdownCloudWidgetComponent', () => {
         fixture.detectChanges();
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

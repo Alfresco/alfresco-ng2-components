@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
@@ -34,14 +33,13 @@ describe('CardViewDateItemComponent', () => {
     let component: CardViewDateItemComponent;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
             defaultDateFormat: 'shortDate',

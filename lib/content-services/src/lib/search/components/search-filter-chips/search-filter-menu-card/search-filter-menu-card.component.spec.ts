@@ -19,20 +19,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchFilterMenuCardComponent } from './search-filter-menu-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { setupTestBed } from '@alfresco/adf-core';
 
 describe('SearchFilterMenuComponent', () => {
     let component: SearchFilterMenuCardComponent;
     let fixture: ComponentFixture<SearchFilterMenuCardComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

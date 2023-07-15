@@ -29,6 +29,7 @@ const resetTestingModule = TestBed.resetTestingModule;
 const preventAngularFromResetting = () => (TestBed.resetTestingModule = () => TestBed);
 const allowAngularToReset = () => (TestBed.resetTestingModule = resetTestingModule);
 
+// @deprecated Please use the standard `TestBed.configureTestingModule` instead
 export const setupTestBed = (moduleDef: TestModuleMetadata) => {
     beforeAll((done) => {
             localStorage.clear();

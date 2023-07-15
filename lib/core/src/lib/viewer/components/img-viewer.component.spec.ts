@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { UrlService } from '../../common/services/url.service';
 import { ImgViewerComponent } from './img-viewer.component';
-import { setupTestBed, CoreTestingModule } from '../../testing';
+import { CoreTestingModule } from '../../testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
@@ -36,11 +36,13 @@ describe('Test Img viewer component ', () => {
         return new Blob([data], { type: 'image/png' });
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
     });
 
     describe('Zoom customization', () => {

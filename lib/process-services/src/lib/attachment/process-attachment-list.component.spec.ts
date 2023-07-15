@@ -18,7 +18,6 @@
 import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -33,15 +32,13 @@ describe('ProcessAttachmentListComponent', () => {
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
     let getProcessRelatedContentSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ]
-    });
-
     beforeEach(() => {
-
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessAttachmentListComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessContentService);
@@ -250,16 +247,15 @@ class CustomEmptyTemplateComponent {
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule
-        ],
-        declarations: [CustomEmptyTemplateComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule
+            ],
+            declarations: [CustomEmptyTemplateComponent],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
         fixture.detectChanges();
     });

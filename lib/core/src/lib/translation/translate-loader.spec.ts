@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 
@@ -28,17 +27,16 @@ describe('TranslateLoader', () => {
     let translationService: TranslationService;
     let customLoader: TranslateLoaderService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreModule.forRoot()
-        ],
-        providers: [
-            TranslationService
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreModule.forRoot()
+            ],
+            providers: [
+                TranslationService
+            ]
+        });
         translationService = TestBed.inject(TranslationService);
         customLoader = translationService.translate.currentLoader as TranslateLoaderService;
 

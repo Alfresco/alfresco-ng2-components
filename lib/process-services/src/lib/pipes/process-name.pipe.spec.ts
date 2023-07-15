@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment';
-import { setupTestBed, LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
+import { LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
 describe('ProcessNamePipe', () => {
@@ -35,14 +35,13 @@ describe('ProcessNamePipe', () => {
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
     const fakeProcessInstanceDetails = new ProcessInstance({ processDefinitionName: 'fake-process-def-name'});
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNamePipe(localizedDatePipe);
     });

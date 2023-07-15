@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -110,12 +109,14 @@ describe('AspectListComponent', () => {
     let aspectListService: AspectListService;
     let nodeService: NodesApiService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [AspectListService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [AspectListService]
+        });
     });
 
     describe('Loading', () => {

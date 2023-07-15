@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -32,15 +32,14 @@ describe('ProcessHeaderCloudComponent', () => {
     let service: ProcessCloudService;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            ProcessHeaderCloudModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                ProcessHeaderCloudModule
+            ]
+        });
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.inject(ProcessCloudService);

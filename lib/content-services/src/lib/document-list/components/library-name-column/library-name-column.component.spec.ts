@@ -17,7 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { setupTestBed } from '@alfresco/adf-core';
 import { LibraryNameColumnComponent } from './library-name-column.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,24 +26,20 @@ describe('LibraryNameColumnComponent', () => {
     let component: LibraryNameColumnComponent;
     let node;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+        });
         node = {
             id: 'nodeId',
             path: {
                 elements: []
             }
         };
-    });
-
-    beforeEach(() => {
         fixture = TestBed.createComponent(LibraryNameColumnComponent);
         component = fixture.componentInstance;
     });

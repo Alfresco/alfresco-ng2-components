@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { ContentMetadataService } from './content-metadata.service';
@@ -138,10 +138,6 @@ describe('ContentMetaDataService', () => {
         }
     };
 
-    setupTestBed({
-        imports: [TranslateModule.forRoot(), ContentTestingModule]
-    });
-
     const setConfig = (presetName, presetConfig) => {
         appConfig.config['content-metadata'] = {
             presets: {
@@ -151,6 +147,9 @@ describe('ContentMetaDataService', () => {
     };
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
+        });
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
         const propertyDescriptorsService = TestBed.inject(

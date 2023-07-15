@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -60,18 +59,17 @@ describe('AddPermissionDialog', () => {
         close: jasmine.createSpy('close')
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: dialogRef },
-            { provide: MAT_DIALOG_DATA, useValue: data }
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: dialogRef },
+                { provide: MAT_DIALOG_DATA, useValue: data }
+            ]
+        });
         fixture = TestBed.createComponent(AddPermissionDialogComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

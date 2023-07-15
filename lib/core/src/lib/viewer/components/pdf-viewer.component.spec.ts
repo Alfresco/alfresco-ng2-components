@@ -23,7 +23,6 @@ import { PdfViewerComponent } from './pdf-viewer.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -125,29 +124,28 @@ xdescribe('Test PdfViewer component', () => {
     let change: any;
     let dialog: MatDialog;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [
-            TestDialogComponent,
-            UrlTestComponent,
-            UrlTestPasswordComponent,
-            BlobTestComponent
-        ],
-        providers: [
-            {
-                provide: MatDialog, useValue: {
-                    open: () => {
-                    }
-                }
-            },
-            RenderingQueueServices
-        ]
-    });
-
     beforeEach((done) => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [
+                TestDialogComponent,
+                UrlTestComponent,
+                UrlTestPasswordComponent,
+                BlobTestComponent
+            ],
+            providers: [
+                {
+                    provide: MatDialog, useValue: {
+                        open: () => {
+                        }
+                    }
+                },
+                RenderingQueueServices
+            ]
+        });
         fixture = TestBed.createComponent(PdfViewerComponent);
         dialog = TestBed.inject(MatDialog);
 

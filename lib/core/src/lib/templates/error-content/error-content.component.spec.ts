@@ -19,7 +19,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../translation/translation.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,19 +31,7 @@ describe('ErrorContentComponent', () => {
     let translateService: TranslationService;
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ErrorContentComponent);
-        element = fixture.nativeElement;
-        errorContentComponent = fixture.debugElement.componentInstance;
-        translateService = TestBed.inject(TranslationService);
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    describe(' with an undefined error', () => {
-
-        setupTestBed({
+        TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
@@ -53,7 +40,18 @@ describe('ErrorContentComponent', () => {
                 { provide: ActivatedRoute, useValue: { params: of() } }
             ]
         });
+        fixture = TestBed.createComponent(ErrorContentComponent);
+        element = fixture.nativeElement;
+        errorContentComponent = fixture.debugElement.componentInstance;
+        translateService = TestBed.inject(TranslationService);
+    });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
+    describe(' with an undefined error', () => {
         it('should render error code', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
@@ -108,18 +106,9 @@ describe('ErrorContentComponent', () => {
     });
 
     describe(' with a specific error', () => {
-
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            providers: [
-                { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
-            ]
-        });
-
         it('should navigate to an error given by the route params', async () => {
+            const route = TestBed.inject(ActivatedRoute);
+            route.params = of({ id: '404' });
             spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
             await fixture.whenStable();

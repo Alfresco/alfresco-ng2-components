@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Node } from '@alfresco/js-api';
-import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
@@ -36,16 +35,15 @@ describe('Breadcrumb', () => {
     });
     let documentListComponent: DocumentListComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers : [{ provide: DocumentListService, useValue: documentListService }]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            providers : [{ provide: DocumentListService, useValue: documentListService }]
+        });
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
         documentListComponent = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;

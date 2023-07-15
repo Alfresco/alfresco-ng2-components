@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,19 +35,18 @@ describe('ProcessFilterDialogCloudComponent', () => {
         data: {name: 'Mock-Title'}
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            ProcessFiltersCloudModule
-        ],
-        providers: [
-            { provide: MatDialogRef, useValue: mockDialogRef },
-            { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
-          ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule,
+                ProcessFiltersCloudModule
+            ],
+            providers: [
+                { provide: MatDialogRef, useValue: mockDialogRef },
+                { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+            ]
+        });
         fixture = TestBed.createComponent(ProcessFilterDialogCloudComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VersionComparisonComponent } from './version-comparison.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -51,15 +50,14 @@ describe('VersionComparisonComponent', () => {
         slice: null
     } as File;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
         fixture = TestBed.createComponent(VersionComparisonComponent);
         component = fixture.componentInstance;
         component.node = node;

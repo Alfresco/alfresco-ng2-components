@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, setupTestBed } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -37,14 +37,13 @@ describe('FileUploadingListComponent', () => {
         file = { data: { entry: { id: 'x' } } };
     });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         nodesApiService = TestBed.inject(NodesApiService);
 
         uploadService = TestBed.inject(UploadService);

@@ -18,26 +18,20 @@
 import { TestBed } from '@angular/core/testing';
 import { formModelTabs } from '../../mock';
 import { FormService } from './form.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('Form service', () => {
-
     let service: FormService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(FormService);
-    });
-
-    afterEach(() => {
     });
 
     describe('parseForm', () => {

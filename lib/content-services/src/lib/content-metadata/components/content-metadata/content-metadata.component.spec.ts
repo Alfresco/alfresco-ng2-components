@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks, flush } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, MinimalNode, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
@@ -23,7 +23,7 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
     CardViewBaseItemModel, CardViewComponent,
-    LogService, setupTestBed, AppConfigService, UpdateNotification
+    LogService, AppConfigService, UpdateNotification
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { throwError, of, EMPTY } from 'rxjs';
@@ -100,37 +100,37 @@ describe('ContentMetadataComponent', () => {
         return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ],
-        providers: [
-            {
-                provide: LogService,
-                useValue: {
-                    error: jasmine.createSpy('error')
-                }
-            },
-            {
-                provide: TagService,
-                useValue: {
-                    getTagsByNodeId: () => EMPTY,
-                    removeTag: () => EMPTY,
-                    assignTagsToNode: () => EMPTY
-                }
-            },
-            {
-                provide: CategoryService,
-                useValue: {
-                    getCategoryLinksForNode: () => EMPTY,
-                    linkNodeToCategory: () => EMPTY,
-                    unlinkNodeFromCategory: () => EMPTY
-                }
-            }]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ],
+            providers: [
+                {
+                    provide: LogService,
+                    useValue: {
+                        error: jasmine.createSpy('error')
+                    }
+                },
+                {
+                    provide: TagService,
+                    useValue: {
+                        getTagsByNodeId: () => EMPTY,
+                        removeTag: () => EMPTY,
+                        assignTagsToNode: () => EMPTY
+                    }
+                },
+                {
+                    provide: CategoryService,
+                    useValue: {
+                        getCategoryLinksForNode: () => EMPTY,
+                        linkNodeToCategory: () => EMPTY,
+                        unlinkNodeFromCategory: () => EMPTY
+                    }
+                }
+            ]
+        });
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         contentMetadataService = TestBed.inject(ContentMetadataService);
@@ -290,7 +290,7 @@ describe('ContentMetadataComponent', () => {
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
         }));
 
-        it('should throw error on unsuccessful save', fakeAsync((done) => {
+        it('should throw error on unsuccessful save', fakeAsync(() => {
             const logService: LogService = TestBed.inject(LogService);
             component.editable = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
@@ -302,13 +302,14 @@ describe('ContentMetadataComponent', () => {
                 expect(err.statusCode).toBe(0);
                 expect(err.message).toBe('METADATA.ERRORS.GENERIC');
                 sub.unsubscribe();
-                done();
             });
 
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => clickOnSave());
+            discardPeriodicTasks();
+            flush();
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
@@ -329,6 +330,7 @@ describe('ContentMetadataComponent', () => {
             expect(component.node).toEqual(expectedNode);
             expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
+            discardPeriodicTasks();
         }));
 
         it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
@@ -1241,6 +1243,8 @@ describe('ContentMetadataComponent', () => {
             expect(categories[0].textContent).toBe(category1.name);
             expect(categories[1].textContent).toBe(category2.name);
             expect(categoryService.getCategoryLinksForNode).toHaveBeenCalledWith(node.id);
+            discardPeriodicTasks();
+            flush();
         }));
 
         it('should be hidden when editable is true', () => {
@@ -1333,6 +1337,8 @@ describe('ContentMetadataComponent', () => {
             clickOnSave();
 
             expect(categoriesManagementComponent.disableRemoval).toBeFalse();
+            discardPeriodicTasks();
+            flush();
         }));
 
         it('should set categoryNameControlVisible to false after saving', () => {

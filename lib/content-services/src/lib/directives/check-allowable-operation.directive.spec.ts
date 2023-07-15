@@ -16,7 +16,7 @@
  */
 
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
-import { CoreTestingModule, setupTestBed } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { TestBed } from '@angular/core/testing';
@@ -32,17 +32,15 @@ class TestComponent implements NodeAllowableOperationSubject {
 }
 
 describe('CheckAllowableOperationDirective', () => {
-
     let changeDetectorMock: ChangeDetectorRef;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
     });
 

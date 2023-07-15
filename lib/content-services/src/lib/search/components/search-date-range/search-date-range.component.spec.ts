@@ -16,7 +16,7 @@
  */
 
 import { SearchDateRangeComponent } from './search-date-range.component';
-import { MomentDateAdapter, setupTestBed } from '@alfresco/adf-core';
+import { MomentDateAdapter } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -33,14 +33,13 @@ describe('SearchDateRangeComponent', () => {
     const maxDate = '10-Mar-20';
     const dateFormatFixture = 'DD-MMM-YY';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(SearchDateRangeComponent);
         adapter = fixture.debugElement.injector.get(DateAdapter) as MomentDateAdapter;
         component = fixture.componentInstance;

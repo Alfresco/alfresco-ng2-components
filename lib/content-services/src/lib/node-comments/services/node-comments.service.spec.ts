@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CommentModel, setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeCommentsService } from './node-comments.service';
@@ -27,14 +27,13 @@ describe('NodeCommentsService', () => {
 
     let service: NodeCommentsService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         service = TestBed.inject(NodeCommentsService);
 
         jasmine.Ajax.install();

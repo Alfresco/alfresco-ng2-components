@@ -20,7 +20,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
@@ -34,16 +33,14 @@ describe('UserPreferencesService', () => {
     let appConfig: AppConfigServiceMock;
     let alfrescoApiService: AlfrescoApiServiceMock;
     let translate: TranslateService;
-    let changeDisposable: any;
-
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
 
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
             pagination: {
@@ -52,29 +49,19 @@ describe('UserPreferencesService', () => {
             }
         };
 
+        preferences = TestBed.inject(UserPreferencesService);
         storage = TestBed.inject(StorageService);
+        storage.clear();
         translate = TestBed.inject(TranslateService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService) as AlfrescoApiServiceMock;
     });
 
-    beforeEach(() => {
-        storage.clear();
-    });
-
     afterEach(() => {
-        if (changeDisposable) {
-            changeDisposable.unsubscribe();
-        }
-
         storage.clear();
+        TestBed.resetTestingModule();
     });
 
     describe(' with pagination config', () => {
-
-        beforeEach(() => {
-            preferences = TestBed.inject(UserPreferencesService);
-        });
-
         it('should get default pagination from app config', (done) => {
             appConfig.config.pagination.size = 0;
             appConfig.load().then(() => {
@@ -158,29 +145,26 @@ describe('UserPreferencesService', () => {
             expect(storage.getItem(UserPreferenceValues.Locale)).toBe(null);
         });
 
-        it('should stream the page size value when is set', (done) => {
-            preferences.paginationSize = 5;
-            changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
-                expect(userPreferenceStatus[UserPreferenceValues.PaginationSize]).toBe(5);
-                done();
+        it('should stream the page size value when is set', () => {
+            let lastValue;
+            preferences.onChange.subscribe((userPreferenceStatus) => {
+                lastValue = userPreferenceStatus[UserPreferenceValues.PaginationSize];
             });
+            preferences.paginationSize = 5;
+            expect(lastValue).toBe(5);
         });
 
-        it('should stream the user preference status when changed', (done) => {
-            preferences.set('propertyA', 'valueA');
-            changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
-                expect(userPreferenceStatus.propertyA).toBe('valueA');
-                done();
+        it('should stream the user preference status when changed', () => {
+            let lastValue;
+            preferences.onChange.subscribe((userPreferenceStatus) => {
+                lastValue = userPreferenceStatus.propertyA;
             });
+            preferences.set('propertyA', 'valueA');
+            expect(lastValue).toBe('valueA');
         });
     });
 
     describe('with language config', () => {
-
-        beforeEach(() => {
-            preferences = TestBed.inject(UserPreferencesService);
-        });
-
         it('should store default textOrientation based on language', () => {
             appConfig.config.languages = [
                 {
@@ -218,7 +202,7 @@ describe('UserPreferencesService', () => {
             expect(storage.getItem(textOrientation)).toBe(null);
         });
 
-        it('should default to browser locale for textOrientation when locale is not defined in configuration', (done) => {
+        it('should default to browser locale for textOrientation when locale is not defined in configuration', () => {
             appConfig.config.languages = [
                 {
                     key: 'fake-locale-browser',
@@ -228,11 +212,13 @@ describe('UserPreferencesService', () => {
             spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');
             alfrescoApiService.initialize();
 
-            changeDisposable = preferences.onChange
-                .subscribe((userPreferenceStatus) => {
-                    expect(userPreferenceStatus['textOrientation']).toBe('rtl');
-                    done();
+            let lastValue;
+
+            preferences.onChange.subscribe((userPreferenceStatus) => {
+                lastValue = userPreferenceStatus['textOrientation'];
             });
+
+            expect(lastValue).toBe('rtl');
         });
     });
 });

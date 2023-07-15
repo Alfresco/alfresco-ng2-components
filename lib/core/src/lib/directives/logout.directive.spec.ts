@@ -21,7 +21,6 @@ import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../auth/services/authentication.service';
 import { AppConfigService } from '../app-config/app-config.service';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { LogoutDirective } from './logout.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,17 +43,16 @@ describe('LogoutDirective', () => {
         let authService: AuthenticationService;
         let appConfig: AppConfigService;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ],
+                declarations: [
+                    TestComponent
+                ]
+            });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
             appConfig = TestBed.inject(AppConfigService);
@@ -126,17 +124,16 @@ describe('LogoutDirective', () => {
         let router: Router;
         let authService: AuthenticationService;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ],
+                declarations: [
+                    TestComponent
+                ]
+            });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
@@ -170,17 +167,16 @@ describe('LogoutDirective', () => {
         let router: Router;
         let authService: AuthenticationService;
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ],
+                declarations: [
+                    TestComponent
+                ]
+            });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);

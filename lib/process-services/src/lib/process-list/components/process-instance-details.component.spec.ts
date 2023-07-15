@@ -19,11 +19,8 @@ import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-
-import { setupTestBed } from '@alfresco/adf-core';
 import { CommentProcessService } from '../../process-comments/services/comment-process.service';
 import { TaskListModule } from '../../task-list/task-list.module';
-
 import { exampleProcess, exampleProcessNoName, mockRunningProcess, processEnded } from './../../mock';
 import { mockProcessInstanceComments } from './../../mock/process/process-comments.mock';
 import { ProcessService } from './../services/process.service';
@@ -39,18 +36,16 @@ describe('ProcessInstanceDetailsComponent', () => {
     let fixture: ComponentFixture<ProcessInstanceDetailsComponent>;
     let getProcessSpy: jasmine.Spy;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessTestingModule,
-            FormModule,
-            TaskListModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
-
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessTestingModule,
+                FormModule,
+                TaskListModule
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(ProcessInstanceDetailsComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessService);

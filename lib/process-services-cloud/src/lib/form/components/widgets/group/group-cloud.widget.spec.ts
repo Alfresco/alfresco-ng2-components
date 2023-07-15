@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel, setupTestBed } from '@alfresco/adf-core';
+import { FormFieldModel, FormFieldTypes, FormModel, IdentityGroupModel } from '@alfresco/adf-core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCloudWidgetComponent } from './group-cloud.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -28,20 +28,19 @@ describe('GroupCloudWidgetComponent', () => {
     let widget: GroupCloudWidgetComponent;
     let element: HTMLElement;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ],
-        declarations: [
-            GroupCloudWidgetComponent
-        ],
-        schemas: [
-            CUSTOM_ELEMENTS_SCHEMA
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
+            declarations: [
+                GroupCloudWidgetComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
+        });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

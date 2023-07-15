@@ -19,13 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
-
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
-import {
-    setupTestBed,
-    CoreTestingModule
-} from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from '../services/identity-group.service';
@@ -72,16 +68,15 @@ describe('GroupCloudComponent', () => {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]'));
     }
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule,
-            ProcessServiceCloudTestingModule,
-            GroupCloudModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                ProcessServiceCloudTestingModule,
+                GroupCloudModule
+            ]
+        });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

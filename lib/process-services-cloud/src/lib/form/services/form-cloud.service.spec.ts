@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { FormCloudService } from './form-cloud.service';
-import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -39,14 +38,13 @@ describe('Form Cloud service', () => {
     const taskId = 'task-id';
     const processInstanceId = 'process-instance-id';
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         service = TestBed.inject(FormCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');

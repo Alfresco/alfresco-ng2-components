@@ -20,7 +20,6 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../../common/services/storage.service';
@@ -33,14 +32,13 @@ describe('AuthGuardService', () => {
     let storageService: StorageService;
     let appConfigService: AppConfigService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         localStorage.clear();
         state = { url: '' };
         authService = TestBed.inject(AuthenticationService);

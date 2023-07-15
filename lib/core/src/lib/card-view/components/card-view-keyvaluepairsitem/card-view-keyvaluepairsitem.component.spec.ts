@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,14 +31,13 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     const mockEmptyData = [{ name: '', value: '' }];
     const mockData = [{ name: 'test-name', value: 'test-value' }];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;

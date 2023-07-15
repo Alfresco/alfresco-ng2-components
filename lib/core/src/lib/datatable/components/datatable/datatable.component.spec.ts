@@ -24,7 +24,6 @@ import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataTableComponent, ShowHeaderMode } from './datatable.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
@@ -146,15 +145,14 @@ describe('DataTable', () => {
         expect(doubleClickCount).toBe(1);
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [CustomColumnHeaderComponent]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [CustomColumnHeaderComponent]
+        });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
@@ -1381,16 +1379,15 @@ describe('Accesibility', () => {
     let element: any;
     let columnCustomTemplate: TemplateRef<any>;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [CustomColumnTemplateComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [CustomColumnTemplateComponent],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -1603,16 +1600,15 @@ describe('Drag&Drop column header', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [CustomColumnTemplateComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [CustomColumnTemplateComponent],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         data = [
@@ -1715,16 +1711,15 @@ describe('Show/hide columns', () => {
     let data: DataColumn[] = [];
     let dataTableSchema: DataColumn[] = [];
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [CustomColumnTemplateComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [CustomColumnTemplateComponent],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         data = [
@@ -1818,16 +1813,15 @@ describe('Column Resizing', () => {
         headerColumns.forEach((header: HTMLElement) => expect(header.classList).not.toContain(excludedClass));
     };
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        declarations: [CustomColumnTemplateComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            declarations: [CustomColumnTemplateComponent],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         data = [

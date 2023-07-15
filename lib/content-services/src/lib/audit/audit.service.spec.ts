@@ -16,7 +16,7 @@
  */
 
 import { AuditService } from './audit.service';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
@@ -26,14 +26,13 @@ declare let jasmine: any;
 describe('AuditService', () => {
     let service: AuditService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentTestingModule
+            ]
+        });
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',

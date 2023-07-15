@@ -20,7 +20,6 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import * as analyticParamsMock from '../../mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
-import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
 import { of } from 'rxjs';
@@ -36,14 +35,13 @@ describe('AnalyticsReportParametersComponent', () => {
     let validForm = false;
     let service: AnalyticsService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            InsightsTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                InsightsTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
         service = TestBed.inject(AnalyticsService);
         component = fixture.componentInstance;

@@ -17,7 +17,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
@@ -30,14 +29,13 @@ describe('Auth Guard SSO role service', () => {
     let jwtHelperService: JwtHelperService;
     let routerService: Router;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);
         jwtHelperService = TestBed.inject(JwtHelperService);

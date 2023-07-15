@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
-import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { SidenavLayoutModule } from '../../layout.module';
@@ -30,14 +29,13 @@ describe('HeaderLayoutComponent', () => {
     let component: HeaderLayoutComponent;
 
     describe('Input parameters', () => {
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
-        });
-
         beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ]
+            });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             component = fixture.componentInstance;
         });
@@ -222,14 +220,16 @@ describe('HeaderLayoutComponent', () => {
         })
         class HeaderLayoutTesterComponent {}
 
-        setupTestBed({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                SidenavLayoutModule,
-                MaterialModule
-            ],
-            declarations: [HeaderLayoutTesterComponent]
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                    SidenavLayoutModule,
+                    MaterialModule
+                ],
+                declarations: [HeaderLayoutTesterComponent]
+            });
         });
 
         it('should project the provided nodes into the component', () => {

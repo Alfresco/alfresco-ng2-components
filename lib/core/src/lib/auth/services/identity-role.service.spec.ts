@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { setupTestBed } from '../../testing/setup-test-bed';
 import { HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
@@ -49,13 +48,12 @@ export const mockIdentityRoles = {
 describe('IdentityRoleService', () => {
     let service: IdentityRoleService;
 
-    setupTestBed({
-      imports: [
-        HttpClientModule
-      ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule
+            ]
+        });
         service = TestBed.inject(IdentityRoleService);
     });
 

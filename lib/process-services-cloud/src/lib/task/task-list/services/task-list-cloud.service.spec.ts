@@ -16,7 +16,6 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
 import { TaskListCloudService } from './task-list-cloud.service';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -33,14 +32,13 @@ describe('TaskListCloudService', () => {
 
     const returnCallUrl = (queryUrl) => Promise.resolve(queryUrl);
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
+        });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(TaskListCloudService);
         requestSpy = spyOn(adfHttpClient, 'request');

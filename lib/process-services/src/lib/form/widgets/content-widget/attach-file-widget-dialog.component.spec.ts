@@ -21,7 +21,7 @@ import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, 
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, AlfrescoApiService } from '@alfresco/adf-core';
+import { AuthenticationService, AlfrescoApiService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -50,20 +50,19 @@ describe('AttachFileWidgetDialogComponent', () => {
     let isLogged = false;
     const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            ContentModule.forRoot(),
-            ProcessTestingModule
-        ],
-        providers: [
-            { provide: MAT_DIALOG_DATA, useValue: data },
-            { provide: MatDialogRef, useValue: { close: () => of() } }
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                ContentModule.forRoot(),
+                ProcessTestingModule
+            ],
+            providers: [
+                { provide: MAT_DIALOG_DATA, useValue: data },
+                { provide: MatDialogRef, useValue: { close: () => of() } }
+            ],
+            schemas: [NO_ERRORS_SCHEMA]
+        });
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
