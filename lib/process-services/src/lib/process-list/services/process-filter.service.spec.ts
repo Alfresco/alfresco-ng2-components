@@ -20,7 +20,6 @@ import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
