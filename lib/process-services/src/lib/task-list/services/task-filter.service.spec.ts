@@ -22,6 +22,7 @@ import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TaskFilterRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -253,17 +254,36 @@ describe('Activiti Task filter Service', () => {
    });
 
     describe('isFilterAlreadyExisting', () => {
-        let dummyTaskFilters;
+        let dummyTaskFilters : FilterRepresentationModel[];
+        let filterRepresentationData : TaskFilterRepresentation;
+        ;
+
 
         beforeEach(() => {
             dummyTaskFilters = [
-                { name: 'taskFilter1' },
-                { name: 'taskFilter2' }
-            ];
+                {
+                    appId: 0,
+                    filter: filterRepresentationData,
+                    icon: 'fa-random',
+                    id: 9,
+                    index: 0,
+                    name: 'My Tasks',
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                }
+            ]
+
+            filterRepresentationData = {
+                name : '',
+                sort : 'created-desc',
+                state : 'running'
+            }
         });
 
-        it('should return true if the filter already exists', () => {
-            const taskFilterName = 'taskFilter2';
+        it('should return true if the task filter already exists', () => {
+            const taskFilterName = 'My Tasks';
             const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
             const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
@@ -272,8 +292,8 @@ describe('Activiti Task filter Service', () => {
             expect(result).toBe(true);
         });
 
-        it('should return false if the filter does not exist', () => {
-            const taskFilterName = 'taskFilter3';
+        it('should return false if the task filter does not exist', () => {
+            const taskFilterName = 'Involved Tasks';
             const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
             const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);

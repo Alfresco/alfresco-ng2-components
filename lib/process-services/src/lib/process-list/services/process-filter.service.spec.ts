@@ -20,6 +20,8 @@ import { mockError, fakeProcessFiltersResponse } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
+import { setupTestBed, CoreTestingModule } from '@alfresco/adf-core';
+import { ProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -236,17 +238,35 @@ describe('Process filter', () => {
         });
 
         describe('isFilterAlreadyExisting', () => {
-            let dummyProcessFilters;
+            let dummyProcessFilters : FilterProcessRepresentationModel[];
+            let filterRepresentationData : ProcessInstanceFilterRepresentation;
 
             beforeEach(() => {
                 dummyProcessFilters = [
-                    { name: 'processFilter1' },
-                    { name: 'processiFlter2' }
-                ];
+                    {
+                        appId: 0,
+                        filter: filterRepresentationData,
+                        icon: 'fa-random',
+                        id: 8,
+                        index: 0,
+                        name: 'Running',
+                        recent: false,
+                        hasFilter: () => {
+                            return true;
+                        }
+                    }
+                ]
+
+                filterRepresentationData = {
+                    name : '',
+                    sort : 'created-desc',
+                    state : 'running'
+                }
+
             });
 
-            it('should return true if the filter already exists', () => {
-                const processFilterName = 'processiFlter2';
+            it('should return true if the process filter already exists', () => {
+                const processFilterName = 'Running';
                 const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
                 const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
@@ -255,8 +275,8 @@ describe('Process filter', () => {
                 expect(result).toBe(true);
             });
 
-            it('should return false if the filter does not exist', () => {
-                const processFilterName = 'processiFlter3';
+            it('should return false if the process filter does not exist', () => {
+                const processFilterName = 'All';
                 const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
 
                 const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);

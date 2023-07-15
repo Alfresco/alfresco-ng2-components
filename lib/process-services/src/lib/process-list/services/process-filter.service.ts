@@ -137,7 +137,7 @@ export class ProcessFilterService {
         });
     }
 
-    isFilterAlreadyExisting(filters: any, filterName: string): boolean {
+    isFilterAlreadyExisting(filters: FilterProcessRepresentationModel[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
