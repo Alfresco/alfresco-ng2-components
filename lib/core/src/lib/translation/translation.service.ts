@@ -28,6 +28,24 @@ export interface TranslationProvider {
     source: string;
 }
 
+/**
+ * Generate translation provider
+ *
+ * @param id Unique identifier
+ * @param path Path to translation files
+ * @returns Provider
+ */
+export function provideTranslations(id: string, path: string) {
+    return {
+        provide: TRANSLATION_PROVIDER,
+        multi: true,
+        useValue: {
+            name: id,
+            source: path
+        }
+    };
+}
+
 @Injectable({
     providedIn: 'root'
 })

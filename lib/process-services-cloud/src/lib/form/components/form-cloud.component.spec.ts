@@ -25,7 +25,7 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel, FormRenderingService, FormService,
-    TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
+    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1155,14 +1155,7 @@ describe('Multilingual Form', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'app',
-                        source: 'resources'
-                    }
-                }
+                provideTranslations('app', 'resources')
             ]
         });
         translateService = TestBed.inject(TranslateService);
@@ -1237,14 +1230,7 @@ describe('retrieve metadata on submit', () => {
                 FormCloudModule
             ],
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'app',
-                        source: 'resources'
-                    }
-                },
+                provideTranslations('app', 'resources'),
                 {
                     provide: VersionCompatibilityService,
                     useValue: {}

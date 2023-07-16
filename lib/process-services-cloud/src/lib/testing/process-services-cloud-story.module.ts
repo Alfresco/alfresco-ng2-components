@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, provideTranslations } from '@alfresco/adf-core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -27,14 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
         BrowserAnimationsModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-process-services-cloud',
-                source: 'assets/adf-process-services-cloud'
-            }
-        }
+        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
     ]
 })
 export class ProcessServicesCloudStoryModule { }

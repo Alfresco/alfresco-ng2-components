@@ -45,7 +45,7 @@ import { BlankPageModule } from './blank-page/blank-page.module';
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
 
-import { TranslationService } from './translation/translation.service';
+import { provideTranslations } from './translation/translation.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -172,7 +172,8 @@ export class CoreModule {
                     useFactory: createAlfrescoApiInstance,
                     deps: [ AlfrescoApiLoaderService ],
                     multi: true
-                }
+                },
+                provideTranslations('adf-core', 'assets/adf-core')
             ]
         };
     }
@@ -181,9 +182,5 @@ export class CoreModule {
         return {
             ngModule: CoreModule
         };
-    }
-
-    constructor(translation: TranslationService) {
-        translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }
