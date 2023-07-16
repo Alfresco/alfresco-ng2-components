@@ -1,7 +1,8 @@
 <adf-search-chip-autocomplete-input
-    [autocompleteOptions]="autocompleteOptions"
+    [autocompleteOptions$]="autocompleteOptions$"
     [onReset$]="reset$"
     [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
+    (inputChanged)="onInputChange($event)"
     (optionsChanged)="onOptionsChange($event)">
 </adf-search-chip-autocomplete-input>
 

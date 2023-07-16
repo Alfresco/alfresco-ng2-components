@@ -284,6 +284,7 @@
       "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
       "NONE": "No results found for {{searchTerm}}",
       "ERROR": "We hit a problem during the search - try again.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Display name",
         "MODIFIED_BY": "Modified by",

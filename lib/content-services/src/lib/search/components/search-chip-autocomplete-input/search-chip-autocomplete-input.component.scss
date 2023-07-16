@@ -38,6 +38,11 @@ adf-search-chip-autocomplete-input {
     .mat-form-field-wrapper {
         padding: 0;
     }
+
+}
+
+.mat-tooltip-hide {
+    display: none;
 }
 
 .mat-option.adf-autocomplete-added-option {

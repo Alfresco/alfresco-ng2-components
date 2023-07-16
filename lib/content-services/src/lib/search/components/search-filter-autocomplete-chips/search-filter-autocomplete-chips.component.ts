@@ -16,12 +16,14 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TagService } from '../../../tag/services/tag.service';
+import { CategoryService } from '../../../category/services/category.service';
+import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
@@ -32,18 +34,19 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
-    options: SearchFilterList<string[]>;
-    startValue: string[] = null;
+    options: SearchFilterList<AutocompleteOption[]>;
+    startValue: AutocompleteOption[] = [];
     displayValue$ = new Subject<string>();
+    selectedOptions: AutocompleteOption[] = [];
+    enableChangeUpdate: boolean;
 
     private resetSubject$ = new Subject<void>();
     reset$: Observable<void> = this.resetSubject$.asObservable();
-    autocompleteOptions: string[] = [];
-    selectedOptions: string[] = [];
-    enableChangeUpdate: boolean;
+    private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
+    autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
 
-    constructor( private tagService: TagService ) {
-        this.options = new SearchFilterList<string[]>();
+    constructor(private tagService: TagService, private categoryService: CategoryService) {
+        this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 
     ngOnInit() {
@@ -70,11 +73,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         return !!this.selectedOptions;
     }
 
-    getCurrentValue(): string[]{
+    getCurrentValue(): AutocompleteOption[] {
         return this.selectedOptions;
     }
 
-    onOptionsChange(selectedOptions: string[]) {
+    onOptionsChange(selectedOptions: AutocompleteOption[]) {
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
@@ -82,27 +85,57 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
-    setValue(value: string[]) {
+    setValue(value: AutocompleteOption[]) {
         this.selectedOptions = value;
         this.displayValue$.next(this.selectedOptions.join(', '));
         this.submitValues();
     }
 
+    onInputChange(value: string) {
+        if (this.settings.field === AutocompleteField.CATEGORIES) {
+            this.searchForExistingCategories(value);
+        }
+    }
+
     private updateQuery() {
-        this.displayValue$.next(this.selectedOptions.join(', '));
+        this.displayValue$.next(this.selectedOptions.map(option => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = this.selectedOptions.map(val => `${this.settings.field}: "${val}"`).join(' OR ');
+            let queryFragments;
+            if (this.settings.field === AutocompleteField.CATEGORIES) {
+                queryFragments = this.selectedOptions.map(val => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
+            } else {
+                queryFragments = this.selectedOptions.map(val => `${this.settings.field}:"${val.value}"`);
+            }
+            this.context.queryFragments[this.id] = queryFragments.join(' OR ');
             this.context.update();
         }
     }
 
     private setOptions() {
-        if (this.settings.field === 'TAG') {
-            this.tagService.getAllTheTags().subscribe(res => {
-                this.autocompleteOptions = res.list.entries.map(tag => tag.entry.tag);
-            });
-        } else {
-            this.autocompleteOptions = this.settings.options;
+        switch (this.settings.field) {
+            case AutocompleteField.TAG:
+                this.tagService.getAllTheTags().subscribe(tagPaging => {
+                    this.autocompleteOptionsSubject$.next(tagPaging.list.entries.map(tag => ({
+                        value: tag.entry.tag
+                    })));
+                });
+                break;
+            case AutocompleteField.CATEGORIES:
+                this.autocompleteOptionsSubject$.next([]);
+                break;
+            default:
+                this.autocompleteOptionsSubject$.next(this.settings.autocompleteOptions);
+                break;
         }
+    }
+
+    private searchForExistingCategories(searchTerm: string) {
+        this.categoryService.searchCategories(searchTerm, 0, 15).subscribe((existingCategoriesResult) => {
+            this.autocompleteOptionsSubject$.next(existingCategoriesResult.list.entries.map((rowEntry) => {
+                const path = rowEntry.entry.path.name.split('/').splice(3).join('/');
+                const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
+                return {id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath};
+            }));
+        });
     }
 }
