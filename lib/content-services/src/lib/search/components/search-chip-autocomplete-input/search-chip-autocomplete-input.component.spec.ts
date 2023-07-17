@@ -150,7 +150,9 @@ describe('SearchChipAutocompleteInputComponent', () => {
     });
 
     it('should limit autocomplete list to 15 values max', async () => {
-        for (let i = 0; i < 17; i++) component.autocompleteOptions.push({value: 'a' + i});
+        for (let i = 0; i < 17; i++) {
+            component.autocompleteOptions.push({value: 'a' + i});
+        }
         enterNewInputValue('a');
 
         await fixture.whenStable();

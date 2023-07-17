@@ -70,7 +70,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.autocompleteOptions$.subscribe( result => {
             expect(result).toEqual([{value: 'test 1'}, {value: 'test 2'}]);
             done();
-        })
+        });
     });
 
     it('should load tags if field = TAG', (done) => {
@@ -87,7 +87,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.autocompleteOptions$.subscribe(result => {
             expect(result).toEqual([{value: 'tag1'},{value: 'tag2'}]);
             done();
-        })
+        });
     });
 
     it('should update display value when options changes', () => {
