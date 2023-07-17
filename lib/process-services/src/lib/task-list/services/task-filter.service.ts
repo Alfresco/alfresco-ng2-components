@@ -127,6 +127,13 @@ export class TaskFilterService {
             );
     }
 
+    /**
+     * Checks if a filter with the given name already exists in the list of filters.
+     *
+     * @param {FilterRepresentationModel[]} filters - An array of `FilterRepresentationModel` objects representing the existing filters.
+     * @param {string} filterName - The name of the filter to check for existence.
+     * @returns {boolean} - True if a filter with the specified name already exists, false otherwise.
+     */
     isFilterAlreadyExisting(filters: FilterRepresentationModel[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }

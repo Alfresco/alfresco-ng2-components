@@ -256,8 +256,6 @@ describe('Activiti Task filter Service', () => {
     describe('isFilterAlreadyExisting', () => {
         let dummyTaskFilters: FilterRepresentationModel[];
         let filterRepresentationData: TaskFilterRepresentation;
-        ;
-
 
         beforeEach(() => {
             dummyTaskFilters = [
