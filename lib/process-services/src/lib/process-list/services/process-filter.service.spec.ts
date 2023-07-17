@@ -265,21 +265,13 @@ describe('Process filter', () => {
 
             it('should return true if the process filter already exists', () => {
                 const processFilterName = 'Running';
-                const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
-
                 const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
-
-                expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
                 expect(result).toBe(true);
             });
 
             it('should return false if the process filter does not exist', () => {
                 const processFilterName = 'All';
-                const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
-
                 const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
-
-                expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
                 expect(result).toBe(false);
             });
         });

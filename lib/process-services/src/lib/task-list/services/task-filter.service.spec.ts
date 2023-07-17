@@ -284,21 +284,13 @@ describe('Activiti Task filter Service', () => {
 
         it('should return true if the task filter already exists', () => {
             const taskFilterName = 'My Tasks';
-            const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
-
             const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
-
-            expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
             expect(result).toBe(true);
         });
 
         it('should return false if the task filter does not exist', () => {
             const taskFilterName = 'Involved Tasks';
-            const isFilterAlreadyExistingSpy = spyOn<any>(service, 'isFilterAlreadyExisting').and.callThrough();
-
             const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
-
-            expect(isFilterAlreadyExistingSpy).toHaveBeenCalled();
             expect(result).toBe(false);
         });
     });
