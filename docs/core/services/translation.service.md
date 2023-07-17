@@ -62,7 +62,7 @@ this.trans.get(
         total: "122"
       }
     ).subscribe(translation => {
-      this.translatedText = translation;
+        this.translatedText = translation;
     });
 ```
 
@@ -97,12 +97,12 @@ look like the following:
 
 ```json
 {
-  "title": "my app",
-  "LOGIN": {
-     "LABEL": {
-        "LOGIN": "Custom Sign In"
-     }
-  }
+    "title": "my app",
+    "LOGIN": {
+        "LABEL": {
+            "LOGIN": "Custom Sign In"
+        }
+    }
 }
 ```
 
@@ -111,43 +111,31 @@ To enable the new translations in your app, you also need to register them in yo
 translations folder to the `providers`:
 
 ```ts
-// Other imports...
-
-import { TRANSLATION_PROVIDER } from "@alfresco/adf-core";
-
-  ...
+import { provideTranslations } from "@alfresco/adf-core";
 
 @NgModule({
-  imports: [
-    ...
-  ],
-  declarations: [
-    ...
-  ],
-  providers: [
-    {
-      provide: TRANSLATION_PROVIDER,
-      multi: true,
-      useValue: {
-          name: 'my-translations',
-          source: 'assets/my-translations'
-      }
-  }
-  ...
+    providers: [
+        provideTranslations('my-translations', 'assets/my-translations')
+    ]
+})
+export class MyModule {}
 ```
 
 You can now use your new keys in your component:
 
 ```ts
-  ...
-ngOnInit() {
-    this.trans.use("fr");
-    
-    this.trans.get("WELCOME_MESSAGE").subscribe(translation => {
-      this.translatedText = translation;
-    });
-  }
-  ...
+export class MyComponent implements OnInit {
+    trans = inject(TranslationService);
+    translatedText = '';
+
+    ngOnInit() {
+        this.trans.use("fr");
+        
+        this.trans.get("WELCOME_MESSAGE").subscribe(translation => {
+            this.translatedText = translation;
+        });
+    }
+}
 ```
 
 Note: the `source` property points to the web application root. Ensure you have
@@ -180,4 +168,4 @@ class MyComponent {
 
 ## See Also
 
--   [Internationalization](../../user-guide/internationalization.md)
+- [Internationalization](../../user-guide/internationalization.md)
