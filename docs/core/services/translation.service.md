@@ -79,16 +79,21 @@ general format of the path to this folder will be:
 If you wanted English and French translations then you would add
 `en.json` and `fr.json` files into the `i18n` folder and add your new keys:
 
-    // en.json
+**en.json**
 
-        ...
-      "WELCOME_MESSAGE": "Welcome!"
-        ...
+```json
+{
+    "WELCOME_MESSAGE": "Welcome!"
+}
+```
 
-    // fr.json
-        ...
-      "WELCOME_MESSAGE": "Bienvenue !"
-        ...
+**fr.json**
+
+```json
+{
+    "WELCOME_MESSAGE": "Bienvenue !"
+}
+```
 
 The files follow the same hierarchical key:value JSON format as the built-in translations.
 You can add new keys to your local files or redefine existing keys but the built-in definitions
@@ -106,9 +111,7 @@ look like the following:
 }
 ```
 
-To enable the new translations in your app, you also need to register them in your
-`app.module.ts` file. Import `TRANSLATION_PROVIDER` and add the path of your
-translations folder to the `providers`:
+To enable the new translations in your app, you also need to register them in your `app.module.ts` file using `provideTranslations` api:
 
 ```ts
 import { provideTranslations } from "@alfresco/adf-core";
@@ -125,26 +128,27 @@ You can now use your new keys in your component:
 
 ```ts
 export class MyComponent implements OnInit {
-    trans = inject(TranslationService);
+    translateService = inject(TranslationService);
     translatedText = '';
 
     ngOnInit() {
-        this.trans.use("fr");
-        
-        this.trans.get("WELCOME_MESSAGE").subscribe(translation => {
-            this.translatedText = translation;
-        });
+        this.translateService.use("fr");
+        this.translatedText = this.translateService.instant('WELCOME_MESSAGE');
     }
 }
 ```
 
-Note: the `source` property points to the web application root. Ensure you have
-webpack correctly set up to copy all the i18n files at compile time.
+Note: the `source` property points to the web application root.
+Do not forget to configure your Angular application to copy the newly created files to the build output, for example:
 
-```text
-index.html
-assets/ng2-alfresco-core/i18n/en.json
-...
+**angular.json**
+
+```json
+{
+    "glob": "**/*",
+    "input": "lib/core/src/lib/i18n",
+    "output": "/assets/adf-core/i18n"
+}
 ```
 
 You can register as many entries as you like.
