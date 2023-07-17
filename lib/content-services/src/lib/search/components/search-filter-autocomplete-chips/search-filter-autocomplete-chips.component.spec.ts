@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
 import { TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of } from 'rxjs';
+import { AutocompleteField } from '../../models/autocomplete-option.interface';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;
@@ -51,7 +52,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         } as any;
         component.settings = {
             field: 'test', allowUpdateOnChange: true, hideDefaultAction: false, allowOnlyPredefinedValues: false,
-            options: ['option1', 'option2']
+            autocompleteOptions: [{value: 'option1'}, {value: 'option2'}]
         };
         fixture.detectChanges();
     });
@@ -63,13 +64,16 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should set autocomplete options on init', () => {
-        component.settings.options = ['test 1', 'test 2'];
+    it('should set autocomplete options on init',(done) => {
+        component.settings.autocompleteOptions = [{value: 'test 1'}, {value: 'test 2'}];
         component.ngOnInit();
-        expect(component.autocompleteOptions).toEqual(['test 1', 'test 2']);
+        component.autocompleteOptions$.subscribe( result => {
+            expect(result).toEqual([{value: 'test 1'}, {value: 'test 2'}]);
+            done();
+        })
     });
 
-    it('should load tags if field = TAG', () => {
+    it('should load tags if field = TAG', (done) => {
         const tagPagingMock = {
             list: {
                 pagination: {},
@@ -77,10 +81,13 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
             }
         };
 
-        component.settings.field = 'TAG';
+        component.settings.field = AutocompleteField.TAG;
         spyOn(tagService, 'getAllTheTags').and.returnValue(of(tagPagingMock));
         component.ngOnInit();
-        expect(component.autocompleteOptions).toEqual(['tag1', 'tag2']);
+        component.autocompleteOptions$.subscribe(result => {
+            expect(result).toEqual([{value: 'tag1'},{value: 'tag2'}]);
+            done();
+        })
     });
 
     it('should update display value when options changes', () => {
@@ -94,9 +101,9 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     });
 
     it('should reset value and display value when reset button is clicked', () => {
-        component.setValue(['option1', 'option2']);
+        component.setValue([{value: 'option1'}, {value: 'option2'}]);
         fixture.detectChanges();
-        expect(component.selectedOptions).toEqual(['option1', 'option2']);
+        expect(component.selectedOptions).toEqual([{value: 'option1'}, {value: 'option2'}]);
         spyOn(component.context, 'update');
         spyOn(component.displayValue$, 'next');
         const clearBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="adf-search-chip-autocomplete-btn-clear"]')).nativeElement;
@@ -110,13 +117,18 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     it('should correctly compose the search query', () => {
         spyOn(component.context, 'update');
-        addNewOption('option2');
-        addNewOption('option1');
+        component.selectedOptions = [{value: 'option2'}, {value: 'option1'}];
         const applyBtn: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="adf-search-chip-autocomplete-btn-apply"]')).nativeElement;
         applyBtn.click();
         fixture.detectChanges();
 
         expect(component.context.update).toHaveBeenCalled();
-        expect(component.context.queryFragments[component.id]).toBe('test: "option2" OR test: "option1"');
+        expect(component.context.queryFragments[component.id]).toBe('test:"option2" OR test:"option1"');
+
+        component.settings.field = AutocompleteField.CATEGORIES;
+        component.selectedOptions = [{id: 'test-id', value: 'test'}];
+        applyBtn.click();
+        fixture.detectChanges();
+        expect(component.context.queryFragments[component.id]).toBe('cm:categories:"workspace://SpacesStore/test-id"');
     });
 });

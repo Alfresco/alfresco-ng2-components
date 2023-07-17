@@ -133,12 +133,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     selected(event: MatAutocompleteSelectedEvent) {
-        if (!this.isAdded(event.option.value.value)) {
-            this.selectedOptions.push(event.option.value);
-            this.optionInput.nativeElement.value = '';
-            this.formCtrl.setValue('');
-            this.optionsChanged.emit(this.selectedOptions);
-        }
+        this.selectedOptions.push(event.option.value);
+        this.optionInput.nativeElement.value = '';
+        this.formCtrl.setValue('');
+        this.optionsChanged.emit(this.selectedOptions);
     }
 
     private isAdded(value: string): boolean {

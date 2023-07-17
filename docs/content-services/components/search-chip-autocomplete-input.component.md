@@ -15,9 +15,10 @@ Represents an input with autocomplete options.
 
 ```html
 <adf-search-chip-autocomplete-input
-    [autocompleteOptions]="allOptions"
+    [autocompleteOptions]="autocompleteOptions"
     [onReset$]="onResetObservable$"
     [allowOnlyPredefinedValues]="allowOnlyPredefinedValues"
+    (inputChanged)="onInputChange($event)"
     (optionsChanged)="onOptionsChange($event)">
 </adf-search-chip-autocomplete-input>
 ```
@@ -26,7 +27,7 @@ Represents an input with autocomplete options.
 
 | Name                      | Type                     | Default value | Description                                                                                   |
 |---------------------------|--------------------------|----|-----------------------------------------------------------------------------------------------|
-| autocompleteOptions       | `string[]` | [] | Options for autocomplete                                                                      |
+| autocompleteOptions       | `AutocompleteOption[]` | [] | Options for autocomplete                                                                      |
 | onReset$                  | [`Observable`](https://rxjs.dev/guide/observable)`<void>` |    | Observable that will listen to any reset event causing component to clear the chips and input |
 | allowOnlyPredefinedValues | boolean | true | A flag that indicates whether it is possible to add a value not from the predefined ones      |
 | placeholder               | string | 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | Placeholder which should be displayed in input. |
@@ -38,7 +39,8 @@ Represents an input with autocomplete options.
 
 | Name | Type | Description                                   |
 | ---- | ---- |-----------------------------------------------|
-| optionsChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string[]>` | Emitted when the selected options are changed |
+| inputChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the input changes                |
+| optionsChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<AutocompleteOption[]>` | Emitted when the selected options are changed |
 
 ## See also
 

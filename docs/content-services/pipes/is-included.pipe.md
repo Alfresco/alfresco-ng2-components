@@ -15,6 +15,8 @@ Checks if the provided value is contained in the provided array.
 
 ```HTML
 <mat-option [disabled]="value | adfIsIncluded: arrayOfValues"</mat-option>
+
+<mat-option [disabled]="id | adfIsIncluded: arrayOfObjects: 'id'"</mat-option>
 ```
 
 <!-- {% endraw %} -->
