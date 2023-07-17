@@ -8,6 +8,7 @@
         [style.width.px]="fileSizeOperatorsMaxWidth"
         class="adf-search-properties-file-size-operator">
         <mat-select
+            data-automation-id="adf-search-properties-file-size-operator-select"
             [formControl]="form.controls.fileSizeOperator"
             #fileSizeOperatorSelect>
             <mat-option
@@ -21,13 +22,16 @@
         [formControl]="form.controls.fileSize"
         type="number"
         min="0"
+        step="any"
         (input)="narrowDownAllowedCharacters($event)"
         (keydown)="preventIncorrectNumberCharacters($event)"
         id="adf-search-properties-file-size"
         [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
         (blur)="clearNumberFieldWhenInvalid($event)" />
     <mat-form-field class="adf-search-properties-file-size-unit">
-        <mat-select [formControl]="form.controls.fileSizeUnit">
+        <mat-select
+            [formControl]="form.controls.fileSizeUnit"
+            data-automation-id="adf-search-properties-file-size-unit-select">
             <mat-option
                 *ngFor="let fileSizeUnit of fileSizeUnits"
                 [value]="fileSizeUnit">
@@ -38,7 +42,7 @@
     <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="settings?.fileExtensions"
-        (optionsChanged)="setSelectedFileExtensions($event)"
+        (optionsChanged)="selectedExtensions = $event"
         [onReset$]="reset$"
         [allowOnlyPredefinedValues]="false"
         [compareOption]="compareFileExtensions"

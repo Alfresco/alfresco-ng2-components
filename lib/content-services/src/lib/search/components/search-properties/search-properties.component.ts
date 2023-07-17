@@ -49,7 +49,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private _fileSizeUnits = [FileSizeUnit.KB, FileSizeUnit.MB, FileSizeUnit.GB];
     private canvas = document.createElement('canvas');
     private _fileSizeOperatorsMaxWidth: number;
-    private selectedExtensions: string[];
+    private _selectedExtensions: string[];
     private _reset$ = new Subject<void>();
     private sizeField: string;
     private nameField: string;
@@ -75,6 +75,10 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     get reset$(): Subject<void> {
         return this._reset$;
+    }
+
+    set selectedExtensions(extensions: string[]) {
+        this._selectedExtensions = extensions;
     }
 
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
@@ -104,11 +108,12 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     }
 
     narrowDownAllowedCharacters(event: Event) {
+        const value = (event.target as HTMLInputElement).value;
         if (!(event.target as HTMLInputElement).value) {
             return;
         }
-        if ((event as InputEvent).data !== '.') {
-            (event.target as HTMLInputElement).value = (event.target as HTMLInputElement).value.replace(/[^0-9.]/g, '');
+        if ((event as InputEvent).data !== ',' && (event as InputEvent).data !== '.') {
+            (event.target as HTMLInputElement).value = value.replace(/[^0-9.,]/g, '');
         }
     }
 
@@ -164,13 +169,13 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
                         query = `${this.sizeField}:[${size} TO ${size}]`;
                 }
             }
-            if (this.selectedExtensions?.length) {
+            if (this._selectedExtensions?.length) {
                 if (query) {
                     query += ' AND ';
                     displayedValue += ', ';
                 }
-                query += `${this.nameField}:("*.${this.selectedExtensions.join('" OR "*.')}")`;
-                displayedValue += this.selectedExtensions.join(', ');
+                query += `${this.nameField}:("*.${this._selectedExtensions.join('" OR "*.')}")`;
+                displayedValue += this._selectedExtensions.join(', ');
             }
             this.displayValue$.next(displayedValue);
             this.context.queryFragments[this.id] = query;
@@ -185,7 +190,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     getCurrentValue(): SearchProperties {
         return {
             fileSizeCondition: this.form.getRawValue(),
-            fileExtensions: this.selectedExtensions
+            fileExtensions: this._selectedExtensions
         };
     }
 
@@ -193,10 +198,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this.form.patchValue(searchProperties.fileSizeCondition);
         this.selectedExtensions = searchProperties.fileExtensions;
         this.submitValues();
-    }
-
-    setSelectedFileExtensions(extensions: string[]) {
-        this.selectedExtensions = extensions;
     }
 
     private getOperatorNameWidth(operator: string, font: string): number {
