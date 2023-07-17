@@ -64,7 +64,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should set autocomplete options on init',(done) => {
+    it('should set autocomplete options on init', (done) => {
         component.settings.autocompleteOptions = [{value: 'test 1'}, {value: 'test 2'}];
         component.ngOnInit();
         component.autocompleteOptions$.subscribe( result => {

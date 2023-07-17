@@ -92,7 +92,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
         this.autocompleteOptions$.pipe(takeUntil(this.onDestroy$))
             .subscribe(res => {
                 this.autocompleteOptions = res;
-                this.filteredOptions = res.length > 0 ? this.filter(res, this.formCtrl.value) : []
+                this.filteredOptions = res.length > 0 ? this.filter(res, this.formCtrl.value) : [];
             });
         this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
     }
