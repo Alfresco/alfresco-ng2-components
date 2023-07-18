@@ -16,7 +16,8 @@ adf-search-properties {
         margin-right: 8px;
     }
 
-    .adf-search-properties-file-size-operator, .adf-search-properties-file-size-unit {
+    .adf-search-properties-file-size-operator,
+    .adf-search-properties-file-size-unit {
         .mat-form-field-infix {
             border: 1px solid var(--adf-theme-mat-grey-color-a400);
             border-radius: 5px;
@@ -43,14 +44,14 @@ adf-search-properties {
 
         .mat-form-field-outline {
             .mat-form-field-outline {
-                &-start, &-end {
+                &-start,
+                &-end {
                     border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
                     border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
                 }
 
                 &-start {
                     border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
-
                 }
 
                 &-end {
@@ -59,19 +60,20 @@ adf-search-properties {
             }
         }
 
-        .mat-form-field-appearance-outline {
-            .mat-form-field-outline-thick {
-                .mat-form-field-outline {
-                    &-start, &-end {
-                        border-width: 1px;
-                    }
-                }
-            }
-        }
-
         .mat-focused {
             .mat-form-field-outline {
                 outline: 2px auto -webkit-focus-ring-color;
+            }
+        }
+
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline-thick {
+                .mat-form-field-outline {
+                    &-start,
+                    &-end {
+                        border-width: 1px;
+                    }
+                }
             }
         }
     }
