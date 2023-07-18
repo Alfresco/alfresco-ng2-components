@@ -20,12 +20,12 @@ import { FormBuilder } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { FileSizeUnit } from './file-size-unit.enum';
-import { SearchWidget } from '@alfresco/adf-content-services';
 import { Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchProperties } from './search-properties';
 import { TranslateService } from '@ngx-translate/core';
+import { SearchWidget } from '../../models/search-widget.interface';
 
 @Component({
     selector: 'adf-search-properties',
