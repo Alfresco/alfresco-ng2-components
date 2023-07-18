@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+export class FileSizeUnit {
+    static readonly KB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB', 1024);
+    static readonly MB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB', 1048576);
+    static readonly GB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB', 1073741824);
 
-@Pipe({
-    name: 'adfIsIncluded'
-})
-export class IsIncludedPipe<T> implements PipeTransform {
-    transform(value: T, array: T[], compare?: (value1: T, value2: T) => boolean): boolean {
-        return compare ? array.some((arrayValue) => compare(value, arrayValue)) : array.includes(value);
-    }
+    private constructor(readonly abbreviation: string, readonly bytes: number) {}
 }

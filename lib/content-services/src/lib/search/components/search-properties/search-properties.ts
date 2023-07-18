@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { FileSizeCondition } from './file-size-condition';
 
-@Pipe({
-    name: 'adfIsIncluded'
-})
-export class IsIncludedPipe<T> implements PipeTransform {
-    transform(value: T, array: T[], compare?: (value1: T, value2: T) => boolean): boolean {
-        return compare ? array.some((arrayValue) => compare(value, arrayValue)) : array.includes(value);
-    }
+export interface SearchProperties {
+    fileSizeCondition: FileSizeCondition;
+    fileExtensions: string[];
 }

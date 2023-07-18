@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
-
-@Pipe({
-    name: 'adfIsIncluded'
-})
-export class IsIncludedPipe<T> implements PipeTransform {
-    transform(value: T, array: T[], compare?: (value1: T, value2: T) => boolean): boolean {
-        return compare ? array.some((arrayValue) => compare(value, arrayValue)) : array.includes(value);
-    }
+export enum FileSizeOperator {
+    AT_LEAST = 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+    AT_MOST = 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+    EXACTLY = 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY'
 }

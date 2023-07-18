@@ -1,0 +1,89 @@
+adf-search-properties {
+    .adf-search-properties-file-size-label {
+        display: block;
+        margin-top: 4px;
+    }
+
+    input {
+        height: 25px;
+        border: 1px solid var(--adf-theme-mat-grey-color-a400);
+        border-radius: 5px;
+        margin-top: 5px;
+        padding: 5px;
+        font-size: 14px;
+        color: var(--adf-theme-foreground-text-color);
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    .adf-search-properties-file-size-operator,
+    .adf-search-properties-file-size-unit {
+        .mat-form-field-infix {
+            border: 1px solid var(--adf-theme-mat-grey-color-a400);
+            border-radius: 5px;
+            padding: 9px;
+        }
+
+        &.mat-focused {
+            .mat-form-field-infix {
+                outline: 2px auto -webkit-focus-ring-color;
+            }
+        }
+    }
+
+    .mat-form-field-underline {
+        display: none;
+    }
+
+    .adf-search-properties-file-size-unit {
+        width: 78px;
+    }
+
+    adf-search-chip-autocomplete-input {
+        display: block;
+
+        .mat-form-field-outline {
+            .mat-form-field-outline {
+                &-start,
+                &-end {
+                    border-top: 1px solid var(--adf-theme-mat-grey-color-a400);
+                    border-bottom: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+
+                &-start {
+                    border-left: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+
+                &-end {
+                    border-right: 1px solid var(--adf-theme-mat-grey-color-a400);
+                }
+            }
+        }
+
+        .mat-focused {
+            .mat-form-field-outline {
+                outline: 2px auto -webkit-focus-ring-color;
+            }
+        }
+
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline-thick {
+                .mat-form-field-outline {
+                    &-start,
+                    &-end {
+                        border-width: 1px;
+                    }
+                }
+            }
+        }
+    }
+
+    .adf-search-properties-file-type-label {
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+}
+
+.adf-search-filter-chip-menu-panel-properties {
+    max-width: unset;
+}

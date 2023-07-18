@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
@@ -42,6 +42,21 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     @Input()
     allowOnlyPredefinedValues = true;
 
+    @Input()
+    placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
+
+    @Input()
+    compareOption?: (option1: string, option2: string) => boolean;
+
+    @Input()
+    formatChipValue?: (option: string) => string;
+
+    @Input()
+    filter = (options: string[], value: string): string[] => {
+        const filterValue = value.toLowerCase();
+        return options.filter(option => option.toLowerCase().includes(filterValue));
+    };
+
     @Output()
     optionsChanged: EventEmitter<string[]> = new EventEmitter();
 
@@ -50,11 +65,17 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     filteredOptions$: Observable<string[]>;
     selectedOptions: string[] = [];
     private onDestroy$ = new Subject<void>();
+    private _activeAnyOption = false;
+
+    set activeAnyOption(active: boolean) {
+        this._activeAnyOption = active;
+    }
 
     constructor() {
         this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
             startWith(null),
-            map((value: string | null) => (value ? this.filter(value) : []))
+            tap(() => this.activeAnyOption = false),
+            map((value: string | null) => (value ? this.filter(this.autocompleteOptions, value).slice(0, 15) : []))
         );
     }
 
@@ -68,13 +89,18 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     add(event: MatChipInputEvent) {
-        const value = (event.value || '').trim();
+        if (!this._activeAnyOption) {
+            let value = (event.value || '').trim();
+            if (this.formatChipValue) {
+                value = this.formatChipValue(value);
+            }
 
-        if (value && this.isExists(value) && !this.isAdded(value)) {
-            this.selectedOptions.push(value);
-            this.optionsChanged.emit(this.selectedOptions);
-            event.chipInput.clear();
-            this.formCtrl.setValue(null);
+            if (value && this.isExists(value) && !this.isAdded(value)) {
+                this.selectedOptions.push(value);
+                this.optionsChanged.emit(this.selectedOptions);
+                event.chipInput.clear();
+                this.formCtrl.setValue(null);
+            }
         }
     }
 
@@ -94,11 +120,6 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
             this.formCtrl.setValue(null);
             this.optionsChanged.emit(this.selectedOptions);
         }
-    }
-
-    private filter(value: string): string[] {
-        const filterValue = value.toLowerCase();
-        return this.autocompleteOptions.filter(option => option.toLowerCase().includes(filterValue)).slice(0, 15);
     }
 
      private isAdded(value: string): boolean {

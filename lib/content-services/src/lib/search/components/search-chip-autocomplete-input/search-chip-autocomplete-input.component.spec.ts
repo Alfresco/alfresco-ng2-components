@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
+import { DebugElement } from '@angular/core';
 
 describe('SearchChipAutocompleteInputComponent', () => {
     let component: SearchChipAutocompleteInputComponent;
@@ -44,16 +45,20 @@ describe('SearchChipAutocompleteInputComponent', () => {
         component.autocompleteOptions = ['option1', 'option2'];
     });
 
+    function getInput(): HTMLInputElement {
+        return fixture.debugElement.query(By.css('input')).nativeElement;
+    }
+
     function enterNewInputValue(value: string) {
-        const inputElement = fixture.debugElement.query(By.css('input'));
-        inputElement.nativeElement.dispatchEvent(new Event('focusin'));
-        inputElement.nativeElement.value = value;
-        inputElement.nativeElement.dispatchEvent(new Event('input'));
+        const inputElement = getInput();
+        inputElement.dispatchEvent(new Event('focusin'));
+        inputElement.value = value;
+        inputElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
     }
 
     function addNewOption(value: string) {
-        const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+        const inputElement = getInput();
         inputElement.value = value;
         fixture.detectChanges();
         inputElement.dispatchEvent(new KeyboardEvent('keydown', {keyCode: 13}));
@@ -66,6 +71,14 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     function getChipValue(index: number): string {
         return fixture.debugElement.queryAll(By.css('mat-chip span')).map((chip) => chip.nativeElement)[index].innerText;
+    }
+
+    function getOptionElements(): DebugElement[] {
+        return fixture.debugElement.queryAll(By.css('mat-option'));
+    }
+
+    function getAddedOptionElements(): DebugElement[] {
+        return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
     }
 
     it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', () => {
@@ -83,15 +96,25 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect(getChipValue(0)).toBe('test');
     });
 
+    it('should add new formatted option based on formatChipValue', () => {
+        component.allowOnlyPredefinedValues = false;
+        const option = 'abc';
+        component.formatChipValue = (value) => value.replace('.', '');
+
+        addNewOption(`.${option}`);
+        expect(getChipList().length).toBe(1);
+        expect(getChipValue(0)).toBe(option);
+    });
+
     it('should add new option upon clicking on option from autocomplete', async () => {
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
         enterNewInputValue('op');
         await fixture.whenStable();
 
-        const matOptions = document.querySelectorAll('mat-option');
+        const matOptions = getOptionElements();
         expect(matOptions.length).toBe(2);
 
-        const optionToClick = matOptions[0] as HTMLElement;
+        const optionToClick = matOptions[0].nativeElement as HTMLElement;
         optionToClick.click();
 
         expect(optionsChangedSpy).toHaveBeenCalledOnceWith(['option1']);
@@ -103,7 +126,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         addNewOption('option1');
         enterNewInputValue('op');
 
-        const addedOptions = fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
+        const addedOptions = getAddedOptionElements();
 
         await fixture.whenStable();
 
@@ -111,12 +134,24 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect(addedOptions.length).toBe(1);
     });
 
+    it('should apply class to already selected options based on custom compareOption function', async () => {
+        component.allowOnlyPredefinedValues = false;
+        component.autocompleteOptions = ['.test1', 'test3', '.test2', 'test1.'];
+        component.compareOption = (option1, option2) => option1.split('.')[1] === option2;
+
+        fixture.detectChanges();
+        addNewOption('test1');
+        enterNewInputValue('t');
+
+        const addedOptions = getAddedOptionElements();
+        await fixture.whenStable();
+        expect(addedOptions.length).toBe(1);
+    });
+
     it('should limit autocomplete list to 15 values max', () => {
         component.autocompleteOptions = ['a1','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11','a12','a13','a14','a15','a16'];
         enterNewInputValue('a');
-
-        const matOptions = document.querySelectorAll('mat-option');
-        expect(matOptions.length).toBe(15);
+        expect(getOptionElements().length).toBe(15);
     });
 
     it('should not add a value if same value has already been added', () => {
@@ -127,14 +162,19 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     it('should show autocomplete list if similar predefined values exists', () => {
         enterNewInputValue('op');
-        const matOptions = document.querySelectorAll('mat-option');
-        expect(matOptions.length).toBe(2);
+        expect(getOptionElements().length).toBe(2);
+    });
+
+    it('should show autocomplete list based on custom filtering', () => {
+        component.autocompleteOptions = ['.test1', 'test1', 'test1.', '.test2', '.test12'];
+        component.filter = (options, value) => options.filter((option) => option.split('.')[1] === value);
+        enterNewInputValue('test1');
+        expect(getOptionElements().length).toBe(1);
     });
 
     it('should not show autocomplete list if there are no similar predefined values', () => {
         enterNewInputValue('test');
-        const matOptions = document.querySelectorAll('mat-option');
-        expect(matOptions.length).toBe(0);
+        expect(getOptionElements().length).toBe(0);
     });
 
     it('should emit new value when selected options changed', () => {
@@ -146,9 +186,19 @@ describe('SearchChipAutocompleteInputComponent', () => {
     });
 
     it('should clear the input after a new value is added', () => {
-        const input = fixture.debugElement.query(By.css('input')).nativeElement;
+        const input = getInput();
         addNewOption('option1');
         expect(input.value).toBe('');
+    });
+
+    it('should use correct default placeholder for input', () => {
+        expect(getInput().placeholder).toBe('SEARCH.FILTER.ACTIONS.ADD_OPTION');
+    });
+
+    it('should use placeholder for input passed as component input', () => {
+        component.placeholder = 'Some placeholder';
+        fixture.detectChanges();
+        expect(getInput().placeholder).toBe(component.placeholder);
     });
 
     it('should reset all options when onReset$ event is emitted', () => {

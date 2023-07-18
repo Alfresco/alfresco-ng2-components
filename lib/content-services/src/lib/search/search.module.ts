@@ -51,6 +51,7 @@ import { SearchWidgetChipComponent } from './components/search-filter-chips/sear
 import { SearchFacetChipComponent } from './components/search-filter-chips/search-facet-chip/search-facet-chip.component';
 import { SearchLogicalFilterComponent } from './components/search-logical-filter/search-logical-filter.component';
 import { ResetSearchDirective } from './components/reset-search.directive';
+import { SearchPropertiesComponent } from './components/search-properties/search-properties.component';
 
 @NgModule({
     imports: [
@@ -88,7 +89,8 @@ import { ResetSearchDirective } from './components/reset-search.directive';
         SearchWidgetChipComponent,
         SearchFacetChipComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective
+        ResetSearchDirective,
+        SearchPropertiesComponent
     ],
     exports: [
         SearchComponent,

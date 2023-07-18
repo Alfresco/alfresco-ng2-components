@@ -10,19 +10,22 @@
             </button>
         </mat-chip>
         <input
-            placeholder="{{ 'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate }}"
+            placeholder="{{ placeholder | translate }}"
             aria-controls="adf-search-chip-autocomplete"
             #optionInput
             [formControl]="formCtrl"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [attr.aria-label]="'SEARCH.FILTER.ACTIONS.ADD_OPTION' | translate"
-            (matChipInputTokenEnd)="add($event)">
+            [attr.aria-label]="placeholder | translate"
+            (matChipInputTokenEnd)="add($event)"
+            (blur)="activeAnyOption = false"
+            data-automation-id="adf-search-chip-autocomplete-input">
     </mat-chip-list>
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete">
-        <mat-option [disabled]="option | adfIsIncluded: selectedOptions" *ngFor="let option of filteredOptions$ | async"
-                    [ngClass]="(option | adfIsIncluded: selectedOptions) && 'adf-autocomplete-added-option'">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
+                      (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
+        <mat-option [disabled]="option | adfIsIncluded: selectedOptions : compareOption" *ngFor="let option of filteredOptions$ | async"
+                    [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">
             {{option}}
         </mat-option>
     </mat-autocomplete>
