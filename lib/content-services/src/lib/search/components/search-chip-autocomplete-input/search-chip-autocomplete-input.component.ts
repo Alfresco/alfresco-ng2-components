@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    ViewEncapsulation,
+    ElementRef,
+    ViewChild,
+    OnInit,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+    SimpleChanges,
+    OnChanges
+} from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -30,12 +42,12 @@ import { AutocompleteOption } from '../../models/autocomplete-option.interface';
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
+export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild('optionInput')
     optionInput: ElementRef<HTMLInputElement>;
 
     @Input()
-    autocompleteOptions$: Observable<AutocompleteOption[]>;
+    autocompleteOptions: AutocompleteOption[] = [];
 
     @Input()
     onReset$: Observable<void>;
@@ -66,7 +78,6 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
 
     readonly separatorKeysCodes = [ENTER] as const;
     formCtrl = new FormControl('');
-    autocompleteOptions: AutocompleteOption[] = [];
     filteredOptions: AutocompleteOption[] = [];
     selectedOptions: AutocompleteOption[] = [];
     tooltipShowDelay = 800;
@@ -89,12 +100,13 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
                 this.filteredOptions = value ? this.filter(this.autocompleteOptions, value) : [];
                 this.inputChanged.emit(value);
             });
-        this.autocompleteOptions$.pipe(takeUntil(this.onDestroy$))
-            .subscribe(res => {
-                this.autocompleteOptions = res;
-                this.filteredOptions = res.length > 0 ? this.filter(res, this.formCtrl.value) : [];
-            });
         this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.autocompleteOptions){
+            this.filteredOptions = changes.autocompleteOptions.currentValue.length > 0 ? this.filter(this.formCtrl.value) : [];
+        }
     }
 
     ngOnDestroy() {

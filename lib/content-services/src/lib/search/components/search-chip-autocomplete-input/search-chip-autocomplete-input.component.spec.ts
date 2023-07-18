@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatChip, MatChipRemove } from '@angular/material/chips';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchChipAutocompleteInputComponent } from './search-chip-autocomplete-input.component';
 import { DebugElement } from '@angular/core';
@@ -41,7 +41,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);
         component = fixture.componentInstance;
         component.onReset$ = onResetSubject.asObservable();
-        component.autocompleteOptions$ = of([{value: 'option1'}, {value: 'option2'}]);
+        component.autocompleteOptions = [{value: 'option1'}, {value: 'option2'}];
         fixture.detectChanges();
     });
 
@@ -110,6 +110,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
         enterNewInputValue('op');
         await fixture.whenStable();
+        fixture.detectChanges();
 
         const matOptions = getOptionElements();
         expect(matOptions.length).toBe(2);
@@ -167,7 +168,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
         expect(getChipList().length).toBe(1);
     });
 
-    it('should show autocomplete list if similar predefined values exists', () => {
+    it('should show autocomplete list if similar predefined values exists', async () => {
         enterNewInputValue('op');
         expect(getOptionElements().length).toBe(2);
     });

@@ -92,7 +92,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     onInputChange(value: string) {
-        if (this.settings.field === AutocompleteField.CATEGORIES) {
+        if (this.settings.field === AutocompleteField.CATEGORIES && value) {
             this.searchForExistingCategories(value);
         }
     }
