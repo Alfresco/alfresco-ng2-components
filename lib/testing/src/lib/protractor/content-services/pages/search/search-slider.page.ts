@@ -45,7 +45,7 @@ export class SearchSliderPage {
     async setValue(value: number): Promise<void> {
         const elem = this.filter.$(this.slider).$('.mat-slider-wrapper');
         await browser.actions().mouseMove(elem, { x: 0, y: 0 }).perform();
-        await browser.actions().mouseDown().mouseMove({x: value * 10, y: 0}).mouseUp().perform();
+        await browser.actions().mouseDown().mouseMove({x: value * 20, y: 0}).mouseUp().perform();
     }
 
     async checkSliderIsDisplayed(): Promise<void> {
