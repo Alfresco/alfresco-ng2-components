@@ -189,7 +189,7 @@ export class AppConfigService {
      *
      * @returns Notification when loading is complete
      */
-    load(): Promise<any> {
+    load(callback?: (...args: any[]) => any): Promise<any> {
         return new Promise(async (resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
@@ -198,6 +198,7 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
+                        callback?.();
                         resolve(data);
                         this.onDataLoaded(data);
                     },
