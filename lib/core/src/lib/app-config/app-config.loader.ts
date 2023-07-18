@@ -28,8 +28,9 @@ import { AdfHttpClient } from '@alfresco/adf-core/api';
  * @returns factory function
  */
 export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService, adfHttpClient: AdfHttpClient) {
-    return () => appConfigService.load().then(() => {
+    const init = () => {
         adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF, true);
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
-    });
-}
+    };
+    return () => appConfigService.load(init);
+};
