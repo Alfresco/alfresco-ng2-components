@@ -19,7 +19,8 @@
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [attr.aria-label]="placeholder | translate"
             (matChipInputTokenEnd)="add($event)"
-            (blur)="activeAnyOption = false">
+            (blur)="activeAnyOption = false"
+            data-automation-id="adf-search-chip-autocomplete-input">
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
                       (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">

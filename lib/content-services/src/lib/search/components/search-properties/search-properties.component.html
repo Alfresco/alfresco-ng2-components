@@ -27,7 +27,8 @@
         (keydown)="preventIncorrectNumberCharacters($event)"
         id="adf-search-properties-file-size"
         [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
-        (blur)="clearNumberFieldWhenInvalid($event)" />
+        (blur)="clearNumberFieldWhenInvalid($event)"
+        data-automation-id="adf-search-properties-file-size-input" />
     <mat-form-field class="adf-search-properties-file-size-unit">
         <mat-select
             [formControl]="form.controls.fileSizeUnit"
