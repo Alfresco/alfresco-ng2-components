@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, provideTranslations } from '@alfresco/adf-core';
 
 import { DiagramsModule } from './diagram/diagram.module';
 import { AnalyticsProcessModule } from './analytics-process/analytics-process.module';
@@ -45,14 +45,7 @@ export class InsightsModule {
         return {
             ngModule: InsightsModule,
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-insights',
-                        source: 'assets/adf-insights'
-                    }
-                }
+                provideTranslations('adf-insights', 'assets/adf-insights')
             ]
         };
     }

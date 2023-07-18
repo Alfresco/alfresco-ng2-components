@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER, FormRenderingService } from '@alfresco/adf-core';
+import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -53,14 +53,7 @@ import { ProcessUserInfoModule } from './process-user-info/process-user-info.mod
         ProcessServicesPipeModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-process-services',
-                source: 'assets/adf-process-services'
-            }
-        }
+        provideTranslations('adf-process-services', 'assets/adf-process-services')
     ],
     exports: [
         CommonModule,
@@ -83,14 +76,7 @@ export class ProcessModule {
         return {
             ngModule: ProcessModule,
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services',
-                        source: 'assets/adf-process-services'
-                    }
-                },
+                provideTranslations('adf-process-services', 'assets/adf-process-services'),
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService }
             ]

@@ -24,11 +24,11 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { TranslateModule } from '@ngx-translate/core';
 import {
     AppConfigService,
-    TRANSLATION_PROVIDER,
     DebugAppConfigService,
     CoreModule,
     CoreAutomationService,
-    AuthModule
+    AuthModule,
+    provideTranslations
 } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
@@ -211,22 +211,8 @@ registerLocaleData(localeSv);
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'app',
-                source: 'resources'
-            }
-        },
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'lazy-loading',
-                source: 'resources/lazy-loading'
-            }
-        },
+        provideTranslations('app', 'resources'),
+        provideTranslations('lazy-loading', 'resources/lazy-loading'),
         AppNotificationsService,
         {
             provide: APP_INITIALIZER,

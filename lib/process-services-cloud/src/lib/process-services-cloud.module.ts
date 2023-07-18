@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { TRANSLATION_PROVIDER, CoreModule, FormRenderingService } from '@alfresco/adf-core';
+import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
@@ -52,14 +52,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         RichTextEditorModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-process-services-cloud',
-                source: 'assets/adf-process-services-cloud'
-            }
-        }
+        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
     ],
     exports: [
         AppListCloudModule,
@@ -81,14 +74,7 @@ export class ProcessServicesCloudModule {
         return {
             ngModule: ProcessServicesCloudModule,
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-process-services-cloud',
-                        source: 'assets/adf-process-services-cloud'
-                    }
-                },
+                provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },

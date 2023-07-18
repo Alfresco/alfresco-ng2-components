@@ -21,7 +21,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderService } from './translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { provideTranslations, TranslationService } from './translation.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -47,14 +47,7 @@ describe('TranslationService', () => {
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: '@alfresco/adf-core',
-                        source: 'assets/ng2-alfresco-core'
-                    }
-                }
+                provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
             ]
         });
 

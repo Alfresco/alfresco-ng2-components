@@ -25,7 +25,7 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel, FormRenderingService, FormService,
-    TRANSLATION_PROVIDER, UploadWidgetContentLinkModel, WidgetVisibilityService
+    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -54,6 +54,7 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudService } from '../services/form-cloud.service';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { FormCloudComponent } from './form-cloud.component';
+import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1152,17 +1153,11 @@ describe('Multilingual Form', () => {
             imports: [
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ProcessServicesCloudModule.forRoot()
             ],
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'app',
-                        source: 'resources'
-                    }
-                }
+                provideTranslations('app', 'resources')
             ]
         });
         translateService = TestBed.inject(TranslateService);
@@ -1184,20 +1179,20 @@ describe('Multilingual Form', () => {
         formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
         expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
-        fixture.ngZone.run(() => translateService.use('fr'));
+        await translateService.use('fr').toPromise();
 
-        await fixture.whenStable();
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(getLabelValue('textField')).toEqual('Champ de texte');
         expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
         expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
         expect(getLabelValue('amountField')).toEqual('Champ Montant');
 
-        fixture.ngZone.run(() => translateService.use('en'));
+        await translateService.use('en').toPromise();
 
-        await fixture.whenStable();
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(getLabelValue('textField')).toEqual('Text field');
         expect(getLabelValue('fildUploadField')).toEqual('File Upload');
@@ -1237,14 +1232,7 @@ describe('retrieve metadata on submit', () => {
                 FormCloudModule
             ],
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'app',
-                        source: 'resources'
-                    }
-                },
+                provideTranslations('app', 'resources'),
                 {
                     provide: VersionCompatibilityService,
                     useValue: {}

@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER, SearchTextModule } from '@alfresco/adf-core';
+import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -89,14 +89,7 @@ import { CategoriesModule } from './category/category.module';
         CategoriesModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-content-services',
-                source: 'assets/adf-content-services'
-            }
-        }
+        provideTranslations('adf-content-services', 'assets/adf-content-services')
     ],
     exports: [
         ContentPipeModule,
@@ -134,14 +127,7 @@ export class ContentModule {
         return {
             ngModule: ContentModule,
             providers: [
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'adf-content-services',
-                        source: 'assets/adf-content-services'
-                    }
-                },
+                provideTranslations('adf-content-services', 'assets/adf-content-services'),
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
