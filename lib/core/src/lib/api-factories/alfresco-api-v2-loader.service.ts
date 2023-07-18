@@ -16,9 +16,10 @@
  */
 
 import { AlfrescoApiConfig } from '@alfresco/js-api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { StorageService } from '../../..';
 
 /**
  * Create a factory to resolve an api service instance
@@ -34,6 +35,8 @@ export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApi
     providedIn: 'root'
 })
 export class AlfrescoApiLoaderService {
+    private readonly storageService = inject(StorageService);
+
     constructor(private readonly appConfig: AppConfigService, private readonly apiService: AlfrescoApiService) {}
 
     async init(): Promise<any> {
@@ -59,7 +62,8 @@ export class AlfrescoApiLoaderService {
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
             domainPrefix: this.appConfig.get<string>(AppConfigValues.STORAGE_PREFIX),
-            oauth2: oauth
+            oauth2: oauth,
+            ...(this.storageService.getItem('ticket-ECM') && {ticketEcm: this.storageService.getItem('ticket-ECM')})
         });
 
         await this.apiService.load(config);
