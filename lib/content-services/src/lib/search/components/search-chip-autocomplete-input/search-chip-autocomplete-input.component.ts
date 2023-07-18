@@ -111,7 +111,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
 
             if (value && this.isExists(value) && !this.isAdded(value)) {
                 if (this.allowOnlyPredefinedValues) {
-                    const index = this.autocompleteOptions.map(option => option.value.toLowerCase()).indexOf(value.toLowerCase());
+                    const index = this.autocompleteOptions.findIndex(option => option.value.toLowerCase() === value.toLowerCase());
                     this.selectedOptions.push(this.autocompleteOptions[index]);
                 } else {
                     this.selectedOptions.push({value});
@@ -140,12 +140,12 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     private isAdded(value: string): boolean {
-        return this.selectedOptions.map(option => option.value.toLowerCase()).includes(value.toLowerCase());
+        return this.selectedOptions.some(option => option.value.toLowerCase() === value.toLowerCase());
     }
 
     private isExists(value: string): boolean {
         return this.allowOnlyPredefinedValues
-            ? this.autocompleteOptions.map(option => option.value.toLowerCase()).includes(value.toLowerCase())
+            ? this.autocompleteOptions.some(option => option.value.toLowerCase() === value.toLowerCase())
             : true;
     }
 
