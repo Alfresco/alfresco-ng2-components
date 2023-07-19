@@ -3,6 +3,7 @@
     [onReset$]="reset$"
     [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
     (inputChanged)="onInputChange($event)"
+    [compareOption]="optionComparator"
     (optionsChanged)="onOptionsChange($event)">
 </adf-search-chip-autocomplete-input>
 

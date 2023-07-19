@@ -35,9 +35,9 @@
                 [disabled]="option | adfIsIncluded: selectedOptions : compareOption"
                 *ngFor="let option of filteredOptions" [value]="option" [matTooltipShowDelay]="tooltipShowDelay"
                 [matTooltipDisabled]="!option.fullPath" matTooltipPosition="right"
-                [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath ? option.fullPath : option.value}"
+                [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath || option.value}"
                 [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">
-                {{ option.fullPath ? option.fullPath : option.value }}
+                {{ option.fullPath || option.value }}
             </mat-option>
         </ng-container>
     </mat-autocomplete>

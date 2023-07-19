@@ -21,7 +21,6 @@ describe('IsIncludedPipe', () => {
 
     let pipe: IsIncludedPipe<any>;
     const array = [1, 2, 'test', [null], {}];
-    const arrayOfObjects = [{id: 'id-1', value: 'value-1'}, {id: 'id-2', value: 'value-2'}];
 
     beforeEach(() => {
         pipe = new IsIncludedPipe();
@@ -43,11 +42,10 @@ describe('IsIncludedPipe', () => {
         expect(pipe.transform(50, array)).toBeFalsy();
     });
 
-    it('should return true if provided property included in an array of objects', () => {
-        expect(pipe.transform('id-1', arrayOfObjects, 'id')).toBeTruthy();
-    });
-
-    it('should return false if provided property is not included in array of objects', () => {
-        expect(pipe.transform('id-3', arrayOfObjects, 'id')).toBeFalsy();
+    it('should use provided comparator to check if value contains in the provided array', () => {
+        const arrayOfObjects = [{id: 'id-1', value: 'value-1'}, {id: 'id-2', value: 'value-2'}];
+        const filterFunction = (extension1, extension2) => extension1.value === extension2.value;
+        expect(pipe.transform({id: 'id-1', value: 'value-1'}, arrayOfObjects, filterFunction)).toBeTruthy();
+        expect(pipe.transform({id: 'id-1', value: 'value-3'}, arrayOfObjects, filterFunction)).toBeFalsy();
     });
 });

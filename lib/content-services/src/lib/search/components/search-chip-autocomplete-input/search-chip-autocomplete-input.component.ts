@@ -59,7 +59,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
 
     @Input()
-    compareOption?: (option1: string, option2: string) => boolean;
+    compareOption?: (option1: AutocompleteOption, option2: AutocompleteOption) => boolean;
 
     @Input()
     formatChipValue?: (option: string) => string;
@@ -71,10 +71,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     };
 
     @Output()
-    optionsChanged: EventEmitter<AutocompleteOption[]> = new EventEmitter();
+    optionsChanged = new EventEmitter<AutocompleteOption[]>();
 
     @Output()
-    inputChanged: EventEmitter<string> = new EventEmitter();
+    inputChanged = new EventEmitter<string>();
 
     readonly separatorKeysCodes = [ENTER] as const;
     formCtrl = new FormControl('');
@@ -104,8 +104,8 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.autocompleteOptions){
-            this.filteredOptions = changes.autocompleteOptions.currentValue.length > 0 ? this.filter(this.formCtrl.value) : [];
+        if (changes.autocompleteOptions) {
+            this.filteredOptions = changes.autocompleteOptions.currentValue.length > 0 ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value) : [];
         }
     }
 
@@ -152,12 +152,14 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     }
 
     private isAdded(value: string): boolean {
-        return this.selectedOptions.some(option => option.value.toLowerCase() === value.toLowerCase());
+        const valueLowerCase = value.toLowerCase();
+        return this.selectedOptions.some(option => option.value.toLowerCase() === valueLowerCase);
     }
 
     private isExists(value: string): boolean {
+        const valueLowerCase = value.toLowerCase();
         return this.allowOnlyPredefinedValues
-            ? this.autocompleteOptions.some(option => option.value.toLowerCase() === value.toLowerCase())
+            ? this.autocompleteOptions.some(option => option.value.toLowerCase() === valueLowerCase)
             : true;
     }
 

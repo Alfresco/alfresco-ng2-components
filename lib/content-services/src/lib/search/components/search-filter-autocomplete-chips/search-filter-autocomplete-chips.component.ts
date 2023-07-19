@@ -97,6 +97,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
+    optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
+        return option1.id
+            ? option1.id.toUpperCase() === option2.id.toUpperCase()
+            : option1.value.toUpperCase() === option2.value.toUpperCase();
+    }
+
     private updateQuery() {
         this.displayValue$.next(this.selectedOptions.map(option => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
@@ -125,7 +131,6 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 break;
             default:
                 this.autocompleteOptionsSubject$.next(this.settings.autocompleteOptions);
-                break;
         }
     }
 

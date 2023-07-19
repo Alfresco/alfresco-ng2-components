@@ -26,6 +26,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { SearchProperties } from './search-properties';
 import { TranslateService } from '@ngx-translate/core';
 import { SearchWidget } from '../../models/search-widget.interface';
+import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 
 @Component({
     selector: 'adf-search-properties',
@@ -39,6 +40,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     context?: SearchQueryBuilderService;
     startValue: SearchProperties;
     displayValue$ = new Subject<string>();
+    autocompleteOptions: AutocompleteOption[] = [];
 
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
@@ -77,8 +79,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         return this._reset$;
     }
 
-    set selectedExtensions(extensions: string[]) {
-        this._selectedExtensions = extensions;
+    set selectedExtensions(extensions: AutocompleteOption[]) {
+        this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
@@ -88,6 +90,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
             if (!this.settings.fileExtensions) {
                 this.settings.fileExtensions = [];
             }
+            this.autocompleteOptions = this.parseToAutocompleteOptions(this.settings.fileExtensions);
             [this.sizeField, this.nameField] = this.settings.field.split(',');
         }
         if (this.startValue) {
@@ -127,8 +130,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         return event.key !== '-' && event.key !== 'e' && event.key !== '+';
     }
 
-    compareFileExtensions(extension1: string, extension2: string): boolean {
-        return extension1.toUpperCase() === extension2.toUpperCase();
+    compareFileExtensions(extension1: AutocompleteOption, extension2: AutocompleteOption): boolean {
+        return extension1.value.toUpperCase() === extension2.value.toUpperCase();
     }
 
     getExtensionWithoutDot(extension: string): string {
@@ -136,11 +139,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         return extensionSplitByDot[extensionSplitByDot.length - 1];
     }
 
-    filterExtensions = (extensions: string[], filterValue: string): string[] => {
+    filterExtensions = (extensions: AutocompleteOption[], filterValue: string): AutocompleteOption[] => {
         const filterValueLowerCase = this.getExtensionWithoutDot(filterValue).toLowerCase();
         const extensionWithDot = filterValue.startsWith('.');
         return extensions.filter((option) => {
-            const optionLowerCase = option.toLowerCase();
+            const optionLowerCase = option.value.toLowerCase();
             return extensionWithDot && filterValueLowerCase ? optionLowerCase.startsWith(filterValueLowerCase) : optionLowerCase.includes(filterValue);
         });
     };
@@ -196,8 +199,16 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     setValue(searchProperties: SearchProperties) {
         this.form.patchValue(searchProperties.fileSizeCondition);
-        this.selectedExtensions = searchProperties.fileExtensions;
+        this.selectedExtensions = this.parseToAutocompleteOptions(searchProperties.fileExtensions);
         this.submitValues();
+    }
+
+    private parseToAutocompleteOptions(array: string[]): AutocompleteOption[] {
+        return array.map(value => ({value}));
+    }
+
+    private parseFromAutocompleteOptions(array: AutocompleteOption[]): string[] {
+        return array.flatMap(option => option.value);
     }
 
     private getOperatorNameWidth(operator: string, font: string): number {

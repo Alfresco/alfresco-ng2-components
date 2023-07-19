@@ -127,11 +127,10 @@ describe('SearchChipAutocompleteInputComponent', () => {
         addNewOption('option1');
         enterNewInputValue('op');
 
-        const addedOptions = getAddedOptionElements();
-
         await fixture.whenStable();
         fixture.detectChanges();
 
+        const addedOptions = getAddedOptionElements();
         expect(addedOptions[0]).toBeTruthy();
         expect(addedOptions.length).toBe(1);
     });
@@ -139,21 +138,19 @@ describe('SearchChipAutocompleteInputComponent', () => {
     it('should apply class to already selected options based on custom compareOption function', async () => {
         component.allowOnlyPredefinedValues = false;
         component.autocompleteOptions = [{value: '.test1'}, {value: 'test3'}, {value: '.test2.'}, {value: 'test1'}];
-        component.compareOption = (option1, option2) => option1.split('.')[1] === option2;
+        component.compareOption = (option1, option2) => option1.value.split('.')[1] === option2.value;
 
-        fixture.detectChanges();
         addNewOption('test1');
         enterNewInputValue('t');
 
-        const addedOptions = getAddedOptionElements();
         await fixture.whenStable();
-        expect(addedOptions.length).toBe(1);
+        fixture.detectChanges();
+
+        expect(getAddedOptionElements().length).toBe(1);
     });
 
     it('should limit autocomplete list to 15 values max', async () => {
-        for (let i = 0; i < 17; i++) {
-            component.autocompleteOptions.push({value: 'a' + i});
-        }
+        component.autocompleteOptions = Array.from({length: 16}, (_, i) => ({value: `a${i}`}));
         enterNewInputValue('a');
 
         await fixture.whenStable();
@@ -170,13 +167,17 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     it('should show autocomplete list if similar predefined values exists', async () => {
         enterNewInputValue('op');
+        await fixture.whenStable();
+        fixture.detectChanges();
         expect(getOptionElements().length).toBe(2);
     });
 
-    it('should show autocomplete list based on custom filtering', () => {
+    it('should show autocomplete list based on custom filtering', async () => {
         component.autocompleteOptions = [{value: '.test1'}, {value: 'test1'}, {value: 'test1.'}, {value: '.test2'}, {value: '.test12'}];
         component.filter = (options, value) => options.filter((option) => option.value.split('.')[1] === value);
         enterNewInputValue('test1');
+        await fixture.whenStable();
+        fixture.detectChanges();
         expect(getOptionElements().length).toBe(1);
     });
 
