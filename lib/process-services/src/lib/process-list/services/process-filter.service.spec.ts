@@ -349,7 +349,7 @@ describe('Process filter', () => {
                     expect(result).toEqual([
                         new FilterProcessRepresentationModel({ ...runningFilter, filter: runningFilter.filter, appId }),
                         new FilterProcessRepresentationModel({ ...completedFilter, filter: completedFilter.filter, appId }),
-                        new FilterProcessRepresentationModel({ ...allFilter, filter: allFilter.filter, appId }),
+                        new FilterProcessRepresentationModel({ ...allFilter, filter: allFilter.filter, appId })
                     ]);
                     done();
                 });

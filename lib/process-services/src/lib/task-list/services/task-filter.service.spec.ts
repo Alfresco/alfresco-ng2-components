@@ -382,7 +382,7 @@ describe('Activiti Task filter Service', () => {
                     new FilterRepresentationModel({ ...myTasksFilter, filter: myTasksFilter.filter, appId }),
                     new FilterRepresentationModel({ ...involvedTasksFilter, filter: involvedTasksFilter.filter, appId }),
                     new FilterRepresentationModel({ ...queuedTasksFilter, filter: queuedTasksFilter.filter, appId }),
-                    new FilterRepresentationModel({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId })
                 ]);
                 done();
             });
