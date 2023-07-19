@@ -23,6 +23,7 @@ import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskFilterRepresentation } from '@alfresco/js-api';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -291,5 +292,101 @@ describe('Activiti Task filter Service', () => {
             const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
             expect(result).toBe(false);
         });
+    });
+
+    describe('createDefaultFilters', () => {
+
+        it('should return an array with unique task filters', (done) => {
+            const appId = 101;
+
+            const myTasksFilter = {
+                appId: appId,
+                name: 'My Tasks',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
+                icon: 'fa-random',
+                id: 81,
+                index: 21,
+                recent: false,
+                hasFilter: () => {
+                    return true;
+                }
+            };
+
+            const involvedTasksFilter = {
+                appId: appId,
+                name: 'Involved Tasks',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' },
+                icon: 'fa-random',
+                id: 82,
+                index: 22,
+                recent: false,
+                hasFilter: () => {
+                    return true;
+                }
+            };
+
+            const queuedTasksFilter = {
+                appId: appId,
+                name: 'Queued Tasks',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-queued' },
+                icon: 'fa-random',
+                id: 83,
+                index: 23,
+                recent: false,
+                hasFilter: () => {
+                    return true;
+                }
+            };
+
+            const completedTasksFilter = {
+                appId: appId,
+                name: 'Completed',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-completed' },
+                icon: 'fa-random',
+                id: 84,
+                index: 24,
+                recent: false,
+                hasFilter: () => {
+                    return true;
+                }
+            };
+
+            const duplicateMyTasksFilter = {
+                appId: appId,
+                name: 'My Tasks',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
+                icon: 'fa-random',
+                id: 85,
+                index: 25,
+                recent: false,
+                hasFilter: () => {
+                    return true;
+                }
+            };
+
+            const myTasksObservableObservable = of(myTasksFilter);
+            const involvedTasksObservable = of(involvedTasksFilter);
+            const queuedTasksObservable = of(queuedTasksFilter);
+            const completedTasksObservable = of(completedTasksFilter);
+            const duplicateMyTasksObservableObservable = of(duplicateMyTasksFilter);
+
+            spyOn(service, 'getMyTasksFilterInstance').and.returnValue(myTasksFilter);
+            spyOn(service, 'getInvolvedTasksFilterInstance').and.returnValue(involvedTasksFilter);
+            spyOn(service, 'getQueuedTasksFilterInstance').and.returnValue(queuedTasksFilter);
+            spyOn(service, 'getCompletedTasksFilterInstance').and.returnValue(completedTasksFilter);
+
+            spyOn(service, 'addFilter').and.returnValues(myTasksObservableObservable, involvedTasksObservable, queuedTasksObservable, completedTasksObservable, duplicateMyTasksObservableObservable);
+
+            service.createDefaultFilters(appId).subscribe((result) => {
+                expect(result).toEqual([
+                    new FilterRepresentationModel({ ...myTasksFilter, filter: myTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...involvedTasksFilter, filter: involvedTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...queuedTasksFilter, filter: queuedTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId }),
+                ]);
+                done();
+            });
+        });
+
     });
 });

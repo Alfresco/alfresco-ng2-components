@@ -21,6 +21,7 @@ import { FilterProcessRepresentationModel } from '../models/filter-process.model
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -274,6 +275,86 @@ describe('Process filter', () => {
                 const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
                 expect(result).toBe(false);
             });
+        });
+
+        describe('createDefaultFilters', () => {
+
+            it('should return an array with unique process filters', (done) => {
+                const appId = 123;
+
+                const runningFilter = {
+                    appId: appId,
+                    name: 'Running',
+                    filter: { sort: 'created-desc', name: '', state: 'running' },
+                    icon: 'fa-random',
+                    id: 18,
+                    index: 10,
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                };
+
+                const completedFilter = {
+                    appId: appId,
+                    name: 'Completed',
+                    filter: { sort: 'created-desc', name: '', state: 'completed' },
+                    icon: 'fa-random',
+                    id: 19,
+                    index: 11,
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                };
+
+                const allFilter = {
+                    appId: appId,
+                    name: 'All',
+                    filter: { sort: 'created-desc', name: '', state: 'all' },
+                    icon: 'fa-random',
+                    id: 20,
+                    index: 12,
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                };
+
+                const duplicateRunningFilter = {
+                    appId: appId,
+                    name: 'Running',
+                    filter: { sort: 'created-desc', name: '', state: 'running' },
+                    icon: 'fa-random',
+                    id: 21,
+                    index: 13,
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                };
+
+                const runningObservable = of(runningFilter);
+                const completedObservable = of(completedFilter);
+                const allObservable = of(allFilter);
+                const duplicateRunningObservable = of(duplicateRunningFilter);
+
+                spyOn(service, 'getRunningFilterInstance').and.returnValue(runningFilter);
+                spyOn<any>(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
+                spyOn<any>(service, 'getAllFilterInstance').and.returnValue(allFilter);
+
+                spyOn(service, 'addProcessFilter').and.returnValues(runningObservable, completedObservable, allObservable, duplicateRunningObservable);
+
+                service.createDefaultFilters(appId).subscribe((result) => {
+                    expect(result).toEqual([
+                        new FilterProcessRepresentationModel({ ...runningFilter, filter: runningFilter.filter, appId }),
+                        new FilterProcessRepresentationModel({ ...completedFilter, filter: completedFilter.filter, appId }),
+                        new FilterProcessRepresentationModel({ ...allFilter, filter: allFilter.filter, appId }),
+                    ]);
+                    done();
+                });
+            });
+
         });
     });
 });
