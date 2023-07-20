@@ -160,23 +160,6 @@ export class SearchConfiguration {
                     }
                 },
                 {
-                    id: 'createdModifiedDateRange',
-                    name: 'Date',
-                    enabled: true,
-                    component: {
-                        selector: 'date-range-advanced',
-                        settings: {
-                            dateFormat: 'dd-MMM-yy',
-                            maxDate: 'today',
-                            field: 'cm:created, cm:modified',
-                            displayedLabelsByField: {
-                                "cm:created": 'Created Date',
-                                "cm:modified": 'Modified Date'
-                            }
-                        }
-                    }
-                },
-                {
                     id: 'queryType',
                     name: 'Type',
                     enabled: true,
@@ -191,6 +174,23 @@ export class SearchConfiguration {
                                 {name: 'APP.SEARCH.RADIO.FOLDER', value: 'TYPE:\'cm:folder\''},
                                 {name: 'APP.SEARCH.RADIO.DOCUMENT', value: 'TYPE:\'cm:content\''}
                             ]
+                        }
+                    }
+                },
+                {
+                    id: 'createdModifiedDateRange',
+                    name: 'Date',
+                    enabled: true,
+                    component: {
+                        selector: 'date-range-advanced',
+                        settings: {
+                            dateFormat: 'dd-MMM-yy',
+                            maxDate: 'today',
+                            field: 'cm:created, cm:modified',
+                            displayedLabelsByField: {
+                                "cm:created": 'Created Date',
+                                "cm:modified": 'Modified Date'
+                            }
                         }
                     }
                 }
