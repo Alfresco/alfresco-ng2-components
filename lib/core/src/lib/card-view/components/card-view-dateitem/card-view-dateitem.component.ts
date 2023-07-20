@@ -15,28 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerComponent } from '@mat-datetimepicker/core';
-import { MAT_MOMENT_DATETIME_FORMATS, MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
-import moment, { Moment } from 'moment';
+import { Component, Inject, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
-import { MomentDateAdapter } from '../../../common/utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../common/utils/moment-date-formats.model';
-import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
+import { endOfDay, parse, startOfDay } from 'date-fns';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
 
 @Component({
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
-        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
+        { provide: DateAdapter, useClass: DateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
     ],
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
@@ -58,20 +54,22 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     displayClearAction: boolean = true;
 
     @ViewChild('datePicker')
-    public datepicker: MatDatetimepickerComponent<any>;
+    public datepicker: MatDatepicker<any>;
 
-    valueDate: Moment;
+    valueDate: Date;
     dateFormat: string;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DateAdapter<Moment>,
+    constructor(private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
-                private appConfig: AppConfigService,
                 private clipboardService: ClipboardService,
-                private translateService: TranslationService) {
+                private translateService: TranslationService,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {
         super();
-        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        // need to change this to app.config when will change from moment to date-fns throughout the application
+        // this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
+        this.dateFormat = 'MMM d, y';
     }
 
     ngOnInit() {
@@ -79,14 +77,14 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => {
-                this.dateAdapter.setLocale(locale);
+                this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
                 this.property.locale = locale;
             });
 
-        (this.dateAdapter as MomentDateAdapter).overrideDisplayFormat = 'MMM DD';
+        this.dateFormatConfig.display.dateInput = this.dateFormat;
 
         if (this.property.value) {
-            this.valueDate = moment(this.property.value, this.dateFormat);
+            this.valueDate = parse(this.property.value, this.dateFormat, new Date());
         } else if (this.property.multivalued && !this.property.value) {
             this.property.value = [];
         }
@@ -115,10 +113,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     onDateChanged(newDateValue) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue.value, this.dateFormat, true).endOf('day');
-            if (momentDate.isValid()) {
-                this.valueDate = momentDate;
-                this.property.value = momentDate.toDate();
+            const date = this.getDateValue(newDateValue);
+            if (date) {
+                this.valueDate = date;
+                this.property.value = date;
                 this.update();
             }
         }
@@ -138,9 +136,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     addDateToList(newDateValue) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue.value, this.dateFormat, true).endOf('day');
-            if (momentDate.isValid()) {
-                this.property.value.push(momentDate.toDate());
+            const date = this.getDateValue(newDateValue);
+            if (date) {
+                this.property.value.push(date);
                 this.update();
             }
         }
@@ -153,5 +151,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     update() {
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
+    }
+
+    getDateValue(newDateValue): Date {
+        return this.property.key === 'properties.cm:from' ? startOfDay(newDateValue.value) : endOfDay(newDateValue.value);
     }
 }

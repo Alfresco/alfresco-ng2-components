@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
@@ -25,6 +24,8 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '@alfresco/adf-core';
+import { endOfDay, startOfDay } from 'date-fns';
+import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 
 describe('CardViewDateItemComponent', () => {
 
@@ -61,7 +62,7 @@ describe('CardViewDateItemComponent', () => {
     afterEach(() => fixture.destroy());
 
     it('should pick date format from appConfigService', () => {
-        expect(component.dateFormat).toEqual('shortDate');
+        expect(component.dateFormat).toEqual('MMM d, y');
     });
 
     it('should render the label and value', () => {
@@ -191,8 +192,8 @@ describe('CardViewDateItemComponent', () => {
         const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
         component.editable = true;
         component.property.editable = true;
-        component.property.value = moment('Jul 10 2017', 'MMM DD YYYY').endOf('day').toDate();
-        const expectedDate = moment('Jul 10 2017', 'MMM DD YYYY');
+        component.property.value = endOfDay(new Date('Jul 10 2017'));
+        const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
         const property = { ...component.property };
 
@@ -200,7 +201,7 @@ describe('CardViewDateItemComponent', () => {
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
             target: property,
             changed: {
-                dateKey: expectedDate.endOf('day').toDate()
+                dateKey: endOfDay(expectedDate)
             }
         });
     });
@@ -209,13 +210,13 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = null;
-        const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
+        const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
 
         component.onDateChanged({ value: expectedDate });
 
         await fixture.whenStable();
-        expect(component.property.value).toEqual(expectedDate.endOf('day').toDate());
+        expect(component.property.value).toEqual(endOfDay(expectedDate));
     });
 
     it('should copy value to clipboard on double click', () => {
@@ -314,14 +315,14 @@ describe('CardViewDateItemComponent', () => {
         });
     });
 
-    it('should be possible update a date-time', async () => {
+    it('should be possible update a date-time using end of day', async () => {
         component.editable = true;
         component.property.editable = true;
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.dateFormat = 'M/d/yy, h:mm a';
         component.property.value = 'Jul 10 2017 00:01:00';
-        const expectedDate = moment('Jul 10 2018', 'MMM DD YY h:m:s');
+        const expectedDate = new Date('Jul 10 2018');
         fixture.detectChanges();
 
         await fixture.whenStable();
@@ -332,7 +333,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
 
         fixture.detectChanges();
-        expect(component.property.value).toEqual(expectedDate.endOf('day').toDate());
+        expect(component.property.value).toEqual(endOfDay(expectedDate));
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {
@@ -352,5 +353,45 @@ describe('CardViewDateItemComponent', () => {
         expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017');
         expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017');
         expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017');
+    });
+
+    it('should render chips for multivalue datetimes when chips are enabled', async () => {
+        component.property = new CardViewDatetimeItemModel({
+            label: 'Text label',
+            value: ['Jul 10 2017 00:01:00', 'Jul 11 2017 00:01:00', 'Jul 12 2017 00:01:00'],
+            key: 'textkey',
+            editable: true,
+            multivalued: true
+        });
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        expect(valueChips).not.toBeNull();
+        expect(valueChips.length).toBe(3);
+        expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017, 0:01');
+        expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017, 0:01');
+        expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017, 0:01');
+    });
+
+    it('should be possible update a date-time using start of day', async () => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.default = 'Jul 10 2017 00:01:00';
+        component.property.key = 'properties.cm:from';
+        component.dateFormat = 'M/d/yy, h:mm a';
+        component.property.value = 'Jul 10 2017 00:01:00';
+        const expectedDate = new Date('Jul 10 2018');
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+        const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-properties.cm:from"]');
+        expect(element).toBeDefined();
+        expect(element.innerText).toEqual('Jul 10, 2017');
+        component.onDateChanged({ value: expectedDate });
+
+        fixture.detectChanges();
+        expect(component.property.value).toEqual(startOfDay(expectedDate));
     });
 });
