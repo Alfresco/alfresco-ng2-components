@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldOption } from '@alfresco/adf-core';
+import { DropdownFormFieldOption } from '../components/widgets/dropdown/dropdown-cloud.widget';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 export const mockConditionalEntries = [
@@ -24,15 +24,18 @@ export const mockConditionalEntries = [
         options: [
             {
                 id: 'empty',
-                name: 'Choose one...'
+                name: 'Choose one...',
+                isDefault: true
             },
             {
                 id: 'ATH',
-                name: 'Athens'
+                name: 'Athens',
+                isDefault: false
             },
             {
                 id: 'SKG',
-                name: 'Thessaloniki'
+                name: 'Thessaloniki',
+                isDefault: false
             }
         ]
     },
@@ -41,15 +44,18 @@ export const mockConditionalEntries = [
         options: [
             {
                 id: 'empty',
-                name: 'Choose one...'
+                name: 'Choose one...',
+                isDefault: true
             },
             {
                 id: 'MI',
-                name: 'MILAN'
+                name: 'MILAN',
+                isDefault: false
             },
             {
                 id: 'RM',
-                name: 'ROME'
+                name: 'ROME',
+                isDefault: false
             }
         ]
     },
@@ -58,51 +64,56 @@ export const mockConditionalEntries = [
         options: [
             {
                 id: 'empty',
-                name: 'Choose one...'
+                name: 'Choose one...',
+                isDefault: true
             },
             {
                 id: 'LDN',
-                name: 'London'
+                name: 'London',
+                isDefault: false
             },
             {
                 id: 'MAN',
-                name: 'Manchester'
+                name: 'Manchester',
+                isDefault: false
             },
             {
                 id: 'SHE',
-                name: 'Sheffield'
+                name: 'Sheffield',
+                isDefault: false
             },
             {
                 id: 'LEE',
-                name: 'Leeds'
+                name: 'Leeds',
+                isDefault: false
             }
         ]
     }
 ];
 
-export const mockRestDropdownOptions: FormFieldOption[] = [
-    { id: 'LO', name: 'LONDON' },
-    { id: 'MA', name: 'MANCHESTER' }
+export const mockRestDropdownOptions: DropdownFormFieldOption[] = [
+    { id: 'LO', name: 'LONDON', isDefault: false },
+    { id: 'MA', name: 'MANCHESTER', isDefault: false }
 ];
 
-export const mockSecondRestDropdownOptions: FormFieldOption[] = [
-    { id: 'MI', name: 'MILAN' },
-    { id: 'RM', name: 'ROME' }
+export const mockSecondRestDropdownOptions: DropdownFormFieldOption[] = [
+    { id: 'MI', name: 'MILAN', isDefault: false },
+    { id: 'RM', name: 'ROME', isDefault: false }
 ];
 
-export const fakeOptionList: FormFieldOption[] = [
-    { id: 'opt_1', name: 'option_1' },
-    { id: 'opt_2', name: 'option_2' },
-    { id: 'opt_3', name: 'option_3' }
+export const fakeOptionList: DropdownFormFieldOption[] = [
+    { id: 'opt_1', name: 'option_1', isDefault: false },
+    { id: 'opt_2', name: 'option_2', isDefault: false },
+    { id: 'opt_3', name: 'option_3', isDefault: false }
 ];
 
-export const filterOptionList = [
-    { id: 'opt_1', name: 'option_1' },
-    { id: 'opt_2', name: 'option_2' },
-    { id: 'opt_3', name: 'option_3' },
-    { id: 'opt_4', name: 'option_4' },
-    { id: 'opt_5', name: 'option_5' },
-    { id: 'opt_6', name: 'option_6' }
+export const filterOptionList: DropdownFormFieldOption[] = [
+    { id: 'opt_1', name: 'option_1', isDefault: false },
+    { id: 'opt_2', name: 'option_2', isDefault: false },
+    { id: 'opt_3', name: 'option_3', isDefault: false },
+    { id: 'opt_4', name: 'option_4', isDefault: false },
+    { id: 'opt_5', name: 'option_5', isDefault: false },
+    { id: 'opt_6', name: 'option_6', isDefault: false }
 ];
 
 export const mockPlayersResponse = {
@@ -138,15 +149,18 @@ export const mockDefaultResponse = {
     [
         {
             id: 'default-pet-1',
-            name: 'Dog'
+            name: 'Dog',
+            isDefault: false
         },
         {
             id: 'default-pet-2',
-            name: 'Cat'
+            name: 'Cat',
+            isDefault: false
         },
         {
             id: 'default-pet-3',
-            name: 'Parrot'
+            name: 'Parrot',
+            isDefault: false
         }
     ]
 };
@@ -155,15 +169,18 @@ export const mockCountriesResponse = {
     countries: [
         {
             id: 'PL',
-            name: 'Poland'
+            name: 'Poland',
+            isDefault: false
         },
         {
             id: 'UK',
-            name: 'United Kingdom'
+            name: 'United Kingdom',
+            isDefault: false
         },
         {
             id: 'GR',
-            name: 'Greece'
+            name: 'Greece',
+            isDefault: false
         }
     ]
 };
