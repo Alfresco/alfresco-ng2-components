@@ -114,7 +114,7 @@ function getCommits(options: DiffOptions): Array<Commit> {
         log = log.substring(0, log.length - 1);
     }
 
-    return log.split('\n').map(str => JSON.parse(str) as Commit).filter(commit => commitAuthorAllowed(commit, authorFilter));
+    return log.split('\\n').map(str => JSON.parse(str) as Commit).filter(commit => commitAuthorAllowed(commit, authorFilter));
 }
 
 function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
