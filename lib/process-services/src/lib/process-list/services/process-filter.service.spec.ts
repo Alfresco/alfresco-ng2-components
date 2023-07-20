@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { mockError, fakeProcessFiltersResponse } from '../../mock';
+import { mockError, fakeProcessFiltersResponse, dummyRunningFilter, dummyAllFilter, dummyCompletedFilter, dummyDuplicateRunningFilter } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
@@ -282,57 +282,10 @@ describe('Process filter', () => {
             it('should return an array with unique process filters', (done) => {
                 const appId = 123;
 
-                const runningFilter = {
-                    appId: appId,
-                    name: 'Running',
-                    filter: { sort: 'created-desc', name: '', state: 'running' },
-                    icon: 'fa-random',
-                    id: 18,
-                    index: 10,
-                    recent: false,
-                    hasFilter: () => {
-                        return true;
-                    }
-                };
-
-                const completedFilter = {
-                    appId: appId,
-                    name: 'Completed',
-                    filter: { sort: 'created-desc', name: '', state: 'completed' },
-                    icon: 'fa-random',
-                    id: 19,
-                    index: 11,
-                    recent: false,
-                    hasFilter: () => {
-                        return true;
-                    }
-                };
-
-                const allFilter = {
-                    appId: appId,
-                    name: 'All',
-                    filter: { sort: 'created-desc', name: '', state: 'all' },
-                    icon: 'fa-random',
-                    id: 20,
-                    index: 12,
-                    recent: false,
-                    hasFilter: () => {
-                        return true;
-                    }
-                };
-
-                const duplicateRunningFilter = {
-                    appId: appId,
-                    name: 'Running',
-                    filter: { sort: 'created-desc', name: '', state: 'running' },
-                    icon: 'fa-random',
-                    id: 21,
-                    index: 13,
-                    recent: false,
-                    hasFilter: () => {
-                        return true;
-                    }
-                };
+                const runningFilter = dummyRunningFilter;
+                const completedFilter = dummyCompletedFilter;
+                const allFilter = dummyAllFilter;
+                const duplicateRunningFilter = dummyDuplicateRunningFilter;
 
                 const runningObservable = of(runningFilter);
                 const completedObservable = of(completedFilter);

@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { fakeAppPromise } from '../../mock';
-import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
+import { fakeFiltersResponse, fakeAppFilter, dummyMyTasksFilter, dummyInvolvedTasksFilter, dummyQueuedTasksFilter, dummyCompletedTasksFilter, dummyDuplicateMyTasksFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
@@ -299,70 +299,11 @@ describe('Activiti Task filter Service', () => {
         it('should return an array with unique task filters', (done) => {
             const appId = 101;
 
-            const myTasksFilter = {
-                appId: appId,
-                name: 'My Tasks',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
-                icon: 'fa-random',
-                id: 81,
-                index: 21,
-                recent: false,
-                hasFilter: () => {
-                    return true;
-                }
-            };
-
-            const involvedTasksFilter = {
-                appId: appId,
-                name: 'Involved Tasks',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' },
-                icon: 'fa-random',
-                id: 82,
-                index: 22,
-                recent: false,
-                hasFilter: () => {
-                    return true;
-                }
-            };
-
-            const queuedTasksFilter = {
-                appId: appId,
-                name: 'Queued Tasks',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-queued' },
-                icon: 'fa-random',
-                id: 83,
-                index: 23,
-                recent: false,
-                hasFilter: () => {
-                    return true;
-                }
-            };
-
-            const completedTasksFilter = {
-                appId: appId,
-                name: 'Completed',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-completed' },
-                icon: 'fa-random',
-                id: 84,
-                index: 24,
-                recent: false,
-                hasFilter: () => {
-                    return true;
-                }
-            };
-
-            const duplicateMyTasksFilter = {
-                appId: appId,
-                name: 'My Tasks',
-                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
-                icon: 'fa-random',
-                id: 85,
-                index: 25,
-                recent: false,
-                hasFilter: () => {
-                    return true;
-                }
-            };
+            const myTasksFilter = dummyMyTasksFilter;
+            const involvedTasksFilter = dummyInvolvedTasksFilter;
+            const queuedTasksFilter = dummyQueuedTasksFilter;
+            const completedTasksFilter = dummyCompletedTasksFilter;
+            const duplicateMyTasksFilter = dummyDuplicateMyTasksFilter;
 
             const myTasksObservableObservable = of(myTasksFilter);
             const involvedTasksObservable = of(involvedTasksFilter);
