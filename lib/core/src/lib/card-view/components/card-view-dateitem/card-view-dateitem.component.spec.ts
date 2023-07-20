@@ -61,6 +61,28 @@ describe('CardViewDateItemComponent', () => {
 
     afterEach(() => fixture.destroy());
 
+    const updateDateTime = async (key: string, isStartDayFormat: boolean) => {
+        component.editable = true;
+        component.property.editable = true;
+        component.property.default = 'Jul 10 2017 00:01:00';
+        component.property.key = `${key}`;
+        component.dateFormat = 'M/d/yy, h:mm a';
+        component.property.value = 'Jul 10 2017 00:01:00';
+        const expectedDate = new Date('Jul 10 2018');
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const element = fixture.debugElement.nativeElement.querySelector(`span[data-automation-id="card-date-value-${key}"]`);
+        expect(element).toBeDefined();
+        expect(element.innerText).toEqual('Jul 10, 2017');
+        component.onDateChanged({ value: expectedDate });
+
+        fixture.detectChanges();
+        isStartDayFormat ? expect(component.property.value).toEqual(startOfDay(expectedDate)) : expect(component.property.value).toEqual(endOfDay(expectedDate));
+    };
+
     it('should pick date format from appConfigService', () => {
         expect(component.dateFormat).toEqual('MMM d, y');
     });
@@ -316,24 +338,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should be possible update a date-time using end of day', async () => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.default = 'Jul 10 2017 00:01:00';
-        component.property.key = 'fake-key';
-        component.dateFormat = 'M/d/yy, h:mm a';
-        component.property.value = 'Jul 10 2017 00:01:00';
-        const expectedDate = new Date('Jul 10 2018');
-        fixture.detectChanges();
-
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
-        expect(element).toBeDefined();
-        expect(element.innerText).toEqual('Jul 10, 2017');
-        component.onDateChanged({ value: expectedDate });
-
-        fixture.detectChanges();
-        expect(component.property.value).toEqual(endOfDay(expectedDate));
+        updateDateTime('fake-key', false);
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {
@@ -375,23 +380,6 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should be possible update a date-time using start of day', async () => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.default = 'Jul 10 2017 00:01:00';
-        component.property.key = 'properties.cm:from';
-        component.dateFormat = 'M/d/yy, h:mm a';
-        component.property.value = 'Jul 10 2017 00:01:00';
-        const expectedDate = new Date('Jul 10 2018');
-        fixture.detectChanges();
-
-        await fixture.whenStable();
-        fixture.detectChanges();
-        const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-properties.cm:from"]');
-        expect(element).toBeDefined();
-        expect(element.innerText).toEqual('Jul 10, 2017');
-        component.onDateChanged({ value: expectedDate });
-
-        fixture.detectChanges();
-        expect(component.property.value).toEqual(startOfDay(expectedDate));
+        updateDateTime('properties.cm:from', true);
     });
 });
