@@ -160,23 +160,6 @@ export class SearchConfiguration {
                     }
                 },
                 {
-                    id: 'createdModifiedDateRange',
-                    name: 'Date',
-                    enabled: true,
-                    component: {
-                        selector: 'date-range-advanced',
-                        settings: {
-                            dateFormat: 'dd-MMM-yy',
-                            maxDate: 'today',
-                            field: 'cm:created, cm:modified',
-                            displayedLabelsByField: {
-                                "cm:created": 'Created Date',
-                                "cm:modified": 'Modified Date'
-                            }
-                        }
-                    }
-                },
-                {
                     id: 'queryType',
                     name: 'Type',
                     enabled: true,
