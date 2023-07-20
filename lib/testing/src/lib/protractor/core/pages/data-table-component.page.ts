@@ -204,6 +204,7 @@ export class DataTableComponentPage {
             if (b === 'none') {
                 return 1;
             } else {
+                Logger.error('------ clearSelection catch : ');
                 return -1;
             }
         }

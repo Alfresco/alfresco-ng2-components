@@ -143,7 +143,7 @@ rm -rf ./e2e-output/
 echo "====== BROWSER_RUN: $BROWSER_RUN ======"
 echo "====== Update webdriver-manager ====="
 if [ "$CI" = "true" ]; then
-    npm install -g webdriver-manager
+    npx webdriver-manager update
     export chrome=$(google-chrome --product-version)
     echo "Updating wedriver-manager with chromedriver: $chrome."
     ./node_modules/protractor/bin/webdriver-manager update --gecko=false --versions.chrome=$chrome

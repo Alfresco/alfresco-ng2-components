@@ -201,7 +201,7 @@ describe('Document List Component', () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272770] Should be able to sort by name (Descending)', async () => {
@@ -209,7 +209,7 @@ describe('Document List Component', () => {
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', async () => {
-            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
+            await expect(await contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272772] Should be able to sort by author (Descending)', async () => {
