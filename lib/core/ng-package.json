@@ -3,6 +3,11 @@
   "dest": "../../dist/libs/core",
   "assets": [
     {
+      "glob": "**/*.scss",
+      "input": "./breadcrumbs/src/styles",
+      "output": "./breadcrumbs/styles"
+    },
+    {
       "glob": "custom-theme/**/*",
       "input": "./",
       "output": "/"
