@@ -62,7 +62,7 @@ describe('SearchFacetFieldComponent', () => {
             component.onToggleBucket(event, field, bucket);
 
             expect(bucket.checked).toBeTruthy();
-            expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(field, bucket);
+            expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(field.field, bucket);
             expect(queryBuilder.update).toHaveBeenCalled();
             expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -80,7 +80,7 @@ describe('SearchFacetFieldComponent', () => {
 
         component.onToggleBucket(event, field, bucket);
 
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, bucket);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field.field, bucket);
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -99,7 +99,7 @@ describe('SearchFacetFieldComponent', () => {
         component.onToggleBucket(event, field, query as any);
 
         expect(query.checked).toEqual(false);
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, query);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field.field, query);
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });

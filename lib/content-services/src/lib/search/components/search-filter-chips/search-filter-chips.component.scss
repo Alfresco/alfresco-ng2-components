@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 
-.adf-search-filter-chip {
+.adf-search-filter-chip,
+.adf-search-filter-chip-tabbed {
     &.mat-chip {
         border: 2px solid transparent;
         transition: border 500ms ease-in-out;

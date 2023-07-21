@@ -183,14 +183,14 @@ export abstract class BaseQueryBuilderService {
      * @param field The target field
      * @param bucket Bucket to add
      */
-    addUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
-        if (field && field.field && bucket) {
-            const buckets = this.userFacetBuckets[field.field] || [];
+    addUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+        if (field && bucket) {
+            const buckets = this.userFacetBuckets[field] || [];
             const existing = buckets.find((facetBucket) => facetBucket.label === bucket.label);
             if (!existing) {
                 buckets.push(bucket);
             }
-            this.userFacetBuckets[field.field] = buckets;
+            this.userFacetBuckets[field] = buckets;
         }
     }
 
@@ -210,10 +210,10 @@ export abstract class BaseQueryBuilderService {
      * @param field The target field
      * @param bucket Bucket to remove
      */
-    removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
-        if (field && field.field && bucket) {
-            const buckets = this.userFacetBuckets[field.field] || [];
-            this.userFacetBuckets[field.field] = buckets
+    removeUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+        if (field && bucket) {
+            const buckets = this.userFacetBuckets[field] || [];
+            this.userFacetBuckets[field] = buckets
                 .filter((facetBucket) => facetBucket.label !== bucket.label);
         }
     }

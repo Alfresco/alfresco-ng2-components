@@ -61,7 +61,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
     selectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = true;
-            this.queryBuilder.addUserFacetBucket(field, bucket);
+            this.queryBuilder.addUserFacetBucket(field.field, bucket);
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {
                 this.updateDisplayValue();
@@ -73,7 +73,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
     unselectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = false;
-            this.queryBuilder.removeUserFacetBucket(field, bucket);
+            this.queryBuilder.removeUserFacetBucket(field.field, bucket);
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {
                 this.updateDisplayValue();
@@ -93,7 +93,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
         if (field && field.buckets) {
             for (const bucket of field.buckets.items) {
                 bucket.checked = false;
-                this.queryBuilder.removeUserFacetBucket(field, bucket);
+                this.queryBuilder.removeUserFacetBucket(field.field, bucket);
             }
             this.searchFacetFiltersService.updateSelectedBuckets();
             if (this.canUpdateOnChange) {

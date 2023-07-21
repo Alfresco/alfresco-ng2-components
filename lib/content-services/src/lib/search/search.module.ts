@@ -56,6 +56,7 @@ import { SearchFilterTabbedComponent } from './components/search-filter-tabbed/s
 import { SearchDateRangeAdvancedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component';
 import { SearchDateRangeAdvancedTabbedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component';
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
+import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 
 @NgModule({
     imports: [
@@ -98,7 +99,8 @@ import { SearchFilterTabDirective } from './components/search-filter-tabbed/sear
         SearchFilterTabbedComponent,
         SearchDateRangeAdvancedComponent,
         SearchDateRangeAdvancedTabbedComponent,
-        SearchFilterTabDirective
+        SearchFilterTabDirective,
+        SearchFacetChipTabbedComponent
     ],
     exports: [
         SearchComponent,
@@ -126,7 +128,8 @@ import { SearchFilterTabDirective } from './components/search-filter-tabbed/sear
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
         SearchDateRangeAdvancedComponent,
-        ResetSearchDirective
+        ResetSearchDirective,
+        SearchFacetChipTabbedComponent
     ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }

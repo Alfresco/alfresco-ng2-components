@@ -637,10 +637,10 @@ describe('SearchQueryBuilder', () => {
 
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
 
-        builder.addUserFacetBucket(field1, field1buckets[0]);
-        builder.addUserFacetBucket(field1, field1buckets[1]);
-        builder.addUserFacetBucket(field2, field2buckets[0]);
-        builder.addUserFacetBucket(field2, field2buckets[1]);
+        builder.addUserFacetBucket(field1.field, field1buckets[0]);
+        builder.addUserFacetBucket(field1.field, field1buckets[1]);
+        builder.addUserFacetBucket(field2.field, field2buckets[0]);
+        builder.addUserFacetBucket(field2.field, field2buckets[1]);
 
         const compiledQuery = builder.buildQuery();
         const expectedResult = '(f1-q1 OR f1-q2) AND (f2-q1 OR f2-q2)';

@@ -1,0 +1,13 @@
+.adf-search-filter-chip-tabbed {
+    &[disabled] {
+        pointer-events: none;
+    }
+}
+
+.adf-search-widget-extra-width {
+    max-width: 500px;
+}
+
+.mat-tab-body-wrapper {
+    margin-top: 16px;
+}

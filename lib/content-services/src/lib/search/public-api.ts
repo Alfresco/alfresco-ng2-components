@@ -27,6 +27,7 @@ export * from './models/search-configuration.interface';
 export * from './services/search-query-builder.service';
 export * from './models/search-range.interface';
 export * from './models/search-form.interface';
+export * from './models/tabbed-facet-field.interface';
 
 export * from './search-query-service.token';
 export * from './services/search-header-query-builder.service';
@@ -67,5 +68,6 @@ export * from './components/search-filter-tabbed/search-filter-tabbed.component'
 export * from './components/reset-search.directive';
 export * from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
 export * from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
+export * from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 
 export * from './search.module';

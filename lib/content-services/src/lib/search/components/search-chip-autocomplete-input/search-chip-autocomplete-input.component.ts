@@ -105,7 +105,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.autocompleteOptions) {
-            this.filteredOptions = changes.autocompleteOptions.currentValue.length > 0 ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value) : [];
+            this.filteredOptions = changes.autocompleteOptions.currentValue?.length > 0 ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value) : [];
         }
     }
 

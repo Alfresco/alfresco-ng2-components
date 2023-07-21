@@ -3,6 +3,12 @@
         <adf-search-widget-chip [category]="category"></adf-search-widget-chip>
     </ng-container>
 
+    <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
+        <adf-search-facet-chip-tabbed
+            [tabbedFacet]="facetFiltersService.tabbedFacet"
+            [attr.data-automation-id]="'search-fact-chip-tabbed' + facetFiltersService.tabbedFacet.fields.concat('')" >
+        </adf-search-facet-chip-tabbed>
+    </ng-container>
     <ng-container *ngIf="facetFiltersService.responseFacets && showContextFacets">
         <ng-container *ngFor="let field of facetFiltersService.responseFacets">
             <adf-search-facet-chip [field]="field" [attr.data-automation-id]="'search-fact-chip-' + field.field" ></adf-search-facet-chip>
