@@ -98,7 +98,8 @@ export class CustomResourcesService {
     getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
         const defaultFilter = [
             'TYPE:"content"',
-            '-PATH:"//cm:wiki/*"',
+            //TODO '*' for now cause exception to be thrown, Team6 is working on it
+            '-PATH:"//cm:wiki/"',
             '-TYPE:"app:filelink"',
             '-TYPE:"cm:thumbnail"',
             '-TYPE:"cm:failedThumbnail"',
