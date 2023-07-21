@@ -67,30 +67,32 @@ export class TaskFilterService {
                 (res) => {
                     const filters: FilterRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        if (filter.name === involvedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: involvedTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === myTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: myTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === queuedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: queuedTasksFilter.filter,
-                                appId
-                            }));
-                        } else if (filter.name === completedTasksFilter.name) {
-                            filters.push(new FilterRepresentationModel({
-                                ...filter,
-                                filter: completedTasksFilter.filter,
-                                appId
-                            }));
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                            if (filter.name === involvedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: involvedTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === myTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: myTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === queuedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: queuedTasksFilter.filter,
+                                    appId
+                                }));
+                            } else if (filter.name === completedTasksFilter.name) {
+                                filters.push(new FilterRepresentationModel({
+                                    ...filter,
+                                    filter: completedTasksFilter.filter,
+                                    appId
+                                }));
+                            }
                         }
                     });
                     observer.next(filters);
@@ -114,13 +116,26 @@ export class TaskFilterService {
                 map((response: any) => {
                     const filters: FilterRepresentationModel[] = [];
                     response.data.forEach((filter: FilterRepresentationModel) => {
-                        const filterModel = new FilterRepresentationModel(filter);
-                        filters.push(filterModel);
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                            const filterModel = new FilterRepresentationModel(filter);
+                            filters.push(filterModel);
+                        }
                     });
                     return filters;
                 }),
                 catchError((err) => this.handleError(err))
             );
+    }
+
+    /**
+     * Checks if a filter with the given name already exists in the list of filters.
+     *
+     * @param filters - An array of `FilterRepresentationModel` objects representing the existing filters.
+     * @param filterName - The name of the filter to check for existence.
+     * @returns - True if a filter with the specified name already exists, false otherwise.
+     */
+    isFilterAlreadyExisting(filters: FilterRepresentationModel[], filterName: string): boolean {
+        return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**

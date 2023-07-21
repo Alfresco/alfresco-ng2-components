@@ -49,3 +49,55 @@ export const fakeProcessFiltersResponse = {
         filter: { sort: 'created-desc', name: '', state: 'running' }
     })]
 };
+
+export const dummyRunningFilter = {
+    appId: 123,
+    name: 'Running',
+    filter: { sort: 'created-desc', name: '', state: 'running' },
+    icon: 'fa-random',
+    id: 18,
+    index: 10,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyCompletedFilter = {
+    appId: 123,
+    name: 'Completed',
+    filter: { sort: 'created-desc', name: '', state: 'completed' },
+    icon: 'fa-random',
+    id: 19,
+    index: 11,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyAllFilter = {
+    appId: 123,
+    name: 'All',
+    filter: { sort: 'created-desc', name: '', state: 'all' },
+    icon: 'fa-random',
+    id: 20,
+    index: 12,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyDuplicateRunningFilter = {
+    appId: 123,
+    name: 'Running',
+    filter: { sort: 'created-desc', name: '', state: 'running' },
+    icon: 'fa-random',
+    id: 21,
+    index: 13,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};

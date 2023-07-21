@@ -51,8 +51,10 @@ export class ProcessFilterService {
                 map((response) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     response.data.forEach((filter) => {
-                        const filterModel = new FilterProcessRepresentationModel(filter);
-                        filters.push(filterModel);
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                            const filterModel = new FilterProcessRepresentationModel(filter);
+                            filters.push(filterModel);
+                        }
                     });
                     return filters;
                 }),
@@ -116,12 +118,14 @@ export class ProcessFilterService {
                 (res) => {
                     const filters: FilterProcessRepresentationModel[] = [];
                     res.forEach((filter) => {
-                        if (filter.name === runningFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
-                        } else if (filter.name === completedFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
-                        } else if (filter.name === allFilter.name) {
-                            filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
+                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                            if (filter.name === runningFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: runningFilter.filter, appId }));
+                            } else if (filter.name === completedFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: completedFilter.filter, appId }));
+                            } else if (filter.name === allFilter.name) {
+                                filters.push(new FilterProcessRepresentationModel({ ...filter, filter: allFilter.filter, appId }));
+                            }
                         }
                     });
                     observer.next(filters);
@@ -131,6 +135,17 @@ export class ProcessFilterService {
                     this.handleProcessError(err);
                 });
         });
+    }
+
+    /**
+     * Checks if a filter with the given name already exists in the list of filters.
+     *
+     * @param filters - An array of FilterProcessRepresentationModel objects representing the existing filters.
+     * @param filterName - The name of the filter to check for existence.
+     * @returns - True if a filter with the specified name already exists, false otherwise.
+     */
+    isFilterAlreadyExisting(filters: FilterProcessRepresentationModel[], filterName: string): boolean {
+        return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**

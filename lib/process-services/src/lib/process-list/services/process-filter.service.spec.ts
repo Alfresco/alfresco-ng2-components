@@ -16,10 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { mockError, fakeProcessFiltersResponse } from '../../mock';
+import { mockError, fakeProcessFiltersResponse, dummyRunningFilter, dummyAllFilter, dummyCompletedFilter, dummyDuplicateRunningFilter } from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
+import { ProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -231,6 +233,79 @@ describe('Process filter', () => {
                         done();
                     }
                 );
+            });
+
+        });
+
+        describe('isFilterAlreadyExisting', () => {
+            let dummyProcessFilters: FilterProcessRepresentationModel[];
+            let filterRepresentationData: ProcessInstanceFilterRepresentation;
+
+            beforeEach(() => {
+                dummyProcessFilters = [
+                    {
+                        appId: 0,
+                        filter: filterRepresentationData,
+                        icon: 'fa-random',
+                        id: 8,
+                        index: 0,
+                        name: 'Running',
+                        recent: false,
+                        hasFilter: () => {
+                            return true;
+                        }
+                    }
+                ];
+
+                filterRepresentationData = {
+                    name : '',
+                    sort : 'created-desc',
+                    state : 'running'
+                };
+            });
+
+            it('should return true if the process filter already exists', () => {
+                const processFilterName = 'Running';
+                const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
+                expect(result).toBe(true);
+            });
+
+            it('should return false if the process filter does not exist', () => {
+                const processFilterName = 'All';
+                const result = service.isFilterAlreadyExisting(dummyProcessFilters, processFilterName);
+                expect(result).toBe(false);
+            });
+        });
+
+        describe('createDefaultFilters', () => {
+
+            it('should return an array with unique process filters', (done) => {
+                const appId = 123;
+
+                const runningFilter = dummyRunningFilter;
+                const completedFilter = dummyCompletedFilter;
+                const allFilter = dummyAllFilter;
+                const duplicateRunningFilter = dummyDuplicateRunningFilter;
+
+                const runningObservable = of(runningFilter);
+                const completedObservable = of(completedFilter);
+                const allObservable = of(allFilter);
+                const duplicateRunningObservable = of(duplicateRunningFilter);
+
+                spyOn(service, 'getRunningFilterInstance').and.returnValue(runningFilter);
+                spyOn<any>(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
+                spyOn<any>(service, 'getAllFilterInstance').and.returnValue(allFilter);
+
+                spyOn(service, 'addProcessFilter').and.returnValues(runningObservable, completedObservable, allObservable, duplicateRunningObservable);
+
+                service.createDefaultFilters(appId).subscribe((result) => {
+                    expect(result).toEqual([
+                        new FilterProcessRepresentationModel({ ...runningFilter, filter: runningFilter.filter, appId }),
+                        new FilterProcessRepresentationModel({ ...completedFilter, filter: completedFilter.filter, appId }),
+                        new FilterProcessRepresentationModel({ ...allFilter, filter: allFilter.filter, appId })
+                    ]);
+                    done();
+                });
             });
 
         });

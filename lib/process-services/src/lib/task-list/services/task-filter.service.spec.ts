@@ -17,11 +17,13 @@
 
 import { TestBed } from '@angular/core/testing';
 import { fakeAppPromise } from '../../mock';
-import { fakeFiltersResponse, fakeAppFilter } from '../../mock/task/task-filters.mock';
+import { fakeFiltersResponse, fakeAppFilter, dummyMyTasksFilter, dummyInvolvedTasksFilter, dummyQueuedTasksFilter, dummyCompletedTasksFilter, dummyDuplicateMyTasksFilter } from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TaskFilterRepresentation } from '@alfresco/js-api';
+import { of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -251,4 +253,81 @@ describe('Activiti Task filter Service', () => {
             });
         });
    });
+
+    describe('isFilterAlreadyExisting', () => {
+        let dummyTaskFilters: FilterRepresentationModel[];
+        let filterRepresentationData: TaskFilterRepresentation;
+
+        beforeEach(() => {
+            dummyTaskFilters = [
+                {
+                    appId: 0,
+                    filter: filterRepresentationData,
+                    icon: 'fa-random',
+                    id: 9,
+                    index: 0,
+                    name: 'My Tasks',
+                    recent: false,
+                    hasFilter: () => {
+                        return true;
+                    }
+                }
+            ];
+
+            filterRepresentationData = {
+                name : '',
+                sort : 'created-desc',
+                state : 'running'
+            };
+        });
+
+        it('should return true if the task filter already exists', () => {
+            const taskFilterName = 'My Tasks';
+            const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
+            expect(result).toBe(true);
+        });
+
+        it('should return false if the task filter does not exist', () => {
+            const taskFilterName = 'Involved Tasks';
+            const result = service.isFilterAlreadyExisting(dummyTaskFilters, taskFilterName);
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('createDefaultFilters', () => {
+
+        it('should return an array with unique task filters', (done) => {
+            const appId = 101;
+
+            const myTasksFilter = dummyMyTasksFilter;
+            const involvedTasksFilter = dummyInvolvedTasksFilter;
+            const queuedTasksFilter = dummyQueuedTasksFilter;
+            const completedTasksFilter = dummyCompletedTasksFilter;
+            const duplicateMyTasksFilter = dummyDuplicateMyTasksFilter;
+
+            const myTasksObservableObservable = of(myTasksFilter);
+            const involvedTasksObservable = of(involvedTasksFilter);
+            const queuedTasksObservable = of(queuedTasksFilter);
+            const completedTasksObservable = of(completedTasksFilter);
+            const duplicateMyTasksObservableObservable = of(duplicateMyTasksFilter);
+
+            spyOn(service, 'getMyTasksFilterInstance').and.returnValue(myTasksFilter);
+            spyOn(service, 'getInvolvedTasksFilterInstance').and.returnValue(involvedTasksFilter);
+            spyOn(service, 'getQueuedTasksFilterInstance').and.returnValue(queuedTasksFilter);
+            spyOn(service, 'getCompletedTasksFilterInstance').and.returnValue(completedTasksFilter);
+
+            spyOn(service, 'addFilter').and.returnValues(myTasksObservableObservable, involvedTasksObservable, queuedTasksObservable, completedTasksObservable, duplicateMyTasksObservableObservable);
+
+            service.createDefaultFilters(appId).subscribe((result) => {
+                expect(result).toEqual([
+                    new FilterRepresentationModel({ ...myTasksFilter, filter: myTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...involvedTasksFilter, filter: involvedTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...queuedTasksFilter, filter: queuedTasksFilter.filter, appId }),
+                    new FilterRepresentationModel({ ...completedTasksFilter, filter: completedTasksFilter.filter, appId })
+                ]);
+                done();
+            });
+        });
+
+    });
 });

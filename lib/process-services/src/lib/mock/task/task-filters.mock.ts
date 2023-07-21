@@ -102,3 +102,68 @@ export const fakeRepresentationFilter2: FilterRepresentationModel = new FilterRe
         dueBefore: null
     }
 });
+
+export const dummyMyTasksFilter = {
+    appId: 101,
+    name: 'My Tasks',
+    filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
+    icon: 'fa-random',
+    id: 81,
+    index: 21,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyInvolvedTasksFilter = {
+    appId: 101,
+    name: 'Involved Tasks',
+    filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' },
+    icon: 'fa-random',
+    id: 82,
+    index: 22,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyQueuedTasksFilter = {
+    appId: 101,
+    name: 'Queued Tasks',
+    filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-queued' },
+    icon: 'fa-random',
+    id: 83,
+    index: 23,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyCompletedTasksFilter = {
+    appId: 101,
+    name: 'Completed',
+    filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-completed' },
+    icon: 'fa-random',
+    id: 84,
+    index: 24,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
+
+export const dummyDuplicateMyTasksFilter = {
+    appId: 101,
+    name: 'My Tasks',
+    filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-mytasks' },
+    icon: 'fa-random',
+    id: 85,
+    index: 25,
+    recent: false,
+    hasFilter: () => {
+        return true;
+    }
+};
