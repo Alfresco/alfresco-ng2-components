@@ -77,6 +77,7 @@ describe('CardViewDateItemComponent', () => {
         return expectedDate;
     };
 
+    //we will enable this test when will change from moment to date-fns throughout the application
     // eslint-disable-next-line ban/ban
     xit('should pick date format from appConfigService', () => {
         expect(component.dateFormat).toEqual('shortDate');
