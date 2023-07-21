@@ -54,7 +54,8 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
         if (this.queryProvider?.query) {
             query = this.queryProvider.query.replace(new RegExp(/\${([^}]+)}/g), searchTerm);
         } else {
-            query = `(email:*${searchTerm}* OR firstName:*${searchTerm}* OR lastName:*${searchTerm}* OR displayName:*${searchTerm}* OR authorityName:*${searchTerm}* OR authorityDisplayName:*${searchTerm}*) AND ANAME:("0/APP.DEFAULT")`;
+            //TODO change to PARENT: with noderef of app.default or to PATH://cm:APP.DEFAULT/*
+            query = `(username:*${searchTerm}* OR email:*${searchTerm}* OR firstName:*${searchTerm}* OR lastName:*${searchTerm}* OR authorityName:*${searchTerm}* OR authorityDisplayName:*${searchTerm}*)`;
         }
         return query;
     }
