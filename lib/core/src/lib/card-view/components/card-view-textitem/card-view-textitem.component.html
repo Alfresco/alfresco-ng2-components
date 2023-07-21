@@ -33,7 +33,7 @@
                     [attr.data-automation-id]="'card-textitem-value-' + property.key">
                 </textarea>
 
-                <button
+                <!-- <button
                     *ngIf="isEditable"
                     matSuffix
                     class="adf-textitem-clear-icon"
@@ -47,7 +47,7 @@
                     class="adf-textitem-edit-icon"
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate">
                     <mat-icon>mode_edit</mat-icon>
-                </button>
+                </button> -->
 
         </mat-form-field>
     </div>
@@ -120,6 +120,10 @@
 
     <div *ngSwitchCase="'emptyTemplate'">
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
+    </div>
+
+    <div *ngSwitchCase="''">
+
     </div>
 
     <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"

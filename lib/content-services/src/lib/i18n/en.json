@@ -148,7 +148,8 @@
       "NO_EXISTING_TAGS": "No Existing Tags",
       "TITLE": "Create Tags",
       "CREATE_TAG": "Create: {{tag}}",
-      "NAME": "Name",
+      "NAME": "Add a tag to these items",
+      "TAGS_PLACEHOLDER": "Add a tag to these items",
       "ERRORS": {
         "EXISTING_TAG": "Tag already exists",
         "ALREADY_ADDED_TAG": "Tag is already added",
@@ -421,7 +422,7 @@
   "METADATA": {
     "BASIC": {
       "HEADER": "Properties",
-      "NAME": "Name",
+      "NAME": "General Info",
       "TITLE": "Title",
       "DESCRIPTION": "Description",
       "AUTHOR": "Author",

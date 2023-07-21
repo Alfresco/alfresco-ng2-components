@@ -40,6 +40,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     editable: boolean;
 
     @Input()
+    generalEditable: boolean;
+
+    @Input()
     displayEmpty: boolean = true;
 
     @Input()

@@ -1,8 +1,14 @@
 .adf-categories-management {
+    padding-top: 12px;
     .adf-category-name-field {
         display: flex;
         justify-content: space-between;
         width: 100%;
+        background: rgba(33, 33, 33, 0.05);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
+        padding: 0 12px;
 
         mat-form-field {
             width: 100%;

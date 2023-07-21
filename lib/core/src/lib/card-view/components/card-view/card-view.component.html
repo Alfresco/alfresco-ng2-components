@@ -3,7 +3,7 @@
         <div [attr.data-automation-id]="'header-'+property.key" class="adf-property">
             <adf-card-view-item-dispatcher
                 [property]="property"
-                [editable]="editable"
+                [editable]="editable || generalEditable"
                 [displayEmpty]="displayEmpty"
                 [displayNoneOption]="property['displayNoneOption'] !== undefined ? property['displayNoneOption'] : displayNoneOption"
                 [displayClearAction]="displayClearAction"

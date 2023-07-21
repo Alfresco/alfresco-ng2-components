@@ -20,4 +20,5 @@ import { CardViewItem } from '@alfresco/adf-core';
 export interface CardViewGroup {
     title: string;
     properties: CardViewItem[];
+    editable: boolean;
 }

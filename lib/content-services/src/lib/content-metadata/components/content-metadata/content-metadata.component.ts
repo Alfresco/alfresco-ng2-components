@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
@@ -35,6 +35,7 @@ import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -46,11 +47,23 @@ const DEFAULT_SEPARATOR = ', ';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
+    @ViewChild(MatExpansionPanel) panel: MatExpansionPanel;
     protected onDestroy$ = new Subject<boolean>();
+    editableGeneral: boolean;
+    editableTags: boolean = false;
+    editableCategories: boolean = false
+    generalInfoPanelState: boolean;
+    tagsPanelState: boolean;
+    categoriesPanelState: boolean;
+    aspectPanelstate: boolean;
+    loading;
 
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
+
+    @Input()
+    generalEditable: boolean
 
     /** Toggles whether the edit button should be shown */
     @Input()
@@ -71,7 +84,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * (ie, reduced information) in the display
      */
     @Input()
-    expanded: boolean = false;
+    expanded: boolean = true;
+
+    initiallyExpanded = true;
 
     /** The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time */
     @Input()
@@ -229,9 +244,56 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges() {
+    saveChanges(group:any, event: Event) {
+        event.stopPropagation();
         this._saving = true;
         this.tagNameControlVisible = false;
+        group.editable = !group.editable;
+        this.categoryControlVisible = false;
+        if (this.hasContentTypeChanged(this.changedProperties)) {
+            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
+                this.updateNode();
+            });
+        } else {
+            this.updateNode();
+        }
+    }
+
+    generalSaveChanges(event: Event) {
+        event.stopPropagation();
+        this._saving = true;
+        this.tagNameControlVisible = false;
+        this.generalEditable = !this.generalEditable;
+        this.categoryControlVisible = false;
+        if (this.hasContentTypeChanged(this.changedProperties)) {
+            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
+                this.updateNode();
+            });
+        } else {
+            this.updateNode();
+        }
+    }
+
+    saveTagsChanges(event: Event) {
+        event.stopPropagation();
+        this._saving = true;
+        this.tagNameControlVisible = false;
+        this.editableTags = !this.editableTags;
+        this.categoryControlVisible = false;
+        if (this.hasContentTypeChanged(this.changedProperties)) {
+            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
+                this.updateNode();
+            });
+        } else {
+            this.updateNode();
+        }
+    }
+
+    saveCategoriesChanges(event: Event) {
+        event.stopPropagation();
+        this._saving = true;
+        this.tagNameControlVisible = false;
+        this.editableCategories = !this.editableCategories;
         this.categoryControlVisible = false;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
@@ -269,9 +331,32 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.hasMetadataChanged = false;
     }
 
-    cancelChanges() {
+    cancelChanges(group: any, event: Event) {
+        event.stopPropagation();
         this.revertChanges();
         this.loadProperties(this.node);
+        group.editable = !group.editable;
+    }
+
+    generalCancelChanges(event: Event) {
+        event.stopPropagation();
+        this.revertChanges();
+        this.loadProperties(this.node);
+        this.generalEditable = !this.generalEditable;
+    }
+
+    CancelTagsChanges(event: Event) {
+        event.stopPropagation();
+        this.revertChanges();
+        this.loadProperties(this.node);
+        this.editableTags = !this.editableTags;
+    }
+
+    cancelCategoriesChanges(event: Event) {
+        event.stopPropagation();
+        this.revertChanges();
+        this.loadProperties(this.node);
+        this.editableCategories = !this.editableCategories
     }
 
     showGroup(group: CardViewGroup): boolean {
@@ -420,4 +505,39 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
         return observables;
     }
+
+    generalToggleEdit(event: Event): void {
+        event.stopPropagation();
+        this.generalEditable = !this.generalEditable;
+        if (!this.panel.expanded) {
+            this.panel.open(); // Expand the panel if it's collapsed
+        }
+    }
+
+    toggleTagsEdit(event: Event): void {
+        event.stopPropagation();
+        this.editableTags = !this.editableTags;
+        if (this.editableTags) {
+            this.tagsPanelState = true;
+        } else {
+            this.tagsPanelState = false;
+        }  
+    }
+
+    toggleCategoriesEdit(event: Event): void {
+        event.stopPropagation();
+        this.editableCategories = !this.editableCategories;
+        if (this.editableCategories) {
+            this.categoriesPanelState = true;
+        } else {
+            this.categoriesPanelState = false;
+        }
+    }
+
+    toggleEdit(group: any, event: Event): void {
+        event.stopPropagation();
+        group.editable = !group.editable;
+        group.expanded = true;
+    }
 }
+
