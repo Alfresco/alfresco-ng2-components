@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-export * from './object-utils';
-export * from './file-utils';
-export * from './moment-date-formats.model';
-export * from './moment-date-adapter';
-export * from './string-utils';
-export * from './date-fns-utils';
+import { Directive, Input, TemplateRef } from '@angular/core';
+
+@Directive({
+  selector: '[adf-search-filter-tab]'
+})
+export class SearchFilterTabDirective {
+    @Input('adf-search-filter-tab')
+    name: string;
+
+    constructor(public readonly templateRef: TemplateRef<any>) { }
+}

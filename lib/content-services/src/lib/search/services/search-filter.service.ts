@@ -26,6 +26,9 @@ import { SearchDatetimeRangeComponent } from '../components/search-datetime-rang
 import { SearchLogicalFilterComponent } from '../components/search-logical-filter/search-logical-filter.component';
 import { SearchFilterAutocompleteChipsComponent } from '../components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 import { SearchPropertiesComponent } from '../components/search-properties/search-properties.component';
+import {
+    SearchDateRangeAdvancedTabbedComponent
+} from '../components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +48,8 @@ export class SearchFilterService {
         'date-range': SearchDateRangeComponent,
         'datetime-range': SearchDatetimeRangeComponent,
         'logical-filter': SearchLogicalFilterComponent,
-        'autocomplete-chips': SearchFilterAutocompleteChipsComponent
+        'autocomplete-chips': SearchFilterAutocompleteChipsComponent,
+        'date-range-advanced': SearchDateRangeAdvancedTabbedComponent
     };
 
 }

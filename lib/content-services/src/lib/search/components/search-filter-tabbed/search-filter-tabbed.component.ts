@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-export * from './object-utils';
-export * from './file-utils';
-export * from './moment-date-formats.model';
-export * from './moment-date-adapter';
-export * from './string-utils';
-export * from './date-fns-utils';
+import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
+import { SearchFilterTabDirective } from './search-filter-tab.directive';
+
+@Component({
+  selector: 'adf-search-filter-tabbed',
+  templateUrl: './search-filter-tabbed.component.html',
+  styleUrls: ['./search-filter-tabbed.component.scss'],
+  encapsulation: ViewEncapsulation.None
+})
+export class SearchFilterTabbedComponent {
+    @ContentChildren(SearchFilterTabDirective)
+    tabsContents: QueryList<SearchFilterTabDirective>;
+}

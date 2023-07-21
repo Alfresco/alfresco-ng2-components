@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-export * from './object-utils';
-export * from './file-utils';
-export * from './moment-date-formats.model';
-export * from './moment-date-adapter';
-export * from './string-utils';
-export * from './date-fns-utils';
+import { DateRangeType } from './date-range-type';
+import { InLastDateType } from './in-last-date-type';
+
+export interface SearchDateRangeAdvanced {
+    dateRangeType: DateRangeType;
+    inLastValueType?: InLastDateType;
+    inLastValue?: string;
+    betweenStartDate?: Date;
+    betweenEndDate?: Date;
+}

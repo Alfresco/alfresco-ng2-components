@@ -1,0 +1,5 @@
+<mat-tab-group>
+    <mat-tab *ngFor="let tabContent of tabsContents" label="{{tabContent.name | translate}}">
+        <ng-container *ngTemplateOutlet="tabContent.templateRef"></ng-container>
+    </mat-tab>
+</mat-tab-group>

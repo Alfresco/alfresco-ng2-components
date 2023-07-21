@@ -24,6 +24,13 @@ import { SearchWidgetContainerComponent } from '../../search-widget-container/se
 @Component({
   selector: 'adf-search-widget-chip',
   templateUrl: './search-widget-chip.component.html',
+  styles: [
+      `
+    .adf-search-widget-extra-width {
+      max-width: 500px;
+    }
+  `
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class SearchWidgetChipComponent  {

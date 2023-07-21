@@ -52,6 +52,10 @@ import { SearchFacetChipComponent } from './components/search-filter-chips/searc
 import { SearchLogicalFilterComponent } from './components/search-logical-filter/search-logical-filter.component';
 import { ResetSearchDirective } from './components/reset-search.directive';
 import { SearchPropertiesComponent } from './components/search-properties/search-properties.component';
+import { SearchFilterTabbedComponent } from './components/search-filter-tabbed/search-filter-tabbed.component';
+import { SearchDateRangeAdvancedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component';
+import { SearchDateRangeAdvancedTabbedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component';
+import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 
 @NgModule({
     imports: [
@@ -90,7 +94,11 @@ import { SearchPropertiesComponent } from './components/search-properties/search
         SearchFacetChipComponent,
         SearchLogicalFilterComponent,
         ResetSearchDirective,
-        SearchPropertiesComponent
+        SearchPropertiesComponent,
+        SearchFilterTabbedComponent,
+        SearchDateRangeAdvancedComponent,
+        SearchDateRangeAdvancedTabbedComponent,
+        SearchFilterTabDirective
     ],
     exports: [
         SearchComponent,
@@ -116,6 +124,8 @@ import { SearchPropertiesComponent } from './components/search-properties/search
         SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
         SearchLogicalFilterComponent,
+        SearchFilterTabbedComponent,
+        SearchDateRangeAdvancedComponent,
         ResetSearchDirective
     ],
     providers: [

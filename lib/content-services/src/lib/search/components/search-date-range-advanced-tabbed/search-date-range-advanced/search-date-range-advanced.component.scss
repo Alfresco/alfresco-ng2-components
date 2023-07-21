@@ -1,0 +1,45 @@
+.adf-search-date-range-advanced {
+    .mat-radio-group {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+    }
+
+    .mat-radio-button {
+        margin: 5px;
+    }
+
+    .adf-search-date-range-horizontal-container {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 15px;
+
+        .adf-search-date-range-input-field {
+            width: 75px;
+        }
+
+        .adf-search-date-range-form-field {
+            padding-left: 10px;
+            flex: 1;
+
+            .mat-form-field-wrapper {
+                padding-bottom: 0;
+                margin-bottom: 1.25em;
+                border: 1px solid var(--adf-theme-mat-grey-color-a400);
+                border-radius: 5px;
+
+                .mat-form-field-infix {
+                    border: 0;
+                }
+
+                .mat-form-field-underline {
+                    display: none;
+                }
+
+                .mat-form-field-subscript-wrapper {
+                    margin-top: 2em;
+                }
+            }
+        }
+    }
+}
