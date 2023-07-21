@@ -38,7 +38,7 @@ export class AppConfigServiceMock extends AppConfigService {
     load(): Promise<any> {
         return new Promise((resolve) => {
             this.status = Status.LOADED;
-            this.onDataLoaded(this.config);
+            this.onDataLoaded();
             resolve(this.config);
         });
     }

@@ -188,4 +188,14 @@ describe('AppConfigService', () => {
 
         expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
     });
+
+    it('should execute callback function if is passed to the load method', async () => {
+        const fakeCallBack = jasmine.createSpy('fakeCallBack');
+        fakeCallBack.and.returnValue(()=>{});
+
+        await appConfigService.load(fakeCallBack);
+
+        expect(fakeCallBack).toHaveBeenCalled();
+    });
+
 });
