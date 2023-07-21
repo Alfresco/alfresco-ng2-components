@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Authentication } from '../interfaces/authentication.interface';
 import { CookieService } from '../../common/services/cookie.service';
 import { ContentAuth } from './content-auth';
 import { ProcessAuth } from './process-auth';
 import { catchError, map } from 'rxjs/operators';
-import { from, Observable, zip } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { RedirectionModel } from '../models/redirection.model';
 import { BaseAuthenticationService } from '../services/base-authentication.service';
 import { LogService } from '../../common';
 import { HttpHeaders } from '@angular/common/http';
-import { AlfrescoApiService } from '../../../..';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
@@ -36,7 +35,6 @@ const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
     providedIn: 'root'
 })
 export class BasicAlfrescoAuthService extends BaseAuthenticationService {
-    alfrescoApiService = inject(AlfrescoApiService);
 
     protected redirectUrl: RedirectionModel = null;
 
@@ -56,7 +54,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     ) {
         super(appConfig, cookie, logService);
 
-        zip(this.alfrescoApiService.alfrescoApiInitialized, this.appConfig.onLoad)
+        this.appConfig.onLoad
             .subscribe(() => {
                 if (this.isLoggedIn()) {
                     this.onLogin.next('logged-in');

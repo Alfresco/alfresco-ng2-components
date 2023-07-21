@@ -165,8 +165,7 @@ export class AppConfigService {
         this.onLoadSubject.next(this.config);
     }
 
-    protected onDataLoaded(data: any) {
-        this.config = Object.assign({}, this.config, data || {});
+    protected onDataLoaded() {
         this.onLoadSubject.next(this.config);
 
         this.extensionService.setup$
@@ -199,9 +198,10 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
+                        this.config = Object.assign({}, this.config, data || {});
                         callback?.();
                         resolve(data);
-                        this.onDataLoaded(data);
+                        this.onDataLoaded();
                     },
                     () => {
                         // eslint-disable-next-line no-console
