@@ -14,7 +14,7 @@ Checks if the provided value is contained in the provided array.
 <!-- {% raw %} -->
 
 ```HTML
-<mat-option [disabled]="value | adfIsIncluded: arrayOfValues"</mat-option>
+<mat-option [disabled]="value | adfIsIncluded: arrayOfValues : comparator"></mat-option>
 ```
 
 <!-- {% endraw %} -->

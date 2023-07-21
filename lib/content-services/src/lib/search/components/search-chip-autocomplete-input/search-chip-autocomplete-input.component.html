@@ -4,8 +4,14 @@
             class="adf-option-chips"
             *ngFor="let option of selectedOptions"
             (removed)="remove(option)">
-            <span>{{option}}</span>
-            <button matChipRemove class="adf-option-chips-delete-button" [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option">
+            <span [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath}"
+                  [matTooltipDisabled]="!option.fullPath" [matTooltipShowDelay]="tooltipShowDelay">
+                {{ option.value }}
+            </span>
+            <button matChipRemove class="adf-option-chips-delete-button" [matTooltipDisabled]="!option.fullPath"
+                    [matTooltip]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' \'' + option.fullPath + '\''"
+                    [matTooltipShowDelay]="tooltipShowDelay"
+                    [attr.aria-label]="('SEARCH.FILTER.BUTTONS.REMOVE' | translate) + ' ' + option.value">
                 <mat-icon class="adf-option-chips-delete-icon">close</mat-icon>
             </button>
         </mat-chip>
@@ -24,9 +30,15 @@
     </mat-chip-list>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"
                       (optionActivated)="activeAnyOption = true" (closed)="activeAnyOption = false">
-        <mat-option [disabled]="option | adfIsIncluded: selectedOptions : compareOption" *ngFor="let option of filteredOptions$ | async"
-                    [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">
-            {{option}}
-        </mat-option>
+        <ng-container *ngIf="optionInput.value.length > 0">
+            <mat-option
+                [disabled]="option | adfIsIncluded: selectedOptions : compareOption"
+                *ngFor="let option of filteredOptions" [value]="option" [matTooltipShowDelay]="tooltipShowDelay"
+                [matTooltipDisabled]="!option.fullPath" matTooltipPosition="right"
+                [matTooltip]="'SEARCH.RESULTS.WILL_CONTAIN' | translate:{searchTerm: option.fullPath || option.value}"
+                [ngClass]="(option | adfIsIncluded: selectedOptions : compareOption) && 'adf-autocomplete-added-option'">
+                {{ option.fullPath || option.value }}
+            </mat-option>
+        </ng-container>
     </mat-autocomplete>
 </mat-form-field>

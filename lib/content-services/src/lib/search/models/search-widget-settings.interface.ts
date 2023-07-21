@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { AutocompleteOption } from './autocomplete-option.interface';
+
 export interface SearchWidgetSettings {
     field: string;
     /* allow the user to update search in every change */
@@ -27,6 +29,8 @@ export interface SearchWidgetSettings {
     format?: string;
     /* allow the user to search only within predefined options */
     allowOnlyPredefinedValues?: boolean;
+    /* allow the user to predefine autocomplete options */
+    autocompleteOptions?: AutocompleteOption[];
 
     [indexer: string]: any;
 }

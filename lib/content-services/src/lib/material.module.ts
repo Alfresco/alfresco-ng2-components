@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -40,6 +41,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 @NgModule({
     imports: [
         MatButtonModule,
+        MatAutocompleteModule,
         MatChipsModule,
         MatDialogModule,
         MatIconModule,
@@ -63,6 +65,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     ],
     exports: [
         MatButtonModule,
+        MatAutocompleteModule,
         MatChipsModule,
         MatDialogModule,
         MatIconModule,

@@ -41,4 +41,11 @@ describe('IsIncludedPipe', () => {
     it('should return false if the number is not contained in an array', () => {
         expect(pipe.transform(50, array)).toBeFalsy();
     });
+
+    it('should use provided comparator to check if value contains in the provided array', () => {
+        const arrayOfObjects = [{id: 'id-1', value: 'value-1'}, {id: 'id-2', value: 'value-2'}];
+        const filterFunction = (extension1, extension2) => extension1.value === extension2.value;
+        expect(pipe.transform({id: 'id-1', value: 'value-1'}, arrayOfObjects, filterFunction)).toBeTruthy();
+        expect(pipe.transform({id: 'id-1', value: 'value-3'}, arrayOfObjects, filterFunction)).toBeFalsy();
+    });
 });

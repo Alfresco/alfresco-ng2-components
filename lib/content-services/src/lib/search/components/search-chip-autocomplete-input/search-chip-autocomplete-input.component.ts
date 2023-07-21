@@ -15,13 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ElementRef, ViewChild, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    ViewEncapsulation,
+    ElementRef,
+    ViewChild,
+    OnInit,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+    SimpleChanges,
+    OnChanges
+} from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { EMPTY, Observable, Subject, timer } from 'rxjs';
+import { debounce, startWith, takeUntil, tap } from 'rxjs/operators';
+import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
@@ -29,12 +42,12 @@ import { map, startWith, takeUntil, tap } from 'rxjs/operators';
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
+export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild('optionInput')
     optionInput: ElementRef<HTMLInputElement>;
 
     @Input()
-    autocompleteOptions: string[] = [];
+    autocompleteOptions: AutocompleteOption[] = [];
 
     @Input()
     onReset$: Observable<void>;
@@ -46,24 +59,28 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     placeholder = 'SEARCH.FILTER.ACTIONS.ADD_OPTION';
 
     @Input()
-    compareOption?: (option1: string, option2: string) => boolean;
+    compareOption?: (option1: AutocompleteOption, option2: AutocompleteOption) => boolean;
 
     @Input()
     formatChipValue?: (option: string) => string;
 
     @Input()
-    filter = (options: string[], value: string): string[] => {
+    filter = (options: AutocompleteOption[], value: string): AutocompleteOption[] => {
         const filterValue = value.toLowerCase();
-        return options.filter(option => option.toLowerCase().includes(filterValue));
+        return options.filter(option => option.value.toLowerCase().includes(filterValue)).slice(0, 15);
     };
 
     @Output()
-    optionsChanged: EventEmitter<string[]> = new EventEmitter();
+    optionsChanged = new EventEmitter<AutocompleteOption[]>();
+
+    @Output()
+    inputChanged = new EventEmitter<string>();
 
     readonly separatorKeysCodes = [ENTER] as const;
     formCtrl = new FormControl('');
-    filteredOptions$: Observable<string[]>;
-    selectedOptions: string[] = [];
+    filteredOptions: AutocompleteOption[] = [];
+    selectedOptions: AutocompleteOption[] = [];
+    tooltipShowDelay = 800;
     private onDestroy$ = new Subject<void>();
     private _activeAnyOption = false;
 
@@ -71,16 +88,25 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
         this._activeAnyOption = active;
     }
 
-    constructor() {
-        this.filteredOptions$ = this.formCtrl.valueChanges.pipe(
-            startWith(null),
-            tap(() => this.activeAnyOption = false),
-            map((value: string | null) => (value ? this.filter(this.autocompleteOptions, value).slice(0, 15) : []))
-        );
+    ngOnInit() {
+        this.formCtrl.valueChanges
+            .pipe(
+                startWith(''),
+                tap(() => this.activeAnyOption = false),
+                debounce((value: string) => (value ? timer(300) : EMPTY)),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((value: string) => {
+                this.filteredOptions = value ? this.filter(this.autocompleteOptions, value) : [];
+                this.inputChanged.emit(value);
+            });
+        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
     }
 
-    ngOnInit() {
-        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.autocompleteOptions) {
+            this.filteredOptions = changes.autocompleteOptions.currentValue.length > 0 ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value) : [];
+        }
     }
 
     ngOnDestroy() {
@@ -96,15 +122,20 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
             }
 
             if (value && this.isExists(value) && !this.isAdded(value)) {
-                this.selectedOptions.push(value);
+                if (this.allowOnlyPredefinedValues) {
+                    const index = this.autocompleteOptions.findIndex(option => option.value.toLowerCase() === value.toLowerCase());
+                    this.selectedOptions.push(this.autocompleteOptions[index]);
+                } else {
+                    this.selectedOptions.push({value});
+                }
                 this.optionsChanged.emit(this.selectedOptions);
                 event.chipInput.clear();
-                this.formCtrl.setValue(null);
+                this.formCtrl.setValue('');
             }
         }
     }
 
-    remove(value: string) {
+    remove(value: AutocompleteOption) {
         const index = this.selectedOptions.indexOf(value);
 
         if (index >= 0) {
@@ -114,28 +145,28 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy {
     }
 
     selected(event: MatAutocompleteSelectedEvent) {
-        if (!this.isAdded(event.option.viewValue)) {
-            this.selectedOptions.push(event.option.viewValue);
-            this.optionInput.nativeElement.value = '';
-            this.formCtrl.setValue(null);
-            this.optionsChanged.emit(this.selectedOptions);
-        }
+        this.selectedOptions.push(event.option.value);
+        this.optionInput.nativeElement.value = '';
+        this.formCtrl.setValue('');
+        this.optionsChanged.emit(this.selectedOptions);
     }
 
-     private isAdded(value: string): boolean {
-        return this.selectedOptions.includes(value);
+    private isAdded(value: string): boolean {
+        const valueLowerCase = value.toLowerCase();
+        return this.selectedOptions.some(option => option.value.toLowerCase() === valueLowerCase);
     }
 
     private isExists(value: string): boolean {
+        const valueLowerCase = value.toLowerCase();
         return this.allowOnlyPredefinedValues
-            ? this.autocompleteOptions.map(option => option.toLowerCase()).includes(value.toLowerCase())
+            ? this.autocompleteOptions.some(option => option.value.toLowerCase() === valueLowerCase)
             : true;
     }
 
     private reset() {
         this.selectedOptions = [];
         this.optionsChanged.emit(this.selectedOptions);
-        this.formCtrl.setValue(null);
+        this.formCtrl.setValue('');
         this.optionInput.nativeElement.value = '';
     }
 }

@@ -28,7 +28,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
                         "hideDefaultAction": true,
                         "allowOnlyPredefinedValues": false,
                         "field": "SITE",
-                        "options": [ "Option 1", "Option 2" ]
+                        "autocompleteOptions": [ {"value": "Option 1"}, {"value": "Option 2"} ]
                     }
                 }
             }
@@ -42,7 +42,7 @@ Implements a [search widget](../../../lib/content-services/src/lib/search/models
 | Name | Type     | Description                                                                                                        |
 | ---- |----------|--------------------------------------------------------------------------------------------------------------------|
 | field | `string`   | Field to apply the query to. Required value                                                                        |
-| options | `string[]` | Predefined options for autocomplete                                                                                |
+| autocompleteOptions | `AutocompleteOption[]` | Predefined options for autocomplete                                                                                |
 | allowOnlyPredefinedValues | `boolean` | Specifies whether the input values should only be from predefined                                                  |
 | allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true                                |
 | hideDefaultAction | `boolean` | Show/hide the widget actions. By default is false |

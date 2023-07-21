@@ -40,6 +40,10 @@ adf-search-chip-autocomplete-input {
     }
 }
 
+.mat-tooltip-hide {
+    display: none;
+}
+
 .mat-option.adf-autocomplete-added-option {
     background: var(--adf-theme-mat-grey-color-a200);
     color: var(--adf-theme-primary-300);
