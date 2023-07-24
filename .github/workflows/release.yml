@@ -97,7 +97,7 @@ jobs:
           enable-node-modules-cache: false
       - name: install
         run: |
-          npm ci 
+          npm ci
           npx nx run cli:bundle
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
@@ -222,3 +222,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - uses: ./.github/actions/npm-check-bundle
+
+  finalize:
+      if: always()
+      runs-on: ubuntu-latest
+      name: Final Results
+      needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
+      steps:
+
+        - uses: slackapi/slack-github-action@v1.23.0
+          name: Nofify FE hxp-front-end-apps workflow failed
+          if: ${{ contains(toJson(needs.*.result), 'failure') }}
+          env:
+            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          with:
+            channel-id: 'C04N93XU491' #hxp-front-end-apps
+            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }} username:${{ github.event.pusher.username }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
