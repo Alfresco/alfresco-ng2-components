@@ -129,10 +129,6 @@ describe('SearchDateRangeAdvancedTabbedComponent', () => {
         };
 
         fixture.detectChanges();
-
-        const searchDateRangeAdvancedComponentList = fixture.debugElement.queryAll(By.directive(SearchDateRangeAdvancedComponent));
-        createdDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => (searchDateRangeAdvancedComponent.componentInstance as SearchDateRangeAdvancedComponent).field === 'createdDate').componentInstance;
-        // modifiedDateRangeComponent = searchDateRangeAdvancedComponentList.find(searchDateRangeAdvancedComponent => searchDateRangeAdvancedComponent.attributes['field'] === 'modifiedDate').componentInstance;
     });
 
     it('should be able to generate separate fields on init', () => {

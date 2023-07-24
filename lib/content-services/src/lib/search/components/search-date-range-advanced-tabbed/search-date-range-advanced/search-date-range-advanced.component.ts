@@ -124,11 +124,6 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
                 this.betweenStartDateFormControl.clearValidators();
                 this.betweenEndDateFormControl.clearValidators();
                 break;
-            default:
-                this.form.controls.inLastValue.clearValidators();
-                this.betweenStartDateFormControl.clearValidators();
-                this.betweenEndDateFormControl.clearValidators();
-                break;
         }
         this.betweenStartDateFormControl.updateValueAndValidity();
         this.betweenEndDateFormControl.updateValueAndValidity();
@@ -181,28 +176,5 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
             default:
                 return true;
         }
-    }
-
-    // dateChanged(event: Event, formControl: FormControl<Date | null>) {
-    //     clearTimeout(this.dateChangeDebounce);
-    //     this.dateChangeDebounce = window.setTimeout(() => {
-    //         if (!event?.target['value']) {
-    //             formControl.errors.required = true;
-    //             formControl.errors.dateFormatInvalid = false;
-    //         } else {
-    //             const date = parse(event.target['value'], this.dateFormat, new Date());
-    //             if(!isValid(date)) {
-    //                 formControl.errors.dateFormatInvalid = true;
-    //             } else {
-    //                 formControl.errors.dateFormatInvalid = false;
-    //                 formControl.setValue(date);
-    //             }
-    //         }
-    //     }, 500);
-    // }
-
-    onLastDateValueChanged(event: Event) {
-        const value: string = event.target['value'];
-        event.target['value'] = value.replace(/\D*0*([1-9]*\d*)/g, '$1');
     }
 }
