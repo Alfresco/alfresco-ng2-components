@@ -17,6 +17,9 @@
 
 import { browser } from 'protractor';
 
+/*
+Open the CoreAutomationService in ADF core to see where we augment the window
+*/
 export class LocalStorageUtil {
 
     static async getConfigField(field: string): Promise<any> {
