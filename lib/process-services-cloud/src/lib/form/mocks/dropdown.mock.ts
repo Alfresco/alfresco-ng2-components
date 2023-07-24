@@ -168,6 +168,71 @@ export const mockCountriesResponse = {
     ]
 };
 
+export const fakeFormOptionEntries = [
+    [
+        {
+            id: 'id_1',
+            name: 'name_1'
+        },
+        {
+            id: 'id_1',
+            name: 'name_2'
+        },
+        {
+            id: 'id_3',
+            name: 'name_3'
+        }
+    ],
+    [
+        {
+            id: 'empty',
+            name: 'name_1'
+        },
+        {
+            id: 'id_1',
+            name: 'name_2'
+        },
+        {
+            id: 'id_3',
+            name: 'name_3'
+        }
+    ],
+    [
+        {
+            id: 'empty',
+            name: 'name_1',
+            isDefault: true
+        },
+        {
+            id: 'id_1',
+            name: 'name_2',
+            isDefault: false
+        },
+        {
+            id: 'id_3',
+            name: 'name_3',
+            isDefault: false
+        }
+    ],
+    [
+        {
+            id: 'id_1',
+            name: 'name_1',
+            isDefault: true
+        },
+        {
+            id: 'id_1',
+            name: 'name_2',
+            isDefault: false
+        },
+        {
+            id: 'id_3',
+            name: 'name_3',
+            isDefault: false
+        }
+    ]
+];
+
 export const mockFormVariableWithJson = [
     new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'fake-id-1' })
 ];

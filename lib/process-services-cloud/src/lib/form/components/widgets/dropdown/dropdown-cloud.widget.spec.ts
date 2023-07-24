@@ -39,7 +39,8 @@ import {
     mockRestDropdownOptions,
     mockSecondRestDropdownOptions,
     mockVariablesWithDefaultJson,
-    mockProcessVariablesWithJson
+    mockProcessVariablesWithJson,
+    fakeFormOptionEntries
 } from '../../../mocks/dropdown.mock';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
@@ -775,6 +776,32 @@ describe('DropdownCloudWidgetComponent', () => {
 
                     expect(formFieldValueChangedSpy).toHaveBeenCalledWith(formFieldValueChangedEvent);
                 });
+            });
+        });
+
+        describe('Default option', () => {
+            it('should not get default option from list of options which do not have any id matching the DEFAULT_OPTION id', () => {
+                const call = widget.getDefaultOption(fakeFormOptionEntries[0]);
+
+                expect(call).toEqual(undefined);
+            });
+
+            it('should get default option from list of options which have any id matching the DEFAULT_OPTION id, while not having an isDefault flag set to true', () => {
+                const call = widget.getDefaultOption(fakeFormOptionEntries[1]);
+
+                expect(call).toEqual(fakeFormOptionEntries[1][0]);
+            });
+
+            it('should get default option from list of options which have any id matching the DEFAULT_OPTION id while also having an isDefault flag set to true', () => {
+                const call = widget.getDefaultOption(fakeFormOptionEntries[2]);
+
+                expect(call).toEqual(fakeFormOptionEntries[2][0]);
+            });
+
+            it('should get default option from list of options which has an isDefault flag set to true, despite the option id', () => {
+                const call = widget.getDefaultOption(fakeFormOptionEntries[3]);
+
+                expect(call).toEqual(fakeFormOptionEntries[3][0]);
             });
         });
 

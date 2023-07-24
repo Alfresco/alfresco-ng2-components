@@ -435,6 +435,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     getDefaultOption(options: FormFieldOption[]): FormFieldOption {
-        return options.find((option: FormFieldOption) => option.isDefault === undefined ? option.id === DEFAULT_OPTION.id : option.isDefault);
+        return options.find((option: FormFieldOption) => option.isDefault ?? option.id === DEFAULT_OPTION.id);
     }
 }
