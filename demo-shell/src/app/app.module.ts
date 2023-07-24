@@ -145,6 +145,7 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor() {
+    constructor(automationService: CoreAutomationService) {
+        automationService.setup();
     }
 }
