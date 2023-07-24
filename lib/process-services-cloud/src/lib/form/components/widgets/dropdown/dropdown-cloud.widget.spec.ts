@@ -18,6 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
+import { DropdownCloudWidgetComponent } from './dropdown-cloud.widget';
 import {
     FormFieldModel,
     FormModel,
@@ -26,7 +27,6 @@ import {
     FormFieldTypes,
     LogService
 } from '@alfresco/adf-core';
-import { DropdownCloudWidgetComponent, DropdownFormFieldOption } from './dropdown-cloud.widget';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -91,7 +91,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 readOnly: false,
                 restUrl: 'https://fake-rest-url'
             });
-            widget.field.emptyOption = { id: 'empty', name: 'Choose one...', isDefault: true } as DropdownFormFieldOption;
+            widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
             widget.field.isVisible = true;
             fixture.detectChanges();
         });
@@ -184,20 +184,17 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.optionType = 'rest';
             widget.field.value = {
                 id: 'opt1',
-                name: 'default1_value',
-                isDefault: false
+                name: 'default1_value'
             };
 
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                 {
                     id: 'opt1',
-                    name: 'default1_value',
-                    isDefault: false
+                    name: 'default1_value'
                 },
                 {
                     id: 2,
-                    name: 'default2_value',
-                    isDefault: false
+                    name: 'default2_value'
                 }
             ] as any));
 
@@ -218,13 +215,11 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                 {
                     id: 'opt1',
-                    name: 'default1_value',
-                    isDefault: false
+                    name: 'default1_value'
                 },
                 {
                     id: 2,
-                    name: 'default2_value',
-                    isDefault: false
+                    name: 'default2_value'
                 }
             ] as any));
 
@@ -234,12 +229,12 @@ describe('DropdownCloudWidgetComponent', () => {
             await openSelect();
             const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(options[0].nativeElement.innerText).toBe('default1_value');
-            expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value', isDefault: false });
+            expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
         });
 
         it('should not display required error for a non required dropdown when selecting the none option', async () => {
             widget.field.options = [
-                { id: 'empty', name: 'Choose empty', isDefault: true },
+                { id: 'empty', name: 'Choose empty' },
                 ...fakeOptionList
             ];
 
@@ -259,7 +254,7 @@ describe('DropdownCloudWidgetComponent', () => {
         it('should not display required error when selecting a valid option for a required dropdown', async () => {
             widget.field.required = true;
             widget.field.options = [
-                { id: 'empty', name: 'Choose empty', isDefault: true },
+                { id: 'empty', name: 'Choose empty' },
                 ...fakeOptionList
             ];
 
@@ -278,7 +273,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should not have a value when switching from an available option to the None option', async () => {
             widget.field.options = [
-                { id: 'empty', name: 'This is a mock none option', isDefault: true },
+                { id: 'empty', name: 'This is a mock none option' },
                 ...fakeOptionList
             ];
 
@@ -444,8 +439,8 @@ describe('DropdownCloudWidgetComponent', () => {
                 options: fakeOptionList,
                 selectionType: 'multiple',
                 value: [
-                    { id: 'opt_1', name: 'option_1', isDefault: false },
-                    { id: 'opt_2', name: 'option_2', isDefault: false }
+                    { id: 'opt_1', name: 'option_1' },
+                    { id: 'opt_2', name: 'option_2' }
                 ]
             });
             fixture.detectChanges();
@@ -479,8 +474,8 @@ describe('DropdownCloudWidgetComponent', () => {
             optionOne.triggerEventHandler('click', null);
             optionTwo.triggerEventHandler('click', null);
             expect(widget.field.value).toEqual([
-                { id: 'opt_1', name: 'option_1', isDefault: false },
-                { id: 'opt_2', name: 'option_2', isDefault: false }
+                { id: 'opt_1', name: 'option_1' },
+                { id: 'opt_2', name: 'option_2' }
             ]);
         });
 
@@ -494,30 +489,26 @@ describe('DropdownCloudWidgetComponent', () => {
                 optionType : 'rest',
                 selectionType: 'multiple',
                 value: [
-                    { id: 'opt_3', name: 'option_3', isDefault: false },
-                    { id: 'opt_4', name: 'option_4', isDefault: false }
+                    { id: 'opt_3', name: 'option_3' },
+                    { id: 'opt_4', name: 'option_4' }
                 ]
             });
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                 {
                     id: 'opt_1',
-                    name: 'option_1',
-                    isDefault: false
+                    name: 'option_1'
                 },
                 {
                     id: 'opt_2',
-                    name: 'option_2',
-                    isDefault: false
+                    name: 'option_2'
                 },
                 {
                     id: 'opt_3',
-                    name: 'option_3',
-                    isDefault: false
+                    name: 'option_3'
                 },
                 {
                     id: 'opt_4',
-                    name: 'option_4',
-                    isDefault: false
+                    name: 'option_4'
                 }
             ] as any));
 
@@ -549,23 +540,19 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([
                 {
                     id: 'opt_1',
-                    name: 'option_1',
-                    isDefault: false
+                    name: 'option_1'
                 },
                 {
                     id: 'opt_2',
-                    name: 'option_2',
-                    isDefault: false
+                    name: 'option_2'
                 },
                 {
                     id: 'opt_3',
-                    name: 'option_3',
-                    isDefault: false
+                    name: 'option_3'
                 },
                 {
                     id: 'opt_4',
-                    name: 'option_4',
-                    isDefault: false
+                    name: 'option_4'
                 }
             ] as any));
 
@@ -577,8 +564,8 @@ describe('DropdownCloudWidgetComponent', () => {
             optionOne.triggerEventHandler('click', null);
             optionTwo.triggerEventHandler('click', null);
             expect(widget.field.value).toEqual([
-                { id: 'opt_2', name: 'option_2', isDefault: false },
-                { id: 'opt_4', name: 'option_4', isDefault: false }
+                { id: 'opt_2', name: 'option_2' },
+                { id: 'opt_4', name: 'option_4' }
             ]);
         });
     });

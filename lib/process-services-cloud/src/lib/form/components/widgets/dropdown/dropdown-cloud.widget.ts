@@ -38,10 +38,6 @@ export const DEFAULT_OPTION = {
 };
 export const HIDE_FILTER_LIMIT = 5;
 
-export interface DropdownFormFieldOption extends FormFieldOption {
-    isDefault: boolean;
-}
-
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
@@ -68,7 +64,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     variableOptionsFailed = false;
     previewState = false;
     restApiHostName: string;
-    list$: Observable<DropdownFormFieldOption[]>;
+    list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
 
     private readonly defaultVariableOptionId = 'id';
@@ -199,7 +195,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             const bodyParam = this.buildBodyParam();
             this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
                 .pipe(takeUntil(this.onDestroy$))
-                .subscribe((result: DropdownFormFieldOption[]) => {
+                .subscribe((result: FormFieldOption[]) => {
                     this.resetRestApiErrorMessage();
                     this.field.options = result;
                     this.updateOptions();
@@ -338,7 +334,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return this.field?.rule?.ruleOn;
     }
 
-    compareDropdownValues(opt1: DropdownFormFieldOption | string, opt2: DropdownFormFieldOption | string): boolean {
+    compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
         if (!opt1 || !opt2) {
             return false;
         }
@@ -358,7 +354,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return opt1 === opt2;
     }
 
-    getOptionValue(option: DropdownFormFieldOption, fieldValue: string): string | DropdownFormFieldOption {
+    getOptionValue(option: FormFieldOption, fieldValue: string): string | FormFieldOption {
         if (this.field.hasMultipleValues) {
             return option;
         }
@@ -399,7 +395,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     updateOptions(): void {
         this.showInputFilter = this.field.options.length > this.appConfig.get<number>('form.dropDownFilterLimit', HIDE_FILTER_LIMIT);
-        this.list$ = combineLatest([of(this.field.options as DropdownFormFieldOption[]), this.filter$])
+        this.list$ = combineLatest([of(this.field.options), this.filter$])
             .pipe(
                 map(([items, search]) => {
                     if (!search) {
@@ -438,7 +434,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             !this.variableOptionsFailed;
     }
 
-    getDefaultOption(options: DropdownFormFieldOption[]): DropdownFormFieldOption {
-        return options.find((option: DropdownFormFieldOption) => option.isDefault);
+    getDefaultOption(options: FormFieldOption[]): FormFieldOption {
+        return options.find((option: FormFieldOption) => option.isDefault === undefined ? option.id === DEFAULT_OPTION.id : option.isDefault);
     }
 }

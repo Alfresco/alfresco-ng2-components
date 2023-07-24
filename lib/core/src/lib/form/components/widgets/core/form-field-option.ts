@@ -20,4 +20,5 @@
 export interface FormFieldOption {
     id: string;
     name: string;
+    isDefault?: boolean;
 }
