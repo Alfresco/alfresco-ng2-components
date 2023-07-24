@@ -20,10 +20,14 @@
 }
 
 .adf-datatable-list {
-    .adf-datatable-selected > svg {
-        fill: var(--theme-accent-color);
-        width: 30px;
-        height: 30px;
+    .adf-datatable-selected {
+        overflow: unset;
+
+        & > svg {
+            fill: var(--theme-accent-color);
+            width: 30px;
+            height: 30px;
+        }
     }
 }
 
