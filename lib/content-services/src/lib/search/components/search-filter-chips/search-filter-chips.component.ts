@@ -19,6 +19,8 @@ import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-filter-chips',
@@ -27,16 +29,27 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent {
+    private onDestroy$ = new Subject<void>();
+
     /** Toggles whether to show or not the context facet filters. */
     @Input()
     showContextFacets: boolean = true;
+
+    facetChipTabbedId = '';
 
     constructor(
         @Inject(SEARCH_QUERY_SERVICE_TOKEN)
         public queryBuilder: SearchQueryBuilderService,
         public facetFiltersService: SearchFacetFiltersService) {}
 
-    get facetChipTabbedId() {
-        return 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet.fields.join('-');
+    ngOnInit() {
+        this.queryBuilder.executed.asObservable()
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(() => this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet.fields.join('-'));
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }

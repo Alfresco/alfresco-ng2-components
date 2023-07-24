@@ -424,7 +424,7 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     resetAllSelectedBuckets() {
         this.responseFacets.forEach((facetField) => {
-            if (facetField && facetField.buckets) {
+            if (facetField?.buckets) {
                 for (const bucket of facetField.buckets.items) {
                     bucket.checked = false;
                     this.queryBuilder.removeUserFacetBucket(facetField.field, bucket);
