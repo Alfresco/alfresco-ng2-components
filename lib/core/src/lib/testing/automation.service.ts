@@ -39,6 +39,11 @@ export class CoreAutomationService {
     ) {
         // eslint-disable-next-line no-console
         console.log('ADF Core AutomationService init');
+    }
+
+    setup() {
+        // eslint-disable-next-line no-console
+        console.log('ADF Core setup');
 
         const adfProxy = window['adf'] || {};
 
