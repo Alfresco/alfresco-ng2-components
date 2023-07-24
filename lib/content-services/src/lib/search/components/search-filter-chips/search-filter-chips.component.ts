@@ -45,7 +45,7 @@ export class SearchFilterChipsComponent {
     ngOnInit() {
         this.queryBuilder.executed.asObservable()
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe(() => this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet.fields.join('-'));
+        .subscribe(() => this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-'));
     }
 
     ngOnDestroy() {
