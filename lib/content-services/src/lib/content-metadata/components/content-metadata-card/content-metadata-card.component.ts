@@ -48,6 +48,14 @@ export class ContentMetadataCardComponent implements OnChanges {
     @Input()
     displayAspect: string = null;
 
+    /** Display tags in the card **/
+    @Input()
+    displayTags = true;
+
+    /** Display categories in the card **/
+    @Input()
+    displayCategories = true;
+
     /** (required) Name or configuration of the metadata preset, which defines aspects
      * and their properties.
      */
