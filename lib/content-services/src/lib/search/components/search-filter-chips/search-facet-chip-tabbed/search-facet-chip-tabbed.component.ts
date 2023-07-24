@@ -19,7 +19,7 @@ import { Component, ElementRef, Inject, Input, OnChanges, OnInit, SimpleChanges,
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search-query-service.token';
 import { FacetWidget } from '../../../models/facet-widget.interface';
@@ -45,20 +45,21 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
 
     private resetSubject$ = new Subject<void>();
 
-    displayValue$: Subject<string> = new Subject<string>();
-    reset$: Observable<void> = this.resetSubject$.asObservable();
+    displayValue$ = new Subject<string>();
+    reset$ = this.resetSubject$.asObservable();
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
     autocompleteOptions = {};
     selectedOptions = {};
+    isPopulated = false;
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService,
                 private translationService: TranslationService,
                 private searchFacetFiltersService: SearchFacetFiltersService,
                 private focusTrapFactory: ConfigurableFocusTrapFactory) {
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.tabbedFacet.fields.forEach((field) => {
             Object.defineProperty(this.selectedOptions, field, {
                 value: [],
@@ -67,12 +68,11 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges) {
         if (changes.tabbedFacet) {
+            this.isPopulated = this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0);
             this.tabbedFacet.fields.forEach((field) => {
-                const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => {
-                    return { value: item.display };
-                });
+                const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ value: item.display }));
                 Object.defineProperty(this.autocompleteOptions, field, {
                     value: options,
                     writable: true
@@ -104,8 +104,8 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         this.menuTrigger.closeMenu();
     }
 
-    onEnterKeydown(): void {
-        if (this.isPopulated()) {
+    onEnterKeydown() {
+        if (this.isPopulated) {
             if (!this.menuTrigger.menuOpen) {
                 this.menuTrigger.openMenu();
             } else {
@@ -120,18 +120,15 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         }
     }
 
-    isPopulated(): boolean {
-        return this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0 || this.selectedOptions[field].length > 0);
-    }
-
     onOptionsChange(selectedOptions: AutocompleteOption[], field: string) {
         this.selectedOptions[field] = selectedOptions.map((selectedOption) => selectedOption.value);
+        this.isPopulated = this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0);
         this.updateDisplayValue();
         this.updateUserFacetBuckets();
         this.queryBuilder.update();
     }
 
-    updateDisplayValue(): void {
+    updateDisplayValue() {
         let displayValue = '';
         this.tabbedFacet.fields.forEach((field) => {
             if (this.selectedOptions[field].length > 0) {
@@ -142,18 +139,22 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         this.displayValue$.next(displayValue);
     }
 
-    reset(): void {
+    reset() {
         this.resetSubject$.next();
         this.updateUserFacetBuckets();
         this.updateDisplayValue();
         this.queryBuilder.update();
     }
 
-    submitValues(): void {
+    submitValues() {
         this.updateUserFacetBuckets();
         this.searchFacetFiltersService.updateSelectedBuckets();
         this.updateDisplayValue();
         this.queryBuilder.update();
+    }
+
+    optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
+        return option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
     private updateUserFacetBuckets() {

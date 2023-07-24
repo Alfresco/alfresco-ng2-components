@@ -36,4 +36,7 @@ export class SearchFilterChipsComponent {
         public queryBuilder: SearchQueryBuilderService,
         public facetFiltersService: SearchFacetFiltersService) {}
 
+    get facetChipTabbedId() {
+        return 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet.fields.join('-');
+    }
 }

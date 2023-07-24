@@ -54,15 +54,15 @@ describe('SearchFacetFieldComponent', () => {
             spyOn(queryBuilder, 'addUserFacetBucket').and.callThrough();
 
             const event: any = { checked: true };
-            const field: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
+            const facetField: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
             const bucket: FacetFieldBucket = { checked: false, filterQuery: 'q1', label: 'q1', count: 1 };
-            component.field = field;
+            component.field = facetField;
             fixture.detectChanges();
 
-            component.onToggleBucket(event, field, bucket);
+            component.onToggleBucket(event, facetField, bucket);
 
             expect(bucket.checked).toBeTruthy();
-            expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(field.field, bucket);
+            expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith(facetField.field, bucket);
             expect(queryBuilder.update).toHaveBeenCalled();
             expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -72,15 +72,15 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const event: any = { checked: false };
-        const field: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
+        const facetField: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
         const bucket: FacetFieldBucket = { checked: true, filterQuery: 'q1', label: 'q1', count: 1 };
 
-        component.field = field;
+        component.field = facetField;
         fixture.detectChanges();
 
-        component.onToggleBucket(event, field, bucket);
+        component.onToggleBucket(event, facetField, bucket);
 
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field.field, bucket);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(facetField.field, bucket);
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -91,15 +91,15 @@ describe('SearchFacetFieldComponent', () => {
 
         const event: any = { checked: false };
         const query = { checked: true, label: 'q1', filterQuery: 'query1' };
-        const field = { field: 'q1', type: 'query', label: 'label1', buckets: new SearchFilterList([ query ] ) } as FacetField;
+        const facetField = { field: 'q1', type: 'query', label: 'label1', buckets: new SearchFilterList([ query ] ) } as FacetField;
 
-        component.field = field;
+        component.field = facetField;
         fixture.detectChanges();
 
-        component.onToggleBucket(event, field, query as any);
+        component.onToggleBucket(event, facetField, query as any);
 
         expect(query.checked).toEqual(false);
-        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field.field, query);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(facetField.field, query);
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(searchFacetFiltersService.updateSelectedBuckets).toHaveBeenCalled();
     });

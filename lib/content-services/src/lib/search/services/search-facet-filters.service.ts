@@ -102,14 +102,14 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
-        configFacetFields.forEach((field) => {
-            const responseField = this.findFacet(context, itemType, field.label);
-            const responseBuckets = this.getResponseBuckets(responseField, field)
-                .filter(this.getFilterByMinCount(field.mincount));
-            this.sortFacetBuckets(responseBuckets, field.settings?.bucketSortBy, field.settings?.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
-            const alreadyExistingField = this.findResponseFacet(itemType, field.label);
+        configFacetFields.forEach((facetField) => {
+            const responseField = this.findFacet(context, itemType, facetField.label);
+            const responseBuckets = this.getResponseBuckets(responseField, facetField)
+                .filter(this.getFilterByMinCount(facetField.mincount));
+            this.sortFacetBuckets(responseBuckets, facetField.settings?.bucketSortBy, facetField.settings?.bucketSortDirection ?? FacetBucketSortDirection.ASCENDING);
+            const alreadyExistingField = this.findResponseFacet(itemType, facetField.label);
 
-            if (field.field === 'cm:categories'){
+            if (facetField.field === 'cm:categories'){
                 this.loadCategoryNames(responseBuckets);
             }
 
@@ -119,18 +119,18 @@ export class SearchFacetFiltersService implements OnDestroy {
                 this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField) {
                 if (responseBuckets.length > 0) {
-                    const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
+                    const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, facetField.pageSize);
                     bucketList.filter = this.getBucketFilterFunction(bucketList);
 
                     if (!this.responseFacets) {
                         this.responseFacets = [];
                     }
                     this.responseFacets.push({
-                        ...field,
+                        ...facetField,
                         type: responseField.type || itemType,
-                        label: field.label,
-                        pageSize: field.pageSize | DEFAULT_PAGE_SIZE,
-                        currentPageSize: field.pageSize | DEFAULT_PAGE_SIZE,
+                        label: facetField.label,
+                        pageSize: facetField.pageSize | DEFAULT_PAGE_SIZE,
+                        currentPageSize: facetField.pageSize | DEFAULT_PAGE_SIZE,
                         buckets: bucketList
                     });
                 }
@@ -140,8 +140,7 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     private parseTabbedFacetField() {
         if (this.responseFacets) {
-            let fields = '';
-            this.responseFacets.forEach((facet) => fields = `${fields},${facet.field}`);
+            const fields = this.responseFacets.reduce((acc, facet) => `${acc},${facet.field}`, '');
             const tabbedFacetField: TabbedFacetField = {
                 fields: ['creator', 'modifier'],
                 label: 'SEARCH.FILTER.PEOPLE',
@@ -389,10 +388,10 @@ export class SearchFacetFiltersService implements OnDestroy {
         });
     }
 
-    unselectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+    unselectFacetBucket(facetField: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = false;
-            this.queryBuilder.removeUserFacetBucket(field.field, bucket);
+            this.queryBuilder.removeUserFacetBucket(facetField.field, bucket);
             this.updateSelectedBuckets();
             this.queryBuilder.update();
         }
@@ -402,14 +401,14 @@ export class SearchFacetFiltersService implements OnDestroy {
     updateSelectedBuckets() {
         if (this.responseFacets) {
             this.selectedBuckets = [];
-            let fields = this.tabbedFacet === null ? [] : Object.keys(this.tabbedFacet?.fields).map(field => this.tabbedFacet.facets[field]);
-            fields = [...fields, ...this.responseFacets];
-            for (const field of fields) {
-                if (field?.buckets) {
+            let facetFields = this.tabbedFacet === null ? [] : Object.keys(this.tabbedFacet?.fields).map(field => this.tabbedFacet.facets[field]);
+            facetFields = [...facetFields, ...this.responseFacets];
+            for (const facetField of facetFields) {
+                if (facetField?.buckets) {
                     this.selectedBuckets.push(
-                        ...this.queryBuilder.getUserFacetBuckets(field.field)
+                        ...this.queryBuilder.getUserFacetBuckets(facetField.field)
                             .filter((bucket) => bucket.checked)
-                            .map((bucket) => ({field, bucket}))
+                            .map((bucket) => ({field: facetField, bucket}))
                     );
                 }
             }
@@ -424,11 +423,11 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     resetAllSelectedBuckets() {
-        this.responseFacets.forEach((field) => {
-            if (field && field.buckets) {
-                for (const bucket of field.buckets.items) {
+        this.responseFacets.forEach((facetField) => {
+            if (facetField && facetField.buckets) {
+                for (const bucket of facetField.buckets.items) {
                     bucket.checked = false;
-                    this.queryBuilder.removeUserFacetBucket(field.field, bucket);
+                    this.queryBuilder.removeUserFacetBucket(facetField.field, bucket);
                 }
                 this.updateSelectedBuckets();
             }

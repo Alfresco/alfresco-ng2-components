@@ -6,7 +6,7 @@
     <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
         <adf-search-facet-chip-tabbed
             [tabbedFacet]="facetFiltersService.tabbedFacet"
-            [attr.data-automation-id]="'search-fact-chip-tabbed' + facetFiltersService.tabbedFacet.fields.concat('')" >
+            [attr.data-automation-id]="facetChipTabbedId" >
         </adf-search-facet-chip-tabbed>
     </ng-container>
     <ng-container *ngIf="facetFiltersService.responseFacets && showContextFacets">

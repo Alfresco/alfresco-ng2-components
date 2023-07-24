@@ -3,12 +3,3 @@
         <ng-container *ngTemplateOutlet="tabContent.templateRef"></ng-container>
     </mat-tab>
 </mat-tab-group>
-
-<div class="adf-facet-buttons adf-facet-buttons--topSpace" *ngIf="!settings?.hideDefaultAction">
-    <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="tab-clear-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
-    </button>
-    <button mat-button color="primary" (click)="submitValues()" data-automation-id="tab-apply-btn">
-        {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
-    </button>
-</div>

@@ -7,7 +7,7 @@ Last reviewed: 2023-07-18
 
 # [Search facet chip tabbed component](../../../lib/content-services/src/lib/search/components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component.ts "Defined in search-facet-chip-tabbed.component.ts")
 
-Implements a [facet widget](../../../lib/content-services/src/lib/search/models/facet-widget.interface.ts) consisting of creator and modifier facets insided tabbed component.
+Implements a [facet widget](../../../lib/content-services/src/lib/search/models/facet-widget.interface.ts) consisting of creator and modifier facets inside tabbed component.
 
 ![Search facet chip tabbed](../../docassets/images/search-facet-chip-tabbed.png)
 
