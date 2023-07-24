@@ -230,6 +230,23 @@ export const fakeFormOptionEntries = [
             name: 'name_3',
             isDefault: false
         }
+    ],
+    [
+        {
+            id: 'empty',
+            name: 'name_1',
+            isDefault: false
+        },
+        {
+            id: 'id_1',
+            name: 'name_2',
+            isDefault: false
+        },
+        {
+            id: 'id_3',
+            name: 'name_3',
+            isDefault: false
+        }
     ]
 ];
 

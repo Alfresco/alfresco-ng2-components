@@ -786,22 +786,28 @@ describe('DropdownCloudWidgetComponent', () => {
                 expect(call).toEqual(undefined);
             });
 
-            it('should get default option from list of options which have any id matching the DEFAULT_OPTION id, while not having an isDefault flag set to true', () => {
+            it('should get default option from list of options which has an id matching the DEFAULT_OPTION id, while not having an isDefault flag on that option', () => {
                 const call = widget.getDefaultOption(fakeFormOptionEntries[1]);
 
                 expect(call).toEqual(fakeFormOptionEntries[1][0]);
             });
 
-            it('should get default option from list of options which have any id matching the DEFAULT_OPTION id while also having an isDefault flag set to true', () => {
+            it('should get default option from list of options which has an id matching the DEFAULT_OPTION id while also having an isDefault flag set to true on that option', () => {
                 const call = widget.getDefaultOption(fakeFormOptionEntries[2]);
 
                 expect(call).toEqual(fakeFormOptionEntries[2][0]);
             });
 
-            it('should get default option from list of options which has an isDefault flag set to true, despite the option id', () => {
+            it('should get default option from list of options which has an isDefault flag set to true, despite the option id not matching the DEFAULT_OPTION id', () => {
                 const call = widget.getDefaultOption(fakeFormOptionEntries[3]);
 
                 expect(call).toEqual(fakeFormOptionEntries[3][0]);
+            });
+
+            it('should not get default option from list of options which has an id matching the DEFAULT_OPTION id, while having an isDefault flag set to false on that option', () => {
+                const call = widget.getDefaultOption(fakeFormOptionEntries[4]);
+
+                expect(call).toEqual(undefined);
             });
         });
 
