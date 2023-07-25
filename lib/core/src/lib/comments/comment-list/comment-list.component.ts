@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, Inject } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
-import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
@@ -30,7 +27,7 @@ import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
     encapsulation: ViewEncapsulation.None
 })
 
-export class CommentListComponent implements OnInit, OnDestroy {
+export class CommentListComponent {
 
     /** The comments data used to populate the list. */
     @Input()
@@ -38,28 +35,13 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
     /** Emitted when the user clicks on one of the comment rows. */
     @Output()
-    clickRow: EventEmitter<CommentModel> = new EventEmitter<CommentModel>();
+    clickRow = new EventEmitter<CommentModel>();
 
     selectedComment: CommentModel;
-    currentLocale;
-    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         @Inject(ADF_COMMENTS_SERVICE) private commentsService: Partial<CommentsService>,
-        public userPreferenceService: UserPreferencesService
     ) {
-    }
-
-    ngOnInit() {
-        this.userPreferenceService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.currentLocale = locale);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     selectComment(comment: CommentModel): void {

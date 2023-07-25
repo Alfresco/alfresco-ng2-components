@@ -23,7 +23,7 @@
             <div matLine [attr.id]="'comment-message-' + comment.id" class="adf-comment-message" [innerHTML]="comment.message">
             </div>
             <div matLine [attr.id]="'comment-time-' + comment.id" class="adf-comment-message-time">
-                {{ comment.created | adfTimeAgo: currentLocale }}
+                {{ comment.created | adfTimeAgo }}
             </div>
         </div>
     </mat-list-item>
