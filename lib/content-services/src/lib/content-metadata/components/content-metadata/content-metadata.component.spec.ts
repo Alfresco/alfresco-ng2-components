@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService, TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
+import { AllowableOperationsEnum, CategoriesManagementComponent, CategoriesManagementMode, CategoryService, TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -76,7 +76,25 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
+    const findGenralInfoSaveButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-generalInfo-metadata]')).nativeElement;
+    const findTagsSaveButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-tags-metadata]')).nativeElement;
     const findSaveButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-metadata]')).nativeElement;
+    const findSCategorieSaveButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-categories-metadata]')).nativeElement;
+
+    const clickOnGenralInfoSave = () => {
+        findGenralInfoSaveButton().click();
+        fixture.detectChanges();
+    };
+
+    const clickOnTagsSave = () => {
+        findTagsSaveButton().click();
+        fixture.detectChanges();
+    };
+
+    const clickOnCategoriesSave = () => {
+        findSCategorieSaveButton().click();
+        fixture.detectChanges();
+    };
 
     const clickOnSave = () => {
         findSaveButton().click();
@@ -172,6 +190,14 @@ describe('ContentMetadataComponent', () => {
             expect(component.editable).toBe(false);
         });
 
+        it('should have editableTags input param as false by default', () => {
+            expect(component.editableTags).toBe(false);
+        });
+
+        it('should have editableCategories input param as false by default', () => {
+            expect(component.editableCategories).toBe(false);
+        });
+
         it('should have displayEmpty input param as false by default', () => {
             expect(component.displayEmpty).toBe(false);
         });
@@ -221,7 +247,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(async () => {
-            component.editable = true;
+            component.editableGeneralInfo    = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -231,15 +257,15 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            clickOnSave();
+            clickOnGenralInfoSave();
 
             await fixture.whenStable();
             expect(component.node).toEqual(expectedNode);
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
-        it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync( () => {
-            component.editable = true;
+        it('should call removeTag and assignTagsToNode on TagService on save click',() => {
+            component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -253,11 +279,11 @@ describe('ContentMetadataComponent', () => {
             const tagName2 = 'New tag 3';
 
             updateService.update(property, 'updated-value');
-            tick(600);
 
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
-            clickOnSave();
+            const mockEvent = new Event('click');
+            component.saveTagsChanges(mockEvent);
 
             const tag1 = new TagBody();
             tag1.tag = tagName1;
@@ -265,10 +291,10 @@ describe('ContentMetadataComponent', () => {
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-        }));
+        });
 
-        it('should call getTagsByNodeId on TagService on save click', fakeAsync( () => {
-            component.editable = true;
+        it('should call getTagsByNodeId on TagService on save click', () => {
+            component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -280,15 +306,15 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(of({}));
 
             updateService.update(property, 'updated-value');
-            tick(600);
 
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagPaging.list.entries[0].entry.tag, 'New tag 3']);
             getTagsByNodeIdSpy.calls.reset();
-            clickOnSave();
+            const mockEvent = new Event('click');
+            component.saveTagsChanges(mockEvent);
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
-        }));
+        });
 
         it('should throw error on unsuccessful save', fakeAsync(() => {
             const logService: LogService = TestBed.inject(LogService);
@@ -307,13 +333,13 @@ describe('ContentMetadataComponent', () => {
             spyOn(nodesApiService, 'updateNode').and.returnValue(throwError(new Error('My bad')));
 
             fixture.detectChanges();
-            fixture.whenStable().then(() => clickOnSave());
+            fixture.whenStable().then(() => clickOnGenralInfoSave());
             discardPeriodicTasks();
             flush();
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
-            component.editable = true;
+            component.editableGeneralInfo = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -324,7 +350,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            clickOnSave();
+            clickOnGenralInfoSave();
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
@@ -333,8 +359,8 @@ describe('ContentMetadataComponent', () => {
             discardPeriodicTasks();
         }));
 
-        it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
-            component.editable = true;
+        it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', () => {
+            component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
@@ -349,25 +375,23 @@ describe('ContentMetadataComponent', () => {
             const tagName2 = 'New tag 3';
 
             updateService.update(property, 'ft:poppoli');
-            tick(600);
 
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
-            tick(100);
             fixture.detectChanges();
-            clickOnSave();
+            const mockEvent = new Event('click');
+            component.saveTagsChanges(mockEvent);
 
-            tick(100);
             const tag1 = new TagBody();
             tag1.tag = tagName1;
             const tag2 = new TagBody();
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-        }));
+        });
 
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
-            component.editable = true;
+            component.editableGeneralInfo = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -379,12 +403,101 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            clickOnSave();
+            clickOnGenralInfoSave();
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
             expect(updateService.updateNodeAspect).toHaveBeenCalledWith(expectedNode);
         }));
+    });
+
+    describe('editing', () => {
+        it('should toggle editableGeneralInfo by clicking on the edit button', () => {
+            component.editableGeneralInfo = true;
+            component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+            fixture.detectChanges();
+            const mockEvent = new Event('click');
+            component.toggleGeneralEdit(mockEvent);
+            expect(component.editableGeneralInfo).toBe(false);
+        });
+
+        it('should toggle editableTags by clicking on the edit button', () => {
+            component.editableTags = true;
+            component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+            fixture.detectChanges();
+            const mockEvent = new Event('click');
+            component.toggleTagsEdit(mockEvent);
+            expect(component.editableTags).toBe(false);
+        });
+    
+        it('should toggle editableCategories by clicking on the edit button', () => {
+            component.editableCategories = true;
+            component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+            fixture.detectChanges();
+            const mockEvent = new Event('click');
+            component.toggleCategoriesEdit(mockEvent);
+            expect(component.editableCategories).toBe(false);
+        });
+
+        it('should set group.editable to true and call expandePanel when toggleEdit is called with group.editable as false', () => {
+            const group = { editable: false };
+            const mockEvent = { stopPropagation: () => {} };
+            spyOn(mockEvent, 'stopPropagation');
+            spyOn(component, 'expandePanel');
+            component.toggleEdit(group, mockEvent as Event);
+            expect(group.editable).toBe(true);
+            expect(mockEvent.stopPropagation).toHaveBeenCalled();
+            expect(component.expandePanel).toHaveBeenCalledWith(group);
+          });
+
+          it('should set group.editable to false and not call expandePanel when toggleEdit is called with group.editable as true', () => {
+            const group = { editable: true };
+            const mockEvent = { stopPropagation: () => {} };
+            spyOn(mockEvent, 'stopPropagation');
+            spyOn(component, 'expandePanel');
+            component.toggleEdit(group, mockEvent as Event);
+            expect(group.editable).toBe(false);
+            expect(mockEvent.stopPropagation).toHaveBeenCalled();
+            expect(component.expandePanel).not.toHaveBeenCalled();
+          });
+    });
+
+    describe('cancelChanges', () => {
+        it('should cancel changes for group and set editable to false', () => {
+            const group = { editable: true };
+            const mockEvent = new Event('click');
+            spyOn(component, 'revertChanges');
+            component.cancelChanges(group, mockEvent);
+            expect(group.editable).toBe(false);
+            expect(component.revertChanges).toHaveBeenCalled();
+          });
+
+          it('should cancel general info changes and set editableGeneralInfo to false', () => {
+            const mockEvent = new Event('click');
+            component.editableGeneralInfo = true;
+            spyOn(component, 'revertChanges');
+            component.cancelGeneralInfoChanges(mockEvent);
+            expect(component.editableGeneralInfo).toBe(false);
+            expect(component.revertChanges).toHaveBeenCalled();
+          });
+
+          it('should cancel tags changes and set editableTags to false', () => {
+            component.editableTags = true;
+            const mockEvent = new Event('click');
+            spyOn(component, 'revertChanges');
+            component.CancelTagsChanges(mockEvent);
+            expect(component.editableTags).toBe(false);
+            expect(component.revertChanges).toHaveBeenCalled();
+          });
+
+          it('should cancel categories changes and set editableCategories to false', () => {
+            const mockEvent = new Event('click');
+            component.editableCategories = true;
+            spyOn(component, 'revertChanges');
+            component.cancelCategoriesChanges(mockEvent);
+            expect(component.editableCategories).toBe(false);
+            expect(component.revertChanges).toHaveBeenCalled();
+          });
     });
 
     describe('Reseting', () => {
@@ -1015,7 +1128,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should render tags after loading tags after clicking on Cancel button', fakeAsync(() => {
-            component.editable = true;
+            component.editableTags = true;
             fixture.detectChanges();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
                 changed: {}
@@ -1025,7 +1138,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
 
             clickOnCancel();
-            component.editable = false;
+            component.editableTags = false;
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
@@ -1049,7 +1162,7 @@ describe('ContentMetadataComponent', () => {
         let tagsCreator: TagsCreatorComponent;
 
         beforeEach(() => {
-            component.editable = true;
+            component.editableTags = true;
             component.displayTags = true;
             fixture.detectChanges();
             tagsCreator = findTagsCreator();
@@ -1099,7 +1212,7 @@ describe('ContentMetadataComponent', () => {
             tagsCreator.tagsChange.emit([]);
             fixture.detectChanges();
 
-            clickOnSave();
+            clickOnTagsSave();
             expect(tagsCreator.disabledTagsRemoving).toBeTrue();
         });
 
@@ -1120,7 +1233,7 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tagsCreator.tagsChange.emit([tagName1, tagName2]);
-            clickOnSave();
+            clickOnTagsSave();
 
             expect(tagsCreator.disabledTagsRemoving).toBeFalse();
         }));
@@ -1130,7 +1243,7 @@ describe('ContentMetadataComponent', () => {
             tagsCreator.tagsChange.emit([]);
             fixture.detectChanges();
 
-            clickOnSave();
+            clickOnTagsSave();
             expect(tagsCreator.tagNameControlVisible).toBeFalse();
         });
 
@@ -1258,7 +1371,7 @@ describe('ContentMetadataComponent', () => {
         let categoriesManagementComponent: CategoriesManagementComponent;
 
         beforeEach(() => {
-            component.editable = true;
+            component.editableCategories = true;
             component.displayCategories = true;
             component.node.aspectNames.push('generalclassifiable');
             spyOn(categoryService, 'getCategoryLinksForNode').and.returnValue(of(categoryPagingResponse));
@@ -1315,7 +1428,7 @@ describe('ContentMetadataComponent', () => {
             categoriesManagementComponent.categoriesChange.emit([]);
             fixture.detectChanges();
 
-            clickOnSave();
+            clickOnCategoriesSave();
             expect(categoriesManagementComponent.disableRemoval).toBeTrue();
         });
 
@@ -1346,7 +1459,7 @@ describe('ContentMetadataComponent', () => {
             categoriesManagementComponent.categoriesChange.emit([]);
             fixture.detectChanges();
 
-            clickOnSave();
+            clickOnCategoriesSave();
             expect(categoriesManagementComponent.categoryNameControlVisible).toBeFalse();
         });
 

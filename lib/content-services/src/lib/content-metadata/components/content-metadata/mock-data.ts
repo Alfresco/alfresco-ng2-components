@@ -25,6 +25,7 @@ export const mockGroupProperties = [
                 key: 'properties.exif:pixelXDimension',
                 default: null,
                 editable: true,
+                editableTags: true,
                 clickable: false,
                 icon: '',
                 data: null,
@@ -40,6 +41,7 @@ export const mockGroupProperties = [
                 key: 'properties.exif:pixelYDimension',
                 default: null,
                 editable: true,
+                editableTags: true,
                 clickable: false,
                 icon: '',
                 data: null,
@@ -49,7 +51,9 @@ export const mockGroupProperties = [
                 clickCallBack: null,
                 displayValue: 400
             }
-        ]
+        ],
+        editable: true,
+        expanded: true,
     },
     {
         title: 'CUSTOM',
@@ -60,6 +64,7 @@ export const mockGroupProperties = [
                 key: 'properties.custom:abc',
                 default: null,
                 editable: true,
+                editableTags: true,
                 clickable: false,
                 icon: '',
                 data: null,
@@ -69,6 +74,8 @@ export const mockGroupProperties = [
                 clickCallBack: null,
                 displayValue: 400
             }
-        ]
+        ],
+        editable: true,
+        expanded: true,
     }
 ];

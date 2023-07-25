@@ -149,6 +149,7 @@
       "TITLE": "Create Tags",
       "CREATE_TAG": "Create: {{tag}}",
       "NAME": "Name",
+      "INPUT_PLACEHOLDER": "Add a tag to these items",
       "ERRORS": {
         "EXISTING_TAG": "Tag already exists",
         "ALREADY_ADDED_TAG": "Tag is already added",
@@ -179,6 +180,7 @@
     "NAME": "Category name",
     "LOADING": "Loading",
     "HIDE_INPUT": "Hide input",
+    "INPUT_PLACEHOLDER": "Add a categories to these items",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
       "REQUIRED": "Category name is required",
@@ -487,7 +489,8 @@
       "MODIFIED_DATE": "Modified Date",
       "CONTENT_TYPE": "Content Type",
       "TAGS": "Tags",
-      "ADD_TAG_TOOLTIP": "Add tag"
+      "ADD_TAG_TOOLTIP": "Add tag",
+      "HEADER_TITLE": "General info"
     },
     "CONTENT_TYPE": {
       "DIALOG" :{

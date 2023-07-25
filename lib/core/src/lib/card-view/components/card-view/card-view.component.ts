@@ -34,6 +34,9 @@ export class CardViewComponent {
     @Input()
     editable: boolean;
 
+    @Input()
+    editableGeneralInfo: boolean;
+
     /** Toggles whether or not to show empty items in non-editable mode. */
     @Input()
     displayEmpty: boolean = true;
