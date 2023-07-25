@@ -70,7 +70,7 @@ export class CommentListComponent {
         let result = '';
 
         if (user) {
-            result = `${user.firstName} ${user.lastName}`;
+            result = `${user.firstName || ''} ${user.lastName || ''}`;
         }
 
         return result.trim();
