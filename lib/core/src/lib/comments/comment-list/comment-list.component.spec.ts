@@ -178,7 +178,7 @@ describe('CommentListComponent', () => {
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-img-container');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toContain(commentList.getUserShortName(mockCommentOne.createdBy));
+        expect(elements[0].innerText).toContain(commentList.getUserInitials(mockCommentOne.createdBy));
         expect(fixture.nativeElement.querySelector('.adf-comment-img-container:empty')).toBeNull();
     });
 

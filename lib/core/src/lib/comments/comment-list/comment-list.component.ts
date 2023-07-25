@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, Inject } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
+import { User } from '../../models/general-user.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
@@ -52,24 +53,34 @@ export class CommentListComponent {
         this.clickRow.emit(this.selectedComment);
     }
 
-    getUserShortName(user: any): string {
-        let shortName = '';
+    getUserInitials(user: User): string {
+        let result = '';
         if (user) {
             if (user.firstName) {
-                shortName = user.firstName[0].toUpperCase();
+                result = user.firstName[0];
             }
             if (user.lastName) {
-                shortName += user.lastName[0].toUpperCase();
+                result += user.lastName[0];
             }
         }
-        return shortName;
+        return result.toUpperCase();
     }
 
-    isPictureDefined(user: any): boolean {
-        return user.pictureId || user.avatarId;
+    getUserFullName(user: User): string {
+        let result = '';
+
+        if (user) {
+            result = `${user.firstName} ${user.lastName}`;
+        }
+
+        return result.trim();
     }
 
-    getUserImage(user: any): string {
+    isPictureDefined(user: User): boolean {
+        return user['pictureId'] || user['avatarId'];
+    }
+
+    getUserImage(user: User): string {
         return this.commentsService.getUserImage(user);
     }
 }

@@ -4,22 +4,19 @@
                   class="adf-comment-list-item"
                   [class.adf-is-selected]="comment.isSelected">
         <div class="adf-comment-img-container">
-            <div
-                *ngIf="!isPictureDefined(comment.createdBy)"
-                class="adf-comment-user-icon">
-                {{getUserShortName(comment.createdBy)}}
+            <div *ngIf="!isPictureDefined(comment.createdBy)"
+                 class="adf-comment-user-icon">
+                {{ getUserInitials(comment.createdBy) }}
             </div>
-            <div>
-                <img [alt]="comment.createdBy" *ngIf="isPictureDefined(comment.createdBy)"
-                      class="adf-people-img"
+            <div *ngIf="isPictureDefined(comment.createdBy)">
+                <img class="adf-people-img"
+                     [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
                      [src]="getUserImage(comment.createdBy)" />
             </div>
         </div>
         <div class="adf-comment-contents">
-            <div matLine class="adf-comment-user-name">
-                {{comment.createdBy?.firstName}} {{comment.createdBy?.lastName}}
-            </div>
-            <div matLine class="adf-comment-message">{{comment.message}}</div>
+            <div matLine class="adf-comment-user-name">{{ getUserFullName(comment.createdBy) }}</div>
+            <div matLine class="adf-comment-message">{{ comment.message }}</div>
             <div matLine class="adf-comment-message-time">{{ comment.created | adfTimeAgo }}</div>
         </div>
     </mat-list-item>
