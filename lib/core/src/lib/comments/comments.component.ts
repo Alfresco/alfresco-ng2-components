@@ -81,7 +81,6 @@ export class CommentsComponent implements OnChanges {
                 }
 
                 comments = this.sortedComments(comments);
-                // this.addCommentsToObserver(comments);
                 this.comments.push(...comments);
             },
             (err) => {
@@ -95,11 +94,9 @@ export class CommentsComponent implements OnChanges {
             return;
         }
 
-        const comment: string = this.sanitize(this.message);
-
         this.beingAdded = true;
 
-        this.commentsService.add(this.id, comment)
+        this.commentsService.add(this.id, this.message)
             .subscribe(
                 (res: CommentModel) => {
                     this.addToComments(res);
@@ -150,12 +147,5 @@ export class CommentsComponent implements OnChanges {
 
     private resetComments(): void {
         this.comments = [];
-    }
-
-    private sanitize(input: string): string {
-        return input.replace(/^\s+|\s+$|\s+(?=\s)/g, '')
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;').replace(/\r?\n/g, '<br/>');
     }
 }
