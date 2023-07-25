@@ -57,4 +57,8 @@ export class CardViewComponent {
     /** String separator between multi-value property items. */
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
+
+    /** Toggles whether or not to show label for multivalued chip property. */
+    @Input()
+    displayLabelForMultiValuedChip: boolean = true;
 }

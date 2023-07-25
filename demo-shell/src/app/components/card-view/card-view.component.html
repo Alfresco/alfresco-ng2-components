@@ -6,7 +6,8 @@
             [properties]="properties"
             [editable]="isEditable"
             [displayClearAction]="showClearDateAction"
-            [displayNoneOption]="showNoneOption">
+            [displayNoneOption]="showNoneOption"
+            [displayLabelForMultiValuedChip]="showLabelForMultiValuedChip">
         </adf-card-view>
     </mat-card>
 
@@ -38,6 +39,13 @@
         (change)="toggleNoneOption()"
         [checked]="showNoneOption">
         Show none option
+    </mat-slide-toggle><br>
+    <mat-slide-toggle
+        id="app-toggle-label-multivalued-chip"
+        [color]="'primary'"
+        (change)="toggleLabelForMultiValuedChip()"
+        [checked]="showLabelForMultiValuedChip">
+        Show label for multivalued (chips) property
     </mat-slide-toggle>
 </p>
 

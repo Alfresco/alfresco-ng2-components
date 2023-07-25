@@ -47,6 +47,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     logs: string[];
     showClearDateAction = false;
     showNoneOption = false;
+    showLabelForMultiValuedChip = false;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -266,6 +267,10 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     toggleNoneOption() {
         this.showNoneOption = !this.showNoneOption;
+    }
+
+    toggleLabelForMultiValuedChip() {
+        this.showLabelForMultiValuedChip = !this.showLabelForMultiValuedChip;
     }
 
     reset() {
