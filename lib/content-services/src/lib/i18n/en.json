@@ -336,7 +336,12 @@
         "SEARCH_FILTER": "Search Filter List",
         "OPTIONS-SELECTION": "Options Selection"
       },
-      "ANY": "Any"
+      "ANY": "Any",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
       "ft_ic_raster_image": "Image file",

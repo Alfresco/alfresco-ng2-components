@@ -75,7 +75,7 @@ describe('SearchFilterChipsComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
             { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList()}
         ];
-        searchFacetFiltersService.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+        searchFacetFiltersService.queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { type: 'field', label: 'f1', field: 'f1', buckets: [
@@ -125,7 +125,7 @@ describe('SearchFilterChipsComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
             { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList()}
         ];
-        queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+        queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             { type: 'field', label: 'f1', field: 'f1', buckets: [
@@ -174,7 +174,7 @@ describe('SearchFilterChipsComponent', () => {
                         { label: 'b2', count: 1, filterQuery: 'filter2' }]) },
             { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
         ];
-        queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[0]);
+        queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
         const data = {
             list: {
                 context: {}

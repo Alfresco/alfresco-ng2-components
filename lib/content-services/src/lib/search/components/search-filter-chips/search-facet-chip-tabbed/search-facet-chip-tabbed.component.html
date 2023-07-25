@@ -1,0 +1,59 @@
+<mat-chip [attr.data-automation-id]="'search-filter-chip-tabbed-' + tabbedFacet.label"
+          disableRipple
+          class="adf-search-filter-chip-tabbed"
+          [class.adf-search-toggle-chip]="(displayValue$ | async) || menuTrigger.menuOpen"
+          [disabled]="!isPopulated"
+          tabIndex="0"
+          [matMenuTriggerFor]="menu"
+          (onMenuOpen)="onMenuOpen()"
+          (keydown.enter)="onEnterKeydown()"
+          (keydown.escape)="onEscKeydown()"
+          [attr.title]="displayValue$ | async"
+          #menuTrigger="matMenuTrigger">
+
+    <span class="adf-search-filter-placeholder">{{ tabbedFacet.label | translate }}:</span>
+
+    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="displayValue$ | async as displayValue; else showAny">
+        &nbsp; {{ displayValue | translate }}
+    </span>
+    <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
+    <mat-icon *ngIf="isPopulated; else disabledIcon">{{ chipIcon }}</mat-icon>
+    <ng-template #disabledIcon>
+        <mat-icon>remove</mat-icon>
+    </ng-template>
+</mat-chip>
+
+<mat-menu #menu="matMenu" class="adf-search-widget-extra-width" backdropClass="adf-search-filter-chip-menu" (closed)="onClosed()">
+    <div #menuContainer [attr.data-automation-id]="'search-field-' + tabbedFacet.label">
+        <adf-search-filter-menu-card (click)="$event.stopPropagation()"
+                                     (keydown.tab)="$event.stopPropagation();"
+                                     (keydown.shift.tab)="$event.stopPropagation()"
+                                     (close)="menuTrigger.closeMenu()">
+            <ng-container ngProjectAs="filter-title">
+                {{ tabbedFacet.label | translate }}
+            </ng-container>
+            <ng-container ngProjectAs="filter-content">
+                <adf-search-filter-tabbed>
+                    <ng-container *ngFor="let field of tabbedFacet.fields">
+                        <adf-search-chip-autocomplete-input
+                            *adf-search-filter-tab="tabbedFacet.facets[field]?.label"
+                            [autocompleteOptions]="autocompleteOptions[field]"
+                            [onReset$]="reset$"
+                            [allowOnlyPredefinedValues]="true"
+                            [compareOption]="optionComparator"
+                            (optionsChanged)="onOptionsChange($event, field)">
+                        </adf-search-chip-autocomplete-input>
+                    </ng-container>
+                </adf-search-filter-tabbed>
+            </ng-container>
+            <ng-container ngProjectAs="filter-actions">
+                <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">
+                    {{ 'SEARCH.FILTER.BUTTONS.CLEAR' | translate }}
+                </button>
+                <button mat-flat-button class="adf-search-action-button" color="primary" (click)="onApply()" id="apply-filter-button">
+                    {{ 'SEARCH.FILTER.BUTTONS.APPLY' | translate }}
+                </button>
+            </ng-container>
+        </adf-search-filter-menu-card>
+    </div>
+</mat-menu>

@@ -1,0 +1,17 @@
+adf-search-facet-chip-tabbed {
+    .adf-search-filter-chip-tabbed {
+        &[disabled] {
+            pointer-events: none;
+        }
+    }
+
+    .adf-search-widget-extra-width {
+        max-width: 500px;
+    }
+}
+
+adf-search-filter-tabbed {
+    .mat-tab-body-wrapper {
+        margin-top: 16px;
+    }
+}

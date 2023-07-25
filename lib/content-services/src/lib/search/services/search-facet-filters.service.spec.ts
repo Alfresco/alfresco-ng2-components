@@ -497,7 +497,7 @@ describe('SearchFacetFiltersService', () => {
                 }]
             }
         ];
-        let data = {
+        const data = {
             list: {
                 context: {
                     facets: fields
@@ -511,6 +511,55 @@ describe('SearchFacetFiltersService', () => {
         expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe(`Test Category/Subcategory/${entry.name}`);
         expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(1);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
+    });
+
+    it('should extract creator and modifier facets and create tabbed facet for them', () => {
+        searchFacetFiltersService.responseFacets = null;
+        queryBuilder.config = {
+            categories: [],
+            facetFields: { fields: [
+                    { label: 'creator', field: 'creator' },
+                    { label: 'modifier', field: 'modifier' }
+                ]},
+            facetQueries: {
+                queries: []
+            }
+        };
+
+        const serverResponseFields: any = [
+            {
+                type: 'field',
+                label: 'creator',
+                buckets: [
+                    { label: 'b1', metrics: [{value: {count: 10}}] },
+                    { label: 'b2', metrics: [{value: {count: 1}}] }
+                ]
+            },
+            {
+                type: 'field',
+                label: 'modifier',
+                buckets: [
+                    { label: 'c1', metrics: [{value: {count: 10}}] },
+                    { label: 'c2', metrics: [{value: {count: 1}}] }
+                ]
+            }
+        ];
+        const data = {
+            list: {
+                context: {
+                    facets: serverResponseFields
+                }
+            }
+        };
+
+        searchFacetFiltersService.onDataLoaded(data);
+        expect(searchFacetFiltersService.responseFacets.length).toEqual(0);
+        expect(searchFacetFiltersService.tabbedFacet.fields).toEqual(['creator', 'modifier']);
+        expect(searchFacetFiltersService.tabbedFacet.label).toEqual('SEARCH.FILTER.PEOPLE');
+        expect(searchFacetFiltersService.tabbedFacet.facets['creator'].buckets.items[0].label).toEqual('b1');
+        expect(searchFacetFiltersService.tabbedFacet.facets['creator'].buckets.items[1].label).toEqual('b2');
+        expect(searchFacetFiltersService.tabbedFacet.facets['modifier'].buckets.items[0].label).toEqual('c1');
+        expect(searchFacetFiltersService.tabbedFacet.facets['modifier'].buckets.items[1].label).toEqual('c2');
     });
 
     describe('Bucket sorting', () => {
