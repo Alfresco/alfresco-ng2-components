@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
 import { User } from '../../models/general-user.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
@@ -38,11 +38,7 @@ export class CommentListComponent {
     clickRow = new EventEmitter<CommentModel>();
 
     selectedComment: CommentModel;
-
-    constructor(
-        @Inject(ADF_COMMENTS_SERVICE) private commentsService: Partial<CommentsService>,
-    ) {
-    }
+    private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE)
 
     selectComment(comment: CommentModel): void {
         if (this.selectedComment) {

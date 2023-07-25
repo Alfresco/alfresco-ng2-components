@@ -17,7 +17,7 @@
 
 import { CommentModel, User } from '../../models';
 import { Observable, of } from 'rxjs';
-import { CommentsService } from '../interfaces';
+import { CommentsService } from '../interfaces/comments-service.interface';
 
 export class CommentsServiceMock implements Partial<CommentsService> {
 

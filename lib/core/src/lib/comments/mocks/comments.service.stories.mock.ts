@@ -17,7 +17,7 @@
 
 import { CommentModel } from '../../models';
 import { Observable, of } from 'rxjs';
-import { CommentsService } from '../interfaces';
+import { CommentsService } from '../interfaces/comments-service.interface';
 import { testUser } from './comments.stories.mock';
 import { UserLike } from '../../pipes/user-like.interface';
 

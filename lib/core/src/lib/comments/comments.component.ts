@@ -19,15 +19,13 @@ import { CommentModel } from '../models/comment.model';
 import {
     Component,
     EventEmitter,
-    Inject,
+    inject,
     Input,
     OnChanges,
     Output,
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
-import { share } from 'rxjs/operators';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 
@@ -49,27 +47,13 @@ export class CommentsComponent implements OnChanges {
 
     /** Emitted when an error occurs while displaying/adding a comment. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     comments: CommentModel[] = [];
-
     message: string;
-
     beingAdded: boolean = false;
 
-    private commentObserver: Observer<CommentModel>;
-    comment$: Observable<CommentModel>;
-
-    constructor(@Inject(ADF_COMMENTS_SERVICE) private commentsService: CommentsService) {
-        this.comment$ = new Observable<CommentModel>((observer) => this.commentObserver = observer)
-            .pipe(
-                share()
-            );
-
-        this.comment$.subscribe((comment: CommentModel) => {
-            this.comments.push(comment);
-        });
-    }
+    private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
     ngOnChanges(changes: SimpleChanges): void {
         this.id = null;
@@ -97,8 +81,8 @@ export class CommentsComponent implements OnChanges {
                 }
 
                 comments = this.sortedComments(comments);
-                this.addCommentsToObserver(comments);
-
+                // this.addCommentsToObserver(comments);
+                this.comments.push(...comments);
             },
             (err) => {
                 this.error.emit(err);
@@ -161,12 +145,6 @@ export class CommentsComponent implements OnChanges {
             const date2 = new Date(comment2.created);
 
             return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-        });
-    }
-
-    private addCommentsToObserver(comments: CommentModel[]): void {
-        comments.forEach((currentComment: CommentModel) => {
-            this.commentObserver.next(currentComment);
         });
     }
 

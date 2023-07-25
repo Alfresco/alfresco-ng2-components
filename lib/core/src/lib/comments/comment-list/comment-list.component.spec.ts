@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
@@ -44,7 +43,6 @@ describe('CommentListComponent', () => {
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,

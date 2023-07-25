@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
-import { ADF_COMMENTS_SERVICE, CommentsService } from './interfaces';
 import { of, throwError } from 'rxjs';
+import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
+import { CommentsService } from './interfaces/comments-service.interface';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -37,7 +38,6 @@ describe('CommentsComponent', () => {
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
@@ -48,7 +48,7 @@ describe('CommentsComponent', () => {
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
 
-        commentsService = fixture.componentInstance['commentsService'];
+        commentsService = TestBed.inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
         getCommentSpy = spyOn(commentsService, 'get').and.returnValue(commentsResponseMock.getComments());
         addCommentSpy = spyOn(commentsService, 'add').and.returnValue(commentsResponseMock.addComment());
