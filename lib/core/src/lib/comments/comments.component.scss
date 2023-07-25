@@ -5,18 +5,20 @@ adf-comments {
         overflow: auto;
     }
 
+    .adf-comments-divider {
+        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+    }
+
     .adf-comments-header {
-        padding: 10px 20px;
+        padding: 10px 0;
         font-size: var(--theme-body-1-font-size);
         font-weight: 600;
-        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
         margin: 0;
     }
 
     .adf-comments-input-container {
-        width: calc(100% - 30px);
-        padding: 8px 15px 0;
-        border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
+        width: 100%;
+        padding: 8px 0;
 
         textarea {
             resize: vertical;
@@ -30,6 +32,5 @@ adf-comments {
     .adf-comments-input-actions {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 10px;
     }
 }
