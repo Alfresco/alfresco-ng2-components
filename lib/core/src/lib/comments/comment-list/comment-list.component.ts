@@ -26,7 +26,6 @@ import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
     styleUrls: ['./comment-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
 export class CommentListComponent {
 
     /** The comments data used to populate the list. */

@@ -75,7 +75,7 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('#adf-comment-1'));
+            const comment = fixture.debugElement.query(By.css('.adf-comment-list:first-child'));
             comment.triggerEventHandler('click', null);
         });
     }));
@@ -96,7 +96,7 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('#adf-comment-2'));
+            const comment = fixture.debugElement.query(By.css('.adf-comment-list:last-child'));
             comment.triggerEventHandler('click', null);
         });
     }));
