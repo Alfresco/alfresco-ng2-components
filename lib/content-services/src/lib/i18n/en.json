@@ -181,6 +181,7 @@
     "LOADING": "Loading",
     "HIDE_INPUT": "Hide input",
     "INPUT_PLACEHOLDER": "Add a categories to these items",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
       "REQUIRED": "Category name is required",
@@ -490,7 +491,8 @@
       "CONTENT_TYPE": "Content Type",
       "TAGS": "Tags",
       "ADD_TAG_TOOLTIP": "Add tag",
-      "HEADER_TITLE": "General info"
+      "HEADER_TITLE": "General info",
+      "NO_TAGS_ADDED": "There are currently no tags added"
     },
     "CONTENT_TYPE": {
       "DIALOG" :{

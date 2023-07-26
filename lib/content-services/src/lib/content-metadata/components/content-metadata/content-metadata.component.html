@@ -12,14 +12,12 @@
                             {{ 'CORE.METADATA.HEADER_TITLE' | translate }}
                         </mat-panel-title>
                     </div>
-                    <div>
                         <button *ngIf="!editableGeneralInfo" mat-icon-button (click)="toggleGeneralEdit($event)"
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                             [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                             data-automation-id="meta-data-card-toggle-generalInfo-edit" class="adf-edit-icon-buttons">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                    </div>
                     <div class="adf-metadata-action-buttons" *ngIf="editableGeneralInfo">
                         <button mat-icon-button (click)="cancelGeneralInfoChanges($event)" data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
@@ -50,14 +48,12 @@
                             {{ tagsPanelState ? 'expand_more' : 'chevron_right'}}</mat-icon>
                         <mat-panel-title class="adf-metadata-properties-title">{{ 'METADATA.BASIC.TAGS' | translate }}</mat-panel-title>
                     </div>
-                    <div>
                         <button *ngIf="!editableTags" mat-icon-button (click)="toggleTagsEdit($event)"
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                             [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                             data-automation-id="meta-data-card-toggle-tags-edit" class="adf-edit-icon-buttons">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                    </div>
                     <div class="adf-metadata-action-buttons" *ngIf="editableTags">
                         <button mat-icon-button (click)="CancelTagsChanges($event)" data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
@@ -73,7 +69,7 @@
                         <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                     </div>
                     <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-tags-added" >
-                        There are currently no tags added
+                        {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                     </div>
                     <div *ngIf="editableTags" class="adf-metadata-properties-tags">
                         <adf-tags-creator 
@@ -94,14 +90,12 @@
                             <mat-panel-title class="adf-metadata-properties-title">{{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' |
                                 translate }}</mat-panel-title>
                     </div>
-                    <div>
                         <button *ngIf="!editableCategories" mat-icon-button (click)="toggleCategoriesEdit($event)"
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                             [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                             data-automation-id="meta-data-card-toggle-categoeies-edit" class="adf-edit-icon-buttons">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
-                    </div>
                     <div class="adf-metadata-action-buttons" *ngIf="editableCategories">
                         <button mat-icon-button (click)="cancelCategoriesChanges($event)" data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
@@ -117,7 +111,7 @@
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
                 <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-catagories-added" >
-                    There are currently no categories added
+                    {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
                     <adf-categories-management [(categoryNameControlVisible)]="categoryControlVisible"
@@ -139,14 +133,12 @@
                             <mat-panel-title class="adf-metadata-properties-title">
                                 {{ group.title | translate }}
                             </mat-panel-title>
-                            </div>
-                      <div>
+                        </div>
                         <button *ngIf="!group.editable" mat-icon-button [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                           [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate" data-automation-id="meta-data-card-toggle-edit"
                           class="adf-edit-icon-buttons" (click)="toggleEdit(group, $event)">
                           <mat-icon>mode_edit</mat-icon>
                         </button>
-                      </div>
                       <div class="adf-metadata-action-buttons" *ngIf="group.editable">
                         <button mat-icon-button (click)="cancelGroupChanges(group, $event)" data-automation-id="reset-metadata">
                           <mat-icon>clear</mat-icon>

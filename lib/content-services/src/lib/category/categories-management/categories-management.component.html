@@ -7,7 +7,7 @@
             [formControl]="categoryNameControl"
             (keyup.enter)="addCategory()" 
             aria-labelledby="adf-category-name-input-label"
-            placeholder="'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate" 
+            placeholder="{{'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate }}" 
             adf-auto-focus />
         <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
     </div>
