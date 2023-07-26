@@ -23,5 +23,4 @@ export interface CardViewTextItemProperties extends CardViewItemProperties {
     multivalued?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
-    displayLabelForMultiValuedChip?: boolean;
 }

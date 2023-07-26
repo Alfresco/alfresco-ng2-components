@@ -33,7 +33,6 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
         this.multiline = !!cardViewTextItemProperties.multiline;
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
-        this.displayLabelForMultiValuedChip = cardViewTextItemProperties.displayLabelForMultiValuedChip ?? false;
 
         if (this.default && this.isEmpty()) {
             this.value = this.default;

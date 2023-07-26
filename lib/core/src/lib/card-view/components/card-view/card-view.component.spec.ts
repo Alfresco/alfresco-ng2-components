@@ -233,8 +233,7 @@ describe('CardViewComponent', () => {
         const multiValueProperty: CardViewItem = new CardViewTextItemModel({
           label: 'My Multivalue Label',
           value: ['Value 1', 'Value 2', 'Value 3'],
-          key: 'multi-key',
-          displayLabelForMultiValuedChip: true
+          key: 'multi-key'
         });
 
         component.properties = [multiValueProperty];
