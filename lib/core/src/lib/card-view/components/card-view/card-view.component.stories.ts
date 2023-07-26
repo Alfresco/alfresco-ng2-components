@@ -57,6 +57,10 @@ export default {
         multiValueSeparator: {
             control: 'text',
             defaultValue: ', '
+        },
+        displayLabelForMultiValuedChip: {
+            control: 'boolean',
+            defaultValue: true
         }
     }
 } as Meta;
