@@ -179,4 +179,17 @@ describe('CardViewItemDispatcherComponent', () => {
             });
         });
     });
+
+    describe('Display label for multi-valued chips', () => {
+        it('should pass the displayLabelForMultiValuedChip parameter to the CardViewShinyCustomElementItemComponent', () => {
+            const expectedDisplayLabel = false;
+
+            component.ngOnChanges({
+                displayLabelForMultiValuedChip: new SimpleChange(true, expectedDisplayLabel, false)
+            });
+
+            const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
+            expect(shinyCustomElementItemComponent.displayLabelForMultiValuedChip).toBe(expectedDisplayLabel);
+        });
+    });
 });

@@ -226,4 +226,27 @@ describe('CardViewComponent', () => {
         expect(currentOptions[0].innerHTML).toContain(options[0].label);
         expect(currentOptions[1].innerHTML).toContain(options[1].label);
     });
+
+    it('should show/hide the label for multivalued chip property based on displayLabelForMultiValuedChip input', async () => {
+        const multiValueProperty = new CardViewTextItemModel({
+            label: 'My Multivalue Label',
+            value: ['Value 1', 'Value 2', 'Value 3'],
+            key: 'multi-key'
+        });
+        component.properties = [multiValueProperty];
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const labelElement = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(labelElement).not.toBeNull();
+        expect(labelElement.nativeElement.innerText).toBe('My Multivalue Label');
+
+        component.displayLabelForMultiValuedChip = false;
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const hiddenLabelElement = fixture.debugElement.query(By.css('.adf-property-label'));
+        expect(hiddenLabelElement).toBeNull();
+    });
 });

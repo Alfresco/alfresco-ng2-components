@@ -864,4 +864,49 @@ describe('CardViewTextItemComponent', () => {
 
         });
     });
+
+    describe('showLabelForMultiValuedChip', () => {
+        it('should display the label for multi-valued chips if displayLabelForMultiValuedChip is true', async () => {
+            const cardViewTextItemObject = {
+                label: 'Text label',
+                value: ['item1', 'item2', 'item3'],
+                key: 'textkey',
+                default: ['FAKE-DEFAULT-KEY'],
+                editable: true,
+                multivalued: true
+            };
+
+            component.property = new CardViewTextItemModel(cardViewTextItemObject);
+            component.displayLabelForMultiValuedChip = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const labelElement = fixture.debugElement.query(By.css(`.adf-property-label`));
+            expect(labelElement).not.toBeNull();
+            expect(labelElement.nativeElement.innerText).toBe('Text label');
+        });
+
+        it('should NOT display the label for multi-valued chips if displayLabelForMultiValuedChip is false', async () => {
+            const cardViewTextItemObject = {
+                label: 'Text label',
+                value: ['item1', 'item2', 'item3'],
+                key: 'textkey',
+                default: ['FAKE-DEFAULT-KEY'],
+                editable: true,
+                multivalued: true
+            };
+
+            component.property = new CardViewTextItemModel(cardViewTextItemObject);
+            component.displayLabelForMultiValuedChip = false;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const labelElement = fixture.debugElement.query(By.css(`.adf-property-label`));
+            expect(labelElement).toBeNull();
+        });
+    });
 });
