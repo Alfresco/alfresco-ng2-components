@@ -78,7 +78,7 @@ export default {
         },
         displayLabelForMultiValuedChip: {
             control: 'boolean',
-            description: 'Display label for each chip in multi-valued mode',
+            description: 'Display label for multivalued (chips) property',
             defaultValue: true,
             table: {
                 type: { summary: 'boolean' },

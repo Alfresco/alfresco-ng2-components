@@ -37,12 +37,9 @@ describe('CardViewComponent', () => {
         TestBed.configureTestingModule({
         imports: [TranslateModule.forRoot(), CoreTestingModule]
         }).compileComponents();
-    }));
-
-    beforeEach(() => {
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
-    });
+    }));
 
     afterEach(() => {
         fixture.destroy();
