@@ -455,4 +455,28 @@ describe('CategoriesManagementComponent', () => {
             }));
         });
     });
+
+    it('should remove a category', fakeAsync(() => {
+    component.managementMode = CategoriesManagementMode.ASSIGN;
+    const categoryToRemove: Category = { id: 'catToRemove', name: 'Category to Remove' };
+    component.categories = [categoryToRemove];
+    component['_existingCategories'] = [];
+    component.initialCategories = [];
+    component.removeCategoryTitle = 'Remove Category';
+    component.removeCategory(categoryToRemove);
+    expect(component.categories.length).toBe(0);
+    }));
+
+    it('should hide categoryNameControl and emit event', fakeAsync(() => {
+    component.hideNameInput();
+    expect(component.categoryNameControlVisible).toBe(false);
+    expect(component.existingCategoriesPanelVisible).toBe(false);
+    }));
+
+    it('should toggle categoryNameControl visibility', () => {
+    component.categoryNameControlVisible = true;
+    expect(component.categoryNameControlVisible).toBe(true);
+    component.categoryNameControlVisible = false;
+    expect(component.categoryNameControlVisible).toBe(false);
+    });
 });

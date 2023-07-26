@@ -36,7 +36,7 @@
             align-items: center;
             border-radius: 16px;
             width: fit-content;
-            background: rgba(33, 33, 33, 0.05);
+            background: var(--adf-metadata-tags-background-color);
             margin-top: 12px;
             padding: 6px 12px;
             justify-content: center;
@@ -121,7 +121,7 @@
             .adf-metadata-properties {
                 .mat-expansion-panel {
                     width: 755px;
-                    border: 1px solid var(--adf-package-list-table-row-border-bottom-color);
+                    border: 1px solid var(--adf-metadata-property-panel-border-color);
                     margin: 24px;
                     border-radius: 12px !important;
                 }
