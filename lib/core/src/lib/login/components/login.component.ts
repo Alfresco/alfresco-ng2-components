@@ -55,7 +55,7 @@ interface ValidationMessage {
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-login' }
+    host: {class: 'adf-login'}
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
@@ -167,7 +167,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 const url = params['redirectUrl'];
                 const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
-                this.basicAlfrescoAuthService.setRedirect({ provider, url });
+                this.basicAlfrescoAuthService.setRedirect({provider, url});
             });
         }
 
@@ -198,16 +198,17 @@ export class LoginComponent implements OnInit, OnDestroy {
      *
      * @param values
      */
-    onSubmit(values: any): void {
+    async onSubmit(values: any): Promise<void> {
         this.disableError();
 
         const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
+            controls: {username: this.form.controls.username}
         });
         this.executeSubmit.emit(args);
 
         if (!args.defaultPrevented) {
             this.actualLoginStep = LoginSteps.Checking;
+
             this.performLogin(values);
         }
     }
@@ -249,7 +250,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     performLogin(values: { username: string; password: string }) {
-        this.basicAlfrescoAuthService.login(values.username, values.password, this.rememberMe)
+        this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 async (token: any) => {
                     const redirectUrl = this.basicAlfrescoAuthService.getRedirect();

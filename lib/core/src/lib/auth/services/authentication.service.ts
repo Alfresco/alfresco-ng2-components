@@ -134,6 +134,14 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
+    login(username: string, password: string, rememberMe?: boolean): Observable<{ type: string; ticket: any }> {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.loginWithPassword(username, password);
+        } else {
+            return this.basicAlfrescoAuthService.login(username, password, rememberMe);
+        }
+    }
+
     getEcmUsername(): string {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.getEcmUsername();
