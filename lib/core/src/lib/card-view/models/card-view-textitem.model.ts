@@ -26,7 +26,6 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
-    displayLabelForMultiValuedChip: boolean = false;
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
