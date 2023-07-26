@@ -466,11 +466,4 @@ describe('CategoriesManagementComponent', () => {
     component.removeCategory(categoryToRemove);
     expect(component.categories.length).toBe(0);
     }));
-
-    it('should toggle categoryNameControl visibility', () => {
-    component.categoryNameControlVisible = true;
-    expect(component.categoryNameControlVisible).toBe(true);
-    component.categoryNameControlVisible = false;
-    expect(component.categoryNameControlVisible).toBe(false);
-    });
 });

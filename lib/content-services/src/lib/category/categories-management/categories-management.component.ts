@@ -83,9 +83,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      set categoryNameControlVisible(categoryNameControlVisible: boolean) {
          this._categoryNameControlVisible = categoryNameControlVisible;
          if (categoryNameControlVisible) {
-             setTimeout(() => {
                  this.categoryNameInputElement.nativeElement.scrollIntoView();
-             });
              this._existingCategoriesPanelVisible = true;
          } else {
             this._existingCategoriesPanelVisible = false;

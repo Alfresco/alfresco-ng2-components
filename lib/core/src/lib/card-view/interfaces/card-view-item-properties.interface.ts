@@ -23,6 +23,7 @@ export interface CardViewItemProperties {
     key: any;
     default?: any;
     editable?: boolean;
+    editableGeneralInfo?: boolean;
     clickable?: any;
     icon?: string;
     hint?: string;

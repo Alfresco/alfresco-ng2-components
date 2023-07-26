@@ -24,6 +24,7 @@ export abstract class CardViewBaseItemModel {
     key: any;
     default: any;
     editable: boolean;
+    editableGeneralInfo: boolean;
     clickable: boolean;
     icon?: string;
     hint?: string;
@@ -38,6 +39,7 @@ export abstract class CardViewBaseItemModel {
         this.key = cardViewItemProperties.key;
         this.default = cardViewItemProperties.default;
         this.editable = !!cardViewItemProperties.editable;
+        this.editableGeneralInfo = !!cardViewItemProperties.editableGeneralInfo;
         this.clickable = !!cardViewItemProperties.clickable;
         this.icon = cardViewItemProperties.icon || '';
         this.hint = cardViewItemProperties.hint || '';
