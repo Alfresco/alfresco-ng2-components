@@ -238,10 +238,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges(group:any, event: Event) {
+
+    saveChanges(event: Event) {
         event.stopPropagation();
         this._saving = true;
-        group.editable = !group.editable;
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();
@@ -249,47 +249,29 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.updateNode();
         }
+    }
+
+    saveGroupChanges(group: any, event: Event) {
+        this.saveChanges(event);
+        group.editable = !group.editable;
     }
 
     saveGeneralInfoChanges(event: Event) {
-        event.stopPropagation();
-        this._saving = true;
+        this.saveChanges(event);
         this.editableGeneralInfo = !this.editableGeneralInfo;
-        if (this.hasContentTypeChanged(this.changedProperties)) {
-            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
-                this.updateNode();
-            });
-        } else {
-            this.updateNode();
-        }
     }
 
     saveTagsChanges(event: Event) {
-        event.stopPropagation();
-        this._saving = true;
+        this.saveChanges(event);
         this.tagNameControlVisible = false;
         this.editableTags = !this.editableTags;
-        if (this.hasContentTypeChanged(this.changedProperties)) {
-            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
-                this.updateNode();
-            });
-        } else {
-            this.updateNode();
-        }
     }
 
+
     saveCategoriesChanges(event: Event) {
-        event.stopPropagation();
-        this._saving = true;
-        this.editableCategories = !this.editableCategories;
+        this.saveChanges(event);
         this.categoryControlVisible = false;
-        if (this.hasContentTypeChanged(this.changedProperties)) {
-            this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
-                this.updateNode();
-            });
-        } else {
-            this.updateNode();
-        }
+        this.editableCategories = !this.editableCategories;
     }
 
     /**
@@ -319,32 +301,30 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.hasMetadataChanged = false;
     }
 
-    cancelChanges(group: any, event: Event) {
+    cancelChanges(event: Event) {
         event.stopPropagation();
         this.revertChanges();
         this.loadProperties(this.node);
+    }
+
+    cancelGroupChanges(group: any, event: Event) {
+        this.cancelChanges(event);
         group.editable = !group.editable;
     }
 
     cancelGeneralInfoChanges(event: Event) {
-        event.stopPropagation();
-        this.revertChanges();
-        this.loadProperties(this.node);
+        this.cancelChanges(event);
         this.editableGeneralInfo = !this.editableGeneralInfo;
     }
 
     CancelTagsChanges(event: Event) {
-        event.stopPropagation();
-        this.revertChanges();
-        this.loadProperties(this.node);
+        this.cancelChanges(event);
         this.editableTags = !this.editableTags;
     }
 
     cancelCategoriesChanges(event: Event) {
-        event.stopPropagation();
-        this.revertChanges();
-        this.loadProperties(this.node);
-        this.editableCategories = !this.editableCategories
+        this.cancelChanges(event);
+        this.editableCategories = !this.editableCategories;
     }
 
     showGroup(group: CardViewGroup): boolean {
@@ -494,7 +474,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         event.stopPropagation();
         this.editableGeneralInfo = !this.editableGeneralInfo;
         if (!this.panel.expanded) {
-            this.panel.open(); // Expand the panel if it's collapsed
+            this.panel.open();
         }
     }
 
@@ -526,14 +506,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    expandePanel(group:any) {
+    expandePanel(group: any) {
         group.expanded = true;
     }
 
     onPanelOpened(group: any): void {
         group.aspectPanelstate = true;
     }
-      onPanelClosed(group: any): void {
+    onPanelClosed(group: any): void {
         group.aspectPanelstate = false;
     }
 }

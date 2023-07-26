@@ -148,10 +148,10 @@
                         </button>
                       </div>
                       <div class="adf-metadata-action-buttons" *ngIf="group.editable">
-                        <button mat-icon-button (click)="cancelChanges(group, $event)" data-automation-id="reset-metadata">
+                        <button mat-icon-button (click)="cancelGroupChanges(group, $event)" data-automation-id="reset-metadata">
                           <mat-icon>clear</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="saveChanges(group, $event)" color="primary" data-automation-id="save-metadata"
+                        <button mat-icon-button (click)="saveGroupChanges(group, $event)" color="primary" data-automation-id="save-metadata"
                           [disabled]="!hasMetadataChanged">
                           <mat-icon>check</mat-icon>
                         </button>

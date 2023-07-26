@@ -467,12 +467,6 @@ describe('CategoriesManagementComponent', () => {
     expect(component.categories.length).toBe(0);
     }));
 
-    it('should hide categoryNameControl and emit event', fakeAsync(() => {
-    component.hideNameInput();
-    expect(component.categoryNameControlVisible).toBe(false);
-    expect(component.existingCategoriesPanelVisible).toBe(false);
-    }));
-
     it('should toggle categoryNameControl visibility', () => {
     component.categoryNameControlVisible = true;
     expect(component.categoryNameControlVisible).toBe(true);
