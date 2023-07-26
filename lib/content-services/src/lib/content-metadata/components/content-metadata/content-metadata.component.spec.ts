@@ -467,7 +467,7 @@ describe('ContentMetadataComponent', () => {
             const group = { editable: true };
             const mockEvent = new Event('click');
             spyOn(component, 'revertChanges');
-            component.cancelChanges(group, mockEvent);
+            component.cancelChanges(mockEvent);
             expect(group.editable).toBe(false);
             expect(component.revertChanges).toHaveBeenCalled();
           });
