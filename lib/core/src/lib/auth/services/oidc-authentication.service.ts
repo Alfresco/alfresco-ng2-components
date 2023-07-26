@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, defer } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -72,7 +72,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     hasValidIdToken(): boolean {
-        return this.oauthService.hasValidAccessToken();
+        return this.oauthService.hasValidIdToken();
     }
 
     isImplicitFlow() {
@@ -96,6 +96,25 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
             }),
             catchError((err) => this.handleError(err))
         );
+    }
+
+    loginWithPassword(username: string, password: string): Observable<{ type: string; ticket: any }> {
+        // @ts-ignore
+        return defer(async () => {
+            try {
+                await this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password);
+                await this.oauthService.refreshToken();
+                const accessToken = this.oauthService.getAccessToken();
+                this.onLogin.next(accessToken);
+
+                return {
+                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
+                    ticket: accessToken
+                };
+            } catch (err) {
+                throw this.handleError(err);
+            }
+        });
     }
 
     getEcmUsername(): string {
