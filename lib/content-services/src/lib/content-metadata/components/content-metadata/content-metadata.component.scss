@@ -1,6 +1,11 @@
 .adf {
     &-metadata-properties {
 
+        .mat-expansion-panel {
+            border: 1px solid var(--adf-metadata-property-panel-border-color);
+            border-radius: 12px !important;
+            margin-bottom: 12px;
+
         mat-expansion-panel-header {
             height: 56px;
 
@@ -10,6 +15,7 @@
                 padding-left: 12px;
             }
         }
+    }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
@@ -127,5 +133,11 @@
                 }
             }
         }
+    }
+}
+
+.adf-content-metadata-card {
+    .mat-card:not([class*=mat-elevation-z]) {
+        box-shadow: none;
     }
 }
