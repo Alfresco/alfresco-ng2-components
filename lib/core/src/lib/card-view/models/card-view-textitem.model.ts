@@ -26,12 +26,14 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
     clickCallBack?: any;
+    displayLabelForMultiValuedChip: boolean = false;
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
         this.multiline = !!cardViewTextItemProperties.multiline;
         this.pipes = cardViewTextItemProperties.pipes || [];
         this.clickCallBack = cardViewTextItemProperties.clickCallBack ? cardViewTextItemProperties.clickCallBack : null;
+        this.displayLabelForMultiValuedChip = cardViewTextItemProperties.displayLabelForMultiValuedChip ?? false;
 
         if (this.default && this.isEmpty()) {
             this.value = this.default;
