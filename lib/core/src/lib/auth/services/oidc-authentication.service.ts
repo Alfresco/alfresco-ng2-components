@@ -99,16 +99,17 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     loginWithPassword(username: string, password: string): Observable<{ type: string; ticket: any }> {
-        // @ts-ignore
         return defer(async () => {
             try {
+                await this.authConfig.loadConfig();
+                await this.oauthService.loadDiscoveryDocument();
                 await this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password);
                 await this.oauthService.refreshToken();
                 const accessToken = this.oauthService.getAccessToken();
                 this.onLogin.next(accessToken);
 
                 return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
+                    type: <string>this.appConfig.get(AppConfigValues.PROVIDERS),
                     ticket: accessToken
                 };
             } catch (err) {

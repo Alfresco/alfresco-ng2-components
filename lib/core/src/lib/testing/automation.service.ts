@@ -37,14 +37,9 @@ export class CoreAutomationService {
         private storageService: StorageService,
         private auth: AuthenticationService
     ) {
-        // eslint-disable-next-line no-console
-        console.log('ADF Core AutomationService init');
     }
 
     setup() {
-        // eslint-disable-next-line no-console
-        console.log('ADF Core setup');
-
         const adfProxy = window['adf'] || {};
 
         adfProxy.getConfigField = (field: string): any => this.appConfigService.get(field);

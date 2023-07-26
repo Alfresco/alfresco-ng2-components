@@ -18,7 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
@@ -72,7 +72,7 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    protected onLoadSubject: Subject<any>;
+    protected onLoadSubject: ReplaySubject<any>;
     onLoad: Observable<any>;
 
     get isLoaded() {
@@ -80,7 +80,7 @@ export class AppConfigService {
     }
 
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
-        this.onLoadSubject = new Subject();
+        this.onLoadSubject = new ReplaySubject();
         this.onLoad = this.onLoadSubject.asObservable();
 
         extensionService.setup$.subscribe((config) => {
