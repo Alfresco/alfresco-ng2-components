@@ -154,8 +154,8 @@ defaultCardViewTextItem.args = {
 };
 defaultCardViewTextItem.parameters = { layout: 'centered' };
 
-export const multiValuedChipsCardViewTextItem = template.bind({});
-multiValuedChipsCardViewTextItem.args = {
+export const displayLabelForChipsCardTextItem = template.bind({});
+displayLabelForChipsCardTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Multi-Valued Chips template',
         value: ['Chip 1', 'Chip 2', 'Chip 3'],
@@ -168,4 +168,4 @@ multiValuedChipsCardViewTextItem.args = {
     }),
     displayLabelForChips: true
 };
-multiValuedChipsCardViewTextItem.parameters = { layout: 'centered' };
+displayLabelForChipsCardTextItem.parameters = { layout: 'centered' };
