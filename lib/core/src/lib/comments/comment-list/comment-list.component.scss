@@ -1,6 +1,5 @@
 .adf {
     &-comment-img-container {
-        float: left;
         width: 40px;
         height: 100%;
         display: flex;
@@ -30,8 +29,7 @@
     }
 
     &-comment-user-name {
-        float: left;
-        width: calc(100% - 10%);
+        width: 100%;
         padding: 2px 10px;
         font-weight: 600;
         font-size: var(--theme-body-1-font-size);
