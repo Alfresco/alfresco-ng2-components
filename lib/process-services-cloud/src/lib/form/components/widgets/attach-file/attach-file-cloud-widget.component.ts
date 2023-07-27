@@ -64,6 +64,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = ALIAS_USER_FOLDER;
     selectedNode: Node;
+    lastSentToViewers: Node;
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
@@ -89,7 +90,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.hasFile && this.field.value.length === 1) {
+        if (this.hasFile && this.field.value.length > 0) {
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
@@ -105,12 +106,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
+    onRemoveFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
         if (file['id'] === this.selectedNode?.id) {
             this.selectedNode = null;
-            this.contentModelFormFileHandler();
         }
+        if(file['id'] === this.lastSentToViewers?.id) {
+            this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
+        }
+    }
+
+    onRetrieveFileMetadata(file: File| RelatedContentRepresentation | Node) {
+        this.contentModelFormFileHandler(file);
     }
 
     fetchAppNameFromAppConfig(): string {
@@ -137,7 +144,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
-                if (this.field.value.length === 1) {
+                if(!this.lastSentToViewers) {
                     this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
                 }
             });
@@ -208,7 +215,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return selections.filter(opt => !existingNode.some((node) => node.id === opt.id));
     }
 
-    downloadContent(file: Node): void {
+    onDownloadFile(file: Node): void {
         this.processCloudContentService.downloadFile(file.id);
     }
 
@@ -222,7 +229,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         );
     }
 
-    onAttachFileClicked(nodeSelector: any) {
+    onShowFile(nodeSelector: any) {
         nodeSelector.nodeId = nodeSelector.id;
         this.fileClicked(new ContentLinkModel(nodeSelector));
     }
@@ -256,6 +263,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             });
         }
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
+        this.lastSentToViewers = file;
     }
 
     isRetrieveMetadataOptionEnabled(): boolean {

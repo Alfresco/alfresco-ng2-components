@@ -49,51 +49,51 @@ export class FilePropertiesTableCloudComponent {
     mimeTypeIcon;
 
     @Output()
-    rowClick: EventEmitter<Node> = new EventEmitter<Node>();
+    rowClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
-    attachFileClick: EventEmitter<any> = new EventEmitter<any>();
+    showClicked: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    downloadFile: EventEmitter<Node> = new EventEmitter<Node>();
+    downloadClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
-    uploadNewFileVersion: EventEmitter<NewVersionUploaderDialogData> = new EventEmitter<NewVersionUploaderDialogData>();
+    newVersionClicked: EventEmitter<NewVersionUploaderDialogData> = new EventEmitter<NewVersionUploaderDialogData>();
 
     @Output()
-    contentModelFileHandler: EventEmitter<any> = new EventEmitter<Node>();
+    retrieveMetadataClicked: EventEmitter<any> = new EventEmitter<Node>();
 
     @Output()
-    removeAttachFile: EventEmitter<any> = new EventEmitter<any>();
+    removeClicked: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
 
     onRowClicked(file?: Node) {
-        this.rowClick.emit(file);
+        this.rowClicked.emit(file);
     }
 
-    onAttachFileClicked(nodeSelector: any) {
-        this.attachFileClick.emit(nodeSelector);
+    onShowClicked(nodeSelector: any) {
+        this.showClicked.emit(nodeSelector);
     }
 
-    downloadContent(file: Node) {
-        this.downloadFile.emit(file);
+    onDownloadClicked(file: Node) {
+        this.downloadClicked.emit(file);
     }
 
-    onUploadNewFileVersion(customEvent: any, node: Node){
+    onNewVersionClicked(customEvent: any, node: Node){
         const newVersionUploaderDialogData: NewVersionUploaderDialogData = {
             file: customEvent.detail.files[0].file,
             node
         };
-        this.uploadNewFileVersion.emit(newVersionUploaderDialogData);
+        this.newVersionClicked.emit(newVersionUploaderDialogData);
     }
 
-    contentModelFormFileHandler(file?: any) {
-        this.contentModelFileHandler.emit(file);
+    onRetrieveMetadataClicked(file?: any) {
+        this.retrieveMetadataClicked.emit(file);
     }
 
-    onRemoveAttachFile(file: any) {
-        this.removeAttachFile.emit(file);
+    onRemoveClicked(file: any) {
+        this.removeClicked.emit(file);
     }
 
     getIcon(mimeType: string): string {

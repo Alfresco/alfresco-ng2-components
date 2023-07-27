@@ -589,24 +589,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             showOption.click();
         });
 
-        it('should request form to be updated with metadata when retrieve is clicked', async () => {
-            updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
-            widget.field.value = [fakeNodeWithProperties];
-            fixture.detectChanges();
-
-            const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
-            menuButton.click();
-            fixture.detectChanges();
-
-            const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata')).nativeElement as HTMLButtonElement;
-            retrieveMetadataOption.click();
-            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
-        });
-
         it('should display the default menu options if no options are provided', async () => {
             widget.field.params = onlyLocalParams;
             const inputDebugElement = fixture.debugElement.query(
@@ -661,48 +643,71 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should have been called onInit when widget only one file', async () => {
+        it('should be called onInit when widget has only one file', async () => {
             widget.field.value = [fakeNodeWithProperties];
             widget.ngOnInit();
 
             fixture.detectChanges();
             await fixture.whenStable();
             expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
             expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called onInit when widget has more than one file', async () => {
+        it('should be called onInit with the first file when widget has more than one', async () => {
             widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.ngOnInit();
 
             fixture.detectChanges();
             await fixture.whenStable();
-            expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
+            expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
+            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called on remove node if node removed is not the selected one', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
-            widget.selectedNode = fakeNodeWithProperties;
+        it('should be called with null onRemoveFile if the removed file was being displayed by viewers and theres no more files to display', async () => {
+            widget.field.value = [fakeNodeWithProperties];
+            widget.lastSentToViewers = fakeNodeWithProperties;
 
             fixture.detectChanges();
 
-            widget.onRemoveAttachFile(fakeMinimalNode);
+            widget.onRemoveFile(fakeNodeWithProperties);
 
             await fixture.whenStable();
-            expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
-        });
-
-        it('should have been called on remove node if node removed is the selected one', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
-            widget.selectedNode = fakeNodeWithProperties;
-            fixture.detectChanges();
-
-            widget.onRemoveAttachFile(fakeNodeWithProperties);
-
-            await fixture.whenStable();
-            expect(contentModelFormFileHandlerSpy).toHaveBeenCalled();
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(null);
+            expect(apiServiceSpy).not.toHaveBeenCalled();
             expect(updateFormSpy).not.toHaveBeenCalled();
-            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(undefined, widget.field.id));
+            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(null, widget.field.id));
+        });
+
+        it('should be called with next file onRemoveFile if the removed file was being displayed by viewers and theres more files to display', async () => {
+            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.lastSentToViewers = fakeNodeWithProperties;
+
+            fixture.detectChanges();
+
+            widget.onRemoveFile(fakeNodeWithProperties);
+
+            await fixture.whenStable();
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeMinimalNode);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeMinimalNode.id);
+            expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
+            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeMinimalNode, widget.field.id));
+        });
+
+        it('should be called onRetrieveFileMetadata', async () => {
+            widget.field.value = [fakeNodeWithProperties];
+            fixture.detectChanges();
+
+            widget.onRetrieveFileMetadata(fakeNodeWithProperties);
+
+            await fixture.whenStable();
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
+            expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
+            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
         it('should have been called on attach file when value was empty', async () => {
@@ -712,19 +717,36 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
 
             expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
             expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
-        it('should not be called on attach file when has a file previously', async () => {
+        it('should not be called on newly attached file if viewers are displaying another one', async () => {
             spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
             widget.field.value = [fakeMinimalNode];
+            widget.lastSentToViewers = fakeMinimalNode;
 
             clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
+        });
+
+        it('should be called on newly attached file if viewers are not displaying another one', async () => {
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
+            widget.field.value = [fakeMinimalNode];
+            widget.lastSentToViewers = null;
+
+            clickOnAttachFileWidget('attach-file-alfresco');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(fakeNodeWithProperties);
+            expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
+            expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
+            expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(fakeNodeWithProperties, widget.field.id));
         });
 
         it('should be called when selecting a row if no previous row was selected', async () => {
@@ -758,16 +780,16 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be called when deselecting a row', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
             widget.selectedNode = fakeNodeWithProperties;
+            widget.lastSentToViewers = fakeNodeWithProperties;
 
             widget.onRowClicked(fakeNodeWithProperties);
-
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(widget.selectedNode).toBeNull();
-            expect(contentModelFormFileHandlerSpy).toHaveBeenCalled();
+            expect(contentModelFormFileHandlerSpy).toHaveBeenCalledWith(null);
+            expect(apiServiceSpy).not.toHaveBeenCalled();
             expect(updateFormSpy).not.toHaveBeenCalled();
             expect(contentClickedSpy).toHaveBeenCalledWith(new UploadWidgetContentLinkModel(null, widget.field.id));
         });
