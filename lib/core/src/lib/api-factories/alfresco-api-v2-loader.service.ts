@@ -19,7 +19,7 @@ import { AlfrescoApiConfig } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { StorageService } from "../common";
+import { StorageService } from '../common/services/storage.service';
 
 /**
  * Create a factory to resolve an api service instance
