@@ -115,7 +115,7 @@ describe('CardViewItemDispatcherComponent', () => {
             const expectedCustomInput = 1;
             const expectedDisplayNoneOption = false;
             const expectedDisplayClearAction = false;
-            const expectedDisplayLabel = false;
+            const expectedDisplayLabel = true;
 
             component.ngOnChanges({
                 editable: new SimpleChange(true, expectedEditable, false),
@@ -124,7 +124,7 @@ describe('CardViewItemDispatcherComponent', () => {
                 customInput: new SimpleChange(0, expectedCustomInput, false),
                 displayNoneOption: new SimpleChange(true, expectedDisplayNoneOption, false),
                 displayClearAction: new SimpleChange(true, expectedDisplayClearAction, false),
-                displayLabelForChips: new SimpleChange(true, expectedDisplayLabel, false)
+                displayLabelForChips: new SimpleChange(false, expectedDisplayLabel, false)
             });
 
             const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;

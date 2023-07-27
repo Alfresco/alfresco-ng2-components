@@ -58,7 +58,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForChips: boolean = true;
+    displayLabelForChips: boolean = false;
 
     @ViewChild(CardViewContentProxyDirective, { static: true })
     private content: CardViewContentProxyDirective;

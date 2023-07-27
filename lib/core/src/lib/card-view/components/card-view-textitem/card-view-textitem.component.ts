@@ -59,7 +59,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForChips: boolean = true;
+    displayLabelForChips: boolean = false;
 
     editedValue: string | string[];
     errors: CardViewItemValidator[];

@@ -78,11 +78,11 @@ export default {
         },
         displayLabelForChips: {
             control: 'boolean',
-            description: 'Display label for multivalued (chips) property',
-            defaultValue: true,
+            description: 'Display label for chips property',
+            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: false }
             }
         }
     }
@@ -120,7 +120,7 @@ chipsCardViewTextItem.args = {
         icon: 'icon',
         editable: true
     }),
-    displayLabelForChips: true
+    displayLabelForChips: false
 };
 chipsCardViewTextItem.parameters = { layout: 'centered' };
 
@@ -166,6 +166,6 @@ displayLabelForChipsCardTextItem.args = {
         icon: 'icon',
         editable: true
     }),
-    displayLabelForChips: true
+    displayLabelForChips: false
 };
 displayLabelForChipsCardTextItem.parameters = { layout: 'centered' };

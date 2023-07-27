@@ -60,5 +60,5 @@ export class CardViewComponent {
 
     /** Toggles whether or not to show label for multivalued chip property. */
     @Input()
-    displayLabelForChips: boolean = true;
+    displayLabelForChips: boolean = false;
 }

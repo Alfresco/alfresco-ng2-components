@@ -239,12 +239,12 @@ describe('CardViewComponent', () => {
 
         const cardViewItemDispatcherComponent = getCardViewItemDispatcherComponent();
 
-        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(true);
+        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(false);
 
-        component.displayLabelForChips = false;
+        component.displayLabelForChips = true;
         fixture.detectChanges();
 
-        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(false);
+        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(true);
     });
 
     function getCardViewItemDispatcherComponent() {

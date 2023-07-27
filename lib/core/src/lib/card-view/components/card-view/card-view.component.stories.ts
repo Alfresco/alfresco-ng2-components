@@ -60,7 +60,7 @@ export default {
         },
         displayLabelForChips: {
             control: 'boolean',
-            defaultValue: true
+            defaultValue: false
         }
     }
 } as Meta;
