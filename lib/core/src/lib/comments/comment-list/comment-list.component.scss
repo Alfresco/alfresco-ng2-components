@@ -1,7 +1,3 @@
-.adf-is-selected {
-    background: var(--adf-theme-primary-100);
-}
-
 .adf {
     &-comment-img-container {
         float: left;
@@ -18,21 +14,7 @@
         padding-top: 12px;
         overflow: hidden;
         height: 100% !important;
-        transition: background 0.8s;
         background-position: center;
-
-        &:hover {
-            background:
-                var(--adf-theme-primary-100)
-                radial-gradient(circle, transparent 1%, var(--adf-theme-primary-100) 1%)
-                center/15000%;
-        }
-
-        &:active {
-            background-color: var(--adf-theme-primary-300);
-            background-size: 100%;
-            transition: background 0s;
-        }
     }
 
     &-comment-user-icon {

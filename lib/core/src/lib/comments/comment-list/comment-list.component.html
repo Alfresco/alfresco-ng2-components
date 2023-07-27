@@ -1,8 +1,7 @@
  <mat-list class="adf-comment-list">
     <mat-list-item *ngFor="let comment of comments"
                   (click)="selectComment(comment)"
-                  class="adf-comment-list-item"
-                  [class.adf-is-selected]="comment.isSelected">
+                  class="adf-comment-list-item">
         <div class="adf-comment-img-container">
             <div *ngIf="!comment.hasAvatarPicture" class="adf-comment-user-icon">{{ comment.userInitials }}</div>
             <img *ngIf="comment.hasAvatarPicture" class="adf-people-img"

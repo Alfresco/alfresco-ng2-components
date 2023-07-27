@@ -37,16 +37,10 @@ export class CommentListComponent {
     @Output()
     clickRow = new EventEmitter<CommentModel>();
 
-    selectedComment: CommentModel;
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE)
 
     selectComment(comment: CommentModel): void {
-        if (this.selectedComment) {
-            this.selectedComment.isSelected = false;
-        }
-        comment.isSelected = true;
-        this.selectedComment = comment;
-        this.clickRow.emit(this.selectedComment);
+        this.clickRow.emit(comment);
     }
 
     getUserImage(user: User): string {

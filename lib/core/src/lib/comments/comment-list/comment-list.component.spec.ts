@@ -25,7 +25,6 @@ import {
     commentUserNoPictureDefined,
     commentUserPictureDefined,
     mockCommentOne,
-    mockCommentTwo,
     testUser
 } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
@@ -74,27 +73,6 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const comment = fixture.debugElement.query(By.css('.adf-comment-list:first-child'));
-            comment.triggerEventHandler('click', null);
-        });
-    }));
-
-    it('should deselect the previous selected comment when a new one is clicked', fakeAsync(() => {
-        mockCommentOne.isSelected = true;
-        const commentOne = new CommentModel(mockCommentOne);
-        const commentTwo = new CommentModel(mockCommentTwo);
-        commentList.selectedComment = commentOne;
-        commentList.comments = [commentOne, commentTwo];
-
-        commentList.clickRow.subscribe(() => {
-            fixture.detectChanges();
-            const commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
-            expect(commentSelectedList.length).toBe(1);
-            expect(commentSelectedList[0].textContent).toContain('2nd Test Comment');
-        });
-
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('.adf-comment-list:last-child'));
             comment.triggerEventHandler('click', null);
         });
     }));
