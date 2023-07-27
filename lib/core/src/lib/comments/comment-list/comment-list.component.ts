@@ -49,19 +49,6 @@ export class CommentListComponent {
         this.clickRow.emit(this.selectedComment);
     }
 
-    getUserInitials(user: User): string {
-        let result = '';
-        if (user) {
-            if (user.firstName) {
-                result = user.firstName[0];
-            }
-            if (user.lastName) {
-                result += user.lastName[0];
-            }
-        }
-        return result.toUpperCase();
-    }
-
     getUserImage(user: User): string {
         return this.commentsService.getUserImage(user);
     }

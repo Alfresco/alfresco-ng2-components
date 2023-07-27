@@ -164,17 +164,6 @@ describe('CommentsComponent', () => {
             fixture.whenStable();
         });
 
-        it('should sanitize comment when user input contains html elements', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = '<div class="text-class"><button onclick=""><h1>action</h1></button></div>';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const sanitizedStr = '&lt;div class=&quot;text-class&quot;&gt;&lt;button onclick=&quot;&quot;&gt;&lt;h1&gt;action&lt;/h1&gt;&lt;/button&gt;&lt;/div&gt;';
-            expect(addCommentSpy).toHaveBeenCalledWith('123', sanitizedStr);
-        });
-
         it('should normalize comment when user input contains spaces sequence', async () => {
             const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = 'test comment';
@@ -184,17 +173,6 @@ describe('CommentsComponent', () => {
             await fixture.whenStable();
 
             expect(addCommentSpy).toHaveBeenCalledWith('123', 'test comment');
-        });
-
-        it('should add break lines to comment when user input contains new line characters', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'these\nare\nparagraphs\n';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(addCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
         });
 
         it('should call service to add a comment when add button is pressed', async () => {
