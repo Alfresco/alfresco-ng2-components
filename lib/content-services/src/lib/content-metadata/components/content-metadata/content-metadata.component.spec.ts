@@ -35,7 +35,7 @@ import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService, TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 
 describe('ContentMetadataComponent', () => {
@@ -110,7 +110,6 @@ describe('ContentMetadataComponent', () => {
                 ContentTestingModule,
                 MatIconModule,
                 MatExpansionModule,
-                MatExpansionPanel,
                 MatDividerModule
             ],
             providers: [
@@ -274,7 +273,7 @@ describe('ContentMetadataComponent', () => {
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
         });
 
-        it('should call getTagsByNodeId on TagService on save click', fakeAsync( () => {
+        it('should call getTagsByNodeId on TagService on save click', () => {
             component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
@@ -287,7 +286,6 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(of({}));
 
             updateService.update(property, 'updated-value');
-            tick(600);
 
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagPaging.list.entries[0].entry.tag, 'New tag 3']);
@@ -296,7 +294,7 @@ describe('ContentMetadataComponent', () => {
             component.saveTagsChanges(mockEvent);
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
-        }));
+        });
 
         it('should throw error on unsuccessful save', fakeAsync(() => {
             const logService: LogService = TestBed.inject(LogService);
@@ -321,7 +319,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should open the confirm dialog when content type is changed', fakeAsync(() => {
-            component.editable = true;
+            component.editableGeneralInfo = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = { ...node, nodeType: 'ft:sbiruli' };
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -332,8 +330,8 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            clickOnSave();
-
+            const mockEvent = new Event('click');
+            component.saveGeneralInfoChanges(mockEvent);
             tick(100);
             expect(component.node).toEqual(expectedNode);
             expect(contentMetadataService.openConfirmDialog).toHaveBeenCalledWith({nodeType: 'ft:poppoli'});
@@ -341,7 +339,7 @@ describe('ContentMetadataComponent', () => {
             discardPeriodicTasks();
         }));
 
-        it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed', fakeAsync(() => {
+        it('should call removeTag and assignTagsToNode on TagService after confirming confirmation dialog when content type is changed',() => {
             component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
@@ -357,26 +355,23 @@ describe('ContentMetadataComponent', () => {
             const tagName2 = 'New tag 3';
 
             updateService.update(property, 'ft:poppoli');
-            tick(600);
 
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
-            tick(100);
             fixture.detectChanges();
             const mockEvent = new Event('click');
             component.saveTagsChanges(mockEvent);
 
-            tick(100);
             const tag1 = new TagBody();
             tag1.tag = tagName1;
             const tag2 = new TagBody();
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-        }));
+        });
 
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
-            component.editable = true;
+            component.editableGeneralInfo = true;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
             const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
@@ -388,7 +383,8 @@ describe('ContentMetadataComponent', () => {
 
             fixture.detectChanges();
             tick(100);
-            clickOnSave();
+            const mockEvent = new Event('click');
+            component.saveGeneralInfoChanges(mockEvent);
 
             tick(100);
             expect(component.node).toEqual(expectedNode);
