@@ -150,11 +150,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     reset(): void {
         const config = this.authConfig.loadAppConfig();
         this.auth.updateIDPConfiguration(config);
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-
-        if (config.oidc && oauth2.silentLogin) {
-            this.auth.login();
-        }
     }
 
     isPublicUrl(): boolean {
