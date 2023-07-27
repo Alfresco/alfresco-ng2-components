@@ -390,7 +390,129 @@ describe('ContentMetadataComponent', () => {
             expect(component.node).toEqual(expectedNode);
             expect(updateService.updateNodeAspect).toHaveBeenCalledWith(expectedNode);
         }));
+
+        it('should save general info changes and toggle editableGeneralInfo', () => {
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.editableGeneralInfo = true;
+            component.saveGeneralInfoChanges(event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(component.editableGeneralInfo).toBe(false);
+        });
+
+        it('should save group changes and set group editable to false', () => {
+            const group = { editable: true };
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.saveGroupChanges(group, event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(group.editable).toBe(false);
+        });
     });
+
+    describe('cancelChanges', () => {
+        it('should cancel group changes and set group editable to false', () => {
+            const group = { editable: true };
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.cancelGroupChanges(group, event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(group.editable).toBe(false);
+        });
+
+        it('should cancel general info changes and toggle editableGeneralInfo', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editableGeneralInfo = true;
+            component.cancelGeneralInfoChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editableGeneralInfo).toBe(false);
+        });
+
+        it('should cancel tags changes and toggle editableTags', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editableTags = true;
+            component.CancelTagsChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editableTags).toBe(false);
+        });
+
+        it('should cancel categories changes and toggle editableCategories', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editableCategories = true;
+            component.cancelCategoriesChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editableCategories).toBe(false);
+        });
+    })
+
+    describe('editing', () => {
+        it('should toggle categories edit and set categoriesPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.editableCategories = false;
+            component.categoriesPanelState = false;
+            component.toggleCategoriesEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editableCategories).toBe(true);
+            expect(component.categoriesPanelState).toBe(true);
+            component.toggleCategoriesEdit(event);
+            expect(component.editableCategories).toBe(false);
+            expect(component.categoriesPanelState).toBe(false);
+        });
+
+        it('should toggle group edit and expand the panel if editable', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            const group = { editable: false };
+            component.expandePanel = jasmine.createSpy();
+            component.toggleEdit(group, event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(group.editable).toBe(true);
+            expect(component.expandePanel).toHaveBeenCalledWith(group);
+        });
+
+        it('should toggle group edit but not expand the panel if not editable', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            const group = { editable: true };
+            component.expandePanel = jasmine.createSpy();
+            component.toggleEdit(group, event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(group.editable).toBe(false);
+            expect(component.expandePanel).not.toHaveBeenCalled();
+        });
+
+        it('should toggle general info edit and set generalInfoPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.generalInfoPanelState = true;
+            component.editableGeneralInfo = false;
+            component.toggleGeneralEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editableGeneralInfo).toBe(true);
+            expect(component.generalInfoPanelState).toBe(true);
+            component.toggleGeneralEdit(event);
+            expect(component.editableGeneralInfo).toBe(false);
+            expect(component.generalInfoPanelState).toBe(true);
+        });
+
+        it('should toggle tags edit and set tagsPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.editableTags = false;
+            component.tagsPanelState = false;
+            component.toggleTagsEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editableTags).toBe(true);
+            expect(component.tagsPanelState).toBe(true);
+            component.toggleTagsEdit(event);
+            expect(component.editableTags).toBe(false);
+            expect(component.tagsPanelState).toBe(false);
+        });
+    })
 
     describe('Reseting', () => {
         it('should reset changedProperties on reset click', async () => {
