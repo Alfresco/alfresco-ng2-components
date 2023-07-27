@@ -45,7 +45,9 @@ export enum AppConfigValues {
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
     APPLICATION = 'application',
     STORAGE_PREFIX = 'application.storagePrefix',
-    NOTIFY_DURATION = 'notificationDefaultDuration'
+    NOTIFY_DURATION = 'notificationDefaultDuration',
+    CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM',
+    PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM'
 }
 
 // eslint-disable-next-line no-shadow

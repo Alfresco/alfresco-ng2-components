@@ -34,8 +34,6 @@ export interface TicketEntry {
     };
 }
 
-export const CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM';
-
 @Injectable({
     providedIn: 'root'
 })
@@ -71,8 +69,8 @@ export class ContentAuth {
     }
 
     private setConfig() {
-        if (this.storageService.getItem(CONTENT_TICKET_STORAGE_LABEL)) {
-            this.setTicket(this.storageService.getItem(CONTENT_TICKET_STORAGE_LABEL));
+        if (this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL)) {
+            this.setTicket(this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL));
         }
 
     }
@@ -157,7 +155,7 @@ export class ContentAuth {
         this.authentications.basicAuth.username = 'ROLE_TICKET';
         this.authentications.basicAuth.password = ticket;
         this.config.ticketEcm = ticket;
-        this.storageService.setItem(CONTENT_TICKET_STORAGE_LABEL, ticket);
+        this.storageService.setItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL, ticket);
         this.ticket = ticket;
     }
 
@@ -173,7 +171,7 @@ export class ContentAuth {
     }
 
     invalidateSession() {
-        this.storageService.removeItem(CONTENT_TICKET_STORAGE_LABEL);
+        this.storageService.removeItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL);
         this.authentications.basicAuth.username = null;
         this.authentications.basicAuth.password = null;
         this.config.ticketEcm = null;
