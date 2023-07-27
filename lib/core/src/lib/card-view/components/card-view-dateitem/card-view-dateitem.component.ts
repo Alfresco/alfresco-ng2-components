@@ -26,7 +26,7 @@ import { BaseCardView } from '../base-card-view';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
 import { endOfDay, parse, startOfDay } from 'date-fns';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
 
 @Component({
@@ -111,7 +111,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.datepicker.open();
     }
 
-    onDateChanged(newDateValue) {
+    onDateChanged(newDateValue: MatDatepickerInputEvent<any, any>) {
         if (newDateValue) {
             const date = this.getDateValue(newDateValue);
             if (date) {
@@ -134,7 +134,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
     }
 
-    addDateToList(newDateValue) {
+    addDateToList(newDateValue: MatDatepickerInputEvent<any, any>) {
         if (newDateValue) {
             const date = this.getDateValue(newDateValue);
             if (date) {
@@ -153,7 +153,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
     }
 
-    getDateValue(newDateValue): Date {
+    getDateValue(newDateValue: MatDatepickerInputEvent<any, any>): Date {
         return this.property.key === 'properties.cm:from' ? startOfDay(newDateValue.value) : endOfDay(newDateValue.value);
     }
 }
