@@ -272,7 +272,7 @@ describe('CardViewTextItemComponent', () => {
             expect(valueChips).toBeNull();
         });
 
-        it('should display the label for multi-valued chips if displayLabelForMultiValuedChip is true', async () => {
+        it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
             const cardViewTextItemObject = {
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -283,7 +283,7 @@ describe('CardViewTextItemComponent', () => {
             };
 
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
-            component.displayLabelForMultiValuedChip = true;
+            component.displayLabelForChips = true;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
@@ -294,7 +294,7 @@ describe('CardViewTextItemComponent', () => {
             expect(labelElement.nativeElement.innerText).toBe('Text label');
         });
 
-        it('should NOT display the label for multi-valued chips if displayLabelForMultiValuedChip is false', async () => {
+        it('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
             const cardViewTextItemObject = {
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -305,7 +305,7 @@ describe('CardViewTextItemComponent', () => {
             };
 
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
-            component.displayLabelForMultiValuedChip = false;
+            component.displayLabelForChips = false;
             component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();

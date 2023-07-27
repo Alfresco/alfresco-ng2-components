@@ -124,7 +124,7 @@ describe('CardViewItemDispatcherComponent', () => {
                 customInput: new SimpleChange(0, expectedCustomInput, false),
                 displayNoneOption: new SimpleChange(true, expectedDisplayNoneOption, false),
                 displayClearAction: new SimpleChange(true, expectedDisplayClearAction, false),
-                displayLabelForMultiValuedChip: new SimpleChange(true, expectedDisplayLabel, false)
+                displayLabelForChips: new SimpleChange(true, expectedDisplayLabel, false)
             });
 
             const shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
@@ -134,7 +134,7 @@ describe('CardViewItemDispatcherComponent', () => {
             expect(shinyCustomElementItemComponent.customInput).toBe(expectedCustomInput);
             expect(shinyCustomElementItemComponent.displayNoneOption).toBe(expectedDisplayNoneOption);
             expect(shinyCustomElementItemComponent.displayClearAction).toBe(expectedDisplayClearAction);
-            expect(shinyCustomElementItemComponent.displayLabelForMultiValuedChip).toBe(expectedDisplayLabel);
+            expect(shinyCustomElementItemComponent.displayLabelForChips).toBe(expectedDisplayLabel);
         });
     });
 

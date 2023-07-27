@@ -59,7 +59,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForMultiValuedChip: boolean = true;
+    displayLabelForChips: boolean = true;
 
     editedValue: string | string[];
     errors: CardViewItemValidator[];
@@ -234,6 +234,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     get showLabelForMultiValuedChip(): boolean {
-        return this.displayLabelForMultiValuedChip;
+        return this.displayLabelForChips;
     }
 }

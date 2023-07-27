@@ -76,7 +76,7 @@ export default {
                 defaultValue: { summary: ', ' }
             }
         },
-        displayLabelForMultiValuedChip: {
+        displayLabelForChips: {
             control: 'boolean',
             description: 'Display label for multivalued (chips) property',
             defaultValue: true,
@@ -120,7 +120,7 @@ chipsCardViewTextItem.args = {
         icon: 'icon',
         editable: true
     }),
-    displayLabelForMultiValuedChip: true
+    displayLabelForChips: true
 };
 chipsCardViewTextItem.parameters = { layout: 'centered' };
 
@@ -166,6 +166,6 @@ multiValuedChipsCardViewTextItem.args = {
         icon: 'icon',
         editable: true
     }),
-    displayLabelForMultiValuedChip: true
+    displayLabelForChips: true
 };
 multiValuedChipsCardViewTextItem.parameters = { layout: 'centered' };

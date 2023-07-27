@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
@@ -33,13 +33,13 @@ describe('CardViewComponent', () => {
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
 
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-        imports: [TranslateModule.forRoot(), CoreTestingModule]
-        }).compileComponents();
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
+        });
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
-    }));
+    });
 
     afterEach(() => {
         fixture.destroy();
@@ -226,7 +226,7 @@ describe('CardViewComponent', () => {
         expect(currentOptions[1].innerHTML).toContain(options[1].label);
     });
 
-    it('should show/hide the label for multivalued chip property based on displayLabelForMultiValuedChip input', () => {
+    it('should show/hide the label for multivalued chip property based on displayLabelForChips input', () => {
         const multiValueProperty: CardViewItem = new CardViewTextItemModel({
           label: 'My Multivalue Label',
           value: ['Value 1', 'Value 2', 'Value 3'],
@@ -238,17 +238,17 @@ describe('CardViewComponent', () => {
 
         const cardViewItemDispatcherComponent = getCardViewItemDispatcherComponent();
 
-        expect(cardViewItemDispatcherComponent.displayLabelForMultiValuedChip).toBe(true);
+        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(true);
 
-        component.displayLabelForMultiValuedChip = false;
+        component.displayLabelForChips = false;
         fixture.detectChanges();
 
-        expect(cardViewItemDispatcherComponent.displayLabelForMultiValuedChip).toBe(false);
-      });
+        expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(false);
+    });
 
-      function getCardViewItemDispatcherComponent() {
+    function getCardViewItemDispatcherComponent() {
         const cardViewItemDispatcherDebugElement = fixture.debugElement.query(By.directive(CardViewItemDispatcherComponent));
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
-      }
+    }
 
 });

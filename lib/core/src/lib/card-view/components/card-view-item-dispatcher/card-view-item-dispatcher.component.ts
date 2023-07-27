@@ -58,7 +58,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @Input()
-    displayLabelForMultiValuedChip: boolean = true;
+    displayLabelForChips: boolean = true;
 
     @ViewChild(CardViewContentProxyDirective, { static: true })
     private content: CardViewContentProxyDirective;
@@ -113,7 +113,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.copyToClipboardAction = this.copyToClipboardAction;
         this.componentReference.instance.useChipsForMultiValueProperty = this.useChipsForMultiValueProperty;
         this.componentReference.instance.multiValueSeparator = this.multiValueSeparator;
-        this.componentReference.instance.displayLabelForMultiValuedChip = this.displayLabelForMultiValuedChip;
+        this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
     private proxy(methodName, ...args) {

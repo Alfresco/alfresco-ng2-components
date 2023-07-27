@@ -58,7 +58,7 @@ export default {
             control: 'text',
             defaultValue: ', '
         },
-        displayLabelForMultiValuedChip: {
+        displayLabelForChips: {
             control: 'boolean',
             defaultValue: true
         }
