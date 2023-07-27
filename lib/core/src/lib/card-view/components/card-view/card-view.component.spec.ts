@@ -33,10 +33,11 @@ describe('CardViewComponent', () => {
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), CoreTestingModule]
-        });
+        }).compileComponents();
+
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
     });
