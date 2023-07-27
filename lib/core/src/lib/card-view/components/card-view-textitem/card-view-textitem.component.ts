@@ -233,7 +233,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         return this.property.multivalued && this.useChipsForMultiValueProperty;
     }
 
-    get showLabelForMultiValuedChip(): boolean {
+    get showLabelForChips(): boolean {
         return this.displayLabelForChips;
     }
 }

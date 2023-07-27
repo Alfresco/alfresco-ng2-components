@@ -54,7 +54,7 @@
 
     <div *ngSwitchCase="'chipsTemplate'"
          class="adf-property-field adf-textitem-chip-list-container">
-        <mat-label *ngIf="showLabelForMultiValuedChip" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
+        <mat-label *ngIf="showLabelForChips" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
             {{ property.label | translate }}
         </mat-label>
         <mat-chip-list #chipList
