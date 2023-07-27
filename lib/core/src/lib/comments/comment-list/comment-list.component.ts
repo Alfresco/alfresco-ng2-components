@@ -62,20 +62,6 @@ export class CommentListComponent {
         return result.toUpperCase();
     }
 
-    getUserFullName(user: User): string {
-        let result = '';
-
-        if (user) {
-            result = `${user.firstName || ''} ${user.lastName || ''}`;
-        }
-
-        return result.trim();
-    }
-
-    isPictureDefined(user: User): boolean {
-        return user['pictureId'] || user['avatarId'];
-    }
-
     getUserImage(user: User): string {
         return this.commentsService.getUserImage(user);
     }
