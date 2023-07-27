@@ -22,7 +22,6 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { StorageService } from '../../common/services/storage.service';
 import { ReplaySubject, Subject } from 'rxjs';
 
-export const PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM';
 
 @Injectable({
     providedIn: 'root'
@@ -58,7 +57,7 @@ export class ProcessAuth {
     private setConfig() {
         this.ticket = undefined;
 
-        this.setTicket(this.storageService.getItem(PROCESS_TICKET_STORAGE_LABEL));
+        this.setTicket(this.storageService.getItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL));
     }
 
     saveUsername(username: string) {
@@ -171,13 +170,13 @@ export class ProcessAuth {
             this.authentications.basicAuth.ticket = ticket;
             this.authentications.basicAuth.password = null;
             this.config.ticketBpm = ticket;
-            this.storageService.setItem(PROCESS_TICKET_STORAGE_LABEL, ticket);
+            this.storageService.setItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL, ticket);
             this.ticket = ticket;
         }
     }
 
     invalidateSession() {
-        this.storageService.removeItem(PROCESS_TICKET_STORAGE_LABEL);
+        this.storageService.removeItem(AppConfigValues.PROCESS_TICKET_STORAGE_LABEL);
         this.authentications.basicAuth.ticket = null;
         this.authentications.basicAuth.password = null;
         this.authentications.basicAuth.username = null;
