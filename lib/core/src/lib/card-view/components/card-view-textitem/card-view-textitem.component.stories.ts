@@ -75,6 +75,15 @@ export default {
                 type: { summary: 'string' },
                 defaultValue: { summary: ', ' }
             }
+        },
+        displayLabelForChips: {
+            control: 'boolean',
+            description: 'Display label for chips property',
+            defaultValue: false,
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false }
+            }
         }
     }
 } as Meta;
@@ -110,7 +119,8 @@ chipsCardViewTextItem.args = {
         multivalued: true,
         icon: 'icon',
         editable: true
-    })
+    }),
+    displayLabelForChips: false
 };
 chipsCardViewTextItem.parameters = { layout: 'centered' };
 
@@ -143,3 +153,19 @@ defaultCardViewTextItem.args = {
     })
 };
 defaultCardViewTextItem.parameters = { layout: 'centered' };
+
+export const displayLabelForChipsCardTextItem = template.bind({});
+displayLabelForChipsCardTextItem.args = {
+    property: new CardViewTextItemModel({
+        label: 'CardView Text Item - Multi-Valued Chips template',
+        value: ['Chip 1', 'Chip 2', 'Chip 3'],
+        key: 'multivalued',
+        default: 'default value',
+        multiline: true,
+        multivalued: true,
+        icon: 'icon',
+        editable: true
+    }),
+    displayLabelForChips: false
+};
+displayLabelForChipsCardTextItem.parameters = { layout: 'centered' };
