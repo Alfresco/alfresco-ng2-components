@@ -35,7 +35,7 @@ export class CommentsServiceStoriesMock implements Partial<CommentsService> {
 
 export const commentsResponseMock = {
     getComments: () => of([
-        {
+        new CommentModel({
             id: 1,
             message: 'Test Comment',
             created: new Date(),
@@ -61,8 +61,8 @@ export const commentsResponseMock = {
                 isAdmin: () => false
             } as UserLike,
             isSelected: false
-        } as CommentModel,
-        {
+        }),
+        new CommentModel({
             id: 2,
             message: 'Test Comment',
             created: new Date(),
@@ -88,8 +88,8 @@ export const commentsResponseMock = {
                 isAdmin: () => false
             } as UserLike,
             isSelected: false
-        } as CommentModel,
-        {
+        }),
+        new CommentModel({
             id: 3,
             message: 'Test Comment',
             created: new Date(),
@@ -115,13 +115,15 @@ export const commentsResponseMock = {
                 isAdmin: () => false
             } as UserLike,
             isSelected: false
-        } as CommentModel
+        })
     ]),
-    addComment: (message: string) => of({
-        id: 1,
-        message,
-        created: new Date(),
-        createdBy: testUser,
-        isSelected: false
-    } as CommentModel)
+    addComment: (message: string) => of(
+        new CommentModel({
+            id: 1,
+            message,
+            created: new Date(),
+            createdBy: testUser,
+            isSelected: false
+        })
+    )
 };
