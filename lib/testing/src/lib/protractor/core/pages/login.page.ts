@@ -66,6 +66,8 @@ export class LoginPage {
         Logger.log('Login With ' + username);
         const authType = await LocalStorageUtil.getConfigField('authType');
 
+        Logger.log(`AuthType ${authType}`);
+
         if (!authType || authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password, options);
         } else {
@@ -83,7 +85,10 @@ export class LoginPage {
         await BrowserActions.getUrl(loginURL);
 
         if (oauth2 && oauth2.silentLogin === false) {
+            Logger.log(`Login SSO`);
             await this.clickOnSSOButton();
+        }else{
+            Logger.log(`Login SSO silent login`);
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
@@ -98,6 +103,8 @@ export class LoginPage {
     }
 
     async loginBasicAuth(username: string, password: string, options: LoginOptions = { waitForUserIcon: true }): Promise<void> {
+        Logger.log(`Login Basic`);
+
         await this.goToLoginPage();
 
         await this.enterUsernameBasicAuth(username);

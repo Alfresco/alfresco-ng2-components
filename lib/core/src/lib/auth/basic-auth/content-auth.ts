@@ -163,7 +163,7 @@ export class ContentAuth {
      * Get the current Ticket
      * */
     getToken(): string {
-        if(!this.ticket){
+        if (!this.ticket) {
             this.onError.next('error');
         }
 
@@ -200,6 +200,11 @@ export class ContentAuth {
         }
 
         return this.adfHttpClient.post(this.basePath + '/tickets', {bodyParam: ticketBodyCreate});
+    }
+
+    async requireAlfTicket(): Promise<void> {
+        const ticket = await this.adfHttpClient.get(this.basePath + '/tickets/-me-');
+        this.setTicket(ticket.entry.id);
     }
 
     deleteTicket(): Promise<any> {
