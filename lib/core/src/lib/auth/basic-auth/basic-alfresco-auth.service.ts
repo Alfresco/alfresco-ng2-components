@@ -56,7 +56,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
         this.appConfig.onLoad
             .subscribe(() => {
-                if (this.isLoggedIn()) {
+                if (!this.isOauth() && this.isLoggedIn()) {
                     this.onLogin.next('logged-in');
                 }
             });
@@ -201,18 +201,18 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
             return this.contentAuth.getToken();
         } else if (this.isALLProvider()) {
             return this.contentAuth.getToken();
-        }else{
+        } else {
             return '';
         }
     }
 
     /** @deprecated */
-    getTicketEcm(): string{
+    getTicketEcm(): string {
         return this.contentAuth.getToken();
     }
 
     /** @deprecated */
-    getTicketBpm(): string{
+    getTicketBpm(): string {
         return this.processAuth.getToken();
     }
 
@@ -330,6 +330,9 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return header.set('Authorization', ticket);
     }
 
+    async requireAlfTicket(): Promise<void> {
+        return this.contentAuth.requireAlfTicket();
+    }
 
     /**
      * Gets the BPM ticket from the Storage in Base 64 format.

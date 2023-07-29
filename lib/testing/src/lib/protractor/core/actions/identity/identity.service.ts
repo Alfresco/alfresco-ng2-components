@@ -83,6 +83,14 @@ export class IdentityService {
         const queryParams = {};
         const postBody = {};
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
+
+        const deletePromise = this.api.performIdentityOperation(path, method, queryParams, postBody)
+
+        deletePromise.then(() => {
+            Logger.info(`user ${userId} delete`);
+        })
+
+        return deletePromise;
     }
 
     async getUserInfoByUsername(username: string): Promise<any> {
