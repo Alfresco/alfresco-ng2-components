@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../common/services/storage.service';
+import { AuthenticationService, BasicAlfrescoAuthService } from "../auth";
 
 /**
  * Create a factory to resolve an api service instance
@@ -35,10 +36,22 @@ export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApi
     providedIn: 'root'
 })
 export class AlfrescoApiLoaderService {
-    constructor(private readonly appConfig: AppConfigService, private readonly apiService: AlfrescoApiService, private storageService: StorageService) {}
+    constructor(private readonly appConfig: AppConfigService,
+                private readonly apiService: AlfrescoApiService,
+                private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService,
+                private readonly authService: AuthenticationService,
+                private storageService: StorageService) {
+    }
 
     async init(): Promise<any> {
         await this.appConfig.load();
+
+        this.authService.onLogin.subscribe(async () => {
+            if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
+                await this.basicAlfrescoAuthService.requireAlfTicket();
+            }
+        });
+
         return this.initAngularAlfrescoApi();
     }
 

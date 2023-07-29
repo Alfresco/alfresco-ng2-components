@@ -127,7 +127,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     ssoImplicitLogin() {
-        this.oauthService.initLoginFlow();
+        this.auth.login();
     }
 
     ssoCodeFlowLogin() {

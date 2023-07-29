@@ -285,7 +285,7 @@ exports.config = {
 
             // @ts-ignore
             if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
-
+                Logger.info(`Configure demo shell OAUTH`);
                 // @ts-ignore
                 await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
                 // @ts-ignore

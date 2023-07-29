@@ -37,7 +37,7 @@ export class UploadActions {
     async uploadFile(fileLocation: fs.PathLike, fileName: string, parentFolderId: string): Promise<NodeEntry> {
         const file = fs.createReadStream(fileLocation);
 
-        return this.uploadApi.uploadFile(
+        const uploadPromise = this.uploadApi.uploadFile(
             file,
             '',
             parentFolderId,
@@ -48,6 +48,12 @@ export class UploadActions {
                 renditions: 'doclib'
             }
         );
+
+        uploadPromise.then(() => {
+            Logger.info(`${fileName} uploaded in ${parentFolderId}`);
+        })
+
+        return uploadPromise;
     }
 
     async createEmptyFiles(emptyFileNames: string[], parentFolderId: string): Promise<NodeEntry> {
@@ -74,6 +80,7 @@ export class UploadActions {
     async deleteFileOrFolder(nodeId: string) {
         const apiCall = async () => {
             try {
+                Logger.error(`Deleting ${nodeId}`);
                 return this.nodesApi.deleteNode(nodeId, { permanent: true });
             } catch (error) {
                 Logger.error('Error delete file or folder');
@@ -91,8 +98,18 @@ export class UploadActions {
         if (files && files.length > 0) {
             for (const fileName of files) {
                 const pathFile = path.join(sourcePath, fileName);
-                promises.push(this.uploadFile(pathFile, fileName, folder));
+
+                const uploadPromise = this.uploadFile(pathFile, fileName, folder);
+
+                await uploadPromise.then(() => {
+                    Logger.info(`File ${fileName} uploaded successfully in ${folder}!`);
+                }).catch(() => {
+                    Logger.error(`File ${fileName} error during the upload in ${folder}!`);
+                });
+
+                promises.push(uploadPromise);
             }
+
             uploadedFiles = await Promise.all(promises);
         }
 
