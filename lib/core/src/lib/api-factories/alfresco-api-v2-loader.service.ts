@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from '../common/services/storage.service';
-import { AuthenticationService, BasicAlfrescoAuthService } from "../auth";
+import { AuthenticationService, BasicAlfrescoAuthService } from '../auth';
 
 /**
  * Create a factory to resolve an api service instance
