@@ -49,9 +49,9 @@ export class UploadActions {
             }
         );
 
-        uploadPromise.then(() => {
+        await uploadPromise.then(() => {
             Logger.info(`${fileName} uploaded in ${parentFolderId}`);
-        })
+        });
 
         return uploadPromise;
     }
