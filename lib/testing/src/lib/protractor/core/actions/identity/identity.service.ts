@@ -84,11 +84,11 @@ export class IdentityService {
         const postBody = {};
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
 
-        const deletePromise = this.api.performIdentityOperation(path, method, queryParams, postBody)
+        const deletePromise = this.api.performIdentityOperation(path, method, queryParams, postBody);
 
-        deletePromise.then(() => {
+        await deletePromise.then(() => {
             Logger.info(`user ${userId} delete`);
-        })
+        });
 
         return deletePromise;
     }
