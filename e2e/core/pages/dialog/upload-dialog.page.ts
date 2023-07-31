@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder, $, $$ } from 'protractor';
+import { by, browser, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
@@ -31,12 +31,6 @@ export class UploadDialogPage {
     title = $('span[class*="upload-dialog__title"]');
     minimizeButton = $('mat-icon[title="Minimize"]');
     maximizeButton = $('mat-icon[title="Maximize"]');
-    canUploadConfirmationTitle = $('.upload-dialog__confirmation--title');
-    canUploadConfirmationDescription = $('.upload-dialog__confirmation--text');
-    confirmationDialogNoButton = element(by.partialButtonText('No'));
-    confirmationDialogYesButton = element(by.partialButtonText('Yes'));
-    cancelUploadsElement = $('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]');
-    cancelUploadInProgressButton = $('div[data-automation-id="cancel-upload-progress"]');
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
@@ -76,25 +70,13 @@ export class UploadDialogPage {
     }
 
     async filesAreUploaded(content: string[]): Promise<void> {
-        for (let i = 0; i < content.length; i++) {
-            await this.fileIsUploaded(content[i]);
+        for (const item of content) {
+            await this.fileIsUploaded(item);
         }
     }
 
     async fileIsNotDisplayedInDialog(content: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible($(`div[class*='uploading-row'] span[title="${content}"]`));
-    }
-
-    async cancelUploads(): Promise<void> {
-        await BrowserActions.click(this.cancelUploadsElement);
-    }
-
-    async cancelProgress(): Promise<void> {
-        await BrowserActions.click(this.cancelUploadInProgressButton);
-    }
-
-    async checkCancelProgressIsVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadInProgressButton);
     }
 
     async fileIsCancelled(content: string): Promise<void> {
@@ -113,24 +95,6 @@ export class UploadDialogPage {
     async getTitleText(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.title);
         return this.title.getText();
-    }
-
-    async getConfirmationDialogTitleText(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
-        return this.canUploadConfirmationTitle.getText();
-    }
-
-    async getConfirmationDialogDescriptionText(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
-        return this.canUploadConfirmationDescription.getText();
-    }
-
-    async clickOnConfirmationDialogYesButton(): Promise<void> {
-        await BrowserActions.click(this.confirmationDialogYesButton);
-    }
-
-    async clickOnConfirmationDialogNoButton(): Promise<void> {
-        await BrowserActions.click(this.confirmationDialogNoButton);
     }
 
     async numberOfCurrentFilesUploaded(): Promise<string> {
