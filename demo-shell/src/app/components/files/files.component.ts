@@ -237,7 +237,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     stickyHeader: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-    enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
@@ -602,10 +601,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onInfiniteScrolling(): void {
         this.infiniteScrolling = !this.infiniteScrolling;
         this.infinitePaginationComponent.reset();
-    }
-
-    canDownloadNode(node: MinimalNodeEntity): boolean {
-        return node && node.entry && node.entry.name === 'custom';
     }
 
     onBeginUpload(event: UploadFilesEvent) {

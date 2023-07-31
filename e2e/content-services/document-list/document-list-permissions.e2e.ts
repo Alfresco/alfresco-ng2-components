@@ -16,7 +16,6 @@
  */
 
 import { browser } from 'protractor';
-import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { createApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 import { SitesApi } from '@alfresco/js-api';
@@ -24,7 +23,6 @@ import { SitesApi } from '@alfresco/js-api';
 describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = createApiService();
@@ -60,13 +58,6 @@ describe('Document List Component', () => {
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
             await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
-        });
-
-        it('[C279924] Should display custom message when accessing a file without permissions', async () => {
-            await contentServicesPage.goToDocumentList();
-            await contentServicesPage.enableCustomPermissionMessage();
-            await BrowserActions.getUrl(browser.baseUrl + '/files/' + privateSite.entry.guid);
-            await expect(await errorPage.getErrorCode()).toBe('403');
         });
    });
 });

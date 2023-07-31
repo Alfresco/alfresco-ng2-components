@@ -428,11 +428,6 @@ export class ContentServicesPage {
         await BrowserActions.click(infiniteScrollButton);
     }
 
-    async enableCustomPermissionMessage(): Promise<void> {
-        const customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
-        await BrowserActions.click(customPermissionMessage);
-    }
-
     async enableMediumTimeFormat(): Promise<void> {
         const mediumTimeFormat = $('#enableMediumTimeFormat');
         await BrowserActions.click(mediumTimeFormat);

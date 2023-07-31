@@ -186,9 +186,6 @@
                 (name-click)="documentList.onNodeDblClick($any($event).detail?.node)"
                 (filterSelection)="onFilterSelected($event)">
 
-                <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
-                    <h1>You don't have permissions</h1>
-                </adf-custom-no-permission-template>
                 <adf-custom-empty-content-template *ngIf="disableDragArea">
                     <div class="app-empty_template">
                         <div class="app-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
@@ -277,19 +274,6 @@
                 </data-columns>
 
                 <content-actions>
-                    <content-action
-                        icon="get_app"
-                        title="Download this file now!"
-                        handler="download"
-                        [visible]="canDownloadNode">
-                    </content-action>
-                    <content-action
-                        icon="get_app"
-                        title="Never see this action again"
-                        handler="download"
-                        [visible]="false">
-                    </content-action>
-                    <!-- common actions -->
                     <content-action
                         icon="get_app"
                         title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
@@ -527,12 +511,6 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
                 {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="enableCustomPermissionMessage">
-                {{'APP.CUSTOM-PERMISSION-MESSAGE' | translate}}
             </mat-slide-toggle>
         </section>
 
