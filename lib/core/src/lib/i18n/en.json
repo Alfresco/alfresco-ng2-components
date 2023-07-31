@@ -266,6 +266,7 @@
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profile Image",
     "NONE": "No comments",
     "ADD": "Add",
     "HEADER": "Comments ({{ count }})",

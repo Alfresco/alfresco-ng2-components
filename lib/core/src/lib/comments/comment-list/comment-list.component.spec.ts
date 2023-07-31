@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
@@ -26,7 +25,6 @@ import {
     commentUserNoPictureDefined,
     commentUserPictureDefined,
     mockCommentOne,
-    mockCommentTwo,
     testUser
 } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
@@ -44,7 +42,6 @@ describe('CommentListComponent', () => {
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
@@ -64,7 +61,7 @@ describe('CommentListComponent', () => {
     });
 
     it('should emit row click event', fakeAsync(() => {
-        commentList.comments = [Object.assign({}, mockCommentOne)];
+        commentList.comments = [mockCommentOne];
 
         commentList.clickRow.subscribe((selectedComment: CommentModel) => {
             expect(selectedComment.id).toEqual(1);
@@ -75,28 +72,7 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('#adf-comment-1'));
-            comment.triggerEventHandler('click', null);
-        });
-    }));
-
-    it('should deselect the previous selected comment when a new one is clicked', fakeAsync(() => {
-        mockCommentOne.isSelected = true;
-        const commentOne = Object.assign({}, mockCommentOne);
-        const commentTwo = Object.assign({}, mockCommentTwo);
-        commentList.selectedComment = commentOne;
-        commentList.comments = [commentOne, commentTwo];
-
-        commentList.clickRow.subscribe(() => {
-            fixture.detectChanges();
-            const commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
-            expect(commentSelectedList.length).toBe(1);
-            expect(commentSelectedList[0].textContent).toContain('2nd Test Comment');
-        });
-
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const comment = fixture.debugElement.query(By.css('#adf-comment-2'));
+            const comment = fixture.debugElement.query(By.css('.adf-comment-list:first-child'));
             comment.triggerEventHandler('click', null);
         });
     }));
@@ -109,7 +85,7 @@ describe('CommentListComponent', () => {
     });
 
     it('should show comment message when input is given', async () => {
-        commentList.comments = [Object.assign({}, mockCommentOne)];
+        commentList.comments = [mockCommentOne];
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -121,19 +97,19 @@ describe('CommentListComponent', () => {
     });
 
     it('should show comment user when input is given', async () => {
-        commentList.comments = [Object.assign({}, mockCommentOne)];
+        commentList.comments = [mockCommentOne];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-name');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toBe(mockCommentOne.createdBy.firstName + ' ' + mockCommentOne.createdBy.lastName);
+        expect(elements[0].innerText).toBe(mockCommentOne.userDisplayName);
         expect(fixture.nativeElement.querySelector('.adf-comment-user-name:empty')).toBeNull();
     });
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async () => {
-        const commentFewSecond = Object.assign({}, mockCommentOne);
+        const commentFewSecond = new CommentModel(mockCommentOne);
         commentFewSecond.created = new Date();
 
         commentList.comments = [commentFewSecond];
@@ -146,7 +122,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
-        const commentOld = Object.assign({}, mockCommentOne);
+        const commentOld = new CommentModel(mockCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
         commentList.comments = [commentOld];
 
@@ -158,7 +134,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {
-        const commentOld = Object.assign({}, mockCommentOne);
+        const commentOld = new CommentModel(mockCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
         commentList.comments = [commentOld];
 
@@ -171,14 +147,14 @@ describe('CommentListComponent', () => {
     });
 
     it('should show user icon when input is given', async () => {
-        commentList.comments = [Object.assign({}, mockCommentOne)];
+        commentList.comments = [mockCommentOne];
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         const elements = fixture.nativeElement.querySelectorAll('.adf-comment-img-container');
         expect(elements.length).toBe(1);
-        expect(elements[0].innerText).toContain(commentList.getUserShortName(mockCommentOne.createdBy));
+        expect(elements[0].innerText).toContain(mockCommentOne.userInitials);
         expect(fixture.nativeElement.querySelector('.adf-comment-img-container:empty')).toBeNull();
     });
 

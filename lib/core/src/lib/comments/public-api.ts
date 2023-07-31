@@ -17,7 +17,8 @@
 
 export * from './comments.component';
 
-export * from './interfaces/index';
+export * from './interfaces/comments-service.interface';
+export * from './interfaces/comments.token';
 
 export * from './comments.module';
 
