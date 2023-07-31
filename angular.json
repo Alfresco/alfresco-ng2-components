@@ -275,12 +275,15 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "commands": [
-              {
-                "command": "echo temporary skip unit tests to check e2es"
-              }
+            "main": "lib/core/test.ts",
+            "tsConfig": "lib/core/tsconfig.spec.json",
+            "karmaConfig": "lib/core/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true,
+            "styles": [
+              "demo-shell/src/styles.scss"
             ]
           }
         },
@@ -421,13 +424,13 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "commands": [
-              {
-                "command": "echo temporary skip unit tests to check e2es"
-              }
-            ]
+            "main": "lib/content-services/src/test.ts",
+            "tsConfig": "lib/content-services/tsconfig.spec.json",
+            "karmaConfig": "lib/content-services/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -539,13 +542,13 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "commands": [
-              {
-                "command": "echo temporary skip unit tests to check e2es"
-              }
-            ]
+            "main": "lib/process-services/src/test.ts",
+            "tsConfig": "lib/process-services/tsconfig.spec.json",
+            "karmaConfig": "lib/process-services/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -625,13 +628,13 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "commands": [
-              {
-                "command": "echo temporary skip unit tests to check e2es"
-              }
-            ]
+            "main": "lib/process-services-cloud/src/test.ts",
+            "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
+            "karmaConfig": "lib/process-services-cloud/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -754,13 +757,13 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "executor": "nx:run-commands",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "commands": [
-              {
-                "command": "echo temporary skip unit tests to check e2es"
-              }
-            ]
+            "main": "lib/insights/src/test.ts",
+            "tsConfig": "lib/insights/tsconfig.spec.json",
+            "karmaConfig": "lib/insights/karma.conf.js",
+            "sourceMap": true,
+            "codeCoverage": true
           }
         },
         "lint": {
