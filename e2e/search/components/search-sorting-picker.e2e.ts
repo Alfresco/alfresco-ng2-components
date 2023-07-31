@@ -209,8 +209,8 @@ describe('Search Sorting Picker', () => {
         const nodeList = await getNodesDisplayed(numberOfElements, idList);
 
         const modifiedDateList = [];
-        for (let i = 0; i < nodeList.length; i++) {
-            modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
+        for (const item of nodeList) {
+            modifiedDateList.push(new Date(item.entry.modifiedAt));
         }
 
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
@@ -218,14 +218,12 @@ describe('Search Sorting Picker', () => {
 
     const getNodesDisplayed = async function(numberOfElements: number, idList: string[]) {
         const promises = [];
-        let nodeList;
 
         for (let i = 0; i < (numberOfElements - 1); i++) {
             if (idList[i] && idList[i].trim() !== '') {
                 promises.push(nodesApi.getNode(idList[i]));
             }
         }
-        nodeList = await Promise.all(promises);
-        return nodeList;
+        return Promise.all(promises);
     };
 });

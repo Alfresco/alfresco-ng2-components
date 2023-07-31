@@ -52,20 +52,18 @@ describe('Search component - Search Page', () => {
 
     const acsUser = new UserModel();
     const emptyFolderModel = new FolderModel({ name: 'search' + StringUtil.generateRandomString() });
-    let firstFileModel;
     const newFolderModel = new FolderModel();
-    let fileNames = [];
-    const nrOfFiles = 15;
-    const adminNrOfFiles = 5;
 
     beforeAll(async () => {
-        fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
+        const nrOfFiles = 15;
+        const adminNrOfFiles = 5;
+        const fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
         const adminFileNames = StringUtil.generateFilesNames(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);
 
-        firstFileModel = new FileModel({
+        const firstFileModel = new FileModel({
             name: search.active.firstFile,
             location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });

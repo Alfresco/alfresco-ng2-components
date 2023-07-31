@@ -49,7 +49,6 @@ export class ContentServicesPage {
 
     multipleFileUploadToggle = $('#adf-document-list-enable-drop-files');
     uploadBorder = $('#document-list-container');
-    contentServices = $('.app-sidenav-link[data-automation-id="Content Services"]');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
     editFolderButton = $('button[data-automation-id="edit-folder"]');
@@ -60,20 +59,14 @@ export class ContentServicesPage {
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
     uploadMultipleFileButton = $('input[data-automation-id="upload-multiple-files"]');
     uploadFolderButton = $('input[data-automation-id="uploadFolder"]');
-    errorSnackBar = $('simple-snack-bar[class*="mat-simple-snackbar"]');
     emptyPagination = $('adf-pagination[class*="adf-pagination__empty"]');
     dragAndDrop = $$('adf-upload-drag-area div').first();
     nameHeader = $$('div[data-automation-id="auto_header_content_id_name"] > span').first();
     sizeHeader = $$('div[data-automation-id="auto_header_content_id_content.sizeInBytes"] > span').first();
     createdByHeader = $$('div[data-automation-id="auto_header_content_id_createdByUser.displayName"] > span').first();
     createdHeader = $$('div[data-automation-id="auto_header_content_id_createdAt"] > span').first();
-    recentFiles = $('.app-container-recent');
-    recentFilesExpanded = $('.app-container-recent mat-expansion-panel-header.mat-expanded');
-    recentFilesClosed = $('.app-container-recent mat-expansion-panel-header');
-    recentFileIcon = $('.app-container-recent mat-expansion-panel-header mat-icon');
     emptyFolder = $('.adf-empty-folder-this-space-is-empty');
     emptyFolderImage = $('.adf-empty-folder-image');
-    emptyRecent = $('.app-container-recent .app-empty-list__title');
     gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
     cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
@@ -234,36 +227,6 @@ export class ContentServicesPage {
         return sorted;
     }
 
-    async checkRecentFileToBeShowed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.recentFiles);
-    }
-
-    async expandRecentFiles(): Promise<void> {
-        await this.checkRecentFileToBeShowed();
-        await this.checkRecentFileToBeClosed();
-        await BrowserActions.click(this.recentFilesClosed);
-        await this.checkRecentFileToBeOpened();
-    }
-
-    async closeRecentFiles(): Promise<void> {
-        await this.checkRecentFileToBeShowed();
-        await this.checkRecentFileToBeOpened();
-        await BrowserActions.click(this.recentFilesExpanded);
-        await this.checkRecentFileToBeClosed();
-    }
-
-    async checkRecentFileToBeClosed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.recentFilesClosed);
-    }
-
-    async checkRecentFileToBeOpened(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.recentFilesExpanded);
-    }
-
-    async getRecentFileIcon(): Promise<string> {
-        return BrowserActions.getText(this.recentFileIcon);
-    }
-
     // @deprecated prefer waitTillContentLoaded
     async checkDocumentListElementsAreDisplayed(): Promise<void> {
         await this.checkAcsContainer();
@@ -284,10 +247,6 @@ export class ContentServicesPage {
         const navigationBarPage = new NavigationBarPage();
         await navigationBarPage.navigateToContentServices();
         await this.contentList.dataTablePage().waitTillContentLoaded();
-    }
-
-    async clickOnContentServices(): Promise<void> {
-        await BrowserActions.click(this.contentServices);
     }
 
     async numberOfResultsDisplayed(): Promise<number> {
@@ -329,10 +288,6 @@ export class ContentServicesPage {
 
     async checkListIsSortedByAuthorColumn(sortOrder: string): Promise<any> {
         return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.createdBy);
-    }
-
-    async checkListIsSortedBySizeColumn(sortOrder: string): Promise<any> {
-        return this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.columns.size);
     }
 
     async sortAndCheckListIsOrderedByAuthor(sortOrder: string): Promise<any> {
@@ -460,21 +415,12 @@ export class ContentServicesPage {
         return BrowserActions.getAttribute(this.uploadMultipleFileButton, 'title');
     }
 
-    async getFolderButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
-        return BrowserActions.getAttribute(this.uploadFolderButton, 'title');
-    }
-
     async checkUploadButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
     }
 
     async uploadButtonIsEnabled(): Promise<boolean> {
         return this.uploadFileButton.isEnabled();
-    }
-
-    async getErrorMessage(): Promise<string> {
-        return BrowserActions.getText(this.errorSnackBar);
     }
 
     async enableInfiniteScrolling(): Promise<void> {
@@ -532,11 +478,6 @@ export class ContentServicesPage {
         await DropActions.dropFile(this.dragAndDrop, file);
     }
 
-    async dragAndDropFolder(folderName: string): Promise<void> {
-        await this.checkDragAndDropDIsDisplayed();
-        await DropActions.dropFolder(this.dragAndDrop, folderName);
-    }
-
     async checkLockIsDisplayedForElement(name): Promise<void> {
         const lockButton = $(`div.adf-datatable-cell[data-automation-id="${name}"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
@@ -546,12 +487,6 @@ export class ContentServicesPage {
         return this.contentList.dataTablePage().getColumnValueForRow(this.columns.name, file, columnName);
     }
 
-    async getStyleValueForRowText(rowName, styleName): Promise<string> {
-        const row = $(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`);
-        await BrowserVisibility.waitUntilElementIsVisible(row);
-        return row.getCssValue(styleName);
-    }
-
     async checkEmptyFolderTextToBe(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolder);
         await expect(await this.emptyFolder.getText()).toContain(text);
@@ -559,10 +494,6 @@ export class ContentServicesPage {
 
     async checkEmptyFolderImageUrlToContain(url): Promise<void> {
         await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
-    }
-
-    async checkEmptyRecentFileIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.emptyRecent);
     }
 
     async getRowIconImageUrl(fileName): Promise<string> {
