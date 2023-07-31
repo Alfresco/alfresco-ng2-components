@@ -44,7 +44,6 @@ import {
     AuthenticationService,
     AppConfigService,
     AppConfigValues,
-    LogService,
     NotificationService,
     DataRow,
     UserPreferencesService,
@@ -256,7 +255,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private dialog: MatDialog,
                 private location: Location,
                 private router: Router,
-                private logService: LogService,
                 private appConfig: AppConfigService,
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
@@ -394,15 +392,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderCreated(event: FolderCreatedEvent) {
-        this.logService.log('FOLDER CREATED');
-        this.logService.log(event);
         if (event && event.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
     }
 
     onFolderAction(node) {
-        this.logService.log(node);
         if (node && node.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
@@ -634,14 +629,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 });
             }
         }
-    }
-
-    isCustomActionDisabled(node: MinimalNodeEntity): boolean {
-        return !(node && node.entry && node.entry.name === 'custom');
-    }
-
-    runCustomAction(event: any) {
-        this.logService.log(event);
     }
 
     onUploadNewVersion(ev) {
