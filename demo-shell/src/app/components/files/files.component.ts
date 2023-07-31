@@ -37,8 +37,7 @@ import {
     Pagination,
     MinimalNodeEntryEntity,
     SiteEntry,
-    SearchEntry,
-    NodeEntry
+    SearchEntry
 } from '@alfresco/js-api';
 import {
     AlfrescoApiService,
@@ -240,16 +239,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     stickyHeader: boolean;
-    preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-    noHeaderMode = ShowHeaderMode.Never;
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
-
-    selectedNodes = [];
 
     enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
     enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
@@ -282,12 +277,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (entry && entry.isFile) {
             this.preview.showResource(entry.id);
         }
-    }
-
-    toggleFolder() {
-        this.multipleFileUpload = false;
-        this.folderUpload = !this.folderUpload;
-        return this.folderUpload;
     }
 
     toggleThumbnails() {
@@ -327,19 +316,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe((value: any[]) => {
-                let selectedNodes: NodeEntry[] = [];
-
-                if (this.preselectNodes) {
-                    if (value && value.length > 0) {
-                        if (this.selectionMode === 'single') {
-                            selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
-                        } else {
-                            selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
-                        }
-                        this.selectedNodes = [...selectedNodes];
-                    }
-                }
-
                 this.onFileUploadEvent(value[0]);
             });
 
@@ -457,10 +433,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     emitReadyEvent(event: NodePaging) {
         this.documentListReady.emit(event);
-    }
-
-    pageIsEmpty(node: NodePaging) {
-        return node && node.list && node.list.entries.length === 0;
     }
 
     onContentActionError(errors: any) {
@@ -619,12 +591,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedNextPage.emit(event);
     }
 
-    loadNextBatch(event: Pagination): void {
-        this.pagination.maxItems = event.maxItems;
-        this.pagination.skipCount = event.skipCount;
-        this.loadNext.emit(event);
-    }
-
     onPrevPage(event: Pagination): void {
         this.pagination.maxItems = event.maxItems;
         this.pagination.skipCount = event.skipCount;
@@ -758,32 +724,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentList.reload();
     }
 
-    setPreselectNodes(nodes: string) {
-        this.selectedNodes = this.getArrayFromString(nodes);
-        this.documentList.reload();
-    }
-
-    isStringArray(str: string): boolean {
-        try {
-            const result = JSON.parse(str);
-            return Array.isArray(result);
-        } catch (e) {
-            return false;
-        }
-    }
-
-    private getArrayFromString<T = any>(value: string): T[] {
-        if (this.isStringArray(value)) {
-            return JSON.parse(value);
-        } else {
-            return [];
-        }
-    }
-
-    onMultipleFilesUpload() {
-        this.selectedNodes = [];
-    }
-
     onEnableDownloadPrompt() {
         const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
@@ -813,5 +753,4 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         const previewConfig = this.appConfig?.config['viewer'];
         previewConfig['fileAutoDownloadSizeThresholdInMB'] = this.fileAutoDownloadSizeThresholdInMB;
     }
-
 }

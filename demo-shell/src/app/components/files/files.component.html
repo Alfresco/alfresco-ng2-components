@@ -1,33 +1,4 @@
 <div class="app-container">
-
-    <mat-accordion *ngIf="showRecentFiles" class="app-container-recent">
-        <mat-expansion-panel hideToggle="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ 'DOCUMENT_LIST.RECENT.TITLE' | translate }}
-                    <mat-icon>history</mat-icon>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <adf-document-list
-                [currentFolderId]="'-recent-'"
-                locationFormat="/files"
-                [display]="'gallery'"
-                [preselectNodes]="selectedNodes"
-                [showHeader]="noHeaderMode"
-                [maxItems]="5"
-                (preview)="showFile($event)"
-                selectionMode="null">
-                <adf-custom-empty-content-template>
-                    <div class="app-empty-list__block">
-                        <mat-icon>history</mat-icon>
-                        <p class="app-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
-                    </div>
-                </adf-custom-empty-content-template>
-            </adf-document-list>
-        </mat-expansion-panel>
-    </mat-accordion>
-
     <div *ngIf="showSitePicker" class="app-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
         </adf-sites-dropdown>
@@ -304,17 +275,7 @@
                             </div>
                         </ng-template>
                     </data-column>
-                    <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
-                    <!--
-                    <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
-                        key="id"
-                        class="app-full-width adf-ellipsis-cell">
-                        <ng-template let-entry="$implicit">
-                            <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
-                        </ng-template>
-                    </data-column>
-                    -->
+
                     <data-column
                         class="app-full-width adf-ellipsis-cell adf-desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
@@ -546,7 +507,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" (change)="onMultipleFilesUpload()" [(ngModel)]="multipleFileUpload" >
+            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" [(ngModel)]="multipleFileUpload" >
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
@@ -638,21 +599,6 @@
                 Sticky Header
             </mat-slide-toggle>
         </section>
-
-        <section>
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="preselectNodes" id="preselectNodes">
-                Preselect Nodes
-            </mat-slide-toggle>
-        </section>
-
-        <form class="example-form">
-            <mat-form-field *ngIf="preselectNodes" class="adf-preselect-nodes-input">
-                <input matInput
-                (input)="setPreselectNodes($any($event).target?.value)"
-                placeholder="NodeEntry[] => [{ entry: { isFile: true, id: 'node-id' }}, { entry: { isFile: true, id: 'node-id' }} ]">
-            </mat-form-field>
-        </form>
 
         <section>
             <mat-slide-toggle
