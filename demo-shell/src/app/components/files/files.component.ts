@@ -246,7 +246,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
+    enableDownloadPrompt = this.appConfig.get<boolean>('viewer.enableDownloadPrompt', false);
     enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
     downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
     downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
