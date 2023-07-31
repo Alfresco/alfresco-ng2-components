@@ -175,6 +175,31 @@ describe('CommentsComponent', () => {
             expect(addCommentSpy).toHaveBeenCalledWith('123', 'test comment');
         });
 
+        it('should support multiline comments with HTML', async () => {
+            const commentText: string = [
+                `<form action="/action_page.php">`,
+                `First name: <input type="text" name="fname"><br>`,
+                `Last name: <input type="text" name="lname"><br>`,
+                `<input type="submit" value="Submit">`,
+                `</form>`
+            ].join('\n');
+
+            getCommentSpy.and.returnValue(of([]));
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(commentText));
+
+            component.message = commentText;
+            const addButton = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            addButton.dispatchEvent(new Event('click'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(addCommentSpy).toHaveBeenCalledWith('123', commentText);
+
+            const messageElement = fixture.nativeElement.querySelector('.adf-comment-message');
+            expect(messageElement.innerText).toBe(commentText);
+        });
+
         it('should call service to add a comment when add button is pressed', async () => {
             const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
 
