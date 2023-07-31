@@ -80,7 +80,7 @@ export class UploadActions {
     async deleteFileOrFolder(nodeId: string) {
         const apiCall = async () => {
             try {
-                Logger.error(`Deleting ${nodeId}`);
+                Logger.info(`Deleting ${nodeId}`);
                 return this.nodesApi.deleteNode(nodeId, { permanent: true });
             } catch (error) {
                 Logger.error('Error delete file or folder');
