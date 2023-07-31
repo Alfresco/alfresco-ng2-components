@@ -118,7 +118,7 @@ describe('CommentListComponent', () => {
         await fixture.whenStable();
 
         element = fixture.nativeElement.querySelector('.adf-comment-message-time');
-        expect(element.innerText).toContain('a few seconds ago');
+        expect(element.innerText).toContain('less than a minute ago');
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', async () => {
@@ -130,7 +130,7 @@ describe('CommentListComponent', () => {
         await fixture.whenStable();
 
         element = fixture.nativeElement.querySelector('.adf-comment-message-time');
-        expect(element.innerText).toContain('a day ago');
+        expect(element.innerText).toContain('1 day ago');
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async () => {

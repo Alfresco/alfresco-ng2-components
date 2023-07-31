@@ -42,7 +42,7 @@ describe('TimeAgoPipe', () => {
 
     it('should return time difference for a given date', () => {
         const date = new Date();
-        expect(pipe.transform(date)).toBe('a few seconds ago');
+        expect(pipe.transform(date)).toBe('less than a minute ago');
     });
 
     it('should return exact date if given date is more than seven days ', () => {
@@ -61,7 +61,7 @@ describe('TimeAgoPipe', () => {
             const date = new Date();
             const transformedDate  = pipe.transform(date, 'de');
             /* cspell:disable-next-line */
-            expect(transformedDate).toBe('vor ein paar Sekunden');
+            expect(transformedDate).toBe('vor weniger als 1 Minute');
         });
     });
 });
