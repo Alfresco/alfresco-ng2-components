@@ -327,13 +327,6 @@
                     </content-action>
                     <content-action
                         target="document"
-                        *ngIf="authenticationService.isBpmLoggedIn()"
-                        icon="play_arrow"
-                        title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
-                        (execute)="startProcessAction($event)">
-                    </content-action>
-                    <content-action
-                        target="document"
                         icon="lock"
                         permission="lock"
                         handler="lock"
@@ -403,15 +396,6 @@
             </div>
         </adf-info-drawer-layout>
     </div>
-</div>
-
-<div *ngIf="processId">
-    <adf-start-process
-        [values]="formValues"
-        [appId]="processId"
-        (start)="closeStartProcess()"
-        (cancel)="closeStartProcess()">
-    </adf-start-process>
 </div>
 
 <div *ngIf="showSettingsPanel" class="app-content-service-settings">

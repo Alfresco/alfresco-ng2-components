@@ -199,8 +199,7 @@
       "DOCUMENT": {
         "COPY": "Copy",
         "MOVE": "Move",
-        "DELETE": "Delete",
-        "PROCESS_ACTION": "Start Process"
+        "DELETE": "Delete"
       }
     }
   },

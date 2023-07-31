@@ -40,15 +40,12 @@ import {
     SearchEntry
 } from '@alfresco/js-api';
 import {
-    AlfrescoApiService,
-    AuthenticationService,
     AppConfigService,
     AppConfigValues,
     NotificationService,
     DataRow,
     UserPreferencesService,
     PaginationComponent,
-    FormValues,
     DisplayMode,
     ShowHeaderMode,
     InfinitePaginationComponent,
@@ -71,9 +68,7 @@ import {
     NodesApiService,
     SharedLinksApiService
 } from '@alfresco/adf-content-services';
-
-import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
-
+import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
@@ -116,10 +111,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
-
-    formValues: FormValues = {};
-
-    processId;
 
     @Input()
     sorting = ['name', 'ASC'];
@@ -258,8 +249,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
-                public authenticationService: AuthenticationService,
-                public alfrescoApiService: AlfrescoApiService,
                 private contentMetadataService: ContentMetadataService,
                 private sharedLinksApiService: SharedLinksApiService,
                 private dialogAspectListService: DialogAspectListService,
@@ -543,24 +532,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             return this.contentService.hasAllowableOperations(parentNode, 'create');
         }
         return false;
-    }
-
-    startProcessAction($event: any) {
-        this.formValues['file'] = $event.value.entry;
-
-        const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
-            width: '630px',
-            panelClass: 'adf-version-manager-dialog'
-        });
-
-        dialogRef.afterClosed().subscribe((selectedProcess) => {
-            this.processId = selectedProcess.id;
-        });
-
-    }
-
-    closeStartProcess() {
-        this.processId = null;
     }
 
     onChangePageSize(event: Pagination): void {
