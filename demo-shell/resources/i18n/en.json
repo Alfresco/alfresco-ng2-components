@@ -173,6 +173,8 @@
       "DELETED_BY": "Deleted by"
     },
     "TOOLBAR": {
+      "TOGGLE_DISPLAY_MODE": "Toggle display mode",
+      "TOGGLE_METADATA": "Toggle metadata",
       "CARDVIEW": "Card view mode",
       "SHARE_EDIT": "Edit settings",
       "NEW_FOLDER": "New folder",
@@ -181,10 +183,6 @@
       "DELETE": "Delete",
       "FAVORITES": "Add to favorites",
       "SHARE": "Share",
-      "THEME": "Select a theme",
-      "SHOW_VERSION": "Show version",
-      "HIDE_VERSION": "Hide version",
-      "LISTVIEW": "List view mode",
       "CREATE_LIBRARY": "Create Library"
     },
     "ACTIONS": {

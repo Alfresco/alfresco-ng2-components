@@ -22,7 +22,7 @@
                 </button>
                 <span class="app-error-message--text">{{errorMessage}}</span>
             </div>
-            <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="app-files-toolbar">
+            <adf-toolbar *ngIf="!disableDragArea" class="app-files-toolbar">
                 <adf-toolbar-title>
                     <adf-breadcrumb
                                     class="app-files-breadcrumb"
@@ -41,14 +41,9 @@
                     <button
                         mat-icon-button
                         data-automation-id="document-list-grid-view"
-                        title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
+                        title="{{ 'DOCUMENT_LIST.TOOLBAR.TOGGLE_DISPLAY_MODE' | translate }}"
                         (click)="toggleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'"
-                                  matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy
-                        </mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'"
-                                  matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list
-                        </mat-icon>
+                        <mat-icon>list</mat-icon>
                     </button>
                     <button
                         data-automation-id="create-new-folder"
@@ -57,13 +52,12 @@
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessageError($event)"
                         (success)="documentList.reload()"
-                        [adf-create-folder]="currentFolderId"
-                        matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
+                        [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button
                         mat-icon-button
-                        matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CREATE_LIBRARY' | translate }}"
+                        title="{{ 'DOCUMENT_LIST.TOOLBAR.CREATE_LIBRARY' | translate }}"
                         data-automation-id="create-new-library"
                         (click)="createLibrary()">
                         <mat-icon>library_add</mat-icon>
@@ -75,15 +69,13 @@
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
                             (error)="openSnackMessageError($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry"
-                            (success)="documentList.reload()"
-                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}">
+                            (success)="documentList.reload()">
                         <mat-icon>create</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
-                            [adfNodeDownload]="documentList.selection"
-                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}">
+                            [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -93,8 +85,7 @@
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
-                            [adf-delete]="documentList.selection"
-                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}">
+                            [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <button
@@ -103,17 +94,15 @@
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
                             [adf-node-favorite]="documentList.selection"
-                            matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
-                        <mat-icon>
-                            {{ favorite.hasFavorites() ? 'star' :'star_border' }}
-                        </mat-icon>
+                            title="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
+                        <mat-icon>{{ favorite.hasFavorites() ? 'star' :'star_border' }}</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="documentList.selection.length && !shareRef.isFile"
                             [baseShareUrl]="baseShareUrl"
                             #shareRef="adfShare"
                             [adf-share]="documentList.selection[0]"
-                            [matTooltip]="(shareRef.isShared
+                            [title]="(shareRef.isShared
                                 ? 'DOCUMENT_LIST.TOOLBAR.SHARE_EDIT'
                                 : 'DOCUMENT_LIST.TOOLBAR.SHARE') | translate">
                         <mat-icon>
@@ -122,25 +111,9 @@
                     </button>
                 </div>
 
-                <button mat-icon-button [matMenuTriggerFor]="themePicker"
-                        matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
-                    <mat-icon>format_color_fill</mat-icon>
-                </button>
-
-                <mat-menu #themePicker="matMenu">
-                    <button mat-menu-item (click)="toolbarColor = null">Default</button>
-                    <button mat-menu-item (click)="toolbarColor = 'primary'">Primary</button>
-                    <button mat-menu-item (click)="toolbarColor = 'accent'">Accent</button>
-                    <button mat-menu-item (click)="toolbarColor = 'warn'">Warn</button>
-                </mat-menu>
-
-                <button mat-icon-button (click)="showVersions = !showVersions" class="app-show-versions-button">
-                    <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">
-                        chevron_left
-                    </mat-icon>
-                    <mat-icon *ngIf="showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.HIDE_VERSION' | translate }}">
-                        chevron_right
-                    </mat-icon>
+                <button mat-icon-button (click)="showVersions = !showVersions" class="app-show-versions-button"
+                    title="{{ 'DOCUMENT_LIST.TOOLBAR.TOGGLE_METADATA' | translate }}">
+                    <mat-icon>{{ showVersions ? 'chevron_right' : 'chevron_left' }}</mat-icon>
                 </button>
 
                 <adf-toolbar-divider class="app-toolbar-divider-before-more-menu"></adf-toolbar-divider>
@@ -149,8 +122,7 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item
-                            (click)="toggleGalleryView()">
+                    <button mat-menu-item (click)="toggleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'">view_comfy</mat-icon>
                         <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
@@ -249,15 +221,6 @@
                         [formatTooltip]="getNodeNameTooltip"
                         class="app-ellipsis-cell adf-expand-cell-5">
                     </data-column>
-                    <!-- Location column demo -->
-                    <!--
-                    <data-column
-                        key="path"
-                        type="location"
-                        format="/files"
-                        title="Location">
-                    </data-column>
-                    -->
                     <data-column
                         key="content.sizeInBytes"
                         title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"

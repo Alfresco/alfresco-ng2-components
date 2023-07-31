@@ -80,7 +80,6 @@ import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.compon
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
-import { ThemePalette } from '@angular/material/core';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -108,8 +107,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     baseShareUrl = (
         this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
         this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
-
-    toolbarColor: ThemePalette;
 
     selectionModes = [
         {value: 'none', viewValue: 'None'},
