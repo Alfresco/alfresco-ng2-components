@@ -399,6 +399,18 @@
 </div>
 
 <div *ngIf="showSettingsPanel" class="app-content-service-settings">
+
+    <p>Current folder ID: {{ documentList.currentFolderId }}</p>
+
+    <div class="app-p-10">
+        Selected Nodes:
+        <ul>
+            <li *ngFor="let node of documentList.selection">
+                {{ node.entry.name }}
+            </li>
+        </ul>
+    </div>
+
     <div class="app-container">
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
