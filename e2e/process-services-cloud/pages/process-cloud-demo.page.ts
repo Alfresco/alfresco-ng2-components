@@ -16,11 +16,11 @@
  */
 
 import { BrowserActions, BrowserVisibility, EditProcessFilterCloudComponentPage, ProcessFiltersCloudComponentPage, ProcessListCloudComponentPage } from '@alfresco/adf-testing';
-import { by, element, $ } from 'protractor';
+import { $ } from 'protractor';
 
 export class ProcessCloudDemoPage {
 
-    createButton = $('button[data-automation-id="create-button"');
+    createButton = $('button[data-automation-id="create-button"]');
     newProcessButton = $('button[data-automation-id="btn-start-process"]');
 
     processListCloud = new ProcessListCloudComponentPage();
@@ -35,10 +35,6 @@ export class ProcessCloudDemoPage {
         return this.processListCloud;
     }
 
-    getAllRowsByIdColumn(): Promise<any> {
-        return this.processListCloud.getAllRowsByColumn('Id');
-    }
-
     async openNewProcessForm(): Promise<void> {
         await this.clickOnCreateButton();
         await this.newProcessButtonIsDisplayed();
@@ -51,12 +47,5 @@ export class ProcessCloudDemoPage {
 
     async clickOnCreateButton(): Promise<void> {
         await BrowserActions.click(this.createButton);
-    }
-
-    async checkActionExecuted(processInstanceId: string, action: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Context Menu:')));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Process Instance ID: ' + processInstanceId)));
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText(`span`, 'Action Type: ' + action)));
     }
 }
