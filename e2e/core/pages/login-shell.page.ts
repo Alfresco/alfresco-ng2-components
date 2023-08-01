@@ -19,7 +19,6 @@ import { $, browser, by, element } from 'protractor';
 import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
 
 export class LoginShellPage {
-
     loginURL = browser.baseUrl + '/login';
     loginSSOPage = new LoginPage();
 
@@ -27,17 +26,12 @@ export class LoginShellPage {
     txtUsername = $('input[id="username"]');
     txtPassword = $('input[id="password"]');
     logoImg = $('img[id="adf-login-img-logo"]');
-    successRouteTxt = $('input[data-automation-id="adf-success-route"]');
     logoTxt = $('input[data-automation-id="adf-url-logo"]');
     usernameError = $('span[data-automation-id="username-error"]');
-    passwordError = $('span[data-automation-id="password-required"]');
-    loginError = $('.adf-login-error-message');
     usernameInactive = $('input[id="username"][class*="ng-invalid"]');
-    passwordInactive = $('input[id="password"][class*="ng-invalid"]');
     adfLogo = $('.adf-img-logo');
 
     usernameHighlighted = $('input[id="username"][aria-invalid="true"]');
-    passwordHighlighted = $('input[id="password"][aria-invalid="true"]');
     signInButton = $('#login-button');
     showPasswordElement = $('button[data-automation-id="show_password"]');
     hidePasswordElement = $('button[data-automation-id="hide_password"]');
@@ -46,7 +40,6 @@ export class LoginShellPage {
     register = $('#adf-login-action-right');
     footerSwitch = $('#switch4');
     rememberMeSwitch = $('#adf-toggle-show-rememberme');
-    successRouteSwitch = $('#adf-toggle-show-successRoute');
     logoSwitch = $('#adf-toggle-logo');
     header = $('#adf-header');
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
@@ -84,18 +77,6 @@ export class LoginShellPage {
         return BrowserActions.getText(this.usernameError);
     }
 
-    async getPasswordTooltip(): Promise<string> {
-        return BrowserActions.getText(this.passwordError);
-    }
-
-    async getLoginError(): Promise<string> {
-        return BrowserActions.getText(this.loginError);
-    }
-
-    async checkLoginErrorIsDisplayed(loginError: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementHasText(this.loginError, loginError);
-    }
-
     async checkLoginImgURL(): Promise<string> {
         return BrowserActions.getAttribute(this.logoImg, 'src');
     }
@@ -104,27 +85,13 @@ export class LoginShellPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
     }
 
-    async checkPasswordInactive(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInactive);
-    }
-
     async checkUsernameHighlighted(): Promise<void> {
         await BrowserActions.click(this.adfLogo);
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
     }
 
-    async checkPasswordHighlighted(): Promise<void> {
-        await BrowserActions.click(this.adfLogo);
-        await browser.sleep(900000);
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordHighlighted);
-    }
-
     async checkUsernameTooltipIsNotVisible(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameError);
-    }
-
-    async checkPasswordTooltipIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordError);
     }
 
     async getSignInButtonIsEnabled(): Promise<boolean> {
@@ -191,16 +158,8 @@ export class LoginShellPage {
         await this.togglePage.disableToggle(this.rememberMeSwitch);
     }
 
-    async enableSuccessRouteSwitch(): Promise<void> {
-        await this.togglePage.enableToggle(this.successRouteSwitch);
-    }
-
     async enableLogoSwitch(): Promise<void> {
         await this.togglePage.enableToggle(this.logoSwitch);
-    }
-
-    async enterSuccessRoute(route: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
     async enterLogo(logo: string): Promise<void> {
