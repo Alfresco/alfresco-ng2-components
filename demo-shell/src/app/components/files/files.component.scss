@@ -103,22 +103,3 @@
     line-height: 1.33;
     letter-spacing: -1px;
 }
-
-.app-container-recent {
-    mat-icon {
-        margin-left: 20px;
-    }
-
-    .app-empty-list__block {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
-.adf-preselect-nodes-input {
-    width: 100%;
-}

@@ -44,16 +44,6 @@ export class UploadTogglesPage {
         await this.togglePage.enableToggle(this.uploadFolderToggle);
     }
 
-    async checkFolderUploadToggleIsEnabled(): Promise<boolean> {
-        try {
-            const enabledFolderUpload = $('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]');
-            await BrowserVisibility.waitUntilElementIsVisible(enabledFolderUpload);
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
     async checkMultipleFileUploadToggleIsEnabled(): Promise<void> {
         const enabledToggle = $('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]');
         await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
@@ -67,19 +57,6 @@ export class UploadTogglesPage {
     async checkVersioningToggleIsEnabled(): Promise<void> {
         const enabledToggle = $('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]');
         await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-    }
-
-    async disableFolderUpload(): Promise<void> {
-        await this.togglePage.disableToggle(this.uploadFolderToggle);
-    }
-    async checkFolderUploadToggleIsNotEnabled(): Promise<boolean> {
-        try {
-            const inactiveToggleFolder = $('#adf-folder-upload-switch .mat-slide-toggle-label');
-            await BrowserVisibility.waitUntilElementIsVisible(inactiveToggleFolder);
-            return true;
-        } catch {
-            return false;
-        }
     }
 
     async enableExtensionFilter(): Promise<void> {
@@ -125,5 +102,4 @@ export class UploadTogglesPage {
     async clearText(): Promise<void> {
         await BrowserActions.clearSendKeys(this.maxSizeField, '');
     }
-
 }

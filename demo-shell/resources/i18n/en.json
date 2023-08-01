@@ -52,7 +52,6 @@
     },
     "PERSONAL-FILES": "Personal Files",
     "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
-    "CUSTOM-PERMISSION-MESSAGE": "Enable custom permission message",
     "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
     "SEARCH": {
       "RADIO": {
@@ -160,12 +159,6 @@
     "DESCRIPTION_UPLOAD": "Enable upload",
     "ENABLE_INFINITE_SCROLL": "Enable Infinite Scrolling",
     "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Recent Files list is empty"
-      },
-      "TITLE": "Recent Files"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Display name",
       "IS_LOCKED": "Lock",
@@ -179,6 +172,8 @@
       "DELETED_BY": "Deleted by"
     },
     "TOOLBAR": {
+      "TOGGLE_DISPLAY_MODE": "Toggle display mode",
+      "TOGGLE_METADATA": "Toggle metadata",
       "CARDVIEW": "Card view mode",
       "SHARE_EDIT": "Edit settings",
       "NEW_FOLDER": "New folder",
@@ -187,10 +182,6 @@
       "DELETE": "Delete",
       "FAVORITES": "Add to favorites",
       "SHARE": "Share",
-      "THEME": "Select a theme",
-      "SHOW_VERSION": "Show version",
-      "HIDE_VERSION": "Hide version",
-      "LISTVIEW": "List view mode",
       "CREATE_LIBRARY": "Create Library"
     },
     "ACTIONS": {
@@ -208,8 +199,7 @@
       "DOCUMENT": {
         "COPY": "Copy",
         "MOVE": "Move",
-        "DELETE": "Delete",
-        "PROCESS_ACTION": "Start Process"
+        "DELETE": "Delete"
       }
     }
   },

@@ -25,34 +25,12 @@ describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    let uploadedFolder; let uploadedFolderExtra;
     const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
-    let testFileNode; let pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
     const usersActions = new UsersActions(apiService);
-
-    afterEach(async () => {
-        await apiService.loginWithProfile('admin');
-        if (uploadedFolder) {
-            await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-            uploadedFolder = null;
-        }
-        if (uploadedFolderExtra) {
-            await uploadActions.deleteFileOrFolder(uploadedFolderExtra.entry.id);
-            uploadedFolderExtra = null;
-        }
-        if (testFileNode) {
-            await uploadActions.deleteFileOrFolder(testFileNode.entry.id);
-            testFileNode = null;
-        }
-        if (pdfBFileNode) {
-            await uploadActions.deleteFileOrFolder(pdfBFileNode.entry.id);
-            pdfBFileNode = null;
-        }
-    });
 
     describe('Thumbnails and tooltips', () => {
         const pdfFile = new FileModel({
