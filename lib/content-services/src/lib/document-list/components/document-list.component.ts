@@ -353,7 +353,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private layoutPresets = {};
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
-    private loadingTimeout;
+    private loadingTimeout: any;
     private onDestroy$ = new Subject<boolean>();
 
     private _nodesApi: NodesApi;
