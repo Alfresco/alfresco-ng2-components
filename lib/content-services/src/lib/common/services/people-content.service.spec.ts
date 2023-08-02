@@ -137,15 +137,17 @@ describe('PeopleContentService', () => {
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
     });
 
-    it('should reset the admin cache upon logout', async () => {
+    it('should reset the admin cache upon logout', async (done) => {
         spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmAdminUser } as any));
 
         const user = await peopleContentService.getCurrentUserInfo().toPromise();
         expect(user.id).toEqual('fake-id');
         expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
 
-        authenticationService.onLogout.next(true);
-        expect(peopleContentService.isCurrentUserAdmin()).toBe(false);
+        authenticationService.onLogout.subscribe(()=>{
+            expect(peopleContentService.isCurrentUserAdmin()).toBe(false);
+            done()
+        });
     });
 
     it('should not change current user on every getPerson call', async () => {

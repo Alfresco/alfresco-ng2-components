@@ -27,7 +27,8 @@ import {
     AlfrescoApiServiceMock,
     AppConfigServiceMock,
     TranslationMock,
-    CookieServiceMock
+    CookieServiceMock,
+    AuthModule
 } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,6 +38,7 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 @NgModule({
     imports: [
+        AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule,
