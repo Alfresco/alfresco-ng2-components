@@ -32,9 +32,11 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
+import { AuthModule } from "../auth";
 
 @NgModule({
     imports: [
+        AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientModule,

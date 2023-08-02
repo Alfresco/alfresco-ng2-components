@@ -26,11 +26,12 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule
+    CoreModule, AuthModule
 } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
+        AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         TranslateModule,
         CoreModule.forRoot(),

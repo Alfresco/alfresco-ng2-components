@@ -26,7 +26,7 @@ import {
     TranslationService,
     TranslationMock,
     CoreModule,
-    FormRenderingService
+    FormRenderingService, AuthModule
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
@@ -34,6 +34,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
     imports: [
+        AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
