@@ -25,7 +25,7 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule
+    CoreModule, AuthModule
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
@@ -33,6 +33,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
     imports: [
+        AuthModule.forRoot({ useHash: true }),
         HttpClientModule,
         NoopAnimationsModule,
         RouterTestingModule,
