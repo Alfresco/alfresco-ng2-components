@@ -99,7 +99,7 @@ export class AppConfigService {
     select(property: string): Observable<any> {
         return this.onLoadSubject
             .pipe(
-                map((config) => config[property]),
+                map((config) => ObjectUtils.getValue(config, property)),
                 distinctUntilChanged()
             );
     }
