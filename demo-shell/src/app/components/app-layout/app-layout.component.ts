@@ -41,7 +41,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/confirm-dialog', icon: 'view_headline', title: 'APP_LAYOUT.CONFIRM-DIALOG' },
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
-        { href: '/sites', icon: 'format_list_bulleted', title: 'APP_LAYOUT.SITES' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         {
             href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [

@@ -155,15 +155,6 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'sites',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/sites/sites.module').then(m => m.SitesModule)
-                    }
-                ]
-            },
-            {
                 path: 'header-data',
                 children: [
                     {
