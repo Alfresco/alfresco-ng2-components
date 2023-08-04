@@ -23,23 +23,6 @@
         [showMainDatatableActions]="true"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)">
-        <!-- HTML column definition demo -->
-        <!--
-        <data-columns>
-            <data-column type="image" key="icon" [sortable]="false"></data-column>
-            <data-column key="id" title="Id"></data-column>
-            <data-column key="createdOn" title="Created"></data-column>
-            <data-column key="name" title="Name" class="adf-full-width name-column"></data-column>
-            <data-column type="text" key="createdBy.name" title="Created By"></data-column>
-            <data-column type="text" key="users" title="Users"></data-column>
-            <data-column key="status" title="Status">
-                <ng-template let-value="value">{{value | json }}</ng-template>
-                <adf-data-column-header>
-                    <ng-template>STATUS</ng-template>
-                </adf-data-column-header>
-            </data-column>
-        </data-columns>
-        -->
 
         <adf-main-menu-datatable-template>
             <ng-template let-mainMenuTrigger>

@@ -70,12 +70,7 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     {
         path: 'files/:nodeId/:versionId/view',
@@ -83,24 +78,14 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     {
         path: 'preview/blob',
         component: AppComponent,
         outlet: 'overlay',
         pathMatch: 'full',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
@@ -120,48 +105,23 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'notifications',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
-                    }
-                ]
+                loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
             },
             {
                 path: 'config-editor',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
-                    }
-                ]
+                loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },
             {
                 path: 'pipes',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
-                    }
-                ]
+                loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
             },
             {
                 path: 'card-view',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
-                    }
-                ]
+                loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
             },
             {
                 path: 'header-data',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
-                    }
-                ]
+                loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
             },
             {
                 path: '',
@@ -297,15 +257,10 @@ export const appRoutes: Routes = [
                 path: 'dl-custom-sources',
                 canActivate: [AuthGuardEcm],
                 loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
-
             },
             {
                 path: 'datatable',
                 loadChildren: () => import('./components/datatable/datatable.module').then(m => m.AppDataTableModule)
-            },
-            {
-                path: 'datatable/dnd',
-                loadChildren: () => import('./components/datatable/drag-and-drop/datatable-dnd.module').then(m => m.AppDataTableDndModule)
             },
             {
                 path: 'rich-text-editor',
