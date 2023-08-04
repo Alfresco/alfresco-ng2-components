@@ -293,11 +293,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'extensions/document-list/presets',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/document-list/extension-presets/extension-presets.module').then(m => m.ExtensionPresetsModule)
-            },
-            {
                 path: 'files/:id',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
