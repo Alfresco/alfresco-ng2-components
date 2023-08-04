@@ -46,7 +46,6 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
@@ -386,10 +385,6 @@ export const appRoutes: Routes = [
                 path: 'overlay-viewer',
                 component: OverlayViewerComponent,
                 canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'template-list',
-                component: TemplateDemoComponent
             },
             {
                 path: 'task-list',

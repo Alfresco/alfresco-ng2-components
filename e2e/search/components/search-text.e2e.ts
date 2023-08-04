@@ -76,12 +76,6 @@ describe('Search component - Text widget', () => {
     });
 
     describe('configuration change', () => {
-        let jsonFile;
-
-        beforeAll(async () => {
-            jsonFile = SearchConfiguration.getConfiguration();
-        });
-
         it('[C289330] Should be able to change the Field setting', async () => {
             await BrowserActions.getUrl(browser.baseUrl + '/search;q=*');
             await searchResultPage.tableIsLoaded();
@@ -99,6 +93,7 @@ describe('Search component - Text widget', () => {
             await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
             await searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
+            const jsonFile= SearchConfiguration.getConfiguration();
             jsonFile.categories[0].component.settings.field = 'cm:description';
 
             await navigationBarPage.navigateToContentServices();
