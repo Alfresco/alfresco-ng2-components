@@ -52,6 +52,23 @@ export const mockSchemaDefinitionWithDifferentTypes: DataColumn[] = [
     }
 ];
 
+export const mockInvalidSchemaDefinition: DataColumn[] = [
+    {
+        type: 'text',
+        key: '',
+        title: 'Country ID',
+        sortable: true,
+        draggable: true
+    },
+    {
+        type: 'text',
+        key: undefined,
+        title: 'Country Name',
+        sortable: true,
+        draggable: true
+    }
+];
+
 export const mockCountriesData = [
     {
         id: 'PL',

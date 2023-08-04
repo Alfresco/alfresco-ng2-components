@@ -35,9 +35,7 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
     }
 
     getRows(): DataRow[] {
-        const availableColumnKeys: string[] = this.columns.map(column => column.key);
-
-        if (this.hasAllColumnsLinkedToData(availableColumnKeys)) {
+        if (this.isDataSourceValid()) {
             return this.rows;
         }
 
@@ -45,11 +43,17 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
     }
 
     isDataSourceValid(): boolean {
-        return !!this.getRows().length;
+        return this.hasAllColumnsLinkedToData() && this.hasAllColumnsMandatoryValues();
     }
 
-    private hasAllColumnsLinkedToData(columnKeys: string[]): boolean {
-        return columnKeys.every(columnKey => this.rows.some(row => Object.keys(row.obj).includes(columnKey)));
+    private hasAllColumnsMandatoryValues(): boolean {
+        return this.columns.every(column => !!column.key);
+    }
+
+    private hasAllColumnsLinkedToData(): boolean {
+        const availableColumnKeys: string[] = this.columns.map(column => column.key);
+
+        return availableColumnKeys.every(columnKey => this.rows.some(row => Object.keys(row.obj).includes(columnKey)));
     }
 
     private setColumnsTypeToText(): void {

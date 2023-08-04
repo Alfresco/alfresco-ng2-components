@@ -19,6 +19,7 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
     mockCountriesData,
     mockCountriesIncorrectData,
+    mockInvalidSchemaDefinition,
     mockSchemaDefinition,
     mockSchemaDefinitionWithDifferentTypes
 } from '../../../mocks/data-table-widget.mock';
@@ -58,7 +59,16 @@ describe('WidgetDataTableAdapter', () => {
         expect(isDataSourceValid).toBeFalse();
     });
 
-    it('should return true for isDataSourceValid() if rows have data', () => {
+    it('should return an empty array if columns have invalid structure', () => {
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockCountriesData, mockInvalidSchemaDefinition);
+        const rows = widgetDataTableAdapter.getRows();
+        const isDataSourceValid = widgetDataTableAdapter.isDataSourceValid();
+
+        expect(rows).toEqual([]);
+        expect(isDataSourceValid).toBeFalse();
+    });
+
+    it('should return true for isDataSourceValid() if rows have data and valid columns schema', () => {
         const isValid = widgetDataTableAdapter.isDataSourceValid();
 
         expect(isValid).toBeTrue();

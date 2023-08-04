@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormFieldTypes, FormModel, LogService, setupTestBed } from '@alfresco/adf-core';
+import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, LogService, setupTestBed } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DataTableWidgetComponent } from './data-table.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -25,6 +25,7 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
     mockCountriesData,
+    mockInvalidSchemaDefinition,
     mockJsonFormVariableWith,
     mockJsonFormVariableWithIncorrectData,
     mockJsonProcessVariables,
@@ -42,6 +43,7 @@ describe('DataTableWidgetComponent', () => {
 
     const getDataVariable = (
             variableName: string,
+            schemaDefinition: DataColumn[],
             processVariables?: TaskVariableCloud[],
             variables?: TaskVariableCloud[]
         ) => new FormFieldModel(
@@ -50,7 +52,7 @@ describe('DataTableWidgetComponent', () => {
             name: 'Data Table',
             type: FormFieldTypes.DATA_TABLE,
             optionType: 'variable',
-            schemaDefinition: mockSchemaDefinition,
+            schemaDefinition,
             variableConfig: {
                 variableName
             }
@@ -95,7 +97,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize column schema', () => {
-        widget.field = getDataVariable('json-form-variable', [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
         fixture.detectChanges();
 
         widget.dataSource.getColumns().forEach((column, index) =>
@@ -104,7 +106,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize data source based on form variable', () => {
-        widget.field = getDataVariable('json-form-variable', [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
@@ -114,7 +116,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize data source based on process variable', () => {
-        widget.field = getDataVariable('json-variable', mockJsonProcessVariables);
+        widget.field = getDataVariable('json-variable', mockSchemaDefinition, mockJsonProcessVariables);
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
@@ -124,7 +126,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should NOT display error if form is in preview state', () => {
-        widget.field = getDataVariable('json-form-variable', [], mockJsonFormVariableWithIncorrectData);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
         fixture.detectChanges();
 
@@ -136,7 +138,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should NOT display data table with data source if form is in preview state', () => {
-        widget.field = getDataVariable('json-form-variable', [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
         fixture.detectChanges();
 
@@ -148,7 +150,18 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should be able to display and log error if data source is not linked to every column', () => {
-        widget.field = getDataVariable('json-form-variable', [], mockJsonFormVariableWithIncorrectData);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
+        fixture.detectChanges();
+
+        const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
+
+        expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.DATA_TABLE_LOAD_FAILED'));
+        expect(logServiceSpy).toHaveBeenCalledWith('Data source has corrupted model or structure');
+        expect(widget.dataSource.getRows()).toEqual([]);
+    });
+
+    it('should be able to display and log error if data source has invalid column structure', () => {
+        widget.field = getDataVariable('json-form-variable', mockInvalidSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
@@ -160,7 +173,7 @@ describe('DataTableWidgetComponent', () => {
 
     it('should be able to display and log error if variable is not found', () => {
         const notFoundVariable = 'not-found-json-variable';
-        widget.field = getDataVariable(notFoundVariable, [], mockJsonFormVariableWithIncorrectData);
+        widget.field = getDataVariable(notFoundVariable, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
