@@ -35,7 +35,6 @@ import { NotificationCloudService } from '../../../services/notification-cloud.s
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloModule } from 'apollo-angular';
-import { AuthModule } from '@alfresco/adf-core';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -248,7 +247,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, AuthModule, ApolloModule],
+            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
             providers: [
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
             ]
