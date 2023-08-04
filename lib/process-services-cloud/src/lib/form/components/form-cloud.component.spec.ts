@@ -25,7 +25,7 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel, FormRenderingService, FormService,
-    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations
+    UploadWidgetContentLinkModel, WidgetVisibilityService, provideTranslations, AuthModule
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1151,6 +1151,7 @@ describe('Multilingual Form', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                AuthModule.forRoot({ useHash: true }),
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreModule.forRoot(),

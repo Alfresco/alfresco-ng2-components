@@ -236,6 +236,8 @@ export class AppConfigService {
                         resolve(res);
                     },
                     error: (err: any) => {
+                        // eslint-disable-next-line no-console
+                        console.error('hostIdp not correctly configured or unreachable');
                         reject(err);
                     }
                 });
