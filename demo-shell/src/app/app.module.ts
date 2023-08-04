@@ -39,7 +39,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { LogComponent } from './components/log/log.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
@@ -163,7 +162,6 @@ registerLocaleData(localeSv);
         SearchBarComponent,
         SearchResultComponent,
         SearchExtendedComponent,
-        LogComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,
         FormViewerComponent,
