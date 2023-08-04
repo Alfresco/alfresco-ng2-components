@@ -447,10 +447,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'datatable-lazy',
-                loadChildren: () => import('./components/lazy-loading/lazy-loading.module').then(m => m.LazyLoadingModule)
-            },
-            {
                 path: 'copy-content',
                 loadChildren: () => import('./components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
             },

@@ -53,11 +53,6 @@
               },
               {
                 "glob": "**/*",
-                "input": "demo-shell/src/app/components/lazy-loading/i18n",
-                "output": "/resources/lazy-loading/i18n"
-              },
-              {
-                "glob": "**/*",
                 "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },

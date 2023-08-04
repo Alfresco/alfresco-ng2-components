@@ -212,7 +212,6 @@ registerLocaleData(localeSv);
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         provideTranslations('app', 'resources'),
-        provideTranslations('lazy-loading', 'resources/lazy-loading'),
         AppNotificationsService,
         {
             provide: APP_INITIALIZER,

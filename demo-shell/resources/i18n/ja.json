@@ -98,7 +98,6 @@
     "LOGIN": "ログイン",
     "CUSTOM_SOURCES": "カスタムソース",
     "DATATABLE": "Datatable",
-    "DATATABLE_LAZY": "Datatable (遅延読み込み)",
     "DOCUMENT_LIST": "文書リスト",
     "TEMPLATE": "テンプレート",
     "FORM": "フォーム",
