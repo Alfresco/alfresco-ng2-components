@@ -35,6 +35,7 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '../../../../api/src';
+import { StorageService } from '../../common/services/storage.service';
 
 describe('IdentityUserService', () => {
 
@@ -46,6 +47,7 @@ describe('IdentityUserService', () => {
         { id: 'id-5', name: 'MOCK-ROLE-2'}
     ];
 
+    let storageService: StorageService;
     let service: IdentityUserService;
     let adfHttpClient: AdfHttpClient;
     let requestSpy: jasmine.Spy;
@@ -57,18 +59,14 @@ describe('IdentityUserService', () => {
                 CoreTestingModule
             ]
         });
+        storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');
-
-        const store = {};
-
-        spyOn(localStorage, 'getItem').and.callFake( (key: string): string => store[key] || null);
-        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  store[key] = value);
     });
 
     it('should fetch identity user info from Jwt id token', () => {
-        localStorage.setItem(JwtHelperService.USER_ID_TOKEN, mockToken);
+        storageService.setItem(JwtHelperService.USER_ID_TOKEN, mockToken);
         const user = service.getCurrentUserInfo();
         expect(user).toBeDefined();
         expect(user.firstName).toEqual('John');
@@ -78,7 +76,7 @@ describe('IdentityUserService', () => {
     });
 
     it('should fallback on Jwt access token for identity user info', () => {
-        localStorage.setItem(JwtHelperService.USER_ACCESS_TOKEN, mockToken);
+        storageService.setItem(JwtHelperService.USER_ACCESS_TOKEN, mockToken);
         const user = service.getCurrentUserInfo();
         expect(user).toBeDefined();
         expect(user.firstName).toEqual('John');
