@@ -374,11 +374,6 @@
       "ACTION_TYPE": "Tipo de acción"
     }
   },
-  "BREADCRUMB_DEMO": {
-    "NEW_FOLDER_LABEL": "Crear un nuevo botón de carpeta",
-    "EDIT_NODE_LABEL": "Editar botón de nodo",
-    "DELETE_NODE_LABEL": "Eliminar el botón del icono del nodo"
-  },
   "DEFAULT_SEARCH": "Predeterminado",
   "OPEN_DIALOG": "Abrir cuadro de diálogo",
   "SHOW_LIST_LABEL": "Hacer clic para mostrar la lista"

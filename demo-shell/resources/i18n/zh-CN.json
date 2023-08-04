@@ -374,11 +374,6 @@
       "ACTION_TYPE": "操作类型"
     }
   },
-  "BREADCRUMB_DEMO": {
-    "NEW_FOLDER_LABEL": "创建一个新文件夹按钮",
-    "EDIT_NODE_LABEL": "编辑节点按钮",
-    "DELETE_NODE_LABEL": "删除节点图标按钮"
-  },
   "DEFAULT_SEARCH": "默认值",
   "OPEN_DIALOG": "打开对话框",
   "SHOW_LIST_LABEL": "单击以显示列表"

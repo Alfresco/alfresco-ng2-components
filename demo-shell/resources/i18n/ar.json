@@ -374,11 +374,6 @@
       "ACTION_TYPE": "نوع الإجراء"
     }
   },
-  "BREADCRUMB_DEMO": {
-    "NEW_FOLDER_LABEL": "تم إنشاء زر مجلد جديد",
-    "EDIT_NODE_LABEL": "زر تحرير العقدة",
-    "DELETE_NODE_LABEL": "زر حذف أيقونة العقدة"
-  },
   "DEFAULT_SEARCH": "افتراضي",
   "OPEN_DIALOG": "فتح الحوار",
   "SHOW_LIST_LABEL": "انقر لعرض القائمة"
