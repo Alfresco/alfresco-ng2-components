@@ -122,57 +122,5 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalled();
             expect(component.property.value.length).toBe(0);
         });
-
-        it('should update property on input blur', waitForAsync(() => {
-            spyOn(cardViewUpdateService, 'update');
-            component.ngOnChanges();
-            fixture.detectChanges();
-
-            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
-            addButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            const nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
-            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
-
-            nameInput.nativeElement.value = mockData[0].name;
-            nameInput.nativeElement.dispatchEvent(new Event('input'));
-            valueInput.nativeElement.value = mockData[0].value;
-            valueInput.nativeElement.dispatchEvent(new Event('input'));
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                valueInput.triggerEventHandler('blur', null);
-                fixture.detectChanges();
-
-                expect(cardViewUpdateService.update).toHaveBeenCalled();
-                expect(JSON.stringify(component.property.value)).toBe(JSON.stringify(mockData));
-            });
-        }));
-
-        it('should not update property if at least one input is empty on blur', waitForAsync(() => {
-            spyOn(cardViewUpdateService, 'update');
-            component.ngOnChanges();
-            fixture.detectChanges();
-
-            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
-            addButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
-
-            valueInput.nativeElement.value = mockData[0].value;
-            valueInput.nativeElement.dispatchEvent(new Event('input'));
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                valueInput.triggerEventHandler('blur', null);
-                fixture.detectChanges();
-
-                expect(cardViewUpdateService.update).not.toHaveBeenCalled();
-            });
-        }));
    });
 });

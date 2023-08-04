@@ -1231,7 +1231,7 @@ describe('retrieve metadata on submit', () => {
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreModule.forRoot(),
-                FormCloudModule,
+                FormCloudModule
             ],
             providers: [
                 provideTranslations('app', 'resources'),
