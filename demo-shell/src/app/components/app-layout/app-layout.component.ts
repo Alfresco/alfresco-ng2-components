@@ -64,8 +64,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE', children: [
             { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
-            { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' },
-            { href: '/copy-content', icon: 'view_module', title: 'Copy Content' }
+            { href: '/datatable/dnd', icon: 'view_module', title: 'Drag and Drop' }
         ]},
         { href: '/rich-text-editor', icon: 'list_alt', title: 'APP_LAYOUT.RICH_TEXT_EDITOR' },
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },

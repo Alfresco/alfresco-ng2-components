@@ -433,10 +433,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'copy-content',
-                loadChildren: () => import('./components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
-            },
-            {
                 path: 'template-list',
                 component: TemplateDemoComponent
             },
