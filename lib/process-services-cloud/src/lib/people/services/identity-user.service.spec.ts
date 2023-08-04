@@ -17,9 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { JwtHelperService } from '@alfresco/adf-core';
 import { IdentityUserService } from './identity-user.service';
-import { mockToken } from '../mock/jwt-helper.service.spec';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import {
     mockSearchUserByApp,
@@ -50,37 +48,6 @@ describe('IdentityUserService', () => {
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');
-    });
-
-    describe('Current user info (JWT token)', () => {
-
-        beforeEach(() => {
-            const store = {};
-
-            spyOn(localStorage, 'getItem').and.callFake((key: string): string => store[key] || null);
-            spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => store[key] = value);
-        });
-
-        it('should fetch identity user info from Jwt id token', () => {
-            localStorage.setItem(JwtHelperService.USER_ID_TOKEN, mockToken);
-            const user = service.getCurrentUserInfo();
-            expect(user).toBeDefined();
-            expect(user.firstName).toEqual('John');
-            expect(user.lastName).toEqual('Doe');
-            expect(user.email).toEqual('johnDoe@gmail.com');
-            expect(user.username).toEqual('johnDoe1');
-        });
-
-        it('should fallback on Jwt access token for identity user info', () => {
-            localStorage.setItem(JwtHelperService.USER_ACCESS_TOKEN, mockToken);
-            const user = service.getCurrentUserInfo();
-            expect(user).toBeDefined();
-            expect(user.firstName).toEqual('John');
-            expect(user.lastName).toEqual('Doe');
-            expect(user.email).toEqual('johnDoe@gmail.com');
-            expect(user.username).toEqual('johnDoe1');
-        });
-
     });
 
     describe('Search', () => {
