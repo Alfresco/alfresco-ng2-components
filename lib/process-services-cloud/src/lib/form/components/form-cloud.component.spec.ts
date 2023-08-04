@@ -1227,10 +1227,11 @@ describe('retrieve metadata on submit', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                AuthModule.forRoot({ useHash: true }),
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreModule.forRoot(),
-                FormCloudModule
+                FormCloudModule,
             ],
             providers: [
                 provideTranslations('app', 'resources'),
