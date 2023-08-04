@@ -375,6 +375,5 @@
     }
   },
   "DEFAULT_SEARCH": "Standard",
-  "OPEN_DIALOG": "Öppna dialogruta",
-  "SHOW_LIST_LABEL": "Klicka för att visa listan"
+  "OPEN_DIALOG": "Öppna dialogruta"
 }

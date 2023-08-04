@@ -6,7 +6,7 @@
         <mat-label>Node Id For Aspects</mat-label>
         <input matInput placeholder="Node Id" [(ngModel)]="currentNodeId">
     </mat-form-field>
-    <button mat-raised-button color="primary" [attr.aria-label]="'SHOW_LIST_LABEL' | translate" (click)="showAspectForNode()">
+    <button mat-raised-button color="primary" (click)="showAspectForNode()">
         Show/Hide List
     </button>
     <adf-aspect-list [nodeId]="currentNodeId" *ngIf="isShowed" (valueChanged)="onValueChanged($event)"></adf-aspect-list>

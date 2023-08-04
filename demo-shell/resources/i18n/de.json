@@ -375,6 +375,5 @@
     }
   },
   "DEFAULT_SEARCH": "Standard",
-  "OPEN_DIALOG": "Dialog öffnen",
-  "SHOW_LIST_LABEL": "Klicken Sie, um die Liste anzuzeigen"
+  "OPEN_DIALOG": "Dialog öffnen"
 }

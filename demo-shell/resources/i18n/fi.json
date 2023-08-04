@@ -375,6 +375,5 @@
     }
   },
   "DEFAULT_SEARCH": "Oletus",
-  "OPEN_DIALOG": "Avaa valintaikkuna",
-  "SHOW_LIST_LABEL": "Näytä luettelo napsauttamalla"
+  "OPEN_DIALOG": "Avaa valintaikkuna"
 }

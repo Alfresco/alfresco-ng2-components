@@ -375,6 +375,5 @@
     }
   },
   "DEFAULT_SEARCH": "デフォルト",
-  "OPEN_DIALOG": "ダイアログを開く",
-  "SHOW_LIST_LABEL": "クリックしてリストを表示"
+  "OPEN_DIALOG": "ダイアログを開く"
 }

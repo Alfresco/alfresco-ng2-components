@@ -375,6 +375,5 @@
     }
   },
   "DEFAULT_SEARCH": "Standard",
-  "OPEN_DIALOG": "Åbn dialog",
-  "SHOW_LIST_LABEL": "Klik for at vise listen"
+  "OPEN_DIALOG": "Åbn dialog"
 }

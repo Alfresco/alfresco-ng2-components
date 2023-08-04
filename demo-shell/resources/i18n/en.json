@@ -365,6 +365,5 @@
     }
   },
   "DEFAULT_SEARCH": "Default",
-  "OPEN_DIALOG": "Open dialog",
-  "SHOW_LIST_LABEL": "Click to show the list"
+  "OPEN_DIALOG": "Open dialog"
 }
