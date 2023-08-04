@@ -34,7 +34,7 @@ export function loadAppConfig(appConfigService: AppConfigService, storageService
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
 
         appConfigService.select(AppConfigValues.STORAGE_PREFIX).subscribe((property) => {
-            storageService.prefix = property
+            storageService.prefix = property;
         });
     };
     return () => appConfigService.load(init);

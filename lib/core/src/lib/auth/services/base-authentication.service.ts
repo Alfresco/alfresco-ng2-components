@@ -100,7 +100,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     isBPMProvider(): boolean {
         const provider = this.appConfig.get('providers');
         if (provider && (typeof provider === 'string' || provider instanceof String)) {
-            return provider && provider.toUpperCase() === 'BPM';
+            return provider.toUpperCase() === 'BPM';
         } else {
             return false;
         }

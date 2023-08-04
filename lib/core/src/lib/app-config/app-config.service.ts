@@ -78,7 +78,7 @@ export class AppConfigService {
     onLoad: Observable<any>;
 
     get isLoaded() {
-        return this.status = Status.LOADED;
+        return this.status === Status.LOADED;
     }
 
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {

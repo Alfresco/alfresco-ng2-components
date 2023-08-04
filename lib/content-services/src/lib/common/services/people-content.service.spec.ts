@@ -47,7 +47,6 @@ describe('PeopleContentService', () => {
             ]
         });
 
-        authenticationService = TestBed.inject(AuthenticationService);
         peopleContentService = TestBed.inject(PeopleContentService);
     });
 

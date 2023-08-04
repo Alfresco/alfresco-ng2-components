@@ -293,7 +293,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private createCSRFToken(a?: any): string {
-        return a ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
+        const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
+        return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
     private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {

@@ -20,6 +20,7 @@ import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
+import { AuthModule } from '../auth';
 
 declare let jasmine: any;
 
@@ -30,6 +31,7 @@ describe('TranslateLoader', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                AuthModule.forRoot({ useHash: true }),
                 TranslateModule.forRoot(),
                 CoreModule.forRoot()
             ],

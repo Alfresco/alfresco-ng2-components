@@ -82,7 +82,6 @@ export class IdentityService {
         const method = 'DELETE';
         const queryParams = {};
         const postBody = {};
-        return this.api.performIdentityOperation(path, method, queryParams, postBody);
 
         const deletePromise = this.api.performIdentityOperation(path, method, queryParams, postBody);
 
