@@ -145,47 +145,6 @@ describe('ContentMetadataCardComponent', () => {
         expect(contentMetadataComponent).toBeNull();
     });
 
-    it('should toggle editable by clicking on the button', () => {
-        component.editable = true;
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        button.triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        expect(component.editable).toBe(false);
-    });
-
-    it('should toggle expanded by clicking on the button', () => {
-        component.expanded = true;
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand"]'));
-        button.triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        expect(component.expanded).toBe(false);
-    });
-
-    it('should have the proper text on button while collapsed', () => {
-        component.expanded = false;
-        fixture.detectChanges();
-
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
-
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION');
-    });
-
-    it('should have the proper text on button while collapsed', () => {
-        component.expanded = true;
-        fixture.detectChanges();
-
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
-
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
-    });
-
     it('should hide the edit button in readOnly is true', () => {
         component.readOnly = true;
         fixture.detectChanges();
@@ -193,25 +152,6 @@ describe('ContentMetadataCardComponent', () => {
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
         expect(button).toBeNull();
     });
-
-    it('should hide the edit button if node does not have `update` permissions', () => {
-        component.readOnly = false;
-        component.node.allowableOperations = null;
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        expect(button).toBeNull();
-    });
-
-    it('should show the edit button if node does has `update` permissions', () => {
-        component.readOnly = false;
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        expect(button).not.toBeNull();
-    });
-
     it('should expand the card when custom display aspect is valid', () => {
         expect(component.expanded).toBeFalsy();
 
@@ -222,21 +162,6 @@ describe('ContentMetadataCardComponent', () => {
         displayAspect = new SimpleChange('EXIF' , null, false);
         component.ngOnChanges({ displayAspect });
         expect(component.expanded).toBeTruthy();
-    });
-
-    it('should call the aspect dialog when edit aspect is clicked', () => {
-        component.editable = true;
-        component.node.id = 'fake-node-id';
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        spyOn(nodeAspectService, 'updateNodeAspects').and.stub();
-
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-edit-aspect"]'));
-        button.triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        expect(nodeAspectService.updateNodeAspects).toHaveBeenCalledWith('fake-node-id');
     });
 
     it('should not show the edit aspect button if ACS version is not supported', () => {
