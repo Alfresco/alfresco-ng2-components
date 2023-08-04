@@ -196,7 +196,7 @@ export class ContentAuth {
         if (ticketBodyCreate === null || ticketBodyCreate === undefined) {
             this.onError.next((`Missing param ticketBodyCreate`));
 
-            throw new Error(`Missing param '${name}'`);
+            throw new Error(`Missing param ticketBodyCreate`);
         }
 
         return this.adfHttpClient.post(this.basePath + '/tickets', {bodyParam: ticketBodyCreate});

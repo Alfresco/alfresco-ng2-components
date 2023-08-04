@@ -15,20 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    createNewPersonMock,
-    fakeEcmAdminUser,
-    fakeEcmUser,
-    fakeEcmUser2,
-    fakeEcmUserList
-} from '../mocks/ecm-user.service.mock';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    AuthenticationService,
-    CoreTestingModule,
-    LogService
-} from '@alfresco/adf-core';
+import { fakeEcmUserList, createNewPersonMock, fakeEcmUser, fakeEcmUser2, fakeEcmAdminUser, fakeEcmUserList } from '../mocks/ecm-user.service.mock';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AuthenticationService, CoreTestingModule, LogService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
@@ -37,7 +25,6 @@ describe('PeopleContentService', () => {
 
     let peopleContentService: PeopleContentService;
     let logService: LogService;
-    let authenticationService: AuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -50,7 +37,6 @@ describe('PeopleContentService', () => {
             ]
         });
 
-        authenticationService = TestBed.inject(AuthenticationService);
         peopleContentService = TestBed.inject(PeopleContentService);
         logService = TestBed.inject(LogService);
     });
@@ -133,7 +119,7 @@ describe('PeopleContentService', () => {
 
         await peopleContentService.getCurrentUserInfo().toPromise();
 
-        expect(await peopleContentService.isCurrentUserAdmin()).toBe(true);
+        expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
     });
 
