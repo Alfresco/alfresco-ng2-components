@@ -45,7 +45,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
         ee(this);
     }
 
-    abstract  getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
+    abstract getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
 
     abstract getToken(): string;
 
@@ -98,8 +98,12 @@ export abstract class BaseAuthenticationService implements AuthenticationService
      * @returns True if supported, false otherwise
      */
     isBPMProvider(): boolean {
-        const provider = <string>this.appConfig.get('providers');
-        return provider && provider.toUpperCase() === 'BPM';
+        const provider = this.appConfig.get('providers');
+        if (provider && (typeof provider === 'string' || provider instanceof String)) {
+            return provider && provider.toUpperCase() === 'BPM';
+        } else {
+            return false;
+        }
     }
 
     /**
