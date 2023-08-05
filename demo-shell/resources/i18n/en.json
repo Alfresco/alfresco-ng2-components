@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Details",
-      "COMMENTS": "Comments",
-      "PROPERTIES": "Properties",
-      "VERSIONS": "Versions"
-    },
     "PERSONAL-FILES": "Personal Files",
     "SEARCH": {
       "RADIO": {

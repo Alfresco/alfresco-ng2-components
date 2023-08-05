@@ -38,18 +38,16 @@ export class ViewerPage {
     zoomOutButton = $('#viewer-zoom-out-button');
     scalePageButton = $('#viewer-scale-page-button');
     fullScreenButton = $('button[data-automation-id="adf-toolbar-fullscreen"]');
-    rotateLeft = $('button[id="viewer-rotate-left-button"]');
-    rotateRight = $('button[id="viewer-rotate-right-button"]');
     scaleImg = $('button[id="viewer-reset-button"]');
     fileThumbnail = $('img[data-automation-id="adf-file-thumbnail"]');
     pageSelectorInput = $('input[data-automation-id="adf-page-selector"]');
     imgContainer = $('div[data-automation-id="adf-image-container"]');
     mediaContainer = $('.adf-media-player');
-    percentage = $('div[data-automation-id="adf-page-scale"');
+    percentage = $('div[data-automation-id="adf-page-scale"]');
     thumbnailsBtn = $('button[data-automation-id="adf-thumbnails-button"]');
     thumbnailsContent = $('div[data-automation-id="adf-thumbnails-content"]');
     thumbnailsClose = $('button[data-automation-id="adf-thumbnails-close"]');
-    secondThumbnail = $('adf-pdf-thumb > img[title="Page 2"');
+    secondThumbnail = $('adf-pdf-thumb > img[title="Page 2"]');
     lastThumbnailDisplayed = $$('adf-pdf-thumb').last();
     passwordDialog = $('adf-pdf-viewer-password-dialog');
     passwordSubmit = $('button[data-automation-id="adf-password-dialog-submit"]');
@@ -60,7 +58,6 @@ export class ViewerPage {
     infoSideBar = $('#adf-right-sidebar');
     leftSideBar = $('#adf-left-sidebar');
     viewer = $('adf-viewer');
-    pdfViewer = $('adf-pdf-viewer');
     imgViewer = $('adf-img-viewer');
     activeTab = $('div[class*="mat-tab-label-active"]');
     toolbarSwitch = $('#adf-switch-toolbar');
@@ -75,7 +72,6 @@ export class ViewerPage {
     moreActionsMenuSwitch = $('#adf-switch-moreactionsmenu');
     moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]');
 
-    customNameSwitch = $('#adf-switch-custoname');
     customToolbarToggle = $('#adf-toggle-custom-toolbar');
     customToolbar = $('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]');
 
@@ -98,15 +94,7 @@ export class ViewerPage {
     timeButton = $('#adf-viewer-time');
     bugButton = $('#adf-viewer-bug');
 
-    codeViewer = $('#adf-monaco-file-editor');
-
-    showTabWithIconSwitch = $('#adf-tab-with-icon');
-    showTabWithIconAndLabelSwitch = $('#adf-icon-and-label-tab');
     unknownFormat = $(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`);
-
-    async checkCodeViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
-    }
 
     async viewFile(fileName: string): Promise<void> {
         const fileView = $$(`#document-list-container div[data-automation-id="${fileName}"]`).first();
@@ -254,12 +242,6 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementHasText(this.fileName, filename);
     }
 
-    async checkFileIsOpenedInViewerAndClose(filename: string): Promise<void> {
-        await this.checkFileThumbnailIsDisplayed();
-        await this.checkFileNameIsDisplayed(filename);
-        await this.clickCloseButton();
-    }
-
     async checkPreviousPageButtonIsDisplayed() {
         await BrowserVisibility.waitUntilElementIsVisible(this.previousPageButton);
     }
@@ -284,7 +266,7 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.scalePageButton);
     }
 
-    async checkPageSelectorInputIsDisplayed(checkNumber): Promise<void> {
+    async checkPageSelectorInputIsDisplayed(checkNumber: string): Promise<void> {
         await expect(await BrowserActions.getInputValue(this.pageSelectorInput)).toEqual(checkNumber);
     }
 
@@ -312,10 +294,6 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.fullScreenButton);
     }
 
-    async checkFullScreenButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.fullScreenButton);
-    }
-
     async checkPercentageIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.percentage);
     }
@@ -328,21 +306,8 @@ export class ViewerPage {
         await expect(await BrowserActions.getText(this.percentage)).toBeLessThan(zoom);
     }
 
-    async checkRotateLeftButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rotateLeft);
-    }
-
-    async checkRotateRightButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rotateRight);
-    }
-
     async checkScaleImgButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.scaleImg);
-    }
-
-    async checkRotation(text): Promise<void> {
-        const rotation = await BrowserActions.getAttribute(this.imgContainer, 'style');
-        await expect(rotation).toEqual(text);
     }
 
     async checkInfoSideBarIsNotDisplayed(): Promise<void> {
@@ -406,10 +371,6 @@ export class ViewerPage {
         await BrowserActions.click(this.thumbnailsBtn);
     }
 
-    async clickScaleImgButton(): Promise<void> {
-        await BrowserActions.click(this.scaleImg);
-    }
-
     async clickDownloadButton(): Promise<void> {
         await BrowserActions.click(this.downloadButton);
     }
@@ -440,14 +401,6 @@ export class ViewerPage {
 
     async clickFullScreenButton(): Promise<void> {
         await BrowserActions.click(this.fullScreenButton);
-    }
-
-    async clickRotateLeftButton(): Promise<void> {
-        await BrowserActions.click(this.rotateLeft);
-    }
-
-    async clickRotateRightButton(): Promise<void> {
-        await BrowserActions.click(this.rotateRight);
     }
 
     async getActiveTab(): Promise<string> {
@@ -512,15 +465,6 @@ export class ViewerPage {
 
     async enableDownload(): Promise<void> {
         await this.togglePage.enableToggle(this.openWithSwitch);
-    }
-
-    async enableShowTabWithIcon(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.showTabWithIconSwitch);
-        await this.togglePage.enableToggle(this.showTabWithIconSwitch);
-    }
-
-    async enableShowTabWithIconAndLabel(): Promise<void> {
-        await this.togglePage.enableToggle(this.showTabWithIconAndLabelSwitch);
     }
 
     async checkDownloadButtonIsNotDisplayed(): Promise<void> {
@@ -600,25 +544,12 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.customToolbar);
     }
 
-    async disableCustomName(): Promise<void> {
-        await this.togglePage.disableToggle(this.customNameSwitch);
-    }
-
-    async enableCustomName(): Promise<void> {
-        await this.togglePage.enableToggle(this.customNameSwitch);
-    }
-
     async clickToggleRightSidebar(): Promise<void> {
         await BrowserActions.click(this.showRightSidebarSwitch);
     }
 
     async clickToggleLeftSidebar(): Promise<void> {
         await BrowserActions.click(this.showLeftSidebarSwitch);
-    }
-
-    async enterCustomName(text: string): Promise<void> {
-        const textField = $('input[data-automation-id="adf-text-custom-name"]');
-        await BrowserActions.clearSendKeys(textField, text);
     }
 
     async disableOverlay(): Promise<void> {
@@ -631,26 +562,6 @@ export class ViewerPage {
 
     async checkInlineViewerIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-viewer-inline-container"]'));
-    }
-
-    async checkTabHasNoIcon(index: number): Promise<void> {
-        const tab = $(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content mat-icon`);
-        await BrowserVisibility.waitUntilElementIsNotVisible(tab);
-    }
-
-    async checkTabHasNoLabel(index: number): Promise<void> {
-        const tab = $(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content span`);
-        await BrowserVisibility.waitUntilElementIsNotVisible(tab);
-    }
-
-    async getTabLabelById(index: number): Promise<string> {
-        const tab = $(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content span`);
-        return BrowserActions.getText(tab);
-    }
-
-    async getTabIconById(index: number): Promise<string> {
-        const tab = $(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content mat-icon`);
-        return BrowserActions.getText(tab);
     }
 
     async checkUnknownFormatIsDisplayed(): Promise<void> {
