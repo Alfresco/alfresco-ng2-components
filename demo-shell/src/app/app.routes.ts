@@ -373,10 +373,6 @@ export const appRoutes: Routes = [
                 path: 'about',
                 loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
             },
-            {
-                path: 'icons',
-                loadChildren: () => import('./components/icons/icons.module').then(m => m.AppIconsModule)
-            },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
