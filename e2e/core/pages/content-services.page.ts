@@ -124,7 +124,7 @@ export class ContentServicesPage {
 
     async checkDeleteIsDisabled(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        const disabledDelete = $(`button[data-automation-id*='DELETE'][disabled='true']`);
+        const disabledDelete = $(`button[data-automation-id='Delete'][disabled='true']`);
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
