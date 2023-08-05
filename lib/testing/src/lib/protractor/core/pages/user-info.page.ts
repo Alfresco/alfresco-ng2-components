@@ -21,7 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {
     dialog = $$('mat-card[class*="adf-userinfo-card"]').first();
-    userInfoEcmHeaderTitle = $('div[id="ecm-username"]');
     userInfoSsoHeaderTitle = this.dialog.$('div[id="identity-username"]');
     userInfoSsoTitle = $('.adf-userinfo__detail-title');
     ssoEmail = $('#identity-email');
@@ -33,11 +32,6 @@ export class UserInfoPage {
 
     async clickUserProfile(): Promise<void> {
         await BrowserActions.click(this.userProfileButton);
-    }
-
-    async getContentHeaderTitle(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
-        return BrowserActions.getText(this.userInfoEcmHeaderTitle);
     }
 
     async getSsoHeaderTitle(): Promise<string> {

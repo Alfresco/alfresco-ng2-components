@@ -1,48 +1,6 @@
-.app-setting-button.mat-fab.mat-accent {
+.app-setting-button.mat-fab {
     position: absolute;
     right: 10px;
     top: 10px;
     z-index: 1;
-}
-
-.app-settings {
-    border-radius: 8px;
-    position: absolute;
-    background-color: papayawhip;
-    color: cadetblue;
-    left: 10px;
-    top: 10px;
-    z-index: 1;
-}
-
-.app-toggle {
-    width: auto;
-    margin: 5px;
-    padding: 5px;
-}
-
-.app-mobile-settings,
-.app-mobile-setting-button {
-    display: none;
-}
-
-@media screen and (max-width: 959px) {
-    .app-settings,
-    .app-setting-button.mat-fab.mat-accent {
-        display: none;
-    }
-
-    .app-mobile-settings,
-    .app-mobile-setting-button {
-        display: block;
-    }
-
-    .app-mobile-setting-button {
-        width: 100%;
-    }
-
-    .app-mobile-settings {
-        padding-bottom: 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
 }

@@ -106,7 +106,6 @@ exports.config = {
     suites: {
         smokeTestCore: [
             "./core/login-sso/login-sso.e2e.ts",
-            "./core/login/login-component.e2e.ts",
             "./core/viewer/**/*.e2e.ts"
         ],
         smokeTestCsSearch: [

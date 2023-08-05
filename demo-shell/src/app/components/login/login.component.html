@@ -1,79 +1,10 @@
-<div class="app-settings">
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="switch3"
-            (change)="toggleCSRF()"
-            [checked]="!disableCsrf">
-            CSRF
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-show-successRoute"
-            (change)="toggleSuccessRoute()"
-            [checked]="customSuccessRoute">
-            Show success route
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <ng-container *ngIf="customSuccessRoute">
-            <mat-form-field floatPlaceholder="float">
-                <input matInput
-                       placeholder="Custom success route"
-                       [(ngModel)]="customSuccessRouteURI"
-                       data-automation-id="adf-success-route">
-            </mat-form-field>
-        </ng-container>
-    </p>
-
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-logo"
-            (change)="toggleLogo()"
-            [checked]="customLogoImage">
-            Custom Logo
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <ng-container *ngIf="customLogoImage">
-            <mat-form-field floatPlaceholder="float">
-                <input matInput
-                       placeholder="Custom success Logo URL"
-                       [(ngModel)]="customLogoImageURL"
-                       data-automation-id="adf-url-logo">
-            </mat-form-field>
-        </ng-container>
-    </p>
-
-</div>
-
 <a mat-fab class="app-setting-button" data-automation-id="settings" href="" routerLink="/settings">
     <mat-icon>settings</mat-icon>
 </a>
 
 <adf-login
-    [successRoute]="customSuccessRouteURI"
-    [logoImageUrl]="customLogoImageURL"
+    [successRoute]="'/home'"
     [showLoginActions]="false"
     [showRememberMe]="false"
-    copyrightText="{{ 'application.copyright' | adfAppConfig }}"
-    (success)="onLogin()"
-    (error)="onError($event)">
-    <div class="app-mobile-settings">
-        <p>
-            <mat-slide-toggle
-                id="switch3-mobile"
-                (change)="toggleCSRF()"
-                [checked]="!disableCsrf">
-                CSRF
-            </mat-slide-toggle>
-        </p>
-        <button
-            type="button"
-            mat-raised-button
-            class="app-mobile-setting-button"
-            routerLink="/settings"
-            data-automation-id="settings">Settings
-        </button>
-    </div>
+    copyrightText="{{ 'application.copyright' | adfAppConfig }}">
 </adf-login>

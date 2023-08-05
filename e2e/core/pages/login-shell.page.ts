@@ -21,20 +21,11 @@ import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfre
 export class LoginShellPage {
     loginURL = browser.baseUrl + '/login';
     loginSSOPage = new LoginPage();
-
     togglePage = new TogglePage();
     txtUsername = $('input[id="username"]');
     txtPassword = $('input[id="password"]');
-    logoImg = $('img[id="adf-login-img-logo"]');
     logoTxt = $('input[data-automation-id="adf-url-logo"]');
-    usernameError = $('span[data-automation-id="username-error"]');
-    usernameInactive = $('input[id="username"][class*="ng-invalid"]');
-    adfLogo = $('.adf-img-logo');
-
-    usernameHighlighted = $('input[id="username"][aria-invalid="true"]');
     signInButton = $('#login-button');
-    showPasswordElement = $('button[data-automation-id="show_password"]');
-    hidePasswordElement = $('button[data-automation-id="hide_password"]');
     register = $('#adf-login-action-right');
     logoSwitch = $('#adf-toggle-logo');
     header = $('#adf-header');
@@ -58,59 +49,12 @@ export class LoginShellPage {
         await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
-    async clearUsername(): Promise<void> {
-        await BrowserActions.click(this.txtUsername);
-        await BrowserActions.clearWithBackSpace(this.txtUsername);
-    }
-
-    async clearPassword(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        await BrowserActions.clearWithBackSpace(this.txtPassword);
-    }
-
-    async getUsernameTooltip(): Promise<string> {
-        return BrowserActions.getText(this.usernameError);
-    }
-
-    async checkLoginImgURL(): Promise<string> {
-        return BrowserActions.getAttribute(this.logoImg, 'src');
-    }
-
-    async checkUsernameInactive(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
-    }
-
-    async checkUsernameHighlighted(): Promise<void> {
-        await BrowserActions.click(this.adfLogo);
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
-    }
-
-    async checkUsernameTooltipIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameError);
-    }
-
     async getSignInButtonIsEnabled(): Promise<boolean> {
         return this.signInButton.isEnabled();
     }
 
     async clickSignInButton(): Promise<void> {
         await BrowserActions.click(this.signInButton);
-    }
-
-    async showPassword(): Promise<void> {
-        await BrowserActions.click(this.showPasswordElement);
-    }
-
-    async hidePassword(): Promise<void> {
-        await BrowserActions.click(this.hidePasswordElement);
-    }
-
-    async getShownPassword(): Promise<string> {
-        return BrowserActions.getInputValue(this.txtPassword);
-    }
-
-    async checkPasswordIsHidden(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
     async enableLogoSwitch(): Promise<void> {
