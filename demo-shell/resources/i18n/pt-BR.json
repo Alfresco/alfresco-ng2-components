@@ -65,7 +65,6 @@
     "FORM_LOADING": "Carregamento de formulário",
     "UPLOADER": "Carregador",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Marca",
     "PIPES": "Tubos",
     "TRASHCAN": "Lixeira",
     "SOCIAL": "Social",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Componente Like",
     "RATING": "Componente de classificação"
-  },
-  "TAG": {
-    "LIST": "Lista de Marcas do Content Services",
-    "INSERT": "Inserir ID de Nó",
-    "NODE_LIST": "Lista de marcas por ID de Nó"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

@@ -65,7 +65,6 @@
     "FORM_LOADING": "Formulier laden",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Prullenbak",
     "SOCIAL": "Sociaal",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "'Vind ik leuk'-component",
     "RATING": "Beoordelingscomponent"
-  },
-  "TAG": {
-    "LIST": "Taglijst Content Services",
-    "INSERT": "Node-id invoegen",
-    "NODE_LIST": "Taglijst per node-id"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

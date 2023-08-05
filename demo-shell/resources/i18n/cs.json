@@ -65,7 +65,6 @@
     "FORM_LOADING": "Načítání formuláře",
     "UPLOADER": "Nástroj pro odesílání",
     "WEBSCRIPT": "Webový skript",
-    "TAG": "Tag",
     "PIPES": "Potrubí",
     "TRASHCAN": "Koš",
     "SOCIAL": "Sociální",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Komponenta pro Líbí se mi",
     "RATING": "Komponenta pro Hodnocení"
-  },
-  "TAG": {
-    "LIST": "Uvádět tagy Content Services",
-    "INSERT": "Vložit ID uzlu",
-    "NODE_LIST": "Řadit tagy dle ID uzlu"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

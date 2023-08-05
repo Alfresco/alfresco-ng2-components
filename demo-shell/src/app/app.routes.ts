@@ -345,11 +345,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
             },
             {
-                path: 'tag',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/tag/tag.module').then(m => m.AppTagModule)
-            },
-            {
                 path: 'social',
                 canActivate: [AuthGuardEcm],
                 loadChildren: () => import('./components/social/social.module').then(m => m.AppSocialModule)

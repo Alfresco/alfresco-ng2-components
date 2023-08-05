@@ -65,7 +65,6 @@
     "FORM_LOADING": "Wczytywanie formularza",
     "UPLOADER": "Program do przesyłania",
     "WEBSCRIPT": "Skrypt internetowy",
-    "TAG": "Znacznik",
     "PIPES": "Rury",
     "TRASHCAN": "Kosz",
     "SOCIAL": "Społecznościowy",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Składnik Like",
     "RATING": "Składnik Rating"
-  },
-  "TAG": {
-    "LIST": "Wyświetl znaczniki Content Services",
-    "INSERT": "Wstaw identyfikator węzła",
-    "NODE_LIST": "Lista znaczników według identyfikatora węzła"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

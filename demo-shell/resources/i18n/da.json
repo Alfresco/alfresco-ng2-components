@@ -65,7 +65,6 @@
     "FORM_LOADING": "Formular indlæses",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tag",
     "PIPES": "Rør",
     "TRASHCAN": "Papirkurv",
     "SOCIAL": "Social",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Synes om-komponent",
     "RATING": "Bedømmelse-komponent"
-  },
-  "TAG": {
-    "LIST": "Listetags Content Services",
-    "INSERT": "Indsæt node-id",
-    "NODE_LIST": "Tagliste efter node-id"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

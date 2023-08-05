@@ -65,7 +65,6 @@
     "FORM_LOADING": "フォームを読み込んでいます",
     "UPLOADER": "アップローダー",
     "WEBSCRIPT": "Webscript",
-    "TAG": "タグ",
     "PIPES": "パイプ",
     "TRASHCAN": "ごみ箱",
     "SOCIAL": "ソーシャル",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "[いいね!] コンポーネント",
     "RATING": "評価付けコンポーネント"
-  },
-  "TAG": {
-    "LIST": "Content Services のタグリスト",
-    "INSERT": "ノード ID の挿入",
-    "NODE_LIST": "ノード ID 別タグリスト"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

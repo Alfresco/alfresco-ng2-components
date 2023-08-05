@@ -65,7 +65,6 @@
     "FORM_LOADING": "Carga de formulario",
     "UPLOADER": "Cargador",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Etiqueta",
     "PIPES": "Pipes",
     "TRASHCAN": "Papelera",
     "SOCIAL": "Social",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Componente Me gusta",
     "RATING": "Componente de calificación"
-  },
-  "TAG": {
-    "LIST": "Lista de etiquetas de Content Services",
-    "INSERT": "Insertar ID del nodo",
-    "NODE_LIST": "Lista de etiquetas por ID de nodo"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

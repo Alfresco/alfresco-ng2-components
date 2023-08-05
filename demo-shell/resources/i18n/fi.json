@@ -65,7 +65,6 @@
     "FORM_LOADING": "Lomakelataus",
     "UPLOADER": "Lataustoiminto",
     "WEBSCRIPT": "Verkkokomentosarja",
-    "TAG": "Tunniste",
     "PIPES": "Putket",
     "TRASHCAN": "Roskakori",
     "SOCIAL": "Sosiaalinen",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Tykkäyskomponentti",
     "RATING": "Arviokomponentti"
-  },
-  "TAG": {
-    "LIST": "Luettelotunnisteet – Content Services",
-    "INSERT": "Lisää solmutunnus",
-    "NODE_LIST": "Tunnisteluettelo solmutunnuksen mukaan"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

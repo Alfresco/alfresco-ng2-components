@@ -64,7 +64,6 @@
     "FORM_LOADING": "Form Loading",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Trashcan",
     "SOCIAL": "Social",
@@ -159,11 +158,6 @@
   "SOCIAL": {
     "LIKE": "Like component",
     "RATING": "Rating component"
-  },
-  "TAG": {
-    "LIST": "List Tags Content Services",
-    "INSERT": "Insert Node ID",
-    "NODE_LIST": "Tag list By Node ID"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

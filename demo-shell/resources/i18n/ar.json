@@ -65,7 +65,6 @@
     "FORM_LOADING": "تحميل النموذج",
     "UPLOADER": "مُحمِّل",
     "WEBSCRIPT": "برنامج الويب النصي",
-    "TAG": "علامة",
     "PIPES": "أنابيب",
     "TRASHCAN": "سلة المحذوفات",
     "SOCIAL": "اجتماعي",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "مكون الإعجاب",
     "RATING": "مكون التقييم"
-  },
-  "TAG": {
-    "LIST": "Content Services علامات القائمة",
-    "INSERT": "إدراج معرف العقدة",
-    "NODE_LIST": "قائمة العلامات حسب معرف العقدة"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

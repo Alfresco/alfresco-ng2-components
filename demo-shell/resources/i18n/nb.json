@@ -65,7 +65,6 @@
     "FORM_LOADING": "Skjema lastes inn",
     "UPLOADER": "Opplaster",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tagg",
     "PIPES": "Rør",
     "TRASHCAN": "Søppelkurv",
     "SOCIAL": "Sosial",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Like komponent",
     "RATING": "Rangering komponent"
-  },
-  "TAG": {
-    "LIST": "Liste med tagger Innholdstjenester",
-    "INSERT": "Sett inn node-ID",
-    "NODE_LIST": "Tagg listen etter node-ID"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

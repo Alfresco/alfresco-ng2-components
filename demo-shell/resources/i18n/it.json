@@ -65,7 +65,6 @@
     "FORM_LOADING": "Caricamento modulo",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tag",
     "PIPES": "Tubi",
     "TRASHCAN": "Cestino",
     "SOCIAL": "Social",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Componente Like",
     "RATING": "Componente valutazione"
-  },
-  "TAG": {
-    "LIST": "Elenco tag Content Services",
-    "INSERT": "Inserisci ID nodo",
-    "NODE_LIST": "Elenco tag per ID nodo"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

@@ -65,7 +65,6 @@
     "FORM_LOADING": "Formulär läses in",
     "UPLOADER": "Uppladdad av",
     "WEBSCRIPT": "Webbskript",
-    "TAG": "Tagg",
     "PIPES": "Pipes",
     "TRASHCAN": "Papperskorg",
     "SOCIAL": "Social",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Som komponent",
     "RATING": "Klassificeringskomponent"
-  },
-  "TAG": {
-    "LIST": "Lista taggar Content Services",
-    "INSERT": "Infoga nod-ID",
-    "NODE_LIST": "Tagglista per nod-ID"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

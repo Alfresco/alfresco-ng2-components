@@ -65,7 +65,6 @@
     "FORM_LOADING": "Formular laden",
     "UPLOADER": "Uploader",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Tag",
     "PIPES": "Pipes",
     "TRASHCAN": "Papierkorb",
     "SOCIAL": "Soziale Funktionen",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Like-Komponente",
     "RATING": "Bewertungskomponente"
-  },
-  "TAG": {
-    "LIST": "Content Services-Tagliste",
-    "INSERT": "Node-ID einfügen",
-    "NODE_LIST": "Tagliste nach Node-ID"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

@@ -65,7 +65,6 @@
     "FORM_LOADING": "Chargement du formulaire",
     "UPLOADER": "Chargeur",
     "WEBSCRIPT": "Script Web",
-    "TAG": "Tag",
     "PIPES": "Tuyaux",
     "TRASHCAN": "Corbeille",
     "SOCIAL": "Réseaux sociaux",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Composant J'aime",
     "RATING": "Composant d'évaluation"
-  },
-  "TAG": {
-    "LIST": "Liste des tags Content Services",
-    "INSERT": "Insérer l'ID du nœud",
-    "NODE_LIST": "Liste des tags par ID de nœud"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

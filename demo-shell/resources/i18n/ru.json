@@ -65,7 +65,6 @@
     "FORM_LOADING": "Загрузка формы",
     "UPLOADER": "Загрузчик",
     "WEBSCRIPT": "Webscript",
-    "TAG": "Метка",
     "PIPES": "Каналы",
     "TRASHCAN": "Корзина",
     "SOCIAL": "Социальный",
@@ -160,11 +159,6 @@
   "SOCIAL": {
     "LIKE": "Компонент \"Нравится\"",
     "RATING": "Компонент \"Рейтинг\""
-  },
-  "TAG": {
-    "LIST": "Список меток Content Services",
-    "INSERT": "Вставить идентификатор узла",
-    "NODE_LIST": "Список меток по идентификатору узла"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
