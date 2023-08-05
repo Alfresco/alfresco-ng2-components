@@ -1,28 +1,5 @@
 {
   "APP": {
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "認証タイプ",
-      "BASIC": "基本認証",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit Flow",
-      "PROVIDER": "プロバイダ",
-      "REQUIRED": "このフィールドは必須です",
-      "CS_URL_ERROR": "Content Services のアドレスが URL 形式と一致しません",
-      "PS_URL_ERROR": "Process Services のアドレスが URL 形式と一致しません",
-      "TITLE": "設定",
-      "CS-HOST": "Content Services の URL",
-      "BP-HOST": "Process Services の URL",
-      "BACK": "戻る",
-      "APPLY": "適用",
-      "NOT_VALID": "http(s)://host|ip:port(/path) が認識されません。別の URL を指定してください。",
-      "REDIRECT": "リダイレクト URI",
-      "REDIRECT_LOGOUT": "リダイレクト URI のログアウト",
-      "SILENT": "サイレントログイン",
-      "SCOPE": "範囲",
-      "CLIENT": "クライアント ID",
-      "PUBLIC_URLS": "サイレントログインのパブリック URL",
-      "SECRET": "シークレット"
-    },
     "INFO_DRAWER": {
       "TITLE": "詳細",
       "COMMENTS": "コメント",

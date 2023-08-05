@@ -19,15 +19,15 @@ import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } fro
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
 
 @Component({
+    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }],
     selector: 'adf-host-settings',
     templateUrl: 'host-settings.component.html',
-    host: {
-        class: 'adf-host-settings'
-    },
+    host: { class: 'adf-host-settings' },
     styleUrls: ['./host-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
@@ -40,8 +40,11 @@ export class HostSettingsComponent implements OnInit {
     providers: string[] = ['BPM', 'ECM', 'ALL'];
 
     showSelectProviders = true;
-
     form: UntypedFormGroup;
+
+    ERR_REQUIRED = 'This field is required';
+    ERR_INVALID_URL = 'http(s)://host|ip:port(/path) not recognized, try a different URL.';
+    PLACEHOLDER_URL: 'http(s)://host|ip:port(/path)';
 
     /** Emitted when the URL is invalid. */
     @Output()
@@ -268,28 +271,12 @@ export class HostSettingsComponent implements OnInit {
         return this.oauthConfig.get('secret') as UntypedFormControl;
     }
 
-    get implicitFlow(): UntypedFormControl {
-        return this.oauthConfig.get('implicitFlow') as UntypedFormControl;
-    }
-
-    get codeFlow(): UntypedFormControl {
-        return this.oauthConfig.get('codeFlow') as UntypedFormControl;
-    }
-
     get silentLogin(): UntypedFormControl {
         return this.oauthConfig.get('silentLogin') as UntypedFormControl;
     }
 
     get redirectUri(): UntypedFormControl {
         return this.oauthConfig.get('redirectUri') as UntypedFormControl;
-    }
-
-    get publicUrls(): UntypedFormControl {
-        return this.oauthConfig.get('publicUrls') as UntypedFormControl;
-    }
-
-    get redirectUriLogout(): UntypedFormControl {
-        return this.oauthConfig.get('redirectUriLogout') as UntypedFormControl;
     }
 
     get oauthConfig(): UntypedFormControl {

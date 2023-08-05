@@ -1,28 +1,5 @@
 {
   "APP": {
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "身份验证类型",
-      "BASIC": "基本身份验证",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit Flow",
-      "PROVIDER": "提供程序",
-      "REQUIRED": "此字段为必填字段",
-      "CS_URL_ERROR": "Content Services 地址与 URL 格式不匹配",
-      "PS_URL_ERROR": "Process Services 地址与 URL 格式不匹配",
-      "TITLE": "设置",
-      "CS-HOST": "Content Services URL",
-      "BP-HOST": "Process Services URL",
-      "BACK": "返回",
-      "APPLY": "应用",
-      "NOT_VALID": "http(s)://host|ip:port(/path) 无法识别，请使用其他 URL。",
-      "REDIRECT": "重定向 URI",
-      "REDIRECT_LOGOUT": "重定向 URI 注销",
-      "SILENT": "静默登录",
-      "SCOPE": "范围",
-      "CLIENT": "客户端 ID",
-      "PUBLIC_URLS": "用于静默登录的公共 URL",
-      "SECRET": "机密"
-    },
     "INFO_DRAWER": {
       "TITLE": "详细信息",
       "COMMENTS": "注释",

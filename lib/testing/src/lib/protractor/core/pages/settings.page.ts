@@ -32,7 +32,7 @@ export class SettingsPage {
     silentLoginToggleElement = $('mat-slide-toggle[formcontrolname="silentLogin"]');
     implicitFlowLabel = $('mat-slide-toggle[formcontrolname="implicitFlow"] label');
     implicitFlowElement = $('mat-slide-toggle[formcontrolname="implicitFlow"]');
-    applyButton = $('button[data-automation-id*="host-button"]');
+    applyButton = $('button[data-automation-id="settings-apply-button"]');
     providerDropdown = new DropdownPage($('mat-select[id="adf-provider-selector"]'));
 
     async goToSettingsPage(): Promise<void> {
@@ -52,11 +52,6 @@ export class SettingsPage {
     async setProvider(option): Promise<void> {
         await this.providerDropdown.selectDropdownOption(option);
         await this.providerDropdown.checkOptionIsSelected(option);
-    }
-
-    async setProviderEcmBpm() {
-        await this.setProvider('ALL');
-        await this.clickApply();
     }
 
     async clickSsoRadioButton() {

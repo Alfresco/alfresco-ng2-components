@@ -1,28 +1,5 @@
 {
   "APP": {
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Tipo de autenticación",
-      "BASIC": "Autenticación básica",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit Flow",
-      "PROVIDER": "Proveedor",
-      "REQUIRED": "Este campo es obligatorio",
-      "CS_URL_ERROR": "La dirección de Content Services no coincide con el formato de la URL",
-      "PS_URL_ERROR": "La dirección de Process Services no coincide con el formato de la URL",
-      "TITLE": "Configuración",
-      "CS-HOST": "URL de Content Services",
-      "BP-HOST": "URL de Process Services",
-      "BACK": "Volver",
-      "APPLY": "Aplicar",
-      "NOT_VALID": "http(s)://host|ip:port(/path) no reconocido; pruebe con una URL diferente.",
-      "REDIRECT": "URI de redireccionamiento",
-      "REDIRECT_LOGOUT": "Cierre de sesión de URI de redireccionamiento",
-      "SILENT": "Inicio de sesión silencioso",
-      "SCOPE": "Ámbito",
-      "CLIENT": "ID de cliente",
-      "PUBLIC_URLS": "URL públicas para inicio de sesión silencioso",
-      "SECRET": "Secreto"
-    },
     "INFO_DRAWER": {
       "TITLE": "Detalles",
       "COMMENTS": "Comentarios",

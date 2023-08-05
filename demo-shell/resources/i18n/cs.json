@@ -1,28 +1,5 @@
 {
   "APP": {
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Typ ověřování",
-      "BASIC": "Základní ověřování",
-      "SSO": "Jednotné přihlášení",
-      "IMPLICIT-FLOW": "Implicit Flow",
-      "PROVIDER": "Poskytovatel",
-      "REQUIRED": "Toto pole je povinné",
-      "CS_URL_ERROR": "Adresa Content Services neodpovídá formátu adresy URL",
-      "PS_URL_ERROR": "Adresa Process Services neodpovídá formátu adresy URL",
-      "TITLE": "Nastavení",
-      "CS-HOST": "Adresa URL pro Content Services",
-      "BP-HOST": "Adresa URL pro Process Services",
-      "BACK": "Zpět",
-      "APPLY": "Použít",
-      "NOT_VALID": "http(s)://host|ip:port(/path) nelze rozeznat. Použijte jinou adresu URL.",
-      "REDIRECT": "URI pro přesměrování",
-      "REDIRECT_LOGOUT": "URI pro přesměrování (odhlášení)",
-      "SILENT": "Přihlášení na pozadí",
-      "SCOPE": "Rozsah",
-      "CLIENT": "ID klienta",
-      "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí",
-      "SECRET": "Tajné"
-    },
     "INFO_DRAWER": {
       "TITLE": "Podrobnosti",
       "COMMENTS": "Poznámky",

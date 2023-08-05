@@ -1,9 +1,8 @@
 <div class="adf-setting-container">
     <mat-card class="adf-setting-card">
         <form id="host-form" [formGroup]="form" (submit)="onSubmit(form.value)" (keydown)="keyDownFunction($event)">
-
             <mat-form-field *ngIf="showSelectProviders">
-                <mat-select  id="adf-provider-selector" placeholder="Provider" [formControl]="providersControl">
+                <mat-select  id="adf-provider-selector" [formControl]="providersControl">
                     <mat-option *ngFor="let provider of providers" [value]="provider">
                         {{ provider }}
                     </mat-option>
@@ -11,44 +10,31 @@
             </mat-form-field>
 
             <div class="adf-authentication-type">
-                <div> {{'APP.HOST_SETTINGS.TYPE-AUTH' | translate }} : </div>
+                <div>Authentication type :</div>
                 <mat-radio-group formControlName="authType" >
-                <mat-radio-button value="BASIC">{{'APP.HOST_SETTINGS.BASIC' | translate }}
-                </mat-radio-button>
-                <mat-radio-button value="OAUTH">{{'APP.HOST_SETTINGS.SSO' | translate }}
-                </mat-radio-button>
+                <mat-radio-button value="BASIC">Basic Authentication</mat-radio-button>
+                <mat-radio-button value="OAUTH">SSO</mat-radio-button>
             </mat-radio-group>
             </div>
 
             <ng-container *ngIf="isALL() || isECM()">
                 <mat-card-content>
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{'APP.HOST_SETTINGS.CS-HOST' | translate }}</mat-label>
-                        <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text"
-                               id="ecmHost" placeholder="http(s)://host|ip:port(/path)">
-                        <mat-error *ngIf="ecmHost.hasError('pattern')">
-                            {{ 'APP.HOST_SETTINGS.NOT_VALID'| translate }}
-                        </mat-error>
-                        <mat-error *ngIf="ecmHost.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <mat-label>Content Services URL</mat-label>
+                        <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text" id="ecmHost" [placeholder]="PLACEHOLDER_URL">
+                        <mat-error *ngIf="ecmHost.hasError('pattern')">{{ ERR_INVALID_URL }}</mat-error>
+                        <mat-error *ngIf="ecmHost.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
-                    <p>
                 </mat-card-content>
             </ng-container>
 
             <ng-container *ngIf="isALL() || isBPM()">
                 <mat-card-content>
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{'APP.HOST_SETTINGS.BP-HOST' | translate }}</mat-label>
-                        <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text"
-                               id="bpmHost" placeholder="http(s)://host|ip:port(/path)">
-                        <mat-error *ngIf="bpmHost.hasError('pattern')">
-                            {{ 'APP.HOST_SETTINGS.NOT_VALID'| translate }}
-                        </mat-error>
-                        <mat-error *ngIf="bpmHost.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <mat-label>Process Services URL</mat-label>
+                        <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text" id="bpmHost" [placeholder]="PLACEHOLDER_URL">
+                        <mat-error *ngIf="bpmHost.hasError('pattern')">{{ ERR_INVALID_URL }}</mat-error>
+                        <mat-error *ngIf="bpmHost.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
                 </mat-card-content>
             </ng-container>
@@ -57,14 +43,9 @@
                 <mat-card-content>
                     <mat-form-field class="adf-full-width">
                         <mat-label>Identity Host</mat-label>
-                        <input matInput name="identityHost" id="identityHost" formControlName="identityHost"
-                                placeholder="http(s)://host|ip:port(/path)">
-                        <mat-error *ngIf="identityHost.hasError('pattern')">
-                            {{ 'APP.HOST_SETTINGS.NOT_VALID'| translate }}
-                        </mat-error>
-                        <mat-error *ngIf="identityHost.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <input matInput name="identityHost" id="identityHost" formControlName="identityHost" [placeholder]="PLACEHOLDER_URL">
+                        <mat-error *ngIf="identityHost.hasError('pattern')">{{ ERR_INVALID_URL }}</mat-error>
+                        <mat-error *ngIf="identityHost.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
                 </mat-card-content>
             </ng-container>
@@ -73,91 +54,66 @@
                 <div formGroupName="oauthConfig">
                     <mat-form-field class="adf-full-width">
                         <mat-label>Auth Host</mat-label>
-                        <input matInput name="host" id="oauthHost" formControlName="host"
-                               placeholder="http(s)://host|ip:port(/path)">
-                        <mat-error *ngIf="host.hasError('pattern')">
-                            {{ 'APP.HOST_SETTINGS.NOT_VALID'| translate }}
-                        </mat-error>
-                        <mat-error *ngIf="host.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.CLIENT'| translate }}</mat-label>
-                        <input matInput name="clientId" id="clientId" formControlName="clientId"
-                               placeholder="Client Id">
-                        <mat-error *ngIf="clientId.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <input matInput name="host" id="oauthHost" formControlName="host" [placeholder]="PLACEHOLDER_URL">
+                        <mat-error *ngIf="host.hasError('pattern')">{{ ERR_INVALID_URL }}</mat-error>
+                        <mat-error *ngIf="host.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.SCOPE'| translate }}</mat-label>
-                        <input matInput name="{{ 'APP.HOST_SETTINGS.SCOPE'| translate }}"
-                               formControlName="scope" placeholder="Scope Id">
-                        <mat-error *ngIf="scope.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <mat-label>Client ID</mat-label>
+                        <input matInput name="clientId" id="clientId" formControlName="clientId">
+                        <mat-error *ngIf="clientId.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.SECRET'| translate }}</mat-label>
-                        <input matInput name="{{ 'APP.HOST_SETTINGS.SECRET'| translate }}"
-                               formControlName="secret" placeholder="{{ 'APP.HOST_SETTINGS.SECRET'| translate }}">
-                        <mat-error *ngIf="secret.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <mat-label>Scope Id</mat-label>
+                        <input matInput name="Scope" formControlName="scope">
+                        <mat-error *ngIf="scope.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
 
-                    <label for="silentLogin">{{ 'APP.HOST_SETTINGS.SILENT'| translate }}</label>
-                    <mat-slide-toggle class="adf-full-width" name="silentLogin" [color]="'primary'"
-                                      formControlName="silentLogin">
+                    <mat-form-field class="adf-full-width">
+                        <mat-label>Secret</mat-label>
+                        <input matInput name="Secret" formControlName="secret">
+                        <mat-error *ngIf="secret.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-label>Silent Login</mat-label>
+                    <mat-slide-toggle class="adf-full-width" name="silentLogin" formControlName="silentLogin">
                     </mat-slide-toggle>
 
-                    <label for="implicitFlow">{{ 'APP.HOST_SETTINGS.IMPLICIT-FLOW'| translate }}</label>
-                    <mat-slide-toggle class="adf-full-width" name="implicitFlow" [color]="'primary'"
-                                      formControlName="implicitFlow">
+                    <mat-label>Implicit Flow</mat-label>
+                    <mat-slide-toggle class="adf-full-width" name="implicitFlow" formControlName="implicitFlow">
                     </mat-slide-toggle>
 
                     <ng-container *ngIf="supportsCodeFlow">
-                        <label for="codeFlow">{{ 'CORE.HOST_SETTINGS.CODE-FLOW'| translate }}</label>
-                        <mat-slide-toggle class="adf-full-width" name="codeFlow" [color]="'primary'"
-                                          formControlName="codeFlow">
+                        <mat-label>Code Flow</mat-label>
+                        <mat-slide-toggle class="adf-full-width" name="codeFlow" formControlName="codeFlow">
                         </mat-slide-toggle>
                     </ng-container>
 
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.REDIRECT'| translate }}</mat-label>
-                        <input matInput placeholder="{{ 'APP.HOST_SETTINGS.REDIRECT'| translate }}"
-                               name="redirectUri" formControlName="redirectUri">
-                        <mat-error *ngIf="redirectUri.hasError('required')">
-                            {{ 'APP.HOST_SETTINGS.REQUIRED'| translate }}
-                        </mat-error>
+                        <mat-label>Redirect URI</mat-label>
+                        <input matInput  name="redirectUri" formControlName="redirectUri">
+                        <mat-error *ngIf="redirectUri.hasError('required')">{{ ERR_REQUIRED }}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}</mat-label>
-                        <input id="logout-url" matInput placeholder="{{ 'APP.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}"
-                               name="redirectUriLogout" formControlName="redirectUriLogout">
+                        <mat-label>Redirect URI Logout</mat-label>
+                        <input id="logout-url" matInput name="redirectUriLogout" formControlName="redirectUriLogout">
                     </mat-form-field>
 
                     <mat-form-field class="adf-full-width">
-                        <mat-label>{{ 'APP.HOST_SETTINGS.PUBLIC_URLS'| translate }}</mat-label>
-                        <input id="public-url" matInput placeholder="{{ 'APP.HOST_SETTINGS.PUBLIC_URLS'| translate }}"
-                               name="publicUrls" formControlName="publicUrls">
+                        <mat-label>Public urls silent Login</mat-label>
+                        <input id="public-url" matInput name="publicUrls" formControlName="publicUrls">
                     </mat-form-field>
 
                 </div>
             </ng-container>
             <mat-card-actions align="end">
-                <button mat-button (click)="onCancel()" color="primary">
-                    {{'APP.HOST_SETTINGS.BACK' | translate }}
-                </button>
-                <button type="submit" id="host-button" class="adf-login-button" mat-raised-button
-                        color="primary" data-automation-id="host-button"
-                        [disabled]="!form.valid">
-                    {{'APP.HOST_SETTINGS.APPLY' | translate }}
-                </button>
+                <button mat-button (click)="onCancel()">Back</button>
+                <button type="submit" class="adf-login-button" mat-button
+                        color="primary" data-automation-id="settings-apply-button"
+                        [disabled]="!form.valid">Apply</button>
             </mat-card-actions>
         </form>
     </mat-card>
