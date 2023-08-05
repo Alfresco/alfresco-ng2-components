@@ -66,7 +66,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
             { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' }
         ]},
         { href: '/rich-text-editor', icon: 'list_alt', title: 'APP_LAYOUT.RICH_TEXT_EDITOR' },
-        { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/pipes', icon: 'layers', title: 'APP_LAYOUT.PIPES' },
         { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/config-editor', icon: 'code', title: 'APP_LAYOUT.CONFIG-EDITOR' },

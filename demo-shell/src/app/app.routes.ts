@@ -340,11 +340,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
-                path: 'webscript',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
-            },
-            {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]
