@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Uovervåget login til offentlige URL-adresser",
       "SECRET": "Hemmelig"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Udv. model"
-    },
     "INFO_DRAWER": {
       "TITLE": "Detaljer",
       "COMMENTS": "Kommentarer",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Vis sammenligningsversion"
     },
     "PERSONAL-FILES": "Personlige filer",
-    "WARN-MULTIPLE-UPLOADS": "Vis advarsler for flere uploads.",
     "CUSTOM-PERMISSION-MESSAGE": "Tillad meddelelse om brugerdefineret tilladelse",
     "MEDIUM-TIME-FORMAT": "Tillad mellemlangt tidsformat for dokumentliste",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Filter for brugerdefinerede udvidelser",
     "MAX_SIZE": "Filtrer efter maksimal størrelse",
     "ENABLE_VERSIONING": "Aktivér versionering",
-    "DESCRIPTION_UPLOAD": "Tillad upload",
-    "ENABLE_INFINITE_SCROLL": "Aktivér uendelig rulning",
-    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Listen over de seneste filer er tom"
-      },
-      "TITLE": "Seneste filer"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Visningsnavn",
       "IS_LOCKED": "Lås",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Start proces"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Nulstil til standard",
-    "ADD_ROW": "Tilføj række",
-    "REPLACE_ROWS": "Erstat rækker",
-    "REPLACE_COLUMNS": "Erstat kolonner",
-    "LOAD_NODE": "Indlæs node",
-    "MULTISELECT": "Vælg flere",
-    "MULTISELECT_DESCRIPTION": "Brug Kommando (Mac) eller Ctrl (Windows) for at vælge flere elementer",
-    "USE_CUSTOM_COLUMN_HEADER": "Brug tilpasset skabelon til overskrift 'Bruger'",
-    "CUSTOM_COLUMN_HEADER": "Tilpasset brugeroverskriftskabelon"
   },
   "PS-TAB": {
     "TASKS-TAB": "Opgaver",
@@ -291,10 +267,6 @@
     "INSERT": "Indsæt node-id",
     "NODE_LIST": "Tagliste efter node-id"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Nedarv tilladelse",
-    "INHERITED_PERMISSIONS_BUTTON": "Tilladelsen er nedarvet"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "CLOUDDEMO AF PROCESLISTE",
-    "CUSTOMIZE_FILTERS": "Tilpas dit filter"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Tilpas dit filter"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Enkeltvalg",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Handlingstype"
     }
   },
-  "DEFAULT_SEARCH": "Standard",
   "OPEN_DIALOG": "Åbn dialog"
 }

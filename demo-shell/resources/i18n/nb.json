@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Offentlige URL-er for stille pålogging",
       "SECRET": "Hemmelig"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Utvikl.modus"
-    },
     "INFO_DRAWER": {
       "TITLE": "Detaljer",
       "COMMENTS": "Kommentarer",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Vis sammenligning av versjoner"
     },
     "PERSONAL-FILES": "Personlige filer",
-    "WARN-MULTIPLE-UPLOADS": "Vis advarsel for flere opplastinger.",
     "CUSTOM-PERMISSION-MESSAGE": "Aktiver tilpasset tillatelsesmelding",
     "MEDIUM-TIME-FORMAT": "Aktiver medium tidsformat for dokumentliste",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",
     "MAX_SIZE": "Maks. størrelsesfilter",
     "ENABLE_VERSIONING": "Aktiver versjonering",
-    "DESCRIPTION_UPLOAD": "Aktiver opplasting",
-    "ENABLE_INFINITE_SCROLL": "Aktiver uendelig rulling",
-    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Nylige filer-listen er tom"
-      },
-      "TITLE": "Nylige filer"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Vis navn",
       "IS_LOCKED": "Lås",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Start prosess"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Tilbakestill til standard",
-    "ADD_ROW": "Legg til rad",
-    "REPLACE_ROWS": "Erstatt rader",
-    "REPLACE_COLUMNS": "erstatt kolonner",
-    "LOAD_NODE": "Last node",
-    "MULTISELECT": "Multivalg",
-    "MULTISELECT_DESCRIPTION": "Bruk Cmd (Mac) eller Ctrl (Windows) for å veksle mellom valg av flere elementer",
-    "USE_CUSTOM_COLUMN_HEADER": "Bruk egendefinert mal for toppteksten 'bruker'",
-    "CUSTOM_COLUMN_HEADER": "Egendefinert topptekst for bruker"
   },
   "PS-TAB": {
     "TASKS-TAB": "Oppgaver",
@@ -291,10 +267,6 @@
     "INSERT": "Sett inn node-ID",
     "NODE_LIST": "Tagg listen etter node-ID"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Arv tillatelse",
-    "INHERITED_PERMISSIONS_BUTTON": "Tillatelse arvet"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Ett valg",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Handlingstype"
     }
   },
-  "DEFAULT_SEARCH": "Standard",
   "OPEN_DIALOG": "Åpne dialog"
 }

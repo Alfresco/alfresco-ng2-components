@@ -39,22 +39,20 @@
     <ng-template #customColumnHeaderTemplate>
         <div>
             <span class="adf-datatable-demo-app-custom-user-header">
-                {{ 'DATATABLE.CUSTOM_COLUMN_HEADER'| translate }}
+                Custom User Header Template
             </span>
         </div>
     </ng-template>
 </div>
 
-<div>
-    Selected items: {{ dataTable.selection?.length }}
-</div>
+<div>Selected items: {{ dataTable.selection?.length }}</div>
 
 <div data-automation-id="multiselect">
-    <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
+    <mat-checkbox [(ngModel)]="multiselect">Multiselect</mat-checkbox>
 </div>
 
 <div>
-    <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
+    <p>Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items</p>
     <mat-form-field>
         <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food" data-automation-id="datatable-selection-mode">
             <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
@@ -65,9 +63,9 @@
 </div>
 
 <div class="adf-datatable-demo-app-actions">
-    <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
-    <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
-    <button mat-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
-    <button mat-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
-    <button mat-raised-button (click)="showCustomHeaderColumn()">{{ 'DATATABLE.USE_CUSTOM_COLUMN_HEADER'| translate }}</button>
+    <button mat-raised-button (click)="reset()">Reset to default</button>
+    <button mat-raised-button (click)="addRow()">Add row</button>
+    <button mat-raised-button (click)="replaceRows()">Replace rows</button>
+    <button mat-raised-button (click)="replaceColumns()">Replace columns</button>
+    <button mat-raised-button (click)="showCustomHeaderColumn()">Use custom template for 'User' header</button>
 </div>

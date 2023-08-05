@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "عناوين url العامة لتسجيل الدخول الصامت",
       "SECRET": "سر"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "وضع التطوير"
-    },
     "INFO_DRAWER": {
       "TITLE": "التفاصيل",
       "COMMENTS": "تعليقات",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "إظهار مقارنة الإصدار"
     },
     "PERSONAL-FILES": "الملفات الشخصية",
-    "WARN-MULTIPLE-UPLOADS": "عرض تحذير للتحميلات المتعددة.",
     "CUSTOM-PERMISSION-MESSAGE": "تمكين رسالة إذن مخصصة",
     "MEDIUM-TIME-FORMAT": "تمكين تنسيق وقت متوسط لقائمة المستندات",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "عامل تصفية امتدادات مخصص",
     "MAX_SIZE": "عامل تصفية الحد الأقصى للحجم",
     "ENABLE_VERSIONING": "تمكين تعيين الإصدار",
-    "DESCRIPTION_UPLOAD": "تمكين التحميل",
-    "ENABLE_INFINITE_SCROLL": "تمكين التمرير اللانهائي",
-    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "قائمة أحدث الملفات فارغة"
-      },
-      "TITLE": "أحدث الملفات"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "اسم العرض",
       "IS_LOCKED": "قفل",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "بدء العملية"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "إعادة تعيين إلى افتراضي",
-    "ADD_ROW": "إضافة صف",
-    "REPLACE_ROWS": "استبدال صفوف",
-    "REPLACE_COLUMNS": "استبدال أعمدة",
-    "LOAD_NODE": "تحميل عقدة",
-    "MULTISELECT": "تحديد متعدد",
-    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة",
-    "USE_CUSTOM_COLUMN_HEADER": "استخدم نموذج مخصص للرأس 'المستخدم'",
-    "CUSTOM_COLUMN_HEADER": "قالب رأس المستخدم المخصص"
   },
   "PS-TAB": {
     "TASKS-TAB": "المهام",
@@ -291,10 +267,6 @@
     "INSERT": "إدراج معرف العقدة",
     "NODE_LIST": "قائمة العلامات حسب معرف العقدة"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "إذن التوريث",
-    "INHERITED_PERMISSIONS_BUTTON": "تم توريث الإذن"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "العرض التوضيحي لسحابة قائمة العملية",
-    "CUSTOMIZE_FILTERS": "تخصيص عامل التصفية"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "تخصيص عامل التصفية"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "تحديد واحد",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "نوع الإجراء"
     }
   },
-  "DEFAULT_SEARCH": "افتراضي",
   "OPEN_DIALOG": "فتح الحوار"
 }

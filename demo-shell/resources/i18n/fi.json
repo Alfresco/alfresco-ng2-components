@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Yleisten url-osoitteiden hiljainen sisäänkirjaus",
       "SECRET": "Salainen"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Kehitystapa"
-    },
     "INFO_DRAWER": {
       "TITLE": "Tiedot",
       "COMMENTS": "Kommentit",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Näytä versiovertailu"
     },
     "PERSONAL-FILES": "Omat tiedostot",
-    "WARN-MULTIPLE-UPLOADS": "Näytä varoitus useille latauksille.",
     "CUSTOM-PERMISSION-MESSAGE": "Muokkaa omaa oikeusilmoitusta",
     "MEDIUM-TIME-FORMAT": "Ota Medium-aikamuoto käyttöön asiakirjaluettelossa",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Mukautettu tiedostomuotosuodatin",
     "MAX_SIZE": "Enimmäiskoon suodatin",
     "ENABLE_VERSIONING": "Ota versionhallinta käyttöön",
-    "DESCRIPTION_UPLOAD": "Ota lataus käyttöön",
-    "ENABLE_INFINITE_SCROLL": "Ota rajaton vieritys käyttöön",
-    "MULTISELECT_DESCRIPTION": "Voit valita useita kohteita Cmd- (Mac) tai Ctrl-näppäimen (Windows) avulla",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Viimeisimpien tiedostojen luettelo on tyhjä"
-      },
-      "TITLE": "Viimeisimmät tiedostot"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Näyttönimi",
       "IS_LOCKED": "Lukitse",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Käynnistä prosessi"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Palauta oletukseen",
-    "ADD_ROW": "Lisää rivi",
-    "REPLACE_ROWS": "Korvaa rivejä",
-    "REPLACE_COLUMNS": "Korvaa sarakkeita",
-    "LOAD_NODE": "Lataa solmu",
-    "MULTISELECT": "Monivalinta",
-    "MULTISELECT_DESCRIPTION": "Voit valita useita kohteita Cmd- (Mac) tai Ctrl-näppäimen (Windows) avulla",
-    "USE_CUSTOM_COLUMN_HEADER": "Käytä mukautettua mallia \"Käyttäjä\"-otsikolle",
-    "CUSTOM_COLUMN_HEADER": "Mukautettu käyttäjäotsikon malli"
   },
   "PS-TAB": {
     "TASKS-TAB": "Tehtävät",
@@ -291,10 +267,6 @@
     "INSERT": "Lisää solmutunnus",
     "NODE_LIST": "Tunnisteluettelo solmutunnuksen mukaan"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Peri oikeus",
-    "INHERITED_PERMISSIONS_BUTTON": "Oikeus peritty"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Lisää sovellustunnus",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Muokkaa suodatinta"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Muokkaa suodatinta"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Yksittäinen valinta",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Toiminnon tyyppi"
     }
   },
-  "DEFAULT_SEARCH": "Oletus",
   "OPEN_DIALOG": "Avaa valintaikkuna"
 }

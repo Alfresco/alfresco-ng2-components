@@ -413,7 +413,7 @@
 
     <div class="app-container">
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
+            <mat-slide-toggle [(ngModel)]="showNameColumn">
                 Show Name Column
             </mat-slide-toggle>
         </section>
@@ -425,102 +425,97 @@
         </section>
 
         <section>
-            <mat-slide-toggle data-automation-id="multiSelectToggle" [color]="'primary'" [(ngModel)]="multiselect">
+            <mat-slide-toggle data-automation-id="multiSelectToggle" [(ngModel)]="multiselect">
                 {{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" [(ngModel)]="multipleFileUpload" >
+            <mat-slide-toggle id="adf-multiple-upload-switch" [(ngModel)]="multipleFileUpload" >
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-folder-upload-switch" [color]="'primary'" [(ngModel)]="folderUpload">
+            <mat-slide-toggle id="adf-folder-upload-switch" [(ngModel)]="folderUpload">
                 {{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-extension-filter-upload-switch" [color]="'primary'"
-                              [(ngModel)]="acceptedFilesTypeShow">
+            <mat-slide-toggle id="adf-extension-filter-upload-switch" [(ngModel)]="acceptedFilesTypeShow">
                 {{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-max-size-filter-upload-switch" [color]="'primary'" [(ngModel)]="maxSizeShow">
+            <mat-slide-toggle id="adf-max-size-filter-upload-switch" [(ngModel)]="maxSizeShow">
                 {{'DOCUMENT_LIST.MAX_SIZE' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-thumbnails-upload-switch" [color]="'primary'" (click)="toggleThumbnails()">
+            <mat-slide-toggle id="adf-thumbnails-upload-switch" (click)="toggleThumbnails()">
                 {{'DOCUMENT_LIST.THUMBNAILS' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [checked]="allowDropFiles"
-                              (change)="toggleAllowDropFiles()">
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [checked]="allowDropFiles" (change)="toggleAllowDropFiles()">
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-version-upload-switch" [color]="'primary'" [(ngModel)]="versioning">
+            <mat-slide-toggle id="adf-version-upload-switch" [(ngModel)]="versioning">
                 {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" (click)="onInfiniteScrolling()">
-                {{'DOCUMENT_LIST.ENABLE_INFINITE_SCROLL' | translate}}
+            <mat-slide-toggle (click)="onInfiniteScrolling()">
+                Enable Infinite Scrolling
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="showVersionComments">
-                {{'APP.ADF_VERSION_MANAGER.SHOW_COMMENTS' | translate}}
+            <mat-slide-toggle [(ngModel)]="showVersionComments">
+                Show comments on versions
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="allowVersionDownload">
-                {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
+            <mat-slide-toggle [(ngModel)]="allowVersionDownload">
+                Enable version download
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="warnOnMultipleUploads">
-                {{'APP.WARN-MULTIPLE-UPLOADS' | translate}}
+            <mat-slide-toggle [(ngModel)]="warnOnMultipleUploads">
+                Display warning for multiple uploads
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle color="primary" [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
+            <mat-slide-toggle [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
                 {{'APP.MEDIUM-TIME-FORMAT' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="displayEmptyMetadata" id="displayEmptyMetadata">
+            <mat-slide-toggle [(ngModel)]="displayEmptyMetadata" id="displayEmptyMetadata">
                 Display Empty Metadata
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="stickyHeader" id="stickyHeader">
+            <mat-slide-toggle [(ngModel)]="stickyHeader" id="stickyHeader">
                 Sticky Header
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
+            <mat-slide-toggle [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
                 Enable Download Prompt
             </mat-slide-toggle>
         </section>
@@ -531,8 +526,7 @@
         </section>
 
         <section *ngIf="enableDownloadPrompt">
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
+            <mat-slide-toggle [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
                 Enable Download Prompt Reminders
             </mat-slide-toggle>
         </section>
@@ -543,8 +537,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle
-                color="primary" [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
+            <mat-slide-toggle [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
                 Enable FileAutoDownload
             </mat-slide-toggle>
         </section>
@@ -604,15 +597,13 @@
         </div>
         <section>
             <mat-checkbox id="adf-disable-upload" [(ngModel)]="enableUpload">
-                {{'DOCUMENT_LIST.DESCRIPTION_UPLOAD' | translate}}
+                Enable upload
             </mat-checkbox>
         </section>
     </div>
 
     <div class="app-p-10">
-        <p>
-            {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
-        </p>
+        <p>Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items</p>
         <mat-form-field>
             <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
                 <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">

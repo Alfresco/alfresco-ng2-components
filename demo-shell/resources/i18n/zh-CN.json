@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "用于静默登录的公共 URL",
       "SECRET": "机密"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Dev 模式"
-    },
     "INFO_DRAWER": {
       "TITLE": "详细信息",
       "COMMENTS": "注释",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "显示版本对比"
     },
     "PERSONAL-FILES": "个人文件",
-    "WARN-MULTIPLE-UPLOADS": "针对多个上传显示警告。",
     "CUSTOM-PERMISSION-MESSAGE": "启用自定义权限消息",
     "MEDIUM-TIME-FORMAT": "对文档列表启用中时间格式",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "自定义扩展筛选器",
     "MAX_SIZE": "最大大小筛选器",
     "ENABLE_VERSIONING": "启用版本控制",
-    "DESCRIPTION_UPLOAD": "启用上传",
-    "ENABLE_INFINITE_SCROLL": "启用无限滚动",
-    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "“最近的文件”列表为空"
-      },
-      "TITLE": "最近的文件"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "显示名称",
       "IS_LOCKED": "锁定",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "启动流程"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "重设为默认值",
-    "ADD_ROW": "新增行",
-    "REPLACE_ROWS": "替换行",
-    "REPLACE_COLUMNS": "替换列",
-    "LOAD_NODE": "加载节点",
-    "MULTISELECT": "多选",
-    "MULTISELECT_DESCRIPTION": "使用 Cmd (Mac) 或 Ctrl (Windows) 切换多个项目的选择",
-    "USE_CUSTOM_COLUMN_HEADER": "为“用户”标题使用自定义模板",
-    "CUSTOM_COLUMN_HEADER": "自定义用户标题模板"
   },
   "PS-TAB": {
     "TASKS-TAB": "任务",
@@ -291,10 +267,6 @@
     "INSERT": "插入节点 ID",
     "NODE_LIST": "标记列表（按节点 ID 排序）"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "继承权限",
-    "INHERITED_PERMISSIONS_BUTTON": "已继承权限"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "插入 App ID",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "自定义您的筛选器"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "自定义您的筛选器"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "单个选择",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "操作类型"
     }
   },
-  "DEFAULT_SEARCH": "默认值",
   "OPEN_DIALOG": "打开对话框"
 }

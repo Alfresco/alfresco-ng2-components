@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Public urls silent Login",
       "SECRET": "Secret"
     },
-    "ABOUT": {
-      "DEVELOPMENT":"Dev Mode"
-    },
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Comments",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Show version comparison"
     },
     "PERSONAL-FILES": "Personal Files",
-    "WARN-MULTIPLE-UPLOADS": "Display warning for multiple uploads.",
     "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
     "SEARCH": {
       "RADIO": {
@@ -153,9 +149,6 @@
     "CUSTOM_FILTER": "Custom extensions filter",
     "MAX_SIZE": "Max size filter",
     "ENABLE_VERSIONING": "Enable versioning",
-    "DESCRIPTION_UPLOAD": "Enable upload",
-    "ENABLE_INFINITE_SCROLL": "Enable Infinite Scrolling",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
     "COLUMNS": {
       "DISPLAY_NAME": "Display name",
       "IS_LOCKED": "Lock",
@@ -199,17 +192,6 @@
         "DELETE": "Delete"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Reset to default",
-    "ADD_ROW": "Add row",
-    "REPLACE_ROWS": "Replace rows",
-    "REPLACE_COLUMNS": "Replace columns",
-    "LOAD_NODE": "Load Node",
-    "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Use Cmd (Mac) or Ctrl (Windows) to toggle selection of multiple items",
-    "USE_CUSTOM_COLUMN_HEADER": "Use custom template for 'User' header",
-    "CUSTOM_COLUMN_HEADER": "Custom User Header Template"
   },
   "PS-TAB": {
     "TASKS-TAB": "Tasks",
@@ -281,10 +263,6 @@
     "INSERT": "Insert Node ID",
     "NODE_LIST": "Tag list By Node ID"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Inherit Permission",
-    "INHERITED_PERMISSIONS_BUTTON": "Permission Inherited"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insert App ID",
@@ -318,13 +296,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Customise your filter"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Customise your filter"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Single Selection",
@@ -364,6 +335,5 @@
       "ACTION_TYPE": "Action Type"
     }
   },
-  "DEFAULT_SEARCH": "Default",
   "OPEN_DIALOG": "Open dialog"
 }

@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "URL pubblici per login invisibile",
       "SECRET": "Segreto"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Modalità sviluppo"
-    },
     "INFO_DRAWER": {
       "TITLE": "Dettagli",
       "COMMENTS": "Commenti",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Mostra confronto versioni"
     },
     "PERSONAL-FILES": "File personali",
-    "WARN-MULTIPLE-UPLOADS": "Mostra avviso per caricamenti multipli.",
     "CUSTOM-PERMISSION-MESSAGE": "Abilita messaggio di autorizzazione personalizzato",
     "MEDIUM-TIME-FORMAT": "Abilita formato tempo medio per elenco documenti",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Filtro estensioni personalizzato",
     "MAX_SIZE": "Filtro dimensioni max",
     "ENABLE_VERSIONING": "Abilita controllo delle versioni",
-    "DESCRIPTION_UPLOAD": "Abilita caricamento",
-    "ENABLE_INFINITE_SCROLL": "Abilita scorrimento infinito",
-    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "L'elenco File recenti è vuoto"
-      },
-      "TITLE": "File recenti"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Nome visualizzato",
       "IS_LOCKED": "Blocca",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Avvia processo"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Ripristina ai valori predefiniti",
-    "ADD_ROW": "Aggiungi riga",
-    "REPLACE_ROWS": "Sostituisci righe",
-    "REPLACE_COLUMNS": "Sostituisci colonne",
-    "LOAD_NODE": "Carica nodo",
-    "MULTISELECT": "Selezione multipla",
-    "MULTISELECT_DESCRIPTION": "Usa Cmd (Mac) o Ctrl (Windows) per attivare/disattivare la selezione di più elementi",
-    "USE_CUSTOM_COLUMN_HEADER": "Usa il modello personalizzato per l'intestazione \"Utente\"",
-    "CUSTOM_COLUMN_HEADER": "Modello personalizzato per intestazione Utente"
   },
   "PS-TAB": {
     "TASKS-TAB": "Compiti",
@@ -291,10 +267,6 @@
     "INSERT": "Inserisci ID nodo",
     "NODE_LIST": "Elenco tag per ID nodo"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Eredita autorizzazione",
-    "INHERITED_PERMISSIONS_BUTTON": "Autorizzazione ereditata"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "DEMO CLOUD ELENCO PROCESSI",
-    "CUSTOMIZE_FILTERS": "Personalizza il filtro"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Personalizza il filtro"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Selezione singola",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Tipo di azione"
     }
   },
-  "DEFAULT_SEARCH": "Predefinito",
   "OPEN_DIALOG": "Apri finestra di dialogo"
 }

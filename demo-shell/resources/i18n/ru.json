@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Общедоступные URL-адреса с автоматическим входом",
       "SECRET": "Секретный"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Режим разработки"
-    },
     "INFO_DRAWER": {
       "TITLE": "Сведения",
       "COMMENTS": "Комментарии",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Показать сравнение версий"
     },
     "PERSONAL-FILES": "Личные файлы",
-    "WARN-MULTIPLE-UPLOADS": "Показывать предупреждение для нескольких загрузок.",
     "CUSTOM-PERMISSION-MESSAGE": "Включить сообщение о пользовательском разрешении",
     "MEDIUM-TIME-FORMAT": "Включить средний формат времени для списка документов",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Пользовательский фильтр расширений",
     "MAX_SIZE": "Фильтр максимального размера",
     "ENABLE_VERSIONING": "Включить поддержку версий",
-    "DESCRIPTION_UPLOAD": "Включить загрузку",
-    "ENABLE_INFINITE_SCROLL": "Включить бесконечную прокрутку",
-    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Список последних файлов пуст"
-      },
-      "TITLE": "Последние файлы"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Отображаемое имя",
       "IS_LOCKED": "Блокировка",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Начать процесс"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Установить значение по умолчанию",
-    "ADD_ROW": "Добавить строку",
-    "REPLACE_ROWS": "Заменить строки",
-    "REPLACE_COLUMNS": "Заменить столбцы",
-    "LOAD_NODE": "Загрузить узел",
-    "MULTISELECT": "Выбор нескольких вариантов",
-    "MULTISELECT_DESCRIPTION": "Использовать кнопку Cmd (Mac) или Ctrl (Windows) для переключения выбора нескольких элементов",
-    "USE_CUSTOM_COLUMN_HEADER": "Использовать пользовательский шаблон для заголовка «Пользователь»",
-    "CUSTOM_COLUMN_HEADER": "Пользовательский шаблон заголовка пользователя"
   },
   "PS-TAB": {
     "TASKS-TAB": "Задачи",
@@ -291,10 +267,6 @@
     "INSERT": "Вставить идентификатор узла",
     "NODE_LIST": "Список меток по идентификатору узла"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Наследовать разрешение",
-    "INHERITED_PERMISSIONS_BUTTON": "Разрешение унаследовано"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Настройка фильтра"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Настройка фильтра"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Единичный выбор",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Тип действия"
     }
   },
-  "DEFAULT_SEARCH": "По умолчанию",
   "OPEN_DIALOG": "Открыть диалог"
 }

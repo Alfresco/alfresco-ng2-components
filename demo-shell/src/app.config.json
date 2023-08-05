@@ -386,7 +386,7 @@
         }
       ]
     },
-    "name": "DEFAULT_SEARCH",
+    "name": "Default",
     "default": true
   },
   {

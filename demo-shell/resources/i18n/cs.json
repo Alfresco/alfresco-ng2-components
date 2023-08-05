@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Veřejné adresy URL pro přihlášení na pozadí",
       "SECRET": "Tajné"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Režim pro vývojáře"
-    },
     "INFO_DRAWER": {
       "TITLE": "Podrobnosti",
       "COMMENTS": "Poznámky",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Zobrazit porovnání verzí"
     },
     "PERSONAL-FILES": "Osobní soubory",
-    "WARN-MULTIPLE-UPLOADS": "Zobrazit upozornění v případě hromadného odesílání",
     "CUSTOM-PERMISSION-MESSAGE": "Povolit přizpůsobené oznámení o oprávnění",
     "MEDIUM-TIME-FORMAT": "Povolit střední formát času v seznamu dokumentů",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Vlastní filtr rozšíření",
     "MAX_SIZE": "Filtr max. velikosti",
     "ENABLE_VERSIONING": "Povolit více verzí",
-    "DESCRIPTION_UPLOAD": "Povolit odeslání",
-    "ENABLE_INFINITE_SCROLL": "Povolit nekonečné procházení",
-    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Seznam nedávných souborů je prázdný"
-      },
-      "TITLE": "Nedávné soubory"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Zobrazované jméno",
       "IS_LOCKED": "Zamknout",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Zahájit proces"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Obnovit výchozí",
-    "ADD_ROW": "Přidat řádek",
-    "REPLACE_ROWS": "Nahradit řádky",
-    "REPLACE_COLUMNS": "Nahradit sloupce",
-    "LOAD_NODE": "Načíst uzel",
-    "MULTISELECT": "Hromadný výběr",
-    "MULTISELECT_DESCRIPTION": "Pomocí klávesy Ctrl (Windows) nebo Cmd (Mac) můžete přepínat výběr více položek",
-    "USE_CUSTOM_COLUMN_HEADER": "Použít vlastní šablonu pro záhlaví ,Uživatel‘",
-    "CUSTOM_COLUMN_HEADER": "Vlastní šablona záhlaví Uživatel"
   },
   "PS-TAB": {
     "TASKS-TAB": "Úkoly",
@@ -291,10 +267,6 @@
     "INSERT": "Vložit ID uzlu",
     "NODE_LIST": "Řadit tagy dle ID uzlu"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Dědění oprávnění",
-    "INHERITED_PERMISSIONS_BUTTON": "Oprávnění bylo zděděno"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "Cloudová ukázka seznamu procesů",
-    "CUSTOMIZE_FILTERS": "Přizpůsobit filtr"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Přizpůsobit filtr"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Volba jedné položky",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Typ akce"
     }
   },
-  "DEFAULT_SEARCH": "Výchozí",
   "OPEN_DIALOG": "Otevřít dialogové okno"
 }

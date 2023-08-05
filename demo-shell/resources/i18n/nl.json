@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Openbare URL's voor stille aanmelding",
       "SECRET": "Geheim"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Ontwikkelaarsmodus"
-    },
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Opmerkingen",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Versievergelijking tonen"
     },
     "PERSONAL-FILES": "Persoonlijke bestanden",
-    "WARN-MULTIPLE-UPLOADS": "Waarschuwing weergeven bij meerdere uploads.",
     "CUSTOM-PERMISSION-MESSAGE": "Aangepast rechtenbericht inschakelen",
     "MEDIUM-TIME-FORMAT": "Middellange tijdnotatie voor lijst met documenten inschakelen",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Aangepast extensiefilter",
     "MAX_SIZE": "Max.formaat filter",
     "ENABLE_VERSIONING": "Versiebeheer inschakelen",
-    "DESCRIPTION_UPLOAD": "Uploaden inschakelen",
-    "ENABLE_INFINITE_SCROLL": "Oneindig scrollen inschakelen",
-    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Lijst met recente bestanden is leeg"
-      },
-      "TITLE": "Recente bestanden"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Getoonde naam",
       "IS_LOCKED": "Vergrendeling",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Proces starten"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Opnieuw instellen op standaardwaarden",
-    "ADD_ROW": "Rij toevoegen",
-    "REPLACE_ROWS": "Rijen vervangen",
-    "REPLACE_COLUMNS": "Kolommen vervangen",
-    "LOAD_NODE": "Node laden",
-    "MULTISELECT": "Multiselect",
-    "MULTISELECT_DESCRIPTION": "Cmd (Mac) of Ctrl (Windows) gebruiken om de selectie van meerdere items in of uit te schakelen",
-    "USE_CUSTOM_COLUMN_HEADER": "Aangepaste sjabloon voor 'User'-koptekst gebruiken",
-    "CUSTOM_COLUMN_HEADER": "Aangepaste sjabloon voor User-koptekst"
   },
   "PS-TAB": {
     "TASKS-TAB": "Taken",
@@ -291,10 +267,6 @@
     "INSERT": "Node-id invoegen",
     "NODE_LIST": "Taglijst per node-id"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Rechten overnemen",
-    "INHERITED_PERMISSIONS_BUTTON": "Rechten overgenomen"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-id invoegen",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Enkelvoudige selectie",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Actietype"
     }
   },
-  "DEFAULT_SEARCH": "Standaard",
   "OPEN_DIALOG": "Dialoogvenster Openen"
 }

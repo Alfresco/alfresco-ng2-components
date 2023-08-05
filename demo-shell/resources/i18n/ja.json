@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "サイレントログインのパブリック URL",
       "SECRET": "シークレット"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "開発モード"
-    },
     "INFO_DRAWER": {
       "TITLE": "詳細",
       "COMMENTS": "コメント",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "バージョンの比較を表示"
     },
     "PERSONAL-FILES": "個人的なファイル",
-    "WARN-MULTIPLE-UPLOADS": "複数のアップロードの警告を表示します。",
     "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
     "MEDIUM-TIME-FORMAT": "文書リストの medium 時刻形式を有効にする",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "カスタム拡張子フィルタ",
     "MAX_SIZE": "最大サイズフィルタ",
     "ENABLE_VERSIONING": "バージョン管理を有効化",
-    "DESCRIPTION_UPLOAD": "アップロードを有効にします",
-    "ENABLE_INFINITE_SCROLL": "無限スクロールを有効にする",
-    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "[最近使ったファイル] 一覧は空です"
-      },
-      "TITLE": "最近使ったファイル"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "表示名",
       "IS_LOCKED": "ロック",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "プロセスの開始"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "デフォルトに戻す",
-    "ADD_ROW": "行の追加",
-    "REPLACE_ROWS": "行の置換",
-    "REPLACE_COLUMNS": "列の置換",
-    "LOAD_NODE": "ノードの読み込み",
-    "MULTISELECT": "複数選択",
-    "MULTISELECT_DESCRIPTION": "複数選択の切り替えを行うには、Cmd (Mac) キーまたは Ctrl (Windows) キーを押します",
-    "USE_CUSTOM_COLUMN_HEADER": "「ユーザー」ヘッダーにカスタムテンプレートを使用",
-    "CUSTOM_COLUMN_HEADER": "カスタムユーザーヘッダーテンプレート"
   },
   "PS-TAB": {
     "TASKS-TAB": "タスク",
@@ -291,10 +267,6 @@
     "INSERT": "ノード ID の挿入",
     "NODE_LIST": "ノード ID 別タグリスト"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "権限の継承",
-    "INHERITED_PERMISSIONS_BUTTON": "継承された権限"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "フィルタのカスタマイズ"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "フィルタのカスタマイズ"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "1 つ選択",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "処理のタイプ"
     }
   },
-  "DEFAULT_SEARCH": "デフォルト",
   "OPEN_DIALOG": "ダイアログを開く"
 }

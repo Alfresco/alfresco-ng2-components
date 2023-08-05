@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "URL publiques pour connexion en mode silencieux",
       "SECRET": "Secret"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Mode développement"
-    },
     "INFO_DRAWER": {
       "TITLE": "Détails",
       "COMMENTS": "Commentaires",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Afficher la comparaison des versions"
     },
     "PERSONAL-FILES": "Fichiers personnels",
-    "WARN-MULTIPLE-UPLOADS": "Avertir en cas de téléchargements multiples.",
     "CUSTOM-PERMISSION-MESSAGE": "Activer le message de droits d'accès personnalisés",
     "MEDIUM-TIME-FORMAT": "Activer le format de date \"medium\" pour la liste de documents",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Filtre d'extensions personnalisées",
     "MAX_SIZE": "Filtre de taille max",
     "ENABLE_VERSIONING": "Activer le contrôle de version",
-    "DESCRIPTION_UPLOAD": "Activer l'importation",
-    "ENABLE_INFINITE_SCROLL": "Activer le défilement illimité",
-    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "La liste des fichiers récents est vide"
-      },
-      "TITLE": "Fichiers récents"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Nom affiché",
       "IS_LOCKED": "Verrouiller",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Démarrer le processus"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Rétablir les valeurs par défaut",
-    "ADD_ROW": "Ajouter une ligne",
-    "REPLACE_ROWS": "Remplacer les lignes",
-    "REPLACE_COLUMNS": "Remplacer les colonnes",
-    "LOAD_NODE": "Charger le nœud",
-    "MULTISELECT": "Sélection multiple",
-    "MULTISELECT_DESCRIPTION": "Utiliser Cmd (Mac) ou Ctrl (Windows) pour activer/désactiver la sélection d'éléments multiples",
-    "USE_CUSTOM_COLUMN_HEADER": "Utiliser un modèle personnalisé pour l'en-tête 'Utilisateur'",
-    "CUSTOM_COLUMN_HEADER": "Modèle d'en-tête Utilisateur personnalisé"
   },
   "PS-TAB": {
     "TASKS-TAB": "Tâches",
@@ -291,10 +267,6 @@
     "INSERT": "Insérer l'ID du nœud",
     "NODE_LIST": "Liste des tags par ID de nœud"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Hériter des droits d'accès",
-    "INHERITED_PERMISSIONS_BUTTON": "Droits d'accès hérités"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "Process List Cloud Demo",
-    "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Sélection unique",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Type d'action"
     }
   },
-  "DEFAULT_SEARCH": "Par défaut",
   "OPEN_DIALOG": "Boîte de dialogue Ouvrir"
 }

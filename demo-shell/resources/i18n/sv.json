@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Offentliga url:er för tyst inloggning",
       "SECRET": "Hemlig"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Utvecklarläge"
-    },
     "INFO_DRAWER": {
       "TITLE": "Detaljer",
       "COMMENTS": "Kommentarer",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Visa versionsjämförelse"
     },
     "PERSONAL-FILES": "Personliga filer",
-    "WARN-MULTIPLE-UPLOADS": "Visa varning för flera uppladdningar",
     "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetsmeddelande",
     "MEDIUM-TIME-FORMAT": "Aktivera mellantidsformat för dokumentlista",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Anpassade tilläggsfilter",
     "MAX_SIZE": "Maxstorlek filter",
     "ENABLE_VERSIONING": "Aktivera versionering",
-    "DESCRIPTION_UPLOAD": "Aktivera uppladdning",
-    "ENABLE_INFINITE_SCROLL": "Aktivera oändlig skrollning",
-    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Listan med de senaste filerna är tom"
-      },
-      "TITLE": "De senaste filerna"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Visa namn",
       "IS_LOCKED": "Lås",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Starta process"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Återställ till standard",
-    "ADD_ROW": "Lägg till rad",
-    "REPLACE_ROWS": "Ersätt rader",
-    "REPLACE_COLUMNS": "Ersätt kolumner",
-    "LOAD_NODE": "Läs in nod",
-    "MULTISELECT": "Flerval",
-    "MULTISELECT_DESCRIPTION": "Använd Cmd (Mac) eller Ctrl (Windows) för att växla val av flera objekt",
-    "USE_CUSTOM_COLUMN_HEADER": "Använd anpassad mall för \"Användare\"-rubrik",
-    "CUSTOM_COLUMN_HEADER": "Anpassad användarhuvudmall"
   },
   "PS-TAB": {
     "TASKS-TAB": "Uppgifter",
@@ -291,10 +267,6 @@
     "INSERT": "Infoga nod-ID",
     "NODE_LIST": "Tagglista per nod-ID"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Ärv behörighet",
-    "INHERITED_PERMISSIONS_BUTTON": "Behörighet ärvt"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Infoga program-ID",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Anpassa ditt filter"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Anpassa ditt filter"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Enskilt val",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Åtgärdstyp"
     }
   },
-  "DEFAULT_SEARCH": "Standard",
   "OPEN_DIALOG": "Öppna dialogruta"
 }

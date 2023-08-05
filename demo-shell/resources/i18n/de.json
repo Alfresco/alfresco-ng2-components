@@ -23,9 +23,6 @@
       "PUBLIC_URLS": "Öffentliche URLs für automatische Anmeldung",
       "SECRET": "Geheimnis"
     },
-    "ABOUT": {
-      "DEVELOPMENT": "Entwicklermodus"
-    },
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Kommentare",
@@ -51,7 +48,6 @@
       "VERSION_COMPARISON": "Versionsvergleich anzeigen"
     },
     "PERSONAL-FILES": "Persönliche Dateien",
-    "WARN-MULTIPLE-UPLOADS": "Warnung bei Mehrfach-Uploads anzeigen.",
     "CUSTOM-PERMISSION-MESSAGE": "Meldung 'Benutzerdefinierte Berechtigung aktivieren'",
     "MEDIUM-TIME-FORMAT": "Mittleres Zeitformat für Dokumentliste aktivieren",
     "SEARCH": {
@@ -154,15 +150,6 @@
     "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",
     "MAX_SIZE": "Filter für max. Größe",
     "ENABLE_VERSIONING": "Versionsverwaltung aktivieren",
-    "DESCRIPTION_UPLOAD": "Hochladen aktivieren",
-    "ENABLE_INFINITE_SCROLL": "Unendlich Scrollen aktivieren",
-    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
-    "RECENT": {
-      "EMPTY_STATE": {
-        "TITLE": "Die Liste der zuletzt verwendeten Dateien ist leer"
-      },
-      "TITLE": "Zuletzt verwendete Dateien"
-    },
     "COLUMNS": {
       "DISPLAY_NAME": "Namen anzeigen",
       "IS_LOCKED": "Sperren",
@@ -209,17 +196,6 @@
         "PROCESS_ACTION": "Prozess starten"
       }
     }
-  },
-  "DATATABLE": {
-    "RESET_DEFAULT": "Auf Standard zurücksetzen",
-    "ADD_ROW": "Zeile hinzufügen",
-    "REPLACE_ROWS": "Zeilen ersetzen",
-    "REPLACE_COLUMNS": "Spalten ersetzen",
-    "LOAD_NODE": "Node laden",
-    "MULTISELECT": "Mehrfachauswahl",
-    "MULTISELECT_DESCRIPTION": "Mit der Befehls- (Mac) oder der Steuerungstaste (Windows) können Sie die Auswahl mehrerer Elemente umschalten",
-    "USE_CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für 'Benutzer'-Kopfzeile verwenden",
-    "CUSTOM_COLUMN_HEADER": "Benutzerdefinierte Vorlage für Benutzer-Kopfzeile"
   },
   "PS-TAB": {
     "TASKS-TAB": "Aufgaben",
@@ -291,10 +267,6 @@
     "INSERT": "Node-ID einfügen",
     "NODE_LIST": "Tagliste nach Node-ID"
   },
-  "DEMO_PERMISSION": {
-    "INHERIT_PERMISSION_BUTTON": "Berechtigungen erben",
-    "INHERITED_PERMISSIONS_BUTTON": "Berechtigungen geerbt"
-  },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
@@ -328,13 +300,6 @@
         "TEXT": ""
       }
     }
-  },
-  "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
-    "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
-  },
-  "TASK_LIST_CLOUD_DEMO": {
-    "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
   },
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Einzelauswahl",
@@ -374,6 +339,5 @@
       "ACTION_TYPE": "Aktionstyp"
     }
   },
-  "DEFAULT_SEARCH": "Standard",
   "OPEN_DIALOG": "Dialog öffnen"
 }
