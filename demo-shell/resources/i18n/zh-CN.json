@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "服务任务列表",
     "RICH_TEXT_EDITOR": "RTF 编辑器"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "永久删除",
-      "RESTORE": "恢复"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "回收站为空",
-      "FIRST_TEXT": "您删除的项目已移至回收站。",
-      "SECOND_TEXT": "清空回收站以永久删除项目。"
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "任务",
-    "PROCESSES-TAB": "流程",
-    "SETTINGS-TAB": "设置",
-    "START-TASK": "启动任务",
-    "START-PROCESS": "启动流程",
-    "PROCESS-AUDIT-LOG": "流程审计日志",
-    "TASK-AUDIT-LOG": "任务审计日志",
-    "TASK-SHOW-HEADER": "显示详细信息标头"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "APP",
-    "SETTINGS_TAB": "设置"
-  },
   "FORM-LIST": {
     "STORE": "存储",
     "RESTORE": "恢复"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. 字号：特大",
       "XXTRALARGE": "8. 字号：超大"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "插入 App ID",
-      "APP_ID_TYPE_ERROR": "App ID 必须为数字",
-      "NUMBER_TYPE_ERROR": "值必须是数字",
-      "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "开始页面"
-    },
-    "TASK_CONTEXT_MENU": "任务列表上下文菜单"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "插入 App ID",
-      "APP_ID_TYPE_ERROR": "App ID 必须为数字",
-      "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "流程列表上下文菜单"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2",

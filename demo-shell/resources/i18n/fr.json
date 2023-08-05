@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Liste des tâches de service",
     "RICH_TEXT_EDITOR": "Editeur de texte enrichi"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Supprimer définitivement",
-      "RESTORE": "Restaurer"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "La corbeille est vide",
-      "FIRST_TEXT": "Les éléments supprimés sont placés dans la corbeille.",
-      "SECOND_TEXT": "Videz la corbeille pour supprimer définitivement les éléments."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Tâches",
-    "PROCESSES-TAB": "Processus",
-    "SETTINGS-TAB": "Paramètres",
-    "START-TASK": "Démarrer la tâche",
-    "START-PROCESS": "Démarrer le processus",
-    "PROCESS-AUDIT-LOG": "Journal d'audit des processus",
-    "TASK-AUDIT-LOG": "Journal d'audit des tâches",
-    "TASK-SHOW-HEADER": "Afficher l'en-tête de détail"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Application",
-    "SETTINGS_TAB": "Paramètres"
-  },
   "FORM-LIST": {
     "STORE": "Stocker",
     "RESTORE": "Restaurer"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Taille : très gros",
       "XXTRALARGE": "8.Taille : énorme"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
-      "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
-      "NUMBER_TYPE_ERROR": "La valeur doit être un numéro",
-      "NUMBER_GREATER_THAN": "La valeur doit être égale ou supérieure à {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Démarrage de la page"
-    },
-    "TASK_CONTEXT_MENU": "Menu contextuel Liste des tâches"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
-      "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
-      "NUMBER_GREATER_THAN": "La valeur doit être égale ou supérieure à {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Menu contextuel Liste des processus"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Titre personnalisé traduction un",
   "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux",

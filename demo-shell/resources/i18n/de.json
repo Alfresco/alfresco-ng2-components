@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Service-Aufgabenliste",
     "RICH_TEXT_EDITOR": "Rich-Text-Editor"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Endgültig löschen",
-      "RESTORE": "Wiederherstellen"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Papierkorb ist leer",
-      "FIRST_TEXT": "Gelöschte Elemente werden in den Papierkorb verschoben.",
-      "SECOND_TEXT": "Leeren Sie den Papierkorb, um die Elemente endgültig zu löschen."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Aufgaben",
-    "PROCESSES-TAB": "Prozess",
-    "SETTINGS-TAB": "Einstellungen",
-    "START-TASK": "Aufgabe starten",
-    "START-PROCESS": "Prozess starten",
-    "PROCESS-AUDIT-LOG": "Prozess-Audit-Protokoll",
-    "TASK-AUDIT-LOG": "Aufgaben-Audit-Protokoll",
-    "TASK-SHOW-HEADER": "Detailsheader anzeigen"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Anwendung",
-    "SETTINGS_TAB": "Einstellungen"
-  },
   "FORM-LIST": {
     "STORE": "Speichern",
     "RESTORE": "Wiederherstellen"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Größe: sehr groß",
       "XXTRALARGE": "8.Größe: extrem groß"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
-      "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
-      "NUMBER_TYPE_ERROR": "Wert muss Zahl sein",
-      "NUMBER_GREATER_THAN": "Wert muss größer oder gleich {{ value }} sein"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Startseite"
-    },
-    "TASK_CONTEXT_MENU": "Aufgabenlisten-Kontextmenü"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
-      "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
-      "NUMBER_GREATER_THAN": "Wert muss größer oder gleich {{ value }} sein"
-    },
-    "PROCESS_CONTEXT_MENU": "Prozesslisten-Kontextmenü"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2",

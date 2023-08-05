@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Vytvořit",
-      "NEW_TASK": "Nový úkol",
-      "NEW_PROCESS": "Nový proces"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Pokračovat",

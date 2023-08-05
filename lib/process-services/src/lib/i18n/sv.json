@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Skapa",
-      "NEW_TASK": "Ny uppgift",
-      "NEW_PROCESS": "Ny process"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Fortsätt",

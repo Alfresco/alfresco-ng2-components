@@ -7,13 +7,13 @@
                    matInput
                    [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
+                Insert App ID
             </mat-error>
             <mat-error *ngIf="processAppId.hasError('pattern')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
+                App ID must be a number
             </mat-error>
             <mat-error *ngIf="processAppId.hasError('min')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+                {{ 'Value must be greater than or equal to ' + minValue }}
             </mat-error>
         </mat-form-field>
 
@@ -57,10 +57,10 @@
                 matInput
                 [formControl]="processSize">
             <mat-error *ngIf="processSize.hasError('min')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+                {{ 'Value must be greater than or equal to ' + minValue }}
             </mat-error>
             <mat-error *ngIf="processSize.hasError('pattern')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+                Value must be a number
             </mat-error>
         </mat-form-field>
 
@@ -70,10 +70,10 @@
                 matInput
                 [formControl]="processPage">
             <mat-error *ngIf="processPage.hasError('min')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+                {{ 'Value must be greater than or equal to ' + minValue }}
             </mat-error>
             <mat-error *ngIf="processPage.hasError('pattern')">
-                {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+                Value must be a number
             </mat-error>
         </mat-form-field>
 

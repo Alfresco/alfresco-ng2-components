@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Lijst met servicetaken",
     "RICH_TEXT_EDITOR": "RTF-editor"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Definitief verwijderen",
-      "RESTORE": "Herstellen"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Prullenbak is leeg",
-      "FIRST_TEXT": "Items die u verwijdert, worden verplaatst naar de prullenbak.",
-      "SECOND_TEXT": "Leeg de prullenmand om items definitief te verwijderen."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Taken",
-    "PROCESSES-TAB": "Proces",
-    "SETTINGS-TAB": "Instellingen",
-    "START-TASK": "Taak starten",
-    "START-PROCESS": "Proces starten",
-    "PROCESS-AUDIT-LOG": "Auditlog van proces",
-    "TASK-AUDIT-LOG": "Auditlog van taak",
-    "TASK-SHOW-HEADER": "Detailkoptekst weergeven"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "App",
-    "SETTINGS_TAB": "Instellingen"
-  },
   "FORM-LIST": {
     "STORE": "Opslaan",
     "RESTORE": "Herstellen"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Grootte: extra groot",
       "XXTRALARGE": "8.Grootte: XX groot"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "App-id invoegen",
-      "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
-      "NUMBER_TYPE_ERROR": "Waarde moet een getal zijn",
-      "NUMBER_GREATER_THAN": "Waarde moet groter zijn dan of gelijk zijn aan {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Beginpagina"
-    },
-    "TASK_CONTEXT_MENU": "Contextmenu lijst met taken"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "App-id invoegen",
-      "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
-      "NUMBER_GREATER_THAN": "Waarde moet groter zijn dan of gelijk zijn aan {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Contextmenu lijst met processen"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Aangepaste titel vertaling één",
   "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee",

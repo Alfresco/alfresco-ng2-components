@@ -7,7 +7,7 @@
                 matInput
                 [formControl]="taskAppId" data-automation-id="appId input">
             <mat-error *ngIf="taskAppId.hasError('pattern')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
+                App ID must be a number
             </mat-error>
         </mat-form-field>
 
@@ -30,10 +30,10 @@
             <input
                 matInput
                 data-automation-id="start"
-                matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
+                title="Starting page"
                 [formControl]="taskStart">
             <mat-error *ngIf="taskStart.hasError('pattern')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+                Value must be a number
             </mat-error>
         </mat-form-field>
 
@@ -62,10 +62,10 @@
                 class="form-control"
                 [formControl]="taskSize" data-automation-id="items per page">
             <mat-error *ngIf="taskSize.hasError('min')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+                {{ 'Value must be greater than or equal to ' + minValue }}
             </mat-error>
             <mat-error *ngIf="taskSize.hasError('pattern')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+                Value must be a number
             </mat-error>
         </mat-form-field>
 
@@ -76,10 +76,10 @@
                 class="form-control"
                 [formControl]="taskPage" data-automation-id="page">
             <mat-error *ngIf="taskPage.hasError('min')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
+                {{ 'Value must be greater than or equal to ' + minValue }}
             </mat-error>
             <mat-error *ngIf="taskPage.hasError('pattern')">
-                {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_TYPE_ERROR' | translate }}
+                Value must be a number
             </mat-error>
         </mat-form-field>
 
@@ -132,9 +132,7 @@
             <mat-label>Sort</mat-label>
             <mat-select
                 [formControl]="taskSort" data-automation-id="selected sort">
-                <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title
-                    }}
-                </mat-option>
+                <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
             </mat-select>
         </mat-form-field>
     </form>

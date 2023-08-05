@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Opgaveliste for tjeneste",
     "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Slet permanent",
-      "RESTORE": "Gendan"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Papirkurven er tom",
-      "FIRST_TEXT": "De elementer, du sletter, flyttes til papirkurven.",
-      "SECOND_TEXT": "Tøm papirkurven for at slette elementerne permanent."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Opgaver",
-    "PROCESSES-TAB": "Proces",
-    "SETTINGS-TAB": "Indstillinger",
-    "START-TASK": "Start opgave",
-    "START-PROCESS": "Start proces",
-    "PROCESS-AUDIT-LOG": "Procesovervågningslog",
-    "TASK-AUDIT-LOG": "Opgaveovervågningslog",
-    "TASK-SHOW-HEADER": "Vis detaljer for header"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "App",
-    "SETTINGS_TAB": "Indstillinger"
-  },
   "FORM-LIST": {
     "STORE": "Gem",
     "RESTORE": "Gendan"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. Størrelse: xtra large",
       "XXTRALARGE": "8. Størrelse: XX large"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
-      "APP_ID_TYPE_ERROR": "App-id'et skal være et tal",
-      "NUMBER_TYPE_ERROR": "Værdien skal være et tal",
-      "NUMBER_GREATER_THAN": "Værdien skal være større end eller lig med {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Startside"
-    },
-    "TASK_CONTEXT_MENU": "Opgave Liste Kontekst Menu"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
-      "APP_ID_TYPE_ERROR": "App-id'et skal være et tal",
-      "NUMBER_GREATER_THAN": "Værdien skal være større end eller lig med {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Proces Liste Kontekst Menu"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Brugerdefineret titel oversættelse et",
   "GROUP-TITLE2-TRANSLATION-KEY": "Brugerdefineret titel oversættelse to",

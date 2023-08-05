@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Seznam úloh služby",
     "RICH_TEXT_EDITOR": "Rich Text Editor"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Trvale odstranit",
-      "RESTORE": "Obnovit"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Koš je prázdný",
-      "FIRST_TEXT": "Odstraněné položky se přesunou do koše.",
-      "SECOND_TEXT": "Vysypáním koše můžete položky trvale odstranit."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Úkoly",
-    "PROCESSES-TAB": "Proces",
-    "SETTINGS-TAB": "Nastavení",
-    "START-TASK": "Zahájit úkol",
-    "START-PROCESS": "Zahájit proces",
-    "PROCESS-AUDIT-LOG": "Protokol auditu pro proces",
-    "TASK-AUDIT-LOG": "Protokol auditu pro úkol",
-    "TASK-SHOW-HEADER": "Zobrazit záhlaví podrobností"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Aplikace",
-    "SETTINGS_TAB": "Nastavení"
-  },
   "FORM-LIST": {
     "STORE": "Uložit",
     "RESTORE": "Obnovit"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Velikost: extra velké",
       "XXTRALARGE": "8.Velikost: XX velké"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
-      "APP_ID_TYPE_ERROR": "ID aplikace musí být číslo",
-      "NUMBER_TYPE_ERROR": "Hodnota musí být číslo",
-      "NUMBER_GREATER_THAN": "Hodnota musí být rovna nebo větší než {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Počáteční strana"
-    },
-    "TASK_CONTEXT_MENU": "Místní nabídka Seznam úkolů"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
-      "APP_ID_TYPE_ERROR": "ID aplikace musí být číslo",
-      "NUMBER_GREATER_THAN": "Hodnota musí být rovna nebo větší než {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Místní nabídka Seznam procesů"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Vlastní překlad názvu 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Vlastní překlad názvu 2",

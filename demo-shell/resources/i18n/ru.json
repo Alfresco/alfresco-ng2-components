@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Список сервисных задач",
     "RICH_TEXT_EDITOR": "Редактор форматированного текста"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Удалить навсегда",
-      "RESTORE": "Восстановить"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Корзина пуста",
-      "FIRST_TEXT": "Элементы, которые вы удаляете, перемещаются в корзину.",
-      "SECOND_TEXT": "Очистите корзину, чтобы удалить элементы навсегда."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Задачи",
-    "PROCESSES-TAB": "Процесс",
-    "SETTINGS-TAB": "Параметры",
-    "START-TASK": "Начать задачу",
-    "START-PROCESS": "Начать процесс",
-    "PROCESS-AUDIT-LOG": "Журнал проверки процесса",
-    "TASK-AUDIT-LOG": "Журнал проверки задачи",
-    "TASK-SHOW-HEADER": "Показать подробности заголовка"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Приложение",
-    "SETTINGS_TAB": "Параметры"
-  },
   "FORM-LIST": {
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. Размер: очень большой",
       "XXTRALARGE": "8. Размер: огромный"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
-      "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
-      "NUMBER_TYPE_ERROR": "Значение должно быть числом",
-      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Начальная страница"
-    },
-    "TASK_CONTEXT_MENU": "Контекстное меню списка задач"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
-      "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
-      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Контекстное меню списка процессов"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
   "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два",

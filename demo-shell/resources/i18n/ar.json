@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "قائمة مهام الخدمات",
     "RICH_TEXT_EDITOR": "محرر نص منسق"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "حذف بشكل دائم",
-      "RESTORE": "استعادة"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "المهملات فارغة",
-      "FIRST_TEXT": "تم نقل العناصر المحذوفة إلى المهملات.",
-      "SECOND_TEXT": "أفرغ المهملات لحذف العناصر بشكل دائم."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "المهام",
-    "PROCESSES-TAB": "العملية",
-    "SETTINGS-TAB": "إعدادات",
-    "START-TASK": "بدء مهمة",
-    "START-PROCESS": "بدء العملية",
-    "PROCESS-AUDIT-LOG": "سجل تدقيق العملية",
-    "TASK-AUDIT-LOG": "سجل تدقيق المهمة",
-    "TASK-SHOW-HEADER": "إظهار تفاصيل الرأس"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "تطبيق",
-    "SETTINGS_TAB": "إعدادات"
-  },
   "FORM-LIST": {
     "STORE": "متجر",
     "RESTORE": "استعادة"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.الحجم: فائق الكبر",
       "XXTRALARGE": "8.الحجم: كبير XX"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
-      "APP_ID_TYPE_ERROR": "يجب أن يكون معرف التطبيق رقمًا",
-      "NUMBER_TYPE_ERROR": "يجب أن تكون القيمة رقمًا",
-      "NUMBER_GREATER_THAN": "يجب أن تكون القيمة أكبر من {{ value }} أو تساويها"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "صفحة البدء"
-    },
-    "TASK_CONTEXT_MENU": "قائمة سياق قائمة المهام"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
-      "APP_ID_TYPE_ERROR": "يجب أن يكون معرف التطبيق رقمًا",
-      "NUMBER_GREATER_THAN": "يجب أن تكون القيمة أكبر من {{ value }} أو تساويها"
-    },
-    "PROCESS_CONTEXT_MENU": "قائمة سياق قائمة العمليات"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "الترجمة الأولى للعنوان المخصص",
   "GROUP-TITLE2-TRANSLATION-KEY": "الترجمة الثانية للعنوان المخصص",

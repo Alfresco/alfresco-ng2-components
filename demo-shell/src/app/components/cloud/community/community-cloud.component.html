@@ -1,20 +1,20 @@
 <mat-tab-group class="app-cloud-layout-tab-body">
-  <mat-tab label="{{'PS_CLOUD_TAB.APPS_TAB' | translate}}">
+  <mat-tab label="App">
     <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="270" [stepOver]="780">
       <adf-sidenav-layout-navigation>
         <ng-template>
-          <adf-sidebar-action-menu [expanded]="true" [width]="205" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+          <adf-sidebar-action-menu [expanded]="true" [width]="205" title="CREATE">
             <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
               <div adf-sidebar-menu-options>
                 <button mat-menu-item data-automation-id="btn-start-task" (click)="onStartTask()">
                  <mat-icon>assessment</mat-icon>
-                   <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
+                   <span>New Task</span>
                 </button>
               </div>
               <div adf-sidebar-menu-options>
                 <button mat-menu-item data-automation-id="btn-start-process" (click)="onStartProcess()">
                   <mat-icon>assessment</mat-icon>
-                  <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_PROCESS' | translate}}</span>
+                  <span>New Process</span>
                 </button>
               </div>
             </adf-sidebar-action-menu>
@@ -28,7 +28,7 @@
         </adf-sidenav-layout-content>
     </adf-sidenav-layout>
   </mat-tab>
-  <mat-tab label="{{'PS_CLOUD_TAB.SETTINGS_TAB' | translate}}">
+  <mat-tab label="Settings">
     <app-cloud-settings></app-cloud-settings>
   </mat-tab>
 </mat-tab-group>

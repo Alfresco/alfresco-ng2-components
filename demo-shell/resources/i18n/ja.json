@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "サービスタスクリスト",
     "RICH_TEXT_EDITOR": "リッチテキストエディタ"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "完全に削除する",
-      "RESTORE": "復元"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "ごみ箱は空です",
-      "FIRST_TEXT": "削除するアイテムはごみ箱に移動されます。",
-      "SECOND_TEXT": "ごみ箱を空にするとアイテムが完全に削除されます。"
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "タスク",
-    "PROCESSES-TAB": "プロセス",
-    "SETTINGS-TAB": "設定",
-    "START-TASK": "タスクの開始",
-    "START-PROCESS": "プロセスの開始",
-    "PROCESS-AUDIT-LOG": "プロセスの監査ログ",
-    "TASK-AUDIT-LOG": "タスクの監査ログ",
-    "TASK-SHOW-HEADER": "詳細ヘッダーを表示する"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "アプリ",
-    "SETTINGS_TAB": "設定"
-  },
   "FORM-LIST": {
     "STORE": "保存",
     "RESTORE": "復元"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.サイズ: 特大",
       "XXTRALARGE": "8.サイズ: 超特大"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
-      "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
-      "NUMBER_TYPE_ERROR": "値は数字でなければなりません",
-      "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "開始ページ"
-    },
-    "TASK_CONTEXT_MENU": "タスクリストのコンテキストメニュー"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
-      "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
-      "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
-    },
-    "PROCESS_CONTEXT_MENU": "プロセスリストのコンテキストメニュー"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2",

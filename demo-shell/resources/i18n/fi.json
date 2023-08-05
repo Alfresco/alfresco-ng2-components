@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Palvelutehtäväluettelo",
     "RICH_TEXT_EDITOR": "RTF-editori"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Poista pysyvästi",
-      "RESTORE": "Palauta"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Roskakori on tyhjä",
-      "FIRST_TEXT": "Poistamasi kohteet siirretään roskakoriin.",
-      "SECOND_TEXT": "Jos haluat poistaa kohteet pysyvästi, tyhjennä roskakori."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Tehtävät",
-    "PROCESSES-TAB": "Prosessi",
-    "SETTINGS-TAB": "Asetukset",
-    "START-TASK": "Aloita tehtävä",
-    "START-PROCESS": "Käynnistä prosessi",
-    "PROCESS-AUDIT-LOG": "Prosessitarkastusloki",
-    "TASK-AUDIT-LOG": "Tehtävätarkastusloki",
-    "TASK-SHOW-HEADER": "Näytä tieto-otsikko"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Sovellus",
-    "SETTINGS_TAB": "Asetukset"
-  },
   "FORM-LIST": {
     "STORE": "Tallenna",
     "RESTORE": "Palauta"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. Koko: XL",
       "XXTRALARGE": "8. Koko: XXL"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Lisää sovellustunnus",
-      "APP_ID_TYPE_ERROR": "Sovellustunnuksen täytyy olla numero",
-      "NUMBER_TYPE_ERROR": "Arvon täytyy olla numero",
-      "NUMBER_GREATER_THAN": "Arvon täytyy olla yhtä suuri tai suurempi kuin {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Aloitussivu"
-    },
-    "TASK_CONTEXT_MENU": "Tehtäväluettelon pikavalikko"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Lisää sovellustunnus",
-      "APP_ID_TYPE_ERROR": "Sovellustunnuksen täytyy olla numero",
-      "NUMBER_GREATER_THAN": "Arvon täytyy olla yhtä suuri tai suurempi kuin {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Prosessiluettelon pikavalikko"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Oma otsikkokäännös yksi",
   "GROUP-TITLE2-TRANSLATION-KEY": "Oma otsikkokäännös kaksi",

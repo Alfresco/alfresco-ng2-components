@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Lista de tarefas de serviços",
     "RICH_TEXT_EDITOR": "Editor de RTF"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Apagar permanentemente",
-      "RESTORE": "Restaurar"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "A lixeira está vazia",
-      "FIRST_TEXT": "Itens apagados são movidos para a Lixeira.",
-      "SECOND_TEXT": "Esvazie a Lixeira para apagar os itens permanentemente."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Tarefas",
-    "PROCESSES-TAB": "Processo",
-    "SETTINGS-TAB": "Configurações",
-    "START-TASK": "Iniciar tarefa",
-    "START-PROCESS": "Iniciar processo",
-    "PROCESS-AUDIT-LOG": "Log de auditoria de processo",
-    "TASK-AUDIT-LOG": "Log de auditoria de tarefa",
-    "TASK-SHOW-HEADER": "Mostrar cabeçalho de detalhes"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Aplicativo",
-    "SETTINGS_TAB": "Configurações"
-  },
   "FORM-LIST": {
     "STORE": "Armazenar",
     "RESTORE": "Restaurar"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Tamanho: muito grande",
       "XXTRALARGE": "8.Tamanho: extragrande"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
-      "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
-      "NUMBER_TYPE_ERROR": "O valor deve ser um número",
-      "NUMBER_GREATER_THAN": "O valor deve ser maior ou igual a {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Iniciando a página"
-    },
-    "TASK_CONTEXT_MENU": "Menu de contexto da lista de tarefas"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
-      "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
-      "NUMBER_GREATER_THAN": "O valor deve ser maior ou igual a {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Menu de contexto da lista de processamento"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado",

@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Lista zadań serwisowych",
     "RICH_TEXT_EDITOR": "Edytor tekstu sformatowanego"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Usuń trwale",
-      "RESTORE": "Przywróć"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Kosz jest pusty",
-      "FIRST_TEXT": "Usuwane elementy są przesyłane do kosza.",
-      "SECOND_TEXT": "Aby trwale usunąć elementy, opróżnij kosz."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Zadania",
-    "PROCESSES-TAB": "Proces",
-    "SETTINGS-TAB": "Ustawienia",
-    "START-TASK": "Rozpocznij zadanie",
-    "START-PROCESS": "Rozpocznij proces",
-    "PROCESS-AUDIT-LOG": "Dziennik inspekcji procesu",
-    "TASK-AUDIT-LOG": "Dziennik inspekcji zadania",
-    "TASK-SHOW-HEADER": "Pokaż nagłówek szczegółów"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Aplikacja",
-    "SETTINGS_TAB": "Ustawienia"
-  },
   "FORM-LIST": {
     "STORE": "Magazyn",
     "RESTORE": "Przywróć"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. Rozmiar: bardzo duży",
       "XXTRALARGE": "8. Rozmiar: wyjątkowo duży"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Wstaw identyfikator aplikacji",
-      "APP_ID_TYPE_ERROR": "Identyfikator aplikacji musi być liczbą.",
-      "NUMBER_TYPE_ERROR": "Wartość musi być liczbą.",
-      "NUMBER_GREATER_THAN": "Wartość musi być większa od lub równa wartości {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Strona początkowa"
-    },
-    "TASK_CONTEXT_MENU": "Menu kontekstowe listy zadań"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Wstaw identyfikator aplikacji",
-      "APP_ID_TYPE_ERROR": "Identyfikator aplikacji musi być liczbą.",
-      "NUMBER_GREATER_THAN": "Wartość musi być większa od lub równa wartości {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Menu kontekstowe listy procesów"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie pierwsze",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie drugie",

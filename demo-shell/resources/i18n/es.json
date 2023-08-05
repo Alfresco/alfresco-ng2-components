@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Lista de tareas de servicio",
     "RICH_TEXT_EDITOR": "Editor de texto enriquecido"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Eliminar permanentemente",
-      "RESTORE": "Restaurar"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "La papelera está vacía",
-      "FIRST_TEXT": "Los elementos que elimine se moverán a la papelera.",
-      "SECOND_TEXT": "Vacíe la papelera para eliminar los elementos permanentemente."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Tareas",
-    "PROCESSES-TAB": "Proceso",
-    "SETTINGS-TAB": "Configuración",
-    "START-TASK": "Iniciar tarea",
-    "START-PROCESS": "Iniciar proceso",
-    "PROCESS-AUDIT-LOG": "Registro de auditoría de procesos",
-    "TASK-AUDIT-LOG": "Registro de auditoría de tareas",
-    "TASK-SHOW-HEADER": "Mostrar encabezado de detalles"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Aplicación",
-    "SETTINGS_TAB": "Configuración"
-  },
   "FORM-LIST": {
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Tamaño: extragrande",
       "XXTRALARGE": "8.Tamaño: extraextragrande"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
-      "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
-      "NUMBER_TYPE_ERROR": "El valor debe ser un número",
-      "NUMBER_GREATER_THAN": "El valor debe ser igual o superior a {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Inicio de página"
-    },
-    "TASK_CONTEXT_MENU": "Menú de contexto Lista de tareas"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
-      "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
-      "NUMBER_GREATER_THAN": "El valor debe ser igual o superior a {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Menú de contexto Lista de procesos"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Traducción de título personalizado 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2",

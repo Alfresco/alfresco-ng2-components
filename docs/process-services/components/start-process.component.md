@@ -67,7 +67,7 @@ Starts a process.
 ```html
  <adf-start-process 
       [appId]="YOUR_APP_ID"
-      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [title]="'Start Process'"
       [name]="PROCESS_NAME"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
  </adf-start-process>		 
@@ -186,7 +186,7 @@ Now you can start process based on selected application from the dropdown. The p
 ```html
  <adf-start-process 
       [appId]="YOUR_APP_ID"
-      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [title]="'Start Process'"
       [name]="PROCESS_NAME"
       [showSelectApplicationDropdown]="true"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
@@ -204,7 +204,7 @@ When an error occurs, the component will emit an error event that can be used to
 ```html
  <adf-start-process 
       [appId]="YOUR_APP_ID"
-      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [title]="'Start Process'"
       [name]="PROCESS_NAME"
       (error)="onError($event)">
  </adf-start-process>		 

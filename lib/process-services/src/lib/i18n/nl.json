@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Maken",
-      "NEW_TASK": "Nieuwe taak",
-      "NEW_PROCESS": "Nieuw proces"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Doorgaan",

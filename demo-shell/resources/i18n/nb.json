@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Serviceoppgaveliste",
     "RICH_TEXT_EDITOR": "Åpne rik teksteditor"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Slett for godt",
-      "RESTORE": "Gjenopprett"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Søppelkurven er tom",
-      "FIRST_TEXT": "Elementer du sletter, flyttes til søppelkurven.",
-      "SECOND_TEXT": "Tøm søppelkurven for å slette elementer for godt."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Oppgaver",
-    "PROCESSES-TAB": "Prosess",
-    "SETTINGS-TAB": "Innstillinger",
-    "START-TASK": "Start oppgave",
-    "START-PROCESS": "Start prosess",
-    "PROCESS-AUDIT-LOG": "Prosessrevisjonslogg",
-    "TASK-AUDIT-LOG": "Oppgaverevisjonslogg",
-    "TASK-SHOW-HEADER": "Vis detaljoverskrift"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "App",
-    "SETTINGS_TAB": "Innstillinger"
-  },
   "FORM-LIST": {
     "STORE": "Lagre",
     "RESTORE": "Gjenopprett"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7.Størrelse: xtra large",
       "XXTRALARGE": "8.Størrelse: XX large"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
-      "APP_ID_TYPE_ERROR": "App-ID må være et tall",
-      "NUMBER_TYPE_ERROR": "Verdien må være et tall",
-      "NUMBER_GREATER_THAN": "Verdien må være høyere enn eller lik {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Starter side"
-    },
-    "TASK_CONTEXT_MENU": "Kontekstmeny for oppgaveliste"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
-      "APP_ID_TYPE_ERROR": "App-ID må være et tall",
-      "NUMBER_GREATER_THAN": "Verdien må være høyere enn eller lik {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Kontekstmeny for prosessliste"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
   "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to",

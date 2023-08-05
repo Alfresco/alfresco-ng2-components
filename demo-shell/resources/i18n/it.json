@@ -90,31 +90,6 @@
     "SERVICE_TASK_LIST": "Elenco compiti servizio",
     "RICH_TEXT_EDITOR": "Editor di testo RTF"
   },
-  "TRASHCAN": {
-    "ACTIONS": {
-      "DELETE_PERMANENT": "Elimina definitivamente",
-      "RESTORE": "Ripristina"
-    },
-    "EMPTY_STATE": {
-      "TITLE": "Il cestino è vuoto",
-      "FIRST_TEXT": "Gli elementi eliminati vengono spostati nel cestino.",
-      "SECOND_TEXT": "Svuotare il cestino per eliminare definitivamente gli elementi."
-    }
-  },
-  "PS-TAB": {
-    "TASKS-TAB": "Compiti",
-    "PROCESSES-TAB": "Processo",
-    "SETTINGS-TAB": "Impostazioni",
-    "START-TASK": "Avvia compito",
-    "START-PROCESS": "Avvia processo",
-    "PROCESS-AUDIT-LOG": "Registro di audit processo",
-    "TASK-AUDIT-LOG": "Registro di audit compito",
-    "TASK-SHOW-HEADER": "Mostra intestazione dettagli"
-  },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "Applicazione",
-    "SETTINGS_TAB": "Impostazioni"
-  },
   "FORM-LIST": {
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
@@ -153,26 +128,6 @@
       "XTRALARGE": "7. Dimensioni: extra grande",
       "XXTRALARGE": "8. Dimensioni: extra extra grande"
     }
-  },
-  "TASK_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
-      "APP_ID_TYPE_ERROR": "L'ID applicazione deve essere un numero",
-      "NUMBER_TYPE_ERROR": "Il valore deve essere un numero",
-      "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
-    },
-    "TOOLTIP_MESSAGE": {
-      "START_INPUT": "Inizia da pagina"
-    },
-    "TASK_CONTEXT_MENU": "Menu di scelta rapida Elenco compiti"
-  },
-  "PROCESS_LIST_DEMO": {
-    "ERROR_MESSAGE": {
-      "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
-      "APP_ID_TYPE_ERROR": "L'ID applicazione deve essere un numero",
-      "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
-    },
-    "PROCESS_CONTEXT_MENU": "Menu di scelta rapida Elenco processi"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
   "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two",
