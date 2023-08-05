@@ -19,6 +19,7 @@ import { $, $$ } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
+/** @deprecated Use Playwright API instead */
 export class SnackbarPage {
 
     notificationSnackBar = $$(`[data-automation-id='adf-snackbar-message-content']`).first();
@@ -41,6 +42,7 @@ export class SnackbarPage {
         return this.notificationSnackBar.getText();
     }
 
+    /** @deprecated Use Playwright API instead */
     async getSnackBarActionMessage(): Promise<string> {
         await this.waitForSnackBarToAppear();
         return this.snackBarAction.getText();
@@ -51,6 +53,7 @@ export class SnackbarPage {
         return this.decorativeIconSnackBar.getText();
     }
 
+    /** @deprecated Use Playwright API instead */
     async clickSnackBarAction(): Promise<void> {
         await this.waitForSnackBarToAppear();
         await BrowserActions.click(this.snackBarAction);

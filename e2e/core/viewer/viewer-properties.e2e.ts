@@ -171,7 +171,7 @@ describe('Viewer', () => {
 
     });
 
-    fit('[C260100] Should be possible to disable Overlay viewer', async () => {
+    it('[C260100] Should be possible to disable Overlay viewer', async () => {
         await navigationBarPage.clickOverlayViewerButton();
         await dataTable.doubleClickRow('Name', fileForOverlay.name);
         await viewerPage.checkOverlayViewerIsDisplayed();
@@ -191,5 +191,4 @@ describe('Viewer', () => {
         await viewerPage.checkImgContainerIsDisplayed();
         await viewerPage.checkInlineViewerIsDisplayed();
     });
-})
-;
+});
