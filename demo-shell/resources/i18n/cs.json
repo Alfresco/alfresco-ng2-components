@@ -39,17 +39,8 @@
       "LOGIN": "Přihlášení",
       "HOME": "Domů"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Povolit odstranění",
-      "SHOW_COMMENTS": "Zobrazit komentáře k verzím",
-      "ALLOW_DOWNLOAD": "Povolit stažení verze",
-      "READ_ONLY": "Pouze ke čtení",
-      "COMMENTS": "Zobrazit komentáře",
-      "VERSION_COMPARISON": "Zobrazit porovnání verzí"
-    },
     "PERSONAL-FILES": "Osobní soubory",
     "CUSTOM-PERMISSION-MESSAGE": "Povolit přizpůsobené oznámení o oprávnění",
-    "MEDIUM-TIME-FORMAT": "Povolit střední formát času v seznamu dokumentů",
     "SEARCH": {
       "RADIO": {
         "NONE": "Žádné",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Vítejte",
-  "VERSION": {
-    "NO_PERMISSION": "Nemáte potřebná oprávnění pro správu verzí tohoto obsahu",
-    "NO_PERMISSION_EVENT": "Nemáte oprávnění „${event.permission}“ potřebná k použití akce „${event.action}“ pro „${event.type}“",
-    "CHOOSE_FILE": "Vyberte soubor, jehož verze si chcete prohlédnout",
-    "DIALOG": {
-      "CLOSE": "Zavřít",
-      "TITLE": "Spravovat verze"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Zavřít",
-      "TITLE": "Metadata"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Aplikace",
     "HEADER_TEXT_COLOR": "Barva textu záhlaví",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Zobrazení překrytí",
     "ABOUT": "O aplikaci",
     "SEARCH": "Rozšířené hledání",
-    "EXTENDED_SEARCH_QUERY_BODY": "Rozšířené hledání s textem dotazu",
     "WORD_TO_SEARCH": "Hledat slovo",
     "SEARCH_CREATED_BY": "Vytvořil(a)",
-    "SEARCH_SERVICE_APPROACH": "Označením této možnosti zakážete vstupní vlastnost a ke konfiguraci použijete službu",
     "HEADER_DATA": "Data záhlaví",
     "TREE_VIEW": "Stromová struktura",
     "EXPAND_LIST": "Rozšiřitený seznam položek",
@@ -161,21 +135,6 @@
       "SIZE": "Velikost",
       "DELETED_ON": "Odstraněno",
       "DELETED_BY": "Odstranil(a)"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Režim zobrazení karet",
-      "SHARE_EDIT": "Upravit nastavení",
-      "NEW_FOLDER": "Nová složka",
-      "EDIT_FOLDER": "Upravit složku",
-      "DOWNLOAD": "Stáhnout",
-      "DELETE": "Odstranit",
-      "FAVORITES": "Přidat mezi oblíbené",
-      "SHARE": "Sdílet",
-      "THEME": "Vybrat motiv",
-      "SHOW_VERSION": "Zobrazit verzi",
-      "HIDE_VERSION": "Skrýt verzi",
-      "LISTVIEW": "Režim zobrazení seznamu",
-      "CREATE_LIBRARY": "Vytvořit knihovnu"
     },
     "ACTIONS": {
       "VERSIONS": "Spravovat verze",

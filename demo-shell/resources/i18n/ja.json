@@ -39,17 +39,8 @@
       "LOGIN": "ログイン",
       "HOME": "ホーム"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "削除を許可する",
-      "SHOW_COMMENTS": "バージョンに関するコメントを表示",
-      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可する",
-      "READ_ONLY": "読取り専用",
-      "COMMENTS": "コメントを表示する",
-      "VERSION_COMPARISON": "バージョンの比較を表示"
-    },
     "PERSONAL-FILES": "個人的なファイル",
     "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
-    "MEDIUM-TIME-FORMAT": "文書リストの medium 時刻形式を有効にする",
     "SEARCH": {
       "RADIO": {
         "NONE": "なし",
@@ -60,21 +51,6 @@
     }
   },
   "title": "ようこそ",
-  "VERSION": {
-    "NO_PERMISSION": "このコンテンツのバージョンを管理する権限がありません",
-    "NO_PERMISSION_EVENT": "${event.type} を ${event.action} するための ${event.permission} 権限がありません",
-    "CHOOSE_FILE": "バージョンを表示するファイルを選択してください",
-    "DIALOG": {
-      "CLOSE": "閉じる",
-      "TITLE": "バージョンの管理"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "閉じる",
-      "TITLE": "メタデータ"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "アプリ",
     "HEADER_TEXT_COLOR": "ヘッダーテキストカラー",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "オーバーレイビューア",
     "ABOUT": "バージョン情報",
     "SEARCH": "詳細検索",
-    "EXTENDED_SEARCH_QUERY_BODY": "クエリ本体を使った詳細検索",
     "WORD_TO_SEARCH": "語句の検索",
     "SEARCH_CREATED_BY": "作成者",
-    "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします",
     "HEADER_DATA": "ヘッダーの日付",
     "TREE_VIEW": "ツリービュー",
     "EXPAND_LIST": "拡張可能なアイテムリスト",
@@ -161,21 +135,6 @@
       "SIZE": "サイズ",
       "DELETED_ON": "削除済み",
       "DELETED_BY": "削除者"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "カード表示モード",
-      "SHARE_EDIT": "設定の編集",
-      "NEW_FOLDER": "新しいフォルダ",
-      "EDIT_FOLDER": "フォルダの編集",
-      "DOWNLOAD": "ダウンロード",
-      "DELETE": "削除",
-      "FAVORITES": "[お気に入り] に追加",
-      "SHARE": "共有",
-      "THEME": "テーマを選択してください",
-      "SHOW_VERSION": "バージョンを表示する",
-      "HIDE_VERSION": "バージョンの非表示",
-      "LISTVIEW": "一覧表示モード",
-      "CREATE_LIBRARY": "ライブラリの作成"
     },
     "ACTIONS": {
       "VERSIONS": "バージョンの管理",

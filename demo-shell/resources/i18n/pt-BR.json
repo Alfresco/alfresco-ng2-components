@@ -39,17 +39,8 @@
       "LOGIN": "Login",
       "HOME": "Página Inicial"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Permitir exclusão",
-      "SHOW_COMMENTS": "Mostrar comentários em versões",
-      "ALLOW_DOWNLOAD": "Ativar descarregamento da versão",
-      "READ_ONLY": "Somente leitura",
-      "COMMENTS": "Mostrar comentários",
-      "VERSION_COMPARISON": "Mostrar comparação de versões"
-    },
     "PERSONAL-FILES": "Arquivos pessoais",
     "CUSTOM-PERMISSION-MESSAGE": "Ativar mensagem de permissão personalizada",
-    "MEDIUM-TIME-FORMAT": "Ativar formato de tempo regular para lista de documento",
     "SEARCH": {
       "RADIO": {
         "NONE": "Nenhum",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Bem-vindo",
-  "VERSION": {
-    "NO_PERMISSION": "Você não tem permissão para gerenciar versões deste conteúdo",
-    "NO_PERMISSION_EVENT": "Você não tem a permissão ${event.permission} para ${event.action} o ${event.type}",
-    "CHOOSE_FILE": "Selecione um arquivo para ver suas versões",
-    "DIALOG": {
-      "CLOSE": "Fechar",
-      "TITLE": "Gerenciar versões"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Fechar",
-      "TITLE": "Metadados"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Aplicativo",
     "HEADER_TEXT_COLOR": "Cor do texto do cabeçalho",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Visualizador de sobreposição",
     "ABOUT": "Sobre",
     "SEARCH": "Pesquisa estendida",
-    "EXTENDED_SEARCH_QUERY_BODY": "Pesquisa estendida com corpo de consulta",
     "WORD_TO_SEARCH": "Pesquisar palavras",
     "SEARCH_CREATED_BY": "Criado por",
-    "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço",
     "HEADER_DATA": "Dados do cabeçalho",
     "TREE_VIEW": "Exibição em árvore",
     "EXPAND_LIST": "Lista de itens expansíveis",
@@ -161,21 +135,6 @@
       "SIZE": "Tamanho",
       "DELETED_ON": "Excluído",
       "DELETED_BY": "Excluído por"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Modo de visualização de cartão",
-      "SHARE_EDIT": "Editar configurações",
-      "NEW_FOLDER": "Nova pasta",
-      "EDIT_FOLDER": "Editar pasta",
-      "DOWNLOAD": "Baixar",
-      "DELETE": "Excluir",
-      "FAVORITES": "Adicionar aos favoritos",
-      "SHARE": "Compartilhar",
-      "THEME": "Selecionar um tema",
-      "SHOW_VERSION": "Mostrar versão",
-      "HIDE_VERSION": "Ocultar versão",
-      "LISTVIEW": "Modo de exibição em lista",
-      "CREATE_LIBRARY": "Criar biblioteca"
     },
     "ACTIONS": {
       "VERSIONS": "Gerenciar versões",

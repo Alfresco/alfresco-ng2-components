@@ -39,17 +39,8 @@
       "LOGIN": "Anmelden",
       "HOME": "Startseite"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Löschen zulassen",
-      "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
-      "ALLOW_DOWNLOAD": "Herunterladen von Version aktivieren",
-      "READ_ONLY": "Schreibgeschützt",
-      "COMMENTS": "Kommentare anzeigen",
-      "VERSION_COMPARISON": "Versionsvergleich anzeigen"
-    },
     "PERSONAL-FILES": "Persönliche Dateien",
     "CUSTOM-PERMISSION-MESSAGE": "Meldung 'Benutzerdefinierte Berechtigung aktivieren'",
-    "MEDIUM-TIME-FORMAT": "Mittleres Zeitformat für Dokumentliste aktivieren",
     "SEARCH": {
       "RADIO": {
         "NONE": "Keine",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Willkommen",
-  "VERSION": {
-    "NO_PERMISSION": "Sie verfügen nicht über die nötige Berechtigung, um Versionen dieses Inhalts zu verwalten",
-    "NO_PERMISSION_EVENT": "Sie verfügen nicht über die nötige Berechtigung ('${event.permission}'), um ${event.action} zu ${event.type}",
-    "CHOOSE_FILE": "Wählen Sie eine Datei aus, um ihre Versionen anzuzeigen",
-    "DIALOG": {
-      "CLOSE": "Schließen",
-      "TITLE": "Versionen verwalten"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Schließen",
-      "TITLE": "Metadaten"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Anwendung",
     "HEADER_TEXT_COLOR": "Farbe des Überschriftstextes",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Overlay-Viewer",
     "ABOUT": "Info",
     "SEARCH": "Erweiterte Suche",
-    "EXTENDED_SEARCH_QUERY_BODY": "Erweiterte Suche mit Abfragetext",
     "WORD_TO_SEARCH": "Suchbegriff",
     "SEARCH_CREATED_BY": "Erstellt von",
-    "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren",
     "HEADER_DATA": "Headerdaten",
     "TREE_VIEW": "Strukturansicht",
     "EXPAND_LIST": "Erweiterbare Elementliste",
@@ -161,21 +135,6 @@
       "SIZE": "Größe",
       "DELETED_ON": "Gelöscht",
       "DELETED_BY": "Gelöscht von"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Kartenansichtsmodus",
-      "SHARE_EDIT": "Einstellungen bearbeiten",
-      "NEW_FOLDER": "Neuer Ordner",
-      "EDIT_FOLDER": "Ordner bearbeiten",
-      "DOWNLOAD": "Herunterladen",
-      "DELETE": "Löschen",
-      "FAVORITES": "Zu Favoriten hinzufügen",
-      "SHARE": "Freigeben",
-      "THEME": "Farbschema auswählen",
-      "SHOW_VERSION": "Version anzeigen",
-      "HIDE_VERSION": "Version ausblenden",
-      "LISTVIEW": "Listenansichtsmodus",
-      "CREATE_LIBRARY": "Bibliothek erstellen"
     },
     "ACTIONS": {
       "VERSIONS": "Versionen verwalten",

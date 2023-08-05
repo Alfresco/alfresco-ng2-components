@@ -39,17 +39,8 @@
       "LOGIN": "Login",
       "HOME": "Home"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Consenti eliminazione",
-      "SHOW_COMMENTS": "Mostra commenti sulle versioni",
-      "ALLOW_DOWNLOAD": "Abilita scaricamento versioni",
-      "READ_ONLY": "Sola lettura",
-      "COMMENTS": "Mostra commenti",
-      "VERSION_COMPARISON": "Mostra confronto versioni"
-    },
     "PERSONAL-FILES": "File personali",
     "CUSTOM-PERMISSION-MESSAGE": "Abilita messaggio di autorizzazione personalizzato",
-    "MEDIUM-TIME-FORMAT": "Abilita formato tempo medio per elenco documenti",
     "SEARCH": {
       "RADIO": {
         "NONE": "Nessuno",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Benvenuto",
-  "VERSION": {
-    "NO_PERMISSION": "Non si dispone dell'autorizzazione per gestire versioni di questo contenuto",
-    "NO_PERMISSION_EVENT": "Non si dispone dell'autorizzazione ${event.permission} per ${event.action} ${event.type}",
-    "CHOOSE_FILE": "Seleziona un file per visualizzarne le versioni",
-    "DIALOG": {
-      "CLOSE": "Chiudi",
-      "TITLE": "Gestione versioni"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Chiudi",
-      "TITLE": "Metadati"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Applicazione",
     "HEADER_TEXT_COLOR": "Colore testo intestazione",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Visualizzatore overlay",
     "ABOUT": "Informazioni su",
     "SEARCH": "Ricerca estesa",
-    "EXTENDED_SEARCH_QUERY_BODY": "Ricerca estesa con corpo query",
     "WORD_TO_SEARCH": "Termine di ricerca",
     "SEARCH_CREATED_BY": "Creato da",
-    "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio",
     "HEADER_DATA": "Dati intestazione",
     "TREE_VIEW": "Vista struttura",
     "EXPAND_LIST": "Elenco elementi espandibile",
@@ -161,21 +135,6 @@
       "SIZE": "Dimensione",
       "DELETED_ON": "Eliminato",
       "DELETED_BY": "Eliminato da"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Modalità di visualizzazione scheda",
-      "SHARE_EDIT": "Modifica impostazioni",
-      "NEW_FOLDER": "Nuova cartella",
-      "EDIT_FOLDER": "Modifica cartella",
-      "DOWNLOAD": "Scarica",
-      "DELETE": "Elimina",
-      "FAVORITES": "Aggiungi ai preferiti",
-      "SHARE": "Condividi",
-      "THEME": "Seleziona un tema",
-      "SHOW_VERSION": "Mostra versione",
-      "HIDE_VERSION": "Nascondi versione",
-      "LISTVIEW": "Modalità vista elenco",
-      "CREATE_LIBRARY": "Crea libreria"
     },
     "ACTIONS": {
       "VERSIONS": "Gestione versioni",

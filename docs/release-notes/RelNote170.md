@@ -85,7 +85,7 @@ Two new content actions have been added, the "copy" and the "move" for both fold
     <content-action
         icon="content_copy"
         target="folder"
-        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
+        title="Copy"
         permission="update"
         [disableWithNoPermission]="true"
         handler="copy">
@@ -93,7 +93,7 @@ Two new content actions have been added, the "copy" and the "move" for both fold
     <content-action
         icon="redo"
         target="folder"
-        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+        title="Move"
         permission="update"
         [disableWithNoPermission]="true"
         handler="move">

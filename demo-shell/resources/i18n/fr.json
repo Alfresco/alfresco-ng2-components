@@ -39,17 +39,8 @@
       "LOGIN": "Connexion",
       "HOME": "Accueil"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Autoriser la suppression",
-      "SHOW_COMMENTS": "Afficher les commentaires sur les versions",
-      "ALLOW_DOWNLOAD": "Activer le téléchargement de la version",
-      "READ_ONLY": "Lecture seule",
-      "COMMENTS": "Afficher les commentaires",
-      "VERSION_COMPARISON": "Afficher la comparaison des versions"
-    },
     "PERSONAL-FILES": "Fichiers personnels",
     "CUSTOM-PERMISSION-MESSAGE": "Activer le message de droits d'accès personnalisés",
-    "MEDIUM-TIME-FORMAT": "Activer le format de date \"medium\" pour la liste de documents",
     "SEARCH": {
       "RADIO": {
         "NONE": "Aucune",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Bienvenue",
-  "VERSION": {
-    "NO_PERMISSION": "Vous n'avez pas les droits d'accès pour gérer les versions de ce contenu",
-    "NO_PERMISSION_EVENT": "Vous n'avez pas les droits d'accès ${event.permission} pour ${event.action} le/la ${event.type}",
-    "CHOOSE_FILE": "Sélectionnez un fichier pour afficher ses versions",
-    "DIALOG": {
-      "CLOSE": "Fermer",
-      "TITLE": "Gérer les versions"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Fermer",
-      "TITLE": "Métadonnées"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Application",
     "HEADER_TEXT_COLOR": "Couleur du texte de l'en-tête",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Visualisation de la superposition",
     "ABOUT": "À propos de",
     "SEARCH": "Recherche globale",
-    "EXTENDED_SEARCH_QUERY_BODY": "Recherche globale sur le corps de la requête",
     "WORD_TO_SEARCH": "Mot recherché",
     "SEARCH_CREATED_BY": "Créé par",
-    "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service",
     "HEADER_DATA": "Données d'en-tête",
     "TREE_VIEW": "Arborescence",
     "EXPAND_LIST": "Liste déroulante",
@@ -161,21 +135,6 @@
       "SIZE": "Taille",
       "DELETED_ON": "Supprimé",
       "DELETED_BY": "Supprimé par"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Mode d'affichage Carte",
-      "SHARE_EDIT": "Modifier les paramètres",
-      "NEW_FOLDER": "Nouveau Dossier",
-      "EDIT_FOLDER": "Modifier le dossier",
-      "DOWNLOAD": "Télécharger",
-      "DELETE": "Supprimer",
-      "FAVORITES": "Ajouter aux favoris",
-      "SHARE": "Partager",
-      "THEME": "Sélectionner un thème",
-      "SHOW_VERSION": "Afficher la version",
-      "HIDE_VERSION": "Masquer la version",
-      "LISTVIEW": "Mode Liste",
-      "CREATE_LIBRARY": "Créer une Bibliothèque"
     },
     "ACTIONS": {
       "VERSIONS": "Gérer les versions",

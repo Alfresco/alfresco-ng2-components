@@ -1,26 +1,26 @@
-<header mat-dialog-title>{{'VERSION.DIALOG.TITLE' | translate}}</header>
+<header mat-dialog-title>Manage Versions</header>
 
 <section>
-    <mat-slide-toggle id="adf-version-manager-switch-readonly" color="primary" [(ngModel)]="readOnly">
-        {{'APP.ADF_VERSION_MANAGER.READ_ONLY' | translate}}
+    <mat-slide-toggle id="adf-version-manager-switch-readonly" [(ngModel)]="readOnly">
+        Read-only
     </mat-slide-toggle>
 </section>
 
 <section>
-    <mat-slide-toggle id="adf-version-manager-switch-download" color="primary" [(ngModel)]="allowDownload">
-        {{'APP.ADF_VERSION_MANAGER.ALLOW_DOWNLOAD' | translate}}
+    <mat-slide-toggle id="adf-version-manager-switch-download" [(ngModel)]="allowDownload">
+        Enable version download
     </mat-slide-toggle>
 </section>
 
 <section>
-    <mat-slide-toggle id="adf-version-manager-switch-comments" color="primary" [(ngModel)]="showComments">
-        {{'APP.ADF_VERSION_MANAGER.COMMENTS' | translate}}
+    <mat-slide-toggle id="adf-version-manager-switch-comments"  [(ngModel)]="showComments">
+        Show comments
     </mat-slide-toggle>
 </section>
 
 <section *ngIf="newFileVersion">
-    <mat-slide-toggle id="adf-version-manager-switch-comparison" color="primary" [(ngModel)]="showVersionComparison">
-        {{'APP.ADF_VERSION_MANAGER.VERSION_COMPARISON' | translate}}
+    <mat-slide-toggle id="adf-version-manager-switch-comparison" [(ngModel)]="showVersionComparison">
+        Show version comparison
     </mat-slide-toggle>
 </section>
 
@@ -40,6 +40,6 @@
     <adf-version-list [node]="contentEntry" [showActions]="false"></adf-version-list>
 </section>
 
-<footer mat-dialog-actions class="adf-version-manager-dialog-actions">
-    <button mat-button (click)="close()">{{'VERSION.DIALOG.CLOSE' | translate}}</button>
+<footer mat-dialog-actions>
+    <button mat-button (click)="close()">Close</button>
 </footer>

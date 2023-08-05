@@ -39,17 +39,8 @@
       "LOGIN": "Aanmelden",
       "HOME": "Home"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Verwijderen toestaan",
-      "SHOW_COMMENTS": "Opmerkingen over versies tonen",
-      "ALLOW_DOWNLOAD": "Versiedownload inschakelen",
-      "READ_ONLY": "Alleen-lezen",
-      "COMMENTS": "Opmerkingen weergeven",
-      "VERSION_COMPARISON": "Versievergelijking tonen"
-    },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "CUSTOM-PERMISSION-MESSAGE": "Aangepast rechtenbericht inschakelen",
-    "MEDIUM-TIME-FORMAT": "Middellange tijdnotatie voor lijst met documenten inschakelen",
     "SEARCH": {
       "RADIO": {
         "NONE": "Geen",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Welkom",
-  "VERSION": {
-    "NO_PERMISSION": "U hebt geen rechten voor het beheren van versies van deze content",
-    "NO_PERMISSION_EVENT": "U hebt geen ${event.permission} rechten voor het ${event.action} van ${event.type}",
-    "CHOOSE_FILE": "Selecteer een bestand om de versies ervan te zien",
-    "DIALOG": {
-      "CLOSE": "Sluiten",
-      "TITLE": "Versies beheren"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Sluiten",
-      "TITLE": "Metagegevens"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "App",
     "HEADER_TEXT_COLOR": "Kleur van koptekst",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Overlay-viewer",
     "ABOUT": "Info",
     "SEARCH": "Uitgebreid zoeken",
-    "EXTENDED_SEARCH_QUERY_BODY": "Uitgebreid zoeken met queryhoofdcode",
     "WORD_TO_SEARCH": "Zoekterm",
     "SEARCH_CREATED_BY": "Gemaakt door",
-    "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service",
     "HEADER_DATA": "Koptekstgegevens",
     "TREE_VIEW": "Structuurweergave",
     "EXPAND_LIST": "Uitvouwbare itemlijst",
@@ -161,21 +135,6 @@
       "SIZE": "Grootte",
       "DELETED_ON": "Verwijderd",
       "DELETED_BY": "Verwijderd door"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Kaartweergavemodus",
-      "SHARE_EDIT": "Instellingen bewerken",
-      "NEW_FOLDER": "Nieuwe map",
-      "EDIT_FOLDER": "Map bewerken",
-      "DOWNLOAD": "Downloaden",
-      "DELETE": "Verwijderen",
-      "FAVORITES": "Toevoegen aan favorieten",
-      "SHARE": "Delen",
-      "THEME": "Een thema selecteren",
-      "SHOW_VERSION": "Versie weergeven",
-      "HIDE_VERSION": "Versie verbergen",
-      "LISTVIEW": "Lijstweergavemodus",
-      "CREATE_LIBRARY": "Bibliotheek maken"
     },
     "ACTIONS": {
       "VERSIONS": "Versies beheren",

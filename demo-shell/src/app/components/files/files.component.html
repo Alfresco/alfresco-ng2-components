@@ -41,7 +41,7 @@
                     <button
                         mat-icon-button
                         data-automation-id="document-list-grid-view"
-                        title="{{ 'DOCUMENT_LIST.TOOLBAR.TOGGLE_DISPLAY_MODE' | translate }}"
+                        title="Toggle display mode"
                         (click)="toggleGalleryView()">
                         <mat-icon>list</mat-icon>
                     </button>
@@ -49,7 +49,7 @@
                         data-automation-id="create-new-folder"
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
-                        title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
+                        title="New folder"
                         (error)="openSnackMessageError($event)"
                         (success)="documentList.reload()"
                         [adf-create-folder]="currentFolderId">
@@ -57,7 +57,7 @@
                     </button>
                     <button
                         mat-icon-button
-                        title="{{ 'DOCUMENT_LIST.TOOLBAR.CREATE_LIBRARY' | translate }}"
+                        title="Create Library}"
                         data-automation-id="create-new-library"
                         (click)="createLibrary()">
                         <mat-icon>library_add</mat-icon>
@@ -66,7 +66,7 @@
                         data-automation-id="edit-folder"
                         mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
-                            title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"
+                            title="Edit folder"
                             (error)="openSnackMessageError($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry"
                             (success)="documentList.reload()">
@@ -74,7 +74,7 @@
                     </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
-                            title="{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}"
+                            title="Download"
                             [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
@@ -83,7 +83,7 @@
                             adf-check-allowable-operation="delete"
                             [permanent]="true"
                             [adf-nodes]="documentList.selection"
-                            title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
+                            title="Delete"
                             (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
@@ -94,7 +94,7 @@
                             [disabled]="!documentList.selection.length"
                             #favorite="adfFavorite"
                             [adf-node-favorite]="documentList.selection"
-                            title="{{ 'DOCUMENT_LIST.TOOLBAR.FAVORITES' | translate }}">
+                            title="Add to favorites">
                         <mat-icon>{{ favorite.hasFavorites() ? 'star' :'star_border' }}</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -102,17 +102,13 @@
                             [baseShareUrl]="baseShareUrl"
                             #shareRef="adfShare"
                             [adf-share]="documentList.selection[0]"
-                            [title]="(shareRef.isShared
-                                ? 'DOCUMENT_LIST.TOOLBAR.SHARE_EDIT'
-                                : 'DOCUMENT_LIST.TOOLBAR.SHARE') | translate">
-                        <mat-icon>
-                            share
-                        </mat-icon>
+                            [title]="(shareRef.isShared ? 'Edit settings' : 'Share')">
+                        <mat-icon>share</mat-icon>
                     </button>
                 </div>
 
                 <button mat-icon-button (click)="showVersions = !showVersions" class="app-show-versions-button"
-                    title="{{ 'DOCUMENT_LIST.TOOLBAR.TOGGLE_METADATA' | translate }}">
+                    title="Toggle metadata">
                     <mat-icon>{{ showVersions ? 'chevron_right' : 'chevron_left' }}</mat-icon>
                 </button>
 
@@ -125,25 +121,25 @@
                     <button mat-menu-item (click)="toggleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'">view_comfy</mat-icon>
                         <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
+                        <span>Card view mode</span>
                     </button>
                     <button mat-menu-item
                             (error)="openSnackMessageError($event)"
                             [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
+                        <span>New folder</span>
                     </button>
                     <button mat-menu-item
                             (click)="createLibrary()">
                         <mat-icon>library_add</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.CREATE_LIBRARY' | translate }}</span>
+                        <span>Create Library</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
                             (error)="openSnackMessageError($event)"
                             [adf-edit-folder]="documentList.selection[0]?.entry">
                         <mat-icon>create</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
+                        <span>Edit folder</span>
                     </button>
                     <button mat-menu-item
                             adf-check-allowable-operation="delete"
@@ -151,7 +147,7 @@
                             (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}</span>
+                        <span>Delete</span>
                     </button>
                 </mat-menu>
             </adf-toolbar>
@@ -204,7 +200,7 @@
                         key="name"
                         sortingKey="name"
                         class="app-ellipsis-cell"
-                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        title="Display name"
                         [formatTooltip]="getNodeNameTooltip">
                         <ng-template let-context>
                             <adf-name-column key="name" [context]="context"></adf-name-column>
@@ -214,13 +210,13 @@
                         *ngIf="showNameColumn && !hyperlinkNavigation"
                         key="name"
                         sortingKey="name"
-                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        title="Display name"
                         [formatTooltip]="getNodeNameTooltip"
                         class="app-ellipsis-cell adf-expand-cell-5">
                     </data-column>
                     <data-column
                         key="content.sizeInBytes"
-                        title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"
+                        title="Size"
                         type="fileSize"
                         sortingKey="sizeInBytes"
                         class="app-desktop-only adf-ellipsis-cell">
@@ -238,13 +234,13 @@
 
                     <data-column
                         class="app-full-width adf-ellipsis-cell adf-desktop-only"
-                        title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
+                        title="Node id"
                         [sortable]="false"
                         key="id">
                     </data-column>
 
                     <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
+                        title="Lock"
                         key="lock"
                         [focus]="false"
                         [sortable]="false"
@@ -257,13 +253,13 @@
                         </ng-template>
                     </data-column>
                     <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                        title="Created by"
                         key="createdByUser.displayName"
                         sortingKey="createdByUser"
                         class="app-desktop-only adf-ellipsis-cell">
                     </data-column>
                     <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
+                        title="Created"
                         key="createdAt"
                         sortingKey="createdAt"
                         type="date"
@@ -276,12 +272,12 @@
                 <content-actions>
                     <content-action
                         icon="get_app"
-                        title="DOCUMENT_LIST.ACTIONS.DOWNLOAD"
+                        title="Download"
                         handler="download">
                     </content-action>
                     <content-action
                         icon="content_copy"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.COPY"
+                        title="Copy"
                         permission="copy"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -290,7 +286,7 @@
                     </content-action>
                     <content-action
                         icon="redo"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.MOVE"
+                        title="Move"
                         permission="update"
                         [disableWithNoPermission]="true"
                         (error)="onContentActionError($event)"
@@ -301,19 +297,19 @@
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        title="DOCUMENT_LIST.ACTIONS.FOLDER.DELETE"
+                        title="Delete"
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
                     </content-action>
                     <content-action
                         icon="info"
-                        title="DOCUMENT_LIST.ACTIONS.METADATA"
+                        title="Info"
                         (execute)="onManageMetadata($event)">
                     </content-action>
                     <content-action
                         icon="supervisor_account"
-                        title="DOCUMENT_LIST.ACTIONS.PERMISSION"
+                        title="Permission"
                         permission="copy"
                         (error)="onContentActionError($event)"
                         (execute)="onPermissionRequested($event)">
@@ -322,7 +318,7 @@
                     <content-action
                         icon="storage"
                         target="document"
-                        title="DOCUMENT_LIST.ACTIONS.VERSIONS"
+                        title="Manage version"
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
@@ -330,12 +326,12 @@
                         icon="lock"
                         permission="lock"
                         handler="lock"
-                        title="DOCUMENT_LIST.ACTIONS.LOCK">
+                        title="Lock">
                     </content-action>
                     <content-action
                         icon="beach_access"
                         target="document"
-                        title="DOCUMENT_LIST.ACTIONS.ASPECTS"
+                        title="Update Aspects"
                         (execute)="onAspectUpdate($event)">
                     </content-action>
                 </content-actions>
@@ -382,13 +378,13 @@
                         <ng-template #choose_document_template>
                             <div class="app-manage-versions-empty">
                                 <mat-icon class="app-manage-versions-empty-icon">face</mat-icon>
-                                {{'VERSION.CHOOSE_FILE' | translate}}
+                                Select a file to see its versions
                             </div>
                         </ng-template>
                         <ng-template #no_permission_to_versions>
                             <div class="app-manage-versions-no-permission">
                                 <mat-icon class="app-manage-versions-no-permission-icon">warning</mat-icon>
-                                {{'VERSION.NO_PERMISSION' | translate}}
+                                You don't have permission to manage versions of this content
                             </div>
                         </ng-template>
                     </adf-info-drawer-tab>
@@ -399,7 +395,6 @@
 </div>
 
 <div *ngIf="showSettingsPanel" class="app-content-service-settings">
-
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
     <div class="app-p-10">
@@ -426,49 +421,49 @@
 
         <section>
             <mat-slide-toggle data-automation-id="multiSelectToggle" [(ngModel)]="multiselect">
-                {{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}
+                Multiselect (with checkboxes)
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-multiple-upload-switch" [(ngModel)]="multipleFileUpload" >
-                {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
+                Multiple File Upload
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-folder-upload-switch" [(ngModel)]="folderUpload">
-                {{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}
+                Folder upload
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-extension-filter-upload-switch" [(ngModel)]="acceptedFilesTypeShow">
-                {{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}
+                Custom extensions filter
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-max-size-filter-upload-switch" [(ngModel)]="maxSizeShow">
-                {{'DOCUMENT_LIST.MAX_SIZE' | translate}}
+                Max size filter
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-thumbnails-upload-switch" (click)="toggleThumbnails()">
-                {{'DOCUMENT_LIST.THUMBNAILS' | translate}}
+                Enable Thumbnails
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-document-list-enable-drop-files" [checked]="allowDropFiles" (change)="toggleAllowDropFiles()">
-                {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
+                Enable Drop Files in a folder or a file
             </mat-slide-toggle>
         </section>
 
         <section>
             <mat-slide-toggle id="adf-version-upload-switch" [(ngModel)]="versioning">
-                {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
+                Enable versioning
             </mat-slide-toggle>
         </section>
 
@@ -498,7 +493,7 @@
 
         <section>
             <mat-slide-toggle [(ngModel)]="enableMediumTimeFormat" id="enableMediumTimeFormat">
-                {{'APP.MEDIUM-TIME-FORMAT' | translate}}
+                Enable medium time format for document list
             </mat-slide-toggle>
         </section>
 

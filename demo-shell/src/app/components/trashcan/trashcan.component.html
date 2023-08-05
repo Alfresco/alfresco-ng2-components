@@ -59,7 +59,7 @@
                 <data-column
                     class="adf-datatable-cell--ellipsis__name"
                     key="name"
-                    title="DOCUMENT_LIST.COLUMNS.DISPLAY_NAME">
+                    title="Display name">
                     <ng-template let-value="value" let-context>
                         <span title="{{ context?.row?.obj | adfNodeNameTooltip }}"
                               class="adf-datatable-cell-value">{{ value }}</span>
@@ -68,13 +68,13 @@
 
                 <data-column
                     key="content.sizeInBytes"
-                    title="DOCUMENT_LIST.COLUMNS.SIZE"
+                    title="Size"
                     type="fileSize">
                 </data-column>
 
                 <data-column
                     key="archivedAt"
-                    title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
+                    title="Deleted on">
                     <ng-template let-value="value">
                         <span title="{{ value | adfLocalizedDate: 'medium' }}"
                               class="adf-datatable-cell-value">{{ value | adfTimeAgo: currentLocale }}</span>
@@ -84,7 +84,7 @@
                 <data-column
                     class="adf-datatable-cell--ellipsis"
                     key="archivedByUser.displayName"
-                    title="DOCUMENT_LIST.COLUMNS.DELETED_BY">
+                    title="Deleted by">
                 </data-column>
 
             </data-columns>

@@ -39,17 +39,8 @@
       "LOGIN": "دخول",
       "HOME": "رئيسية"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "السماح بالحذف",
-      "SHOW_COMMENTS": "إظهار التعليقات على الإصدارات",
-      "ALLOW_DOWNLOAD": "تمكين تنزيل الإصدار",
-      "READ_ONLY": "للقراءة فقط",
-      "COMMENTS": "إظهار التعليقات",
-      "VERSION_COMPARISON": "إظهار مقارنة الإصدار"
-    },
     "PERSONAL-FILES": "الملفات الشخصية",
     "CUSTOM-PERMISSION-MESSAGE": "تمكين رسالة إذن مخصصة",
-    "MEDIUM-TIME-FORMAT": "تمكين تنسيق وقت متوسط لقائمة المستندات",
     "SEARCH": {
       "RADIO": {
         "NONE": "بلا",
@@ -60,21 +51,6 @@
     }
   },
   "title": "مرحبًا",
-  "VERSION": {
-    "NO_PERMISSION": "ليس لديك إذن لإدارة إصدارات هذا المحتوى",
-    "NO_PERMISSION_EVENT": "ليس لديك إذن ${event.permission} ل${event.action} ${event.type}",
-    "CHOOSE_FILE": "حدد ملف لرؤية إصداراته",
-    "DIALOG": {
-      "CLOSE": "إغلاق",
-      "TITLE": "إدارة الإصدارات"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "إغلاق",
-      "TITLE": "بيانات تعريف"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "تطبيق",
     "HEADER_TEXT_COLOR": "لون نص الرأس",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "عارض مركّب",
     "ABOUT": "حول",
     "SEARCH": "بحث ممتد",
-    "EXTENDED_SEARCH_QUERY_BODY": "بحث ممتد بنص الاستعلام",
     "WORD_TO_SEARCH": "بحث عن كلمة",
     "SEARCH_CREATED_BY": "تم الإنشاء بواسطة",
-    "SEARCH_SERVICE_APPROACH": "حدد هذا لتعطيل خاصية الإدخال والتكوين باستخدام الخدمة",
     "HEADER_DATA": "بيانات الرأس",
     "TREE_VIEW": "طريقة عرض الشجرة",
     "EXPAND_LIST": "قائمة العناصر القابلة للتوسيع",
@@ -161,21 +135,6 @@
       "SIZE": "الحجم",
       "DELETED_ON": "تم الحذف",
       "DELETED_BY": "تم الحذف بواسطة"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "وضع عرض البطاقة",
-      "SHARE_EDIT": "إعدادات التحرير",
-      "NEW_FOLDER": "مجلد جديد",
-      "EDIT_FOLDER": "تحرير مجلد",
-      "DOWNLOAD": "تنزيل",
-      "DELETE": "حذف",
-      "FAVORITES": "إضافة إلى المفضلات",
-      "SHARE": "مشاركة",
-      "THEME": "حدد نسق",
-      "SHOW_VERSION": "إظهار الإصدار",
-      "HIDE_VERSION": "إخفاء الإصدار",
-      "LISTVIEW": "وضع عرض القائمة",
-      "CREATE_LIBRARY": "إنشاء مكتبة"
     },
     "ACTIONS": {
       "VERSIONS": "إدارة الإصدارات",

@@ -39,17 +39,8 @@
       "LOGIN": "Zaloguj",
       "HOME": "Strona główna"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Zezwól na usunięcie",
-      "SHOW_COMMENTS": "Pokaż komentarze do wersji",
-      "ALLOW_DOWNLOAD": "Włącz pobieranie wersji",
-      "READ_ONLY": "Tylko do odczytu",
-      "COMMENTS": "Pokaż komentarze",
-      "VERSION_COMPARISON": "Pokaż porównanie wersji"
-    },
     "PERSONAL-FILES": "Pliki osobiste",
     "CUSTOM-PERMISSION-MESSAGE": "Włącz komunikat o niestandardowych uprawnieniach",
-    "MEDIUM-TIME-FORMAT": "Włącz format czasu nośnika dla listy dokumentów",
     "SEARCH": {
       "RADIO": {
         "NONE": "Brak",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Witaj",
-  "VERSION": {
-    "NO_PERMISSION": "Nie masz uprawnień do zarządzania wersjami tej zawartości",
-    "NO_PERMISSION_EVENT": "Nie masz uprawnienia ${event.permission} do akcji ${event.action} typu ${event.type}.",
-    "CHOOSE_FILE": "Wybierz plik, aby wyświetlić jego wersje.",
-    "DIALOG": {
-      "CLOSE": "Zamknij",
-      "TITLE": "Zarządzaj wersjami"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Zamknij",
-      "TITLE": "Metadane"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Aplikacja",
     "HEADER_TEXT_COLOR": "Kolor tekstu nagłówka",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Przeglądarka nakładek",
     "ABOUT": "Informacje",
     "SEARCH": "Wyszukiwanie rozszerzone",
-    "EXTENDED_SEARCH_QUERY_BODY": "Wyszukiwanie rozszerzone z treścią zapytania",
     "WORD_TO_SEARCH": "Szukany wyraz",
     "SEARCH_CREATED_BY": "Utworzone przez",
-    "SEARCH_SERVICE_APPROACH": "Kliknij ten element, aby wyłączyć właściwość wejściową i skonfigurować korzystając z usługi",
     "HEADER_DATA": "Dane nagłówka",
     "TREE_VIEW": "Widok drzewa",
     "EXPAND_LIST": "Lista pozycji rozszerzalnych",
@@ -161,21 +135,6 @@
       "SIZE": "Rozmiar",
       "DELETED_ON": "Usunięte",
       "DELETED_BY": "Usunięte przez"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Tryb widoku karty",
-      "SHARE_EDIT": "Edytuj ustawienia",
-      "NEW_FOLDER": "Nowy folder",
-      "EDIT_FOLDER": "Edytuj folder",
-      "DOWNLOAD": "Pobierz",
-      "DELETE": "Usuń",
-      "FAVORITES": "Dodaj do ulubionych",
-      "SHARE": "Udostępnij",
-      "THEME": "Wybierz motyw",
-      "SHOW_VERSION": "Pokaż wersję",
-      "HIDE_VERSION": "Ukryj wersję",
-      "LISTVIEW": "Tryb widoku listy",
-      "CREATE_LIBRARY": "Utwórz bibliotekę"
     },
     "ACTIONS": {
       "VERSIONS": "Zarządzaj wersjami",

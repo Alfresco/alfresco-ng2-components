@@ -39,17 +39,8 @@
       "LOGIN": "登录",
       "HOME": "主页"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "允许删除",
-      "SHOW_COMMENTS": "显示有关版本的注释",
-      "ALLOW_DOWNLOAD": "启用版本下载",
-      "READ_ONLY": "只读",
-      "COMMENTS": "显示注释",
-      "VERSION_COMPARISON": "显示版本对比"
-    },
     "PERSONAL-FILES": "个人文件",
     "CUSTOM-PERMISSION-MESSAGE": "启用自定义权限消息",
-    "MEDIUM-TIME-FORMAT": "对文档列表启用中时间格式",
     "SEARCH": {
       "RADIO": {
         "NONE": "无",
@@ -60,21 +51,6 @@
     }
   },
   "title": "欢迎使用",
-  "VERSION": {
-    "NO_PERMISSION": "您没有管理此内容版本的权限",
-    "NO_PERMISSION_EVENT": "您没有${event.action}${event.type}的${event.permission}权限",
-    "CHOOSE_FILE": "选择一个文件，查看其版本",
-    "DIALOG": {
-      "CLOSE": "关闭",
-      "TITLE": "管理版本"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "关闭",
-      "TITLE": "元数据"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "APP",
     "HEADER_TEXT_COLOR": "标题文本颜色",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "重叠查看器",
     "ABOUT": "关于",
     "SEARCH": "扩展搜索",
-    "EXTENDED_SEARCH_QUERY_BODY": "包含查询主体的扩展搜索",
     "WORD_TO_SEARCH": "搜索词",
     "SEARCH_CREATED_BY": "创建者",
-    "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置",
     "HEADER_DATA": "标头数据",
     "TREE_VIEW": "树视图",
     "EXPAND_LIST": "可扩展项目列表",
@@ -161,21 +135,6 @@
       "SIZE": "尺寸",
       "DELETED_ON": "已删除",
       "DELETED_BY": "删除人"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "卡查看模式",
-      "SHARE_EDIT": "编辑设置",
-      "NEW_FOLDER": "新建文件夹",
-      "EDIT_FOLDER": "编辑文件夹",
-      "DOWNLOAD": "下载",
-      "DELETE": "删除",
-      "FAVORITES": "添加到收藏夹",
-      "SHARE": "共享",
-      "THEME": "选择一个主题",
-      "SHOW_VERSION": "显示版本",
-      "HIDE_VERSION": "隐藏版本",
-      "LISTVIEW": "列表视图模式",
-      "CREATE_LIBRARY": "创建库"
     },
     "ACTIONS": {
       "VERSIONS": "管理版本",

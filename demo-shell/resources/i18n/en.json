@@ -39,16 +39,7 @@
       "LOGIN": "Login",
       "HOME": "Home"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Allow delete",
-      "SHOW_COMMENTS": "Show comments on versions",
-      "ALLOW_DOWNLOAD": "Enable version download",
-      "READ_ONLY": "Read-only",
-      "COMMENTS": "Show comments",
-      "VERSION_COMPARISON": "Show version comparison"
-    },
     "PERSONAL-FILES": "Personal Files",
-    "MEDIUM-TIME-FORMAT": "Enable medium time format for document list",
     "SEARCH": {
       "RADIO": {
         "NONE": "None",
@@ -59,21 +50,6 @@
     }
   },
   "title": "Welcome",
-  "VERSION": {
-    "NO_PERMISSION": "You don't have permission to manage versions of this content",
-    "NO_PERMISSION_EVENT": "You don't have ${event.permission} permission to ${event.action} the ${event.type}",
-    "CHOOSE_FILE": "Select a file to see its versions",
-    "DIALOG": {
-      "CLOSE": "Close",
-      "TITLE": "Manage Versions"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Close",
-      "TITLE": "Metadata"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "App",
     "HEADER_TEXT_COLOR": "Header text color",
@@ -107,10 +83,8 @@
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
-    "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
-    "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
     "HEADER_DATA": "Header Data",
     "TREE_VIEW": "Tree View",
     "EXPAND_LIST": "Expandable item list",
@@ -160,19 +134,6 @@
       "SIZE": "Size",
       "DELETED_ON": "Deleted",
       "DELETED_BY": "Deleted by"
-    },
-    "TOOLBAR": {
-      "TOGGLE_DISPLAY_MODE": "Toggle display mode",
-      "TOGGLE_METADATA": "Toggle metadata",
-      "CARDVIEW": "Card view mode",
-      "SHARE_EDIT": "Edit settings",
-      "NEW_FOLDER": "New folder",
-      "EDIT_FOLDER": "Edit folder",
-      "DOWNLOAD": "Download",
-      "DELETE": "Delete",
-      "FAVORITES": "Add to favorites",
-      "SHARE": "Share",
-      "CREATE_LIBRARY": "Create Library"
     },
     "ACTIONS": {
       "VERSIONS": "Manage versions",

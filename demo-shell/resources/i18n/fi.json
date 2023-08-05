@@ -39,17 +39,8 @@
       "LOGIN": "Kirjaudu sisään",
       "HOME": "Aloitussivu"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Salli poistaminen",
-      "SHOW_COMMENTS": "Näytä kommentit versioissa",
-      "ALLOW_DOWNLOAD": "Ota version lataaminen käyttöön",
-      "READ_ONLY": "Vain luku",
-      "COMMENTS": "Näytä kommentit",
-      "VERSION_COMPARISON": "Näytä versiovertailu"
-    },
     "PERSONAL-FILES": "Omat tiedostot",
     "CUSTOM-PERMISSION-MESSAGE": "Muokkaa omaa oikeusilmoitusta",
-    "MEDIUM-TIME-FORMAT": "Ota Medium-aikamuoto käyttöön asiakirjaluettelossa",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ei mitään",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Tervetuloa",
-  "VERSION": {
-    "NO_PERMISSION": "Sinulla ei ole oikeutta hallita tämän sisällön versioita",
-    "NO_PERMISSION_EVENT": "Sinulla ei ole oikeutta ${event.permission} tapahtumalle ${event.action} tapahtumatyypissä ${event.type}",
-    "CHOOSE_FILE": "Jos haluat nähdä tiedoston versiot, valitse haluamasi tiedosto",
-    "DIALOG": {
-      "CLOSE": "Sulje",
-      "TITLE": "Hallitse versioita"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Sulje",
-      "TITLE": "Metatiedot"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Sovellus",
     "HEADER_TEXT_COLOR": "Otsikkotekstin väri",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Peittokatselutoiminto",
     "ABOUT": "Tietoja",
     "SEARCH": "Laajennettu haku",
-    "EXTENDED_SEARCH_QUERY_BODY": "Laajennettu haku kyselyn rungon avulla",
     "WORD_TO_SEARCH": "Hakusana",
     "SEARCH_CREATED_BY": "Tekijä:",
-    "SEARCH_SERVICE_APPROACH": "Jos haluat poistaa käytöstä annetun ominaisuuden ja määrittää palvelun avulla, valitse tämä",
     "HEADER_DATA": "Otsikkotiedot",
     "TREE_VIEW": "Puunäkymä",
     "EXPAND_LIST": "Laajennettava kohdelista",
@@ -161,21 +135,6 @@
       "SIZE": "Koko",
       "DELETED_ON": "Poistettu",
       "DELETED_BY": "Poistaja:"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Korttinäkymätila",
-      "SHARE_EDIT": "Muokkaa asetuksia",
-      "NEW_FOLDER": "Uusi kansio",
-      "EDIT_FOLDER": "Muokkaa kansiota",
-      "DOWNLOAD": "Lataa",
-      "DELETE": "Poista",
-      "FAVORITES": "Lisää suosikkeihin",
-      "SHARE": "Jaa",
-      "THEME": "Valitse teema",
-      "SHOW_VERSION": "Näytä versio",
-      "HIDE_VERSION": "Piilota versio",
-      "LISTVIEW": "Luettelonäkymätila",
-      "CREATE_LIBRARY": "Luo kirjasto"
     },
     "ACTIONS": {
       "VERSIONS": "Hallitse versioita",

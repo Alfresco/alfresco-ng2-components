@@ -39,17 +39,8 @@
       "LOGIN": "Inloggning",
       "HOME": "Hem"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Tillåt radering",
-      "SHOW_COMMENTS": "Visa kommentarer om versioner",
-      "ALLOW_DOWNLOAD": "Aktivera version nedladdning",
-      "READ_ONLY": "Skrivskyddad",
-      "COMMENTS": "Visa kommentarer",
-      "VERSION_COMPARISON": "Visa versionsjämförelse"
-    },
     "PERSONAL-FILES": "Personliga filer",
     "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetsmeddelande",
-    "MEDIUM-TIME-FORMAT": "Aktivera mellantidsformat för dokumentlista",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ingen",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Välkommen",
-  "VERSION": {
-    "NO_PERMISSION": "Du har inte behörighet att hantera versioner av det här innehållet",
-    "NO_PERMISSION_EVENT": "Du har inte ${event.permission} behörighet att ${event.action} ${event.type}",
-    "CHOOSE_FILE": "Välj en fil för att se dess versioner",
-    "DIALOG": {
-      "CLOSE": "Stäng",
-      "TITLE": "Hantera versioner"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Stäng",
-      "TITLE": "Metadata"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Program",
     "HEADER_TEXT_COLOR": "Rubrikens textfärg",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Överlagringssvisare",
     "ABOUT": "Om",
     "SEARCH": "Utvidgad sökning",
-    "EXTENDED_SEARCH_QUERY_BODY": "Utvidgad sökning med frågetext",
     "WORD_TO_SEARCH": "Sökord",
     "SEARCH_CREATED_BY": "Skapad av",
-    "SEARCH_SERVICE_APPROACH": "Kontrollera den här för att avaktivera indataegenskap och konfigurera genom att använda tjänsten",
     "HEADER_DATA": "Sidhuvuddata",
     "TREE_VIEW": "Trädvy",
     "EXPAND_LIST": "Utökbar objektlista",
@@ -161,21 +135,6 @@
       "SIZE": "Storlek",
       "DELETED_ON": "Raderad",
       "DELETED_BY": "Raderad av"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Kortvyläge",
-      "SHARE_EDIT": "Redigera inställningar",
-      "NEW_FOLDER": "Ny mapp",
-      "EDIT_FOLDER": "Redigera mapp",
-      "DOWNLOAD": "Ladda ner",
-      "DELETE": "Radera",
-      "FAVORITES": "Lägg till favoriter",
-      "SHARE": "Dela",
-      "THEME": "Välj ett tema",
-      "SHOW_VERSION": "Visa version",
-      "HIDE_VERSION": "Dölj version",
-      "LISTVIEW": "Listvyläge",
-      "CREATE_LIBRARY": "Skapa bibliotek"
     },
     "ACTIONS": {
       "VERSIONS": "Hantera versioner",

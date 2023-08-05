@@ -39,17 +39,8 @@
       "LOGIN": "Iniciar sesión",
       "HOME": "Inicio"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Permitir eliminar",
-      "SHOW_COMMENTS": "Mostrar comentarios en las versiones",
-      "ALLOW_DOWNLOAD": "Habilitar descarga de versión",
-      "READ_ONLY": "Solo lectura",
-      "COMMENTS": "Mostrar comentarios",
-      "VERSION_COMPARISON": "Mostrar versión comparada"
-    },
     "PERSONAL-FILES": "Ficheros personales",
     "CUSTOM-PERMISSION-MESSAGE": "Habilitar mensaje de permiso personalizado",
-    "MEDIUM-TIME-FORMAT": "Habilitar formato de tiempo mediano para lista de documentos",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ninguno",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Bienvenido",
-  "VERSION": {
-    "NO_PERMISSION": "No tiene permiso para administrar versiones de este contenido",
-    "NO_PERMISSION_EVENT": "No tiene permiso ${event.permission} para ${event.action} el ${event.type}",
-    "CHOOSE_FILE": "Seleccione un fichero para ver sus versiones",
-    "DIALOG": {
-      "CLOSE": "Cerrar",
-      "TITLE": "Gestionar versiones"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Cerrar",
-      "TITLE": "Metadatos"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "Aplicación",
     "HEADER_TEXT_COLOR": "Color de texto de encabezado",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Visor de superposición",
     "ABOUT": "Acerca de",
     "SEARCH": "Búsqueda ampliada",
-    "EXTENDED_SEARCH_QUERY_BODY": "Búsqueda ampliada con cuerpo de consulta",
     "WORD_TO_SEARCH": "Buscar palabra",
     "SEARCH_CREATED_BY": "Creado por",
-    "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio",
     "HEADER_DATA": "Datos de encabezado",
     "TREE_VIEW": "Vista de árbol",
     "EXPAND_LIST": "Lista de elementos expandible",
@@ -161,21 +135,6 @@
       "SIZE": "Tamaño",
       "DELETED_ON": "Eliminado",
       "DELETED_BY": "Eliminado por"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Modo de vista de tarjeta",
-      "SHARE_EDIT": "Editar configuración",
-      "NEW_FOLDER": "Nueva carpeta",
-      "EDIT_FOLDER": "Editar carpeta",
-      "DOWNLOAD": "Descargar",
-      "DELETE": "Eliminar",
-      "FAVORITES": "Añadir a Favoritos",
-      "SHARE": "Compartir",
-      "THEME": "Seleccionar un tema",
-      "SHOW_VERSION": "Mostrar versión",
-      "HIDE_VERSION": "Ocultar versión",
-      "LISTVIEW": "Modo de vista de lista",
-      "CREATE_LIBRARY": "Crear biblioteca"
     },
     "ACTIONS": {
       "VERSIONS": "Gestionar versiones",

@@ -39,17 +39,8 @@
       "LOGIN": "Logg på",
       "HOME": "Hjem"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Tillat sletting",
-      "SHOW_COMMENTS": "Vis kommentarer om versjoner",
-      "ALLOW_DOWNLOAD": "Aktiver versjonsnedlasting",
-      "READ_ONLY": "Skrivebeskyttet",
-      "COMMENTS": "Vis kommentarer",
-      "VERSION_COMPARISON": "Vis sammenligning av versjoner"
-    },
     "PERSONAL-FILES": "Personlige filer",
     "CUSTOM-PERMISSION-MESSAGE": "Aktiver tilpasset tillatelsesmelding",
-    "MEDIUM-TIME-FORMAT": "Aktiver medium tidsformat for dokumentliste",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ingen",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Velkommen",
-  "VERSION": {
-    "NO_PERMISSION": "Du har ikke tillatelse til å håndtere versjoner av dette innholdet",
-    "NO_PERMISSION_EVENT": "Du har ikke ${event.permission} tillatelse til å ${event.action} ${event.type}",
-    "CHOOSE_FILE": "Velg en fil for å se versjonene",
-    "DIALOG": {
-      "CLOSE": "Lukk",
-      "TITLE": "Håndtere versjoner"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Lukk",
-      "TITLE": "Metadata"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "App",
     "HEADER_TEXT_COLOR": "Overskriftstekstfarge",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Overleggsfremviser",
     "ABOUT": "Om",
     "SEARCH": "Utvidet søk",
-    "EXTENDED_SEARCH_QUERY_BODY": "Utvidet søk med spørringsuttrykk",
     "WORD_TO_SEARCH": "Søkeord",
     "SEARCH_CREATED_BY": "Opprettet av",
-    "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten",
     "HEADER_DATA": "Overskriftsdata",
     "TREE_VIEW": "Trevisning",
     "EXPAND_LIST": "Utvidbar elementliste",
@@ -161,21 +135,6 @@
       "SIZE": "Størrelse",
       "DELETED_ON": "Slettet",
       "DELETED_BY": "Slettet av"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Kortvisningsmodus",
-      "SHARE_EDIT": "Rediger innstillinger",
-      "NEW_FOLDER": "Ny mappe",
-      "EDIT_FOLDER": "Rediger mappe",
-      "DOWNLOAD": "Last ned",
-      "DELETE": "Slett",
-      "FAVORITES": "Legg til favoritter",
-      "SHARE": "Del",
-      "THEME": "Velg et tema",
-      "SHOW_VERSION": "Vis versjon",
-      "HIDE_VERSION": "Skjul versjon",
-      "LISTVIEW": "Listevisningsmodus",
-      "CREATE_LIBRARY": "Opprett bibliotek"
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versjoner",

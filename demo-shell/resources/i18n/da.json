@@ -39,17 +39,8 @@
       "LOGIN": "Log ind",
       "HOME": "Hjem"
     },
-    "ADF_VERSION_MANAGER": {
-      "ALLOW_DELETE": "Tillad sletning",
-      "SHOW_COMMENTS": "Vis kommentarer til versioner",
-      "ALLOW_DOWNLOAD": "Aktivér versionsdownload",
-      "READ_ONLY": "Skrivebeskyttet",
-      "COMMENTS": "Vis kommentarer",
-      "VERSION_COMPARISON": "Vis sammenligningsversion"
-    },
     "PERSONAL-FILES": "Personlige filer",
     "CUSTOM-PERMISSION-MESSAGE": "Tillad meddelelse om brugerdefineret tilladelse",
-    "MEDIUM-TIME-FORMAT": "Tillad mellemlangt tidsformat for dokumentliste",
     "SEARCH": {
       "RADIO": {
         "NONE": "Ingen",
@@ -60,21 +51,6 @@
     }
   },
   "title": "Velkommen",
-  "VERSION": {
-    "NO_PERMISSION": "Du har ikke tilladelse til at administrere versioner af dette indhold",
-    "NO_PERMISSION_EVENT": "Du har ikke tilladelsen ${event.permission} til at ${event.action} ${event.type}",
-    "CHOOSE_FILE": "Vælg en fil for at få vist dens versioner",
-    "DIALOG": {
-      "CLOSE": "Luk",
-      "TITLE": "Administrer versioner"
-    }
-  },
-  "METADATA": {
-    "DIALOG": {
-      "CLOSE": "Luk",
-      "TITLE": "Metadata"
-    }
-  },
   "APP_LAYOUT": {
     "APP": "App",
     "HEADER_TEXT_COLOR": "Farve på tekst i overskrift",
@@ -108,10 +84,8 @@
     "OVERLAY_VIEWER": "Overlejringsfremviser",
     "ABOUT": "Om",
     "SEARCH": "Udvidet søgning",
-    "EXTENDED_SEARCH_QUERY_BODY": "Udvidet søgning med forespørgselstekst",
     "WORD_TO_SEARCH": "Søg efter ord",
     "SEARCH_CREATED_BY": "Oprettet af",
-    "SEARCH_SERVICE_APPROACH": "Vælg dette felt for at deaktivere inputegenskaben og konfigurere ved hjælp af tjenesten",
     "HEADER_DATA": "Headerdata",
     "TREE_VIEW": "Trævisning",
     "EXPAND_LIST": "Udvidelig punktliste",
@@ -161,21 +135,6 @@
       "SIZE": "Størrelse",
       "DELETED_ON": "Slettet",
       "DELETED_BY": "Slettet af"
-    },
-    "TOOLBAR": {
-      "CARDVIEW": "Kortvisning",
-      "SHARE_EDIT": "Rediger indstillinger",
-      "NEW_FOLDER": "Ny mappe",
-      "EDIT_FOLDER": "Rediger mappe",
-      "DOWNLOAD": "Download",
-      "DELETE": "Slet",
-      "FAVORITES": "Angiv som favorit",
-      "SHARE": "Del",
-      "THEME": "Vælg et tema",
-      "SHOW_VERSION": "Vis version",
-      "HIDE_VERSION": "Skjul version",
-      "LISTVIEW": "Listevisning",
-      "CREATE_LIBRARY": "Opret bibliotek"
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versioner",
