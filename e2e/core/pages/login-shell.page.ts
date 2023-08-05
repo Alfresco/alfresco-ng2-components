@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { $, browser, by, element } from 'protractor';
+import { $, browser } from 'protractor';
 import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
 
 export class LoginShellPage {
@@ -35,13 +35,9 @@ export class LoginShellPage {
     signInButton = $('#login-button');
     showPasswordElement = $('button[data-automation-id="show_password"]');
     hidePasswordElement = $('button[data-automation-id="hide_password"]');
-    rememberMe = $('mat-checkbox[id="adf-login-remember"]');
-    needHelp = $('#adf-login-action-left');
     register = $('#adf-login-action-right');
-    footerSwitch = $('#switch4');
     logoSwitch = $('#adf-toggle-logo');
     header = $('#adf-header');
-    settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
     sidenavLayout = $(`[data-automation-id="sidenav-layout"]`);
 
     async goToLoginPage(): Promise<void> {
@@ -101,10 +97,6 @@ export class LoginShellPage {
         await BrowserActions.click(this.signInButton);
     }
 
-    async clickSettingsIcon(): Promise<void> {
-        await BrowserActions.click(this.settingsIcon);
-    }
-
     async showPassword(): Promise<void> {
         await BrowserActions.click(this.showPasswordElement);
     }
@@ -119,38 +111,6 @@ export class LoginShellPage {
 
     async checkPasswordIsHidden(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-    }
-
-    async checkRememberIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
-    }
-
-    async checkRememberIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
-    }
-
-    async checkNeedHelpIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
-    }
-
-    async checkNeedHelpIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
-    }
-
-    async checkRegisterDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.register);
-    }
-
-    async checkRegisterIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
-    }
-
-    async enableFooter(): Promise<void> {
-        await this.togglePage.enableToggle(this.footerSwitch);
-    }
-
-    async disableFooter(): Promise<void> {
-        await this.togglePage.disableToggle(this.footerSwitch);
     }
 
     async enableLogoSwitch(): Promise<void> {

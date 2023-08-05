@@ -31,7 +31,6 @@ export class LoginComponent {
     customLogoImageURL = './assets/images/alfresco-logo.svg';
 
     disableCsrf = false;
-    showFooter = true;
     customSuccessRoute = false;
     customLogoImage = false;
 
@@ -49,10 +48,6 @@ export class LoginComponent {
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
-    }
-
-    toggleFooter() {
-        this.showFooter = !this.showFooter;
     }
 
     toggleSuccessRoute() {

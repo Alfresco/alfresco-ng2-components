@@ -128,18 +128,6 @@ describe('Login component', () => {
         await loginPage.clearPassword();
     });
 
-    it('[C260048] Should be possible to enable/disable login footer', async () => {
-        await loginPage.goToLoginPage();
-        await loginPage.enableFooter();
-        await loginPage.checkRememberIsDisplayed();
-        await loginPage.checkNeedHelpIsDisplayed();
-        await loginPage.checkRegisterDisplayed();
-        await loginPage.disableFooter();
-        await loginPage.checkRememberIsNotDisplayed();
-        await loginPage.checkNeedHelpIsNotDisplayed();
-        await loginPage.checkRegisterIsNotDisplayed();
-    });
-
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 

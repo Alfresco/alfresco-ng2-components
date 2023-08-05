@@ -9,14 +9,6 @@
     </p>
     <p class="app-toggle">
         <mat-slide-toggle
-            id="switch4"
-            (change)="toggleFooter()"
-            [checked]="showFooter">
-            Login footer
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
             id="adf-toggle-show-successRoute"
             (change)="toggleSuccessRoute()"
             [checked]="customSuccessRoute">
@@ -62,7 +54,7 @@
 <adf-login
     [successRoute]="customSuccessRouteURI"
     [logoImageUrl]="customLogoImageURL"
-    [showLoginActions]="showFooter"
+    [showLoginActions]="false"
     [showRememberMe]="false"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin()"
@@ -74,14 +66,6 @@
                 (change)="toggleCSRF()"
                 [checked]="!disableCsrf">
                 CSRF
-            </mat-slide-toggle>
-        </p>
-        <p>
-            <mat-slide-toggle
-                id="switch4-mobile"
-                (change)="toggleFooter()"
-                [checked]="showFooter">
-                Login footer
             </mat-slide-toggle>
         </p>
         <button
