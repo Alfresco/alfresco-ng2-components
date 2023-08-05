@@ -69,7 +69,7 @@ export class ContentServicesPage {
     emptyFolderImage = $('.adf-empty-folder-image');
     gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
     cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
-    shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+    shareNodeButton = element(by.cssContainingText('mat-icon', 'share'));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
