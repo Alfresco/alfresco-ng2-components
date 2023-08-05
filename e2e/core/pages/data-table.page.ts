@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { $, $$, browser, by, element, ElementFinder, protractor } from 'protractor';
+import { $, $$, browser, by, element, protractor } from 'protractor';
 
 export class DataTablePage {
 
@@ -36,7 +36,6 @@ export class DataTablePage {
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
     allSelectedRows = $$(`adf-datatable-row[class*='is-selected']`);
     selectedRowNumber = $(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
-    idColumnHeader = $(`div[data-automation-id='auto_id_id']`);
     selectModeDropdown = new DropdownPage($(`mat-select[data-automation-id='datatable-selection-mode']`));
 
     constructor(data?) {
@@ -74,13 +73,5 @@ export class DataTablePage {
 
     async selectSelectionMode(selectionMode: string): Promise<void> {
         await this.selectModeDropdown.selectDropdownOption(selectionMode);
-    }
-
-    getDropTargetIdColumnCell(rowNumber: number): ElementFinder {
-        return this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.id);
-    }
-
-    getDropTargetIdColumnHeader(): ElementFinder {
-        return this.idColumnHeader;
     }
 }

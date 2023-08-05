@@ -22,7 +22,6 @@ import { ProcessServicesPage } from '../../process-services/pages/process-servic
 export class NavigationBarPage {
     linkMenuChildrenContainer = $('.nestedMenu');
     dataTableNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Datatable"]');
-    dataTableDragAndDropButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Drag and Drop"]');
     processServicesNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="App"]');
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
     formButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Form"]');
@@ -108,12 +107,6 @@ export class NavigationBarPage {
     async navigateToDatatable(): Promise<void> {
         await this.clickDataTable();
         await BrowserActions.click(this.dataTableNestedButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-    }
-
-    async navigateToDragAndDropDatatable(): Promise<void> {
-        await this.clickDataTable();
-        await BrowserActions.click(this.dataTableDragAndDropButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 

@@ -40,23 +40,10 @@ export class NotificationHistoryPage {
         await BrowserVisibility.waitUntilElementIsVisible(notificationListButton);
     }
 
-    async checkNotificationIsNotPresent(text: string): Promise<void> {
-        const notificationLisText = await BrowserActions.getText(this.notificationList);
-        await expect(notificationLisText).not.toContain(text);
-    }
-
     async checkNotifyContains(text: string): Promise<void> {
         await this.clickNotificationButton();
         await this.checkNotificationIsPresent(text);
         await this.clickMarkAsRead();
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.notificationList);
-    }
-
-    async checkNotifyNotContains(text: string): Promise<void> {
-        await this.clickNotificationButton();
-        await this.checkNotificationIsNotPresent(text);
-        await this.clickNotificationButton();
-        await BrowserActions.closeMenuAndDialogs();
         await BrowserVisibility.waitUntilElementIsNotVisible(this.notificationList);
     }
 }
