@@ -345,11 +345,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
             },
             {
-                path: 'social',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/social/social.module').then(m => m.AppSocialModule)
-            },
-            {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]

@@ -67,7 +67,6 @@
     "WEBSCRIPT": "Script Web",
     "PIPES": "Tuyaux",
     "TRASHCAN": "Corbeille",
-    "SOCIAL": "Réseaux sociaux",
     "SETTINGS": "Paramètres",
     "CONFIG-EDITOR": "Editeur de configuration",
     "OVERLAY_VIEWER": "Visualisation de la superposition",
@@ -155,10 +154,6 @@
       "XTRALARGE": "7.Taille : très gros",
       "XXTRALARGE": "8.Taille : énorme"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Composant J'aime",
-    "RATING": "Composant d'évaluation"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

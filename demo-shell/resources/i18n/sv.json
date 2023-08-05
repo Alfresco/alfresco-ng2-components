@@ -67,7 +67,6 @@
     "WEBSCRIPT": "Webbskript",
     "PIPES": "Pipes",
     "TRASHCAN": "Papperskorg",
-    "SOCIAL": "Social",
     "SETTINGS": "Inställningar",
     "CONFIG-EDITOR": "Konfigurationseditor",
     "OVERLAY_VIEWER": "Överlagringssvisare",
@@ -155,10 +154,6 @@
       "XTRALARGE": "7.Storlek: extra large",
       "XXTRALARGE": "8.Storlek: XX large"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Som komponent",
-    "RATING": "Klassificeringskomponent"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

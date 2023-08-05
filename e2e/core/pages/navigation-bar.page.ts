@@ -110,14 +110,6 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickTagButton(): Promise<void> {
-        await this.clickNavigationBarItem('Tag');
-    }
-
-    async clickSocialButton(): Promise<void> {
-        await this.clickNavigationBarItem('Social');
-    }
-
     async clickOverlayViewerButton(): Promise<void> {
         await this.clickNavigationBarItem('Overlay Viewer');
     }

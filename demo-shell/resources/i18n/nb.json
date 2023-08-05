@@ -67,7 +67,6 @@
     "WEBSCRIPT": "Webscript",
     "PIPES": "Rør",
     "TRASHCAN": "Søppelkurv",
-    "SOCIAL": "Sosial",
     "SETTINGS": "Innstillinger",
     "CONFIG-EDITOR": "Konfigurasjonsredigering",
     "OVERLAY_VIEWER": "Overleggsfremviser",
@@ -155,10 +154,6 @@
       "XTRALARGE": "7.Størrelse: xtra large",
       "XXTRALARGE": "8.Størrelse: XX large"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Like komponent",
-    "RATING": "Rangering komponent"
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {

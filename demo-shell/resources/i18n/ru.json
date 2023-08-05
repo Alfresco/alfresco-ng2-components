@@ -67,7 +67,6 @@
     "WEBSCRIPT": "Webscript",
     "PIPES": "Каналы",
     "TRASHCAN": "Корзина",
-    "SOCIAL": "Социальный",
     "SETTINGS": "Параметры",
     "CONFIG-EDITOR": "Редактор конфигурации",
     "OVERLAY_VIEWER": "Просмотр наложения",
@@ -155,10 +154,6 @@
       "XTRALARGE": "7. Размер: очень большой",
       "XXTRALARGE": "8. Размер: огромный"
     }
-  },
-  "SOCIAL": {
-    "LIKE": "Компонент \"Нравится\"",
-    "RATING": "Компонент \"Рейтинг\""
   },
   "TASK_LIST_DEMO": {
     "ERROR_MESSAGE": {
