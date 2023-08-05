@@ -255,6 +255,5 @@
       "PROCESS_ID": "ID de instancia del proceso",
       "ACTION_TYPE": "Tipo de acción"
     }
-  },
-  "OPEN_DIALOG": "Abrir cuadro de diálogo"
+  }
 }

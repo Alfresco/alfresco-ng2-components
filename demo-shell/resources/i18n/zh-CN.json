@@ -255,6 +255,5 @@
       "PROCESS_ID": "流程实例 ID",
       "ACTION_TYPE": "操作类型"
     }
-  },
-  "OPEN_DIALOG": "打开对话框"
+  }
 }

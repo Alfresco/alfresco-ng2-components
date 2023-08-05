@@ -255,6 +255,5 @@
       "PROCESS_ID": "ID istanza di processo",
       "ACTION_TYPE": "Tipo di azione"
     }
-  },
-  "OPEN_DIALOG": "Apri finestra di dialogo"
+  }
 }

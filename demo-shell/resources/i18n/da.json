@@ -255,6 +255,5 @@
       "PROCESS_ID": "Procesforekomst-id",
       "ACTION_TYPE": "Handlingstype"
     }
-  },
-  "OPEN_DIALOG": "Åbn dialog"
+  }
 }

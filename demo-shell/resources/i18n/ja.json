@@ -255,6 +255,5 @@
       "PROCESS_ID": "プロセスインスタンス ID",
       "ACTION_TYPE": "処理のタイプ"
     }
-  },
-  "OPEN_DIALOG": "ダイアログを開く"
+  }
 }

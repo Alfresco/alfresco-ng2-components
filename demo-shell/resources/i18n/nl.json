@@ -255,6 +255,5 @@
       "PROCESS_ID": "Procesinstance-id",
       "ACTION_TYPE": "Actietype"
     }
-  },
-  "OPEN_DIALOG": "Dialoogvenster Openen"
+  }
 }

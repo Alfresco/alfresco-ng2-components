@@ -255,6 +255,5 @@
       "PROCESS_ID": "ID de instância de processo",
       "ACTION_TYPE": "Tipo de ação"
     }
-  },
-  "OPEN_DIALOG": "Abrir caixa de diálogo"
+  }
 }

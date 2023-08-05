@@ -255,6 +255,5 @@
       "PROCESS_ID": "Prosessiesiintymätunnus",
       "ACTION_TYPE": "Toiminnon tyyppi"
     }
-  },
-  "OPEN_DIALOG": "Avaa valintaikkuna"
+  }
 }

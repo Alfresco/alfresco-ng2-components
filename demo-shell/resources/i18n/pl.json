@@ -255,6 +255,5 @@
       "PROCESS_ID": "Identyfikator wystąpienia procesu",
       "ACTION_TYPE": "Typ czynności"
     }
-  },
-  "OPEN_DIALOG": "Otwórz okno dialogowe"
+  }
 }

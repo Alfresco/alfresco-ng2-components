@@ -254,6 +254,5 @@
       "PROCESS_ID": "Process Instance ID",
       "ACTION_TYPE": "Action Type"
     }
-  },
-  "OPEN_DIALOG": "Open dialog"
+  }
 }

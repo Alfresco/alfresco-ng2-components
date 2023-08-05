@@ -1,35 +1,19 @@
-:host {
+app-home-view {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
-}
-
-.app-home-header-background {
-    overflow: hidden;
-}
-
-.app-home-section {
     text-align: center;
-    padding-top: 60px;
-}
 
-.app-home-headline {
-    h1 {
-        font-size: 56px;
-        font-weight: 300;
-        line-height: 56px;
-        margin: 15px 5px;
+    .app-home-headline {
+        h1 {
+            font-size: 56px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 300;
+        }
     }
-
-    h2 {
-        font-size: 18px;
-        font-weight: 300;
-        line-height: 28px;
-        margin: 15px 0 25px;
-    }
-}
-
-.app-home-docs-button {
-    margin: 30px;
 }

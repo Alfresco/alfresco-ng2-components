@@ -255,6 +255,5 @@
       "PROCESS_ID": "ID de l'instance de processus",
       "ACTION_TYPE": "Type d'action"
     }
-  },
-  "OPEN_DIALOG": "Boîte de dialogue Ouvrir"
+  }
 }

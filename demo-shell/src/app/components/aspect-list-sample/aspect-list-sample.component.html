@@ -12,7 +12,7 @@
     <adf-aspect-list [nodeId]="currentNodeId" *ngIf="isShowed" (valueChanged)="onValueChanged($event)"></adf-aspect-list>
 </div>
 <div>
-    <button mat-fab color="primary" [attr.aria-label]="'OPEN_DIALOG' | translate" (click)="openAspectDialog()">
+    <button mat-fab color="primary" (click)="openAspectDialog()">
         Dialog
     </button>
 </div>

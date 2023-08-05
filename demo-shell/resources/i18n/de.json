@@ -255,6 +255,5 @@
       "PROCESS_ID": "Prozessinstanz-ID",
       "ACTION_TYPE": "Aktionstyp"
     }
-  },
-  "OPEN_DIALOG": "Dialog öffnen"
+  }
 }
