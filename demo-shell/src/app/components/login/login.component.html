@@ -1,10 +1,7 @@
-<!--BPM, ECN AND CSRF TOGGLE-->
-
 <div class="app-settings">
     <p class="app-toggle">
         <mat-slide-toggle
             id="switch3"
-            color="primary"
             (change)="toggleCSRF()"
             [checked]="!disableCsrf">
             CSRF
@@ -13,28 +10,17 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="switch4"
-            color="primary"
             (change)="toggleFooter()"
             [checked]="showFooter">
-            {{ 'LOGIN.LOGIN_FOOTER'| translate }}
-        </mat-slide-toggle>
-    </p>
-    <p class="app-toggle">
-        <mat-slide-toggle
-            id="adf-toggle-show-rememberme"
-            color="primary"
-            (change)="toggleRememberMe()"
-            [checked]="showRememberMe">
-            {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
+            Login footer
         </mat-slide-toggle>
     </p>
     <p class="app-toggle">
         <mat-slide-toggle
             id="adf-toggle-show-successRoute"
-            color="primary"
             (change)="toggleSuccessRoute()"
             [checked]="customSuccessRoute">
-            {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
+            Show success route
         </mat-slide-toggle>
     </p>
     <p class="app-toggle">
@@ -51,10 +37,9 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="adf-toggle-logo"
-            color="primary"
             (change)="toggleLogo()"
             [checked]="customLogoImage">
-            {{ 'LOGIN.CUSTOM_LOGO'| translate }}
+            Custom Logo
         </mat-slide-toggle>
     </p>
     <p class="app-toggle">
@@ -70,9 +55,7 @@
 
 </div>
 
-<!--SETTING BUTTON-->
-
-<a mat-fab class="app-setting-button" data-automation-id="settings" href="" routerLink="/settings" color="accent">
+<a mat-fab class="app-setting-button" data-automation-id="settings" href="" routerLink="/settings">
     <mat-icon>settings</mat-icon>
 </a>
 
@@ -80,7 +63,7 @@
     [successRoute]="customSuccessRouteURI"
     [logoImageUrl]="customLogoImageURL"
     [showLoginActions]="showFooter"
-    [showRememberMe]="showFooter && showRememberMe"
+    [showRememberMe]="false"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin()"
     (error)="onError($event)">
@@ -88,7 +71,6 @@
         <p>
             <mat-slide-toggle
                 id="switch3-mobile"
-                color="primary"
                 (change)="toggleCSRF()"
                 [checked]="!disableCsrf">
                 CSRF
@@ -97,20 +79,17 @@
         <p>
             <mat-slide-toggle
                 id="switch4-mobile"
-                color="primary"
                 (change)="toggleFooter()"
                 [checked]="showFooter">
-                {{ 'LOGIN.LOGIN_FOOTER'| translate }}
+                Login footer
             </mat-slide-toggle>
         </p>
         <button
             type="button"
             mat-raised-button
-            color="accent"
             class="app-mobile-setting-button"
             routerLink="/settings"
-            data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
+            data-automation-id="settings">Settings
         </button>
-
     </div>
 </adf-login>

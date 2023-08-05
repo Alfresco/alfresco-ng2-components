@@ -29,16 +29,6 @@
       "PROPERTIES": "Egenskaber",
       "VERSIONS": "Versioner"
     },
-    "HOME": {
-      "TITLE": "Angular-komponenter til Alfresco",
-      "DOCUMENTATION": "Dokumentation"
-    },
-    "LOGOUT": {
-      "TITLE": "Side til at logge af",
-      "SUB_TITLE": "Du er nu logget af",
-      "LOGIN": "Log ind",
-      "HOME": "Hjem"
-    },
     "PERSONAL-FILES": "Personlige filer",
     "CUSTOM-PERMISSION-MESSAGE": "Tillad meddelelse om brugerdefineret tilladelse",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Automatisk fuldførelse",
     "RADIO_PLACEHOLDER": "Alternativknap",
     "SELECT_PLACEHOLDER": "Rulleliste"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Sidefod til login",
-    "SHOW_REMEMBERME": "Vis Husk mig",
-    "SHOW_SUCCESS_ROUTE": "Vis succesrute",
-    "CUSTOM_LOGO": "Brugerdefineret logo"
   },
   "SEARCH": {
     "RESULTS": "Søgeresultater",

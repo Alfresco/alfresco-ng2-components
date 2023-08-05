@@ -29,16 +29,6 @@
       "PROPERTIES": "Propriétés",
       "VERSIONS": "Versions"
     },
-    "HOME": {
-      "TITLE": "Composants Angular pour Alfresco",
-      "DOCUMENTATION": "Documentation"
-    },
-    "LOGOUT": {
-      "TITLE": "Page de déconnexion",
-      "SUB_TITLE": "Vous êtes bien déconnecté",
-      "LOGIN": "Connexion",
-      "HOME": "Accueil"
-    },
     "PERSONAL-FILES": "Fichiers personnels",
     "CUSTOM-PERMISSION-MESSAGE": "Activer le message de droits d'accès personnalisés",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Saisie semi-automatique",
     "RADIO_PLACEHOLDER": "Case d'option",
     "SELECT_PLACEHOLDER": "Liste déroulante"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Pied de la page connexion",
-    "SHOW_REMEMBERME": "Afficher Mémoriser mes informations",
-    "SHOW_SUCCESS_ROUTE": "Afficher la success route",
-    "CUSTOM_LOGO": "Logo personnalisé"
   },
   "SEARCH": {
     "RESULTS": "Résultats de la recherche",

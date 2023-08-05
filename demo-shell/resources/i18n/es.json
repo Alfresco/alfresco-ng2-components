@@ -29,16 +29,6 @@
       "PROPERTIES": "Propiedades",
       "VERSIONS": "Versiones"
     },
-    "HOME": {
-      "TITLE": "Componentes angulares para Alfresco",
-      "DOCUMENTATION": "Documentación"
-    },
-    "LOGOUT": {
-      "TITLE": "Página de cierre de sesión",
-      "SUB_TITLE": "Se ha cerrado su sesión",
-      "LOGIN": "Iniciar sesión",
-      "HOME": "Inicio"
-    },
     "PERSONAL-FILES": "Ficheros personales",
     "CUSTOM-PERMISSION-MESSAGE": "Habilitar mensaje de permiso personalizado",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Predictivo",
     "RADIO_PLACEHOLDER": "Botón de opción",
     "SELECT_PLACEHOLDER": "Desplegable"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Pie del inicio de sesión",
-    "SHOW_REMEMBERME": "Mostrar opción para recordarme",
-    "SHOW_SUCCESS_ROUTE": "Mostrar ruta correcta",
-    "CUSTOM_LOGO": "Logotipo personalizado"
   },
   "SEARCH": {
     "RESULTS": "Resultados de la búsqueda",

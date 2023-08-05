@@ -29,16 +29,6 @@
       "PROPERTIES": "Właściwości",
       "VERSIONS": "Wersje"
     },
-    "HOME": {
-      "TITLE": "Składniki Angular dla Alfresco",
-      "DOCUMENTATION": "Dokumentacja"
-    },
-    "LOGOUT": {
-      "TITLE": "Strona wylogowywania",
-      "SUB_TITLE": "Wylogowanie przebiegło pomyślnie.",
-      "LOGIN": "Zaloguj",
-      "HOME": "Strona główna"
-    },
     "PERSONAL-FILES": "Pliki osobiste",
     "CUSTOM-PERMISSION-MESSAGE": "Włącz komunikat o niestandardowych uprawnieniach",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Wpisywanie z wyprzedzeniem",
     "RADIO_PLACEHOLDER": "Przycisk radiowy",
     "SELECT_PLACEHOLDER": "Menu rozwijane"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Stopka logowania",
-    "SHOW_REMEMBERME": "Pokaż opcję „Zapamiętaj mnie”",
-    "SHOW_SUCCESS_ROUTE": "Pokaż ścieżkę powodzenia",
-    "CUSTOM_LOGO": "Logo niestandardowe"
   },
   "SEARCH": {
     "RESULTS": "Wyniki wyszukiwania",

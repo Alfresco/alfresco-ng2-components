@@ -29,16 +29,6 @@
       "PROPERTIES": "Egenskaper",
       "VERSIONS": "Versioner"
     },
-    "HOME": {
-      "TITLE": "Angular-komponenter till Alfresco",
-      "DOCUMENTATION": "Dokumentation"
-    },
-    "LOGOUT": {
-      "TITLE": "Utloggningssida",
-      "SUB_TITLE": "Du är nu utloggad",
-      "LOGIN": "Inloggning",
-      "HOME": "Hem"
-    },
     "PERSONAL-FILES": "Personliga filer",
     "CUSTOM-PERMISSION-MESSAGE": "Aktivera anpassat behörighetsmeddelande",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Typeahead",
     "RADIO_PLACEHOLDER": "Radioknapp",
     "SELECT_PLACEHOLDER": "Dropdown"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Inloggningssidfot",
-    "SHOW_REMEMBERME": "Visa kom ihåg mig",
-    "SHOW_SUCCESS_ROUTE": "Visa framgångsväg",
-    "CUSTOM_LOGO": "Anpassad logotyp"
   },
   "SEARCH": {
     "RESULTS": "Sökresultat",

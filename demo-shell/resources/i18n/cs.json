@@ -29,16 +29,6 @@
       "PROPERTIES": "Vlastnosti",
       "VERSIONS": "Verze"
     },
-    "HOME": {
-      "TITLE": "Součásti Angular pro produkty Alfresco",
-      "DOCUMENTATION": "Dokumentace"
-    },
-    "LOGOUT": {
-      "TITLE": "Stránka pro odhlášení",
-      "SUB_TITLE": "Byli jste odhlášeni",
-      "LOGIN": "Přihlášení",
-      "HOME": "Domů"
-    },
     "PERSONAL-FILES": "Osobní soubory",
     "CUSTOM-PERMISSION-MESSAGE": "Povolit přizpůsobené oznámení o oprávnění",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Začněte psát",
     "RADIO_PLACEHOLDER": "Přepínač",
     "SELECT_PLACEHOLDER": "Rozevírací seznam"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Zápatí přihlašování",
-    "SHOW_REMEMBERME": "Zobrazit tlačítko „Zapamatovat přihlášení“",
-    "SHOW_SUCCESS_ROUTE": "Zobrazit okna pro úspěšné přihlášení",
-    "CUSTOM_LOGO": "Vlastní logo"
   },
   "SEARCH": {
     "RESULTS": "Výsledky hledání",

@@ -29,16 +29,6 @@
       "PROPERTIES": "Ominaisuudet",
       "VERSIONS": "Versiot"
     },
-    "HOME": {
-      "TITLE": "Angular-komponentit Alfrescolle",
-      "DOCUMENTATION": "Dokumentaatio"
-    },
-    "LOGOUT": {
-      "TITLE": "Uloskirjautumissivu",
-      "SUB_TITLE": "Olet nyt kirjautunut ulos",
-      "LOGIN": "Kirjaudu sisään",
-      "HOME": "Aloitussivu"
-    },
     "PERSONAL-FILES": "Omat tiedostot",
     "CUSTOM-PERMISSION-MESSAGE": "Muokkaa omaa oikeusilmoitusta",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Typeahead",
     "RADIO_PLACEHOLDER": "Valintanappi",
     "SELECT_PLACEHOLDER": "Avattava valikko"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Kirjautumisalatunniste",
-    "SHOW_REMEMBERME": "Näytä Muista minut -toiminto",
-    "SHOW_SUCCESS_ROUTE": "Näytä onnistumispolku",
-    "CUSTOM_LOGO": "Oma logo"
   },
   "SEARCH": {
     "RESULTS": "Hakutulokset",

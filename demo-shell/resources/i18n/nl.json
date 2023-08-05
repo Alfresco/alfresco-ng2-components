@@ -29,16 +29,6 @@
       "PROPERTIES": "Eigenschappen",
       "VERSIONS": "Versies"
     },
-    "HOME": {
-      "TITLE": "Angular-componenten voor Alfresco",
-      "DOCUMENTATION": "Documentatie"
-    },
-    "LOGOUT": {
-      "TITLE": "Afmeldingspagina",
-      "SUB_TITLE": "U bent nu afgemeld",
-      "LOGIN": "Aanmelden",
-      "HOME": "Home"
-    },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "CUSTOM-PERMISSION-MESSAGE": "Aangepast rechtenbericht inschakelen",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Automatische voltooiing",
     "RADIO_PLACEHOLDER": "Keuzerondje",
     "SELECT_PLACEHOLDER": "Dropdown"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Voettekst aanmeldingspagina",
-    "SHOW_REMEMBERME": "'Mij onthouden' weergeven",
-    "SHOW_SUCCESS_ROUTE": "Succesroute weergeven",
-    "CUSTOM_LOGO": "Aangepast logo"
   },
   "SEARCH": {
     "RESULTS": "Zoekresultaten",

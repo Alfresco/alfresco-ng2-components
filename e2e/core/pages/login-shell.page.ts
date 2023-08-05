@@ -39,7 +39,6 @@ export class LoginShellPage {
     needHelp = $('#adf-login-action-left');
     register = $('#adf-login-action-right');
     footerSwitch = $('#switch4');
-    rememberMeSwitch = $('#adf-toggle-show-rememberme');
     logoSwitch = $('#adf-toggle-logo');
     header = $('#adf-header');
     settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
@@ -152,10 +151,6 @@ export class LoginShellPage {
 
     async disableFooter(): Promise<void> {
         await this.togglePage.disableToggle(this.footerSwitch);
-    }
-
-    async disableRememberMe(): Promise<void> {
-        await this.togglePage.disableToggle(this.rememberMeSwitch);
     }
 
     async enableLogoSwitch(): Promise<void> {

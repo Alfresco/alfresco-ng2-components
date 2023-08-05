@@ -29,16 +29,6 @@
       "PROPERTIES": "Egenskaper",
       "VERSIONS": "Versjoner"
     },
-    "HOME": {
-      "TITLE": "Vinkelkomponenter for Alfresco",
-      "DOCUMENTATION": "Dokumentasjon"
-    },
-    "LOGOUT": {
-      "TITLE": "Avloggingsside",
-      "SUB_TITLE": "Du er nå logget av",
-      "LOGIN": "Logg på",
-      "HOME": "Hjem"
-    },
     "PERSONAL-FILES": "Personlige filer",
     "CUSTOM-PERMISSION-MESSAGE": "Aktiver tilpasset tillatelsesmelding",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Type-ahead",
     "RADIO_PLACEHOLDER": "Alternativknapp",
     "SELECT_PLACEHOLDER": "Nedtrekk"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Bunntekt pålogging",
-    "SHOW_REMEMBERME": "Vis husk meg",
-    "SHOW_SUCCESS_ROUTE": "Vis riktig rute",
-    "CUSTOM_LOGO": "Egendefinert logo"
   },
   "SEARCH": {
     "RESULTS": "Søkeresultater",

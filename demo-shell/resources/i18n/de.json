@@ -29,16 +29,6 @@
       "PROPERTIES": "Eigenschaften",
       "VERSIONS": "Versionen"
     },
-    "HOME": {
-      "TITLE": "Angular-Komponenten für Alfresco",
-      "DOCUMENTATION": "Dokumentation"
-    },
-    "LOGOUT": {
-      "TITLE": "Seite 'Abmelden'",
-      "SUB_TITLE": "Sie sind nun abgemeldet.",
-      "LOGIN": "Anmelden",
-      "HOME": "Startseite"
-    },
     "PERSONAL-FILES": "Persönliche Dateien",
     "CUSTOM-PERMISSION-MESSAGE": "Meldung 'Benutzerdefinierte Berechtigung aktivieren'",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Automatische Vervollständigung",
     "RADIO_PLACEHOLDER": "Optionsschaltfläche",
     "SELECT_PLACEHOLDER": "Dropdown"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login-Fußzeile",
-    "SHOW_REMEMBERME": "'Benutzername und Passwort speichern' anzeigen",
-    "SHOW_SUCCESS_ROUTE": "Erfolgsroute anzeigen",
-    "CUSTOM_LOGO": "Benutzerdefiniertes Logo"
   },
   "SEARCH": {
     "RESULTS": "Ergebnisse durchsuchen",

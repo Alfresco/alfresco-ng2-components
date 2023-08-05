@@ -29,16 +29,6 @@
       "PROPERTIES": "属性",
       "VERSIONS": "版本"
     },
-    "HOME": {
-      "TITLE": "Alfresco 的 Angular 组件",
-      "DOCUMENTATION": "文档"
-    },
-    "LOGOUT": {
-      "TITLE": "注销页面",
-      "SUB_TITLE": "您现在已注销",
-      "LOGIN": "登录",
-      "HOME": "主页"
-    },
     "PERSONAL-FILES": "个人文件",
     "CUSTOM-PERMISSION-MESSAGE": "启用自定义权限消息",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "预先输入",
     "RADIO_PLACEHOLDER": "单选按钮",
     "SELECT_PLACEHOLDER": "下拉列表"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "登录页脚",
-    "SHOW_REMEMBERME": "显示记住我",
-    "SHOW_SUCCESS_ROUTE": "显示成功路由",
-    "CUSTOM_LOGO": "自定义徽标"
   },
   "SEARCH": {
     "RESULTS": "搜索结果",

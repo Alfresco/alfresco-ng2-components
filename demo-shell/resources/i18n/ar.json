@@ -29,16 +29,6 @@
       "PROPERTIES": "الخصائص",
       "VERSIONS": "الإصدارات"
     },
-    "HOME": {
-      "TITLE": "المكونات الزاوّية لـ Alfresco",
-      "DOCUMENTATION": "الوثائق"
-    },
-    "LOGOUT": {
-      "TITLE": "صفحة الخروج",
-      "SUB_TITLE": "تم خروجك الآن",
-      "LOGIN": "دخول",
-      "HOME": "رئيسية"
-    },
     "PERSONAL-FILES": "الملفات الشخصية",
     "CUSTOM-PERMISSION-MESSAGE": "تمكين رسالة إذن مخصصة",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "التنبؤ بالحروف",
     "RADIO_PLACEHOLDER": "زر الراديو",
     "SELECT_PLACEHOLDER": "القائمة المنسدلة"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "تذييل الدخول",
-    "SHOW_REMEMBERME": "إظهار تذكرني",
-    "SHOW_SUCCESS_ROUTE": "إظهار طريق النجاح",
-    "CUSTOM_LOGO": "شعار مخصص"
   },
   "SEARCH": {
     "RESULTS": "نتائج البحث",

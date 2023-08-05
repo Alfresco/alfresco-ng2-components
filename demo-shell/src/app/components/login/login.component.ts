@@ -32,7 +32,6 @@ export class LoginComponent {
 
     disableCsrf = false;
     showFooter = true;
-    showRememberMe = true;
     customSuccessRoute = false;
     customLogoImage = false;
 
@@ -54,10 +53,6 @@ export class LoginComponent {
 
     toggleFooter() {
         this.showFooter = !this.showFooter;
-    }
-
-    toggleRememberMe() {
-        this.showRememberMe = !this.showRememberMe;
     }
 
     toggleSuccessRoute() {

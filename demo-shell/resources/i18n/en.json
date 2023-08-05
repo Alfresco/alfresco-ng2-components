@@ -29,16 +29,6 @@
       "PROPERTIES": "Properties",
       "VERSIONS": "Versions"
     },
-    "HOME": {
-      "TITLE": "Angular components for Alfresco",
-      "DOCUMENTATION": "Documentation"
-    },
-    "LOGOUT": {
-      "TITLE": "Logout Page",
-      "SUB_TITLE": "You are now logged out",
-      "LOGIN": "Login",
-      "HOME": "Home"
-    },
     "PERSONAL-FILES": "Personal Files",
     "SEARCH": {
       "RADIO": {
@@ -143,14 +133,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Typeahead",
     "RADIO_PLACEHOLDER": "Radio Button",
     "SELECT_PLACEHOLDER": "DropDown"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Login footer",
-    "SHOW_REMEMBERME": "Show remember me",
-    "SHOW_SUCCESS_ROUTE": "Show success route",
-    "CUSTOM_LOGO": "Custom Logo"
   },
   "SEARCH": {
     "RESULTS": "Search results",

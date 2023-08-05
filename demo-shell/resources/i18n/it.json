@@ -29,16 +29,6 @@
       "PROPERTIES": "Proprietà",
       "VERSIONS": "Versioni"
     },
-    "HOME": {
-      "TITLE": "Componenti angolari per Alfresco",
-      "DOCUMENTATION": "Documentazione"
-    },
-    "LOGOUT": {
-      "TITLE": "Pagina di logout",
-      "SUB_TITLE": "Utente disconnesso",
-      "LOGIN": "Login",
-      "HOME": "Home"
-    },
     "PERSONAL-FILES": "File personali",
     "CUSTOM-PERMISSION-MESSAGE": "Abilita messaggio di autorizzazione personalizzato",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Typeahead",
     "RADIO_PLACEHOLDER": "Pulsante di opzione",
     "SELECT_PLACEHOLDER": "Elenco a discesa"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Piè di pagina login",
-    "SHOW_REMEMBERME": "Mostra utente memorizzato",
-    "SHOW_SUCCESS_ROUTE": "Mostra percorso riuscito",
-    "CUSTOM_LOGO": "Logo personalizzato"
   },
   "SEARCH": {
     "RESULTS": "Risultati della ricerca",

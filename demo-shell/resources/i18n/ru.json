@@ -29,16 +29,6 @@
       "PROPERTIES": "Свойства",
       "VERSIONS": "Версии"
     },
-    "HOME": {
-      "TITLE": "Угловые компоненты для Alfresco",
-      "DOCUMENTATION": "Документация"
-    },
-    "LOGOUT": {
-      "TITLE": "Страница выхода из системы",
-      "SUB_TITLE": "Вы вышли из системы",
-      "LOGIN": "Войти",
-      "HOME": "Домашняя"
-    },
     "PERSONAL-FILES": "Личные файлы",
     "CUSTOM-PERMISSION-MESSAGE": "Включить сообщение о пользовательском разрешении",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "Буфер клавиатуры",
     "RADIO_PLACEHOLDER": "Селективная кнопка",
     "SELECT_PLACEHOLDER": "Раскрывающееся меню"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "Нижний колонтитул страницы входа в систему",
-    "SHOW_REMEMBERME": "Показывать «Запомнить меня»",
-    "SHOW_SUCCESS_ROUTE": "Показать успешный маршрут",
-    "CUSTOM_LOGO": "Пользовательский логотип"
   },
   "SEARCH": {
     "RESULTS": "Результаты поиска",

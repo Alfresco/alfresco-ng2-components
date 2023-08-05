@@ -29,16 +29,6 @@
       "PROPERTIES": "プロパティ",
       "VERSIONS": "バージョン"
     },
-    "HOME": {
-      "TITLE": "Alfresco の Angular コンポーネント",
-      "DOCUMENTATION": "文書化"
-    },
-    "LOGOUT": {
-      "TITLE": "ログアウトページ",
-      "SUB_TITLE": "ログアウトしました",
-      "LOGIN": "ログイン",
-      "HOME": "ホーム"
-    },
     "PERSONAL-FILES": "個人的なファイル",
     "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
     "SEARCH": {
@@ -144,14 +134,6 @@
     "TYPEAHEAD_PLACEHOLDER": "先行入力",
     "RADIO_PLACEHOLDER": "ラジオ ボタン",
     "SELECT_PLACEHOLDER": "ドロップダウン"
-  },
-  "LOGIN": {
-    "CONTENT_SERVICES": "Content Services",
-    "PROCESS_SERVICES": "Process Services",
-    "LOGIN_FOOTER": "ログインページのフッター",
-    "SHOW_REMEMBERME": "ログイン情報の保存オプションを表示する",
-    "SHOW_SUCCESS_ROUTE": "サクセスルートを表示する",
-    "CUSTOM_LOGO": "カスタムのロゴ"
   },
   "SEARCH": {
     "RESULTS": "検索結果",
