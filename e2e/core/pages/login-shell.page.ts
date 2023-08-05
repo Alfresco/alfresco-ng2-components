@@ -15,26 +15,14 @@
  * limitations under the License.
  */
 
-import { $, browser } from 'protractor';
-import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
+import { $ } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LoginShellPage {
-    loginURL = browser.baseUrl + '/login';
-    loginSSOPage = new LoginPage();
-    togglePage = new TogglePage();
-    txtUsername = $('input[id="username"]');
-    txtPassword = $('input[id="password"]');
-    logoTxt = $('input[data-automation-id="adf-url-logo"]');
-    signInButton = $('#login-button');
-    register = $('#adf-login-action-right');
-    logoSwitch = $('#adf-toggle-logo');
-    header = $('#adf-header');
+    private txtUsername = $('input[id="username"]');
+    private txtPassword = $('input[id="password"]');
+    private signInButton = $('#login-button');
     sidenavLayout = $(`[data-automation-id="sidenav-layout"]`);
-
-    async goToLoginPage(): Promise<void> {
-        await BrowserActions.getUrl(this.loginURL);
-        await this.waitForElements();
-    }
 
     async waitForElements(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
@@ -49,27 +37,7 @@ export class LoginShellPage {
         await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
-    async getSignInButtonIsEnabled(): Promise<boolean> {
-        return this.signInButton.isEnabled();
-    }
-
     async clickSignInButton(): Promise<void> {
         await BrowserActions.click(this.signInButton);
-    }
-
-    async enableLogoSwitch(): Promise<void> {
-        await this.togglePage.enableToggle(this.logoSwitch);
-    }
-
-    async enterLogo(logo: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.logoTxt, logo);
-    }
-
-    async login(username: string, password: string): Promise<void> {
-        await this.loginSSOPage.login(username, password);
-    }
-
-    async loginWithProfile(profile: string): Promise<void> {
-        await this.loginSSOPage.loginWithProfile(profile);
     }
 }
