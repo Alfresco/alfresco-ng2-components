@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Vacíe la papelera para eliminar los elementos permanentemente."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
-    "THUMBNAILS": "Habilitar miniaturas",
-    "ALLOW_DROP_FILES": "Habilitar arrastre de ficheros a una carpeta o fichero",
-    "MULTIPLE_FILE_UPLOAD": "Carga de varios ficheros",
-    "FOLDER_UPLOAD": "Carga de carpetas",
-    "CUSTOM_FILTER": "Filtro de extensiones personalizado",
-    "MAX_SIZE": "Filtro de tamaño máximo",
-    "ENABLE_VERSIONING": "Habilitar control de versiones",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Mostrar nombre",
-      "IS_LOCKED": "Bloquear",
-      "TAG": "Etiqueta",
-      "NODE_ID": "ID de nodo",
-      "CREATED_BY": "Creado por",
-      "CREATED_ON": "Creado",
-      "CREATED": "Creado",
-      "SIZE": "Tamaño",
-      "DELETED_ON": "Eliminado",
-      "DELETED_BY": "Eliminado por"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Gestionar versiones",
-      "ASPECTS": "Actualizar aspectos",
-      "LOCK": "Bloquear",
-      "METADATA": "Información",
-      "DOWNLOAD": "Descargar",
-      "PERMISSION": "Permiso",
-      "FOLDER": {
-        "COPY": "Copiar",
-        "MOVE": "Mover",
-        "DELETE": "Eliminar"
-      },
-      "DOCUMENT": {
-        "COPY": "Copiar",
-        "MOVE": "Mover",
-        "DELETE": "Eliminar",
-        "PROCESS_ACTION": "Iniciar proceso"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Tareas",
     "PROCESSES-TAB": "Proceso",

@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Svuotare il cestino per eliminare definitivamente gli elementi."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
-    "THUMBNAILS": "Abilita miniature",
-    "ALLOW_DROP_FILES": "Abilita Rilascio file in una cartella o file",
-    "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
-    "FOLDER_UPLOAD": "Caricamento cartelle",
-    "CUSTOM_FILTER": "Filtro estensioni personalizzato",
-    "MAX_SIZE": "Filtro dimensioni max",
-    "ENABLE_VERSIONING": "Abilita controllo delle versioni",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Nome visualizzato",
-      "IS_LOCKED": "Blocca",
-      "TAG": "Tag",
-      "NODE_ID": "ID nodo",
-      "CREATED_BY": "Creato da",
-      "CREATED_ON": "Creato il",
-      "CREATED": "Creato",
-      "SIZE": "Dimensione",
-      "DELETED_ON": "Eliminato",
-      "DELETED_BY": "Eliminato da"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Gestione versioni",
-      "ASPECTS": "Aggiorna aspetti",
-      "LOCK": "Blocca",
-      "METADATA": "Informazioni",
-      "DOWNLOAD": "Scarica",
-      "PERMISSION": "Autorizzazione",
-      "FOLDER": {
-        "COPY": "Copia",
-        "MOVE": "Sposta",
-        "DELETE": "Elimina"
-      },
-      "DOCUMENT": {
-        "COPY": "Copia",
-        "MOVE": "Sposta",
-        "DELETE": "Elimina",
-        "PROCESS_ACTION": "Avvia processo"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Compiti",
     "PROCESSES-TAB": "Processo",

@@ -115,47 +115,6 @@
       "SECOND_TEXT": "ごみ箱を空にするとアイテムが完全に削除されます。"
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
-    "THUMBNAILS": "サムネイルを有効化",
-    "ALLOW_DROP_FILES": "ファイルのドロップを許可",
-    "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
-    "FOLDER_UPLOAD": "フォルダのアップロード",
-    "CUSTOM_FILTER": "カスタム拡張子フィルタ",
-    "MAX_SIZE": "最大サイズフィルタ",
-    "ENABLE_VERSIONING": "バージョン管理を有効化",
-    "COLUMNS": {
-      "DISPLAY_NAME": "表示名",
-      "IS_LOCKED": "ロック",
-      "TAG": "タグ",
-      "NODE_ID": "ノード ID",
-      "CREATED_BY": "作成者",
-      "CREATED_ON": "作成日",
-      "CREATED": "作成日",
-      "SIZE": "サイズ",
-      "DELETED_ON": "削除済み",
-      "DELETED_BY": "削除者"
-    },
-    "ACTIONS": {
-      "VERSIONS": "バージョンの管理",
-      "ASPECTS": "アスペクトを更新",
-      "LOCK": "ロック",
-      "METADATA": "情報",
-      "DOWNLOAD": "ダウンロード",
-      "PERMISSION": "権限",
-      "FOLDER": {
-        "COPY": "コピー",
-        "MOVE": "移動",
-        "DELETE": "削除"
-      },
-      "DOCUMENT": {
-        "COPY": "コピー",
-        "MOVE": "移動",
-        "DELETE": "削除",
-        "PROCESS_ACTION": "プロセスの開始"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "タスク",
     "PROCESSES-TAB": "プロセス",

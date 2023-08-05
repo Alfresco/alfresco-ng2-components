@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Tøm søppelkurven for å slette elementer for godt."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
-    "THUMBNAILS": "Aktiver miniatyrbilder",
-    "ALLOW_DROP_FILES": "Aktiver Slipp filer i en mappe eller en fil",
-    "MULTIPLE_FILE_UPLOAD": "Opplasting av flere filer",
-    "FOLDER_UPLOAD": "Opplasting av mappe",
-    "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",
-    "MAX_SIZE": "Maks. størrelsesfilter",
-    "ENABLE_VERSIONING": "Aktiver versjonering",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Vis navn",
-      "IS_LOCKED": "Lås",
-      "TAG": "Tagg",
-      "NODE_ID": "Node-ID",
-      "CREATED_BY": "Opprettet av",
-      "CREATED_ON": "Opprettet",
-      "CREATED": "Opprettet",
-      "SIZE": "Størrelse",
-      "DELETED_ON": "Slettet",
-      "DELETED_BY": "Slettet av"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Administrer versjoner",
-      "ASPECTS": "Oppdater aspekter",
-      "LOCK": "Lås",
-      "METADATA": "Info",
-      "DOWNLOAD": "Last ned",
-      "PERMISSION": "Tillatelse",
-      "FOLDER": {
-        "COPY": "Kopier",
-        "MOVE": "Flytt",
-        "DELETE": "Slett"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopier",
-        "MOVE": "Flytt",
-        "DELETE": "Slett",
-        "PROCESS_ACTION": "Start prosess"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Oppgaver",
     "PROCESSES-TAB": "Prosess",

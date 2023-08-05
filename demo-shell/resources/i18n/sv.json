@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Töm papperskorgen för att radera objekt permanent"
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Flerval (med kryssrutor)",
-    "THUMBNAILS": "Aktivera miniatyrbilder",
-    "ALLOW_DROP_FILES": "Gör det möjligt att dra in filer i en mapp eller en fil",
-    "MULTIPLE_FILE_UPLOAD": "Uppladdning av flera filer",
-    "FOLDER_UPLOAD": "Mappuppladdning",
-    "CUSTOM_FILTER": "Anpassade tilläggsfilter",
-    "MAX_SIZE": "Maxstorlek filter",
-    "ENABLE_VERSIONING": "Aktivera versionering",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Visa namn",
-      "IS_LOCKED": "Lås",
-      "TAG": "Tagg",
-      "NODE_ID": "Nod-ID",
-      "CREATED_BY": "Skapad av",
-      "CREATED_ON": "Skapad den",
-      "CREATED": "Skapad",
-      "SIZE": "Storlek",
-      "DELETED_ON": "Raderad",
-      "DELETED_BY": "Raderad av"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Hantera versioner",
-      "ASPECTS": "Uppdatera aspekter",
-      "LOCK": "Lås",
-      "METADATA": "Info",
-      "DOWNLOAD": "Ladda ner",
-      "PERMISSION": "Behörighet",
-      "FOLDER": {
-        "COPY": "Kopiera",
-        "MOVE": "Flytta",
-        "DELETE": "Radera"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopiera",
-        "MOVE": "Flytta",
-        "DELETE": "Radera",
-        "PROCESS_ACTION": "Starta process"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Uppgifter",
     "PROCESSES-TAB": "Process",

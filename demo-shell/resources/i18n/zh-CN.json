@@ -115,47 +115,6 @@
       "SECOND_TEXT": "清空回收站以永久删除项目。"
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "多选（含复选框）",
-    "THUMBNAILS": "启用缩略图",
-    "ALLOW_DROP_FILES": "在文件夹或文件中启用拖动文件",
-    "MULTIPLE_FILE_UPLOAD": "上传多个文件",
-    "FOLDER_UPLOAD": "文件夹上传",
-    "CUSTOM_FILTER": "自定义扩展筛选器",
-    "MAX_SIZE": "最大大小筛选器",
-    "ENABLE_VERSIONING": "启用版本控制",
-    "COLUMNS": {
-      "DISPLAY_NAME": "显示名称",
-      "IS_LOCKED": "锁定",
-      "TAG": "标记",
-      "NODE_ID": "节点 ID",
-      "CREATED_BY": "创建者",
-      "CREATED_ON": "创建日期",
-      "CREATED": "已创建",
-      "SIZE": "尺寸",
-      "DELETED_ON": "已删除",
-      "DELETED_BY": "删除人"
-    },
-    "ACTIONS": {
-      "VERSIONS": "管理版本",
-      "ASPECTS": "更新方面",
-      "LOCK": "锁定",
-      "METADATA": "信息",
-      "DOWNLOAD": "下载",
-      "PERMISSION": "权限",
-      "FOLDER": {
-        "COPY": "复制",
-        "MOVE": "移动",
-        "DELETE": "删除"
-      },
-      "DOCUMENT": {
-        "COPY": "复制",
-        "MOVE": "移动",
-        "DELETE": "删除",
-        "PROCESS_ACTION": "启动流程"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "任务",
     "PROCESSES-TAB": "流程",

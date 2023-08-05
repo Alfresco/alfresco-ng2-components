@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Esvazie a Lixeira para apagar os itens permanentemente."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Seleção Múltipla (com caixas de seleção)",
-    "THUMBNAILS": "Ativar Miniaturas",
-    "ALLOW_DROP_FILES": "Ativar soltar arquivos em uma pasta ou um arquivo",
-    "MULTIPLE_FILE_UPLOAD": "Carregamento de Vários Arquivos",
-    "FOLDER_UPLOAD": "Carregamento de Pasta",
-    "CUSTOM_FILTER": "Filtro de extensões personalizado",
-    "MAX_SIZE": "Tamanho máximo do filtro",
-    "ENABLE_VERSIONING": "Ativar versões",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Nome de exibição",
-      "IS_LOCKED": "Bloqueio",
-      "TAG": "Marca",
-      "NODE_ID": "ID do nó",
-      "CREATED_BY": "Criado por",
-      "CREATED_ON": "Criado em",
-      "CREATED": "Criado",
-      "SIZE": "Tamanho",
-      "DELETED_ON": "Excluído",
-      "DELETED_BY": "Excluído por"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Gerenciar versões",
-      "ASPECTS": "Atualizar aspectos",
-      "LOCK": "Bloqueio",
-      "METADATA": "Informações",
-      "DOWNLOAD": "Baixar",
-      "PERMISSION": "Permissão",
-      "FOLDER": {
-        "COPY": "Copiar",
-        "MOVE": "Mover",
-        "DELETE": "Excluir"
-      },
-      "DOCUMENT": {
-        "COPY": "Copiar",
-        "MOVE": "Mover",
-        "DELETE": "Excluir",
-        "PROCESS_ACTION": "Iniciar processo"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Tarefas",
     "PROCESSES-TAB": "Processo",

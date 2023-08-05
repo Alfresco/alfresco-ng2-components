@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Vysypáním koše můžete položky trvale odstranit."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Hromadný výběr (pomocí zaškrtávacích polí)",
-    "THUMBNAILS": "Povolit miniatury",
-    "ALLOW_DROP_FILES": "Povolit přetahování souborů do složky nebo souboru",
-    "MULTIPLE_FILE_UPLOAD": "Odeslání více souborů",
-    "FOLDER_UPLOAD": "Odeslat složku",
-    "CUSTOM_FILTER": "Vlastní filtr rozšíření",
-    "MAX_SIZE": "Filtr max. velikosti",
-    "ENABLE_VERSIONING": "Povolit více verzí",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Zobrazované jméno",
-      "IS_LOCKED": "Zamknout",
-      "TAG": "Tag",
-      "NODE_ID": "ID uzlu",
-      "CREATED_BY": "Vytvořil(a)",
-      "CREATED_ON": "Vytvořeno",
-      "CREATED": "Vytvořeno",
-      "SIZE": "Velikost",
-      "DELETED_ON": "Odstraněno",
-      "DELETED_BY": "Odstranil(a)"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Spravovat verze",
-      "ASPECTS": "Aktualizovat aspekty",
-      "LOCK": "Zamknout",
-      "METADATA": "Informace",
-      "DOWNLOAD": "Stáhnout",
-      "PERMISSION": "Oprávnění",
-      "FOLDER": {
-        "COPY": "Kopírovat",
-        "MOVE": "Přesunout",
-        "DELETE": "Odstranit"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopírovat",
-        "MOVE": "Přesunout",
-        "DELETE": "Odstranit",
-        "PROCESS_ACTION": "Zahájit proces"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Úkoly",
     "PROCESSES-TAB": "Proces",

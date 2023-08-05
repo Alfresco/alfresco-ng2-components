@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Aby trwale usunąć elementy, opróżnij kosz."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Wybór wielokrotny (przy użyciu pól wyboru)",
-    "THUMBNAILS": "Włącz miniatury",
-    "ALLOW_DROP_FILES": "Włącz upuszczanie plików w folderze lub pliku",
-    "MULTIPLE_FILE_UPLOAD": "Przesyłanie wielu plików",
-    "FOLDER_UPLOAD": "Przesyłanie folderu",
-    "CUSTOM_FILTER": "Niestandardowy filtr rozszerzeń",
-    "MAX_SIZE": "Filtr rozmiaru maksymalnego",
-    "ENABLE_VERSIONING": "Włącz kontrolę wersji",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Nazwa wyświetlana",
-      "IS_LOCKED": "Blokada",
-      "TAG": "Znacznik",
-      "NODE_ID": "Identyfikator węzła",
-      "CREATED_BY": "Utworzone przez",
-      "CREATED_ON": "Data utworzenia",
-      "CREATED": "Utworzono",
-      "SIZE": "Rozmiar",
-      "DELETED_ON": "Usunięte",
-      "DELETED_BY": "Usunięte przez"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Zarządzaj wersjami",
-      "ASPECTS": "Aktualizuj aspekty",
-      "LOCK": "Blokada",
-      "METADATA": "Informacje",
-      "DOWNLOAD": "Pobierz",
-      "PERMISSION": "Uprawnienie",
-      "FOLDER": {
-        "COPY": "Kopiuj",
-        "MOVE": "Przenieś",
-        "DELETE": "Usuń"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopiuj",
-        "MOVE": "Przenieś",
-        "DELETE": "Usuń",
-        "PROCESS_ACTION": "Rozpocznij proces"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Zadania",
     "PROCESSES-TAB": "Proces",

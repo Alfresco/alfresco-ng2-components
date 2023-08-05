@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Leeren Sie den Papierkorb, um die Elemente endgültig zu löschen."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
-    "THUMBNAILS": "Miniaturansichten aktivieren",
-    "ALLOW_DROP_FILES": "Ablegen von Dateien in einem Ordner oder einer Datei aktivieren",
-    "MULTIPLE_FILE_UPLOAD": "Mehrere Dateien hochladen",
-    "FOLDER_UPLOAD": "Ordner hochladen",
-    "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",
-    "MAX_SIZE": "Filter für max. Größe",
-    "ENABLE_VERSIONING": "Versionsverwaltung aktivieren",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Namen anzeigen",
-      "IS_LOCKED": "Sperren",
-      "TAG": "Tag",
-      "NODE_ID": "Node-ID",
-      "CREATED_BY": "Erstellt von",
-      "CREATED_ON": "Erstellt am",
-      "CREATED": "Erstellt",
-      "SIZE": "Größe",
-      "DELETED_ON": "Gelöscht",
-      "DELETED_BY": "Gelöscht von"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Versionen verwalten",
-      "ASPECTS": "Aspekte aktualisieren",
-      "LOCK": "Sperren",
-      "METADATA": "Info",
-      "DOWNLOAD": "Herunterladen",
-      "PERMISSION": "Berechtigung",
-      "FOLDER": {
-        "COPY": "Kopieren",
-        "MOVE": "Verschieben",
-        "DELETE": "Löschen"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopieren",
-        "MOVE": "Verschieben",
-        "DELETE": "Löschen",
-        "PROCESS_ACTION": "Prozess starten"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Aufgaben",
     "PROCESSES-TAB": "Prozess",

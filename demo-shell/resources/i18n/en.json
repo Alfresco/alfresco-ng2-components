@@ -114,46 +114,6 @@
       "SECOND_TEXT": "Empty Trash to permanently delete items."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
-    "THUMBNAILS": "Enable Thumbnails",
-    "ALLOW_DROP_FILES": "Enable Drop Files in a folder or a file",
-    "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
-    "FOLDER_UPLOAD": "Folder upload",
-    "CUSTOM_FILTER": "Custom extensions filter",
-    "MAX_SIZE": "Max size filter",
-    "ENABLE_VERSIONING": "Enable versioning",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Display name",
-      "IS_LOCKED": "Lock",
-      "TAG": "Tag",
-      "NODE_ID": "Node id",
-      "CREATED_BY": "Created by",
-      "CREATED_ON": "Created on",
-      "CREATED": "Created",
-      "SIZE": "Size",
-      "DELETED_ON": "Deleted",
-      "DELETED_BY": "Deleted by"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Manage versions",
-      "ASPECTS": "Update Aspects",
-      "LOCK": "Lock",
-      "METADATA": "Info",
-      "DOWNLOAD": "Download",
-      "PERMISSION": "Permission",
-      "FOLDER": {
-        "COPY": "Copy",
-        "MOVE": "Move",
-        "DELETE": "Delete"
-      },
-      "DOCUMENT": {
-        "COPY": "Copy",
-        "MOVE": "Move",
-        "DELETE": "Delete"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Tasks",
     "PROCESSES-TAB": "Process",

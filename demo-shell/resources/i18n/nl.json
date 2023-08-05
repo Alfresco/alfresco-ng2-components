@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Leeg de prullenmand om items definitief te verwijderen."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
-    "THUMBNAILS": "Miniaturen inschakelen",
-    "ALLOW_DROP_FILES": "Bestanden neerzetten in een map of een bestand inschakelen",
-    "MULTIPLE_FILE_UPLOAD": "Meerdere bestanden uploaden",
-    "FOLDER_UPLOAD": "Map uploaden",
-    "CUSTOM_FILTER": "Aangepast extensiefilter",
-    "MAX_SIZE": "Max.formaat filter",
-    "ENABLE_VERSIONING": "Versiebeheer inschakelen",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Getoonde naam",
-      "IS_LOCKED": "Vergrendeling",
-      "TAG": "Tag",
-      "NODE_ID": "Node-id",
-      "CREATED_BY": "Gemaakt door",
-      "CREATED_ON": "Gemaakt op",
-      "CREATED": "Gemaakt",
-      "SIZE": "Grootte",
-      "DELETED_ON": "Verwijderd",
-      "DELETED_BY": "Verwijderd door"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Versies beheren",
-      "ASPECTS": "Aspecten bijwerken",
-      "LOCK": "Vergrendeling",
-      "METADATA": "Info",
-      "DOWNLOAD": "Downloaden",
-      "PERMISSION": "Rechten",
-      "FOLDER": {
-        "COPY": "Kopiëren",
-        "MOVE": "Verplaatsen",
-        "DELETE": "Verwijderen"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopiëren",
-        "MOVE": "Verplaatsen",
-        "DELETE": "Verwijderen",
-        "PROCESS_ACTION": "Proces starten"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Taken",
     "PROCESSES-TAB": "Proces",

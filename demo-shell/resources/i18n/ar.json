@@ -115,47 +115,6 @@
       "SECOND_TEXT": "أفرغ المهملات لحذف العناصر بشكل دائم."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "تحديد متعدد (مع خانات اختيارات)",
-    "THUMBNAILS": "تمكين الصور المصغرة",
-    "ALLOW_DROP_FILES": "تمكين إسقاط الملفات في مجلد أو ملف",
-    "MULTIPLE_FILE_UPLOAD": "تحميل ملفات متعددة",
-    "FOLDER_UPLOAD": "تحميل مجلد",
-    "CUSTOM_FILTER": "عامل تصفية امتدادات مخصص",
-    "MAX_SIZE": "عامل تصفية الحد الأقصى للحجم",
-    "ENABLE_VERSIONING": "تمكين تعيين الإصدار",
-    "COLUMNS": {
-      "DISPLAY_NAME": "اسم العرض",
-      "IS_LOCKED": "قفل",
-      "TAG": "علامة",
-      "NODE_ID": "معرف العقدة",
-      "CREATED_BY": "تم الإنشاء بواسطة",
-      "CREATED_ON": "تم الإنشاء في",
-      "CREATED": "تم الإنشاء",
-      "SIZE": "الحجم",
-      "DELETED_ON": "تم الحذف",
-      "DELETED_BY": "تم الحذف بواسطة"
-    },
-    "ACTIONS": {
-      "VERSIONS": "إدارة الإصدارات",
-      "ASPECTS": "تحديث الجوانب",
-      "LOCK": "قفل",
-      "METADATA": "معلومات",
-      "DOWNLOAD": "تنزيل",
-      "PERMISSION": "إذن",
-      "FOLDER": {
-        "COPY": "نسخ",
-        "MOVE": "نقل",
-        "DELETE": "حذف"
-      },
-      "DOCUMENT": {
-        "COPY": "نسخ",
-        "MOVE": "نقل",
-        "DELETE": "حذف",
-        "PROCESS_ACTION": "بدء العملية"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "المهام",
     "PROCESSES-TAB": "العملية",

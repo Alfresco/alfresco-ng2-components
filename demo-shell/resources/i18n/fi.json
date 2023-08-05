@@ -115,47 +115,6 @@
       "SECOND_TEXT": "Jos haluat poistaa kohteet pysyvästi, tyhjennä roskakori."
     }
   },
-  "DOCUMENT_LIST": {
-    "MULTISELECT_CHECKBOXES": "Monivalinta (valintaruuduilla)",
-    "THUMBNAILS": "Ota pikkukuvat käyttöön",
-    "ALLOW_DROP_FILES": "Ota tiedostojen kansioon tai tiedostoon pudottaminen käyttöön",
-    "MULTIPLE_FILE_UPLOAD": "Useiden tiedostojen lataaminen",
-    "FOLDER_UPLOAD": "Kansion lataaminen",
-    "CUSTOM_FILTER": "Mukautettu tiedostomuotosuodatin",
-    "MAX_SIZE": "Enimmäiskoon suodatin",
-    "ENABLE_VERSIONING": "Ota versionhallinta käyttöön",
-    "COLUMNS": {
-      "DISPLAY_NAME": "Näyttönimi",
-      "IS_LOCKED": "Lukitse",
-      "TAG": "Tunniste",
-      "NODE_ID": "Solmutunnus",
-      "CREATED_BY": "Tekijä:",
-      "CREATED_ON": "Luotu",
-      "CREATED": "Luotu",
-      "SIZE": "Koko",
-      "DELETED_ON": "Poistettu",
-      "DELETED_BY": "Poistaja:"
-    },
-    "ACTIONS": {
-      "VERSIONS": "Hallitse versioita",
-      "ASPECTS": "Päivitä ominaisuusjoukot",
-      "LOCK": "Lukitse",
-      "METADATA": "Tiedot",
-      "DOWNLOAD": "Lataa",
-      "PERMISSION": "Oikeus",
-      "FOLDER": {
-        "COPY": "Kopioi",
-        "MOVE": "Siirrä",
-        "DELETE": "Poista"
-      },
-      "DOCUMENT": {
-        "COPY": "Kopioi",
-        "MOVE": "Siirrä",
-        "DELETE": "Poista",
-        "PROCESS_ACTION": "Käynnistä prosessi"
-      }
-    }
-  },
   "PS-TAB": {
     "TASKS-TAB": "Tehtävät",
     "PROCESSES-TAB": "Prosessi",
