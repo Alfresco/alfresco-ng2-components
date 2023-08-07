@@ -67,6 +67,18 @@ describe('FileViewerWidgetComponent', () => {
         });
     });
 
+    it('should set the file id corretly when the field value is an object', (done) => {
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: fakePngAnswer });
+        widget.field = fakeField;
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(widget.field.value).toBe('1933');
+            done();
+        });
+    });
+
     it('should set the file id corretly when the field value is a string', (done) => {
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;

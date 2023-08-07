@@ -18,7 +18,7 @@
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
@@ -43,12 +43,13 @@ export class FileViewerWidgetComponent extends WidgetComponent implements OnInit
     }
 
     ngOnInit(): void {
-        if (this.field &&
-            this.field.value &&
-            Array.isArray(this.field.value) &&
-            this.field.value.length) {
-            const file = this.field.value[0];
-            this.field.value = file.id;
+        if (this.field && this.field.value) {
+            if (Array.isArray(this.field.value) && this.field.value.length) {
+                const file = this.field.value[0];
+                this.field.value = file.id;
+            } else if (typeof this.field.value === 'object' && this.field.value.id) {
+                this.field.value = this.field.value.id;
+            }
         }
     }
 }

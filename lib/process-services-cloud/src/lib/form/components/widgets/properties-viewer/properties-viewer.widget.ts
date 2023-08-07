@@ -48,13 +48,14 @@ export class PropertiesViewerWidgetComponent extends WidgetComponent implements 
     }
 
     ngOnInit(): void {
-        if (this.field &&
-            this.field.value &&
-            Array.isArray(this.field.value) &&
-            this.field.value.length) {
+        if (this.field && this.field.value) {
+            if (Array.isArray(this.field.value) && this.field.value.length) {
                 const file = this.field.value[0];
                 this.field.value = file.id;
+            } else if (typeof this.field.value === 'object' && this.field.value.id) {
+                this.field.value = this.field.value.id;
             }
+        }
     }
 
     onNodeContentLoaded(node: Node) {

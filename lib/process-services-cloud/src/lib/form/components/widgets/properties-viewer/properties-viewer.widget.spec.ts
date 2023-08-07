@@ -112,4 +112,15 @@ describe('PropertiesViewerWidgetComponent', () => {
 
         expect(widget.field.value).toBe('1933');
     });
+
+    it('should set NodeId crrectly when field value is a file object instead of string', async () => {
+        const fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: fakePngAnswer });
+        widget.field = fakeField;
+
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+
+        expect(widget.field.value).toBe('1933');
+    });
 });
