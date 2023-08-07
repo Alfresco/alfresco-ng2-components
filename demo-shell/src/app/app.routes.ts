@@ -103,10 +103,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
             },
             {
-                path: 'notifications',
-                loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
-            },
-            {
                 path: 'config-editor',
                 loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },
