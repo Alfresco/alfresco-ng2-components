@@ -2,33 +2,23 @@
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{'FORM-LOADING.FORM_DATA' | translate}}
-                </mat-panel-title>
-                <mat-panel-description>
-                    {{'FORM-LOADING.FORM_DATA_MESSAGE' | translate}}
-                </mat-panel-description>
+                <mat-panel-title>Form Data</mat-panel-title>
+                <mat-panel-description>Enter values to populate the form</mat-panel-description>
             </mat-expansion-panel-header>
             <mat-list>
                 <mat-list-item>
                     <mat-form-field>
-                        <input matInput
-                              placeholder="{{'FORM-LOADING.TYPEAHEAD_PLACEHOLDER' | translate}}"
-                              [(ngModel)]="typeaheadFieldValue">
+                        <input matInput placeholder="Typeahead" [(ngModel)]="typeaheadFieldValue">
                     </mat-form-field>
                 </mat-list-item>
                 <mat-list-item>
                     <mat-form-field>
-                        <input matInput
-                               placeholder="{{'FORM-LOADING.SELECT_PLACEHOLDER' | translate}}"
-                               [(ngModel)]="selectFieldValue">
+                        <input matInput placeholder="DropDown" [(ngModel)]="selectFieldValue">
                     </mat-form-field>
                 </mat-list-item>
                 <mat-list-item>
                     <mat-form-field>
-                        <input matInput
-                               placeholder="{{'FORM-LOADING.RADIO_PLACEHOLDER' | translate}}"
-                               [(ngModel)]="radioButtonFieldValue">
+                        <input matInput placeholder="Radio Button" [(ngModel)]="radioButtonFieldValue">
                     </mat-form-field>
                 </mat-list-item>
             </mat-list>

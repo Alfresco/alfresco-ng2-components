@@ -1,21 +1,10 @@
 {
   "title": "مرحبًا",
-  "FORM-LIST": {
-    "STORE": "متجر",
-    "RESTORE": "استعادة"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "تم تعيين المهمة {{taskName}} إلى {{assignee}}",
     "PROCESS_STARTED": "تم بدء عملية {{processName}}",
     "TASK_UPDATED": "تم تحديث تفاصيل مهمة {{taskName}}",
     "TASK_CREATED": "تم إنشاء المهمة {{TaskName}}"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "بيانات النموذج",
-    "FORM_DATA_MESSAGE": "إدخال قيم لملء النموذج",
-    "TYPEAHEAD_PLACEHOLDER": "التنبؤ بالحروف",
-    "RADIO_PLACEHOLDER": "زر الراديو",
-    "SELECT_PLACEHOLDER": "القائمة المنسدلة"
   },
   "SEARCH": {
     "RESULTS": "نتائج البحث",

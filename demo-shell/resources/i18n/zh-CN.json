@@ -1,21 +1,10 @@
 {
   "title": "欢迎使用",
-  "FORM-LIST": {
-    "STORE": "存储",
-    "RESTORE": "恢复"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} 任务已分配给 {{assignee}}",
     "PROCESS_STARTED": "{{processName}} 进程已启动",
     "TASK_UPDATED": "{{taskName}} 任务详细信息已更新",
     "TASK_CREATED": "{{taskName}} 任务已创建"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "表单数据",
-    "FORM_DATA_MESSAGE": "输入值以填充表单",
-    "TYPEAHEAD_PLACEHOLDER": "预先输入",
-    "RADIO_PLACEHOLDER": "单选按钮",
-    "SELECT_PLACEHOLDER": "下拉列表"
   },
   "SEARCH": {
     "RESULTS": "搜索结果",

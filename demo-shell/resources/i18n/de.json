@@ -1,21 +1,10 @@
 {
   "title": "Willkommen",
-  "FORM-LIST": {
-    "STORE": "Speichern",
-    "RESTORE": "Wiederherstellen"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Aufgabe '{{taskName}}' wurde {{assignee}} zugewiesen",
     "PROCESS_STARTED": "Prozess '{{processName}}' wurde gestartet",
     "TASK_UPDATED": "Aufgabe '{{taskName}}' wurde aktualisiert",
     "TASK_CREATED": "Die Aufgabe {{taskName}} wurde erstellt"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Formulardaten",
-    "FORM_DATA_MESSAGE": "Geben Sie Werte ein, um das Formular auszufüllen",
-    "TYPEAHEAD_PLACEHOLDER": "Automatische Vervollständigung",
-    "RADIO_PLACEHOLDER": "Optionsschaltfläche",
-    "SELECT_PLACEHOLDER": "Dropdown"
   },
   "SEARCH": {
     "RESULTS": "Ergebnisse durchsuchen",

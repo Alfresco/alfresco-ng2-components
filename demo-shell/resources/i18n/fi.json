@@ -1,21 +1,10 @@
 {
   "title": "Tervetuloa",
-  "FORM-LIST": {
-    "STORE": "Tallenna",
-    "RESTORE": "Palauta"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} -tehtävä on määritetty käyttäjälle {{assignee}}",
     "PROCESS_STARTED": "{{processName}} -prosessi on käynnistetty",
     "TASK_UPDATED": "{{taskName}} -tehtävän tiedot on päivitetty",
     "TASK_CREATED": "{{taskName}} -tehtävä luotiin"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Lomaketiedot",
-    "FORM_DATA_MESSAGE": "Anna lomakkeeseen lisättävät arvot",
-    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
-    "RADIO_PLACEHOLDER": "Valintanappi",
-    "SELECT_PLACEHOLDER": "Avattava valikko"
   },
   "SEARCH": {
     "RESULTS": "Hakutulokset",

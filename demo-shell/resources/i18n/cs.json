@@ -1,21 +1,10 @@
 {
   "title": "Vítejte",
-  "FORM-LIST": {
-    "STORE": "Uložit",
-    "RESTORE": "Obnovit"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Úkol {{taskName}} byl přiřazen uživateli {{assignee}}",
     "PROCESS_STARTED": "Byl spuštěn proces {{processName}}",
     "TASK_UPDATED": "Byly aktualizovány podrobnosti úkolu {{taskName}}",
     "TASK_CREATED": "Úkol {{taskName}} byl vytvořen"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Data formuláře",
-    "FORM_DATA_MESSAGE": "Zadejte hodnoty do formuláře",
-    "TYPEAHEAD_PLACEHOLDER": "Začněte psát",
-    "RADIO_PLACEHOLDER": "Přepínač",
-    "SELECT_PLACEHOLDER": "Rozevírací seznam"
   },
   "SEARCH": {
     "RESULTS": "Výsledky hledání",

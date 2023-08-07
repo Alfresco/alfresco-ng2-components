@@ -1,21 +1,10 @@
 {
   "title": "Bienvenue",
-  "FORM-LIST": {
-    "STORE": "Stocker",
-    "RESTORE": "Restaurer"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "La tâche {{taskName}} a été assignée à {{assignee}}",
     "PROCESS_STARTED": "Le processus {{processName}} a été démarré",
     "TASK_UPDATED": "Les détails de la tâche {{taskName}} ont été mis à jour",
     "TASK_CREATED": "{{taskName}} tâche a été créée"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Données du formulaire",
-    "FORM_DATA_MESSAGE": "Entrez les valeurs pour remplir le formulaire",
-    "TYPEAHEAD_PLACEHOLDER": "Saisie semi-automatique",
-    "RADIO_PLACEHOLDER": "Case d'option",
-    "SELECT_PLACEHOLDER": "Liste déroulante"
   },
   "SEARCH": {
     "RESULTS": "Résultats de la recherche",

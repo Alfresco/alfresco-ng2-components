@@ -1,21 +1,10 @@
 {
   "title": "ようこそ",
-  "FORM-LIST": {
-    "STORE": "保存",
-    "RESTORE": "復元"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}タスクが{{assignee}}に割り当てられました",
     "PROCESS_STARTED": "{{processName}}プロセスが開始しました",
     "TASK_UPDATED": "{{taskName}}タスクの詳細が更新されました",
     "TASK_CREATED": "{{taskName}}タスクが作成されました"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "フォーム データ",
-    "FORM_DATA_MESSAGE": "フォームに入力する値を入力してください",
-    "TYPEAHEAD_PLACEHOLDER": "先行入力",
-    "RADIO_PLACEHOLDER": "ラジオ ボタン",
-    "SELECT_PLACEHOLDER": "ドロップダウン"
   },
   "SEARCH": {
     "RESULTS": "検索結果",

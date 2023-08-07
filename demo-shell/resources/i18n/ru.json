@@ -1,21 +1,10 @@
 {
   "title": "Добро пожаловать",
-  "FORM-LIST": {
-    "STORE": "Хранилище",
-    "RESTORE": "Восстановить"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "Задача {{taskName}} была назначена {{assignee}}",
     "PROCESS_STARTED": "Процесс {{processName}} запущен",
     "TASK_UPDATED": "Сведения о задаче {{taskName}} обновлены",
     "TASK_CREATED": "{{taskName}} задача создана"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Данные формы",
-    "FORM_DATA_MESSAGE": "Введите значения для заполнения формы",
-    "TYPEAHEAD_PLACEHOLDER": "Буфер клавиатуры",
-    "RADIO_PLACEHOLDER": "Селективная кнопка",
-    "SELECT_PLACEHOLDER": "Раскрывающееся меню"
   },
   "SEARCH": {
     "RESULTS": "Результаты поиска",

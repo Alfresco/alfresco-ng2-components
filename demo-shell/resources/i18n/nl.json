@@ -1,21 +1,10 @@
 {
   "title": "Welkom",
-  "FORM-LIST": {
-    "STORE": "Opslaan",
-    "RESTORE": "Herstellen"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}-taak is toegewezen aan {{assignee}}",
     "PROCESS_STARTED": "{{processName}}-proces is gestart",
     "TASK_UPDATED": "{{taskName}}-taakdetails zijn bijgewerkt",
     "TASK_CREATED": "Taak {{taskName}} is gemaakt"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Formuliergegevens",
-    "FORM_DATA_MESSAGE": "Voer waarden in om het formulier in te vullen",
-    "TYPEAHEAD_PLACEHOLDER": "Automatische voltooiing",
-    "RADIO_PLACEHOLDER": "Keuzerondje",
-    "SELECT_PLACEHOLDER": "Dropdown"
   },
   "SEARCH": {
     "RESULTS": "Zoekresultaten",

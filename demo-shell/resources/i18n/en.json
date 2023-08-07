@@ -1,21 +1,10 @@
 {
   "title": "Welcome",
-  "FORM-LIST": {
-    "STORE": "Store",
-    "RESTORE": "Restore"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} task has been assigned to {{assignee}}",
     "PROCESS_STARTED": "{{processName}} process has been started",
     "TASK_UPDATED": "{{taskName}} task details have been updated",
     "TASK_CREATED": "{{taskName}} task was created"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Form Data",
-    "FORM_DATA_MESSAGE": "Enter values to populate the form",
-    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
-    "RADIO_PLACEHOLDER": "Radio Button",
-    "SELECT_PLACEHOLDER": "DropDown"
   },
   "SEARCH": {
     "RESULTS": "Search results",

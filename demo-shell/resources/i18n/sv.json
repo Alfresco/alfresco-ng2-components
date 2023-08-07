@@ -1,21 +1,10 @@
 {
   "title": "Välkommen",
-  "FORM-LIST": {
-    "STORE": "Lagra",
-    "RESTORE": "Återställ"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}} uppgiften har tilldelats till {{assignee}}",
     "PROCESS_STARTED": "{{processName}} processen har startats",
     "TASK_UPDATED": "{{taskName}} uppgiftsinformation har uppdaterats",
     "TASK_CREATED": "Uppgiften {{taskName}} skapades"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Formulärdata",
-    "FORM_DATA_MESSAGE": "Ange värden för att fylla formuläret",
-    "TYPEAHEAD_PLACEHOLDER": "Typeahead",
-    "RADIO_PLACEHOLDER": "Radioknapp",
-    "SELECT_PLACEHOLDER": "Dropdown"
   },
   "SEARCH": {
     "RESULTS": "Sökresultat",

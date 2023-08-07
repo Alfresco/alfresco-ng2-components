@@ -1,21 +1,10 @@
 {
   "title": "Velkommen",
-  "FORM-LIST": {
-    "STORE": "Lagre",
-    "RESTORE": "Gjenopprett"
-  },
   "NOTIFICATIONS": {
     "TASK_ASSIGNED": "{{taskName}}-oppgaven er tilordnet til {{assignee}}",
     "PROCESS_STARTED": "{{processName}}-prosessen er startet",
     "TASK_UPDATED": "{{taskName}}-oppgavedetaljene er oppdatert",
     "TASK_CREATED": "Oppgaven {{taskName}} ble opprettet"
-  },
-  "FORM-LOADING": {
-    "FORM_DATA": "Skjemadata",
-    "FORM_DATA_MESSAGE": "Skriv inn verdier for å fylle ut skjemaet",
-    "TYPEAHEAD_PLACEHOLDER": "Type-ahead",
-    "RADIO_PLACEHOLDER": "Alternativknapp",
-    "SELECT_PLACEHOLDER": "Nedtrekk"
   },
   "SEARCH": {
     "RESULTS": "Søkeresultater",
