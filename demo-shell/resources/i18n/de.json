@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Zurück zur Startseite"
-    },
     "507": {
       "TITLE": "ACS-Datenträger voll",
-      "DESCRIPTION": "Inhalt übersteigt die für das Netzwerk oder System konfigurierte Gesamtspeicherbegrenzung",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Inhalt übersteigt die für das Netzwerk oder System konfigurierte Gesamtspeicherbegrenzung"
     }
   }
 }

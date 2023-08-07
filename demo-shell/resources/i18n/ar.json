@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "الترجمة الأولى للعنوان المخصص",
   "GROUP-TITLE2-TRANSLATION-KEY": "الترجمة الثانية للعنوان المخصص",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "عودة إلى الرئيسية"
-    },
     "507": {
       "TITLE": "قرص ACS ممتلئ",
-      "DESCRIPTION": "يتجاوز المحتوى حد سعة التخزين المكون للشبكة أو النظام",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "يتجاوز المحتوى حد سعة التخزين المكون للشبكة أو النظام"
     }
   }
 }

@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie pierwsze",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie drugie",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Powrót do strony głównej"
-    },
     "507": {
       "TITLE": "Dysk ACS pełny",
-      "DESCRIPTION": "Zawartość przekracza limit łącznego przydziału miejsca w magazynie skonfigurowany w sieci lub systemie",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Zawartość przekracza limit łącznego przydziału miejsca w magazynie skonfigurowany w sieci lub systemie"
     }
   }
 }

@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
   "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Tilbake til startsiden"
-    },
     "507": {
       "TITLE": "ACS-disk er full",
-      "DESCRIPTION": "Innhold overgår samlet lagringskvotegrense konfigurert for nettverket eller systemet",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Innhold overgår samlet lagringskvotegrense konfigurert for nettverket eller systemet"
     }
   }
 }

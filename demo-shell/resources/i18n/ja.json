@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "ホームへ戻る"
-    },
     "507": {
       "TITLE": "ACS のディスクがいっぱいです",
-      "DESCRIPTION": "コンテンツのサイズが、ネットワークまたはシステムに設定されているストレージクォータの上限を超えています。",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "コンテンツのサイズが、ネットワークまたはシステムに設定されているストレージクォータの上限を超えています。"
     }
   }
 }

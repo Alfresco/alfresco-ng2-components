@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Brugerdefineret titel oversættelse et",
   "GROUP-TITLE2-TRANSLATION-KEY": "Brugerdefineret titel oversættelse to",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Tilbage til forsiden"
-    },
     "507": {
       "TITLE": "ACS-disken er fuld",
-      "DESCRIPTION": "Indholdet overskrider den generelle lagerkvotegrænse, der er konfigureret for netværket eller systemet",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Indholdet overskrider den generelle lagerkvotegrænse, der er konfigureret for netværket eller systemet"
     }
   }
 }

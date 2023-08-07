@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Traducción de título personalizado 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Volver al inicio"
-    },
     "507": {
       "TITLE": "Disco ACS lleno",
-      "DESCRIPTION": "El contenido supera el límite de la cuota de almacenamiento general configurado para la red o sistema.",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "El contenido supera el límite de la cuota de almacenamiento general configurado para la red o sistema."
     }
   }
 }

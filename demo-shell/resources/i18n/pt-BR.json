@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Voltar para a página inicial"
-    },
     "507": {
       "TITLE": "Disco ACS cheio",
-      "DESCRIPTION": "O conteúdo excede o limite de armazenamento geral configurado para a rede ou o sistema",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "O conteúdo excede o limite de armazenamento geral configurado para a rede ou o sistema"
     }
   }
 }

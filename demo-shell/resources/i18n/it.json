@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
   "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Torna alla home"
-    },
     "507": {
       "TITLE": "Dico ACS pieno",
-      "DESCRIPTION": "Il contenuto supera il limite di archiviazione complessivo configurato per la rete o il sistema",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Il contenuto supera il limite di archiviazione complessivo configurato per la rete o il sistema"
     }
   }
 }

@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "返回到主页"
-    },
     "507": {
       "TITLE": "ACS 磁盘已满",
-      "DESCRIPTION": "内容超出为网络或系统配置的总存储配额限制",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "内容超出为网络或系统配置的总存储配额限制"
     }
   }
 }

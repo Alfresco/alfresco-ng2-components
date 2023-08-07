@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Vlastní překlad názvu 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Vlastní překlad názvu 2",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Zpět domů"
-    },
     "507": {
       "TITLE": "Disk ACS plný",
-      "DESCRIPTION": "Obsah přesahuje celkovou kvótu úložiště nastavenou pro síť nebo systém",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Obsah přesahuje celkovou kvótu úložiště nastavenou pro síť nebo systém"
     }
   }
 }

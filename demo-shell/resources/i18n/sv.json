@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Anpassad titelöversättning ett",
   "GROUP-TITLE2-TRANSLATION-KEY": "Anpassad titelöversättning två",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Tillbaka hem"
-    },
     "507": {
       "TITLE": "ACS disk full",
-      "DESCRIPTION": "Innehållet överskrider övergripande kvotbegränsning som är konfigurerad för nätverket eller systemet",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Innehållet överskrider övergripande kvotbegränsning som är konfigurerad för nätverket eller systemet"
     }
   }
 }

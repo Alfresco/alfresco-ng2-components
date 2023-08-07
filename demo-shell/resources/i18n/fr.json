@@ -31,15 +31,9 @@
   "GROUP-TITLE1-TRANSLATION-KEY": "Titre personnalisé traduction un",
   "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux",
   "ERROR_CONTENT": {
-    "RETURN_BUTTON": {
-      "TEXT": "Retour à l'accueil"
-    },
     "507": {
       "TITLE": "Disque ACS plein",
-      "DESCRIPTION": "Le contenu dépasse le quota maximum de stockage configuré pour le réseau ou système",
-      "SECONDARY_BUTTON": {
-        "TEXT": ""
-      }
+      "DESCRIPTION": "Le contenu dépasse le quota maximum de stockage configuré pour le réseau ou système"
     }
   }
 }
