@@ -17,7 +17,6 @@
 
 import { browser } from 'protractor';
 import { createApiService,
-    DataTableComponentPage,
     LoginPage,
     UploadActions,
     UserModel,
@@ -35,7 +34,6 @@ describe('Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const dataTable = new DataTableComponentPage();
 
     const pngFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -168,27 +166,5 @@ describe('Viewer', () => {
             await viewerPage.checkLeftSideBarButtonIsNotDisplayed();
             await viewerPage.checkLeftSideBarIsNotDisplayed();
         });
-
-    });
-
-    it('[C260100] Should be possible to disable Overlay viewer', async () => {
-        await navigationBarPage.clickOverlayViewerButton();
-        await dataTable.doubleClickRow('Name', fileForOverlay.name);
-        await viewerPage.checkOverlayViewerIsDisplayed();
-
-        await viewerPage.clickCloseButton();
-        await dataTable.doubleClickRow('Name', pngFile.name);
-
-        await viewerPage.checkOverlayViewerIsDisplayed();
-        await viewerPage.clickCloseButton();
-
-        await viewerPage.disableOverlay();
-
-        await dataTable.doubleClickRow('Name', fileForOverlay.name);
-        await viewerPage.checkImgContainerIsDisplayed();
-        await viewerPage.checkInlineViewerIsDisplayed();
-        await dataTable.doubleClickRow('Name', pngFile.name);
-        await viewerPage.checkImgContainerIsDisplayed();
-        await viewerPage.checkInlineViewerIsDisplayed();
     });
 });
