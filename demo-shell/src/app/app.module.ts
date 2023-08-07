@@ -52,7 +52,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
-import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
@@ -143,7 +142,6 @@ registerLocaleData(localeSv);
         ProcessModule.forRoot(),
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
-        ThemePickerModule,
         NgChartsModule,
         AppCloudSharedModule,
         MonacoEditorModule.forRoot()
