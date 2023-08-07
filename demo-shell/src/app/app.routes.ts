@@ -98,11 +98,6 @@ export const appRoutes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'breadcrumb',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
-            },
-            {
                 path: 'config-editor',
                 loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },

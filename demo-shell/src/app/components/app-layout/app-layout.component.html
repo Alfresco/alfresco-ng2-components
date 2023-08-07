@@ -1,20 +1,17 @@
-<adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav"
-    [expandedSidenav]="expandedSidenav" (expanded)="setState($event)" [position]="position" data-automation-id="sidenav-layout">
+<adf-sidenav-layout
+    [sidenavMin]="70"
+    [sidenavMax]="220"
+    [stepOver]="780"
+    data-automation-id="sidenav-layout">
 
     <adf-sidenav-layout-header>
-        <ng-template let-toggleMenu="toggleMenu" let-isMenuMinimized="isMenuMinimized">
-
+        <ng-template>
             <adf-layout-header
                 id="adf-header"
-                [title]="title | translate"
-                [redirectUrl]="redirectUrl"
-                [logo]="logo"
-                [tooltip]="tooltip | translate"
-                [showSidenavToggle]="showMenu"
-                [expandedSidenav]="!isMenuMinimized()"
-                [color]="color"
-                [position]="position"
-                (clicked)=toggleMenu($event)>
+                title="ADF Demo Application"
+                redirectUrl="/home"
+                tooltip="ADF Demo Application"
+                [showSidenavToggle]="false">
 
                 <div class="app-layout-menu-spacer"></div>
 
@@ -33,7 +30,6 @@
                 </mat-menu>
 
                 <adf-notification-history menuPositionX="before" menuPositionY="above"></adf-notification-history>
-
             </adf-layout-header>
         </ng-template>
     </adf-sidenav-layout-header>

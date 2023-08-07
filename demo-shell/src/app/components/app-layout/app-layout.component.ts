@@ -30,7 +30,6 @@ export class AppLayoutComponent implements OnInit {
         { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },
         { href: '/filtered-search', icon: 'rowing', title: 'Filter Header' },
-        { href: '/breadcrumb', icon: 'label', title: 'Breadcrumb' },
         { href: '/card-view', icon: 'view_headline', title: 'CardView' },
         { href: '/confirm-dialog', icon: 'view_headline', title: 'Confirmation Dialog' },
         { href: '/node-selector', icon: 'attachment', title: 'Node Selector' },
