@@ -258,10 +258,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
             },
             {
-                path: 'datatable',
-                loadChildren: () => import('./components/datatable/datatable.module').then(m => m.AppDataTableModule)
-            },
-            {
                 path: 'search',
                 component: SearchResultComponent,
                 canActivate: [AuthGuardEcm]
