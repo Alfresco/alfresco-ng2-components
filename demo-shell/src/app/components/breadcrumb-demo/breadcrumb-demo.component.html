@@ -9,7 +9,7 @@
     <small>Component is used in the fixed-width layout</small>
 
     <div class="app-breadcrumb-container-restricted">
-        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        <adf-breadcrumb [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
         </adf-breadcrumb>
     </div>
 
@@ -17,7 +17,7 @@
     <small>Component fits the parent container width</small>
 
     <div>
-        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        <adf-breadcrumb [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
         </adf-breadcrumb>
     </div>
 
@@ -28,7 +28,7 @@
     </small>
 
     <div>
-        <adf-breadcrumb [maxItems]="3" root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        <adf-breadcrumb [maxItems]="3" [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
         </adf-breadcrumb>
     </div>
 
@@ -36,7 +36,7 @@
     <small>Component used as a child of the Toolbar component</small>
 
     <adf-toolbar>
-        <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+        <adf-breadcrumb [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
         </adf-breadcrumb>
     </adf-toolbar>
 
@@ -45,7 +45,7 @@
 
     <adf-toolbar>
         <adf-toolbar-title>
-            <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+            <adf-breadcrumb [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
             </adf-breadcrumb>
         </adf-toolbar-title>
     </adf-toolbar>
@@ -59,7 +59,7 @@
 
     <adf-toolbar class="app-full-content-toolbar">
         <adf-toolbar-title>
-            <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
+            <adf-breadcrumb [root]="title" [target]="documentList" [folderNode]="documentList.folderNode">
             </adf-breadcrumb>
         </adf-toolbar-title>
         <adf-toolbar-divider></adf-toolbar-divider>
@@ -76,8 +76,7 @@
 
     <h2>6. Dropdown Breadcrumb</h2>
 
-    <adf-dropdown-breadcrumb class="app-files-breadcrumb"
-                             [target]="documentList">
+    <adf-dropdown-breadcrumb class="app-files-breadcrumb" [target]="documentList">
     </adf-dropdown-breadcrumb>
 
     <div class="app-content">

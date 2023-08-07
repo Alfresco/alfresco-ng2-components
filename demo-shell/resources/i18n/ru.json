@@ -1,7 +1,5 @@
 {
   "APP": {
-    "PERSONAL-FILES": "Личные файлы",
-    "CUSTOM-PERMISSION-MESSAGE": "Включить сообщение о пользовательском разрешении",
     "SEARCH": {
       "RADIO": {
         "NONE": "Нет",

@@ -24,5 +24,5 @@ import { Component, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbDemoComponent {
-
+    title = 'Personal Files';
 }

@@ -1,7 +1,5 @@
 {
   "APP": {
-    "PERSONAL-FILES": "個人的なファイル",
-    "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
     "SEARCH": {
       "RADIO": {
         "NONE": "なし",
