@@ -186,10 +186,6 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'node-selector',
-                loadChildren: () => import('./components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
-            },
-            {
                 path: 'settings-layout',
                 loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
