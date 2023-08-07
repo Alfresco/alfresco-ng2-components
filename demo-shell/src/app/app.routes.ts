@@ -111,10 +111,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
             },
             {
-                path: 'header-data',
-                loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
-            },
-            {
                 path: '',
                 component: HomeComponent
             },

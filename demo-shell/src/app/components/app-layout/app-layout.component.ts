@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
-import { HeaderDataService } from '../header-data/header-data.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ThemePalette } from '@angular/material/core';
 
 @Component({
@@ -28,9 +25,7 @@ import { ThemePalette } from '@angular/material/core';
     host: { class: 'app-layout' },
     encapsulation: ViewEncapsulation.None
 })
-export class AppLayoutComponent implements OnInit, OnDestroy {
-    private onDestroy$ = new Subject<boolean>();
-
+export class AppLayoutComponent implements OnInit {
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },
@@ -38,7 +33,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/breadcrumb', icon: 'label', title: 'Breadcrumb' },
         { href: '/card-view', icon: 'view_headline', title: 'CardView' },
         { href: '/confirm-dialog', icon: 'view_headline', title: 'Confirmation Dialog' },
-        { href: '/header-data', icon: 'edit', title: 'Header Data' },
         { href: '/node-selector', icon: 'attachment', title: 'Node Selector' },
         { href: '/task-list', icon: 'assignment', title: 'Task List' },
         {
@@ -95,63 +89,12 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         } else if (expand) {
             this.expandedSidenav = expand;
         }
-
-        this.headerService.hideMenu
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(show => this.showMenu = show);
-
-        this.headerService.color
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(color => {
-                if (['primary', 'accent', 'warn'].includes(color)) {
-                    this.color = color;
-                } else {
-                    this.color = undefined;
-                    document.documentElement.style.setProperty('--theme-primary-color', color);
-                }
-            });
-
-        this.headerService.title
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(title => this.title = title);
-
-        this.headerService.headerTextColor
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(headerTextColor => {
-                document.documentElement.style.setProperty('--theme-header-text-color', headerTextColor);
-            });
-
-        this.headerService.logo
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(path => this.logo = path);
-
-        this.headerService.redirectUrl
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(redirectUrl => this.redirectUrl = redirectUrl);
-
-        this.headerService.tooltip
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(tooltip => this.tooltip = tooltip);
-
-        this.headerService.position
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(position => this.position = position);
-
-        this.headerService.hideSidenav
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(hideSidenav => this.hideSidenav = hideSidenav);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     constructor(
         private userPreferences: UserPreferencesService,
         private config: AppConfigService,
-        private alfrescoApiService: AlfrescoApiService,
-        private headerService: HeaderDataService) {
+        private alfrescoApiService: AlfrescoApiService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;
         }
