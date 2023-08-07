@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "详细信息",
-      "COMMENTS": "注释",
-      "PROPERTIES": "属性",
-      "VERSIONS": "版本"
-    },
     "PERSONAL-FILES": "个人文件",
     "CUSTOM-PERMISSION-MESSAGE": "启用自定义权限消息",
     "SEARCH": {

@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Szczegóły",
-      "COMMENTS": "Komentarze",
-      "PROPERTIES": "Właściwości",
-      "VERSIONS": "Wersje"
-    },
     "PERSONAL-FILES": "Pliki osobiste",
     "CUSTOM-PERMISSION-MESSAGE": "Włącz komunikat o niestandardowych uprawnieniach",
     "SEARCH": {

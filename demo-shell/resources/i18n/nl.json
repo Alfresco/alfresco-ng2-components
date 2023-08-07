@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Details",
-      "COMMENTS": "Opmerkingen",
-      "PROPERTIES": "Eigenschappen",
-      "VERSIONS": "Versies"
-    },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "CUSTOM-PERMISSION-MESSAGE": "Aangepast rechtenbericht inschakelen",
     "SEARCH": {

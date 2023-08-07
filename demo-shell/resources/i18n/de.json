@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Details",
-      "COMMENTS": "Kommentare",
-      "PROPERTIES": "Eigenschaften",
-      "VERSIONS": "Versionen"
-    },
     "PERSONAL-FILES": "Persönliche Dateien",
     "CUSTOM-PERMISSION-MESSAGE": "Meldung 'Benutzerdefinierte Berechtigung aktivieren'",
     "SEARCH": {

@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Detalles",
-      "COMMENTS": "Comentarios",
-      "PROPERTIES": "Propiedades",
-      "VERSIONS": "Versiones"
-    },
     "PERSONAL-FILES": "Ficheros personales",
     "CUSTOM-PERMISSION-MESSAGE": "Habilitar mensaje de permiso personalizado",
     "SEARCH": {

@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Detaljer",
-      "COMMENTS": "Kommentarer",
-      "PROPERTIES": "Egenskaber",
-      "VERSIONS": "Versioner"
-    },
     "PERSONAL-FILES": "Personlige filer",
     "CUSTOM-PERMISSION-MESSAGE": "Tillad meddelelse om brugerdefineret tilladelse",
     "SEARCH": {

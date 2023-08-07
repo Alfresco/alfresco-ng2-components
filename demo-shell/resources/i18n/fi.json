@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Tiedot",
-      "COMMENTS": "Kommentit",
-      "PROPERTIES": "Ominaisuudet",
-      "VERSIONS": "Versiot"
-    },
     "PERSONAL-FILES": "Omat tiedostot",
     "CUSTOM-PERMISSION-MESSAGE": "Muokkaa omaa oikeusilmoitusta",
     "SEARCH": {

@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Сведения",
-      "COMMENTS": "Комментарии",
-      "PROPERTIES": "Свойства",
-      "VERSIONS": "Версии"
-    },
     "PERSONAL-FILES": "Личные файлы",
     "CUSTOM-PERMISSION-MESSAGE": "Включить сообщение о пользовательском разрешении",
     "SEARCH": {

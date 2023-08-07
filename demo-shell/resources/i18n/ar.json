@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "التفاصيل",
-      "COMMENTS": "تعليقات",
-      "PROPERTIES": "الخصائص",
-      "VERSIONS": "الإصدارات"
-    },
     "PERSONAL-FILES": "الملفات الشخصية",
     "CUSTOM-PERMISSION-MESSAGE": "تمكين رسالة إذن مخصصة",
     "SEARCH": {

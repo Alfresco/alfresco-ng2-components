@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "Podrobnosti",
-      "COMMENTS": "Poznámky",
-      "PROPERTIES": "Vlastnosti",
-      "VERSIONS": "Verze"
-    },
     "PERSONAL-FILES": "Osobní soubory",
     "CUSTOM-PERMISSION-MESSAGE": "Povolit přizpůsobené oznámení o oprávnění",
     "SEARCH": {

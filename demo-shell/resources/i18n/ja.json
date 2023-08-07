@@ -1,11 +1,5 @@
 {
   "APP": {
-    "INFO_DRAWER": {
-      "TITLE": "詳細",
-      "COMMENTS": "コメント",
-      "PROPERTIES": "プロパティ",
-      "VERSIONS": "バージョン"
-    },
     "PERSONAL-FILES": "個人的なファイル",
     "CUSTOM-PERMISSION-MESSAGE": "カスタムの権限メッセージを有効にする",
     "SEARCH": {
