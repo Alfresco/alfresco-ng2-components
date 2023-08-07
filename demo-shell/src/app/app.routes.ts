@@ -26,7 +26,6 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
-import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
@@ -222,11 +221,6 @@ export const appRoutes: Routes = [
             {
                 path: 'search-filter-chips',
                 component: SearchFilterChipsComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'extendedSearch',
-                component: SearchExtendedComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

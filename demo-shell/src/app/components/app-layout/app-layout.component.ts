@@ -52,7 +52,6 @@ export class AppLayoutComponent {
         { href: '/dl-custom-sources', icon: 'extension', title: 'Custom Sources' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
         { href: '/config-editor', icon: 'code', title: 'Configuration Editor' },
-        { href: '/extendedSearch', icon: 'search', title: 'Extended Search' },
         /* cspell:disable-next-line */
         { href: '/overlay-viewer', icon: 'pageview', title: 'Overlay Viewer' },
         { href: '/treeview', icon: 'nature', title: 'Tree View' },
