@@ -42,22 +42,6 @@
       }
     }
   },
-  "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Единичный выбор",
-    "MULTI": "Групповой выбор",
-    "PRESELECTED_VALUE": "Предварительный выбор: ",
-    "ROLE": "Роли: ",
-    "APP_NAME": "Имя приложения",
-    "APP_FILTER_MODE": "Фильтровать по имени приложения",
-    "ROLE_FILTER_MODE": "Фильтровать по роли",
-    "PRESELECT_VALIDATION": "Проверка предварительного выбора",
-    "ALL_PRESELECTED_USERS": "Все заранее заданные пользователи",
-    "ALL_PRESELECTED_GROUPS": "Все заранее заданные группы",
-    "INVALID_USERS": "Недействительные пользователи",
-    "INVALID_GROUPS": "Недействительные группы",
-    "READONLY_MODE": "Режим только для чтения",
-    "GROUPS_RESTRICTION": "Ограничение для групп"
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Выбор нескольких",
     "TESTING_MODE": "Режим тестирования",

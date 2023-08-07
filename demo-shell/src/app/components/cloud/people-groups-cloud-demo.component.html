@@ -4,36 +4,30 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangePeopleMode($event)">
-            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-people-single-mode" value="single">{{
-                'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-            <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-people-multiple-mode" value="multiple">{{
-                'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
+            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-people-single-mode" value="single">Single Selection</mat-radio-button>
+            <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-people-multiple-mode" value="multiple">Multiple Selection</mat-radio-button>
         </mat-radio-group>
         <div class="app-people-control-options">
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="app-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
+                <mat-label>Application Name</mat-label>
                 <input matInput (input)="setPeopleAppName($any($event).target?.value)" data-automation-id="app-people-app-input" />
             </mat-form-field>
             <mat-form-field class="app-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
-                <input matInput
-                    (input)="setPeopleRoles($any($event).target?.value)"
-                    data-automation-id="app-people-roles-input"/>
+                <mat-label>Roles: ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
+                <input matInput (input)="setPeopleRoles($any($event).target?.value)" data-automation-id="app-people-roles-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.GROUPS_RESTRICTION' | translate }} ["hr", "sales"]</mat-label>
+                <mat-label>Groups Restriction ["hr", "sales"]</mat-label>
                 <input matInput
                     (input)="setPeopleGroupsRestriction($any($event).target?.value)"
                     data-automation-id="app-people-groups-restriction-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }} {{ defaultPeoplePlaceholder }}</mat-label>
+                <mat-label>Preselect: {{ defaultPeoplePlaceholder }}</mat-label>
                 <input matInput (input)="setPeoplePreselectValue($any($event).target?.value)"  data-automation-id="app-people-preselect-input" />
             </mat-form-field>
-            <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">{{
-                'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
-            <mat-checkbox data-automation-id="app-people-readonly" value="{{ peopleReadonly }}" (change)="onChangePeopleReadonly($event)">{{
-                'PEOPLE_GROUPS_CLOUD.READONLY_MODE' | translate }}</mat-checkbox>
+            <mat-checkbox class="app-preselect-value" (change)="onChangePeopleValidation($event)">Preselect validation</mat-checkbox>
+            <mat-checkbox data-automation-id="app-people-readonly" value="{{ peopleReadonly }}" (change)="onChangePeopleReadonly($event)">Read-only Mode</mat-checkbox>
         </div>
         <div>
             <adf-cloud-people
@@ -49,7 +43,7 @@
         </div>
 
         <div class="app-people-list" *ngIf="peopleMode === 'multiple'">
-            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_PRESELECTED_USERS' | translate }}</h4>
+            <h4>All Preselected Users</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectUsers" role="listitem">
                     <mat-icon mat-list-icon>person</mat-icon>
@@ -58,7 +52,7 @@
             </mat-list>
 
             <div *ngIf="invalidUsers.length > 0">
-                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_USERS' | translate }} <mat-icon>warning</mat-icon> </h4>
+                <h4>Invalid Users <mat-icon>warning</mat-icon> </h4>
                 <mat-list role="list">
                     <mat-list-item *ngFor="let invalidUser of invalidUsers" role="listitem">
                         <mat-icon mat-list-icon>person</mat-icon>
@@ -76,38 +70,28 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangeGroupsMode($event)">
-            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-group-single-mode" value="single">{{
-                'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-            <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-group-multiple-mode" value="multiple">{{
-                'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
+            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-group-single-mode" value="single">Single Selection</mat-radio-button>
+            <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-group-multiple-mode" value="multiple">Multiple Selection</mat-radio-button>
         </mat-radio-group>
         <div class="app-groups-control-options">
             <mat-form-field *ngIf="isGroupAppNameSelected()" class="app-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
-                <input matInput
-                    (input)="setGroupAppName($any($event).target?.value)"
-                    data-automation-id="app-group-app-input"/>
+                <mat-label>Application Name</mat-label>
+                <input matInput (input)="setGroupAppName($any($event).target?.value)" data-automation-id="app-group-app-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value">
-                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
-                <input matInput
-                    (input)="setGroupRoles($any($event).target?.value)"
-                    data-automation-id="app-group-roles-input"/>
+                <mat-label>Roles: ["ACTIVITI_ADMIN", "ACTIVITI_USER"]</mat-label>
+                <input matInput (input)="setGroupRoles($any($event).target?.value)" data-automation-id="app-group-roles-input"/>
             </mat-form-field>
             <mat-form-field class="app-preselect-value-full">
                 <mat-label>Preselect: {{ defaultGroupPlaceholder }}</mat-label>
-                <input matInput
-                    (input)="setGroupsPreselectValue($any($event).target?.value)"
-                    data-automation-id="app-group-preselect-input" />
+                <input matInput (input)="setGroupsPreselectValue($any($event).target?.value)" data-automation-id="app-group-preselect-input" />
             </mat-form-field>
-            <mat-checkbox class="app-preselect-value" (change)="onChangeGroupValidation($event)">
-                {{ 'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}
-            </mat-checkbox>
+            <mat-checkbox class="app-preselect-value" (change)="onChangeGroupValidation($event)">Preselect validation</mat-checkbox>
             <mat-checkbox
                 data-automation-id="app-group-readonly"
                 value="{{ groupReadonly }}"
                 (change)="onChangeGroupReadonly($event)">
-                {{ 'PEOPLE_GROUPS_CLOUD.READONLY_MODE' | translate }}
+                Read-only Mode
             </mat-checkbox>
         </div>
         <div>
@@ -122,7 +106,7 @@
         </div>
 
         <div class="app-group-list" *ngIf="groupMode === 'multiple'">
-            <h4>{{ 'PEOPLE_GROUPS_CLOUD.ALL_PRESELECTED_GROUPS' | translate }}</h4>
+            <h4>All Preselected Groups</h4>
             <mat-list role="list">
                 <mat-list-item *ngFor="let item of preSelectGroup" role="listitem">
                     <mat-icon mat-list-icon>group</mat-icon>
@@ -131,7 +115,7 @@
             </mat-list>
 
             <div *ngIf="invalidGroups.length > 0">
-                <h4>{{ 'PEOPLE_GROUPS_CLOUD.INVALID_GROUPS' | translate }} <mat-icon>warning</mat-icon> </h4>
+                <h4>Invalid Groups <mat-icon>warning</mat-icon> </h4>
                 <mat-list role="list">
                     <mat-list-item *ngFor="let invalidGroup of invalidGroups" role="listitem">
                         <mat-icon mat-list-icon>group</mat-icon>

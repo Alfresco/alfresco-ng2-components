@@ -42,22 +42,6 @@
       }
     }
   },
-  "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Volba jedné položky",
-    "MULTI": "Volba více položek",
-    "PRESELECTED_VALUE": "Předvolená hodnota: ",
-    "ROLE": "Role: ",
-    "APP_NAME": "Název aplikace",
-    "APP_FILTER_MODE": "Filtrovat podle názvu aplikace",
-    "ROLE_FILTER_MODE": "Filtrovat podle role",
-    "PRESELECT_VALIDATION": "Ověření předvolené hodnoty",
-    "ALL_PRESELECTED_USERS": "Všichni předvolení uživatelé",
-    "ALL_PRESELECTED_GROUPS": "Všechny předvolené skupiny",
-    "INVALID_USERS": "Neplatní uživatelé",
-    "INVALID_GROUPS": "Neplatné skupiny",
-    "READONLY_MODE": "Režim jen pro čtení",
-    "GROUPS_RESTRICTION": "Omezení skupin"
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Hromadný výběr",
     "TESTING_MODE": "Testovací režim",

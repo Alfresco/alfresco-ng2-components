@@ -42,22 +42,6 @@
       }
     }
   },
-  "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Wybór pojedynczy",
-    "MULTI": "Wybór wielokrotny",
-    "PRESELECTED_VALUE": "Wstępny wybór: ",
-    "ROLE": "Role: ",
-    "APP_NAME": "Nazwa aplikacji",
-    "APP_FILTER_MODE": "Filtruj według nazwy aplikacji",
-    "ROLE_FILTER_MODE": "Filtruj według roli",
-    "PRESELECT_VALIDATION": "Sprawdzanie poprawności wstępnego wyboru",
-    "ALL_PRESELECTED_USERS": "Wszyscy wstępnie wybrani użytkownicy",
-    "ALL_PRESELECTED_GROUPS": "Wszystkie wstępnie wybrane grupy",
-    "INVALID_USERS": "Nieprawidłowi użytkownicy",
-    "INVALID_GROUPS": "Nieprawidłowe grupy",
-    "READONLY_MODE": "Tryb tylko do odczytu",
-    "GROUPS_RESTRICTION": "Ograniczenie grup"
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Wybór wielokrotny",
     "TESTING_MODE": "Tryb testowania",

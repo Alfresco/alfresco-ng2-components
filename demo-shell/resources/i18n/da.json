@@ -42,22 +42,6 @@
       }
     }
   },
-  "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Enkeltvalg",
-    "MULTI": "Multivalg",
-    "PRESELECTED_VALUE": "Forudvælg: ",
-    "ROLE": "Roller: ",
-    "APP_NAME": "Appnavn",
-    "APP_FILTER_MODE": "Filtrer efter appnavn",
-    "ROLE_FILTER_MODE": "Filtrer efter rolle",
-    "PRESELECT_VALIDATION": "Forudvælg validering",
-    "ALL_PRESELECTED_USERS": "Alle forudvalgte brugere",
-    "ALL_PRESELECTED_GROUPS": "Alle forudvalgte grupper",
-    "INVALID_USERS": "Ugyldige brugere",
-    "INVALID_GROUPS": "Ugyldige grupper",
-    "READONLY_MODE": "Skrivebeskyttet tilstand",
-    "GROUPS_RESTRICTION": "Gruppebegrænsning"
-  },
   "SETTINGS_CLOUD": {
     "MULTISELECTION": "Multivalg",
     "TESTING_MODE": "Testtilstand",
