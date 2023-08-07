@@ -41,27 +41,5 @@
         "TEXT": ""
       }
     }
-  },
-  "SETTINGS_CLOUD": {
-    "MULTISELECTION": "Wybór wielokrotny",
-    "TESTING_MODE": "Tryb testowania",
-    "SELECTION_MODE": "Tryb wyboru",
-    "SELECTED_ROWS": "Wybrane wiersze",
-    "TASK_DETAILS_REDIRECTION": "Wyświetlaj szczegóły zadania po kliknięciu zadania",
-    "PROCESS_DETAILS_REDIRECTION": "Wyświetlaj szczegóły procesu po kliknięciu procesu",
-    "ACTION": {
-      "ACTION_TITLE": "Dodaj czynność",
-      "ACTION_MENU": "Menu czynności",
-      "CONTEX_MENU": "Menu kontekstowe",
-      "ACTION_VISIBLE": "Widoczne",
-      "ACTION_DISABLE": "Wyłącz",
-      "ADD_BUTTON": "Dodaj",
-      "KEY": "Klucz",
-      "TITLE": "Tytuł",
-      "ICON": "Ikona",
-      "TASK_ID": "Identyfikator zadania",
-      "PROCESS_ID": "Identyfikator wystąpienia procesu",
-      "ACTION_TYPE": "Typ czynności"
-    }
   }
 }

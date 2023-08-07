@@ -41,27 +41,5 @@
         "TEXT": ""
       }
     }
-  },
-  "SETTINGS_CLOUD": {
-    "MULTISELECTION": "Seleção Múltipla",
-    "TESTING_MODE": "Modo de Teste",
-    "SELECTION_MODE": "Modo de seleção",
-    "SELECTED_ROWS": "Linhas selecionadas",
-    "TASK_DETAILS_REDIRECTION": "Exibir detalhes da tarefa ao clicar na tarefa",
-    "PROCESS_DETAILS_REDIRECTION": "Exibir detalhes do processo ao clicar no processo",
-    "ACTION": {
-      "ACTION_TITLE": "Adicionar ação",
-      "ACTION_MENU": "Menu de ação",
-      "CONTEX_MENU": "Menu de contexto",
-      "ACTION_VISIBLE": "Visível",
-      "ACTION_DISABLE": "Desativar",
-      "ADD_BUTTON": "Adicionar",
-      "KEY": "Chave",
-      "TITLE": "Título",
-      "ICON": "Ícone",
-      "TASK_ID": "ID de tarefa",
-      "PROCESS_ID": "ID de instância de processo",
-      "ACTION_TYPE": "Tipo de ação"
-    }
   }
 }

@@ -41,27 +41,5 @@
         "TEXT": ""
       }
     }
-  },
-  "SETTINGS_CLOUD": {
-    "MULTISELECTION": "Multiselectie",
-    "TESTING_MODE": "Testmodus",
-    "SELECTION_MODE": "Selectiemodus",
-    "SELECTED_ROWS": "Geselecteerde rijen",
-    "TASK_DETAILS_REDIRECTION": "Taakdetails weergeven bij klikken op taak",
-    "PROCESS_DETAILS_REDIRECTION": "Procesdetails weergeven bij klikken op proces",
-    "ACTION": {
-      "ACTION_TITLE": "Actie toevoegen",
-      "ACTION_MENU": "Actiemenu",
-      "CONTEX_MENU": "Contextmenu",
-      "ACTION_VISIBLE": "Zichtbaar",
-      "ACTION_DISABLE": "Uitschakelen",
-      "ADD_BUTTON": "Toevoegen",
-      "KEY": "Key",
-      "TITLE": "Titel",
-      "ICON": "Pictogram",
-      "TASK_ID": "Taak-id",
-      "PROCESS_ID": "Procesinstance-id",
-      "ACTION_TYPE": "Actietype"
-    }
   }
 }

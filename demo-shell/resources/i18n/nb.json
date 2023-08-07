@@ -41,27 +41,5 @@
         "TEXT": ""
       }
     }
-  },
-  "SETTINGS_CLOUD": {
-    "MULTISELECTION": "Flervalg",
-    "TESTING_MODE": "Testmodus",
-    "SELECTION_MODE": "Valgmodus",
-    "SELECTED_ROWS": "Valgte rader",
-    "TASK_DETAILS_REDIRECTION": "Vis oppgavedetaljer ved oppgaveklikk",
-    "PROCESS_DETAILS_REDIRECTION": "Vis prosessdetaljer ved prosessklikk",
-    "ACTION": {
-      "ACTION_TITLE": "Legg til handling",
-      "ACTION_MENU": "Handlingsmeny",
-      "CONTEX_MENU": "Kontekstmeny",
-      "ACTION_VISIBLE": "Synlig",
-      "ACTION_DISABLE": "Deaktiver",
-      "ADD_BUTTON": "Legg til",
-      "KEY": "Nøkkel",
-      "TITLE": "Tittel",
-      "ICON": "Ikon",
-      "TASK_ID": "Oppgave-ID",
-      "PROCESS_ID": "Prosesstilfelle-ID",
-      "ACTION_TYPE": "Handlingstype"
-    }
   }
 }
