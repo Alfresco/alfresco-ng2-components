@@ -46,10 +46,4 @@ export class PermissionActions {
         const nodeBody = { permissions: { isInheritanceEnabled: false } };
         return this.nodesApi.updateNode(nodeId, nodeBody, { include: ['permissions'] });
     }
-
-    enableInheritedPermissionsForNode(nodeId: string): Promise<NodeEntry> {
-        const nodeBody = { permissions: { isInheritanceEnabled: true } };
-        return this.nodesApi.updateNode(nodeId, nodeBody, { include: ['permissions'] });
-    }
-
 }

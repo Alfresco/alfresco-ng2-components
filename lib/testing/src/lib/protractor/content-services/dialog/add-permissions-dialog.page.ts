@@ -41,10 +41,6 @@ export class AddPermissionsDialogPage {
         return $$('.mat-option-text');
     }
 
-    async clickCloseButton(): Promise<void> {
-        await BrowserActions.click(this.closeButton);
-    }
-
     async clickAddPermissionButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('button[data-automation-id="adf-add-permission-button"]');
     }
@@ -72,18 +68,9 @@ export class AddPermissionsDialogPage {
         await BrowserActions.click(this.addButton);
     }
 
-    async checkPermissionsDatatableIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('[class*="adf-datatable-permission"]'));
-    }
-
     async getRoleCellValue(rowName: string): Promise<string> {
         const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Users and Groups', rowName, column.role);
         return BrowserActions.getText(locator);
-    }
-
-    async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
-        const row = this.dataTableComponentPage.getRow('Users and Groups', name);
-        await BrowserActions.click(row.$('adf-select-role-permission'));
     }
 
     async selectOption(name: string): Promise<void> {
