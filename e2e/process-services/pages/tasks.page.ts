@@ -53,10 +53,6 @@ export class TasksPage {
         await dialog.clickStartButton();
     }
 
-    async newTaskButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.newTaskButton);
-    }
-
     async clickOnCreateButton(): Promise<void> {
         await BrowserActions.click(this.createButton);
     }

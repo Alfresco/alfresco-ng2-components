@@ -83,10 +83,6 @@ export class TaskListDemoPage {
         await this.taskList().getDataTable().waitTillContentLoaded();
     }
 
-    async getProcessDefinitionId(): Promise<string> {
-        return BrowserActions.getInputValue(this.processInstanceId);
-    }
-
     async typeProcessInstanceId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processInstanceId, input);
     }
@@ -105,10 +101,6 @@ export class TaskListDemoPage {
         await BrowserActions.clearSendKeys(this.page, input.toString());
     }
 
-    async getPage(): Promise<string> {
-        return BrowserActions.getInputValue(this.page);
-    }
-
     async getPageFieldErrorMessage(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pageForm);
         const errorMessage = this.pageForm.$('mat-error');
@@ -121,11 +113,6 @@ export class TaskListDemoPage {
 
     async typeDueBefore(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.dueBefore, input);
-    }
-
-    async clearText(input): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(input);
-        await input.clear();
     }
 
     async clickResetButton(): Promise<void> {

@@ -58,11 +58,8 @@ export class TaskDetailsPage {
     removeInvolvedPeople = $('button[data-automation-id="Remove"]');
     peopleTitle = $('#people-title');
     noFormMessage = $('span[id*="no-form-message"]');
-    cancelAttachForm = $('#adf-no-form-cancel-button');
     attachFormButton = $('#adf-no-form-attach-form-button');
-    disabledAttachFormButton = $('button[id="adf-no-form-attach-form-button"][disabled]');
     removeAttachForm = $('#adf-attach-form-remove-button');
-    attachFormName = $('.adf-form-title');
     emptyTaskDetails = $('adf-task-details > div > div');
     priority = $('[data-automation-id*="card-textitem-value-priority"]');
     editableAssignee = $('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]');
@@ -94,20 +91,8 @@ export class TaskDetailsPage {
         await this.attachFormDropdown.checkOptionIsSelected(formName);
     }
 
-    async checkAttachFormButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.disabledAttachFormButton);
-    }
-
     async checkAttachFormButtonIsEnabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
-    }
-
-    async checkAttachFormDropdownIsDisplayed(): Promise<void> {
-        await this.attachFormDropdown.checkDropdownIsVisible();
-    }
-
-    async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.selectDropdownOption(option);
     }
 
     async noFormIsDisplayed(): Promise<void> {
@@ -137,10 +122,6 @@ export class TaskDetailsPage {
 
     async checkFormIsAttached(formName: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasValue(this.formNameField, formName);
-    }
-
-    getFormName(): Promise<string> {
-        return BrowserActions.getInputValue(this.formNameField);
     }
 
     async waitFormNameEqual(formName: string): Promise<void> {

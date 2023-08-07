@@ -142,14 +142,14 @@ describe('Favorite directive', () => {
         await customSourcesPage.checkRowIsNotDisplayed(testFile.entry.name);
 
         await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.contentList.dataTablePage().waitTillContentLoaded();
+        await trashcanPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 
         await expect(await trashcanPage.numberOfResultsDisplayed()).toBe(1);
 
         await trashcanPage.getDocumentList().dataTablePage().clickRowByContent(testFile.entry.name);
         await trashcanPage.getDocumentList().dataTablePage().checkRowByContentIsSelected(testFile.entry.name);
         await trashcanPage.clickRestore();
-        await trashcanPage.contentList.dataTablePage().waitTillContentLoaded();
+        await trashcanPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         await trashcanPage.checkTrashcanIsEmpty();
 
         await navigationBarPage.navigateToContentServices();

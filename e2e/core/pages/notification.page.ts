@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, $, $$ } from 'protractor';
+import { browser, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage, SnackbarPage } from '@alfresco/adf-testing';
 
 export class NotificationDemoPage {
@@ -26,7 +26,6 @@ export class NotificationDemoPage {
     decorativeIconField = $('input[data-automation-id="notification-icon"]');
     durationField = $('input[data-automation-id="notification-duration"]');
     actionToggle = $('mat-slide-toggle[data-automation-id="notification-action-toggle"]');
-    notificationSnackBar = $$('simple-snack-bar').first();
     actionOutput = $('div[data-automation-id="notification-action-output"]');
     notificationsPage = $('.app-sidenav-link[data-automation-id="Notifications"]');
     notificationConfig = $('p[data-automation-id="notification-custom-object"]');
@@ -34,10 +33,6 @@ export class NotificationDemoPage {
     horizontalPositionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-horizontal-position"]'));
     verticalPositionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-vertical-position"]'));
     directionDropdown = new DropdownPage($('mat-select[data-automation-id="notification-direction"]'));
-
-    async checkNotifyContains(message): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('simple-snack-bar', message)).first());
-    }
 
     async goToNotificationsPage(): Promise<void> {
         await BrowserActions.click(this.notificationsPage);

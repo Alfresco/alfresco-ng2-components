@@ -19,28 +19,21 @@ import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/a
 import { browser, $$, $ } from 'protractor';
 
 export class TrashcanPage {
-
-    contentList = new DocumentListPage($('adf-document-list'));
-    rows = $$('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = $$('adf-document-list .adf-datatable-body').first();
-    pagination = $('adf-pagination');
-    emptyTrashcan = $('adf-empty-content');
-    restoreButton = $(`button[title='Restore']`);
+    private contentList = new DocumentListPage($('adf-document-list'));
+    private restoreButton = $(`button[title='Restore']`);
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return this.rows.count();
+        const rows = $$('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
+        return rows.count();
     }
 
     async waitForTableBody(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
-    }
-
-    async waitForPagination(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pagination);
+        const tableBody = $$('adf-document-list .adf-datatable-body').first();
+        await BrowserVisibility.waitUntilElementIsVisible(tableBody);
     }
 
     async checkTrashcanIsEmpty(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.emptyTrashcan);
+        await BrowserVisibility.waitUntilElementIsVisible($('adf-empty-content'));
     }
 
     getDocumentList(): DocumentListPage {
@@ -55,9 +48,4 @@ export class TrashcanPage {
     async checkRestoreButtonIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.restoreButton);
     }
-
-    async checkRestoreButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.restoreButton);
-    }
-
 }
