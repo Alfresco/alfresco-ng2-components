@@ -81,7 +81,6 @@ import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
-import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { RouterModule } from '@angular/router';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
@@ -161,7 +160,6 @@ registerLocaleData(localeSv);
         FormNodeViewerComponent,
         AppsViewComponent,
         FilesComponent,
-        FilteredSearchComponent,
         FormComponent,
         FormListComponent,
         VersionManagerDialogAdapterComponent,

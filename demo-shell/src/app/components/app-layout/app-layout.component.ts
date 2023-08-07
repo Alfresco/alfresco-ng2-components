@@ -29,7 +29,6 @@ export class AppLayoutComponent implements OnInit {
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },
-        { href: '/filtered-search', icon: 'rowing', title: 'Filter Header' },
         { href: '/card-view', icon: 'view_headline', title: 'CardView' },
         { href: '/node-selector', icon: 'attachment', title: 'Node Selector' },
         { href: '/task-list', icon: 'assignment', title: 'Task List' },
