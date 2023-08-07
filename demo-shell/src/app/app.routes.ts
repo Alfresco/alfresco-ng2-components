@@ -29,7 +29,6 @@ import { SearchResultComponent } from './components/search/search-result.compone
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
-import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
@@ -300,11 +299,6 @@ export const appRoutes: Routes = [
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
-            {
-                path: 'overlay-viewer',
-                component: OverlayViewerComponent,
-                canActivate: [AuthGuardEcm]
-            },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],

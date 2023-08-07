@@ -41,8 +41,6 @@ import { SearchResultComponent } from './components/search/search-result.compone
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
-import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
-
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -164,7 +162,6 @@ registerLocaleData(localeSv);
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        OverlayViewerComponent,
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
