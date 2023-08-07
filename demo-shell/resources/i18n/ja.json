@@ -1,14 +1,4 @@
 {
-  "APP": {
-    "SEARCH": {
-      "RADIO": {
-        "NONE": "なし",
-        "ALL": "すべて",
-        "FOLDER": "フォルダ",
-        "DOCUMENT": "文書"
-      }
-    }
-  },
   "title": "ようこそ",
   "APP_LAYOUT": {
     "APP": "アプリ",

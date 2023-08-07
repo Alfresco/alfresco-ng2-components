@@ -1,14 +1,4 @@
 {
-  "APP": {
-    "SEARCH": {
-      "RADIO": {
-        "NONE": "None",
-        "ALL": "All",
-        "FOLDER": "Folder",
-        "DOCUMENT": "Document"
-      }
-    }
-  },
   "title": "Welcome",
   "APP_LAYOUT": {
     "APP": "App",

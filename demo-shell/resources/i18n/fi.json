@@ -1,14 +1,4 @@
 {
-  "APP": {
-    "SEARCH": {
-      "RADIO": {
-        "NONE": "Ei mitään",
-        "ALL": "Kaikki",
-        "FOLDER": "Kansio",
-        "DOCUMENT": "Asiakirja"
-      }
-    }
-  },
   "title": "Tervetuloa",
   "APP_LAYOUT": {
     "APP": "Sovellus",

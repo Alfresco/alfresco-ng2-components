@@ -169,10 +169,10 @@ export class SearchConfiguration {
                             field: null,
                             pageSize: 5,
                             options: [
-                                {name: 'APP.SEARCH.RADIO.NONE', value: '', default: true},
-                                {name: 'APP.SEARCH.RADIO.ALL', value: 'TYPE:\'cm:folder\' OR TYPE:\'cm:content\''},
-                                {name: 'APP.SEARCH.RADIO.FOLDER', value: 'TYPE:\'cm:folder\''},
-                                {name: 'APP.SEARCH.RADIO.DOCUMENT', value: 'TYPE:\'cm:content\''}
+                                {name: 'None', value: '', default: true},
+                                {name: 'All', value: 'TYPE:\'cm:folder\' OR TYPE:\'cm:content\''},
+                                {name: 'Folder', value: 'TYPE:\'cm:folder\''},
+                                {name: 'Document', value: 'TYPE:\'cm:content\''}
                             ]
                         }
                     }
@@ -188,8 +188,8 @@ export class SearchConfiguration {
                             maxDate: 'today',
                             field: 'cm:created, cm:modified',
                             displayedLabelsByField: {
-                                "cm:created": 'Created Date',
-                                "cm:modified": 'Modified Date'
+                                'cm:created': 'Created Date',
+                                'cm:modified': 'Modified Date'
                             }
                         }
                     }

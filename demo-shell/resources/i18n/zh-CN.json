@@ -1,14 +1,4 @@
 {
-  "APP": {
-    "SEARCH": {
-      "RADIO": {
-        "NONE": "无",
-        "ALL": "全部",
-        "FOLDER": "文件夹",
-        "DOCUMENT": "文档"
-      }
-    }
-  },
   "title": "欢迎使用",
   "APP_LAYOUT": {
     "APP": "APP",

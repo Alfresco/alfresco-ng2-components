@@ -1,14 +1,4 @@
 {
-  "APP": {
-    "SEARCH": {
-      "RADIO": {
-        "NONE": "بلا",
-        "ALL": "الكل",
-        "FOLDER": "مجلد",
-        "DOCUMENT": "مستند"
-      }
-    }
-  },
   "title": "مرحبًا",
   "APP_LAYOUT": {
     "APP": "تطبيق",
