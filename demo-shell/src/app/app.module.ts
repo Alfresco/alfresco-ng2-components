@@ -77,7 +77,6 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
-import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
@@ -191,9 +190,7 @@ registerLocaleData(localeSv);
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
         PeopleGroupCloudDemoComponent,
-        ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent,
         CustomEditorComponent,
         CustomWidgetComponent,
         ProcessCloudLayoutComponent,

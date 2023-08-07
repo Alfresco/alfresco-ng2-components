@@ -47,7 +47,6 @@ import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-c
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
-import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
@@ -190,10 +189,6 @@ export const appRoutes: Routes = [
             {
                 path: 'node-selector',
                 loadChildren: () => import('./components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
-            },
-            {
-                path: 'confirm-dialog',
-                component: ConfirmDialogExampleComponent
             },
             {
                 path: 'settings-layout',
