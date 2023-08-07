@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { UserPreferencesService, AppConfigService, AlfrescoApiService, UserPreferenceValues } from '@alfresco/adf-core';
-import { ThemePalette } from '@angular/material/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './app-layout.component.html',
@@ -25,7 +24,7 @@ import { ThemePalette } from '@angular/material/core';
     host: { class: 'app-layout' },
     encapsulation: ViewEncapsulation.None
 })
-export class AppLayoutComponent implements OnInit {
+export class AppLayoutComponent {
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },
@@ -60,44 +59,11 @@ export class AppLayoutComponent implements OnInit {
         { href: '/about', icon: 'info_outline', title: 'About' }
     ];
 
-    expandedSidenav = false;
-
-    position: 'start' | 'end' = 'start';
-    direction = 'ltr';
-
-    hideSidenav = false;
-    showMenu = true;
-
     enableRedirect = true;
-    color: ThemePalette = 'primary';
-    title = 'ADF Demo Application';
-    logo: string;
-    redirectUrl: string | any[] = ['/home'];
-    tooltip = 'ADF Demo Application';
 
-    ngOnInit() {
-        const expand = this.config.get<boolean>('sideNav.expandedSidenav');
-        const preserveState = this.config.get('sideNav.preserveState');
-
-        if (preserveState && expand) {
-            this.expandedSidenav = (this.userPreferences.get('expandedSidenav', expand.toString()) === 'true');
-        } else if (expand) {
-            this.expandedSidenav = expand;
-        }
-    }
-
-    constructor(
-        private userPreferences: UserPreferencesService,
-        private config: AppConfigService,
-        private alfrescoApiService: AlfrescoApiService) {
+    constructor(private alfrescoApiService: AlfrescoApiService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
             this.enableRedirect = false;
-        }
-    }
-
-    setState(state) {
-        if (this.config.get('sideNav.preserveState')) {
-            this.userPreferences.set(UserPreferenceValues.ExpandedSideNavStatus, state);
         }
     }
 }

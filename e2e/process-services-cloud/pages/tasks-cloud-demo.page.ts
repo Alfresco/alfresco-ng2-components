@@ -25,26 +25,16 @@ import {
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
-
     createButton = TestElement.byCss('button[data-automation-id="create-button"');
     newTaskButton = TestElement.byCss('button[data-automation-id="btn-start-task"]');
     settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
     appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
     displayTaskDetailsToggle = $('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]');
     displayProcessDetailsToggle = $('mat-slide-toggle[data-automation-id="processDetailsRedirection"]');
-    actionMenuToggle = $('mat-slide-toggle[data-automation-id="actionmenu"]');
-    contextMenuToggle = $('mat-slide-toggle[data-automation-id="contextmenu"]');
     multiSelectionToggle = $('mat-slide-toggle[data-automation-id="multiSelection"]');
     testingModeToggle = $('mat-slide-toggle[data-automation-id="testingMode"]');
     selectedRows = element(by.xpath('//div[text()=\' Selected Rows: \']'));
     noOfSelectedRows = element.all(by.xpath('//div[text()=\' Selected Rows: \']//li'));
-    addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
-    keyInputField = TestElement.byCss('input[data-placeholder="Key"]');
-    titleInputField = TestElement.byCss('input[data-placeholder="Title"]');
-    iconInputField = TestElement.byCss('input[data-placeholder="Icon"]');
-    addActionButton = TestElement.byText('button span', 'Add');
-    disableCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='disabled']`);
-    visibleCheckbox = TestElement.byCss(`mat-checkbox[formcontrolname='visible']`);
     spinner = TestElement.byTag('mat-progress-spinner');
     modeDropdown = new DropdownPage($('mat-form-field[data-automation-id="selectionMode"]'));
 
@@ -64,14 +54,6 @@ export class TasksCloudDemoPage {
 
     async enableMultiSelection(): Promise<void> {
         await this.togglePage.enableToggle(this.multiSelectionToggle);
-    }
-
-    async enableActionMenu(): Promise<void> {
-        await this.togglePage.enableToggle(this.actionMenuToggle);
-    }
-
-    async enableContextMenu(): Promise<void> {
-        await this.togglePage.enableToggle(this.contextMenuToggle);
     }
 
     async enableTestingMode(): Promise<void> {
@@ -116,44 +98,6 @@ export class TasksCloudDemoPage {
         await this.checkSelectedRowsIsDisplayed();
         const row = element(by.xpath(`//div[text()=' Selected Rows: ']//li[${rowNo}]`));
         return BrowserActions.getText(row);
-    }
-
-    addActionIsDisplayed(): Promise<void> {
-        return new TestElement(this.addActionTitle).waitVisible();
-    }
-
-    async addAction(text: string): Promise<void> {
-        await this.keyInputField.typeText(text);
-        await this.titleInputField.typeText(text);
-        await this.iconInputField.typeText(text);
-        await this.addActionButton.click();
-    }
-
-    async addDisabledAction(text: string): Promise<void> {
-        await this.keyInputField.typeText(text);
-        await this.titleInputField.typeText(text);
-        await this.iconInputField.typeText(text);
-        await this.disableCheckbox.click();
-        await this.addActionButton.click();
-    }
-
-    async addInvisibleAction(text: string): Promise<void> {
-        await this.keyInputField.typeText(text);
-        await this.titleInputField.typeText(text);
-        await this.iconInputField.typeText(text);
-        await this.visibleCheckbox.click();
-        await this.addActionButton.click();
-    }
-
-    actionAdded(action: string): Promise<void> {
-        return TestElement.byText(`mat-chip`, action).waitVisible();
-    }
-
-    async checkActionExecuted(taskId: string, action: string): Promise<void> {
-        await TestElement.byText(`span`, 'Action Menu:').waitVisible();
-        await TestElement.byText(`span`, 'Context Menu:').waitVisible();
-        await TestElement.byText(`span`, 'Task ID: ' + taskId).waitVisible();
-        await TestElement.byText(`span`, 'Action Type: ' + action).waitVisible();
     }
 
     async clickStartNewTaskButton() {
