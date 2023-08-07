@@ -22,14 +22,14 @@
         <div>
             <label>Change title</label>
             <input type="text" name="title" (keyup.enter)="submitTitle($any($event).target.value)"
-                   placeholder="{{ 'APP_LAYOUT.APP_NAME' | translate}}">
+                   placeholder="ADF Demo Application">
             <p>*press enter for submitting new title</p>
         </div>
 
         <div>
             <label>Change header text color</label>
             <input type="text" name="headerColor" (keyup.enter)="submitHeaderTextColor($any($event).target.value)"
-                   placeholder="{{ 'APP_LAYOUT.HEADER_TEXT_COLOR' | translate}}">
+                   placeholder="Header text color">
             <p>*press enter for submitting new color text</p>
             <p>*hex color</p>
         </div>

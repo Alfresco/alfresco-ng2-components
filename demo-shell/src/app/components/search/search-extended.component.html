@@ -1,7 +1,7 @@
 <div>
     <div id="container-for-custom-input" class="app-search-extended-input-containers">
         <mat-form-field>
-            <label>{{'APP_LAYOUT.WORD_TO_SEARCH' | translate}}</label>
+            <label>Search Word</label>
             <input type="text" matInput
                     id="custom-input" [(ngModel)]="searchedWord" [searchAutocomplete]="auto">
         </mat-form-field>
@@ -19,9 +19,7 @@
                 </mat-card-header>
                 <img mat-card-image [src]="getMimeTypeIcon(item)">
                 <mat-card-content>
-                    <p>
-                        {{'APP_LAYOUT.SEARCH_CREATED_BY' | translate}}: {{item?.entry.createdByUser?.displayName}}
-                    </p>
+                    <p>Created By: {{item?.entry.createdByUser?.displayName}}</p>
                 </mat-card-content>
             </mat-card>
             <mat-card class="app-example-card" id="search_no_result" *ngIf="data?.list?.entries.length === 0">

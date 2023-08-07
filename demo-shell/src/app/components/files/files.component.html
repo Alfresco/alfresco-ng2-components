@@ -24,14 +24,9 @@
             </div>
             <adf-toolbar *ngIf="!disableDragArea" class="app-files-toolbar">
                 <adf-toolbar-title>
-                    <adf-breadcrumb
-                                    class="app-files-breadcrumb"
-                                    root="Personal Files"
-                                    [target]="documentList">
+                    <adf-breadcrumb root="Personal Files" [target]="documentList">
                     </adf-breadcrumb>
-                    <adf-dropdown-breadcrumb
-                                             class="app-files-breadcrumb"
-                                             [target]="documentList">
+                    <adf-dropdown-breadcrumb [target]="documentList">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
