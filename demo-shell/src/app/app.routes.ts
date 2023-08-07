@@ -53,7 +53,6 @@ import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-clo
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
-import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 export const appRoutes: Routes = [
@@ -322,11 +321,6 @@ export const appRoutes: Routes = [
             {
                 path: 'treeview',
                 component: TreeViewSampleComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'expandable-list',
-                component: AspectListSampleComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

@@ -60,7 +60,6 @@ export class AppLayoutComponent implements OnInit {
         /* cspell:disable-next-line */
         { href: '/overlay-viewer', icon: 'pageview', title: 'Overlay Viewer' },
         { href: '/treeview', icon: 'nature', title: 'Tree View' },
-        { href: '/expandable-list', icon: 'hot_tub', title: 'Expandable item list' },
         { href: '/about', icon: 'info_outline', title: 'About' }
     ];
 
