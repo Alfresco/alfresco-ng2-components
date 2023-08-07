@@ -111,10 +111,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },
             {
-                path: 'pipes',
-                loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
-            },
-            {
                 path: 'card-view',
                 loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
             },

@@ -62,7 +62,6 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         { href: '/login', icon: 'vpn_key', title: 'Login' },
         { href: '/trashcan', icon: 'delete', title: 'Trashcan' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'Custom Sources' },
-        { href: '/pipes', icon: 'layers', title: 'Pipes' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
         { href: '/config-editor', icon: 'code', title: 'Configuration Editor' },
         { href: '/extendedSearch', icon: 'search', title: 'Extended Search' },
