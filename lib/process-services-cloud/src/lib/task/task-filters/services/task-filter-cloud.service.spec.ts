@@ -37,6 +37,7 @@ import { TaskCloudEngineEvent } from './../../../models/engine-event-cloud.model
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloModule } from 'apollo-angular';
+import { StorageService } from '@alfresco/adf-core';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -227,6 +228,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     let preferenceCloudService: PreferenceCloudServiceInterface;
     let identityUserService: IdentityUserService;
     let getPreferencesSpy: jasmine.Spy;
+    let storageService: StorageService;
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
@@ -240,6 +242,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.inject(IdentityUserService);
+        storageService = TestBed.inject(StorageService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
@@ -270,7 +273,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
 
-        const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${identityUserMock.username}`));
+        const localData = JSON.parse(storageService.getItem(`task-filters-${appName}-${identityUserMock.username}`));
         expect(localData.length).toEqual(3);
 
         expect(localData[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
