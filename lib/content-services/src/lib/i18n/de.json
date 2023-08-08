@@ -626,5 +626,20 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "{{ count }} mehr anzeigen"
   },
-  "swsdp": "Beispiel: Website-Design-Projekt"
+  "swsdp": "Beispiel: Website-Design-Projekt",
+  "ADF": {
+    "MESSAGES":{
+      "ERRORS":{
+        "INVALID_RECEIVER_EMAIL": "Empfänger-E-Mail-Addresse(n) nicht zulässig. Wenden Sie sich an Ihr IT-Team.",
+        "INVALID_SENDER_EMAIL": "Ihre E-Mail-Adresse muss gültig sein, bevor Sie den Beitritt zur Bibliothek anfordern.",
+        "JOIN_CANCEL_FAILED": "Ihre Beitrittsanfrage kann nicht zurückgezogen werden",
+        "JOIN_REQUEST_FAILED": "Beitritt zur Bibliothek nicht möglich"
+      },
+      "INFO":{
+        "JOINED": "Beitritt zur Bibliothek abgeschlossen",
+        "JOIN_CANCELED": "Anfrage zum Bibliotheksbeitritt zurückgezogen",
+        "JOIN_REQUESTED": "Anfrage zum Bibliotheksbeitritt abgeschickt"
+      }
+    }
+  }
 }

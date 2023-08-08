@@ -95,14 +95,14 @@ export class LibraryMembershipDirective implements OnChanges {
                     const info = {
                         updatedEntry: this.targetSite,
                         shouldReload: false,
-                        i18nKey: 'APP.MESSAGES.INFO.JOIN_CANCELED'
+                        i18nKey: 'ADF.MESSAGES.INFO.JOIN_CANCELED'
                     };
                     this.toggle.emit(info);
                 },
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'APP.MESSAGES.ERRORS.JOIN_CANCEL_FAILED'
+                        i18nKey: 'ADF.MESSAGES.ERRORS.JOIN_CANCEL_FAILED'
                     };
                     this.error.emit(errWithMessage);
                 }
@@ -118,14 +118,14 @@ export class LibraryMembershipDirective implements OnChanges {
                     if (createdMembership.entry && createdMembership.entry.site && createdMembership.entry.site.role) {
                         const info = {
                             shouldReload: true,
-                            i18nKey: 'APP.MESSAGES.INFO.JOINED'
+                            i18nKey: 'ADF.MESSAGES.INFO.JOINED'
                         };
                         this.toggle.emit(info);
                     } else {
                         const info = {
                             updatedEntry: this.targetSite,
                             shouldReload: false,
-                            i18nKey: 'APP.MESSAGES.INFO.JOIN_REQUESTED'
+                            i18nKey: 'ADF.MESSAGES.INFO.JOIN_REQUESTED'
                         };
                         this.toggle.emit(info);
                     }
@@ -133,7 +133,7 @@ export class LibraryMembershipDirective implements OnChanges {
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'APP.MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
+                        i18nKey: 'ADF.MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
                     };
 
                     const senderEmailCheck = 'Failed to resolve sender mail address';
@@ -141,9 +141,9 @@ export class LibraryMembershipDirective implements OnChanges {
 
                     if (error.message) {
                         if (error.message.includes(senderEmailCheck)) {
-                            errWithMessage.i18nKey = 'APP.MESSAGES.ERRORS.INVALID_SENDER_EMAIL';
+                            errWithMessage.i18nKey = 'ADF.MESSAGES.ERRORS.INVALID_SENDER_EMAIL';
                         } else if (error.message.includes(receiverEmailCheck)) {
-                            errWithMessage.i18nKey = 'APP.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL';
+                            errWithMessage.i18nKey = 'ADF.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL';
                         }
                     }
 
@@ -158,7 +158,7 @@ export class LibraryMembershipDirective implements OnChanges {
                     if (createdMembership.entry && createdMembership.entry.role) {
                         const info = {
                             shouldReload: true,
-                            i18nKey: 'APP.MESSAGES.INFO.JOINED'
+                            i18nKey: 'ADF.MESSAGES.INFO.JOINED'
                         };
                         this.toggle.emit(info);
                     }
@@ -166,7 +166,7 @@ export class LibraryMembershipDirective implements OnChanges {
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'APP.MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
+                        i18nKey: 'ADF.MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
                     };
 
                     const senderEmailCheck = 'Failed to resolve sender mail address';
@@ -174,9 +174,9 @@ export class LibraryMembershipDirective implements OnChanges {
 
                     if (error.message) {
                         if (error.message.includes(senderEmailCheck)) {
-                            errWithMessage.i18nKey = 'APP.MESSAGES.ERRORS.INVALID_SENDER_EMAIL';
+                            errWithMessage.i18nKey = 'ADF.MESSAGES.ERRORS.INVALID_SENDER_EMAIL';
                         } else if (error.message.includes(receiverEmailCheck)) {
-                            errWithMessage.i18nKey = 'APP.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL';
+                            errWithMessage.i18nKey = 'ADF.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL';
                         }
                     }
 

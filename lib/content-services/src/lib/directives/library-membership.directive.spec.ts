@@ -196,11 +196,11 @@ describe('LibraryMembershipDirective', () => {
             const testData = [
                 {
                     fixture: 'Failed to resolve sender mail address',
-                    expected: 'APP.MESSAGES.ERRORS.INVALID_SENDER_EMAIL'
+                    expected: 'ADF.MESSAGES.ERRORS.INVALID_SENDER_EMAIL'
                 },
                 {
                     fixture: 'All recipients for the mail action were invalid',
-                    expected: 'APP.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL'
+                    expected: 'ADF.MESSAGES.ERRORS.INVALID_RECEIVER_EMAIL'
                 }
             ];
 

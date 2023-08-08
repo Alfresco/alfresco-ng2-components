@@ -626,5 +626,20 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "もっと {{ count }} 表示する"
   },
-  "swsdp": "サンプル：Webサイトデザインプロジェクト"
+  "swsdp": "サンプル：Webサイトデザインプロジェクト",
+  "ADF": {
+    "MESSAGES":{
+      "ERRORS":{
+        "INVALID_RECEIVER_EMAIL": "受取人の E メールアドレスが無効です。IT 担当者に連絡してください。",
+        "INVALID_SENDER_EMAIL": "参加リクエストを行うには、有効な E メールアドレスが必要です。",
+        "JOIN_CANCEL_FAILED": "参加リクエストをキャンセルできません",
+        "JOIN_REQUEST_FAILED": "ライブラリに参加できません"
+      },
+      "INFO":{
+        "JOINED": "ライブラリに参加しました",
+        "JOIN_CANCELED": "ライブラリへの参加リクエストをキャンセルしました",
+        "JOIN_REQUESTED": "このライブラリへの参加リクエストが送信されました"
+      }
+    }
+  }
 }

@@ -626,5 +626,20 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "查看 {{ count }} 更多"
   },
-  "swsdp": "示例: 网站设计项目"
+  "swsdp": "示例: 网站设计项目",
+  "ADF": {
+    "MESSAGES":{
+      "ERRORS":{
+        "INVALID_RECEIVER_EMAIL": "收件人电子邮件地址无效，请联系 IT 人员。",
+        "INVALID_SENDER_EMAIL": "在请求加入之前，您的电子邮件地址必须有效。",
+        "JOIN_CANCEL_FAILED": "无法取消加入请求",
+        "JOIN_REQUEST_FAILED": "无法加入库"
+      },
+      "INFO":{
+        "JOINED": "已加入库",
+        "JOIN_CANCELED": "已取消加入该库的请求",
+        "JOIN_REQUESTED": "已发送加入该库的请求"
+      }
+    }
+  }
 }

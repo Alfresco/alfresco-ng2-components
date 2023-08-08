@@ -626,5 +626,20 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Ver {{ count }} más"
   },
-  "swsdp": "Ejemplo: Proyecto de diseño de sitio web"
+  "swsdp": "Ejemplo: Proyecto de diseño de sitio web",
+  "ADF": {
+    "MESSAGES":{
+      "ERRORS":{
+        "INVALID_RECEIVER_EMAIL": "Dirección de correo electrónico de destinatario(s) no válida; póngase en contacto con el equipo de TI",
+        "INVALID_SENDER_EMAIL": "Su dirección de correo electrónico debe ser válida antes de solicitar unirse.",
+        "JOIN_CANCEL_FAILED": "No puede cancelarse su solicitud de unirse",
+        "JOIN_REQUEST_FAILED": "No puede unirse a la biblioteca"
+      },
+      "INFO":{
+        "JOINED": "Se ha unido a la biblioteca",
+        "JOIN_CANCELED": "Se ha cancelado la solicitud de unirse a esta biblioteca",
+        "JOIN_REQUESTED": "Se ha enviado una solicitud para unirse a esta biblioteca"
+      }
+    }
+  }
 }
