@@ -257,11 +257,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentList.reload();
     }
 
-    toggleAllowDropFiles() {
-        this.allowDropFiles = !this.allowDropFiles;
-        this.documentList.reload();
-    }
-
     ngOnInit() {
         if (!this.pagination) {
             this.pagination = {
