@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, LogService, setupTestBed } from '@alfresco/adf-core';
+import { DataColumn, FormFieldModel, FormFieldTypes, FormModel, LogService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DataTableWidgetComponent } from './data-table.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
@@ -58,11 +58,12 @@ describe('DataTableWidgetComponent', () => {
             }
         });
 
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                ProcessServiceCloudTestingModule
+            ]
+        });
         fixture = TestBed.createComponent(DataTableWidgetComponent);
         widget = fixture.componentInstance;
 
