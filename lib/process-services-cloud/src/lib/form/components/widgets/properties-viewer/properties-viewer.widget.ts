@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { BaseViewerWidgetComponent, FormService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
 /* eslint-disable @angular-eslint/component-selector */
@@ -38,24 +38,13 @@ import { Node } from '@alfresco/js-api';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class PropertiesViewerWidgetComponent extends WidgetComponent implements OnInit {
+export class PropertiesViewerWidgetComponent extends BaseViewerWidgetComponent {
 
     @Output()
     nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
 
     constructor(formService: FormService) {
         super(formService);
-    }
-
-    ngOnInit(): void {
-        if (this.field?.value) {
-            if (Array.isArray(this.field.value) && this.field.value.length > 0) {
-                const file = this.field.value[0];
-                this.field.value = file.id;
-            } else if (typeof this.field.value === 'object' && this.field.value.id) {
-                this.field.value = this.field.value.id;
-            }
-        }
     }
 
     onNodeContentLoaded(node: Node) {

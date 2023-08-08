@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormService, BaseViewerWidgetComponent } from '@alfresco/adf-core';
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -37,19 +37,8 @@ import { WidgetComponent, FormService } from '@alfresco/adf-core';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class FileViewerWidgetComponent extends WidgetComponent implements OnInit {
+export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {
     constructor(formService: FormService) {
         super(formService);
-    }
-
-    ngOnInit(): void {
-        if (this.field?.value) {
-            if (Array.isArray(this.field.value) && this.field.value.length > 0) {
-                const file = this.field.value[0];
-                this.field.value = file.id;
-            } else if (typeof this.field.value === 'object' && this.field.value.id) {
-                this.field.value = this.field.value.id;
-            }
-        }
     }
 }
