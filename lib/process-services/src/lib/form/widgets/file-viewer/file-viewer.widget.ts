@@ -43,8 +43,8 @@ export class FileViewerWidgetComponent extends WidgetComponent implements OnInit
     }
 
     ngOnInit(): void {
-        if (this.field && this.field.value) {
-            if (Array.isArray(this.field.value) && this.field.value.length) {
+        if (this.field?.value) {
+            if (Array.isArray(this.field.value) && this.field.value.length > 0) {
                 const file = this.field.value[0];
                 this.field.value = file.id;
             } else if (typeof this.field.value === 'object' && this.field.value.id) {
