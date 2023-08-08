@@ -93,7 +93,6 @@ describe('Document List Component', () => {
     });
 
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.clickGridViewButton();
             await contentServicesPage.checkCardViewContainerIsDisplayed();

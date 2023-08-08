@@ -39,8 +39,6 @@ describe('Content Services Viewer', () => {
     const versionManagePage = new VersionManagePage();
     const metadataViewPage = new MetadataViewPage();
 
-    let zoom;
-
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
@@ -241,7 +239,7 @@ describe('Content Services Viewer', () => {
 
             await viewerPage.checkPercentageIsDisplayed();
 
-            zoom = await viewerPage.getZoom();
+            let zoom = await viewerPage.getZoom();
             await viewerPage.clickZoomInButton();
             await viewerPage.checkZoomedIn(zoom);
 

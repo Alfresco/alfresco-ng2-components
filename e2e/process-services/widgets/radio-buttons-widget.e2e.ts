@@ -25,7 +25,6 @@ import { createApiService,
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/process-services.page';
 
 describe('Radio Buttons Widget', () => {
@@ -35,7 +34,6 @@ describe('Radio Buttons Widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -60,8 +58,7 @@ describe('Radio Buttons Widget', () => {
    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(appId);
+        await new ProcessServicesPage().goToAppByAppId(appId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();

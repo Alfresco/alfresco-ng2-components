@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     BrowserActions,
     FormPage,
     LoginPage,
     ProcessUtil,
     UsersActions,
-    Widget
+    Widget, UserModel
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
@@ -30,7 +31,6 @@ import { FormDemoPage } from '.././pages/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Date widget', () => {
 
@@ -39,12 +39,12 @@ describe('Date widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const dateWidget = widget.dateWidget();
-    let appModel;
-    let processUserModel;
-    let deployedAppId; let process;
+    let appModel: any;
+    let processUserModel: UserModel;
+    let deployedAppId: number;
+    let process: any;
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -73,8 +73,7 @@ describe('Date widget', () => {
 
     describe('Simple App', () => {
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -113,13 +112,11 @@ describe('Date widget', () => {
             await formDemoPage.setConfigToEditor(formJson);
             await dateWidget.setDateInput('datefield', '18-7-19');
             await formPage.saveForm();
-            await expect(await dateWidget.getErrorMessage('datefield'))
-                .toBe('Can\'t be less than 19-7-19', 'Min date validation is not working');
+            await expect(await dateWidget.getErrorMessage('datefield')).toBe('Can\'t be less than 19-7-19');
             await dateWidget.clearDateInput('datefield');
             await dateWidget.setDateInput('datefield', '20-7-19');
             await formPage.saveForm();
-            await expect(await dateWidget.getErrorMessage('datefield'))
-                .toBe('Can\'t be greater than 19-8-19', 'Max date validation is not working');
+            await expect(await dateWidget.getErrorMessage('datefield')).toBe('Can\'t be greater than 19-8-19');
             await dateWidget.clearDateInput('datefield');
             await dateWidget.setDateInput('datefield', '19-7-19');
             await formPage.saveForm();

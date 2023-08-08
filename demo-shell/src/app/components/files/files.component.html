@@ -475,39 +475,6 @@
             </mat-slide-toggle>
         </section>
 
-        <section>
-            <mat-slide-toggle [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
-                Enable Download Prompt
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableDownloadPrompt">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onDownloadPromptDelayChange()">
-            </mat-form-field>
-        </section>
-
-        <section *ngIf="enableDownloadPrompt">
-            <mat-slide-toggle [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
-                Enable Download Prompt Reminders
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminder">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onDownloadPromptReminderChange()">
-            </mat-form-field>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
-                Enable FileAutoDownload
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableFileAutoDownload">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="fileAutoDownloadSizeThresholdInMB" (change)="onFileAutoDownloadSizeThresholdChange()">
-            </mat-form-field>
-        </section>
-
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field floatPlaceholder="float">

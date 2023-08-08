@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     LoginPage,
     ProcessUtil,
     UsersActions,
-    Widget
+    Widget, UserModel
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
@@ -40,8 +41,9 @@ describe('Dynamic Table widget ', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let processUserModel;
-    let deployedAppId; let process;
+    let processUserModel: UserModel;
+    let deployedAppId: number;
+    let process: any;
 
     describe('with Date Time Widget App', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
@@ -60,8 +62,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -117,8 +118,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
@@ -173,8 +173,7 @@ describe('Dynamic Table widget ', () => {
         beforeEach(async () => {
             await loginPage.login(processUserModel.username, processUserModel.password);
 
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();

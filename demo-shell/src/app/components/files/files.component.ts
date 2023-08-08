@@ -230,13 +230,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    enableDownloadPrompt = this.appConfig.get<boolean>('viewer.enableDownloadPrompt', false);
-    enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
-    downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
-    downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
-    enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
-    fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
-
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
@@ -653,35 +646,5 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
         }
         this.documentList.reload();
-    }
-
-    onEnableDownloadPrompt() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
-    }
-
-    onDownloadPromptDelayChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
-    }
-
-    onEnableDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPromptReminder'] = this.enableDownloadPromptReminder;
-    }
-
-    onDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
-    }
-
-    onEnableFileAutoDownloadChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableFileAutoDownload'] = this.enableFileAutoDownload;
-    }
-
-    onFileAutoDownloadSizeThresholdChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['fileAutoDownloadSizeThresholdInMB'] = this.fileAutoDownloadSizeThresholdInMB;
     }
 }

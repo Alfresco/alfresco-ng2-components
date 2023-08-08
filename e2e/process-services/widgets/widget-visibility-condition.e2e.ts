@@ -25,7 +25,6 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/process-services.page';
 
 const widgets = {
@@ -57,7 +56,6 @@ describe('Process-Services - Visibility conditions', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -83,8 +81,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(deployedAppId);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });

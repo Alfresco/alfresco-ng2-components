@@ -54,15 +54,14 @@ describe('Checklist component', () => {
 
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        for (let i = 0; i < tasks.length; i++) {
-            await taskUtil.createStandaloneTask(tasks[i]);
+        for (const item of tasks) {
+            await taskUtil.createStandaloneTask(item);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);
    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
