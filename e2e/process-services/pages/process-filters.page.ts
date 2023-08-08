@@ -28,7 +28,6 @@ export class ProcessFiltersPage {
     buttonWindow = $('div > button[data-automation-id="btn-start-process"] > div');
     noContentMessage = $$('.adf-empty-content__title').first();
     rows = $$('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = $$('adf-datatable .adf-datatable-body').first();
     processIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
     startProcessEl = $('adf-start-process .adf-start-process');
 

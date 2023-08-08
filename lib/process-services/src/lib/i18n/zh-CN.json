@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "创建",
-      "NEW_TASK": "新任务",
-      "NEW_PROCESS": "新流程"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "继续",

@@ -38,13 +38,9 @@ import { AppLayoutComponent } from './components/app-layout/app-layout.component
 import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
-import { SearchExtendedComponent } from './components/search/search-extended.component';
-import { LogComponent } from './components/log/log.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
-import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
-
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -53,7 +49,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
-import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
@@ -77,22 +72,15 @@ import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
-import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
-import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { RouterModule } from '@angular/router';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import {
-    CustomEditorComponent,
-    CustomWidgetComponent
-} from './components/cloud/custom-form-components/custom-editor.component';
-import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
+import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -150,7 +138,6 @@ registerLocaleData(localeSv);
         ProcessModule.forRoot(),
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
-        ThemePickerModule,
         NgChartsModule,
         AppCloudSharedModule,
         MonacoEditorModule.forRoot()
@@ -163,29 +150,24 @@ registerLocaleData(localeSv);
         HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
-        SearchExtendedComponent,
-        LogComponent,
         ProcessServiceComponent,
         ShowDiagramComponent,
         FormViewerComponent,
         FormNodeViewerComponent,
         AppsViewComponent,
         FilesComponent,
-        FilteredSearchComponent,
         FormComponent,
         FormListComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        OverlayViewerComponent,
         SharedLinkViewComponent,
         FormLoadingComponent,
         DemoPermissionComponent,
         DemoErrorComponent,
         FormLoadingComponent,
         TreeViewSampleComponent,
-        AspectListSampleComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
@@ -198,11 +180,8 @@ registerLocaleData(localeSv);
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
-        ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent,
         CustomEditorComponent,
         CustomWidgetComponent,
         ProcessCloudLayoutComponent,
@@ -212,7 +191,6 @@ registerLocaleData(localeSv);
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         provideTranslations('app', 'resources'),
-        provideTranslations('lazy-loading', 'resources/lazy-loading'),
         AppNotificationsService,
         {
             provide: APP_INITIALIZER,

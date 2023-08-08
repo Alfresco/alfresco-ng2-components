@@ -15,7 +15,7 @@ Formats the tooltip for a [`Node`](https://github.com/Alfresco/alfresco-js-api/b
 ```html
 <data-column
     key="name"
-    title="APP.DOCUMENT_LIST.COLUMNS.NAME">
+    title="Name">
     <ng-template let-value="value" let-context>
         <span title="{{ context?.row?.obj | adfNodeNameTooltip }}">{{ value }}</span>
     </ng-template>

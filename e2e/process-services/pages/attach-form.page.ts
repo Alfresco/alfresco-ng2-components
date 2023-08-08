@@ -28,16 +28,8 @@ export class AttachFormPage {
     defaultTitle = $('.mat-card-title');
     attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
 
-    async checkNoFormMessageIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
-    }
-
     async checkAttachFormButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
-    }
-
-    async checkCompleteButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
     }
 
     async clickAttachFormButton(): Promise<void> {

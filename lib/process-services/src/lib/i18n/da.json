@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Opret",
-      "NEW_TASK": "Ny opgave",
-      "NEW_PROCESS": "Ny proces"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Fortsæt",

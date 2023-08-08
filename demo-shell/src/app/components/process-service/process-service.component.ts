@@ -527,7 +527,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 model: {
                     key: 'taskDetails',
                     icon: 'open',
-                    title: 'TASK_LIST_DEMO.TASK_CONTEXT_MENU',
+                    title: 'Task List Context Menu',
                     visible: true
                 },
                 subject: new Subject()
@@ -542,7 +542,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 model: {
                     key: 'processDetails',
                     icon: 'open',
-                    title: 'PROCESS_LIST_DEMO.PROCESS_CONTEXT_MENU',
+                    title: 'Process List Context Menu',
                     visible: true
                 },
                 subject: new Subject()

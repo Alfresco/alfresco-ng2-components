@@ -1,7 +1,6 @@
 <div class="inner-layout">
     <div class="inner-layout__header">
-        <adf-breadcrumb [root]="'APP_LAYOUT.TRASHCAN' | translate">
-        </adf-breadcrumb>
+        <adf-breadcrumb [root]="'Trashcan'"></adf-breadcrumb>
 
         <adf-toolbar class="adf-toolbar--inline">
             <button
@@ -10,7 +9,7 @@
                 (delete)="documentList.reload()"
                 [permanent]="true"
                 *ngIf="documentList.selection.length"
-                title="{{ 'TRASHCAN.ACTIONS.DELETE_PERMANENT' | translate }}">
+                title="Delete permanently">
                 <mat-icon>delete_forever</mat-icon>
             </button>
 
@@ -20,7 +19,7 @@
                 (restore)="onRestore($event)"
                 [adf-restore]="$any(documentList).selection"
                 *ngIf="documentList.selection.length"
-                title="{{ 'TRASHCAN.ACTIONS.RESTORE' | translate }}">
+                title="Restore">
                 <mat-icon>restore</mat-icon>
             </button>
         </adf-toolbar>
@@ -41,9 +40,9 @@
             <adf-custom-empty-content-template>
                 <adf-empty-content
                     icon="delete"
-                    [title]="'TRASHCAN.EMPTY_STATE.TITLE'">
-                    <div class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</div>
-                    <div class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</div>
+                    [title]="'Trash is empty'">
+                    <div class="adf-empty-content__text">Items you delete are moved to the Trash.</div>
+                    <div class="adf-empty-content__text">Empty Trash to permanently delete items.</div>
                 </adf-empty-content>
             </adf-custom-empty-content-template>
 
@@ -59,7 +58,7 @@
                 <data-column
                     class="adf-datatable-cell--ellipsis__name"
                     key="name"
-                    title="DOCUMENT_LIST.COLUMNS.DISPLAY_NAME">
+                    title="Display name">
                     <ng-template let-value="value" let-context>
                         <span title="{{ context?.row?.obj | adfNodeNameTooltip }}"
                               class="adf-datatable-cell-value">{{ value }}</span>
@@ -68,13 +67,13 @@
 
                 <data-column
                     key="content.sizeInBytes"
-                    title="DOCUMENT_LIST.COLUMNS.SIZE"
+                    title="Size"
                     type="fileSize">
                 </data-column>
 
                 <data-column
                     key="archivedAt"
-                    title="DOCUMENT_LIST.COLUMNS.DELETED_ON">
+                    title="Deleted on">
                     <ng-template let-value="value">
                         <span title="{{ value | adfLocalizedDate: 'medium' }}"
                               class="adf-datatable-cell-value">{{ value | adfTimeAgo: currentLocale }}</span>
@@ -84,14 +83,13 @@
                 <data-column
                     class="adf-datatable-cell--ellipsis"
                     key="archivedByUser.displayName"
-                    title="DOCUMENT_LIST.COLUMNS.DELETED_BY">
+                    title="Deleted by">
                 </data-column>
 
             </data-columns>
-
         </adf-document-list>
-        <adf-pagination [ngClass]="{ 'no-border' : documentList.isEmpty()}"
-                        [target]="documentList">
+
+        <adf-pagination [ngClass]="{ 'no-border' : documentList.isEmpty()}" [target]="documentList">
         </adf-pagination>
     </div>
 </div>

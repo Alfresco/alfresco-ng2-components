@@ -26,11 +26,9 @@ import { FormViewerComponent } from './components/process-service/form-viewer.co
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
-import { SearchExtendedComponent } from './components/search/search-extended.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
-import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
@@ -46,15 +44,11 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
-import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
-import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
-import { AspectListSampleComponent } from './components/aspect-list-sample/aspect-list-sample.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 export const appRoutes: Routes = [
@@ -70,12 +64,7 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     {
         path: 'files/:nodeId/:versionId/view',
@@ -83,24 +72,14 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     {
         path: 'preview/blob',
         component: AppComponent,
         outlet: 'overlay',
         pathMatch: 'full',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
-            }
-        ]
+        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
     { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
@@ -114,63 +93,12 @@ export const appRoutes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'breadcrumb',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
-            },
-            {
-                path: 'notifications',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
-                    }
-                ]
-            },
-            {
                 path: 'config-editor',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
-                    }
-                ]
-            },
-            {
-                path: 'pipes',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
-                    }
-                ]
+                loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },
             {
                 path: 'card-view',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
-                    }
-                ]
-            },
-            {
-                path: 'sites',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/sites/sites.module').then(m => m.SitesModule)
-                    }
-                ]
-            },
-            {
-                path: 'header-data',
-                children: [
-                    {
-                        path: '',
-                        loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
-                    }
-                ]
+                loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
             },
             {
                 path: '',
@@ -256,14 +184,6 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'node-selector',
-                loadChildren: () => import('./components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
-            },
-            {
-                path: 'confirm-dialog',
-                component: ConfirmDialogExampleComponent
-            },
-            {
                 path: 'settings-layout',
                 loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
@@ -276,26 +196,6 @@ export const appRoutes: Routes = [
                 path: 'files',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'filtered-search',
-                component: FilteredSearchComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'filtered-search/:id',
-                component: FilteredSearchComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'filtered-search/:id/display/:mode',
-                component: FilteredSearchComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'extensions/document-list/presets',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/document-list/extension-presets/extension-presets.module').then(m => m.ExtensionPresetsModule)
             },
             {
                 path: 'files/:id',
@@ -311,19 +211,6 @@ export const appRoutes: Routes = [
                 path: 'dl-custom-sources',
                 canActivate: [AuthGuardEcm],
                 loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
-
-            },
-            {
-                path: 'datatable',
-                loadChildren: () => import('./components/datatable/datatable.module').then(m => m.AppDataTableModule)
-            },
-            {
-                path: 'datatable/dnd',
-                loadChildren: () => import('./components/datatable/drag-and-drop/datatable-dnd.module').then(m => m.AppDataTableDndModule)
-            },
-            {
-                path: 'rich-text-editor',
-                loadChildren: () => import('./components/rich-text-editor/rich-text-editor.module').then(m => m.AppRichTextEditorModule)
             },
             {
                 path: 'search',
@@ -333,11 +220,6 @@ export const appRoutes: Routes = [
             {
                 path: 'search-filter-chips',
                 component: SearchFilterChipsComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'extendedSearch',
-                component: SearchExtendedComponent,
                 canActivate: [AuthGuardEcm]
             },
             {
@@ -400,21 +282,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardBpm]
             },
             {
-                path: 'webscript',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
-            },
-            {
-                path: 'tag',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/tag/tag.module').then(m => m.AppTagModule)
-            },
-            {
-                path: 'social',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/social/social.module').then(m => m.AppSocialModule)
-            },
-            {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
                 canActivate: [AuthGuardEcm]
@@ -425,39 +292,13 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'expandable-list',
-                component: AspectListSampleComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
                 path: 'about',
                 loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
-            },
-            {
-                path: 'icons',
-                loadChildren: () => import('./components/icons/icons.module').then(m => m.AppIconsModule)
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
-            {
-                path: 'overlay-viewer',
-                component: OverlayViewerComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'datatable-lazy',
-                loadChildren: () => import('./components/lazy-loading/lazy-loading.module').then(m => m.LazyLoadingModule)
-            },
-            {
-                path: 'copy-content',
-                loadChildren: () => import('./components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
-            },
-            {
-                path: 'template-list',
-                component: TemplateDemoComponent
-            },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],

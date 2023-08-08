@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "إنشاء",
-      "NEW_TASK": "مهمة جديدة",
-      "NEW_PROCESS": "عملية جديدة"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "متابعة",

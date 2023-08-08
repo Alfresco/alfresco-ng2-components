@@ -46,25 +46,25 @@
     </adf-pagination>
     <div *ngIf="testingMode">
         <div *ngIf="multiselect">
-            {{ 'SETTINGS_CLOUD.SELECTED_ROWS' | translate }}:
+            Selected Rows:
             <ul>
                 <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
             </ul>
         </div>
         <div *ngIf="actionMenu">
-            <span>{{ 'SETTINGS_CLOUD.ACTION.ACTION_MENU' | translate }}:</span>
+            <span>Action Menu:</span>
             <br>
             <div *ngIf="selectedAction">
-                <span [attr.data-automation-id]="selectedAction.id">{{ 'SETTINGS_CLOUD.ACTION.TASK_ID' | translate }}: {{ selectedAction.id }}</span><br>
-                <span [attr.data-automation-id]="selectedAction.actionType">{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedAction.actionType }}</span>
+                <span [attr.data-automation-id]="selectedAction.id">Task ID: {{ selectedAction.id }}</span><br>
+                <span [attr.data-automation-id]="selectedAction.actionType">Action Type: {{ selectedAction.actionType }}</span>
             </div>
         </div>
         <div *ngIf="contextMenu">
-            <span>{{ 'SETTINGS_CLOUD.ACTION.CONTEX_MENU' | translate }}:</span>
+            <span>Context Menu:</span>
             <br>
             <div *ngIf="selectedContextAction">
-                <span [attr.data-automation-id]="selectedContextAction.id">{{ 'SETTINGS_CLOUD.ACTION.TASK_ID' | translate }}: {{ selectedContextAction.id }}</span><br>
-                <span [attr.data-automation-id]="selectedContextAction.actionType">{{ 'SETTINGS_CLOUD.ACTION.ACTION_TYPE' | translate }}: {{ selectedContextAction.actionType }}</span>
+                <span [attr.data-automation-id]="selectedContextAction.id">Task ID: {{ selectedContextAction.id }}</span><br>
+                <span [attr.data-automation-id]="selectedContextAction.actionType">Action Type: {{ selectedContextAction.actionType }}</span>
             </div>
         </div>
     </div>

@@ -15,40 +15,14 @@
  * limitations under the License.
  */
 
-import { $, browser, by, element } from 'protractor';
-import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
+import { $ } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 
 export class LoginShellPage {
-    loginURL = browser.baseUrl + '/login';
-    loginSSOPage = new LoginPage();
-
-    togglePage = new TogglePage();
-    txtUsername = $('input[id="username"]');
-    txtPassword = $('input[id="password"]');
-    logoImg = $('img[id="adf-login-img-logo"]');
-    logoTxt = $('input[data-automation-id="adf-url-logo"]');
-    usernameError = $('span[data-automation-id="username-error"]');
-    usernameInactive = $('input[id="username"][class*="ng-invalid"]');
-    adfLogo = $('.adf-img-logo');
-
-    usernameHighlighted = $('input[id="username"][aria-invalid="true"]');
-    signInButton = $('#login-button');
-    showPasswordElement = $('button[data-automation-id="show_password"]');
-    hidePasswordElement = $('button[data-automation-id="hide_password"]');
-    rememberMe = $('mat-checkbox[id="adf-login-remember"]');
-    needHelp = $('#adf-login-action-left');
-    register = $('#adf-login-action-right');
-    footerSwitch = $('#switch4');
-    rememberMeSwitch = $('#adf-toggle-show-rememberme');
-    logoSwitch = $('#adf-toggle-logo');
-    header = $('#adf-header');
-    settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
+    private txtUsername = $('input[id="username"]');
+    private txtPassword = $('input[id="password"]');
+    private signInButton = $('#login-button');
     sidenavLayout = $(`[data-automation-id="sidenav-layout"]`);
-
-    async goToLoginPage(): Promise<void> {
-        await BrowserActions.getUrl(this.loginURL);
-        await this.waitForElements();
-    }
 
     async waitForElements(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsername);
@@ -63,114 +37,7 @@ export class LoginShellPage {
         await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
-    async clearUsername(): Promise<void> {
-        await BrowserActions.click(this.txtUsername);
-        await BrowserActions.clearWithBackSpace(this.txtUsername);
-    }
-
-    async clearPassword(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-        await BrowserActions.clearWithBackSpace(this.txtPassword);
-    }
-
-    async getUsernameTooltip(): Promise<string> {
-        return BrowserActions.getText(this.usernameError);
-    }
-
-    async checkLoginImgURL(): Promise<string> {
-        return BrowserActions.getAttribute(this.logoImg, 'src');
-    }
-
-    async checkUsernameInactive(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameInactive);
-    }
-
-    async checkUsernameHighlighted(): Promise<void> {
-        await BrowserActions.click(this.adfLogo);
-        await BrowserVisibility.waitUntilElementIsVisible(this.usernameHighlighted);
-    }
-
-    async checkUsernameTooltipIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameError);
-    }
-
-    async getSignInButtonIsEnabled(): Promise<boolean> {
-        return this.signInButton.isEnabled();
-    }
-
     async clickSignInButton(): Promise<void> {
         await BrowserActions.click(this.signInButton);
-    }
-
-    async clickSettingsIcon(): Promise<void> {
-        await BrowserActions.click(this.settingsIcon);
-    }
-
-    async showPassword(): Promise<void> {
-        await BrowserActions.click(this.showPasswordElement);
-    }
-
-    async hidePassword(): Promise<void> {
-        await BrowserActions.click(this.hidePasswordElement);
-    }
-
-    async getShownPassword(): Promise<string> {
-        return BrowserActions.getInputValue(this.txtPassword);
-    }
-
-    async checkPasswordIsHidden(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
-    }
-
-    async checkRememberIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.rememberMe);
-    }
-
-    async checkRememberIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.rememberMe);
-    }
-
-    async checkNeedHelpIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.needHelp);
-    }
-
-    async checkNeedHelpIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.needHelp);
-    }
-
-    async checkRegisterDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.register);
-    }
-
-    async checkRegisterIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.register);
-    }
-
-    async enableFooter(): Promise<void> {
-        await this.togglePage.enableToggle(this.footerSwitch);
-    }
-
-    async disableFooter(): Promise<void> {
-        await this.togglePage.disableToggle(this.footerSwitch);
-    }
-
-    async disableRememberMe(): Promise<void> {
-        await this.togglePage.disableToggle(this.rememberMeSwitch);
-    }
-
-    async enableLogoSwitch(): Promise<void> {
-        await this.togglePage.enableToggle(this.logoSwitch);
-    }
-
-    async enterLogo(logo: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.logoTxt, logo);
-    }
-
-    async login(username: string, password: string): Promise<void> {
-        await this.loginSSOPage.login(username, password);
-    }
-
-    async loginWithProfile(profile: string): Promise<void> {
-        await this.loginSSOPage.loginWithProfile(profile);
     }
 }

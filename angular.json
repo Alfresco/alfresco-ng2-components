@@ -53,11 +53,6 @@
               },
               {
                 "glob": "**/*",
-                "input": "demo-shell/src/app/components/lazy-loading/i18n",
-                "output": "/resources/lazy-loading/i18n"
-              },
-              {
-                "glob": "**/*",
                 "input": "lib/core/src/lib/assets",
                 "output": "/assets"
               },
@@ -113,51 +108,6 @@
               }
             ],
             "styles": [
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss",
-                "bundleName": "adf-blue-orange"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-blue-purple.scss",
-                "bundleName": "adf-blue-purple"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-orange.scss",
-                "bundleName": "adf-cyan-orange"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-cyan-purple.scss",
-                "bundleName": "adf-cyan-purple"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-green-orange.scss",
-                "bundleName": "adf-green-orange"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-green-purple.scss",
-                "bundleName": "adf-green-purple"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-indigo-pink.scss",
-                "bundleName": "adf-indigo-pink"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-pink-bluegrey.scss",
-                "bundleName": "adf-pink-bluegrey"
-              },
-              {
-                "inject": false,
-                "input": "lib/core/src/lib/styles/prebuilt/adf-purple-green.scss",
-                "bundleName": "adf-purple-green"
-              },
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",

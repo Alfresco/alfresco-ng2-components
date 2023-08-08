@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Luo",
-      "NEW_TASK": "Uusi tehtävä",
-      "NEW_PROCESS": "Uusi prosessi"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Jatka",

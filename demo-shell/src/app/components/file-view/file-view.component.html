@@ -68,17 +68,14 @@
 
 
 <ng-template let-node="node" #sidebarRightTemplate>
-    <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
+    <adf-info-drawer title="Details">
 
-        <adf-info-drawer-tab label="APP.INFO_DRAWER.COMMENTS">
-            <adf-node-comments
-                [nodeId]="nodeId"
-                [readOnly]="!isCommentEnabled"
-            >
+        <adf-info-drawer-tab label="Comments">
+            <adf-node-comments [nodeId]="nodeId" [readOnly]="!isCommentEnabled">
             </adf-node-comments>
         </adf-info-drawer-tab>
 
-        <adf-info-drawer-tab label="APP.INFO_DRAWER.PROPERTIES">
+        <adf-info-drawer-tab label="Properties">
             <adf-content-metadata-card *ngIf="isPreset" [node]="node"
                                        [multi]="multi"
                                        [preset]="customPreset"
@@ -97,7 +94,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-metadata-default-properties"
-                    [color]="'primary'"
                     (change)="toggleDisplayProperties()"
                     [checked]="displayDefaultProperties">
                     Display Default Properties
@@ -107,7 +103,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-metadata-empty"
-                    [color]="'primary'"
                     (change)="toggleEmptyMetadata()"
                     [checked]="displayEmptyMetadata">
                     Display Empty Metadata
@@ -117,7 +112,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-metadata-multi"
-                    [color]="'primary'"
                     (change)="toggleMulti()"
                     [checked]="multi">
                     Multi accordion
@@ -127,7 +121,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-metadata-readonly"
-                    [color]="'primary'"
                     (change)="toggleReadOnly()"
                     [checked]="isReadOnly">
                     Read Only
@@ -137,7 +130,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-toggle-custom-preset"
-                    [color]="'primary'"
                     (change)="togglePreset()"
                     [checked]="isPreset">
                     Custom preset
@@ -147,35 +139,24 @@
             <p class="toggle">
 
                 <mat-form-field floatPlaceholder="float">
-                    <input matInput
-                           placeholder="Display Aspect"
-                           [(ngModel)]="desiredAspect">
+                    <input matInput placeholder="Display Aspect" [(ngModel)]="desiredAspect">
                 </mat-form-field>
 
-                <button mat-raised-button (click)="applyAspect()" color="primary">
-                    Apply Aspect
-                </button>
+                <button mat-raised-button (click)="applyAspect()">Apply Aspect</button>
             </p>
 
             <p class="toggle">
                 <ng-container *ngIf="isPreset">
                     <mat-form-field floatPlaceholder="float">
-                        <input matInput
-                               placeholder="Custom Preset"
-                               [(ngModel)]="customPreset"
-                               data-automation-id="adf-text-custom-preset">
+                        <input matInput placeholder="Custom Preset" [(ngModel)]="customPreset" data-automation-id="adf-text-custom-preset">
                     </mat-form-field>
-
-                    <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()" color="primary">
-                        Apply
-                    </button>
-
+                    <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()">Apply</button>
                 </ng-container>
             </p>
 
         </adf-info-drawer-tab>
 
-        <adf-info-drawer-tab label="APP.INFO_DRAWER.VERSIONS">
+        <adf-info-drawer-tab label="Versions">
             <mat-card>
                 <mat-card-content>
                     <adf-version-manager [node]="node"
@@ -196,7 +177,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-fileurl"
-                    [color]="'primary'"
                     (change)="toggleFileUrl()"
                     [checked]="fileUrlSwitch">
                     Url File
@@ -217,7 +197,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-toolbar"
-                    [color]="'primary'"
                     (change)="toggleShowToolbar()"
                     [checked]="showToolbar">
                     Show Toolbar
@@ -227,7 +206,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-goback"
-                    [color]="'primary'"
                     (change)="toggleAllowGoBack()"
                     [checked]="allowGoBack">
                     Allow GoBack
@@ -237,7 +215,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-openwith"
-                    [color]="'primary'"
                     (change)="toggleOpenWith()"
                     [checked]="openWith">
                     Open With
@@ -247,7 +224,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-moreactions"
-                    [color]="'primary'"
                     (change)="toggleOpenMoreActions()"
                     [checked]="moreActions">
                     More Actions
@@ -257,7 +233,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-moreactionsmenu"
-                    [color]="'primary'"
                     (change)="toggleMoreActionsMenu()"
                     [checked]="moreActionsMenu">
                     More Actions Menu
@@ -267,7 +242,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-download"
-                    [color]="'primary'"
                     (change)="toggleAllowDownload()"
                     [checked]="allowDownload">
                     Allow Download
@@ -277,7 +251,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-print"
-                    [color]="'primary'"
                     (change)="toggleAllowPrint()"
                     [checked]="allowPrint">
                     Allow Print
@@ -287,7 +260,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-allowsidebar"
-                    [color]="'primary'"
                     (change)="toggleAllowRightSidebar()"
                     [checked]="allowRightSidebar">
                     Allow Right Sidebar
@@ -297,7 +269,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-switch-allowLeftSidebar"
-                    [color]="'primary'"
                     (change)="toggleAllowLeftSidebar()"
                     [checked]="allowLeftSidebar">
                     Allow Left Sidebar
@@ -307,7 +278,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-toggle-custom-toolbar"
-                    [color]="'primary'"
                     (change)="toggleToolbar()"
                     [checked]="customToolbar">
                     Custom Toolbar
@@ -317,7 +287,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-tab-with-icon"
-                    [color]="'primary'"
                     (change)="toggleShowTabWithIcon()"
                     [checked]="showTabWithIcon">
                     Show tab with icon
@@ -327,7 +296,6 @@
             <p class="toggle">
                 <mat-slide-toggle
                     id="adf-icon-and-label-tab"
-                    [color]="'primary'"
                     (change)="toggleShowTabWithIconAndLabel()"
                     [checked]="showTabWithIconAndLabel">
                     Show tab with icon and label
@@ -335,15 +303,13 @@
             </p>
 
             <p class="toggle">
-                <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()"
-                        color="primary">
+                <button mat-raised-button id="adf-switch-showrightsidebar" (click)="toggleShowRightSidebar()">
                     Toggle Right Sidebar
                 </button>
             </p>
 
             <p class="toggle">
-                <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()"
-                        color="primary">
+                <button mat-raised-button id="adf-switch-showleftsidebar" (click)="hideLeftSidebar()">
                     Hide Left Sidebar
                 </button>
             </p>

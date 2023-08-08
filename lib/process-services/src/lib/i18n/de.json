@@ -315,13 +315,6 @@
       }
     }
   },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "Erstellen",
-      "NEW_TASK": "Neue Aufgabe",
-      "NEW_PROCESS": "Neuer Prozess"
-    }
-  },
   "APP": {
     "DIALOG": {
       "START": "Weiter",

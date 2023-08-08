@@ -69,17 +69,17 @@ export class ContentServicesPage {
     emptyFolderImage = $('.adf-empty-folder-image');
     gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
     cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
-    shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+    shareNodeButton = element(by.cssContainingText('mat-icon', 'share'));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
-    deleteContentElement = $('button[data-automation-id*="DELETE"]');
-    metadataAction = $('button[data-automation-id*="METADATA"]');
-    versionManagerAction = $('button[data-automation-id*="VERSIONS"]');
-    moveContentElement = $('button[data-automation-id*="MOVE"]');
-    copyContentElement = $('button[data-automation-id*="COPY"]');
-    lockContentElement = $('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]');
-    downloadContent = $('button[data-automation-id*="DOWNLOAD"]');
+    deleteContentElement = $('button[data-automation-id="Delete"]');
+    metadataAction = $('button[data-automation-id="Info"]');
+    versionManagerAction = $('button[data-automation-id="Manage versions"]');
+    moveContentElement = $('button[data-automation-id="Move"]');
+    copyContentElement = $('button[data-automation-id="Copy"]');
+    lockContentElement = $('button[data-automation-id="Lock"]');
+    downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     favoriteButton = $('button[data-automation-id="favorite"]');
     markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
@@ -124,7 +124,7 @@ export class ContentServicesPage {
 
     async checkDeleteIsDisabled(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
-        const disabledDelete = $(`button[data-automation-id*='DELETE'][disabled='true']`);
+        const disabledDelete = $(`button[data-automation-id='Delete'][disabled='true']`);
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 

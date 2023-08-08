@@ -33,7 +33,6 @@ describe('Applications list', () => {
 
     let testUser;
     const appNames = [];
-    let applications;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
@@ -42,7 +41,7 @@ describe('Applications list', () => {
         await loginSSOPage.login(testUser.username, testUser.password);
         await apiService.login(testUser.username, testUser.password);
 
-        applications = await applicationsService.getApplicationsByStatus('RUNNING');
+        const applications = await applicationsService.getApplicationsByStatus('RUNNING');
 
         applications.list.entries.forEach(app => {
             appNames.push(app.entry.name.toLowerCase());

@@ -16,7 +16,8 @@
  */
 
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
-import { createApiService,
+import {
+    createApiService,
     BrowserActions, Logger,
     LoginPage,
     NotificationHistoryPage, SearchService,
@@ -24,7 +25,8 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    SnackbarPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -35,7 +37,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
 import CONSTANTS = require('../../util/constants');
 import { NodesApi, SitesApi } from '@alfresco/js-api';
-import { NotificationDemoPage } from '../../core/pages/notification.page';
 
 describe('Permissions Component', () => {
 
@@ -51,7 +52,7 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const notificationPage = new NotificationDemoPage();
+    const snackbarPage = new SnackbarPage();
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
 
@@ -213,8 +214,8 @@ describe('Permissions Component', () => {
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.fullName)).toEqual('Site Collaborator');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'Add button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
+            await snackbarPage.waitForSnackBarToClose();
 
             await permissionsPage.checkUserIsAdded(consumerUser.username);
 

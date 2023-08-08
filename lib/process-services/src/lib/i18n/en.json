@@ -278,7 +278,6 @@
       "NO_START_FORM": "No start form",
       "NO_PROCESS_DEF_SELECTED": "No process definition selected",
       "FORM": {
-        "TITLE": "Start Process",
         "LABEL": {
           "SELECT_APPLICATION": "Select Application",
           "TYPE": "Select Process",
@@ -313,13 +312,6 @@
         "NAME": "Name",
         "CREATED-ON": "Created on"
       }
-    }
-  },
-  "ADF_SIDEBAR_ACTION_MENU": {
-    "BUTTON": {
-      "CREATE": "CREATE",
-      "NEW_TASK": "New Task",
-      "NEW_PROCESS": "New Process"
     }
   },
   "APP":{
