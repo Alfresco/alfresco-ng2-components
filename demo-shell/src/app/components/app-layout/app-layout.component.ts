@@ -26,7 +26,6 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 })
 export class AppLayoutComponent {
     links: Array<any> = [
-        { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },
         { href: '/card-view', icon: 'view_headline', title: 'CardView' },
         { href: '/task-list', icon: 'assignment', title: 'Task List' },
