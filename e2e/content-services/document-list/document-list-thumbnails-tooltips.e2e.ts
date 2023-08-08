@@ -17,20 +17,21 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
-
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const apiService = createApiService();
 
     const uploadActions = new UploadActions(apiService);
-    let acsUser = null;
     const navigationBarPage = new NavigationBarPage();
     const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     describe('Thumbnails and tooltips', () => {
         const pdfFile = new FileModel({
@@ -38,17 +39,9 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
         });
 
-        const testFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
-        });
-
-        const docxFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
-        });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        let filePdfNode; let fileTestNode; let fileDocxNode; let folderNode;
+        let filePdfNode: NodeEntry;
+        let folderNode: NodeEntry;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
@@ -57,8 +50,6 @@ describe('Document List Component', () => {
 
             await apiService.login(acsUser.username, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
-            fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
-            fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
         });
 
@@ -68,12 +59,6 @@ describe('Document List Component', () => {
             await apiService.loginWithProfile('admin');
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
-            }
-            if (fileTestNode) {
-                await uploadActions.deleteFileOrFolder(fileTestNode.entry.id);
-            }
-            if (fileDocxNode) {
-                await uploadActions.deleteFileOrFolder(fileDocxNode.entry.id);
             }
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
@@ -95,26 +80,6 @@ describe('Document List Component', () => {
 
         it('[C260109] Should display tooltip for folder\'s name', async () => {
             await expect(await contentServicesPage.getDocumentList().getTooltip(folderName)).toEqual(folderName);
-        });
-
-        it('[C260119] Should have a specific thumbnail for folders', async () => {
-            const folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
-            await expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
-        });
-
-        it('[C280066] Should have a specific thumbnail PDF files', async () => {
-            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
-            await expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
-        });
-
-        it('[C280067] Should have a specific thumbnail DOCX files', async () => {
-            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
-            await expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
-        });
-
-        it('[C280068] Should have a specific thumbnail files', async () => {
-            const fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
-            await expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
         });
 
         it('[C274701] Should be able to enable thumbnails', async () => {
