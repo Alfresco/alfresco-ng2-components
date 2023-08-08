@@ -35,6 +35,7 @@ import { NotificationCloudService } from '../../../services/notification-cloud.s
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloModule } from 'apollo-angular';
+import { StorageService } from '@alfresco/adf-core';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -242,6 +243,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     let preferenceCloudService: PreferenceCloudServiceInterface;
     let identityUserService: IdentityUserService;
     let getPreferencesSpy: jasmine.Spy;
+    let storageService: StorageService;
 
     const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
 
@@ -255,6 +257,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.inject(IdentityUserService);
+        storageService = TestBed.inject(StorageService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
