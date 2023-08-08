@@ -43,10 +43,10 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
     }
 
     isDataSourceValid(): boolean {
-        return this.hasAllColumnsLinkedToData() && this.hasAllColumnsMandatoryValues();
+        return this.hasAllColumnsLinkedToData() && this.hasAllMandatoryColumnPropertiesHaveValues();
     }
 
-    private hasAllColumnsMandatoryValues(): boolean {
+    private hasAllMandatoryColumnPropertiesHaveValues(): boolean {
         return this.columns.every(column => !!column.key);
     }
 
