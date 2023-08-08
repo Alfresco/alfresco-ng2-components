@@ -94,10 +94,6 @@ export class NavigationBarPage {
         await this.clickNavigationBarItem('Trashcan');
     }
 
-    async clickCustomSources(): Promise<void> {
-        await this.clickNavigationBarItem('Custom Sources');
-    }
-
     async clickTreeViewButton(): Promise<void> {
         await this.clickNavigationBarItem('Tree View');
     }

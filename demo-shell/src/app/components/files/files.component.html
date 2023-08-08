@@ -51,13 +51,6 @@
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
                     <button
-                        mat-icon-button
-                        title="Create Library}"
-                        data-automation-id="create-new-library"
-                        (click)="createLibrary()">
-                        <mat-icon>library_add</mat-icon>
-                    </button>
-                    <button
                         data-automation-id="edit-folder"
                         mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
@@ -83,23 +76,6 @@
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
                     </button>
-                    <button
-                        data-automation-id="favorite"
-                        mat-icon-button
-                            [disabled]="!documentList.selection.length"
-                            #favorite="adfFavorite"
-                            [adf-node-favorite]="documentList.selection"
-                            title="Add to favorites">
-                        <mat-icon>{{ favorite.hasFavorites() ? 'star' :'star_border' }}</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                            [disabled]="documentList.selection.length && !shareRef.isFile"
-                            [baseShareUrl]="baseShareUrl"
-                            #shareRef="adfShare"
-                            [adf-share]="documentList.selection[0]"
-                            [title]="(shareRef.isShared ? 'Edit settings' : 'Share')">
-                        <mat-icon>share</mat-icon>
-                    </button>
                 </div>
 
                 <button mat-icon-button (click)="showVersions = !showVersions" class="app-show-versions-button"
@@ -123,11 +99,6 @@
                             [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>New folder</span>
-                    </button>
-                    <button mat-menu-item
-                            (click)="createLibrary()">
-                        <mat-icon>library_add</mat-icon>
-                        <span>Create Library</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"

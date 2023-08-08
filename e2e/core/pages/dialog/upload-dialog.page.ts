@@ -26,7 +26,6 @@ export class UploadDialogPage {
     uploadedStatusIcon = 'mat-icon[class*="status--done"]';
     cancelledStatusIcon = 'div[class*="status--cancelled"]';
     errorStatusIcon = 'div[class*="status--error"] mat-icon';
-    errorTooltip = $('div.mat-tooltip');
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = $('span[class*="upload-dialog__title"]');
     minimizeButton = $('mat-icon[title="Minimize"]');
@@ -121,6 +120,6 @@ export class UploadDialogPage {
     }
 
     async getTooltip(): Promise<string> {
-        return BrowserActions.getText(this.errorTooltip);
+        return BrowserActions.getAttribute($(this.errorStatusIcon), 'title');
     }
 }

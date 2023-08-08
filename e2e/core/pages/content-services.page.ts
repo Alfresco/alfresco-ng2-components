@@ -26,7 +26,6 @@ import {
     Logger
 } from '@alfresco/adf-testing';
 import { $$, browser, by, element, ElementFinder, protractor, $ } from 'protractor';
-import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 
@@ -45,15 +44,12 @@ export class ContentServicesPage {
     contentList = new DocumentListPage($$('adf-upload-drag-area adf-document-list').first());
     togglePage = new TogglePage();
     createFolderDialog = new FolderDialogPage();
-    createLibraryDialog = new CreateLibraryDialogPage();
-
     multipleFileUploadToggle = $('#adf-document-list-enable-drop-files');
     uploadBorder = $('#document-list-container');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
     editFolderButton = $('button[data-automation-id="edit-folder"]');
     deleteNodesButton = $('button[data-automation-id="delete-toolbar-button"]');
-    createLibraryButton = $('button[data-automation-id="create-new-library"]');
     activeBreadcrumb = $('div[class*="active"]');
     uploadFileButton = $('.adf-upload-button-file-container button');
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
@@ -69,7 +65,6 @@ export class ContentServicesPage {
     emptyFolderImage = $('.adf-empty-folder-image');
     gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
     cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
-    shareNodeButton = element(by.cssContainingText('mat-icon', 'share'));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
@@ -81,9 +76,6 @@ export class ContentServicesPage {
     lockContentElement = $('button[data-automation-id="Lock"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
-    favoriteButton = $('button[data-automation-id="favorite"]');
-    markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
-    notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
     selectAllCheckbox = $$('.adf-checkbox-sr-only').first();
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
@@ -313,29 +305,12 @@ export class ContentServicesPage {
         await BrowserActions.click(this.createFolderButton);
     }
 
-    async clickOnFavoriteButton(): Promise<void> {
-        await BrowserActions.click(this.favoriteButton);
-    }
-
-    async checkIsMarkedFavorite(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.markedFavorite);
-    }
-
-    async checkIsNotMarkedFavorite(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavorite);
-    }
-
     async clickOnEditFolder(): Promise<void> {
         await BrowserActions.click(this.editFolderButton);
     }
 
     async isEditFolderButtonEnabled(): Promise<boolean> {
         return this.editFolderButton.isEnabled();
-    }
-
-    async openCreateLibraryDialog(): Promise<void> {
-        await BrowserActions.click(this.createLibraryButton);
-        await this.createLibraryDialog.libraryDialog.waitVisible();
     }
 
     async createNewFolder(folderName: string): Promise<void> {
@@ -550,12 +525,6 @@ export class ContentServicesPage {
     async checkRowIsDisplayed(rowName): Promise<void> {
         const row = this.contentList.dataTablePage().getCellElementByValue(this.columns.name, rowName);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-    }
-
-    async clickShareButton(): Promise<void> {
-        await browser.sleep(2000);
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.shareNodeButton);
     }
 
     async checkSelectedSiteIsDisplayed(siteName): Promise<void> {

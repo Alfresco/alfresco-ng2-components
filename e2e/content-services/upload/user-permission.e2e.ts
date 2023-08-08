@@ -16,13 +16,13 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService, LoginPage, NotificationHistoryPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, NotificationHistoryPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { SiteEntry, SitesApi } from '@alfresco/js-api';
 
 describe('Upload - User permission', () => {
 
@@ -39,17 +39,10 @@ describe('Upload - User permission', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
-    const pngFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
-    });
-
-    const pdfFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
-    });
-
-    let acsUser; let acsUserTwo; let consumerSite; let managerSite;
+    let acsUser: UserModel;
+    let acsUserTwo: UserModel;
+    let consumerSite: SiteEntry;
+    let managerSite: SiteEntry;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -139,40 +132,6 @@ describe('Upload - User permission', () => {
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
             await contentServicesPage.uploadFile(emptyFile.location);
             await uploadDialog.fileIsUploaded(emptyFile.name);
-        });
-    });
-
-    describe('multiple users', () => {
-        beforeEach(async () => {
-            await contentServicesPage.goToDocumentList();
-        });
-
-        it('[C260175] Should two different user upload files in the proper User Home', async () => {
-            await contentServicesPage.uploadFile(emptyFile.location);
-
-            await uploadDialog.fileIsUploaded(emptyFile.name);
-
-            await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
-
-            await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUserTwo.username, acsUserTwo.password);
-            await contentServicesPage.goToDocumentList();
-
-            await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
-
-            await contentServicesPage.uploadFile(pngFile.location);
-
-            await contentServicesPage.checkContentIsDisplayed(pngFile.name);
-
-            await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUser.username, acsUser.password);
-            await contentServicesPage.goToDocumentList();
-
-            await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
-
-            await contentServicesPage.uploadFile(pdfFile.location);
-
-            await contentServicesPage.checkContentIsDisplayed(pdfFile.name);
         });
     });
 });

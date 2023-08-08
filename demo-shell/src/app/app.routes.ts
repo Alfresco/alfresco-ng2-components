@@ -208,11 +208,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             {
-                path: 'dl-custom-sources',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
-            },
-            {
                 path: 'search',
                 component: SearchResultComponent,
                 canActivate: [AuthGuardEcm]

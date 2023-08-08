@@ -60,13 +60,11 @@ import {
     PermissionStyleModel,
     UploadFilesEvent,
     ConfirmDialogComponent,
-    LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
     FileUploadEvent,
-    NodesApiService,
-    SharedLinksApiService
+    NodesApiService
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
@@ -250,7 +248,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 private contentMetadataService: ContentMetadataService,
-                private sharedLinksApiService: SharedLinksApiService,
                 private dialogAspectListService: DialogAspectListService,
                 private nodeService: NodesApiService) {
     }
@@ -319,12 +316,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(value => this.onFolderAction(value));
 
         this.contentMetadataService.error
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((err: { message: string }) => {
-                this.notificationService.showError(err.message);
-            });
-
-        this.sharedLinksApiService.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
@@ -622,16 +613,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getFileFiltering(): string {
         return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
-    }
-
-    createLibrary(): void {
-        const dialogInstance: any = this.dialog.open(LibraryDialogComponent, {
-            width: '400px'
-        });
-
-        dialogInstance.componentInstance.error.subscribe((message: string) => {
-            this.notificationService.openSnackMessage(message);
-        });
     }
 
     searchResultsHighlight(search: SearchEntry): string {

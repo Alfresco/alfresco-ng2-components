@@ -36,7 +36,7 @@ import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
 import CONSTANTS = require('../../util/constants');
-import { NodesApi, SitesApi } from '@alfresco/js-api';
+import { NodeEntry, NodesApi, SiteEntry, SitesApi } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
 
@@ -58,9 +58,9 @@ describe('Permissions Component', () => {
 
     const contentList = contentServicesPage.getDocumentList();
 
-    let publicSite;
-    let privateSite;
-    let folderName;
+    let publicSite: SiteEntry;
+    let privateSite: SiteEntry;
+    let folderName: string;
 
     const fileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -82,8 +82,8 @@ describe('Permissions Component', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
-    let siteFolder;
-    let privateSiteFile;
+    let siteFolder: NodeEntry;
+    let privateSiteFile: NodeEntry;
 
     const folderOwnerUser = new UserModel();
     const consumerUser: UserModel = new UserModel();
@@ -212,7 +212,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
             await permissionsPage.addPermissionsDialog.selectRole(consumerUser.fullName, 'Site Collaborator');
             await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.fullName)).toEqual('Site Collaborator');
-            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'Add button should be enabled');
+            await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true);
             await permissionsPage.addPermissionsDialog.clickAddButton();
             await expect(await snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
             await snackbarPage.waitForSnackBarToClose();
