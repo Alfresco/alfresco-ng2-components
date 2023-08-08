@@ -48,7 +48,6 @@ export class ContentServicesPage {
     uploadBorder = $('#document-list-container');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
-    editFolderButton = $('button[data-automation-id="edit-folder"]');
     deleteNodesButton = $('button[data-automation-id="delete-toolbar-button"]');
     activeBreadcrumb = $('div[class*="active"]');
     uploadFileButton = $('.adf-upload-button-file-container button');
@@ -128,10 +127,6 @@ export class ContentServicesPage {
 
     async clickDeleteOnToolbar(): Promise<void> {
         await BrowserActions.click(this.deleteNodesButton);
-    }
-
-    async checkToolbarDeleteIsDisabled(): Promise<boolean> {
-        return !(await this.deleteNodesButton.isEnabled());
     }
 
     async metadataContent(content): Promise<void> {
@@ -303,14 +298,6 @@ export class ContentServicesPage {
 
     async clickOnCreateNewFolder(): Promise<void> {
         await BrowserActions.click(this.createFolderButton);
-    }
-
-    async clickOnEditFolder(): Promise<void> {
-        await BrowserActions.click(this.editFolderButton);
-    }
-
-    async isEditFolderButtonEnabled(): Promise<boolean> {
-        return this.editFolderButton.isEnabled();
     }
 
     async createNewFolder(folderName: string): Promise<void> {

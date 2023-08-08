@@ -188,11 +188,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
             {
-                path: 'trashcan',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/trashcan/trashcan.module').then(m => m.AppTrashcanModule)
-            },
-            {
                 path: 'files',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]

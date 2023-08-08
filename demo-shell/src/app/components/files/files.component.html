@@ -50,16 +50,6 @@
                         [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
-                    <button
-                        data-automation-id="edit-folder"
-                        mat-icon-button
-                            [disabled]="!canEditFolder(documentList.selection)"
-                            title="Edit folder"
-                            (error)="openSnackMessageError($event)"
-                            [adf-edit-folder]="documentList.selection[0]?.entry"
-                            (success)="documentList.reload()">
-                        <mat-icon>create</mat-icon>
-                    </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"

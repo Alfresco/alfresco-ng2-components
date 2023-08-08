@@ -90,10 +90,6 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async clickTrashcanButton(): Promise<void> {
-        await this.clickNavigationBarItem('Trashcan');
-    }
-
     async clickTreeViewButton(): Promise<void> {
         await this.clickNavigationBarItem('Tree View');
     }
