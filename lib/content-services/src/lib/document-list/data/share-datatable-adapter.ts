@@ -237,9 +237,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     private sortRows(rows: DataRow[], sorting: DataSorting) {
-        if (this.sortingMode === 'server') {
-            return;
-        }
 
         const options: Intl.CollatorOptions = {};
 
@@ -289,7 +286,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     shareDataRows = shareDataRows.filter(this.filter);
                 }
 
-                if (this.sortingMode !== 'server') {
                     // Sort by first sortable or just first column
                     if (this.columns?.length) {
                         const sorting = this.getSorting();
@@ -304,7 +300,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                             }
                         }
                     }
-                }
             }
         }
 
