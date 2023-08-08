@@ -627,19 +627,17 @@
     "VIEW_MORE": "{{ count }} meer weergeven"
   },
   "swsdp": "Voorbeeld: Websiteontwerpproject",
-  "ADF": {
-    "MESSAGES":{
-      "ERRORS":{
-        "INVALID_RECEIVER_EMAIL": "Het e-mailadres van de ontvanger(s) is niet geldig, neem contact op met IT.",
-        "INVALID_SENDER_EMAIL": "U moet een geldig e-mailadres hebben voordat u kunt aanvragen om lid te worden.",
-        "JOIN_CANCEL_FAILED": "Uw aanvraag om lid te worden kan niet worden geannuleerd",
-        "JOIN_REQUEST_FAILED": "Lid worden van de bibliotheek niet mogelijk"
-      },
-      "INFO":{
-        "JOINED": "Lid geworden van bibliotheek",
-        "JOIN_CANCELED": "Aanvraag om lid te worden van de bibliotheek is geannuleerd",
-        "JOIN_REQUESTED": "Aanvraag om lid te worden van deze bibliotheek is verzonden"
-      }
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Het e-mailadres van de ontvanger(s) is niet geldig, neem contact op met IT.",
+      "INVALID_SENDER_EMAIL": "U moet een geldig e-mailadres hebben voordat u kunt aanvragen om lid te worden.",
+      "JOIN_CANCEL_FAILED": "Uw aanvraag om lid te worden kan niet worden geannuleerd",
+      "JOIN_REQUEST_FAILED": "Lid worden van de bibliotheek niet mogelijk"
+    },
+    "INFO": {
+      "JOINED": "Lid geworden van bibliotheek",
+      "JOIN_CANCELED": "Aanvraag om lid te worden van de bibliotheek is geannuleerd",
+      "JOIN_REQUESTED": "Aanvraag om lid te worden van deze bibliotheek is verzonden"
     }
   }
 }

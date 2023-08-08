@@ -627,19 +627,17 @@
     "VIEW_MORE": "Visualizza altri {{ count }}"
   },
   "swsdp": "Esempio: Progetto di sviluppo di sito Web",
-  "ADF": {
-    "MESSAGES":{
-      "ERRORS":{
-        "INVALID_RECEIVER_EMAIL": "Indirizzo email del destinatario non valido. Contattare l'IT.",
-        "INVALID_SENDER_EMAIL": "L'indirizzo email deve essere valido prima della richiesta di accesso.",
-        "JOIN_CANCEL_FAILED": "Impossibile annullare la richiesta di partecipazione",
-        "JOIN_REQUEST_FAILED": "Impossibile partecipare alla libreria"
-      },
-      "INFO":{
-        "JOINED": "Partecipazione alla libreria confermata",
-        "JOIN_CANCELED": "Richiesta di partecipazione alla libreria annullata",
-        "JOIN_REQUESTED": "Richiesta di partecipazione alla libreria inviata"
-      }
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Indirizzo email del destinatario non valido. Contattare l'IT.",
+      "INVALID_SENDER_EMAIL": "L'indirizzo email deve essere valido prima della richiesta di accesso.",
+      "JOIN_CANCEL_FAILED": "Impossibile annullare la richiesta di partecipazione",
+      "JOIN_REQUEST_FAILED": "Impossibile partecipare alla libreria"
+    },
+    "INFO": {
+      "JOINED": "Partecipazione alla libreria confermata",
+      "JOIN_CANCELED": "Richiesta di partecipazione alla libreria annullata",
+      "JOIN_REQUESTED": "Richiesta di partecipazione alla libreria inviata"
     }
   }
 }

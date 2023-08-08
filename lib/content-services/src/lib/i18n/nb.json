@@ -627,19 +627,17 @@
     "VIEW_MORE": "Vis {{ count }} til"
   },
   "swsdp": "Eksempel: Prosjekt for nettsteddesign",
-  "ADF": {
-    "MESSAGES":{
-      "ERRORS":{
-        "INVALID_RECEIVER_EMAIL": "Mottakeres e-postadresse er ikke gyldig – kontakt IT.",
-        "INVALID_SENDER_EMAIL": "E-postadressen din må være gyldig før du ber om tilslutning.",
-        "JOIN_CANCEL_FAILED": "Kan ikke avbryte forespørselen din om tilslutning",
-        "JOIN_REQUEST_FAILED": "Kan ikke slutte deg til biblioteket"
-      },
-      "INFO":{
-        "JOINED": "Bibliotek tilsluttet",
-        "JOIN_CANCELED": "Forespørselen om tilslutning til biblioteket er avbrutt",
-        "JOIN_REQUESTED": "Forespørsel sendt om tilslutning til dette biblioteket"
-      }
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Mottakeres e-postadresse er ikke gyldig – kontakt IT.",
+      "INVALID_SENDER_EMAIL": "E-postadressen din må være gyldig før du ber om tilslutning.",
+      "JOIN_CANCEL_FAILED": "Kan ikke avbryte forespørselen din om tilslutning",
+      "JOIN_REQUEST_FAILED": "Kan ikke slutte deg til biblioteket"
+    },
+    "INFO": {
+      "JOINED": "Bibliotek tilsluttet",
+      "JOIN_CANCELED": "Forespørselen om tilslutning til biblioteket er avbrutt",
+      "JOIN_REQUESTED": "Forespørsel sendt om tilslutning til dette biblioteket"
     }
   }
 }

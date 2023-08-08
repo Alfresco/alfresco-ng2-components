@@ -627,19 +627,17 @@
     "VIEW_MORE": "Afficher {{ count }} de plus"
   },
   "swsdp": "Exemple : projet de conception de site Web",
-  "ADF": {
-    "MESSAGES":{
-      "ERRORS":{
-        "INVALID_RECEIVER_EMAIL": "Adresse e-mail du ou des destinataire(s) non valide. Contactez le support technique.",
-        "INVALID_SENDER_EMAIL": "Pour faire une demande pour rejoindre, vous devez avoir une adresse e-mail valide.",
-        "JOIN_CANCEL_FAILED": "Impossible d'annuler la demande pour rejoindre",
-        "JOIN_REQUEST_FAILED": "Impossible de rejoindre la bibliothèque"
-      },
-      "INFO":{
-        "JOINED": "Vous avez rejoint la bibliothèque",
-        "JOIN_CANCELED": "La demande pour rejoindre la bibliothèque a été annulée",
-        "JOIN_REQUESTED": "Demande envoyée pour rejoindre cette bibliothèque"
-      }
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Adresse e-mail du ou des destinataire(s) non valide. Contactez le support technique.",
+      "INVALID_SENDER_EMAIL": "Pour faire une demande pour rejoindre, vous devez avoir une adresse e-mail valide.",
+      "JOIN_CANCEL_FAILED": "Impossible d'annuler la demande pour rejoindre",
+      "JOIN_REQUEST_FAILED": "Impossible de rejoindre la bibliothèque"
+    },
+    "INFO": {
+      "JOINED": "Vous avez rejoint la bibliothèque",
+      "JOIN_CANCELED": "La demande pour rejoindre la bibliothèque a été annulée",
+      "JOIN_REQUESTED": "Demande envoyée pour rejoindre cette bibliothèque"
     }
   }
 }

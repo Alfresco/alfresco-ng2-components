@@ -627,19 +627,17 @@
     "VIEW_MORE": "Zobrazit dalších {{ count }}"
   },
   "swsdp": "Ukázka: Projekt návrhu webové stránky",
-  "ADF": {
-    "MESSAGES":{
-      "ERRORS":{
-        "INVALID_RECEIVER_EMAIL": "E-mailová adresa příjemců není platná. Obraťte se na oddělení IT.",
-        "INVALID_SENDER_EMAIL": "Žádost o připojení vyžaduje platnou e-mailovou adresu.",
-        "JOIN_CANCEL_FAILED": "Žádost o připojení nebylo možné zrušit",
-        "JOIN_REQUEST_FAILED": "Ke knihovně se nebylo možné připojit"
-      },
-      "INFO":{
-        "JOINED": "Připojeno ke knihovně",
-        "JOIN_CANCELED": "Zrušena žádost o připojení ke knihovně",
-        "JOIN_REQUESTED": "Odeslána žádost o připojení k této knihovně"
-      }
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "E-mailová adresa příjemců není platná. Obraťte se na oddělení IT.",
+      "INVALID_SENDER_EMAIL": "Žádost o připojení vyžaduje platnou e-mailovou adresu.",
+      "JOIN_CANCEL_FAILED": "Žádost o připojení nebylo možné zrušit",
+      "JOIN_REQUEST_FAILED": "Ke knihovně se nebylo možné připojit"
+    },
+    "INFO": {
+      "JOINED": "Připojeno ke knihovně",
+      "JOIN_CANCELED": "Zrušena žádost o připojení ke knihovně",
+      "JOIN_REQUESTED": "Odeslána žádost o připojení k této knihovně"
     }
   }
 }
