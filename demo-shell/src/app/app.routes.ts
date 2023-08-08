@@ -291,10 +291,6 @@ export const appRoutes: Routes = [
                 component: TreeViewSampleComponent,
                 canActivate: [AuthGuardEcm]
             },
-            {
-                path: 'about',
-                loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
-            },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },

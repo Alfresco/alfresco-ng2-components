@@ -52,8 +52,7 @@ export class AppLayoutComponent {
         { href: '/dl-custom-sources', icon: 'extension', title: 'Custom Sources' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
         { href: '/config-editor', icon: 'code', title: 'Configuration Editor' },
-        { href: '/treeview', icon: 'nature', title: 'Tree View' },
-        { href: '/about', icon: 'info_outline', title: 'About' }
+        { href: '/treeview', icon: 'nature', title: 'Tree View' }
     ];
 
     enableRedirect = true;
