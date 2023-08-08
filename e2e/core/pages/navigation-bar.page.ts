@@ -98,10 +98,6 @@ export class NavigationBarPage {
         await this.clickNavigationBarItem('Custom Sources');
     }
 
-    async clickOverlayViewerButton(): Promise<void> {
-        await this.clickNavigationBarItem('Overlay Viewer');
-    }
-
     async clickTreeViewButton(): Promise<void> {
         await this.clickNavigationBarItem('Tree View');
     }
