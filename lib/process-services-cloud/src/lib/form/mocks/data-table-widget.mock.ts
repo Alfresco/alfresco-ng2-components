@@ -97,7 +97,7 @@ export const mockJsonFormVariableWithIncorrectData = [
     new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesIncorrectData, type: 'json', id: 'fake-id-1' })
 ];
 
-export const mockJsonFormVariableWith = [
+export const mockJsonFormVariable = [
     new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesData, type: 'json', id: 'fake-id-1' })
 ];
 

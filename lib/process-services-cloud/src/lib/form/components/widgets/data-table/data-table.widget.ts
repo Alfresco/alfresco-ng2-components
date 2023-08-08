@@ -63,7 +63,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     dataTableLoadFailed = false;
     previewState = false;
 
-    rowsData: DataRow[];
+    private rowsData: DataRow[];
     private columnsSchema: DataColumn[];
     private variableName: string;
 

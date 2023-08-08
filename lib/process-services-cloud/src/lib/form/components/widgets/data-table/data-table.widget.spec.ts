@@ -26,7 +26,7 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
     mockCountriesData,
     mockInvalidSchemaDefinition,
-    mockJsonFormVariableWith,
+    mockJsonFormVariable,
     mockJsonFormVariableWithIncorrectData,
     mockJsonProcessVariables,
     mockSchemaDefinition
@@ -97,7 +97,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize column schema', () => {
-        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
         widget.dataSource.getColumns().forEach((column, index) =>
@@ -106,7 +106,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize data source based on form variable', () => {
-        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
@@ -138,7 +138,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should NOT display data table with data source if form is in preview state', () => {
-        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariableWith);
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariable);
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
         fixture.detectChanges();
 
