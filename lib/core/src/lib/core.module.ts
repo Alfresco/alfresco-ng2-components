@@ -53,9 +53,8 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
 import { DirectionalityConfigService } from './common/services/directionality-config.service';
 import { SearchTextModule } from './search-text/search-text-input.module';
-import { AdfHttpClient, AlfrescoJsClientsModule } from '@alfresco/adf-core/api';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { LegacyApiClientModule } from './api-factories/legacy-api-client.module';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
@@ -101,8 +100,6 @@ import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
-        LegacyApiClientModule,
-        AlfrescoJsClientsModule,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
             cookieName: 'CSRF-TOKEN',
