@@ -232,24 +232,6 @@
                         handler="download">
                     </content-action>
                     <content-action
-                        icon="content_copy"
-                        title="Copy"
-                        permission="copy"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="copy">
-                    </content-action>
-                    <content-action
-                        icon="redo"
-                        title="Move"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="move">
-                    </content-action>
-                    <content-action
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
@@ -276,13 +258,6 @@
                         target="document"
                         title="Manage versions"
                         (execute)="onManageVersions($event)">
-                    </content-action>
-                    <content-action
-                        target="document"
-                        icon="lock"
-                        permission="lock"
-                        handler="lock"
-                        title="Lock">
                     </content-action>
                     <content-action
                         icon="beach_access"

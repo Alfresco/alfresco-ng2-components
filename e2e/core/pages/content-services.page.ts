@@ -45,8 +45,6 @@ export class ContentServicesPage {
     uploadBorder = $('#document-list-container');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
-    deleteNodesButton = $('button[data-automation-id="delete-toolbar-button"]');
-    activeBreadcrumb = $('div[class*="active"]');
     uploadFileButton = $('.adf-upload-button-file-container button');
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
     uploadMultipleFileButton = $('input[data-automation-id="upload-multiple-files"]');
@@ -67,9 +65,6 @@ export class ContentServicesPage {
     deleteContentElement = $('button[data-automation-id="Delete"]');
     metadataAction = $('button[data-automation-id="Info"]');
     versionManagerAction = $('button[data-automation-id="Manage versions"]');
-    moveContentElement = $('button[data-automation-id="Move"]');
-    copyContentElement = $('button[data-automation-id="Copy"]');
-    lockContentElement = $('button[data-automation-id="Lock"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
@@ -292,10 +287,6 @@ export class ContentServicesPage {
         await this.goToDocumentList();
         await this.openFolder(folderName);
         await this.deleteAndCheckFolderNotDisplayed(subFolderName);
-    }
-
-    async getActiveBreadcrumb(): Promise<string> {
-        return BrowserActions.getAttribute(this.activeBreadcrumb, 'title');
     }
 
     async uploadFile(fileLocation: string): Promise<void> {
