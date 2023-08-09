@@ -15,26 +15,52 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Inject, Optional, Pipe, PipeTransform } from '@angular/core';
 import { UserLike } from './user-like.interface';
+import { ADF_FULL_NAME_PIPE_INCLUDE_EMAIL } from './full-name-email-required.token';
 
 @Pipe({ name: 'fullName' })
 export class FullNamePipe implements PipeTransform {
 
-    transform(user: UserLike): string {
-        return this.buildFullName(user) ? this.buildFullName(user) : this.buildFromUsernameOrEmail(user);
+    constructor(@Optional() @Inject(ADF_FULL_NAME_PIPE_INCLUDE_EMAIL) private includeEmail = false) {
     }
 
-    buildFullName(user: UserLike): string {
+    transform(user: UserLike, includeEmail: boolean | undefined): string {
+        return this.buildFullName(user, includeEmail) ? this.buildFullName(user, includeEmail) : this.buildFromUsernameOrEmail(user, includeEmail);
+    }
+
+    private includeEmailInFullName(includeEmail: boolean | undefined) {
+        return includeEmail === undefined ? this.includeEmail : includeEmail;
+    }
+
+    private buildFullName(user: UserLike, includeEmail: boolean | undefined): string {
         const fullName: string[] = [];
+        let hasName = false;
 
-        fullName.push(user?.firstName);
-        fullName.push(user?.lastName);
+        if (user?.firstName) {
+            hasName = true;
+            fullName.push(user?.firstName);
+        }
 
-        return fullName.join(' ').trim();
+        if (user?.lastName) {
+            hasName = true;
+            fullName.push(user?.lastName);
+        }
+
+        if (this.includeEmailInFullName(includeEmail) && hasName && user?.email) {
+            fullName.push(`<${user.email}>`);
+        }
+
+        return fullName.join(' ');
     }
 
-    buildFromUsernameOrEmail(user: UserLike): string {
-        return (user?.username || user?.email) ?? '' ;
+    private buildFromUsernameOrEmail(user: UserLike, includeEmail: boolean | undefined): string {
+        let fullName = (user?.username || user?.email) ?? '';
+
+        if (this.includeEmailInFullName(includeEmail) && user.username && user.email) {
+            fullName += ` <${user.email}>`;
+        }
+
+        return fullName;
     }
 }

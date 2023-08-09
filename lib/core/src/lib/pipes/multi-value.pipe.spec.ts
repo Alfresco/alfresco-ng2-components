@@ -20,7 +20,7 @@ import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('FullNamePipe', () => {
+describe('MultiValuePipe', () => {
 
     let pipe: MultiValuePipe;
 
