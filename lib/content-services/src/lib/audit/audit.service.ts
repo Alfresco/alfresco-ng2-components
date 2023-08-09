@@ -45,6 +45,7 @@ export class AuditService {
 
     /**
      * Gets a list of audit applications.
+     *
      * @param opts Options.
      * @returns a list of the audit applications.
      */
@@ -61,6 +62,7 @@ export class AuditService {
 
     /**
      * Get audit application info.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Options.
      * @returns status of an audit application.
@@ -78,6 +80,7 @@ export class AuditService {
 
     /**
      * Update audit application info.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditAppBodyUpdate The audit application to update.
      * @param opts Options.
@@ -94,6 +97,7 @@ export class AuditService {
 
     /**
      * List audit entries for an audit application.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Options.
      * @returns a list of audit entries.
@@ -112,6 +116,7 @@ export class AuditService {
 
     /**
      * Get audit entry.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @param opts Options.
@@ -128,6 +133,7 @@ export class AuditService {
 
     /**
      * List audit entries for a node.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Options.
      * @returns
@@ -145,6 +151,7 @@ export class AuditService {
 
     /**
      * Permanently delete audit entries for an audit application.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids.
      * @returns
@@ -158,6 +165,7 @@ export class AuditService {
 
     /**
      * Permanently delete an audit entry.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @returns

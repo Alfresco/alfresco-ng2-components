@@ -26,8 +26,8 @@ import {
     UsersActions
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { VersionManagePage } from '../../core/pages/version-manager.page';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { VersionManagePage } from '../pages/version-manager.page';
+import { UploadDialogPage } from '../pages/upload-dialog.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');

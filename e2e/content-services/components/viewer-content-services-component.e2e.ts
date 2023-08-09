@@ -28,7 +28,7 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { VersionManagePage } from '../pages/version-manager.page';
-import { MetadataViewPage } from '../pages/metadata-view.page';
+import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 
 describe('Content Services Viewer', () => {
     const acsUser = new UserModel();

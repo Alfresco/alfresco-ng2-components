@@ -24,7 +24,7 @@ import { createApiService,
     UsersActions, ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { VersionManagePage } from '../../core/pages/version-manager.page';
+import { VersionManagePage } from '../pages/version-manager.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
