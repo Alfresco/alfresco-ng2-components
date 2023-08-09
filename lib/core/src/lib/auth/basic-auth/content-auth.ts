@@ -79,6 +79,10 @@ export class ContentAuth {
         this.storageService.setItem('ACS_USERNAME', username);
     }
 
+    getUsername() {
+        return this.storageService.getItem('ACS_USERNAME');
+    }
+
     /**
      * login Alfresco API
      * @param  username:   // Username to login

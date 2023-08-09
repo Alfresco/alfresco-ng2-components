@@ -64,6 +64,10 @@ export class ProcessAuth {
         this.storageService.setItem('APS_USERNAME', username);
     }
 
+    getUsername() {
+        return this.storageService.getItem('APS_USERNAME');
+    }
+
     /**
      * login Activiti API
      * @param  username:   // Username to login
@@ -166,7 +170,7 @@ export class ProcessAuth {
      * @param ticket
      * */
     setTicket(ticket: string) {
-        if(ticket && ticket !=='null') {
+        if (ticket && ticket !== 'null') {
             this.authentications.basicAuth.ticket = ticket;
             this.authentications.basicAuth.password = null;
             this.config.ticketBpm = ticket;
@@ -188,7 +192,7 @@ export class ProcessAuth {
      * Get the current Ticket
      * */
     getToken(): string {
-        if(!this.ticket){
+        if (!this.ticket) {
             this.onError.next('error');
             return null;
         }
