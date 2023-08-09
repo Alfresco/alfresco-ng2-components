@@ -31,17 +31,8 @@ import {
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
-    MinimalNodeEntity,
-    NodePaging,
-    Pagination,
-    MinimalNodeEntryEntity,
-    SiteEntry,
-    SearchEntry
-} from '@alfresco/js-api';
-import {
-    AppConfigService,
-    AppConfigValues,
     NotificationService,
     DataRow,
     UserPreferencesService,
@@ -95,10 +86,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     allowDropFiles = true;
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
-
-    baseShareUrl = (
-        this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
-        this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
 
     selectionModes = [
         {value: 'none', viewValue: 'None'},
@@ -236,7 +223,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private dialog: MatDialog,
                 private location: Location,
                 private router: Router,
-                private appConfig: AppConfigService,
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
@@ -410,11 +396,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.openSnackMessageError(message);
-    }
-
-    onContentActionSuccess(message: string) {
-        this.openSnackMessageInfo(message);
-        this.documentList.reload();
     }
 
     onDeleteActionSuccess(message: string) {

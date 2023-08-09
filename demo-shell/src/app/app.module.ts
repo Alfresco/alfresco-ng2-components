@@ -51,7 +51,6 @@ import { MetadataDialogAdapterComponent } from './components/files/metadata-dial
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
-import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -124,7 +123,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        SharedLinkViewComponent,
         DemoPermissionComponent,
         DemoErrorComponent,
         TreeViewSampleComponent,

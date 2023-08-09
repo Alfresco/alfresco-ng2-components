@@ -29,7 +29,6 @@ import { SearchResultComponent } from './components/search/search-result.compone
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
-import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
@@ -80,7 +79,6 @@ export const appRoutes: Routes = [
         pathMatch: 'full',
         loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
-    { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: '',
         component: AppLayoutComponent,

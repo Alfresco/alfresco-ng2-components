@@ -279,7 +279,6 @@ exports.config = {
             await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
             // @ts-ignore
             await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
-            await LocalStorageUtil.setStorageItem('baseShareUrl', `${HOST}/#`);
 
             // @ts-ignore
             await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);

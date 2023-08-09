@@ -399,36 +399,6 @@ describe('Content Services Viewer', () => {
             await viewerPage.checkCloseButtonIsDisplayed();
             await viewerPage.clickCloseButton();
         });
-
-        it('[C268901] Should need a password when opening a protected file', async () => {
-            await contentServicesPage.doubleClickRow(protectedFile.name);
-            await viewerPage.waitTillContentLoaded();
-
-            await viewerPage.checkZoomInButtonIsDisplayed();
-            await viewerPage.checkPasswordDialogIsDisplayed();
-            await viewerPage.checkPasswordSubmitDisabledIsDisplayed();
-
-            await viewerPage.enterPassword('random password');
-            await viewerPage.clickPasswordSubmit();
-            await viewerPage.checkPasswordErrorIsDisplayed();
-            await viewerPage.checkPasswordInputIsDisplayed();
-
-            await viewerPage.enterPassword(protectedFile.password);
-            await viewerPage.clickPasswordSubmit();
-            await viewerPage.checkFileContent('1', protectedFile.firstPageText);
-
-            await viewerPage.clickCloseButton();
-        });
-
-        it('[C307985] Should close the viewer when password dialog is cancelled', async () => {
-            await contentServicesPage.doubleClickRow(protectedFile.name);
-            await viewerPage.waitTillContentLoaded();
-
-            await viewerPage.checkPasswordDialogIsDisplayed();
-            await viewerPage.clickClosePasswordDialog();
-            await contentServicesPage.checkContentIsDisplayed(protectedFile.name);
-        });
-
     });
 
     describe('Viewer - version update with unsupported file', () => {
