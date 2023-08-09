@@ -172,7 +172,7 @@ export class SearchFiltersPage {
     }
 
     async checkSizeRangeFilterIsDisplayed(): Promise<void> {
-        await this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
+        await this.searchCategoriesPage.checkFilterIsDisplayed(this.sizeRangeFilter);
     }
 
     async clickSizeRangeFilterHeader(): Promise<void> {
