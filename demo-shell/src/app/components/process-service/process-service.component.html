@@ -15,24 +15,13 @@
                             </div>
                         </adf-sidebar-action-menu>
                     </div>
-                    <mat-accordion class="app-accordion-panel" displayMode="flat">
-                        <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <mat-icon>assignment</mat-icon>
-                                    <div id="tasks-accordion-title" class="app-accordion-title-padding">Tasks</div>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <adf-task-filters [filterParam]="filterSelected"
-                                              role="group"
-                                              aria-labelledby="tasks-accordion-title"
-                                              [appId]="appId"
-                                              (filterClicked)="onTaskFilterClick($event)"
-                                              (filterSelected)="onTaskFilterClick($event)"
-                                              (success)="onSuccessTaskFilterList()" #activitiFilter>
-                            </adf-task-filters>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                    <adf-task-filters [filterParam]="filterSelected"
+                                      role="group"
+                                      [appId]="appId"
+                                      (filterClicked)="onTaskFilterClick($event)"
+                                      (filterSelected)="onTaskFilterClick($event)"
+                                      (success)="onSuccessTaskFilterList()" #activitiFilter>
+                    </adf-task-filters>
                 </div>
                 <div
                     class="app-grid-item app-tasks-list"
@@ -129,27 +118,16 @@
                             </div>
                         </adf-sidebar-action-menu>
                     </div>
-                    <mat-accordion class="app-accordion-panel" displayMode="flat">
-                        <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <mat-icon>assessment</mat-icon>
-                                    <div id="process-accordion-title" class="app-accordion-title-padding">Processes</div>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <adf-process-instance-filters
-                                    #activitiProcessFilter
-                                    role="group"
-                                    aria-labelledby="process-accordion-title"
-                                    [appId]="appId"
-                                    [filterParam]="filterSelected"
-                                    [showIcon]="false"
-                                    (filterClicked)="onProcessFilterChange($event)"
-                                    (filterSelected)="onProcessFilterChange($event)"
-                                    (success)="onSuccessProcessFilterList()">
-                            </adf-process-instance-filters>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                    <adf-process-instance-filters
+                        #activitiProcessFilter
+                        role="group"
+                        [appId]="appId"
+                        [filterParam]="filterSelected"
+                        [showIcon]="false"
+                        (filterClicked)="onProcessFilterChange($event)"
+                        (filterSelected)="onProcessFilterChange($event)"
+                        (success)="onSuccessProcessFilterList()">
+                    </adf-process-instance-filters>
                 </div>
                 <div
                     class="app-grid-item app-processes-list app-list"

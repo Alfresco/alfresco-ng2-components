@@ -130,24 +130,3 @@
         max-height: initial;
     }
 }
-
-.app-accordion-panel {
-    .mat-expansion-panel {
-        background: inherit;
-    }
-
-    .mat-expansion-panel-header-title,
-    .mat-expansion-panel-header-description {
-        flex-basis: 0;
-        align-items: center;
-    }
-
-    .mat-expansion-panel-header-description {
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .app-accordion-title-padding {
-        padding-left: 20px;
-    }
-}
