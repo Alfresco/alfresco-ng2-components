@@ -16,7 +16,7 @@
  */
 
 import { createApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { UserFiltersApi } from '@alfresco/js-api';
 

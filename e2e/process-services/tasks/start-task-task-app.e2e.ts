@@ -26,9 +26,9 @@ import { createApiService,
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
-import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
-import { TasksPage } from './../pages/tasks.page';
+import { AttachmentListPage } from '../pages/attachment-list.page';
+import { ChecklistDialog } from '../pages/dialog/create-checklist-dialog.page';
+import { TasksPage } from '../pages/tasks.page';
 import * as CONSTANTS from '../../util/constants';
 
 describe('Start Task - Task App', () => {

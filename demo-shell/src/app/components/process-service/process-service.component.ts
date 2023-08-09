@@ -29,14 +29,10 @@ import {
     Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    Pagination,
-    UserProcessInstanceFilterRepresentation,
-    ScriptFilesApi
-} from '@alfresco/js-api';
+import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
+    AlfrescoApiService, UserPreferencesService, DataCellEvent, NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
@@ -162,7 +158,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
-                private logService: LogService,
                 private appConfig: AppConfigService,
                 private preview: PreviewService,
                 formRenderingService: FormRenderingService,
@@ -181,18 +176,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
-
-        formService.formLoaded
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(formEvent => {
-                this.logService.log(`Form loaded: ${formEvent.form.id}`);
-            });
-
-        formService.formFieldValueChanged
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(formFieldEvent => {
-                this.logService.log(`Field value changed. Form: ${formFieldEvent.form.id}, Field: ${formFieldEvent.field.id}, Value: ${formFieldEvent.field.value}`);
-            });
 
         this.preferenceService
             .select(UserPreferenceValues.PaginationSize)
@@ -219,22 +202,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             .subscribe((content) => {
                 this.showContentPreview(content);
             });
-
-        formService.validateForm
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(validateFormEvent => {
-                this.logService.log('Error form:' + validateFormEvent.errorsField);
-            });
-
-        // Uncomment this block to see form event handling in action
-        /*
-        formService.formEvents
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((event: Event) => {
-                this.logService.log('Event fired:' + event.type);
-                this.logService.log('Event Target:' + event.target);
-            });
-        */
     }
 
     ngOnInit() {
@@ -436,14 +403,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         }
     }
 
-    onAuditClick(event: any) {
-        this.logService.log(event);
-    }
-
-    onAuditError(event: any): void {
-        this.logService.error('My custom error message' + event);
-    }
-
     onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
@@ -496,14 +455,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     private reloadTaskFilters(): void {
         this.activitiFilter.selectFilter(this.activitiFilter.getCurrentFilter());
-    }
-
-    onRowClick(event): void {
-        this.logService.log(event);
-    }
-
-    onRowDblClick(event): void {
-        this.logService.log(event);
     }
 
     onAssignTask() {

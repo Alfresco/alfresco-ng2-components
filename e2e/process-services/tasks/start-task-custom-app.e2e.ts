@@ -20,8 +20,8 @@ import { browser } from 'protractor';
 
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
-import { TasksPage } from './../pages/tasks.page';
+import { AttachmentListPage } from '../pages/attachment-list.page';
+import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Start Task - Custom App', () => {
