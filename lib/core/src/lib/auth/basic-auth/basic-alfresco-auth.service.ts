@@ -300,11 +300,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     }
 
     getBpmUsername(): string {
-        return this.contentAuth.authentications.basicAuth.username;
+        return this.processAuth.getUsername();
     }
 
     getEcmUsername(): string {
-        return this.processAuth.authentications.basicAuth.username;
+        return this.contentAuth.getUsername();
     }
 
     /**
