@@ -195,7 +195,7 @@ describe('Version component permissions', () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
             const message = await new SnackbarPage().getSnackBarMessage();
-            expect(message).toEqual(`You don't have access to do this`);
+            expect(message).toEqual(`You don't have access to do this.`);
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', async () => {
@@ -251,7 +251,7 @@ describe('Version component permissions', () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
             const message = await new SnackbarPage().getSnackBarMessage();
-            expect(message).toEqual('You don\'t have access to do this');
+            expect(message).toEqual(`You don't have access to do this.`);
         });
 
         it('[C277202] Should be disabled the option for a locked file', async () => {
