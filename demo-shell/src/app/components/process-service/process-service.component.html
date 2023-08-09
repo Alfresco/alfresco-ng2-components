@@ -78,19 +78,12 @@
                             [task-id]="currentTaskId"
                             [download]="true"
                             mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
-                            <mat-icon>assignment_ind</mat-icon>
+                            <mat-icon>download</mat-icon>
                         </button>
-                        <mat-divider></mat-divider>
                     </div>
-                    <mat-card>
-                        <mat-card-content>
-                            <app-task-attachments [taskId]="currentTaskId"></app-task-attachments>
-                        </mat-card-content>
-                    </mat-card>
+                    <app-task-attachments [taskId]="currentTaskId"></app-task-attachments>
                 </div>
-                <div
-                    class="app-grid-item app-tasks-start"
-                    *ngIf="isStartTaskMode()">
+                <div class="app-grid-item app-tasks-start" *ngIf="isStartTaskMode()">
                     <adf-start-task
                         [appId]="appId"
                         [name]="defaultTaskName"
@@ -104,9 +97,7 @@
     <mat-tab id="processes-header" href="#processes" label="Process">
         <div class="app-page-content" *ngIf="showProcessTab">
             <div class="app-grid">
-                <div
-                    id="app-processes-menu"
-                    class="app-grid-item app-processes-menu">
+                <div id="app-processes-menu" class="app-grid-item app-processes-menu">
                     <div class="app-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205" title="CREATE">
                             <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
@@ -120,7 +111,6 @@
                     </div>
                     <adf-process-instance-filters
                         #activitiProcessFilter
-                        role="group"
                         [appId]="appId"
                         [filterParam]="filterSelected"
                         [showIcon]="false"
@@ -155,9 +145,7 @@
                         #processListPagination>
                     </adf-pagination>
                 </div>
-                <div
-                    class="app-grid-item app-processes-details"
-                    *ngIf="!isStartProcessMode()">
+                <div class="app-grid-item app-processes-details" *ngIf="!isStartProcessMode()">
                     <adf-process-instance-details
                         #activitiProcessDetails
                         [processInstanceId]="currentProcessInstanceId"
@@ -165,7 +153,7 @@
                         (showProcessDiagram)="onShowProcessDiagram($event)"
                         (taskClick)="onProcessDetailsTaskClick($event)">
                     </adf-process-instance-details>
-                    <mat-divider></mat-divider>
+
                     <div *ngIf="currentProcessInstanceId">
                         Process Audit log
                         <button adf-process-audit
@@ -174,16 +162,11 @@
                                 [format]="'pdf'"
                                 (clicked)="onAuditClick($event)"
                                 (error)="onAuditError($event)">
-                            <mat-icon>assignment_ind</mat-icon>
+                            <mat-icon>download</mat-icon>
                         </button>
-                        <mat-divider></mat-divider>
                     </div>
-                    <mat-card>
-                        <mat-card-content>
-                            <app-process-attachments [processInstanceId]="currentProcessInstanceId">
-                            </app-process-attachments>
-                        </mat-card-content>
-                    </mat-card>
+                    <app-process-attachments [processInstanceId]="currentProcessInstanceId">
+                    </app-process-attachments>
                 </div>
                 <div
                     class="app-grid-item app-processes-start"
