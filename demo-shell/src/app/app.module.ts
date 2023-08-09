@@ -16,7 +16,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
@@ -81,9 +81,6 @@ import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud
 import { RouterModule } from '@angular/router';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
-
-import { setupAppNotifications } from './services/app-notifications-factory';
-import { AppNotificationsService } from './services/app-notifications.service';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
 
@@ -156,14 +153,7 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
-        provideTranslations('app', 'resources'),
-        AppNotificationsService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: setupAppNotifications,
-            deps: [AppNotificationsService],
-            multi: true
-        }
+        provideTranslations('app', 'resources')
     ],
     bootstrap: [AppComponent]
 })

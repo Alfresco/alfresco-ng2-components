@@ -310,16 +310,6 @@ export class ContentServicesPage {
         await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderLocation)));
     }
 
-    async getSingleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
-        return BrowserActions.getAttribute(this.uploadFileButtonInput, 'title');
-    }
-
-    async getMultipleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
-        return BrowserActions.getAttribute(this.uploadMultipleFileButton, 'title');
-    }
-
     async checkUploadButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
     }

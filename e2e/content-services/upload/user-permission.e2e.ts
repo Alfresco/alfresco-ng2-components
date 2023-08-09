@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService, LoginPage, NotificationHistoryPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, SnackbarPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -30,7 +30,6 @@ describe('Upload - User permission', () => {
     const uploadDialog = new UploadDialogPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
@@ -118,7 +117,8 @@ describe('Upload - User permission', () => {
 
             await contentServicesPage.uploadFile(emptyFile.location);
 
-            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            const message = await new SnackbarPage().getSnackBarMessage();
+            expect(message).toEqual('You don\'t have the create permission to upload the content');
         });
     });
 

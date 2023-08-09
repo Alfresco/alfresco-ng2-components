@@ -452,7 +452,6 @@
         <div *ngIf="!acceptedFilesTypeShow">
             <adf-upload-button
                 #uploadButton
-                tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
@@ -469,7 +468,6 @@
         <div *ngIf="acceptedFilesTypeShow">
             <adf-upload-button
                 #uploadButton
-                tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [acceptedFilesType]="acceptedFilesType"

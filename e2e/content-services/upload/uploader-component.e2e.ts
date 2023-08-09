@@ -99,8 +99,6 @@ describe('Upload component', () => {
         });
 
         it('[C272788] Should display upload button', async () => {
-            await expect(await contentServicesPage.getSingleFileButtonTooltip()).toEqual('Custom tooltip');
-
             await contentServicesPage.checkUploadButton();
             await contentServicesPage.checkContentIsDisplayed(firstPdfFileModel.name);
         });
@@ -131,13 +129,6 @@ describe('Upload component', () => {
             await uploadDialog.fileIsUploaded(pngFileModel.name);
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
-        });
-
-        it('[C272794] Should display tooltip for uploading files', async () => {
-            await uploadToggles.enableMultipleFileUpload();
-            await uploadToggles.checkMultipleFileUploadToggleIsEnabled();
-            await expect(await contentServicesPage.getMultipleFileButtonTooltip()).toEqual('Custom tooltip');
-            await uploadToggles.disableMultipleFileUpload();
         });
 
         it('[C279920] Should rename a file uploaded twice', async () => {

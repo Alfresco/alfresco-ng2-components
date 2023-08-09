@@ -16,9 +16,10 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { createApiService,
+import {
+    createApiService,
     LoginPage,
-    NotificationHistoryPage,
+    SnackbarPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -38,7 +39,6 @@ describe('Version component permissions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
-    const notificationHistoryPage = new NotificationHistoryPage();
     const contentServices = new ContentServicesPage();
     let site;
 
@@ -194,7 +194,8 @@ describe('Version component permissions', () => {
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', async () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
-            await notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
+            const message = await new SnackbarPage().getSnackBarMessage();
+            expect(message).toEqual(`You don't have access to do this`);
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', async () => {
@@ -249,7 +250,8 @@ describe('Version component permissions', () => {
         it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', async () => {
             await contentServices.versionManagerContent(differentCreatorFile.name);
 
-            await notificationHistoryPage.checkNotifyContains(`You don't have access to do this`);
+            const message = await new SnackbarPage().getSnackBarMessage();
+            expect(message).toEqual('You don\'t have access to do this');
         });
 
         it('[C277202] Should be disabled the option for a locked file', async () => {
