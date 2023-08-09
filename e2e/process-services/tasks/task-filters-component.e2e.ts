@@ -27,8 +27,6 @@ import { ProcessServicesPage } from './../pages/process-services.page';
 import { TasksPage } from './../pages/tasks.page';
 import { TasksListPage } from './../pages/tasks-list.page';
 import { TaskDetailsPage } from './../pages/task-details.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { AppSettingsTogglesPage } from './../pages/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from './../pages/task-filters-demo.page';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
@@ -181,8 +179,6 @@ describe('Task', () => {
         const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
-        const processServiceTabBarPage = new ProcessServiceTabBarPage();
-        const appSettingsToggles = new AppSettingsTogglesPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
         const apiService = createApiService();
@@ -229,37 +225,6 @@ describe('Task', () => {
             await browser.refresh();
             await taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
             await userFiltersApi.deleteUserTaskFilter(id);
-        });
-
-        it('[C286447] Should display the task filter icon when a custom filter is added', async () => {
-            const newFilter = new UserProcessInstanceFilterRepresentation({
-                name: 'New Task Filter with icon',
-                appId,
-                icon: 'glyphicon-cloud',
-                filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
-            });
-            const { id } = await userFiltersApi.createUserTaskFilter(newFilter);
-
-            await browser.refresh();
-            await processServiceTabBarPage.clickSettingsButton();
-            await browser.sleep(500);
-            await appSettingsToggles.enableTaskFiltersIcon();
-            await processServiceTabBarPage.clickTasksButton();
-
-            await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
-            await expect(await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
-            await userFiltersApi.deleteUserTaskFilter(id);
-        });
-
-        it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {
-            await taskFiltersDemoPage.myTasksFilter().checkTaskFilterHasNoIcon();
-
-            await processServiceTabBarPage.clickSettingsButton();
-            await appSettingsToggles.enableTaskFiltersIcon();
-            await processServiceTabBarPage.clickTasksButton();
-
-            await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            await expect(await taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
         });
     });
 });

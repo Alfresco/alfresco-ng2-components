@@ -28,7 +28,6 @@ import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachmentListPage } from './../pages/attachment-list.page';
 import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
 import { TasksPage } from './../pages/tasks.page';
 import * as CONSTANTS from '../../util/constants';
 
@@ -38,7 +37,6 @@ describe('Start Task - Task App', () => {
 
     const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
-    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
@@ -167,22 +165,6 @@ describe('Start Task - Task App', () => {
         await startTaskDialog.clickStartButton();
         await attachmentListPage.clickAttachFileButton(jpgFile.location);
         await attachmentListPage.checkFileIsAttached(jpgFile.name);
-    });
-
-    it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', async () => {
-        await taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await taskPage.taskDetails().appSettingsToggles().disableShowHeader();
-        await processServiceTabBarPage.clickTasksButton();
-
-        await taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await taskPage.taskDetails().appSettingsToggles().enableShowHeader();
-        await processServiceTabBarPage.clickTasksButton();
-
-        await taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', async () => {

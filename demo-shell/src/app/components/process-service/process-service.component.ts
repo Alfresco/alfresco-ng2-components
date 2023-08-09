@@ -126,12 +126,9 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     currentTaskId: string;
     currentProcessInstanceId: string;
 
-    taskSchemaColumns: any[] = [];
     taskPage = 0;
     processPage = 0;
     paginationPageSize = 0;
-    processSchemaColumns: any[] = [];
-    showHeaderContent = true;
 
     defaultProcessDefinitionName: string;
     defaultProcessName: string;
@@ -149,8 +146,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     showTaskTab: boolean;
     showProcessTab: boolean;
 
-    showProcessFilterIcon: boolean;
-    showTaskFilterIcon: boolean;
     showApplications: boolean;
     applicationId: number;
     processDefinitionName: string;
@@ -278,10 +273,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     resetTaskPaginationPage() {
         this.taskPage = 0;
-    }
-
-    toggleHeaderContent(): void {
-        this.showHeaderContent = !this.showHeaderContent;
     }
 
     onTabChange(event: any): void {

@@ -17,8 +17,6 @@
 
 import { createApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { AppSettingsTogglesPage } from './../pages/dialog/app-settings-toggles.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { UserFiltersApi } from '@alfresco/js-api';
 
@@ -26,8 +24,6 @@ describe('New Process Filters', () => {
 
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const appSettingsToggles = new AppSettingsTogglesPage();
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
@@ -87,28 +83,6 @@ describe('New Process Filters', () => {
         await processFiltersPage.checkFilterIsDisplayed(processFilter.new_filter);
     });
 
-    it('[C286450] Should display the process filter icon when a custom filter is added', async () => {
-        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            appId: null,
-            name: processFilter.new_icon,
-            icon: 'glyphicon-cloud',
-            filter: { sort: 'created-desc', name: '', state: 'running' }
-        });
-
-        filterId = customProcessFilter.id;
-
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await appSettingsToggles.enableProcessFiltersIcon();
-        await processServiceTabBarPage.clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
-        await expect(await processFiltersPage.getFilterIcon(processFilter.new_icon)).toEqual('cloud');
-    });
-
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
         customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
             appId: null,
@@ -129,51 +103,6 @@ describe('New Process Filters', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
-    });
-
-    it('[C286451] Should display changes on a process filter when this filter icon is edited', async () => {
-        customProcessFilter = await userFiltersApi.createUserProcessInstanceFilter({
-            appId: null,
-            name: processFilter.edit_icon,
-            icon: 'glyphicon-random',
-            filter: { sort: 'created-desc', name: '', state: 'running' }
-        });
-
-        filterId = customProcessFilter.id;
-
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
-
-        await userFiltersApi.updateUserProcessInstanceFilter(filterId, {
-            appId: null,
-            name: processFilter.edit_icon,
-            icon: 'glyphicon-cloud',
-            filter: { sort: 'created-desc', name: '', state: 'running' }
-        });
-
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await appSettingsToggles.enableProcessFiltersIcon();
-        await processServiceTabBarPage.clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
-        await expect(await processFiltersPage.getFilterIcon(processFilter.edit_icon)).toEqual('cloud');
-    });
-
-    it('[C286452] Should display process filter icons only when showIcon property is set on true', async () => {
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-        await processFiltersPage.checkFilterHasNoIcon(processFilter.all);
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await appSettingsToggles.enableProcessFiltersIcon();
-        await processServiceTabBarPage.clickProcessButton();
-
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.all);
-        await expect(await processFiltersPage.getFilterIcon(processFilter.all)).toEqual('dashboard');
     });
 
     it('[C260475] Should be able to delete a filter on APS and check it on ADF', async () => {

@@ -1,5 +1,5 @@
 <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="onTabChange($event)"
-               data-automation-id="navigation-bar">
+               data-automation-id="navigation-bar" [animationDuration]="'0'">
     <mat-tab id="app-tasks-header" href="#tasks" label="Tasks">
         <div class="app-page-content" *ngIf="showTaskTab">
             <div class="app-grid">
@@ -27,7 +27,6 @@
                                               role="group"
                                               aria-labelledby="tasks-accordion-title"
                                               [appId]="appId"
-                                              [showIcon]="showTaskFilterIcon"
                                               (filterClicked)="onTaskFilterClick($event)"
                                               (filterSelected)="onTaskFilterClick($event)"
                                               (success)="onSuccessTaskFilterList()" #activitiFilter>
@@ -75,7 +74,7 @@
                                       [taskId]="currentTaskId"
                                       [showFormTitle]="true"
                                       [fieldValidators]="fieldValidators"
-                                      [showHeaderContent]="showHeaderContent"
+                                      [showHeaderContent]="true"
                                       (formCompleted)="onFormCompleted()"
                                       (formContentClicked)="onContentClick($event)"
                                       (taskCreated)="onTaskCreated($event)"
@@ -144,7 +143,7 @@
                                     aria-labelledby="process-accordion-title"
                                     [appId]="appId"
                                     [filterParam]="filterSelected"
-                                    [showIcon]="showProcessFilterIcon"
+                                    [showIcon]="false"
                                     (filterClicked)="onProcessFilterChange($event)"
                                     (filterSelected)="onProcessFilterChange($event)"
                                     (success)="onSuccessProcessFilterList()">
@@ -233,18 +232,6 @@
                 <span><h3>Settings Menu</h3></span>
             </div>
             <div class="app-grid-item app-settings-details">
-                <div>
-                    <mat-slide-toggle id="adf-show-task-filter-icon" [(ngModel)]="showTaskFilterIcon">Show task filters icons
-                    </mat-slide-toggle>
-                </div>
-                <div>
-                    <mat-slide-toggle id="adf-show-process-filter-icon" [(ngModel)]="showProcessFilterIcon">Show process filters icons
-                    </mat-slide-toggle>
-                </div>
-                <div>
-                    <mat-slide-toggle id="adf-show-header" (change)="toggleHeaderContent()" [checked]="showHeaderContent">Show details header
-                    </mat-slide-toggle>
-                </div>
                 <div>
                     <mat-slide-toggle id="adf-process-multiselect" [(ngModel)]="multiSelectProcess">Multiselect Process List
                     </mat-slide-toggle>
