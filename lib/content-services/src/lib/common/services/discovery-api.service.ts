@@ -16,9 +16,15 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, Observable, throwError, Subject, forkJoin } from 'rxjs';
+import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { RepositoryInfo, SystemPropertiesRepresentation, DiscoveryApi, AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
+import {
+    RepositoryInfo,
+    SystemPropertiesRepresentation,
+    DiscoveryApi,
+    AboutApi,
+    SystemPropertiesApi
+} from '@alfresco/js-api';
 
 import { AlfrescoApiService, BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
 
@@ -32,6 +38,7 @@ export class DiscoveryApiService {
         this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
         return this._discoveryApi;
     }
+
     /**
      * Gets product information for Content Services.
      */
@@ -41,13 +48,15 @@ export class DiscoveryApiService {
         private authenticationService: AuthenticationService,
         private alfrescoApiService: AlfrescoApiService
     ) {
-        forkJoin([this.alfrescoApiService.alfrescoApiInitialized, this.authenticationService.onLogin])
-            .pipe(
+        this.authenticationService.onLogin.subscribe(() => {
+            this.alfrescoApiService.alfrescoApiInitialized.pipe(
                 filter(() => this.authenticationService.isEcmLoggedIn()),
                 take(1),
                 switchMap(() => this.getEcmProductInfo())
             )
-            .subscribe((info) => this.ecmProductInfo$.next(info));
+                .subscribe((info) => this.ecmProductInfo$.next(info));
+
+        });
     }
 
 
