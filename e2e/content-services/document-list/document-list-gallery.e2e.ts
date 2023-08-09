@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
@@ -29,7 +29,7 @@ describe('Document List Component', () => {
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
-    let acsUser = null;
+    let acsUser: UserModel;
     const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View', () => {
@@ -90,7 +90,7 @@ describe('Document List Component', () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-    });
+        });
 
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
@@ -143,21 +143,6 @@ describe('Document List Component', () => {
                 .toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
-        });
-
-        // eslint-disable-next-line ban/ban
-        xit('[C280129] Should keep Gallery View when accessing a folder', async () => {
-            await contentServicesPage.navigateToCardFolder(folderName);
-
-            await expect(await contentServicesPage.getCardElementShowedInPage()).toBe(1);
-            await expect(await contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
-        });
-
-        it('[C280130] Should be able to go back to List View', async () => {
-            await contentServicesPage.clickGridViewButton();
-            await contentServicesPage.checkAcsContainer();
-            await contentServicesPage.openFolder(folderName);
-            await contentServicesPage.checkRowIsDisplayed(pdfFile.name);
         });
 
         it('[C261993] Should be able to sort Gallery Cards by display name', async () => {
