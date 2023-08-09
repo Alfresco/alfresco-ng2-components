@@ -28,7 +28,6 @@
                     [presetColumn]="presetColumn"
                     [page]="taskPage"
                     [size]="paginationPageSize"
-                    [selectionMode]="selectionMode"
                     [name]="taskFilter?.filter?.name"
                     [assignment]="taskFilter?.filter?.assignment"
                     [state]="taskFilter?.filter?.state"
@@ -37,7 +36,6 @@
                     (rowClick)="onTaskRowClick($event)"
                     (success)="onSuccessTaskList()"
                     (row-dblclick)="onTaskRowDblClick($any($event))"
-                    [multiselect]="multiSelectTask"
                     #taskList>
                 </adf-tasklist>
 
@@ -64,7 +62,7 @@
                                   (assignTask)="onAssignTask()"
                                   (taskDeleted)="onTaskDeleted()">
                 </adf-task-details>
-                <mat-divider></mat-divider>
+
                 <div *ngIf="currentTaskId">
                     Task Audit log
                     <button
@@ -77,6 +75,7 @@
                 </div>
                 <app-task-attachments [taskId]="currentTaskId"></app-task-attachments>
             </div>
+
             <div class="app-grid-item app-tasks-start" *ngIf="isStartTaskMode()">
                 <adf-start-task
                     [appId]="appId"
@@ -87,6 +86,7 @@
             </div>
         </div>
     </mat-tab>
+
     <mat-tab id="processes-header" label="Process">
         <div class="app-grid">
             <div id="app-processes-menu" class="app-grid-item app-processes-menu">
@@ -99,6 +99,7 @@
                         </button>
                     </div>
                 </adf-sidebar-action-menu>
+
                 <adf-process-instance-filters
                     #activitiProcessFilter
                     [appId]="appId"
@@ -109,13 +110,13 @@
                     (success)="onSuccessProcessFilterList()">
                 </adf-process-instance-filters>
             </div>
+
             <div
                 class="app-grid-item app-processes-list"
                 *ngIf="processFilter && !isStartProcessMode()">
                 <adf-process-instance-list
                     #processList
                     *ngIf="processFilter?.filter" [appId]="processFilter?.appId"
-                    [selectionMode]="selectionMode"
                     [presetColumn]="presetColumn"
                     [state]="processFilter?.filter?.state"
                     [page]="processPage"
@@ -123,7 +124,6 @@
                     [sort]="processFilter?.filter?.sort"
                     (rowClick)="onProcessRowClick($event)"
                     (row-dblclick)="onProcessRowDblClick($any($event))"
-                    [multiselect]="multiSelectProcess"
                     (success)="onSuccessProcessList()">
                 </adf-process-instance-list>
                 <adf-pagination
@@ -133,6 +133,7 @@
                     #processListPagination>
                 </adf-pagination>
             </div>
+
             <div class="app-grid-item app-processes-details" *ngIf="!isStartProcessMode()">
                 <adf-process-instance-details
                     #activitiProcessDetails
@@ -169,23 +170,6 @@
                     (error)="onStartProcessError($event)">
                 </adf-start-process>
             </div>
-        </div>
-    </mat-tab>
-    <mat-tab id="settings-header" label="Settings">
-        <div>
-            <div>
-                <mat-slide-toggle id="adf-process-multiselect" [(ngModel)]="multiSelectProcess">Multiselect Process List
-                </mat-slide-toggle>
-            </div>
-            <div>
-                <mat-slide-toggle id="adf-task-multiselect" [(ngModel)]="multiSelectTask">Multiselect Task List
-                </mat-slide-toggle>
-            </div>
-            <mat-radio-group [(ngModel)]="selectionMode">
-                <mat-radio-button value="multiple">multiple</mat-radio-button>
-                <mat-radio-button value="single">single</mat-radio-button>
-                <mat-radio-button value="none">none</mat-radio-button>
-            </mat-radio-group>
         </div>
     </mat-tab>
 </mat-tab-group>

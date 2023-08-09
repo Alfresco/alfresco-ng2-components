@@ -110,10 +110,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Output()
     changePageSize = new EventEmitter<Pagination>();
 
-    multiSelectTask = false;
-    multiSelectProcess = false;
-    selectionMode = 'single';
-
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
     layoutType: string;
@@ -228,10 +224,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
-        this.resetTaskPaginationPage();
-    }
-
-    resetTaskPaginationPage() {
         this.taskPage = 0;
     }
 
