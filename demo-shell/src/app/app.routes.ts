@@ -30,7 +30,6 @@ import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { FormListComponent } from './components/form/form-list.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
-import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
@@ -280,7 +279,6 @@ export const appRoutes: Routes = [
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
-            { path: 'form-loading', component: FormLoadingComponent },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],
