@@ -616,7 +616,6 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 });
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
-    let preferencesService: PreferenceCloudServiceInterface;
     @Component({
         template: `
                  <adf-cloud-process-list #processListCloud>
@@ -626,14 +625,13 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
                  </adf-cloud-process-list>
             `
     })
-
     class EmptyTemplateComponent {
         @ViewChild(ProcessListCloudComponent)
         processListCloud: ProcessListCloudComponent;
     }
 
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
-    preferencesService = jasmine.createSpyObj('preferencesService', {
+    const preferencesService = jasmine.createSpyObj('preferencesService', {
         getPreferences: of({}),
         updatePreference: of({})
     });

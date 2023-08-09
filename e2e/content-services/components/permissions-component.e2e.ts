@@ -35,7 +35,7 @@ import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { UploadDialogPage } from '../pages/upload-dialog.page';
 import { GroupsApi, NodeEntry } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
