@@ -162,7 +162,6 @@ runs:
         AUTH_TYPE: "${{ inputs.e2e-test-auth }}"
         E2E_TEST_ID: "${{ inputs.e2e-test-id }}"
         DEPS: "${{ inputs.deps }}"
-        E2E_LOG_LEVEL: "TRACE"
       shell: bash
       run: |
         set -u;
