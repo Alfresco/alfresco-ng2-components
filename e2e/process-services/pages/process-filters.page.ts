@@ -19,16 +19,13 @@ import { BrowserActions, BrowserVisibility, DataTableComponentPage, StartProcess
 import { $, $$ } from 'protractor';
 
 export class ProcessFiltersPage {
-
     dataTable = new DataTableComponentPage();
     createProcessButton = $('.app-processes-menu button[data-automation-id="create-button"] > span');
     newProcessButton = $('div > button[data-automation-id="btn-start-process"]');
     processesPage = $('#app-processes-menu');
-    accordionMenu = $('.app-processes-menu mat-accordion');
     buttonWindow = $('div > button[data-automation-id="btn-start-process"] > div');
     noContentMessage = $$('.adf-empty-content__title').first();
     rows = $$('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
-    processIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
     startProcessEl = $('adf-start-process .adf-start-process');
 
     getButtonFilterLocatorByName = (name: string) => $(`button[data-automation-id='${name}_filter']`);
@@ -57,7 +54,6 @@ export class ProcessFiltersPage {
 
     async clickCreateProcessButton(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsVisible(this.accordionMenu);
         await BrowserVisibility.waitUntilElementIsVisible(this.processesPage);
         await BrowserActions.click(this.createProcessButton);
     }
@@ -111,19 +107,6 @@ export class ProcessFiltersPage {
     async checkFilterIsDisplayed(name: string): Promise<void> {
         const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
-    }
-
-    async checkFilterHasNoIcon(name: string): Promise<void> {
-        const filterName = await this.getButtonFilterLocatorByName(name);
-        await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.$(this.processIcon));
-    }
-
-    async getFilterIcon(name: string): Promise<string> {
-        const filterName = await this.getButtonFilterLocatorByName(name);
-        await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        const icon = filterName.$(this.processIcon);
-        return BrowserActions.getText(icon);
     }
 
     async checkFilterIsNotDisplayed(name: string): Promise<void> {

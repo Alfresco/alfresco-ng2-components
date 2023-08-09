@@ -21,7 +21,7 @@ import { ElementFinder, $ } from 'protractor';
 
 export class FiltersPage {
 
-    accordionMenu = $('.app-processes-menu mat-accordion');
+    accordionMenu = $('.app-processes-menu');
     buttonWindow = $('div > button[data-automation-id="btn-start-process"] > div');
     processIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
 
@@ -30,10 +30,6 @@ export class FiltersPage {
 
     async clickFilterButton(filterElement: ElementFinder): Promise<void> {
         await BrowserActions.click(filterElement);
-    }
-
-    async isFilterEnabled(filterElement: ElementFinder): Promise<boolean> {
-        return filterElement.isEnabled();
     }
 
     async isFilterHighlighted(filterName: string): Promise<boolean> {
@@ -64,18 +60,5 @@ export class FiltersPage {
         } catch (error) {
             return false;
         }
-    }
-
-    async checkFilterHasNoIcon(name: string): Promise<void> {
-        const filterName = this.getLocatorForFilterByName(name);
-        await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(filterName.$(this.processIcon));
-    }
-
-    async getFilterIcon(name: string): Promise<string> {
-        const filterName = this.getLocatorForFilterByName(name);
-        await BrowserVisibility.waitUntilElementIsVisible(filterName);
-        const icon = filterName.$(this.processIcon);
-        return BrowserActions.getText(icon);
     }
 }
