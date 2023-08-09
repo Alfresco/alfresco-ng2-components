@@ -93,10 +93,6 @@ export const appRoutes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'config-editor',
-                loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
-            },
-            {
                 path: 'card-view',
                 loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
             },

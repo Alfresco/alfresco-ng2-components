@@ -16,14 +16,8 @@
  */
 
 import { Component, OnDestroy } from '@angular/core';
-import {
-    AppConfigService,
-    NotificationService,
-    UserPreferencesService,
-    UserPreferenceValues
-} from '@alfresco/adf-core';
+import { AppConfigService, NotificationService, UserPreferencesService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-config-editor',
@@ -31,7 +25,6 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./config-editor.component.scss']
 })
 export class ConfigEditorComponent implements OnDestroy {
-
     private onDestroy$ = new Subject<boolean>();
 
     editor: any;
@@ -54,9 +47,11 @@ export class ConfigEditorComponent implements OnDestroy {
         this.indentCode();
     }
 
-    constructor(private appConfig: AppConfigService,
-                private userPreferencesService: UserPreferencesService,
-                private notificationService: NotificationService) {
+    constructor(
+        private appConfig: AppConfigService,
+        private userPreferencesService: UserPreferencesService,
+        private notificationService: NotificationService
+    ) {
         this.code = JSON.stringify(appConfig.config);
     }
 
@@ -81,57 +76,9 @@ export class ConfigEditorComponent implements OnDestroy {
         this.code = '';
     }
 
-    appConfigClick() {
-        this.isUserPreference = false;
-        this.code = JSON.stringify(this.appConfig.config);
-        this.indentCode();
-    }
-
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
-    }
-
-    textOrientationClick() {
-        this.isUserPreference = true;
-        this.userPreferenceProperty = 'textOrientation';
-
-        this.userPreferencesService
-            .select(this.userPreferenceProperty)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((textOrientation: number) => {
-                this.code = JSON.stringify(textOrientation);
-                this.field = 'textOrientation';
-                this.indentCode();
-            });
-
-        this.indentCode();
-    }
-
-    infinitePaginationConfClick() {
-        this.isUserPreference = true;
-        this.userPreferenceProperty = UserPreferenceValues.PaginationSize;
-        this.userPreferencesService
-            .select(this.userPreferenceProperty)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((pageSize: number) => {
-                this.code = JSON.stringify(pageSize);
-                this.field = 'adf-infinite-pagination';
-                this.indentCode();
-            });
-    }
-
-    supportedPageSizesClick() {
-        this.isUserPreference = true;
-        this.userPreferenceProperty = UserPreferenceValues.SupportedPageSizes;
-        this.userPreferencesService
-            .select(this.userPreferenceProperty)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((supportedPageSizes: number) => {
-                this.code = JSON.stringify(supportedPageSizes);
-                this.field = 'adf-supported-page-size';
-                this.indentCode();
-            });
     }
 
     indentCode() {
@@ -139,5 +86,4 @@ export class ConfigEditorComponent implements OnDestroy {
             this.editor.getAction('editor.action.formatDocument').run();
         }, 300);
     }
-
 }

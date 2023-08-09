@@ -49,7 +49,6 @@ export class AppLayoutComponent {
         ]},
         { href: '/login', icon: 'vpn_key', title: 'Login' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
-        { href: '/config-editor', icon: 'code', title: 'Configuration Editor' },
         { href: '/treeview', icon: 'nature', title: 'Tree View' }
     ];
 

@@ -1,49 +1,14 @@
+<ngx-monaco-editor id="adf-code-configuration-editor"
+                   class="app-file-editor"
+                   [options]="editorOptions"
+                   [(ngModel)]="code"
+                   (onInit)="onInit($event)">
+</ngx-monaco-editor>
 <div>
-    <mat-nav-list class="app-list-confgurations">
-
-        <mat-list-item  (click)="appConfigClick()">
-            <a matLine id="adf-app-conf">App Config Editor</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-
-        <mat-list-item (click)="infinitePaginationConfClick()">
-            <a matLine id="adf-infinite-pagination-conf">Infinite pagination</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-
-        <mat-list-item (click)="supportedPageSizesClick()">
-            <a matLine id="adf-supported-page-size">Supported Page Sizes </a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-
-        <mat-list-item (click)="textOrientationClick()">
-            <a matLine id="adf-page-orientation-conf">Page Orientation</a>
-            <button mat-icon-button>
-                <mat-icon>info</mat-icon>
-            </button>
-        </mat-list-item>
-    </mat-nav-list>
-
-    <div>
-        <ngx-monaco-editor id="adf-code-configuration-editor"
-                           class="app-file-editor"
-                           [options]="editorOptions"
-                           [(ngModel)]="code"
-                           (onInit)="onInit($event)">
-        </ngx-monaco-editor>
-        <div class="app-list-confgurations-buttons">
-            <button mat-raised-button id="adf-configuration-save" (click)="onSave()" color="primary">
-                Save
-            </button>
-            <button mat-raised-button id="adf-configuration-clear" (click)="onClear()" color="primary">
-                Clear
-            </button>
-        </div>
-    </div>
+    <button mat-raised-button id="adf-configuration-save" (click)="onSave()" color="primary">
+        Save
+    </button>
+    <button mat-raised-button id="adf-configuration-clear" (click)="onClear()" color="primary">
+        Clear
+    </button>
 </div>
