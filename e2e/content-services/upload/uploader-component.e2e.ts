@@ -19,7 +19,7 @@ import { browser, by, element } from 'protractor';
 
 import { createApiService, DropActions, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { UploadDialogPage } from '../pages/upload-dialog.page';
 import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';

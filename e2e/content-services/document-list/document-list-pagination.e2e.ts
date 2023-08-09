@@ -31,7 +31,7 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { UploadDialogPage } from '../pages/upload-dialog.page';
 
 describe('Document List - Pagination', () => {
     const pagination = {
