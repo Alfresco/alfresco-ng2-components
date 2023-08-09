@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { BaseViewerWidgetComponent, FormService } from '@alfresco/adf-core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
@@ -37,18 +37,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class FileViewerWidgetComponent extends WidgetComponent implements OnInit {
+export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {
     constructor(formService: FormService) {
         super(formService);
-    }
-
-    ngOnInit(): void {
-        if (this.field &&
-            this.field.value &&
-            Array.isArray(this.field.value) &&
-            this.field.value.length) {
-            const file = this.field.value[0];
-            this.field.value = file.id;
-        }
     }
 }

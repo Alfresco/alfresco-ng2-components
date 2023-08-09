@@ -19,7 +19,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'base-viewer-widget',
@@ -44,12 +44,13 @@ export class BaseViewerWidgetComponent extends WidgetComponent implements OnInit
     }
 
     ngOnInit(): void {
-        if (this.field &&
-            this.field.value &&
-            Array.isArray(this.field.value) &&
-            this.field.value.length) {
-            const file = this.field.value[0];
-            this.field.value = file.id;
+        if (this.field?.value) {
+            if (Array.isArray(this.field.value) && this.field.value.length > 0) {
+                const file = this.field.value[0];
+                this.field.value = file.id;
+            } else if (typeof this.field.value === 'object' && this.field.value.id) {
+                this.field.value = this.field.value.id;
+            }
         }
     }
 }
