@@ -32,7 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, DataCellEvent, NotificationService
+    AlfrescoApiService, UserPreferencesService, NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
@@ -113,8 +113,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     multiSelectTask = false;
     multiSelectProcess = false;
     selectionMode = 'single';
-    taskContextMenu = false;
-    processContextMenu = false;
 
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
@@ -138,9 +136,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     flag = true;
 
     presetColumn = 'default';
-
-    showTaskTab: boolean;
-    showProcessTab: boolean;
 
     showApplications: boolean;
     applicationId: number;
@@ -208,8 +203,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
-        this.showProcessTab = this.activeTab === this.tabs.processes;
-        this.showTaskTab = this.activeTab === this.tabs.tasks;
         this.route.params.subscribe((params) => {
             const applicationId = params['appId'];
 
@@ -245,10 +238,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onTabChange(event: any): void {
         const index = event.index;
         if (index === TASK_ROUTE) {
-            this.showTaskTab = event.index === this.tabs.tasks;
             this.relocateLocationToTask();
         } else if (index === PROCESS_ROUTE) {
-            this.showProcessTab = event.index === this.tabs.processes;
             this.relocateLocationToProcess();
             if (this.processList) {
                 this.processList.reload();
@@ -416,7 +407,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.loadStencilScriptsInPageFromProcessService();
     }
 
-    loadStencilScriptsInPageFromProcessService() {
+    private loadStencilScriptsInPageFromProcessService() {
         this.scriptFileApi.getControllers().then((response) => {
             if (response) {
                 const stencilScript = document.createElement('script');
@@ -460,35 +451,5 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onAssignTask() {
         this.taskList.reload();
         this.currentTaskId = null;
-    }
-
-    onShowTaskRowContextMenu(event: DataCellEvent) {
-        event.value.actions = [
-            {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'taskDetails',
-                    icon: 'open',
-                    title: 'Task List Context Menu',
-                    visible: true
-                },
-                subject: new Subject()
-            }
-        ];
-    }
-
-    onShowProcessRowContextMenu(event: DataCellEvent) {
-        event.value.actions = [
-            {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'processDetails',
-                    icon: 'open',
-                    title: 'Process List Context Menu',
-                    visible: true
-                },
-                subject: new Subject()
-            }
-        ];
     }
 }
