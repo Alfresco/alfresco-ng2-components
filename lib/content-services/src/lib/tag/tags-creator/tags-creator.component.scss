@@ -63,6 +63,16 @@ adf-tags-creator {
         }
     }
 
+    .adf-tag-search-field {
+        width: 752px;
+        background: var(--adf-metadata-tags-background-color);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
+        display: flex;
+        padding: 0 12px;
+    }
+
     .adf-create-tag-label {
         color: var(--theme-primary-color);
         cursor: pointer;
