@@ -1,11 +1,23 @@
 adf-tags-creator {
     display: block;
-    margin-left: -24px;
 
     .adf-label-with-icon-button {
-        display: flex;
-        justify-content: space-between;
+        background: var(--adf-metadata-tags-background-color);
+        width: fit-content;
+        height: 32px;
+        display: inline-flex;
         align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        padding: 6px 0;
+        padding-left: 12px;
+        margin-left: 8px;
+
+        .adf-remove-tag {
+            line-height: 24px;
+            height: 24px;
+            transform: scale(0.7);
+        }
     }
 
     .adf-no-tags-message {
@@ -29,6 +41,16 @@ adf-tags-creator {
         }
     }
 
+    .adf-tag-search-field {
+        width: 752px;
+        background: var(--adf-metadata-tags-background-color);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
+        display: flex;
+        padding: 0 12px;
+    }
+
     .adf-create-tag-label {
         color: var(--theme-primary-color);
         cursor: pointer;
@@ -37,14 +59,11 @@ adf-tags-creator {
         overflow-wrap: anywhere;
         display: inline-block;
         padding-right: 12px;
-        overflow: auto;
         max-height: 7vh;
     }
 
     .adf-tags-list {
-        padding-left: 10px;
         padding-right: 0;
-        overflow: auto;
     }
 
     .adf-tag {
@@ -52,13 +71,9 @@ adf-tags-creator {
         overflow-wrap: anywhere;
 
         & + .adf-tag {
-            margin-top: -14px;
+            margin-top: 8px;
+            margin-left: 8px;
         }
-    }
-
-    .adf-tags-creation {
-        padding-left: 27px;
-        padding-right: 22px;
     }
 
     .adf-existing-tags-panel {
