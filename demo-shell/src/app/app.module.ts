@@ -61,7 +61,6 @@ import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.compo
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
@@ -129,7 +128,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
-        TaskHeaderCloudDemoComponent,
         CloudViewerComponent,
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,

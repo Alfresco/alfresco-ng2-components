@@ -43,7 +43,6 @@ import { CloudViewerComponent } from './components/cloud/cloud-viewer.component'
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
@@ -114,11 +113,6 @@ export const appRoutes: Routes = [
                         path: 'people-group-cloud',
                         data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: PeopleGroupCloudDemoComponent
-                    },
-                    {
-                        path: 'task-header-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        component: TaskHeaderCloudDemoComponent
                     },
                     {
                         path: 'service-task-list',
