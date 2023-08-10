@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { createApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/process-filters.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { UserFiltersApi } from '@alfresco/js-api';
+import { UserFiltersApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 describe('New Process Filters', () => {
-
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const navigationBarPage = new NavigationBarPage();
@@ -30,7 +29,10 @@ describe('New Process Filters', () => {
     const usersActions = new UsersActions(apiService);
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());
 
-    let tenantId; let user; let filterId; let customProcessFilter;
+    let tenantId: number;
+    let user: UserModel;
+    let filterId: number;
+    let customProcessFilter: UserProcessInstanceFilterRepresentation;
 
     const processFilter = {
         running: 'Running',

@@ -43,7 +43,7 @@ export class ProcessListDemoPage {
         await this.stateDropdown.selectDropdownOption(stateOption);
     }
 
-    async addAppId(appId: string): Promise<void> {
+    async addAppId(appId: string | number): Promise<void> {
         await BrowserActions.click(this.appIdInput);
         await this.appIdInput.sendKeys(protractor.Key.ENTER);
         await this.appIdInput.clear();
