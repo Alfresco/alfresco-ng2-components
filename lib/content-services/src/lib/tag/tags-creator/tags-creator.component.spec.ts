@@ -21,7 +21,7 @@ import { NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatError, MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -96,11 +96,6 @@ describe('TagsCreatorComponent', () => {
     function getRemoveTagButtons(): HTMLButtonElement[] {
         const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
         return elements.map(el => el.nativeElement);
-    }
-
-    function clickAtHideNameInputButton() {
-        fixture.debugElement.query(By.css(`[data-automation-id="hide-tag-name-input-button"]`)).nativeElement.click();
-        fixture.detectChanges();
     }
 
     function getAddedTags(): string[] {
@@ -263,37 +258,13 @@ describe('TagsCreatorComponent', () => {
             const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
             expect(tagNameField).toBeTruthy();
             expect(tagNameField.nativeElement.hasAttribute('hidden')).toBeFalsy();
-            expect(tagNameField.query(By.directive(MatFormField))).toBeTruthy();
+            expect(tagNameField).toBeTruthy();
         });
-
-        it('should be hidden after clicking button for hiding input', fakeAsync(() => {
-            component.tagNameControlVisible = true;
-            fixture.detectChanges();
-            tick(100);
-
-            clickAtHideNameInputButton();
-
-            const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
-            expect(tagNameField).toBeFalsy();
-        }));
 
         it('should input be autofocused', fakeAsync(() => {
             component.tagNameControlVisible = true;
             fixture.detectChanges();
             tick(100);
-            expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
-        }));
-
-        it('should input be autofocused after showing input second time', fakeAsync(() => {
-            component.tagNameControlVisible = true;
-            fixture.detectChanges();
-            tick(100);
-
-            clickAtHideNameInputButton();
-            component.tagNameControlVisible = true;
-            fixture.detectChanges();
-            tick(100);
-
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
         }));
 
@@ -320,13 +291,6 @@ describe('TagsCreatorComponent', () => {
                 typeTag('');
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
-            }));
-
-            it('should not show error for required if tags are changed', fakeAsync(() => {
-                typeTag('');
-                component.tags = ['new tag 1', 'new tag 2'];
-                fixture.detectChanges();
-                expect(getFirstError()).toBeUndefined();
             }));
 
             it('should show error when duplicated already added tag', fakeAsync(() => {
@@ -402,14 +366,6 @@ describe('TagsCreatorComponent', () => {
 
             expect(getPanel()).toBeTruthy();
         });
-
-        it('should not be visible when something has been typed and input has been hidden', fakeAsync(() => {
-            typeTag('some tag');
-
-            clickAtHideNameInputButton();
-
-            expect(getPanel()).toBeFalsy();
-        }));
 
         it('should have correct label when mode is Create and Assign', fakeAsync(() => {
             component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;

@@ -1,54 +1,39 @@
 <div class="adf-tags-creation">
+    <div class="adf-tag-name-field" *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible">
+        <div class="adf-tag-search-field">
+            <input #tagNameInput
+                    matInput autocomplete="off"
+                    [formControl]="tagNameControl"
+                    (keyup.enter)="addTag()"
+                    aria-labelledby="adf-tag-name-input-label"
+                    adf-auto-focus
+                    placeholder="{{'TAG.TAGS_CREATOR.INPUT_PLACEHOLDER' | translate}}" 
+            />
+        </div>
+    </div>
+    <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
     <p
        class="adf-no-tags-message"
-       *ngIf="!tags.length && !tagNameControlVisible">
+       *ngIf="!tags.length">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div
         class="adf-tags-list"
         [class.adf-tags-list-fixed]="!tagNameControlVisible"
         #tagsList>
-        <p
-            *ngFor="let tag of tags"
-            class="adf-tag adf-label-with-icon-button">
+        <span
+        *ngFor="let tag of tags"
+        class="adf-tag adf-label-with-icon-button">
             {{ tag }}
             <button
                 data-automation-id="remove-tag-button"
                 mat-icon-button
                 (click)="removeTag(tag)"
-                [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
-                [disabled]="disabledTagsRemoving">
-                <mat-icon>remove</mat-icon>
+                [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate" [disabled]="disabledTagsRemoving"
+                class="adf-remove-tag">
+                <mat-icon>close</mat-icon>
             </button>
-        </p>
-    </div>
-    <div
-        class="adf-tag-name-field"
-        *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible"
-        [hidden]="!tagNameControlVisible">
-        <mat-form-field *ngIf="tagNameControlVisible">
-            <mat-icon matPrefix>search</mat-icon>
-            <mat-label id="adf-tag-name-input-label">
-                {{ 'TAG.TAGS_CREATOR.NAME' | translate }}
-            </mat-label>
-            <input
-                #tagNameInput
-                matInput
-                autocomplete="off"
-                [formControl]="tagNameControl"
-                (keyup.enter)="addTag()"
-                aria-labelledby="adf-tag-name-input-label"
-                adf-auto-focus
-            />
-            <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
-        </mat-form-field>
-        <button
-            data-automation-id="hide-tag-name-input-button"
-            mat-icon-button
-            (click)="hideNameInput()"
-            [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.HIDE_INPUT' | translate">
-            <mat-icon>remove</mat-icon>
-        </button>
+        </span>
     </div>
 </div>
 <div

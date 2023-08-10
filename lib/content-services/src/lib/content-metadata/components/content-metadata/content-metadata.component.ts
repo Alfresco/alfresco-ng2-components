@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
@@ -35,6 +35,7 @@ import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -46,6 +47,7 @@ const DEFAULT_SEPARATOR = ', ';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
+    @ViewChild(MatExpansionPanel) panel: MatExpansionPanel;
     protected onDestroy$ = new Subject<boolean>();
 
     /** (required) The node entity to fetch metadata about */
@@ -105,6 +107,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayCategories = false;
 
+     /** (optional) This flag sets the metadata in read only mode
+     * preventing changes.
+     */
+     @Input()
+     readOnly = false;
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[];
     private _editable = false;
@@ -126,6 +134,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
+    generalInfoPanelState: boolean;
+    tagsPanelState: boolean;
+    editableTags: boolean = false;
+    categoriesPanelState: boolean;
+    editableCategories: boolean = false;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -135,7 +148,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private translationService: TranslationService,
         private appConfig: AppConfigService,
         private tagService: TagService,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private cdr: ChangeDetectorRef
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -229,7 +243,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges() {
+    saveChanges(event: Event) {
+        event.stopPropagation();
         this._saving = true;
         this.tagNameControlVisible = false;
         this.categoryControlVisible = false;
@@ -240,6 +255,26 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.updateNode();
         }
+    }
+
+    saveGeneralInfoChanges(event:Event) {
+        this.saveChanges(event);
+        this.editable = !this.editable;
+    }
+
+    saveTagsChanges(event: Event) {
+        this.saveChanges(event);
+        this.editableTags = !this.editableTags;
+    }
+    
+    saveCategoriesChanges(event: Event) {
+        this.saveChanges(event);
+        this.editableCategories = !this.editableCategories;
+    }
+
+    saveGroupChanges(group: any, event:Event) {
+        this.saveChanges(event);
+        group.editable = !group.editable;
     }
 
     /**
@@ -269,11 +304,100 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.hasMetadataChanged = false;
     }
 
-    cancelChanges() {
+    cancelChanges(event: Event) {
+        event.stopPropagation();
         this.revertChanges();
         this.loadProperties(this.node);
     }
 
+    cancelGroupChanges(group: any, event: Event) {
+        this.cancelChanges(event);
+        group.editable = !group.editable;
+    }
+
+    CancelTagsChanges(event: Event) {
+        this.cancelChanges(event);
+        this.editableTags = !this.editableTags;
+    }
+
+    cancelCategoriesChanges(event: Event) {
+        this.cancelChanges(event);
+        this.editableCategories = !this.editableCategories;
+    }
+
+    cancelGeneralInfoChanges(event: Event) {
+        this.cancelChanges(event);
+        this.editable = !this.editable;
+    }
+
+    toggleGeneralEdit(event: Event): void {
+        event.stopPropagation();
+        this.editable = !this.editable;
+        if (!this.panel.expanded) {
+            this.panel.open();
+        }
+    }
+
+    toggleTagsEdit(event: Event): void {
+        event.stopPropagation();
+        this.editableTags = !this.editableTags;
+        this.tagNameControlVisible = true;
+        if (this.editableTags) {
+            this.tagsPanelState = true;
+        } else {
+            this.tagsPanelState = false;
+        }  
+    }
+
+    toggleCategoriesEdit(event: Event): void {
+        event.stopPropagation();
+        this.editableCategories = !this.editableCategories;
+        this.categoryControlVisible = true
+        if (this.editableCategories) {
+            this.categoriesPanelState = true;
+        } else {
+            this.categoriesPanelState = false;
+        }
+    }
+
+    toggleEdit(group: any, event: Event): void {
+        event.stopPropagation();
+        group.editable = !group.editable;
+        if(group.editable) {
+            group.expanded = true;
+        }
+    }
+
+    handlePanelOpen() {
+        this.tagsPanelState = true;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+    
+    handlePanelClose() {
+        this.tagsPanelState = false;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+
+    handleGneralPanelOpen() {
+        this.generalInfoPanelState = true;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+    
+    handleGeneralPanelClose() {
+        this.generalInfoPanelState = false;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+
+    handleCategoryPanelOpen() {
+        this.categoriesPanelState = true;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+    
+    handleCategoryPanelClose() {
+        this.categoriesPanelState = false;
+        this.cdr.detectChanges(); // Explicitly trigger change detection
+    }
+    
     showGroup(group: CardViewGroup): boolean {
         const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
 
