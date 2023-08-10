@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     DatePickerCalendarPage,
     DateUtil,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     UsersActions,
-    Widget
+    Widget,
+    UserModel
 } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 
 describe('Dynamic Table', () => {
-
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -41,18 +43,20 @@ describe('Dynamic Table', () => {
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
 
-    let user; let tenantId; let appId;
+    let user: UserModel;
+    let tenantId: number;
+    let appId: number;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         tenantId = user.tenantId;
-   });
+    });
 
     afterAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(tenantId);
-   });
+    });
 
     describe('Date Picker', () => {
         const app = browser.params.resources.Files.DYNAMIC_TABLE_APP;

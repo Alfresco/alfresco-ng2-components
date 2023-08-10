@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { createApiService, FormPage, LoginPage, UsersActions, Widget } from '@alfresco/adf-testing';
+import { createApiService, FormPage, LoginPage, UserModel, UsersActions, Widget } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Form Component', () => {
-
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
@@ -28,7 +27,8 @@ describe('Form Component', () => {
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
-    let tenantId; let user;
+    let tenantId: number;
+    let user: UserModel;
 
     const fields = {
         dateWidgetId: 'label7',
@@ -92,5 +92,5 @@ describe('Form Component', () => {
         await formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         await formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         await formPage.checkErrorLogMessage(message.errorLabel);
-   });
+    });
 });
