@@ -30,7 +30,7 @@ export class FullNamePipe implements PipeTransform {
     }
 
     private includeEmailInFullName(includeEmail: boolean | undefined) {
-        return includeEmail === undefined ? this.includeEmail : includeEmail;
+        return includeEmail === undefined ? !!this.includeEmail : includeEmail;
     }
 
     private buildFullName(user: UserLike, includeEmail: boolean | undefined): string {
@@ -47,7 +47,7 @@ export class FullNamePipe implements PipeTransform {
             fullName.push(user?.lastName);
         }
 
-        if (this.includeEmailInFullName(includeEmail) && hasName && user?.email) {
+        if (this.includeEmailInFullName(includeEmail) && hasName && !!user?.email) {
             fullName.push(`<${user.email}>`);
         }
 
