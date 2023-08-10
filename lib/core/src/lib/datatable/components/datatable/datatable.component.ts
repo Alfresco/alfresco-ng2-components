@@ -320,6 +320,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
             this.resetSelection();
+            console.log('UNSELECT');
             this.emitRowSelectionEvent('row-unselect', null);
         }
 
@@ -527,9 +528,15 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
         if (this.data) {
             if (this.isSingleSelectionMode()) {
-                this.resetSelection();
-                this.selectRow(row, true);
-                this.emitRowSelectionEvent('row-select', row);
+                const isRowSelected = row.isSelected
+                if (isRowSelected) {
+                    this.resetSelection();
+                    this.emitRowSelectionEvent('row-unselect', null);
+                } else {
+                    this.resetSelection();
+                    this.selectRow(row, true);
+                    this.emitRowSelectionEvent('row-select', row);
+                }
             }
 
             if (this.isMultiSelectionMode()) {
@@ -550,7 +557,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             }
         }
     }
-
     resetSelection(): void {
         if (this.data) {
             const rows = this.data.getRows();
