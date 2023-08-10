@@ -33,8 +33,7 @@ export class AppLayoutComponent {
         {
             href: '/cloud', icon: 'cloud', title: 'Process Cloud', children: [
                 { href: '/cloud/', icon: 'cloud', title: 'Home' },
-                { href: '/form-cloud', icon: 'poll', title: 'Form' },
-                { href: '/cloud/service-task-list', icon: 'cloud', title: 'Service Task List' }
+                { href: '/form-cloud', icon: 'poll', title: 'Form' }
             ]
         },
         { href: '/activiti', icon: 'device_hub', title: 'Process Services', children: [

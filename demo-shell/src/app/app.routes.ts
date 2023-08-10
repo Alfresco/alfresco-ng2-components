@@ -43,7 +43,6 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 export const appRoutes: Routes = [
@@ -107,11 +106,6 @@ export const appRoutes: Routes = [
                         path: '',
                         data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: AppsCloudDemoComponent
-                    },
-                    {
-                        path: 'service-task-list',
-                        data: { roles: ['ACTIVITI_ADMIN'], redirectUrl: '/error/403' },
-                        component: ServiceTaskListCloudDemoComponent
                     },
                     {
                         path: ':appName',
