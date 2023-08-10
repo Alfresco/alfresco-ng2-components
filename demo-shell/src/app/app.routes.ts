@@ -114,11 +114,6 @@ export const appRoutes: Routes = [
                         component: ServiceTaskListCloudDemoComponent
                     },
                     {
-                        path: 'community',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        loadChildren: () => import('./components/cloud/community/community.module').then(m => m.AppCommunityModule)
-                    },
-                    {
                         path: ':appName',
                         canActivate: [AuthGuardSsoRoleService],
                         data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
