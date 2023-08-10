@@ -26,7 +26,7 @@ export class ProcessDetailsPage {
     propertiesList = TestElement.byCss('.adf-property-list');
     showDiagramButton = TestElement.byId('show-diagram-button');
     diagramCanvas = TestElement.byCss('svg[xmlns="http://www.w3.org/2000/svg"]');
-    backButton = TestElement.byCss('app-show-diagram button.mat-mini-fab.mat-accent');
+    backButton = TestElement.byCss('#btn-diagram-back');
     commentInput = TestElement.byId('comment-input');
     auditLogButton = TestElement.byCss('button[adf-process-audit]');
     cancelProcessButton = TestElement.byCss('div[data-automation-id="header-status"] > button');
