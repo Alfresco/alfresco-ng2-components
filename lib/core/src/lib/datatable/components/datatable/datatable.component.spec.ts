@@ -576,17 +576,13 @@ describe('DataTable', () => {
         dataTable.ngOnChanges({});
         fixture.detectChanges();
         dataTable.onRowClick(rows[0], new MouseEvent('click'));
-        dataTable.rowClick.pipe(
-            take(1)
-        ).subscribe(() => {
-            expect(rows[0].isSelected).toBeTruthy();
-            expect(rows[1].isSelected).toBeFalsy();
+        dataTable.rowClick.pipe(take(1)).subscribe(() => {
+            expect(rows[0].isSelected).toBeTrue();
+            expect(rows[1].isSelected).toBeFalse();
             dataTable.onRowClick(rows[0], new MouseEvent('click'));
-            dataTable.rowClick.pipe(
-                take(1)
-            ).subscribe(() => {
-                expect(rows[0].isSelected).toBeFalsy();
-                expect(rows[1].isSelected).toBeFalsy();
+            dataTable.rowClick.pipe(take(1)).subscribe(() => {
+                expect(rows[0].isSelected).toBeFalse();
+                expect(rows[1].isSelected).toBeFalse();
                 done();
             });
         });
