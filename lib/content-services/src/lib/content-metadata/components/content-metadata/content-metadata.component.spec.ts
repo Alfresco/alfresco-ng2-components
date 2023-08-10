@@ -95,7 +95,12 @@ describe('ContentMetadataComponent', () => {
     const clickOnGeneralInfoSave = () => {
         findSaveGeneralInfoButton().click();
         fixture.detectChanges();
-    };
+    }
+
+    const clickOnTagsSave = () => {
+        findSaveTagsButton().click();
+        fixture.detectChanges();
+    }
 
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
@@ -813,7 +818,6 @@ describe('ContentMetadataComponent', () => {
 
     describe('Display properties with aspect oriented config', () => {
         let appConfig: AppConfigService;
-        let classesApi: ClassesApi;
         let expectedNode: Node;
 
         const verResponse: PropertyGroup = {
@@ -1154,6 +1158,7 @@ describe('ContentMetadataComponent', () => {
         it('should render tags after loading tags in ngOnInit', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
+            fixture.whenStable();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
