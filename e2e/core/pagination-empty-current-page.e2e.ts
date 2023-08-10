@@ -25,13 +25,13 @@ import { createApiService,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
+import { NodeEntry } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
-import { ContentServicesPage } from '../core/pages/content-services.page';
+import { ContentServicesPage } from './pages/content-services.page';
 
 describe('Pagination - returns to previous page when current is empty', () => {
-
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
@@ -48,8 +48,8 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const nrOfFiles = 6;
     const nrOfFolders = 5;
     const lastFile = 'newFile6.txt';
-    let lastFolderResponse;
-    let pngFileUploaded;
+    let lastFolderResponse: NodeEntry;
+    let pngFileUploaded: any;
     const folderNames = ['t1', 't2', 't3', 't4', 't5', 't6'];
 
     const itemsPerPage = {

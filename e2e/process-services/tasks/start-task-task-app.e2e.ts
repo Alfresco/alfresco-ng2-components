@@ -26,19 +26,16 @@ import { createApiService,
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
-import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { TasksPage } from './../pages/tasks.page';
+import { AttachmentListPage } from '../pages/attachment-list.page';
+import { ChecklistDialog } from '../pages/dialog/create-checklist-dialog.page';
+import { TasksPage } from '../pages/tasks.page';
 import * as CONSTANTS from '../../util/constants';
 
 describe('Start Task - Task App', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
-    const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
@@ -46,16 +43,11 @@ describe('Start Task - Task App', () => {
     const taskUtil = new TaskUtil(apiService);
     const applicationsUtil = new ApplicationsUtil(apiService);
 
-    let processUserModel; let assigneeUserModel;
+    let processUserModel: UserModel;
+    let assigneeUserModel: UserModel;
     const formTextField = app.form_fields.form_fieldId;
-    const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
-    const firstComment = 'comm1'; const firstChecklist = 'checklist1';
-    const taskName255Characters = StringUtil.generateRandomString(255);
-    const taskNameBiggerThen255Characters = StringUtil.generateRandomString(256);
-    const lengthValidationError = 'Length exceeded, 255 characters max.';
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    const showHeaderTask = 'Show Header';
     const jpgFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
@@ -72,7 +64,7 @@ describe('Start Task - Task App', () => {
 
         await applicationsUtil.importApplication(app.file_path);
 
-        await taskUtil.createStandaloneTask(showHeaderTask);
+        await taskUtil.createStandaloneTask('Show Header');
 
         await loginPage.login(processUserModel.username, processUserModel.password);
     });
@@ -101,9 +93,11 @@ describe('Start Task - Task App', () => {
             .toEqual(assigneeUserModel.email);
 
         await taskDetails.selectActivityTab();
+        const firstComment = 'comm1';
         await taskDetails.addComment(firstComment);
         await taskDetails.checkCommentIsDisplayed(firstComment);
 
+        const firstChecklist = 'checklist1';
         await (await taskPage.clickOnAddChecklistButton()).addName(firstChecklist);
 
         const checklistDialog = new ChecklistDialog();
@@ -133,6 +127,7 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
         const formFields = await taskPage.formFields();
+        const formFieldValue = 'First value ';
         await formFields.setFieldValue(formTextField, formFieldValue);
 
         await formFields.refreshForm();
@@ -169,29 +164,16 @@ describe('Start Task - Task App', () => {
         await attachmentListPage.checkFileIsAttached(jpgFile.name);
     });
 
-    it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', async () => {
-        await taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await taskPage.taskDetails().appSettingsToggles().disableShowHeader();
-        await processServiceTabBarPage.clickTasksButton();
-
-        await taskPage.taskDetails().taskInfoDrawerIsNotDisplayed();
-
-        await processServiceTabBarPage.clickSettingsButton();
-        await taskPage.taskDetails().appSettingsToggles().enableShowHeader();
-        await processServiceTabBarPage.clickTasksButton();
-
-        await taskPage.taskDetails().taskInfoDrawerIsDisplayed();
-    });
-
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', async () => {
         const startDialog = await taskPage.createNewTask();
+        const taskName255Characters = StringUtil.generateRandomString(255);
         await startDialog.addName(taskName255Characters);
 
         await startDialog.checkStartButtonIsEnabled();
+        const taskNameBiggerThen255Characters = StringUtil.generateRandomString(256);
         await startDialog.addName(taskNameBiggerThen255Characters);
         await startDialog.blur(startDialog.name);
+        const lengthValidationError = 'Length exceeded, 255 characters max.';
         await startDialog.checkValidationErrorIsDisplayed(lengthValidationError);
         await startDialog.checkStartButtonIsDisabled();
     });

@@ -16,7 +16,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,8 +39,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FormComponent } from './components/form/form.component';
-import { FormListComponent } from './components/form/form-list.component';
-import { FormLoadingComponent } from './components/form/form-loading.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -52,7 +50,6 @@ import { MetadataDialogAdapterComponent } from './components/files/metadata-dial
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
-import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -64,15 +61,12 @@ import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.compo
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
-import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
@@ -81,45 +75,8 @@ import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud
 import { RouterModule } from '@angular/router';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
-
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-import localeDe from '@angular/common/locales/de';
-import localeIt from '@angular/common/locales/it';
-import localeEs from '@angular/common/locales/es';
-import localeJa from '@angular/common/locales/ja';
-import localeNl from '@angular/common/locales/nl';
-import localePt from '@angular/common/locales/pt';
-import localeNb from '@angular/common/locales/nb';
-import localeRu from '@angular/common/locales/ru';
-import localeCh from '@angular/common/locales/zh';
-import localeAr from '@angular/common/locales/ar';
-import localeCs from '@angular/common/locales/cs';
-import localePl from '@angular/common/locales/pl';
-import localeFi from '@angular/common/locales/fi';
-import localeDa from '@angular/common/locales/da';
-import localeSv from '@angular/common/locales/sv';
-import { setupAppNotifications } from './services/app-notifications-factory';
-import { AppNotificationsService } from './services/app-notifications.service';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
-
-registerLocaleData(localeFr);
-registerLocaleData(localeDe);
-registerLocaleData(localeIt);
-registerLocaleData(localeEs);
-registerLocaleData(localeJa);
-registerLocaleData(localeNl);
-registerLocaleData(localePt);
-registerLocaleData(localeNb);
-registerLocaleData(localeRu);
-registerLocaleData(localeCh);
-registerLocaleData(localeAr);
-registerLocaleData(localeCs);
-registerLocaleData(localePl);
-registerLocaleData(localeFi);
-registerLocaleData(localeDa);
-registerLocaleData(localeSv);
 
 @NgModule({
     imports: [
@@ -157,47 +114,33 @@ registerLocaleData(localeSv);
         AppsViewComponent,
         FilesComponent,
         FormComponent,
-        FormListComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        SharedLinkViewComponent,
-        FormLoadingComponent,
         DemoPermissionComponent,
         DemoErrorComponent,
-        FormLoadingComponent,
         TreeViewSampleComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
-        TaskHeaderCloudDemoComponent,
         CloudViewerComponent,
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        PeopleGroupCloudDemoComponent,
         FormCloudDemoComponent,
         CustomEditorComponent,
         CustomWidgetComponent,
         ProcessCloudLayoutComponent,
-        ServiceTaskListCloudDemoComponent,
         SearchFilterChipsComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
-        provideTranslations('app', 'resources'),
-        AppNotificationsService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: setupAppNotifications,
-            deps: [AppNotificationsService],
-            multi: true
-        }
+        provideTranslations('app', 'resources')
     ],
     bootstrap: [AppComponent]
 })

@@ -18,15 +18,6 @@
                 <app-search-bar></app-search-bar>
 
                 <app-shell-user-info [menuPositionX]="'before'" [menuPositionY]="'above'"></app-shell-user-info>
-
-                <button data-automation-id="language-menu-button" mat-icon-button [matMenuTriggerFor]="langMenu">
-                    <mat-icon>language</mat-icon>
-                </button>
-                <mat-menu #langMenu="matMenu" class="app-menu">
-                    <adf-language-menu></adf-language-menu>
-                </mat-menu>
-
-                <adf-notification-history menuPositionX="before" menuPositionY="above"></adf-notification-history>
             </adf-layout-header>
         </ng-template>
     </adf-sidenav-layout-header>

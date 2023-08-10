@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
-    LoginPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
+import {
+    createApiService, AppListCloudPage, GroupIdentityService, IdentityService,
+    LoginPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
-    TasksService
+    TasksService, SnackbarPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
@@ -35,7 +36,6 @@ describe('Form Field Component - Dropdown Widget', () => {
     const taskList = tasksCloudDemoPage.taskListCloudComponent();
 
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const notificationHistoryPage = new NotificationHistoryPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new ProcessCloudWidgetPage();
 
@@ -148,7 +148,9 @@ describe('Form Field Component - Dropdown Widget', () => {
         await expect(await taskFilter.getActiveFilterName()).toBe('My Tasks');
 
         await taskList.checkContentIsNotDisplayedByName(dropdownOptionTaskName);
-        await notificationHistoryPage.checkNotifyContains('Task has been saved successfully');
+
+        const message = await new SnackbarPage().getSnackBarMessage();
+        expect(message).toEqual('Task has been saved successfully');
 
         await taskFilter.clickTaskFilter('completed-tasks');
         await taskList.getDataTable().waitTillContentLoaded();

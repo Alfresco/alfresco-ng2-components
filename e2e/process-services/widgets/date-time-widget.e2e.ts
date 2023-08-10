@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     LoginPage,
     ProcessUtil,
     UsersActions,
-    Widget
+    Widget, UserModel
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Date and time widget', () => {
 
@@ -35,16 +36,16 @@ describe('Date and time widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let processUserModel;
-    let appModel;
-    let deployedAppId; let process;
+    let processUserModel: UserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
 
     beforeAll(async () => {
        await apiService.loginWithProfile('admin');
@@ -61,8 +62,7 @@ describe('Date and time widget', () => {
    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();

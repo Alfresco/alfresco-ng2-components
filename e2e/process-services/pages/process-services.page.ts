@@ -47,7 +47,7 @@ export class ProcessServicesPage {
         return new ProcessServiceTabBarPage();
     }
 
-    async goToAppByAppId(appId: string): Promise<void> {
+    async goToAppByAppId(appId: string | number): Promise<void> {
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${appId}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         const taskPage = new TasksPage();

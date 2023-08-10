@@ -24,17 +24,16 @@ import { createApiService,
     ViewerPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TasksPage } from './../pages/tasks.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
+import { TasksPage } from '../pages/tasks.page';
+import { AttachmentListPage } from '../pages/attachment-list.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { Activiti } from '@alfresco/js-api';
+import { Activiti, RelatedContentRepresentation } from '@alfresco/js-api';
 import ContentApi = Activiti.ContentApi;
 
 describe('Attachment list action menu for tasks', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -55,7 +54,10 @@ describe('Attachment list action menu for tasks', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     const downloadedPngFile = pngFile.name;
-    let tenantId; let appId; let relatedContent; let relatedContentId;
+    let tenantId: number;
+    let appId: number;
+    let relatedContent: RelatedContentRepresentation;
+    let relatedContentId: number;
     const taskName = {
         active: 'Active Task',
         completed: 'Completed Task',
@@ -64,7 +66,6 @@ describe('Attachment list action menu for tasks', () => {
     };
 
     beforeAll(async () => {
-
         await apiService.loginWithProfile('admin');
         const user = await usersActions.createUser();
         tenantId = user.tenantId;

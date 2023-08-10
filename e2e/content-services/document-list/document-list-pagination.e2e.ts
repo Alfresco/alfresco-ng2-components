@@ -50,8 +50,6 @@ describe('Document List - Pagination', () => {
 
     let acsUser: UserModel;
     let fileNames = [];
-
-    let currentPage = 1;
     let secondSetOfFiles = [];
 
     const nrOfFiles = 20;
@@ -130,6 +128,7 @@ describe('Document List - Pagination', () => {
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
+        let currentPage = 1;
         await contentServicesPage.openFolder(newFolderModel.name);
         await paginationPage.selectItemsPerPage('5');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -178,7 +177,7 @@ describe('Document List - Pagination', () => {
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
-        currentPage = 1;
+        let currentPage = 1;
         await contentServicesPage.openFolder(newFolderModel.name);
         await paginationPage.selectItemsPerPage('10');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -207,9 +206,8 @@ describe('Document List - Pagination', () => {
     });
 
     it('[C260065] Should be able to set Items per page to 15', async () => {
-        currentPage = 1;
+        let currentPage = 1;
         await contentServicesPage.openFolder(newFolderModel.name);
-        await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await paginationPage.selectItemsPerPage('15');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
@@ -236,7 +234,6 @@ describe('Document List - Pagination', () => {
 
     it('[C91320] Pagination should preserve sorting', async () => {
         await contentServicesPage.openFolder(newFolderModel.name);
-        await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
 
         await paginationPage.selectItemsPerPage('20');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
@@ -269,7 +266,6 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
         await contentServicesPage.openFolder(newFolderModel.name);
 
-        await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
@@ -280,9 +276,8 @@ describe('Document List - Pagination', () => {
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
-        currentPage = 1;
+        let currentPage = 1;
         await contentServicesPage.openFolder(folderThreeModel.name);
-        await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(folderThreeModel.name);
         await paginationPage.selectItemsPerPage('15');
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
@@ -370,7 +365,6 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await contentServicesPage.openFolder(newFolderModel.name);
-        await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
 
         await apiService.login(acsUser.username, acsUser.password);
@@ -436,5 +430,4 @@ describe('Document List - Pagination', () => {
 
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
     });
-
 });

@@ -16,23 +16,16 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ModelsActions,
-    ProcessUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
-import { ProcessServicesPage } from './../pages/process-services.page';
+import { createApiService, ApplicationsUtil, LoginPage, ModelsActions, ProcessUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
+import { ProcessServicesPage } from '../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { ProcessListPage } from './../pages/process-list.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
+import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
+import { ProcessListPage } from '../pages/process-list.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
 import * as moment from 'moment';
-import { ProcessInstancesApi } from '@alfresco/js-api';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation, ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Process Instance Details', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -48,7 +41,10 @@ describe('Process Instance Details', () => {
     const modelsActions = new ModelsActions(apiService);
     const processApi = new ProcessInstancesApi(apiService.getInstance());
 
-    let appModel; let process; let user;
+    let appModel: AppDefinitionRepresentation;
+    let process: ProcessInstanceRepresentation;
+    let user: UserModel;
+
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
@@ -70,13 +66,13 @@ describe('Process Instance Details', () => {
         await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         process = await processApi.getProcessInstance(processModel.id);
-   });
+    });
 
     afterAll(async () => {
         await modelsActions.deleteModel(appModel.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(user.tenantId);
-   });
+    });
 
     it('[C307031] Should display the created date in the default format', async () => {
         await processDetailsPage.checkProcessHeaderDetailsAreVisible();

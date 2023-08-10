@@ -28,14 +28,10 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
-import { FormListComponent } from './components/form/form-list.component';
-import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
-import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
@@ -46,9 +42,7 @@ import { CloudViewerComponent } from './components/cloud/cloud-viewer.component'
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 
 export const appRoutes: Routes = [
@@ -81,7 +75,6 @@ export const appRoutes: Routes = [
         pathMatch: 'full',
         loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
     },
-    { path: 'preview/s/:id', component: SharedLinkViewComponent },
     {
         path: '',
         component: AppLayoutComponent,
@@ -91,10 +84,6 @@ export const appRoutes: Routes = [
                 path: '',
                 redirectTo: `/home`,
                 pathMatch: 'full'
-            },
-            {
-                path: 'config-editor',
-                loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
             },
             {
                 path: 'card-view',
@@ -117,26 +106,6 @@ export const appRoutes: Routes = [
                         path: '',
                         data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: AppsCloudDemoComponent
-                    },
-                    {
-                        path: 'people-group-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        component: PeopleGroupCloudDemoComponent
-                    },
-                    {
-                        path: 'task-header-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        component: TaskHeaderCloudDemoComponent
-                    },
-                    {
-                        path: 'service-task-list',
-                        data: { roles: ['ACTIVITI_ADMIN'], redirectUrl: '/error/403' },
-                        component: ServiceTaskListCloudDemoComponent
-                    },
-                    {
-                        path: 'community',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        loadChildren: () => import('./components/cloud/community/community.module').then(m => m.AppCommunityModule)
                     },
                     {
                         path: ':appName',
@@ -188,11 +157,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
             {
-                path: 'trashcan',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/trashcan/trashcan.module').then(m => m.AppTrashcanModule)
-            },
-            {
                 path: 'files',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
@@ -206,11 +170,6 @@ export const appRoutes: Routes = [
                 path: 'files/:id/display/:mode',
                 component: FilesComponent,
                 canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'dl-custom-sources',
-                canActivate: [AuthGuardEcm],
-                loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
             },
             {
                 path: 'search',
@@ -291,14 +250,8 @@ export const appRoutes: Routes = [
                 component: TreeViewSampleComponent,
                 canActivate: [AuthGuardEcm]
             },
-            {
-                path: 'about',
-                loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
-            },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
-            { path: 'form-list', component: FormListComponent },
-            { path: 'form-loading', component: FormLoadingComponent },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],

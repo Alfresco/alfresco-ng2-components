@@ -17,14 +17,9 @@
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
 import { browser, by, element, Key, $, $$ } from 'protractor';
-import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
-
-    appSettingsTogglesClass = new AppSettingsTogglesPage();
-
     formContent = $('adf-form');
-
     formNameField = $('[data-automation-id="card-textitem-value-formName"]');
     formNameButton = $('[data-automation-id="card-textitem-toggle-formName"]');
     assigneeField = $('[data-automation-id="card-textitem-value-assignee"]');
@@ -45,7 +40,6 @@ export class TaskDetailsPage {
     involvePeopleButton = $('div[class*="add-people"]');
     addPeopleField = $('input[data-automation-id="adf-people-search-input"]');
     addInvolvedUserButton = $('button[id="add-people"]');
-    taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = $('div[data-automation-id="app-tasks-details"]');
     taskDetailsEmptySection = $('div[data-automation-id="adf-tasks-details--empty"]');
     completeTask = $('button[id="adf-no-form-complete-button"]');
@@ -302,18 +296,6 @@ export class TaskDetailsPage {
 
     async clickAuditLogButton(): Promise<void> {
         await BrowserActions.click(this.auditLogButton);
-    }
-
-    appSettingsToggles(): AppSettingsTogglesPage {
-        return this.appSettingsTogglesClass;
-    }
-
-    async taskInfoDrawerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
-    }
-
-    async taskInfoDrawerIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.taskDetailsInfoDrawer);
     }
 
     async checkNoPeopleIsInvolved(): Promise<void> {

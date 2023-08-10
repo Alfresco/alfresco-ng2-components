@@ -30,15 +30,14 @@ import { createApiService,
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { ProcessInstancesApi } from '@alfresco/js-api';
+import { AttachmentListPage } from '../pages/attachment-list.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
+import { AppDefinitionRepresentation, ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Start Process Component', () => {
-
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
@@ -62,7 +61,9 @@ describe('Start Process Component', () => {
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
-    let appCreated; let simpleAppCreated; let dateFormAppCreated;
+    let appCreated: AppDefinitionRepresentation;
+    let simpleAppCreated: AppDefinitionRepresentation;
+    let dateFormAppCreated: AppDefinitionRepresentation;
 
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -77,7 +78,6 @@ describe('Start Process Component', () => {
     });
 
     describe('Provider: BPM', () => {
-
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
@@ -121,7 +121,6 @@ describe('Start Process Component', () => {
         });
 
         describe(' Once logged with user with app', () => {
-
             beforeEach(async () => {
                 await loginPage.login(secondProcUserModel.username, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
@@ -264,7 +263,9 @@ describe('Start Process Component', () => {
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.enterProcessName('Type');
                 await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
                 await startProcessPage.clickStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Type');
@@ -278,7 +279,9 @@ describe('Start Process Component', () => {
                 await startProcessPage.typeProcessDefinition('process');
 
                 await startProcessPage.pressDownArrowAndEnter();
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
             });
 
             it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
@@ -288,7 +291,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
                 await startProcessPage.clickProcessDropdownArrow();
 
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe('');

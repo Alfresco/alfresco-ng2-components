@@ -15,53 +15,45 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Radio Buttons Widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.RADIO_BUTTONS;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let appId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let appId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.username, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-       appId = await applicationsService.getAppDefinitionId(appModel.id);
+        await apiService.login(processUserModel.username, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        appId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.username, processUserModel.password);
+    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(appId);
+        await new ProcessServicesPage().goToAppByAppId(appId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -71,7 +63,7 @@ describe('Radio Buttons Widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);

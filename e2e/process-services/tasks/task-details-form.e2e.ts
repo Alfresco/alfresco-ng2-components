@@ -15,27 +15,30 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     ProcessUtil,
-    StringUtil, TaskUtil,
+    StringUtil,
+    TaskUtil,
     UsersActions,
     Widget,
-    FormUtil
+    FormUtil,
+    UserModel
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { FiltersPage } from './../pages/filters.page';
-import { TaskDetailsPage } from './../pages/task-details.page';
-import { TasksListPage } from './../pages/tasks-list.page';
-import { TasksPage } from './../pages/tasks.page';
-import { AttachFormPage } from './../pages/attach-form.page';
+import { FiltersPage } from '../pages/filters.page';
+import { TaskDetailsPage } from '../pages/task-details.page';
+import { TasksListPage } from '../pages/tasks-list.page';
+import { TasksPage } from '../pages/tasks.page';
+import { AttachFormPage } from '../pages/attach-form.page';
 import CONSTANTS = require('../../util/constants');
-import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
+import { ModelRepresentation, TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 
 describe('Task Details - Form', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -56,7 +59,12 @@ describe('Task Details - Form', () => {
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
     const tasksApi = new TasksApi(apiService.getInstance());
 
-    let task; let otherTask; let user; let newForm; let attachedForm; let otherAttachedForm;
+    let task: TaskRepresentation;
+    let otherTask: TaskRepresentation;
+    let user: UserModel;
+    let newForm: ModelRepresentation;
+    let attachedForm: ModelRepresentation;
+    let otherAttachedForm: ModelRepresentation;
 
     beforeAll(async () => {
         const attachedFormModel = {
@@ -183,7 +191,8 @@ describe('Task Details - Form', () => {
             tabFieldVar: 'tabBasicFieldVar'
         };
 
-        let newTask; let appModel;
+        let newTask;
+        let appModel;
 
         beforeAll(async () => {
             appModel = await applicationsService.importPublishDeployApp(app.file_path);

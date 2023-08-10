@@ -15,54 +15,46 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Document Template widget', () => {
-
     const app = browser.params.resources.Files.FILE_FORM_ADF;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.username, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp( app.file_path);
+        await apiService.login(processUserModel.username, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-       deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
+        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await processUtil.startProcessOfApp(appModel.name);
-       await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+        process = await processUtil.startProcessOfApp(appModel.name);
+        await loginPage.login(processUserModel.username, processUserModel.password);
+    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(deployedAppId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -72,10 +64,9 @@ describe('Document Template widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C260406] should check that the template contains assigned file ', async () => {
-        await expect(await widget.containerWidget().getFieldText(app.form_fields.container_id))
-            .toEqual(app.attached_file);
+        await expect(await widget.containerWidget().getFieldText(app.form_fields.container_id)).toEqual(app.attached_file);
     });
 });

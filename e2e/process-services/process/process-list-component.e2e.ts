@@ -15,19 +15,21 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     ProcessUtil,
-    UsersActions
+    UsersActions,
+    UserModel
 } from '@alfresco/adf-testing';
-import { ProcessListDemoPage } from './../pages/process-list-demo.page';
+import { ProcessListDemoPage } from '../pages/process-list-demo.page';
 import { browser } from 'protractor';
-import { TaskFormsApi } from '@alfresco/js-api';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation, TaskFormsApi } from '@alfresco/js-api';
 
 describe('Process List Test', () => {
-
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
 
@@ -40,7 +42,9 @@ describe('Process List Test', () => {
     const modelsActions = new ModelsActions(apiService);
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
-    let appDateModel; let appUserWidgetModel; let user;
+    let appDateModel: AppDefinitionRepresentation;
+    let appUserWidgetModel: AppDefinitionRepresentation;
+    let user: UserModel;
 
     const processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];
 
@@ -56,8 +60,10 @@ describe('Process List Test', () => {
         insertAppId: 'Insert App ID'
     };
 
-    let appWithDateFieldId;
-    let procWithDate; let completedProcWithDate; let completedProcWithUserWidget;
+    let appWithDateFieldId: string | number;
+    let procWithDate: ProcessInstanceRepresentation;
+    let completedProcWithDate: ProcessInstanceRepresentation;
+    let completedProcWithUserWidget: ProcessInstanceRepresentation;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -87,7 +93,7 @@ describe('Process List Test', () => {
         await taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.id, { values: { label: null } });
 
         await loginPage.login(user.username, user.password);
-   });
+    });
 
     afterAll(async () => {
         await modelsActions.deleteModel(appDateModel.id);
@@ -96,11 +102,11 @@ describe('Process List Test', () => {
         await apiService.loginWithProfile('admin');
 
         await usersActions.deleteTenant(user.tenantId);
-   });
+    });
 
     beforeEach(async () => {
         await BrowserActions.getUrl(browser.baseUrl + '/process-list');
-   });
+    });
 
     it('[C286638] Should display all process by default', async () => {
         await processListDemoPage.checkAppIdFieldIsDisplayed();

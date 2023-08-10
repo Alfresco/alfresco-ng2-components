@@ -19,9 +19,7 @@ import { ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
-
     filter: ElementFinder;
-    taskIcon = 'adf-icon[data-automation-id="adf-filter-icon"]';
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
@@ -29,17 +27,6 @@ export class TaskFiltersPage {
 
     async checkTaskFilterIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-    }
-
-    async getTaskFilterIcon(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const icon = this.filter.$(this.taskIcon);
-        return BrowserActions.getText(icon);
-    }
-
-    async checkTaskFilterHasNoIcon(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.filter.$(this.taskIcon));
     }
 
     async clickTaskFilter(): Promise<void> {

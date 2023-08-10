@@ -71,7 +71,7 @@ export class UploadActions {
         }, {});
     }
 
-    async deleteFileOrFolder(nodeId) {
+    async deleteFileOrFolder(nodeId: string) {
         const apiCall = async () => {
             try {
                 return this.nodesApi.deleteNode(nodeId, { permanent: true });
@@ -83,13 +83,12 @@ export class UploadActions {
         return ApiUtil.waitForApi(apiCall, () => true);
     }
 
-    async uploadFolder(sourcePath, folder) {
+    async uploadFolder(sourcePath: string, folder: string): Promise<any[]> {
         const files = fs.readdirSync(sourcePath);
-        let uploadedFiles;
+        let uploadedFiles: any[];
         const promises = [];
 
         if (files && files.length > 0) {
-
             for (const fileName of files) {
                 const pathFile = path.join(sourcePath, fileName);
                 promises.push(this.uploadFile(pathFile, fileName, folder));

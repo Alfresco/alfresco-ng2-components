@@ -15,29 +15,24 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Checkbox Widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.CHECKBOX;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
 
-    let processUserModel;
-    let appModel;
-    let deployedAppId; let process;
+    let processUserModel: UserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -56,10 +51,10 @@ describe('Checkbox Widget', () => {
 
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
     });
@@ -68,7 +63,7 @@ describe('Checkbox Widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
         await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');

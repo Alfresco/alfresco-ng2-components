@@ -17,20 +17,18 @@
 
 import { browser } from 'protractor';
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ModelsActions,
-    ProcessUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ModelsActions, ProcessUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { FiltersPage } from './../pages/filters.page';
-import { ProcessInstancesApi, UserFiltersApi } from '@alfresco/js-api';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { FiltersPage } from '../pages/filters.page';
+import {
+    AppDefinitionRepresentation,
+    ProcessInstancesApi,
+    ResultListDataRepresentationProcessInstanceRepresentation,
+    UserFiltersApi
+} from '@alfresco/js-api';
 
 describe('Sorting for process filters', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -44,8 +42,11 @@ describe('Sorting for process filters', () => {
     const userFiltersApi = new UserFiltersApi(apiService.getInstance());
     const processInstancesApi = new ProcessInstancesApi(apiService.getInstance());
 
-    let tenantId, appId, user, processesQuery;
-    let importedApp;
+    let tenantId: number;
+    let appId: number;
+    let user: UserModel;
+    let processesQuery: ResultListDataRepresentationProcessInstanceRepresentation;
+    let importedApp: AppDefinitionRepresentation;
 
     const processFilter = {
         running_old_first: 'Running - Oldest first',
@@ -79,16 +80,17 @@ describe('Sorting for process filters', () => {
             await modelsActions.deleteModel(appId);
             await apiService.loginWithProfile('admin');
             await usersActions.deleteTenant(tenantId);
-        } catch (e) {
-        }
+        } catch (e) {}
 
         await navigationBarPage.clickLogoutButton();
     });
 
     it('[C260476] Should be able to create a filter on APS for running processes - Oldest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.running_old_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-asc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.running_old_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-asc', name: '', state: 'running' }
         });
         const processUtil = new ProcessUtil(apiService);
         const firstProc = await processUtil.startProcessOfApp(importedApp.name);
@@ -100,7 +102,10 @@ describe('Sorting for process filters', () => {
         await processFiltersPage.checkFilterIsDisplayed(processFilter.running_old_first);
         await filtersPage.goToFilter(processFilter.running_old_first);
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-asc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'running',
+            sort: 'created-asc'
         });
         await expect(processesQuery.data[0].name).toEqual(firstProc.name);
         await expect(processesQuery.data[1].name).toEqual(secondProc.name);
@@ -109,8 +114,10 @@ describe('Sorting for process filters', () => {
 
     it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.completed_old_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-asc', 'name': '', 'state': 'completed' }
+            appId: null,
+            name: processFilter.completed_old_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-asc', name: '', state: 'completed' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -129,7 +136,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.completed_old_first);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-asc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'completed',
+            sort: 'created-asc'
         });
         await expect(processesQuery.data[0].name).toEqual(firstProc.name);
         await expect(processesQuery.data[1].name).toEqual(secondProc.name);
@@ -138,8 +148,10 @@ describe('Sorting for process filters', () => {
 
     it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.all_old_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-asc', 'name': '', 'state': 'all' }
+            appId: null,
+            name: processFilter.all_old_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-asc', name: '', state: 'all' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -162,7 +174,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.all_old_first);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-asc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'all',
+            sort: 'created-asc'
         });
         await expect(processesQuery.data[0].name).toEqual(firstProc.name);
         await expect(processesQuery.data[1].name).toEqual(secondProc.name);
@@ -174,8 +189,10 @@ describe('Sorting for process filters', () => {
 
     it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.running_new_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            appId: null,
+            name: processFilter.running_new_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -190,7 +207,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.running_new_first);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-desc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'running',
+            sort: 'created-desc'
         });
         await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
         await expect(processesQuery.data[1].name).toEqual(secondProc.name);
@@ -199,8 +219,10 @@ describe('Sorting for process filters', () => {
 
     it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.completed_new_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' }
+            appId: null,
+            name: processFilter.completed_new_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'completed' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -218,7 +240,10 @@ describe('Sorting for process filters', () => {
 
         await filtersPage.goToFilter(processFilter.completed_new_first);
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-desc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'completed',
+            sort: 'created-desc'
         });
         await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
         await expect(processesQuery.data[1].name).toEqual(secondProc.name);
@@ -227,8 +252,10 @@ describe('Sorting for process filters', () => {
 
     it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.all_new_first, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' }
+            appId: null,
+            name: processFilter.all_new_first,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'all' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -251,7 +278,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.all_new_first);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-desc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'all',
+            sort: 'created-desc'
         });
         await expect(processesQuery.data[0].name).toEqual(deleteThirdProc.name);
         await expect(processesQuery.data[1].name).toEqual(deleteSecondProc.name);
@@ -263,8 +293,10 @@ describe('Sorting for process filters', () => {
 
     it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.completed_most_recently, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'ended-asc', 'name': '', 'state': 'completed' }
+            appId: null,
+            name: processFilter.completed_most_recently,
+            icon: 'glyphicon-random',
+            filter: { sort: 'ended-asc', name: '', state: 'completed' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -283,7 +315,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.completed_most_recently);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-asc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'completed',
+            sort: 'ended-asc'
         });
         await expect(processesQuery.data[0].name).toEqual(secondProc.name);
         await expect(processesQuery.data[1].name).toEqual(firstProc.name);
@@ -292,8 +327,10 @@ describe('Sorting for process filters', () => {
 
     it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', async () => {
         await userFiltersApi.createUserProcessInstanceFilter({
-            'appId': null, 'name': processFilter.completed_least_recently, 'icon': 'glyphicon-random',
-            'filter': { 'sort': 'ended-desc', 'name': '', 'state': 'completed' }
+            appId: null,
+            name: processFilter.completed_least_recently,
+            icon: 'glyphicon-random',
+            filter: { sort: 'ended-desc', name: '', state: 'completed' }
         });
 
         const processUtil = new ProcessUtil(apiService);
@@ -312,7 +349,10 @@ describe('Sorting for process filters', () => {
         await filtersPage.goToFilter(processFilter.completed_least_recently);
 
         processesQuery = await processInstancesApi.getProcessInstances({
-            'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-desc'
+            processDefinitionId: null,
+            appDefinitionId: null,
+            state: 'completed',
+            sort: 'ended-desc'
         });
         await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
         await expect(processesQuery.data[1].name).toEqual(firstProc.name);

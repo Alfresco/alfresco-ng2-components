@@ -20,8 +20,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
     selector: 'app-show-diagram',
-    templateUrl: './show-diagram.component.html',
-    styleUrls: ['./show-diagram.component.css']
+    templateUrl: './show-diagram.component.html'
 })
 export class ShowDiagramComponent {
 

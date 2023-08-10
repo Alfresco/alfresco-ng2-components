@@ -1,6 +1,5 @@
 <div class="main-content">
-
-    <mat-tab-group>
+    <mat-tab-group [animationDuration]="0">
         <mat-tab label="Form" class="form-cloud-render">
             <div class="app-form-container">
                 <adf-cloud-form
@@ -13,8 +12,7 @@
 
             <div class="app-console" #console>
                 <h3>Error log:</h3>
-                <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message |
-                    translate}}</p>
+                <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message | translate}}</p>
             </div>
         </mat-tab>
         <mat-tab label="Editor" class="form-cloud-editor">
@@ -26,15 +24,9 @@
                 (onInit)="onInitFormEditor($event)">
             </ngx-monaco-editor>
             <div class="app-form-editor-buttons">
-                <button mat-raised-button id="app-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
-                    form config
-                </button>
-                <button mat-raised-button id="app-form-config-clear" (click)="onClearFormConfig()" color="primary">Clear
-                    form config
-                </button>
-            </div>
-            <div class="app-upload-config-button">
-                <a mat-raised-button color="primary" >
+                <button mat-raised-button id="app-form-config-save" (click)="onSaveFormConfig()">Save form config</button>
+                <button mat-raised-button id="app-form-config-clear" (click)="onClearFormConfig()">Clear form config</button>
+                <a mat-raised-button class="app-upload-config-button">
                     <mat-icon>file_upload</mat-icon>
                     <label for="upload-config-file">Upload JSON File</label>
                     <input
@@ -46,7 +38,6 @@
                         (change)="onConfigAdded($event)">
                 </a>
             </div>
-
         </mat-tab>
 
     </mat-tab-group>

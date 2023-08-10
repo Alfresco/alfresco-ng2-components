@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { createApiService, ApplicationsUtil, LoginPage, UserFiltersUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, UserFiltersUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { TasksPage } from './../pages/tasks.page';
-import { TasksListPage } from './../pages/tasks-list.page';
-import { TaskDetailsPage } from './../pages/task-details.page';
-import { TaskFiltersDemoPage } from './../pages/task-filters-demo.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { TasksPage } from '../pages/tasks.page';
+import { TasksListPage } from '../pages/tasks-list.page';
+import { TaskDetailsPage } from '../pages/task-details.page';
+import { TaskFiltersDemoPage } from '../pages/task-filters-demo.page';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 describe('Task Filters Sorting', () => {
-
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
     const loginPage = new LoginPage();
@@ -41,8 +40,8 @@ describe('Task Filters Sorting', () => {
     const usersActions = new UsersActions(apiService);
     const userFiltersUtil = new UserFiltersUtil(apiService);
 
-    let user;
-    let appId;
+    let user: UserModel;
+    let appId: number;
 
     const tasks = [
         { name: 'Task 1 Completed', dueDate: '01/01/2019' },
@@ -50,7 +49,8 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 3 Completed', dueDate: '03/01/2019' },
         { name: 'Task 4', dueDate: '01/01/2019' },
         { name: 'Task 5', dueDate: '02/01/2019' },
-        { name: 'Task 6', dueDate: '03/01/2019' }];
+        { name: 'Task 6', dueDate: '03/01/2019' }
+    ];
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -67,21 +67,21 @@ describe('Task Filters Sorting', () => {
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);
 
-        await tasksPage.createTask({name: tasks[0].name, dueDate: tasks[0].dueDate});
+        await tasksPage.createTask({ name: tasks[0].name, dueDate: tasks[0].dueDate });
         await taskDetailsPage.clickCompleteTask();
 
-        await tasksPage.createTask({name: tasks[1].name, dueDate: tasks[1].dueDate});
+        await tasksPage.createTask({ name: tasks[1].name, dueDate: tasks[1].dueDate });
         await taskDetailsPage.clickCompleteTask();
 
-        await tasksPage.createTask({name: tasks[2].name, dueDate: tasks[2].dueDate});
+        await tasksPage.createTask({ name: tasks[2].name, dueDate: tasks[2].dueDate });
         await taskDetailsPage.clickCompleteTask();
 
-        await tasksPage.createTask({name: tasks[3].name, dueDate: tasks[3].dueDate});
-        await tasksPage.createTask({name: tasks[4].name, dueDate: tasks[4].dueDate});
-        await tasksPage.createTask({name: tasks[5].name, dueDate: tasks[5].dueDate});
+        await tasksPage.createTask({ name: tasks[3].name, dueDate: tasks[3].dueDate });
+        await tasksPage.createTask({ name: tasks[4].name, dueDate: tasks[4].dueDate });
+        await tasksPage.createTask({ name: tasks[5].name, dueDate: tasks[5].dueDate });
     });
 
-    afterAll( async () => {
+    afterAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(user.tenantId);
     });
@@ -89,7 +89,7 @@ describe('Task Filters Sorting', () => {
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Newest first',
+            name: 'Newest first',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
         });
@@ -101,12 +101,12 @@ describe('Task Filters Sorting', () => {
         await expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
         await expect(await tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
-   });
+    });
 
     it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Newest last',
+            name: 'Newest last',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'completed', assignment: 'involved' }
         });
@@ -123,7 +123,7 @@ describe('Task Filters Sorting', () => {
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Due first',
+            name: 'Due first',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'completed', assignment: 'involved' }
         });
@@ -140,7 +140,7 @@ describe('Task Filters Sorting', () => {
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Due last',
+            name: 'Due last',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'completed', assignment: 'involved' }
         });
@@ -157,7 +157,7 @@ describe('Task Filters Sorting', () => {
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Newest first Open',
+            name: 'Newest first Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'open', assignment: 'involved' }
         });
@@ -174,7 +174,7 @@ describe('Task Filters Sorting', () => {
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Newest last Open',
+            name: 'Newest last Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'open', assignment: 'involved' }
         });
@@ -191,7 +191,7 @@ describe('Task Filters Sorting', () => {
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Due first Open',
+            name: 'Due first Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'open', assignment: 'involved' }
         });
@@ -208,7 +208,7 @@ describe('Task Filters Sorting', () => {
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', async () => {
         const newFilter = new UserProcessInstanceFilterRepresentation({
             appId,
-            name : 'Due last Open',
+            name: 'Due last Open',
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'open', assignment: 'involved' }
         });
