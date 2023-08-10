@@ -1,8 +1,15 @@
 .adf-categories-management {
+    padding-top: 12px;
+    
     .adf-category-name-field {
         display: flex;
         justify-content: space-between;
         width: 100%;
+        background: var(--adf-metadata-tags-background-color);
+        height: 32px;
+        border-radius: 12px;
+        align-items: center;
+        padding: 0 12px;
 
         mat-form-field {
             width: 100%;
@@ -34,7 +41,6 @@
 }
 
 .adf-categories-list {
-    padding-bottom: 10px;
 
     .mat-list-base .mat-list-item,
     .mat-list-base .mat-list-option {
