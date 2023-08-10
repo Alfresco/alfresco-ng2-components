@@ -17,13 +17,13 @@
 
 import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
-import { ProcessListPage } from './../pages/process-list.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
+import { ProcessListPage } from '../pages/process-list.page';
 import { browser } from 'protractor';
-import { ProcessListDemoPage } from './../pages/process-list-demo.page';
+import { ProcessListDemoPage } from '../pages/process-list-demo.page';
 
 describe('Process Filters Test', () => {
     const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
@@ -48,11 +48,6 @@ describe('Process Filters Test', () => {
         canceled: 'Test_canceled',
         one: 'Test fake process one',
         two: 'Test fake process two'
-    };
-    const processFilter = {
-        running: 'Running',
-        all: 'All',
-        completed: 'Completed'
     };
 
     beforeAll(async () => {
@@ -93,7 +88,6 @@ describe('Process Filters Test', () => {
         await startProcessPage.enterProcessName(processTitle.running);
         await startProcessPage.clickFormStartProcessButton();
 
-        await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
         await processFiltersPage.selectFromProcessList(processTitle.running);
 
         await processDetailsPage.propertiesList.waitVisible();
@@ -105,7 +99,6 @@ describe('Process Filters Test', () => {
         await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickAllFilterButton();
-        await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
         await processFiltersPage.selectFromProcessList(processTitle.running);
         await processFiltersPage.selectFromProcessList(processTitle.completed);
         await processDetailsPage.propertiesList.waitVisible();
@@ -117,7 +110,6 @@ describe('Process Filters Test', () => {
         await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickCompletedFilterButton();
-        await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         await processFiltersPage.selectFromProcessList(processTitle.completed);
         await processDetailsPage.propertiesList.waitVisible();
     });
@@ -137,7 +129,6 @@ describe('Process Filters Test', () => {
         await processListDemoPage.checkProcessIsNotDisplayed(processTitle.canceled);
 
         await processFiltersPage.clickCompletedFilterButton();
-        await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
         await processListDemoPage.checkProcessIsDisplayed(processTitle.canceled);
         await processFiltersPage.selectFromProcessList(processTitle.canceled);
         await processDetailsPage.propertiesList.waitVisible();

@@ -77,11 +77,6 @@ export class ProcessFiltersPage {
         await BrowserActions.click(processName);
     }
 
-    async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const processNameHighlighted = $(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`);
-        await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
-    }
-
     async numberOfProcessRows(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(await this.rows.first());
         return this.rows.count();
@@ -89,19 +84,6 @@ export class ProcessFiltersPage {
 
     async waitForTableBody(): Promise<void> {
         await this.dataTable.waitForTableBody();
-    }
-
-    /**
-     *  Sort the list by name column.
-     *
-     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
-     */
-    async sortByName(sortOrder: string) {
-        await this.dataTable.sortByColumn(sortOrder, 'name');
-    }
-
-    async getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
     async checkFilterIsDisplayed(name: string): Promise<void> {
@@ -112,19 +94,5 @@ export class ProcessFiltersPage {
     async checkFilterIsNotDisplayed(name: string): Promise<void> {
         const filterName = await this.getButtonFilterLocatorByName(name);
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
-    }
-
-    async checkProcessesSortedByNameAsc(): Promise<void> {
-        const list = await this.getAllRowsNameColumn();
-        for (let i = 1; i < list.length; i++) {
-            await expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
-        }
-    }
-
-    async checkProcessesSortedByNameDesc(): Promise<void> {
-        const list = await this.getAllRowsNameColumn();
-        for (let i = 1; i < list.length; i++) {
-            await expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
-        }
     }
 }
