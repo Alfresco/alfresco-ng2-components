@@ -68,7 +68,6 @@ import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
@@ -134,7 +133,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        PeopleGroupCloudDemoComponent,
         FormCloudDemoComponent,
         CustomEditorComponent,
         CustomWidgetComponent,

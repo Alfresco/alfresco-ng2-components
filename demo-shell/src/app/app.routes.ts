@@ -32,7 +32,6 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { AppComponent } from './app.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
@@ -108,11 +107,6 @@ export const appRoutes: Routes = [
                         path: '',
                         data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: AppsCloudDemoComponent
-                    },
-                    {
-                        path: 'people-group-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
-                        component: PeopleGroupCloudDemoComponent
                     },
                     {
                         path: 'service-task-list',

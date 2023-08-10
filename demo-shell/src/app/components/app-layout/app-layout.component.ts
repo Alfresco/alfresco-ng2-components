@@ -35,7 +35,6 @@ export class AppLayoutComponent {
                 { href: '/cloud/', icon: 'cloud', title: 'Home' },
                 { href: '/cloud/community', icon: 'cloud', title: 'Community' },
                 { href: '/form-cloud', icon: 'poll', title: 'Form' },
-                { href: '/cloud/people-group-cloud', icon: 'group', title: 'People/Group Cloud' },
                 { href: '/cloud/task-header-cloud', icon: 'cloud', title: 'Task Header Cloud' },
                 { href: '/cloud/service-task-list', icon: 'cloud', title: 'Service Task List' }
             ]
