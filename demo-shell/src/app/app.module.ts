@@ -39,7 +39,6 @@ import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FormComponent } from './components/form/form.component';
-import { FormListComponent } from './components/form/form-list.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
@@ -118,7 +117,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         AppsViewComponent,
         FilesComponent,
         FormComponent,
-        FormListComponent,
         VersionManagerDialogAdapterComponent,
         MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,

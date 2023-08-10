@@ -43,8 +43,7 @@ export class AppLayoutComponent {
         { href: '/activiti', icon: 'device_hub', title: 'Process Services', children: [
             { href: '/activiti', icon: 'vpn_key', title: 'App' },
             { href: '/process-list', icon: 'assignment', title: 'Process List' },
-            { href: '/form', icon: 'poll', title: 'Form' },
-            { href: '/form-list', icon: 'library_books', title: 'Form List' }
+            { href: '/form', icon: 'poll', title: 'Form' }
         ]},
         { href: '/login', icon: 'vpn_key', title: 'Login' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
