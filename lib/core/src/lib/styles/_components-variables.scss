@@ -45,6 +45,8 @@
         --adf-identity-user-info-line-height: $adf-ref-line-height,
         --adf-identity-user-info-font-size: var(--theme-adf-picture-1-font-size),
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
+        --adf-metadata-property-panel-border-color: $adf-metadata-property-panel-border-color,
+        --adf-metadata-tags-background-color: $adf-metadata-tags-background-color
     );
 
     // propagates SCSS variables into the CSS variables scope
