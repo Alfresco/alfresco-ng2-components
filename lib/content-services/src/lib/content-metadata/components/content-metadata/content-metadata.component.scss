@@ -1,37 +1,71 @@
 .adf {
     &-metadata-properties {
-        .mat-expansion-panel-header.mat-expanded:hover,
-        .mat-expansion-panel-header.mat-expanded:focus {
-            background: var(--adf-theme-background-hover-color);
-        }
+
+        .mat-expansion-panel {
+            border: 1px solid var(--adf-metadata-property-panel-border-color);
+            border-radius: 12px !important;
+            margin-bottom: 12px;
 
         mat-expansion-panel-header {
-            height: 64px;
+            height: 56px;
 
             .adf-metadata-properties-title {
                 font-weight: normal;
                 font-size: 15px;
+                padding-left: 12px;
             }
         }
+    }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
         }
 
-        .adf-metadata-properties-tag {
-            height: 40px;
+        .adf-mat-divider {
+            margin-left: -24px;
+            margin-right: -24px;
+        }
+
+        .adf-edit-icon-buttons {
+            color: var(--adf-theme-foreground-text-color-054);
+        }
+
+        .adf-toggle-icons {
             display: flex;
             align-items: center;
-            margin-top: -14px;
-            margin-bottom: 1em;
+            flex: 1;
+        }
 
-            &:first-of-type {
-                margin-top: 5px;
-            }
+        .adf-metadata-properties-tag {
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 16px;
+            width: fit-content;
+            background: var(--adf-metadata-tags-background-color);
+            margin-top: 12px;
+            padding: 6px 12px;
+            justify-content: center;
+            margin-left: 8px;
+        }
+
+        .adf-metadata-no-tags-added {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            padding: 24px;
+        }
+
+        .adf-metadata-no-catagories-added {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            padding: 24px;
         }
 
         &-tags {
-            padding: 0 10px 0 26px;
 
             &-title {
                 display: flex;
@@ -42,15 +76,9 @@
             }
 
             adf-tags-creator {
-                margin-top: 19px;
 
                 .adf-tags-creation {
                     padding-right: 0;
-                    padding-left: 12px;
-
-                    .adf-tag {
-                        margin-top: -14px;
-                    }
                 }
 
                 &.adf-creator-with-existing-tags-panel {
@@ -73,7 +101,7 @@
     &-metadata-categories-header {
         display: flex;
         flex-direction: column;
-        padding: 0 24px;
+        padding-right: 24px;
 
         .adf-metadata-categories-title {
             display: flex;
@@ -90,5 +118,26 @@
                 visibility: hidden;
             }
         }
+    }
+}
+
+.acs-details-container {
+    .mat-tab-body-content {
+        .adf-content-metadata-card {
+            .adf-metadata-properties {
+                .mat-expansion-panel {
+                    width: 755px;
+                    border: 1px solid var(--adf-metadata-property-panel-border-color);
+                    margin: 24px;
+                    border-radius: 12px !important;
+                }
+            }
+        }
+    }
+}
+
+.adf-content-metadata-card {
+    .mat-card:not([class*=mat-elevation-z]) {
+        box-shadow: none;
     }
 }

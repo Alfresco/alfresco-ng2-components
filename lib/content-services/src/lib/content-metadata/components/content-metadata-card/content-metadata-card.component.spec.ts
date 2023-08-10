@@ -147,55 +147,6 @@ describe('ContentMetadataCardComponent', () => {
         expect(contentMetadataComponent).toBeNull();
     });
 
-    it('should toggle editable by clicking on the button', () => {
-        component.editable = true;
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        fixture.detectChanges();
-
-        getToggleEditButton().triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        expect(component.editable).toBe(false);
-    });
-
-    it('should emit editableChange by clicking on toggle edit button', () => {
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        fixture.detectChanges();
-        spyOn(component.editableChange, 'emit');
-
-        getToggleEditButton().nativeElement.click();
-        expect(component.editableChange.emit).toHaveBeenCalledWith(true);
-    });
-
-    it('should toggle expanded by clicking on the button', () => {
-        component.expanded = true;
-        fixture.detectChanges();
-
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand"]'));
-        button.triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        expect(component.expanded).toBe(false);
-    });
-
-    it('should have the proper text on button while collapsed', () => {
-        component.expanded = false;
-        fixture.detectChanges();
-
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
-
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION');
-    });
-
-    it('should have the proper text on button while collapsed', () => {
-        component.expanded = true;
-        fixture.detectChanges();
-
-        const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
-
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
-    });
-
     it('should hide the edit button in readOnly is true', () => {
         component.readOnly = true;
         fixture.detectChanges();
@@ -209,14 +160,6 @@ describe('ContentMetadataCardComponent', () => {
         fixture.detectChanges();
 
         expect(getToggleEditButton()).toBeNull();
-    });
-
-    it('should show the edit button if node does has `update` permissions', () => {
-        component.readOnly = false;
-        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
-        fixture.detectChanges();
-
-        expect(getToggleEditButton()).not.toBeNull();
     });
 
     it('should expand the card when custom display aspect is valid', () => {

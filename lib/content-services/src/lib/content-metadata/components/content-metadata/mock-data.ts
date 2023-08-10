@@ -49,7 +49,9 @@ export const mockGroupProperties = [
                 clickCallBack: null,
                 displayValue: 400
             }
-        ]
+        ],
+        editable: true,
+        expanded: true,
     },
     {
         title: 'CUSTOM',
@@ -69,6 +71,8 @@ export const mockGroupProperties = [
                 clickCallBack: null,
                 displayValue: 400
             }
-        ]
+        ],
+        editable: true,
+        expanded: true,
     }
 ];
