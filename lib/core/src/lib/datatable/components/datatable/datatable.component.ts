@@ -18,14 +18,31 @@
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 
 import {
-    ViewChildren, QueryList, HostListener,
-    AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy, AfterViewInit, OnInit
+    AfterContentInit,
+    AfterViewInit,
+    Component,
+    ContentChild,
+    DoCheck,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    IterableDiffers,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    QueryList,
+    SimpleChange,
+    SimpleChanges,
+    TemplateRef,
+    ViewChildren,
+    ViewEncapsulation
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Subscription, Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
@@ -39,7 +56,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
-import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
+import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -320,7 +337,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
             this.resetSelection();
-            console.log('UNSELECT');
             this.emitRowSelectionEvent('row-unselect', null);
         }
 
@@ -528,12 +544,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
         if (this.data) {
             if (this.isSingleSelectionMode()) {
-                const isRowSelected = row.isSelected
-                if (isRowSelected) {
-                    this.resetSelection();
+                this.resetSelection();
+                if (row.isSelected) {
                     this.emitRowSelectionEvent('row-unselect', null);
                 } else {
-                    this.resetSelection();
                     this.selectRow(row, true);
                     this.emitRowSelectionEvent('row-select', row);
                 }
@@ -557,6 +571,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             }
         }
     }
+
     resetSelection(): void {
         if (this.data) {
             const rows = this.data.getRows();
