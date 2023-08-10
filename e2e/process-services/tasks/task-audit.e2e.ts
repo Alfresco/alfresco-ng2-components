@@ -19,17 +19,18 @@ import {
     LoginPage,
     BrowserActions,
     FileBrowserUtil,
-    ApplicationsUtil, createApiService,
+    ApplicationsUtil,
+    createApiService,
     UsersActions,
-    TaskUtil
+    TaskUtil,
+    UserModel
 } from '@alfresco/adf-testing';
-import { TasksPage } from './../pages/tasks.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
+import { TasksPage } from '../pages/tasks.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Task Audit', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -40,11 +41,10 @@ describe('Task Audit', () => {
     const usersActions = new UsersActions(apiService);
     const taskUtil = new TaskUtil(apiService);
 
-    let processUserModel;
+    let processUserModel: UserModel;
 
     const taskTaskApp = 'Audit task task app';
     const taskCustomApp = 'Audit task custom app';
-    const taskCompleteCustomApp = 'Audit completed task custom app';
     const auditLogFile = 'Audit.pdf';
 
     beforeAll(async () => {
@@ -59,7 +59,7 @@ describe('Task Audit', () => {
         await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
-    afterAll( async () => {
+    afterAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
     });
@@ -96,7 +96,8 @@ describe('Task Audit', () => {
     it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', async () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
-        await taskPage.createTask({name: taskCompleteCustomApp});
+        const taskCompleteCustomApp = 'Audit completed task custom app';
+        await taskPage.createTask({ name: taskCompleteCustomApp });
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskCompleteCustomApp);
@@ -113,7 +114,7 @@ describe('Task Audit', () => {
     it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', async () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
-        await taskPage.createTask({name: taskCustomApp});
+        await taskPage.createTask({ name: taskCustomApp });
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskCustomApp);
