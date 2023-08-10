@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { createApiService, LoginPage, SettingsPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, SettingsPage, UserInfoPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('User Info - SSO', () => {
-
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
@@ -27,16 +26,21 @@ describe('User Info - SSO', () => {
     const apiService = createApiService({ authType: 'OAUTH', provider: 'ECM' });
     const usersActions = new UsersActions(apiService);
 
-    let identityUser;
+    let identityUser: UserModel;
 
     beforeAll(async () => {
         await apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
 
         identityUser = await usersActions.createUser();
 
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
+        await settingsPage.setProviderEcmSso(
+            browser.params.testConfig.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+            browser.params.testConfig.appConfig.identityHost,
+            false,
+            true,
+            browser.params.testConfig.appConfig.oauth2.clientId
+        );
 
         await loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });

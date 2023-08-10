@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, createApiService, UsersActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, createApiService, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Amount Widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.AMOUNT;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     const apiService = createApiService();
     const applicationsService = new ApplicationsUtil(apiService);
@@ -49,7 +50,7 @@ describe('Amount Widget', () => {
 
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
         const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedAppId}/tasks/`;
@@ -64,7 +65,7 @@ describe('Amount Widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
@@ -78,12 +79,12 @@ describe('Amount Widget', () => {
         await expect(fieldCurrency.trim()).toBe('$');
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
-        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe(`Can't be less than 5`);
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 
         await widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 101);
-        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
+        await expect(await widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe(`Can't be greater than 100`);
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
 

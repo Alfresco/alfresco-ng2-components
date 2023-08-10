@@ -99,7 +99,7 @@
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error">
         <mat-icon mat-list-icon
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.UPLOAD_FILE_ERROR' | translate: { error: file.errorCode | adfFileUploadError }"
-            [matTooltip]="file.errorCode | adfFileUploadError">
+            [title]="file.errorCode | adfFileUploadError">
             report_problem
         </mat-icon>
     </div>

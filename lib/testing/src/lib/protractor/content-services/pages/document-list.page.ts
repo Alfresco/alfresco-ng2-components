@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder, browser, $$, protractor } from 'protractor';
+import { ElementFinder, browser, $$, protractor } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -34,18 +34,6 @@ export class DocumentListPage {
         this.tableBody = rootElement.$$('.adf-datatable-body').first();
     }
 
-    async checkLockedIcon(content: string): Promise<void> {
-        const row = this.dataTable.getRow('Display name', content);
-        const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock'));
-        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
-    }
-
-    async checkUnlockedIcon(content: string): Promise<void> {
-        const row = this.dataTable.getRow('Display name', content);
-        const lockIcon = row.element(by.cssContainingText('div[title="Lock"] mat-icon', 'lock_open'));
-        await BrowserVisibility.waitUntilElementIsVisible(lockIcon);
-    }
-
     async waitForTableBody(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
@@ -58,10 +46,7 @@ export class DocumentListPage {
         await this.dataTable.selectRow('Display name', nodeName);
     }
 
-    async selectRowWithKeyboard(nodeName: string): Promise<void> {
-        await this.dataTable.selectRowWithKeyboard('Display name', nodeName);
-    }
-
+    /** @deprecated Use Playwright API instead */
     async selectRowsWithKeyboard(...contentNames: string[]): Promise<void> {
         let option: any;
         await browser.actions().sendKeys(protractor.Key.COMMAND).perform();

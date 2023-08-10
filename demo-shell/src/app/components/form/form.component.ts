@@ -33,12 +33,10 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class FormComponent implements OnInit, OnDestroy {
-
     form: FormModel;
     errorFields: FormFieldModel[] = [];
     formConfig: string;
     editor: any;
-    keepPrefixedSpace = true;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -86,7 +84,7 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     parseForm() {
-        this.form = this.formService.parseForm(JSON.parse(this.formConfig), null, false, this.keepPrefixedSpace);
+        this.form = this.formService.parseForm(JSON.parse(this.formConfig), null, false, true);
     }
 
     onSaveFormConfig() {
@@ -113,9 +111,5 @@ export class FormComponent implements OnInit, OnDestroy {
         this.onInitFormEditor(this.editor);
 
         $event.target.value = '';
-    }
-
-    togglePrefixedSpace() {
-        this.keepPrefixedSpace = !this.keepPrefixedSpace;
     }
 }

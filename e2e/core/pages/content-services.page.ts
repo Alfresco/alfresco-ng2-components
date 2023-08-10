@@ -21,12 +21,10 @@ import {
     BrowserVisibility,
     DateUtil,
     DocumentListPage,
-    TogglePage,
     DropdownPage,
     Logger
 } from '@alfresco/adf-testing';
-import { $$, browser, by, element, ElementFinder, protractor, $ } from 'protractor';
-import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
+import { $$, browser, by, element, protractor, $ } from 'protractor';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 
@@ -43,18 +41,10 @@ export class ContentServicesPage {
     };
 
     contentList = new DocumentListPage($$('adf-upload-drag-area adf-document-list').first());
-    togglePage = new TogglePage();
     createFolderDialog = new FolderDialogPage();
-    createLibraryDialog = new CreateLibraryDialogPage();
-
-    multipleFileUploadToggle = $('#adf-document-list-enable-drop-files');
     uploadBorder = $('#document-list-container');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
-    editFolderButton = $('button[data-automation-id="edit-folder"]');
-    deleteNodesButton = $('button[data-automation-id="delete-toolbar-button"]');
-    createLibraryButton = $('button[data-automation-id="create-new-library"]');
-    activeBreadcrumb = $('div[class*="active"]');
     uploadFileButton = $('.adf-upload-button-file-container button');
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
     uploadMultipleFileButton = $('input[data-automation-id="upload-multiple-files"]');
@@ -69,21 +59,14 @@ export class ContentServicesPage {
     emptyFolderImage = $('.adf-empty-folder-image');
     gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
     cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
-    shareNodeButton = element(by.cssContainingText('mat-icon', 'share'));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
     deleteContentElement = $('button[data-automation-id="Delete"]');
     metadataAction = $('button[data-automation-id="Info"]');
     versionManagerAction = $('button[data-automation-id="Manage versions"]');
-    moveContentElement = $('button[data-automation-id="Move"]');
-    copyContentElement = $('button[data-automation-id="Copy"]');
-    lockContentElement = $('button[data-automation-id="Lock"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
-    favoriteButton = $('button[data-automation-id="favorite"]');
-    markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
-    notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
     selectAllCheckbox = $$('.adf-checkbox-sr-only').first();
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
@@ -95,11 +78,6 @@ export class ContentServicesPage {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
-    async checkContextActionIsVisible(actionName) {
-        const actionButton = $(`button[data-automation-id="context-${actionName}"`);
-        await BrowserVisibility.waitUntilElementIsVisible(actionButton);
-    }
-
     async isContextActionEnabled(actionName): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
@@ -108,18 +86,6 @@ export class ContentServicesPage {
 
     getDocumentList(): DocumentListPage {
         return this.contentList;
-    }
-
-    async closeActionContext(): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
-    }
-
-    async checkLockedIcon(content): Promise<void> {
-        return this.contentList.checkLockedIcon(content);
-    }
-
-    async checkUnlockedIcon(content): Promise<void> {
-        return this.contentList.checkUnlockedIcon(content);
     }
 
     async checkDeleteIsDisabled(content): Promise<void> {
@@ -134,14 +100,6 @@ export class ContentServicesPage {
         await this.checkContentIsNotDisplayed(content);
     }
 
-    async clickDeleteOnToolbar(): Promise<void> {
-        await BrowserActions.click(this.deleteNodesButton);
-    }
-
-    async checkToolbarDeleteIsDisabled(): Promise<boolean> {
-        return !(await this.deleteNodesButton.isEnabled());
-    }
-
     async metadataContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.metadataAction);
@@ -150,21 +108,6 @@ export class ContentServicesPage {
     async versionManagerContent(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.versionManagerAction);
-    }
-
-    async copyContent(content): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        await BrowserActions.click(this.copyContentElement);
-    }
-
-    async moveContent(content): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        await BrowserActions.click(this.moveContentElement);
-    }
-
-    async lockContent(content): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        await BrowserActions.click(this.lockContentElement);
     }
 
     async clickFileHyperlink(fileName): Promise<void> {
@@ -180,15 +123,6 @@ export class ContentServicesPage {
     async clickHyperlinkNavigationToggle(): Promise<void> {
         const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
         await BrowserActions.click(hyperlinkToggle);
-    }
-
-    async enableDropFilesInAFolder(): Promise<void> {
-        await this.togglePage.enableToggle(this.multipleFileUploadToggle);
-    }
-
-    async disableDropFilesInAFolder(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
-        await this.togglePage.disableToggle(this.multipleFileUploadToggle);
     }
 
     async getElementsDisplayedId() {
@@ -313,31 +247,6 @@ export class ContentServicesPage {
         await BrowserActions.click(this.createFolderButton);
     }
 
-    async clickOnFavoriteButton(): Promise<void> {
-        await BrowserActions.click(this.favoriteButton);
-    }
-
-    async checkIsMarkedFavorite(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.markedFavorite);
-    }
-
-    async checkIsNotMarkedFavorite(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.notMarkedFavorite);
-    }
-
-    async clickOnEditFolder(): Promise<void> {
-        await BrowserActions.click(this.editFolderButton);
-    }
-
-    async isEditFolderButtonEnabled(): Promise<boolean> {
-        return this.editFolderButton.isEnabled();
-    }
-
-    async openCreateLibraryDialog(): Promise<void> {
-        await BrowserActions.click(this.createLibraryButton);
-        await this.createLibraryDialog.libraryDialog.waitVisible();
-    }
-
     async createNewFolder(folderName: string): Promise<void> {
         await this.clickOnCreateNewFolder();
         await this.createFolderDialog.addFolderName(folderName);
@@ -355,17 +264,17 @@ export class ContentServicesPage {
         await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
-    async checkContentIsDisplayed(content): Promise<void> {
+    async checkContentIsDisplayed(content: string): Promise<void> {
         await this.contentList.dataTablePage().checkContentIsDisplayed(this.columns.name, content);
     }
 
-    async checkContentsAreDisplayed(content): Promise<void> {
-        for (let i = 0; i < content.length; i++) {
-            await this.checkContentIsDisplayed(content[i]);
+    async checkContentsAreDisplayed(content: string[]): Promise<void> {
+        for (const item of content) {
+            await this.checkContentIsDisplayed(item);
         }
     }
 
-    async checkContentIsNotDisplayed(content): Promise<void> {
+    async checkContentIsNotDisplayed(content: string): Promise<void> {
         await this.contentList.dataTablePage().checkContentIsNotDisplayed(this.columns.name, content);
     }
 
@@ -380,17 +289,13 @@ export class ContentServicesPage {
         await this.deleteAndCheckFolderNotDisplayed(subFolderName);
     }
 
-    async getActiveBreadcrumb(): Promise<string> {
-        return BrowserActions.getAttribute(this.activeBreadcrumb, 'title');
-    }
-
-    async uploadFile(fileLocation): Promise<void> {
+    async uploadFile(fileLocation: string): Promise<void> {
         await this.checkUploadButton();
         await this.uploadFileButtonInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         await this.checkUploadButton();
     }
 
-    async uploadMultipleFile(files): Promise<void> {
+    async uploadMultipleFile(files: string[]): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
         let allFiles = path.resolve(path.join(browser.params.testConfig.main.rootPath, files[0]));
         for (let i = 1; i < files.length; i++) {
@@ -403,16 +308,6 @@ export class ContentServicesPage {
     async uploadFolder(folderLocation: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
         await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderLocation)));
-    }
-
-    async getSingleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFileButton);
-        return BrowserActions.getAttribute(this.uploadFileButtonInput, 'title');
-    }
-
-    async getMultipleFileButtonTooltip(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
-        return BrowserActions.getAttribute(this.uploadMultipleFileButton, 'title');
     }
 
     async checkUploadButton(): Promise<void> {
@@ -514,27 +409,27 @@ export class ContentServicesPage {
         return $$('div.app-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
     }
 
-    async getDocumentCardIconForElement(elementName): Promise<string> {
+    async getDocumentCardIconForElement(elementName: string): Promise<string> {
         const elementIcon = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`);
         return BrowserActions.getAttribute(elementIcon, 'src');
     }
 
-    async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
+    async checkDocumentCardPropertyIsShowed(elementName: string, propertyName: string): Promise<void> {
         const elementProperty = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
-    async getAttributeValueForElement(elementName, propertyName): Promise<string> {
+    async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {
         const elementSize = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`);
         return BrowserActions.getText(elementSize);
     }
 
-    async checkMenuIsShowedForElementIndex(elementIndex): Promise<void> {
+    async checkMenuIsShowedForElementIndex(elementIndex: number): Promise<void> {
         const elementMenu = $(`button[data-automation-id="action_menu_${elementIndex}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(elementMenu);
     }
 
-    async navigateToCardFolder(folderName): Promise<void> {
+    async navigateToCardFolder(folderName: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const folderCard = $(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`);
         await BrowserActions.click(folderCard);
@@ -543,22 +438,16 @@ export class ContentServicesPage {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async selectGridSortingFromDropdown(sortingOption): Promise<void> {
+    async selectGridSortingFromDropdown(sortingOption: string): Promise<void> {
         await this.sortingDropdown.selectDropdownOption(sortingOption);
     }
 
-    async checkRowIsDisplayed(rowName): Promise<void> {
+    async checkRowIsDisplayed(rowName: string): Promise<void> {
         const row = this.contentList.dataTablePage().getCellElementByValue(this.columns.name, rowName);
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
-    async clickShareButton(): Promise<void> {
-        await browser.sleep(2000);
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.shareNodeButton);
-    }
-
-    async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
+    async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
         await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
@@ -578,10 +467,6 @@ export class ContentServicesPage {
 
     async clickSelectAllCheckbox(): Promise<void> {
         await BrowserActions.click(this.selectAllCheckbox);
-    }
-
-    getRowByName(rowName: string): ElementFinder {
-        return this.contentList.dataTable.getRow(this.columns.name, rowName);
     }
 
     async selectFolder(folderName: string): Promise<void> {

@@ -15,73 +15,21 @@
  * limitations under the License.
  */
 
-import { $$, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { $$ } from 'protractor';
+import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialogPage {
 
     folderDialog = $$('adf-folder-dialog').first();
     folderNameField = this.folderDialog.$('#adf-folder-name-input');
-    folderDescriptionField = this.folderDialog.$('#adf-folder-description-input');
     createUpdateButton = this.folderDialog.$('#adf-folder-create-button');
     cancelButton = this.folderDialog.$('#adf-folder-cancel-button');
-    folderTitle = this.folderDialog.$('h2.mat-dialog-title');
-    validationMessage = this.folderDialog.$('div.mat-form-field-subscript-wrapper mat-hint span');
-
-    async getDialogTitle(): Promise<string> {
-        return BrowserActions.getText(this.folderTitle);
-    }
-
-    async checkFolderDialogIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.folderDialog);
-    }
-
-    async checkFolderDialogIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.folderDialog);
-    }
 
     async clickOnCreateUpdateButton(): Promise<void> {
         await BrowserActions.click(this.createUpdateButton);
     }
 
-    async clickOnCancelButton(): Promise<void> {
-        await BrowserActions.click(this.cancelButton);
-    }
-
     async addFolderName(folderName): Promise<void> {
         await BrowserActions.clearSendKeys(this.folderNameField, folderName);
     }
-
-    async addFolderDescription(folderDescription): Promise<void> {
-        await BrowserActions.clearSendKeys(this.folderDescriptionField, folderDescription);
-    }
-
-    async getFolderName(): Promise<string> {
-        return BrowserActions.getInputValue(this.folderNameField);
-    }
-
-    async getValidationMessage(): Promise<string> {
-        return BrowserActions.getText(this.validationMessage);
-    }
-
-    async checkValidationMessageIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.validationMessage);
-    }
-
-    getFolderNameField(): ElementFinder {
-        return this.folderNameField;
-    }
-
-    getFolderDescriptionField(): ElementFinder {
-        return this.folderDescriptionField;
-    }
-
-    async checkCreateUpdateBtnIsEnabled(): Promise<boolean> {
-        return this.createUpdateButton.isEnabled();
-    }
-
-    async checkCancelBtnIsEnabled(): Promise<void> {
-        await this.cancelButton.isEnabled();
-    }
-
 }

@@ -16,20 +16,13 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ModelsActions,
-    ProcessUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
+import { createApiService, ApplicationsUtil, LoginPage, ModelsActions, ProcessUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ActivitiCommentsApi, TasksApi } from '@alfresco/js-api';
+import { ActivitiCommentsApi, ResultListDataRepresentationCommentRepresentation, TasksApi } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -44,7 +37,10 @@ describe('Comment component for Processes', () => {
     const commentsApi = new ActivitiCommentsApi(apiService.getInstance());
     const taskApi = new TasksApi(apiService.getInstance());
 
-    let user; let appId; let processInstanceId; let addedComment;
+    let user: UserModel;
+    let appId: number;
+    let processInstanceId: string;
+    let addedComment: ResultListDataRepresentationCommentRepresentation;
     const processName = 'Comment APS';
 
     beforeAll(async () => {
@@ -82,7 +78,9 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.getTotalNumberOfComments('Comments (' + addedComment.total + ')');
         await expect(await commentsPage.getMessage(0)).toEqual(addedComment.data[0].message);
-        await expect(await commentsPage.getUserName(0)).toEqual(addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName);
+        await expect(await commentsPage.getUserName(0)).toEqual(
+            addedComment.data[0].createdBy.firstName + ' ' + addedComment.data[0].createdBy.lastName
+        );
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
@@ -120,7 +118,9 @@ describe('Comment component for Processes', () => {
 
         await commentsPage.getTotalNumberOfComments('Comments (' + addedTaskComment.total + ')');
         await expect(await commentsPage.getMessage(0)).toEqual(addedTaskComment.data[0].message);
-        await expect(await commentsPage.getUserName(0)).toEqual(addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName);
+        await expect(await commentsPage.getUserName(0)).toEqual(
+            addedTaskComment.data[0].createdBy.firstName + ' ' + addedTaskComment.data[0].createdBy.lastName
+        );
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 });

@@ -15,18 +15,22 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginPage, ModelsActions,
+    LoginPage,
+    ModelsActions,
     ProcessUtil,
-    StringUtil, TaskUtil,
-    UsersActions
+    StringUtil,
+    TaskUtil,
+    UsersActions,
+    UserModel
 } from '@alfresco/adf-testing';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { TasksPage } from './../pages/tasks.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
-import { TaskActionsApi, TaskFormsApi, TasksApi } from '@alfresco/js-api';
+import { AppDefinitionRepresentation, TaskActionsApi, TaskFormsApi, TasksApi } from '@alfresco/js-api';
 import Task = require('../../models/APS/Task');
 import TaskModel = require('../../models/APS/TaskModel');
 import FormModel = require('../../models/APS/FormModel');
@@ -34,7 +38,6 @@ import CONSTANTS = require('../../util/constants');
 import * as moment from 'moment';
 
 describe('Task Details component', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const processServices = new ProcessServicesPage();
@@ -49,10 +52,11 @@ describe('Task Details component', () => {
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
     const taskFormsApi = new TaskFormsApi(apiService.getInstance());
 
-    let processUserModel; let appModel;
+    let processUserModel: UserModel;
+    let appModel: AppDefinitionRepresentation;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'll';
-    let formModel;
+    let formModel: any;
 
     const taskFormModel = {
         name: StringUtil.generateRandomString(),
@@ -162,7 +166,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
         await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[1].name);
+        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
         await expect(await taskPage.taskDetails().getDuration()).toEqual('');
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
@@ -193,7 +197,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         await expect(await taskPage.taskDetails().getCategory()).toEqual(CONSTANTS.TASK_DETAILS.NO_CATEGORY);
         await expect(await taskPage.taskDetails().getDueDate()).toEqual(CONSTANTS.TASK_DETAILS.NO_DATE);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel.definition.models[1].name);
+        await expect(await taskPage.taskDetails().getParentName()).toEqual(appModel['definition'].models[1].name);
         await expect(await taskPage.taskDetails().getDuration()).toEqual('');
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
@@ -310,7 +314,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
     });
 
-    it('[C260321] Should not be able to edit a completed task\'s details', async () => {
+    it('[C260321] Should not be able to edit a completed task details', async () => {
         const taskName = 'TaskCompleted';
         const form = await modelsActions.modelsApi.createModel(taskFormModel);
         const task = await taskUtil.createStandaloneTask(taskName);

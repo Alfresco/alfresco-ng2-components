@@ -39,8 +39,6 @@ describe('Content Services Viewer', () => {
     const versionManagePage = new VersionManagePage();
     const metadataViewPage = new MetadataViewPage();
 
-    let zoom;
-
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         firstPageText: browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
@@ -241,7 +239,7 @@ describe('Content Services Viewer', () => {
 
             await viewerPage.checkPercentageIsDisplayed();
 
-            zoom = await viewerPage.getZoom();
+            let zoom = await viewerPage.getZoom();
             await viewerPage.clickZoomInButton();
             await viewerPage.checkZoomedIn(zoom);
 
@@ -401,36 +399,6 @@ describe('Content Services Viewer', () => {
             await viewerPage.checkCloseButtonIsDisplayed();
             await viewerPage.clickCloseButton();
         });
-
-        it('[C268901] Should need a password when opening a protected file', async () => {
-            await contentServicesPage.doubleClickRow(protectedFile.name);
-            await viewerPage.waitTillContentLoaded();
-
-            await viewerPage.checkZoomInButtonIsDisplayed();
-            await viewerPage.checkPasswordDialogIsDisplayed();
-            await viewerPage.checkPasswordSubmitDisabledIsDisplayed();
-
-            await viewerPage.enterPassword('random password');
-            await viewerPage.clickPasswordSubmit();
-            await viewerPage.checkPasswordErrorIsDisplayed();
-            await viewerPage.checkPasswordInputIsDisplayed();
-
-            await viewerPage.enterPassword(protectedFile.password);
-            await viewerPage.clickPasswordSubmit();
-            await viewerPage.checkFileContent('1', protectedFile.firstPageText);
-
-            await viewerPage.clickCloseButton();
-        });
-
-        it('[C307985] Should close the viewer when password dialog is cancelled', async () => {
-            await contentServicesPage.doubleClickRow(protectedFile.name);
-            await viewerPage.waitTillContentLoaded();
-
-            await viewerPage.checkPasswordDialogIsDisplayed();
-            await viewerPage.clickClosePasswordDialog();
-            await contentServicesPage.checkContentIsDisplayed(protectedFile.name);
-        });
-
     });
 
     describe('Viewer - version update with unsupported file', () => {

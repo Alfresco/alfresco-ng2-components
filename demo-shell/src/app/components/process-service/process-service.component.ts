@@ -29,14 +29,10 @@ import {
     Output
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    Pagination,
-    UserProcessInstanceFilterRepresentation,
-    ScriptFilesApi
-} from '@alfresco/js-api';
+import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
+    AlfrescoApiService, UserPreferencesService, NotificationService
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
@@ -114,24 +110,15 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @Output()
     changePageSize = new EventEmitter<Pagination>();
 
-    multiSelectTask = false;
-    multiSelectProcess = false;
-    selectionMode = 'single';
-    taskContextMenu = false;
-    processContextMenu = false;
-
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
     layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
 
-    taskSchemaColumns: any[] = [];
     taskPage = 0;
     processPage = 0;
     paginationPageSize = 0;
-    processSchemaColumns: any[] = [];
-    showHeaderContent = true;
 
     defaultProcessDefinitionName: string;
     defaultProcessName: string;
@@ -146,11 +133,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     presetColumn = 'default';
 
-    showTaskTab: boolean;
-    showProcessTab: boolean;
-
-    showProcessFilterIcon: boolean;
-    showTaskFilterIcon: boolean;
     showApplications: boolean;
     applicationId: number;
     processDefinitionName: string;
@@ -167,7 +149,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
-                private logService: LogService,
                 private appConfig: AppConfigService,
                 private preview: PreviewService,
                 formRenderingService: FormRenderingService,
@@ -186,18 +167,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
-
-        formService.formLoaded
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(formEvent => {
-                this.logService.log(`Form loaded: ${formEvent.form.id}`);
-            });
-
-        formService.formFieldValueChanged
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(formFieldEvent => {
-                this.logService.log(`Field value changed. Form: ${formFieldEvent.form.id}, Field: ${formFieldEvent.field.id}, Value: ${formFieldEvent.field.value}`);
-            });
 
         this.preferenceService
             .select(UserPreferenceValues.PaginationSize)
@@ -224,30 +193,12 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             .subscribe((content) => {
                 this.showContentPreview(content);
             });
-
-        formService.validateForm
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(validateFormEvent => {
-                this.logService.log('Error form:' + validateFormEvent.errorsField);
-            });
-
-        // Uncomment this block to see form event handling in action
-        /*
-        formService.formEvents
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((event: Event) => {
-                this.logService.log('Event fired:' + event.type);
-                this.logService.log('Event Target:' + event.target);
-            });
-        */
     }
 
     ngOnInit() {
         if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
-        this.showProcessTab = this.activeTab === this.tabs.processes;
-        this.showTaskTab = this.activeTab === this.tabs.tasks;
         this.route.params.subscribe((params) => {
             const applicationId = params['appId'];
 
@@ -273,24 +224,14 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
-        this.resetTaskPaginationPage();
-    }
-
-    resetTaskPaginationPage() {
         this.taskPage = 0;
-    }
-
-    toggleHeaderContent(): void {
-        this.showHeaderContent = !this.showHeaderContent;
     }
 
     onTabChange(event: any): void {
         const index = event.index;
         if (index === TASK_ROUTE) {
-            this.showTaskTab = event.index === this.tabs.tasks;
             this.relocateLocationToTask();
         } else if (index === PROCESS_ROUTE) {
-            this.showProcessTab = event.index === this.tabs.processes;
             this.relocateLocationToProcess();
             if (this.processList) {
                 this.processList.reload();
@@ -445,14 +386,6 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         }
     }
 
-    onAuditClick(event: any) {
-        this.logService.log(event);
-    }
-
-    onAuditError(event: any): void {
-        this.logService.error('My custom error message' + event);
-    }
-
     onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
@@ -466,7 +399,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.loadStencilScriptsInPageFromProcessService();
     }
 
-    loadStencilScriptsInPageFromProcessService() {
+    private loadStencilScriptsInPageFromProcessService() {
         this.scriptFileApi.getControllers().then((response) => {
             if (response) {
                 const stencilScript = document.createElement('script');
@@ -507,46 +440,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.activitiFilter.selectFilter(this.activitiFilter.getCurrentFilter());
     }
 
-    onRowClick(event): void {
-        this.logService.log(event);
-    }
-
-    onRowDblClick(event): void {
-        this.logService.log(event);
-    }
-
     onAssignTask() {
         this.taskList.reload();
         this.currentTaskId = null;
-    }
-
-    onShowTaskRowContextMenu(event: DataCellEvent) {
-        event.value.actions = [
-            {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'taskDetails',
-                    icon: 'open',
-                    title: 'Task List Context Menu',
-                    visible: true
-                },
-                subject: new Subject()
-            }
-        ];
-    }
-
-    onShowProcessRowContextMenu(event: DataCellEvent) {
-        event.value.actions = [
-            {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'processDetails',
-                    icon: 'open',
-                    title: 'Process List Context Menu',
-                    visible: true
-                },
-                subject: new Subject()
-            }
-        ];
     }
 }

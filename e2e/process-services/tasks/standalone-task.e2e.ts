@@ -25,7 +25,7 @@ import {
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
-import { TasksPage } from './../pages/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TasksApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
@@ -40,8 +40,8 @@ describe('Start Task - Task App', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
 
-    let processUserModel; let anotherUser;
-    const noFormMessage = 'No forms attached';
+    let processUserModel: UserModel;
+    let anotherUser: UserModel;
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -81,7 +81,7 @@ describe('Start Task - Task App', () => {
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
         await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
@@ -139,7 +139,7 @@ describe('Start Task - Task App', () => {
 
         await taskPage.formFields().noFormIsDisplayed();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskDetails.getNoFormMessage()).toEqual('No forms attached');
     });
 
     it('[C329799] Form actions are enabled in assigned task', async () => {

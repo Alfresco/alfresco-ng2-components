@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TasksPage } from './../pages/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 describe('Task Details - No form', () => {
-
     const app = browser.params.resources.Files.NO_FORM_APP;
 
     const loginPage = new LoginPage();
@@ -32,9 +32,8 @@ describe('Task Details - No form', () => {
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
-    let processUserModel;
-    const noFormMessage = 'No forms attached';
-    let importedApp;
+    let processUserModel: UserModel;
+    let importedApp: AppDefinitionRepresentation;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -45,9 +44,9 @@ describe('Task Details - No form', () => {
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         await new ProcessUtil(apiService).startProcessOfApp(importedApp.name);
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
-    afterAll( async () => {
+    afterAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
     });
@@ -63,6 +62,8 @@ describe('Task Details - No form', () => {
         await taskPage.taskDetails().checkCompleteTaskButtonIsEnabled();
         await taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
         await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+
+        const noFormMessage = 'No forms attached';
         await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
-   });
+    });
 });

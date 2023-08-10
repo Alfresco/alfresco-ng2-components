@@ -17,21 +17,21 @@
 
 import { TestBed } from '@angular/core/testing';
 import { ThumbnailService } from './thumbnail.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ThumbnailService', () => {
 
     let service: ThumbnailService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
-        });
         service = TestBed.inject(ThumbnailService);
+    });
+
+    it('should return the correct icon for a PDF document', () => {
+        expect(service.getMimeTypeIcon('application/pdf')).toContain('ft_ic_pdf');
+    });
+
+    it('should return the correct icon for a DOCX document', () => {
+        expect(service.getMimeTypeIcon('application/msword')).toContain('ft_ic_ms_word');
     });
 
     it('should return the correct icon for a plain text file', () => {

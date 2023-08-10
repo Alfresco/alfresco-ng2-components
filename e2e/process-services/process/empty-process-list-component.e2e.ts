@@ -16,15 +16,14 @@
  */
 
 import { browser } from 'protractor';
-import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
-import { ProcessListPage } from './../pages/process-list.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
+import { ProcessListPage } from '../pages/process-list.page';
 
 describe('Empty Process List Test', () => {
-
     const appWithProcess = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleAppWithUserForm = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
@@ -37,7 +36,7 @@ describe('Empty Process List Test', () => {
     const startProcessPage = new StartProcessPage();
     const apiService = createApiService();
 
-    let user;
+    let user: UserModel;
 
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
@@ -54,7 +53,7 @@ describe('Empty Process List Test', () => {
         await applicationsService.importPublishDeployApp(simpleAppWithUserForm.file_path);
 
         await loginPage.login(user.username, user.password);
-   });
+    });
 
     it('[C260494] Should add process to list when a process is created', async () => {
         await navigationBarPage.navigateToProcessServicesPage();

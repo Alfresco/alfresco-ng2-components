@@ -19,7 +19,10 @@ import { ApplicationsUtil } from './applications.util';
 import { Logger } from '../../core/utils/logger';
 import { StringUtil } from '../../../shared/utils/string.util';
 import { ApiService } from '../../../shared/api/api.service';
-import { TasksApi, ProcessInstancesApi, TaskRepresentation, ProcessDefinitionsApi } from '@alfresco/js-api';
+import {
+    ProcessDefinitionsApi, ProcessInstanceRepresentation, ProcessInstancesApi, TaskRepresentation, TasksApi, ProcessDefinitionRepresentation,
+    ResultListDataRepresentationProcessInstanceRepresentation
+} from '@alfresco/js-api';
 
 export class ProcessUtil {
 
@@ -37,27 +40,27 @@ export class ProcessUtil {
         this.tasksApi = new TasksApi(apiService.getInstance());
     }
 
-    async startProcessByDefinitionName(appName: string, processDefinitionName: string, processName?: string): Promise<any> {
+    async startProcessByDefinitionName(appName: string, processDefinitionName: string, processName?: string): Promise<ProcessInstanceRepresentation> {
         try {
             const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
-
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
-            const startProcessOptions: any = { processDefinitionId: processDefinition.id, name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase() };
-
-            return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
+            return this.processInstancesApi.startNewProcessInstance({
+                processDefinitionId: processDefinition.id,
+                name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase()
+            });
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            return null;
         }
     }
 
-    async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<any> {
+    async startProcessByDefinitionNameWithFormValues(appName: string, processDefinitionName: string, values: any, processName?: string): Promise<ProcessInstanceRepresentation> {
         try {
             const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
-
             const processDefinition = await this.getProcessDefinitionByName(appDefinition.deploymentId, processDefinitionName);
 
-            const startProcessOptions: any = {
+            const startProcessOptions = {
                 processDefinitionId: processDefinition.id,
                 name: processName ? processName : processDefinitionName + StringUtil.generateRandomString(5).toLowerCase(),
                 values
@@ -66,17 +69,19 @@ export class ProcessUtil {
             return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            return null;
         }
     }
 
-    async startProcessOfApp(appName: string, processName?: string): Promise<any> {
+    async startProcessOfApp(appName: string, processName?: string): Promise<ProcessInstanceRepresentation> {
         try {
             const appDefinition = await this.applicationsUtil.getAppDefinitionByName(appName);
             const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
-            const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
+            const startProcessOptions = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
             return this.processInstancesApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            return null;
         }
     }
 
@@ -88,21 +93,22 @@ export class ProcessUtil {
         }
     }
 
-    async getProcessDefinitionByName(deploymentId: string, processName: string): Promise<any> {
+    async getProcessDefinitionByName(deploymentId: string, processName: string): Promise<ProcessDefinitionRepresentation> {
         try {
             const processDefinitionList = await this.processDefinitionsApi.getProcessDefinitions({ deploymentId });
-            const chosenProcess = processDefinitionList.data.find( (processDefinition) => processDefinition.name === processName);
-            return chosenProcess;
+            return processDefinitionList.data.find((processDefinition) => processDefinition.name === processName);
         } catch (error) {
             Logger.error('Get ProcessDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            return null;
         }
     }
 
-    async getProcessInstanceByName(processInstanceName: string, processInstanceStatus?: string, maxNumberOfResults?: number): Promise<any> {
+    async getProcessInstanceByName(processInstanceName: string, processInstanceStatus?: string, maxNumberOfResults?: number): Promise<ResultListDataRepresentationProcessInstanceRepresentation> {
         try {
             return await this.processInstancesApi.filterProcessInstances({filter: {name: processInstanceName, state: processInstanceStatus}, size: maxNumberOfResults});
         } catch (error) {
             Logger.error('List process instances using a filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            return null;
         }
     }
 

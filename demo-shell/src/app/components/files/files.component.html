@@ -50,23 +50,6 @@
                         [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
-                    <button
-                        mat-icon-button
-                        title="Create Library}"
-                        data-automation-id="create-new-library"
-                        (click)="createLibrary()">
-                        <mat-icon>library_add</mat-icon>
-                    </button>
-                    <button
-                        data-automation-id="edit-folder"
-                        mat-icon-button
-                            [disabled]="!canEditFolder(documentList.selection)"
-                            title="Edit folder"
-                            (error)="openSnackMessageError($event)"
-                            [adf-edit-folder]="documentList.selection[0]?.entry"
-                            (success)="documentList.reload()">
-                        <mat-icon>create</mat-icon>
-                    </button>
                     <button mat-icon-button
                             [disabled]="!hasSelection(documentList.selection)"
                             title="Download"
@@ -82,23 +65,6 @@
                             (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
                         <mat-icon>delete</mat-icon>
-                    </button>
-                    <button
-                        data-automation-id="favorite"
-                        mat-icon-button
-                            [disabled]="!documentList.selection.length"
-                            #favorite="adfFavorite"
-                            [adf-node-favorite]="documentList.selection"
-                            title="Add to favorites">
-                        <mat-icon>{{ favorite.hasFavorites() ? 'star' :'star_border' }}</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                            [disabled]="documentList.selection.length && !shareRef.isFile"
-                            [baseShareUrl]="baseShareUrl"
-                            #shareRef="adfShare"
-                            [adf-share]="documentList.selection[0]"
-                            [title]="(shareRef.isShared ? 'Edit settings' : 'Share')">
-                        <mat-icon>share</mat-icon>
                     </button>
                 </div>
 
@@ -123,11 +89,6 @@
                             [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>New folder</span>
-                    </button>
-                    <button mat-menu-item
-                            (click)="createLibrary()">
-                        <mat-icon>library_add</mat-icon>
-                        <span>Create Library</span>
                     </button>
                     <button mat-menu-item
                             [disabled]="!canEditFolder(documentList.selection)"
@@ -271,24 +232,6 @@
                         handler="download">
                     </content-action>
                     <content-action
-                        icon="content_copy"
-                        title="Copy"
-                        permission="copy"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="copy">
-                    </content-action>
-                    <content-action
-                        icon="redo"
-                        title="Move"
-                        permission="update"
-                        [disableWithNoPermission]="true"
-                        (error)="onContentActionError($event)"
-                        (success)="onContentActionSuccess($event)"
-                        handler="move">
-                    </content-action>
-                    <content-action
                         icon="delete"
                         permission="delete"
                         [disableWithNoPermission]="true"
@@ -315,13 +258,6 @@
                         target="document"
                         title="Manage versions"
                         (execute)="onManageVersions($event)">
-                    </content-action>
-                    <content-action
-                        target="document"
-                        icon="lock"
-                        permission="lock"
-                        handler="lock"
-                        title="Lock">
                     </content-action>
                     <content-action
                         icon="beach_access"
@@ -451,12 +387,6 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [checked]="allowDropFiles" (change)="toggleAllowDropFiles()">
-                Enable Drop Files in a folder or a file
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle id="adf-version-upload-switch" [(ngModel)]="versioning">
                 Enable versioning
             </mat-slide-toggle>
@@ -504,39 +434,6 @@
             </mat-slide-toggle>
         </section>
 
-        <section>
-            <mat-slide-toggle [(ngModel)]="enableDownloadPrompt" id="enableDownloadPrompt" (change)="onEnableDownloadPrompt()">
-                Enable Download Prompt
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableDownloadPrompt">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptDelay" (change)="onDownloadPromptDelayChange()">
-            </mat-form-field>
-        </section>
-
-        <section *ngIf="enableDownloadPrompt">
-            <mat-slide-toggle [(ngModel)]="enableDownloadPromptReminder" id="enableDownloadPromptReminders" (change)="onEnableDownloadPromptReminderChange()">
-                Enable Download Prompt Reminders
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableDownloadPrompt && enableDownloadPromptReminder">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="downloadPromptReminderDelay" (change)="onDownloadPromptReminderChange()">
-            </mat-form-field>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="enableFileAutoDownload" id="enableFileAutoDownload" (change)="onEnableFileAutoDownloadChange()">
-                Enable FileAutoDownload
-            </mat-slide-toggle>
-        </section>
-        <section *ngIf="enableFileAutoDownload">
-            <mat-form-field>
-                <input matInput type="number" [(ngModel)]="fileAutoDownloadSizeThresholdInMB" (change)="onFileAutoDownloadSizeThresholdChange()">
-            </mat-form-field>
-        </section>
-
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field floatPlaceholder="float">
@@ -555,7 +452,6 @@
         <div *ngIf="!acceptedFilesTypeShow">
             <adf-upload-button
                 #uploadButton
-                tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [multipleFiles]="multipleFileUpload"
@@ -572,7 +468,6 @@
         <div *ngIf="acceptedFilesTypeShow">
             <adf-upload-button
                 #uploadButton
-                tooltip="Custom tooltip"
                 [disabled]="!enableUpload"
                 [rootFolderId]="documentList.currentFolderId"
                 [acceptedFilesType]="acceptedFilesType"

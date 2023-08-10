@@ -31,17 +31,8 @@ import {
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
-    MinimalNodeEntity,
-    NodePaging,
-    Pagination,
-    MinimalNodeEntryEntity,
-    SiteEntry,
-    SearchEntry
-} from '@alfresco/js-api';
-import {
-    AppConfigService,
-    AppConfigValues,
     NotificationService,
     DataRow,
     UserPreferencesService,
@@ -60,13 +51,11 @@ import {
     PermissionStyleModel,
     UploadFilesEvent,
     ConfirmDialogComponent,
-    LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
     FileUploadEvent,
-    NodesApiService,
-    SharedLinksApiService
+    NodesApiService
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
@@ -97,10 +86,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     allowDropFiles = true;
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
-
-    baseShareUrl = (
-        this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
-        this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
 
     selectionModes = [
         {value: 'none', viewValue: 'None'},
@@ -232,25 +217,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    enableDownloadPrompt = this.appConfig.get<boolean>('viewer.enableDownloadPrompt', false);
-    enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
-    downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
-    downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
-    enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
-    fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
-
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: ContentService,
                 private dialog: MatDialog,
                 private location: Location,
                 private router: Router,
-                private appConfig: AppConfigService,
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
                 private contentMetadataService: ContentMetadataService,
-                private sharedLinksApiService: SharedLinksApiService,
                 private dialogAspectListService: DialogAspectListService,
                 private nodeService: NodesApiService) {
     }
@@ -264,11 +240,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     toggleThumbnails() {
         this.thumbnails = !this.thumbnails;
-        this.documentList.reload();
-    }
-
-    toggleAllowDropFiles() {
-        this.allowDropFiles = !this.allowDropFiles;
         this.documentList.reload();
     }
 
@@ -319,12 +290,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(value => this.onFolderAction(value));
 
         this.contentMetadataService.error
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((err: { message: string }) => {
-                this.notificationService.showError(err.message);
-            });
-
-        this.sharedLinksApiService.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
@@ -431,11 +396,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.openSnackMessageError(message);
-    }
-
-    onContentActionSuccess(message: string) {
-        this.openSnackMessageInfo(message);
-        this.documentList.reload();
     }
 
     onDeleteActionSuccess(message: string) {
@@ -624,16 +584,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
     }
 
-    createLibrary(): void {
-        const dialogInstance: any = this.dialog.open(LibraryDialogComponent, {
-            width: '400px'
-        });
-
-        dialogInstance.componentInstance.error.subscribe((message: string) => {
-            this.notificationService.openSnackMessage(message);
-        });
-    }
-
     searchResultsHighlight(search: SearchEntry): string {
         if (search && search.highlight) {
             return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
@@ -672,35 +622,5 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
         }
         this.documentList.reload();
-    }
-
-    onEnableDownloadPrompt() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
-    }
-
-    onDownloadPromptDelayChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
-    }
-
-    onEnableDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPromptReminder'] = this.enableDownloadPromptReminder;
-    }
-
-    onDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
-    }
-
-    onEnableFileAutoDownloadChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableFileAutoDownload'] = this.enableFileAutoDownload;
-    }
-
-    onFileAutoDownloadSizeThresholdChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['fileAutoDownloadSizeThresholdInMB'] = this.fileAutoDownloadSizeThresholdInMB;
     }
 }

@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { createApiService, ApplicationsUtil, LoginPage, TaskUtil, UsersActions } from '@alfresco/adf-testing';
-import { TasksPage } from './../pages/tasks.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { ChecklistDialog } from './../pages/dialog/create-checklist-dialog.page';
+import { createApiService, ApplicationsUtil, LoginPage, TaskUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
+import { TasksPage } from '../pages/tasks.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { ChecklistDialog } from '../pages/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 
 describe('Checklist component', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -38,11 +37,16 @@ describe('Checklist component', () => {
     const applicationService = new ApplicationsUtil(apiService);
     const taskUtil = new TaskUtil(apiService);
 
-    let processUserModel;
+    let processUserModel: UserModel;
 
     const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
     const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
-    const removeChecklist = ['removeFirstRunningChecklist', 'removeSecondRunningChecklist', 'removeFirstCompletedChecklist', 'removeSecondCompletedChecklist'];
+    const removeChecklist = [
+        'removeFirstRunningChecklist',
+        'removeSecondRunningChecklist',
+        'removeFirstCompletedChecklist',
+        'removeSecondCompletedChecklist'
+    ];
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
     beforeAll(async () => {
@@ -54,19 +58,18 @@ describe('Checklist component', () => {
 
         await apiService.login(processUserModel.username, processUserModel.password);
 
-        for (let i = 0; i < tasks.length; i++) {
-            await taskUtil.createStandaloneTask(tasks[i]);
+        for (const item of tasks) {
+            await taskUtil.createStandaloneTask(item);
         }
 
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C279976] Should no checklist be created when no title is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -93,7 +96,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        await (await taskPage.clickOnAddChecklistButton());
+        await await taskPage.clickOnAddChecklistButton();
         await taskPage.checkChecklistDialogIsDisplayed();
         await expect(await taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
         await expect(await taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
@@ -122,7 +125,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.tasksListPage().selectRow(tasks[2]);
 
-        await (await taskPage.clickOnAddChecklistButton());
+        await await taskPage.clickOnAddChecklistButton();
         await taskPage.checkChecklistDialogIsDisplayed();
         await checklistDialog.addName(removeChecklist[0]);
         await checklistDialog.clickCreateChecklistButton();

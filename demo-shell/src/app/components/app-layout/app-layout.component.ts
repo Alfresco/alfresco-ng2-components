@@ -33,27 +33,17 @@ export class AppLayoutComponent {
         {
             href: '/cloud', icon: 'cloud', title: 'Process Cloud', children: [
                 { href: '/cloud/', icon: 'cloud', title: 'Home' },
-                { href: '/cloud/community', icon: 'cloud', title: 'Community' },
-                { href: '/form-cloud', icon: 'poll', title: 'Form' },
-                { href: '/cloud/people-group-cloud', icon: 'group', title: 'People/Group Cloud' },
-                { href: '/cloud/task-header-cloud', icon: 'cloud', title: 'Task Header Cloud' },
-                { href: '/cloud/service-task-list', icon: 'cloud', title: 'Service Task List' }
+                { href: '/form-cloud', icon: 'poll', title: 'Form' }
             ]
         },
         { href: '/activiti', icon: 'device_hub', title: 'Process Services', children: [
             { href: '/activiti', icon: 'vpn_key', title: 'App' },
             { href: '/process-list', icon: 'assignment', title: 'Process List' },
-            { href: '/form', icon: 'poll', title: 'Form' },
-            { href: '/form-list', icon: 'library_books', title: 'Form List' },
-            { href: '/form-loading', icon: 'cached', title: 'Form Loading' }
+            { href: '/form', icon: 'poll', title: 'Form' }
         ]},
         { href: '/login', icon: 'vpn_key', title: 'Login' },
-        { href: '/trashcan', icon: 'delete', title: 'Trashcan' },
-        { href: '/dl-custom-sources', icon: 'extension', title: 'Custom Sources' },
         { href: '/settings-layout', icon: 'settings', title: 'Settings' },
-        { href: '/config-editor', icon: 'code', title: 'Configuration Editor' },
-        { href: '/treeview', icon: 'nature', title: 'Tree View' },
-        { href: '/about', icon: 'info_outline', title: 'About' }
+        { href: '/treeview', icon: 'nature', title: 'Tree View' }
     ];
 
     enableRedirect = true;
