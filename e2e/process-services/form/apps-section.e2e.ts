@@ -39,7 +39,7 @@ describe('Modify applications', () => {
     const applicationService = new ApplicationsUtil(apiService);
     const appsApi = new AppDefinitionsApi(apiService.getInstance());
 
-    let firstApp: any;
+    let firstApp: AppDefinitionRepresentation;
     let appVersionToBeDeleted: AppDefinitionRepresentation;
 
     beforeAll(async () => {
@@ -132,7 +132,7 @@ describe('Modify applications', () => {
                 name: appToBeDeleted.title,
                 description: newDescription,
                 definition: {
-                    models: [firstApp.definition.models[0]],
+                    models: [firstApp['definition'].models[0]],
                     theme: 'theme-4',
                     icon: 'glyphicon-user'
                 }

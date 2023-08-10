@@ -24,12 +24,12 @@ import { createApiService,
     UsersActions
 } from '@alfresco/adf-testing';
 import { FolderModel } from '../models/ACS/folder.model';
-import { ContentServicesPage } from '../core/pages/content-services.page';
+import { ContentServicesPage } from './pages/content-services.page';
 import { InfinitePaginationPage } from './pages/infinite-pagination.page';
-import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { NavigationBarPage } from './pages/navigation-bar.page';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Enable infinite scrolling', () => {
-
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
@@ -45,9 +45,9 @@ describe('Enable infinite scrolling', () => {
     const nrOfFiles = 30;
     let deleteFileNames = [];
     const nrOfDeletedFiles = 22;
-    let deleteUploaded;
+    let deleteUploaded: NodeEntry;
     const pageSize = 20;
-    let emptyFolderModel;
+    let emptyFolderModel: NodeEntry;
 
     const files = {
         base: 'newFile',

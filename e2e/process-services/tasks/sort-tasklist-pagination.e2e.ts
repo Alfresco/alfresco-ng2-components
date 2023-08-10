@@ -15,20 +15,13 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    PaginationPage,
-    StringUtil, TaskUtil,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, PaginationPage, StringUtil, TaskUtil, UsersActions, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TasksPage } from './../pages/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Task List Pagination - Sorting', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -41,9 +34,8 @@ describe('Task List Pagination - Sorting', () => {
     const taskUtil = new TaskUtil(apiService);
 
     const nrOfTasks = 20;
-    let processUserModel;
-    const taskNameBase = 'Task';
-    const taskNames = StringUtil.generateFilesNames(10, nrOfTasks + 9, taskNameBase, '');
+    let processUserModel: UserModel;
+    const taskNames = StringUtil.generateFilesNames(10, nrOfTasks + 9, 'Task', '');
 
     const itemsPerPage = {
         five: '5',

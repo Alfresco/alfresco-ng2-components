@@ -23,9 +23,9 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { AttachmentListPage } from '../pages/attachment-list.page';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Custom App', () => {
-
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginPage();
@@ -41,7 +41,7 @@ describe('Start Task - Custom App', () => {
 
     const taskPage = new TasksPage();
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File', 'Spinner'];
-    let appModel: any;
+    let appModel: AppDefinitionRepresentation;
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
@@ -59,7 +59,7 @@ describe('Start Task - Custom App', () => {
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     it('[C263942] Should be possible to modify a task', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(appModel.name)).clickTasksButton();
@@ -83,8 +83,9 @@ describe('Start Task - Custom App', () => {
 
         await taskDetails.clickAddInvolvedUserButton();
 
-        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
-        ).toEqual(assigneeUserModel.email);
+        await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)).toEqual(
+            assigneeUserModel.email
+        );
 
         await taskDetails.selectActivityTab();
 
