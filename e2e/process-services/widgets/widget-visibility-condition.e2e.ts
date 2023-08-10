@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 const widgets = {
     textOneId: 'text1',
@@ -50,7 +45,6 @@ const checkbox = {
 };
 
 describe('Process-Services - Visibility conditions', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
 
     const loginPage = new LoginPage();
@@ -62,22 +56,23 @@ describe('Process-Services - Visibility conditions', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.username, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        await apiService.login(processUserModel.username, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-       deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
+        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.username, processUserModel.password);
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.username, processUserModel.password);
     });
 
     beforeEach(async () => {

@@ -15,20 +15,14 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Hyperlink widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.HYPERLINK;
 
     const loginPage = new LoginPage();
@@ -40,9 +34,10 @@ describe('Hyperlink widget', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let processUserModel;
-    let deployedAppId; let process;
+    let appModel: AppDefinitionRepresentation;
+    let processUserModel: UserModel;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');

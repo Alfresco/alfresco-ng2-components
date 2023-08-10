@@ -27,10 +27,11 @@ import {
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
-import { FormDemoPage } from '.././pages/form-demo.page';
+import { FormDemoPage } from '../pages/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Date widget', () => {
 
@@ -41,10 +42,10 @@ describe('Date widget', () => {
     const widget = new Widget();
 
     const dateWidget = widget.dateWidget();
-    let appModel: any;
+    let appModel: AppDefinitionRepresentation;
     let processUserModel: UserModel;
     let deployedAppId: number;
-    let process: any;
+    let process: ProcessInstanceRepresentation;
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);

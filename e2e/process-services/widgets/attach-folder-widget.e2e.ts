@@ -15,29 +15,24 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Attach Folder widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.ATTACH_FOLDER;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
@@ -56,7 +51,7 @@ describe('Attach Folder widget', () => {
 
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
         await new ProcessServicesPage().goToAppByAppId(deployedAppId);
@@ -69,7 +64,7 @@ describe('Attach Folder widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.upload_button_id);

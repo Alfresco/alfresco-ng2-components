@@ -28,9 +28,9 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Dynamic Table widget ', () => {
-
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
@@ -43,7 +43,7 @@ describe('Dynamic Table widget ', () => {
 
     let processUserModel: UserModel;
     let deployedAppId: number;
-    let process: any;
+    let process: ProcessInstanceRepresentation;
 
     describe('with Date Time Widget App', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
@@ -188,15 +188,15 @@ describe('Dynamic Table widget ', () => {
 
             await widget.dynamicTable().setDatatableInput('name', app.CUSTOM_VALIDATOR.FIELD.NAME);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Id\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Id' is required.`);
 
             await widget.dynamicTable().setDatatableInput('id', app.CUSTOM_VALIDATOR.FIELD.ID);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Number\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Number' is required.`);
 
             await widget.dynamicTable().setDatatableInput('12', app.CUSTOM_VALIDATOR.FIELD.NUM);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Address\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Address' is required.`);
 
             await widget.dynamicTable().setDatatableInput('address', app.CUSTOM_VALIDATOR.FIELD.ADDRESS);
             await widget.dynamicTable().clickSaveButton();

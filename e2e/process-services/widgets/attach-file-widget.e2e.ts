@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    FileBrowserUtil,
-    LoginPage,
-    UsersActions,
-    ViewerPage,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, FileBrowserUtil, LoginPage, UsersActions, ViewerPage, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -33,7 +26,6 @@ import { FiltersPage } from '../pages/filters.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Attach widget - File', () => {
-
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
 
     const loginPage = new LoginPage();
@@ -49,9 +41,8 @@ describe('Attach widget - File', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 
-    let processUserModel;
-    const pdfFile = new FileModel({name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name});
-    const appFields = app.form_fields;
+    let processUserModel: UserModel;
+    const pdfFile = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -73,8 +64,8 @@ describe('Attach widget - File', () => {
         await newTask.selectForm(app.formName);
         await newTask.clickStartButton();
 
-        await widget.attachFileWidget().attachFile(appFields.attachFile_id, pdfFile.location);
-        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().attachFile(app.form_fields.attachFile_id, pdfFile.location);
+        await widget.attachFileWidget().checkFileIsAttached(app.form_fields.attachFile_id, pdfFile.name);
     });
 
     afterAll(async () => {
@@ -83,7 +74,7 @@ describe('Attach widget - File', () => {
     });
 
     it('[C268067] Should be able to preview, download and remove attached files from an active form', async () => {
-        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().toggleAttachedFileMenu(app.form_fields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().checkAttachFileOptionsActiveForm();
 
         await widget.attachFileWidget().viewAttachedFile();
@@ -91,11 +82,11 @@ describe('Attach widget - File', () => {
         await viewerPage.checkCloseButtonIsDisplayed();
         await viewerPage.clickCloseButton();
 
-        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().toggleAttachedFileMenu(app.form_fields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().downloadFile();
         await FileBrowserUtil.isFileDownloaded(pdfFile.name);
 
-        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().toggleAttachedFileMenu(app.form_fields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().removeAttachedFile();
         await widget.attachFileWidget().attachFileWidgetDisplayed();
     });
@@ -107,9 +98,9 @@ describe('Attach widget - File', () => {
         await tasksListPage.checkTaskListIsLoaded();
         await filtersPage.goToFilter('Completed Tasks');
         await tasksListPage.checkTaskListIsLoaded();
-        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().checkFileIsAttached(app.form_fields.attachFile_id, pdfFile.name);
 
-        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().toggleAttachedFileMenu(app.form_fields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().checkAttachFileOptionsCompletedForm();
 
         await widget.attachFileWidget().viewAttachedFile();
@@ -117,7 +108,7 @@ describe('Attach widget - File', () => {
         await viewerPage.checkCloseButtonIsDisplayed();
         await viewerPage.clickCloseButton();
 
-        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
+        await widget.attachFileWidget().toggleAttachedFileMenu(app.form_fields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().downloadFile();
         await FileBrowserUtil.isFileDownloaded(pdfFile.name);
     });

@@ -27,6 +27,7 @@ import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Date and time widget', () => {
 
@@ -42,9 +43,9 @@ describe('Date and time widget', () => {
     const processUtil = new ProcessUtil(apiService);
 
     let processUserModel: UserModel;
-    let appModel: any;
+    let appModel: AppDefinitionRepresentation;
     let deployedAppId: number;
-    let process: any;
+    let process: ProcessInstanceRepresentation;
 
     beforeAll(async () => {
        await apiService.loginWithProfile('admin');

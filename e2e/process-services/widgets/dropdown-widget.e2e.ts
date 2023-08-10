@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
+import {
+  createApiService,
+  ApplicationsUtil,
+  LoginPage,
+  ProcessUtil,
+  UsersActions,
+  Widget, UserModel
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Dropdown widget', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.DROPDOWN;
@@ -39,23 +41,24 @@ describe('Dropdown widget', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.username, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        await apiService.login(processUserModel.username, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-       deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
+        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.username, processUserModel.password);
+    });
 
     beforeEach(async () => {
         await new ProcessServicesPage().goToAppByAppId(deployedAppId);
