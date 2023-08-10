@@ -1,14 +1,20 @@
 <div class="adf-categories-management">
-    <p *ngIf="!categories.length && !categoryNameControlVisible"
-       class="adf-no-categories-message">
-        {{ noCategoriesMsg | translate }}
-    </p>
-    <div class="adf-categories-list"
-         [class.adf-categories-list-fixed]="!categoryNameControlVisible">
+    <div *ngIf="((!categoryNameControlVisible && categories.length)) || categoryNameControlVisible"
+         class="adf-category-name-field">
+        <input #categoryNameInput
+               matInput autocomplete="off"
+               [formControl]="categoryNameControl"
+               (keyup.enter)="addCategory()"
+               aria-labelledby="adf-category-name-input-label"
+               placeholder="{{'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate }}"
+               adf-auto-focus />
+        <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
+    </div>
+    <div class="adf-categories-list" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
         <span
             *ngFor="let category of categories"
             [class.adf-categories-padded]="!isCRUDMode"
-            class="adf-assigned-categories">
+                class="adf-assigned-categories">
             {{ category.name }}
             <button
                 data-automation-id="categories-remove-category-button"
@@ -21,38 +27,14 @@
             </button>
         </span>
     </div>
-    <div *ngIf="((!categoryNameControlVisible && categories.length)) || categoryNameControlVisible"
-        [hidden]="!categoryNameControlVisible"
-        class="adf-category-name-field">
-        <mat-form-field>
-            <mat-icon matPrefix>search</mat-icon>
-            <mat-label id="adf-category-name-input-label">
-                {{ 'CATEGORIES_MANAGEMENT.NAME' | translate }}
-            </mat-label>
-            <input
-                #categoryNameInput
-                matInput
-                autocomplete="off"
-                [formControl]="categoryNameControl"
-                (keyup.enter)="addCategory()"
-                aria-labelledby="adf-category-name-input-label"
-                adf-auto-focus
-            />
-            <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
-        </mat-form-field>
-        <button
-            mat-icon-button
-            [class.adf-btn-padded]="!isCRUDMode"
-            (click)="hideNameInput()"
-            [attr.title]="'CATEGORIES_MANAGEMENT.HIDE_INPUT' | translate">
-            <mat-icon>remove</mat-icon>
-        </button>
-    </div>
+    <p *ngIf="!categories.length" class="adf-no-categories-message">
+        {{ noCategoriesMsg | translate }}
+    </p>
 </div>
 <div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
     <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
         <span class="adf-create-category-label"
-            (click)="addCategory()"
+        (click)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
         </span>
@@ -77,8 +59,8 @@
             </mat-selection-list>
         </ng-container>
         <mat-spinner
-            *ngIf="existingCategoriesLoading"
-            [diameter]="50"
+               *ngIf="existingCategoriesLoading"
+               [diameter]="50"
             [attr.aria-label]="'CATEGORIES_MANAGEMENT.LOADING' | translate">
         </mat-spinner>
     </div>
