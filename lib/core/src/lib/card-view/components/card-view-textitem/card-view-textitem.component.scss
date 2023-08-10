@@ -171,7 +171,7 @@
     }
 }
 
-.mat-form-field {
+.mat-form-field:not(.adf-textitem-chip-list-input) {
     .mat-form-field-suffix {
         .adf-textitem-edit-icon {
             display: block;
