@@ -626,5 +626,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Vis {{ count }} mere"
   },
-  "swsdp": "Prøve: Websted Design Projekt"
+  "swsdp": "Prøve: Websted Design Projekt",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "E-mailadressen for en eller flere modtagere er ikke gyldig. Kontakt din it-afdeling.",
+      "INVALID_SENDER_EMAIL": "Din e-mailadresse skal være gyldig, inden du kan anmode om at blive tilmeldt.",
+      "JOIN_CANCEL_FAILED": "Din anmodning om tilmelding kan ikke annulleres",
+      "JOIN_REQUEST_FAILED": "Du kan ikke tilmeldes biblioteket"
+    },
+    "INFO": {
+      "JOINED": "Du er nu tilmeldt biblioteket",
+      "JOIN_CANCELED": "Anmodningen om at blive tilmeldt biblioteket er blevet annulleret",
+      "JOIN_REQUESTED": "Anmodningen om at blive tilmeldt biblioteket er blevet sendt"
+    }
+  }
 }

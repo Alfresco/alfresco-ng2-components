@@ -626,5 +626,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Visa {{ count }} till"
   },
-  "swsdp": "Sampel: Webbplatsdesignprojekt"
+  "swsdp": "Sampel: Webbplatsdesignprojekt",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Mottagarens/mottagarnas e-postadress(er) inte giltig(a), kontakta IT-avdelningen.",
+      "INVALID_SENDER_EMAIL": "Du måste ha en giltig e-postadress för att få gå med.",
+      "JOIN_CANCEL_FAILED": "Kan inte avbryta din begäran om att gå med",
+      "JOIN_REQUEST_FAILED": "Kan inte gå med i biblioteket"
+    },
+    "INFO": {
+      "JOINED": "Gick med i bibliotek",
+      "JOIN_CANCELED": "Avbröt begäran om att gå med i biblioteket",
+      "JOIN_REQUESTED": "Begäran skickad om att gå med i det här biblioteket"
+    }
+  }
 }
