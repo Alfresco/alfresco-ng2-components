@@ -22,6 +22,7 @@ import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
 })
 export class AboutPanelDirective {
     @Input() label!: string;
+    @Input() automationId: string;
 
     @ContentChild(TemplateRef)
     layoutTemplate!: TemplateRef<any>;
