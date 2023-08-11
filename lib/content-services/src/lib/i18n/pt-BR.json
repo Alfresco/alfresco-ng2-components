@@ -626,5 +626,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Visualizar{{ count }} mais"
   },
-  "swsdp": "Amostra: Projeto de design do site da Web"
+  "swsdp": "Amostra: Projeto de design do site da Web",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "O endereço de e-mail do(s) destinatário(s) não é válido, entre em contato com a TI.",
+      "INVALID_SENDER_EMAIL": "Você deve ter um endereço de e-mail válido para solicitar a entrada.",
+      "JOIN_CANCEL_FAILED": "Não foi possível cancelar a solicitação de ingressar",
+      "JOIN_REQUEST_FAILED": "Não foi possível ingressar na biblioteca"
+    },
+    "INFO": {
+      "JOINED": "Ingressou na biblioteca",
+      "JOIN_CANCELED": "Cancelou a solicitação de ingressar na biblioteca",
+      "JOIN_REQUESTED": "Solicitação enviada para ingressar nesta biblioteca"
+    }
+  }
 }

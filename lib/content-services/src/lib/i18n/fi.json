@@ -626,5 +626,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Katso {{ count }} lisää"
   },
-  "swsdp": "Otos: Verkkosivuston suunnitteluprojekti"
+  "swsdp": "Otos: Verkkosivuston suunnitteluprojekti",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Vastaanottajien sähköpostiosoitteet eivät ole kelvollisia. Ota yhteyttä IT-tukeen.",
+      "INVALID_SENDER_EMAIL": "Sähköpostiosoitteesi täytyy olla kelvollinen, ennen kuin voit pyytää liittymistä.",
+      "JOIN_CANCEL_FAILED": "Liittymispyynnön peruuttaminen ei onnistu",
+      "JOIN_REQUEST_FAILED": "Kirjastoon liittyminen ei onnistu"
+    },
+    "INFO": {
+      "JOINED": "Kirjastoon liityttiin",
+      "JOIN_CANCELED": "Tämän kirjaston liittymispyyntö peruutettiin",
+      "JOIN_REQUESTED": "Tämän kirjaston liittymispyyntö lähetettiin"
+    }
+  }
 }
