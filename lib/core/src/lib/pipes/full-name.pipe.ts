@@ -25,7 +25,7 @@ export class FullNamePipe implements PipeTransform {
     constructor(@Optional() @Inject(ADF_FULL_NAME_PIPE_INCLUDE_EMAIL) private includeEmail = false) {
     }
 
-    transform(user: UserLike, includeEmail: boolean | undefined): string {
+    transform(user: UserLike, includeEmail?: boolean): string {
         return this.buildFullName(user, includeEmail) ? this.buildFullName(user, includeEmail) : this.buildFromUsernameOrEmail(user, includeEmail);
     }
 
