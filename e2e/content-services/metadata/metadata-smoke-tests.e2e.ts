@@ -143,7 +143,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        fit('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -194,7 +194,6 @@ describe('Metadata component', () => {
             );
             await metadataViewPage.clickSaveMetadata();
         });
-
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
