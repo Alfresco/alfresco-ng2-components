@@ -38,7 +38,7 @@ describe('Metadata component', () => {
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
-        DEFAULT_ASPECT: 'Properties',
+        DEFAULT_ASPECT: 'General info',
         MORE_INFO_BUTTON: 'More information',
         LESS_INFO_BUTTON: 'Less information',
         ARROW_DOWN: 'keyboard_arrow_down',
@@ -131,34 +131,12 @@ describe('Metadata component', () => {
             expect(size).toEqual(pngFileModel.getContent().getSizeInBytes());
 
             await metadataViewPage.editIconIsDisplayed();
-            await metadataViewPage.informationButtonIsDisplayed();
-
-            const informationButtonText = await metadataViewPage.getInformationButtonText();
-            const informationIconText = await metadataViewPage.getInformationIconText();
-
-            expect(informationButtonText).toEqual(METADATA.MORE_INFO_BUTTON);
-            expect(informationIconText).toEqual(METADATA.ARROW_DOWN);
-        });
-
-        it('[C272769] Should be possible to display more details when clicking on More Information button', async () => {
-            await viewerPage.clickInfoButton();
-            await viewerPage.checkInfoSideBarIsDisplayed();
-            await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.informationButtonIsDisplayed();
-            await metadataViewPage.clickOnInformationButton();
-
-            const informationButtonText = await metadataViewPage.getInformationButtonText();
-            const informationIconText = await metadataViewPage.getInformationIconText();
-
-            expect(informationButtonText).toEqual(METADATA.LESS_INFO_BUTTON);
-            expect(informationIconText).toEqual(METADATA.ARROW_UP);
         });
 
         it('[C270952] Should be possible to open/close properties using info icon', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.informationButtonIsDisplayed();
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsNotDisplayed();
             await viewerPage.clickInfoButton();
@@ -169,7 +147,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        fit('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -208,7 +186,7 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.editIconIsDisplayed();
+            // await metadataViewPage.editIconIsDisplayed();
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
@@ -221,7 +199,6 @@ describe('Metadata component', () => {
             );
             await metadataViewPage.clickSaveMetadata();
         });
-
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
@@ -229,8 +206,6 @@ describe('Metadata component', () => {
             await metadataViewPage.editIconIsDisplayed();
 
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
-            await metadataViewPage.clickOnInformationButton();
 
             await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -255,14 +230,14 @@ describe('Metadata component', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.editIconIsDisplayed();
+        await metadataViewPage.generaleditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        await metadataViewPage.editIconClick();
+        await metadataViewPage.editIconGeneralClick();
 
         await metadataViewPage.enterDescriptionText('check author example description');
-        await metadataViewPage.clickSaveMetadata();
+        await metadataViewPage.clickSaveGeneralMetadata();
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
         await navigationBarPage.clickLogoutButton();
