@@ -40,11 +40,6 @@ describe('Viewer', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
-    const fileModelVersionTwo = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
-    });
-
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
