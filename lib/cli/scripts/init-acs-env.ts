@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-const alfrescoApi = require('@alfresco/js-api');
+import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi } from '@alfresco/js-api';
+import { exit, argv } from 'node:process';
 const program = require('commander');
 const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const { SharedlinksApi, FavoritesApi, NodesApi } = require('@alfresco/js-api');
 const MAX_RETRY = 10;
 let counter = 0;
 const TIMEOUT = 6000;
@@ -34,14 +33,13 @@ export default async function() {
 }
 
 async function main() {
-
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
         .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
-        .parse(process.argv);
+        .parse(argv);
 
     await checkEnv();
 
@@ -104,7 +102,7 @@ async function uploadFile(fileName: string, fileDestination: string) {
     const file = fs.createReadStream(path.join(__dirname, filePath));
     let uploadedFile: any;
     try {
-        uploadedFile = await alfrescoJsApi.upload.uploadFile(
+        uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(
             file,
             '',
             fileDestination,
@@ -128,7 +126,7 @@ async function lockFile(nodeId) {
         type: 'ALLOW_OWNER_CHANGES'
     };
     try {
-        await alfrescoJsApi.nodes.lockNode(nodeId, data);
+        await new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
         logger.info('File was locked');
      } catch (error) {
         logger.error('Failed to lock file with error: ', error.stack);
@@ -165,8 +163,7 @@ async function favoriteFile(nodeId) {
 
 async function checkEnv() {
     try {
-
-        alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
             hostBpm: program.host,
             hostEcm: program.host,
@@ -176,29 +173,29 @@ async function checkEnv() {
                 clientId: `${program.clientId}`,
                 scope: 'openid'
             }
-        });
+        } as any);
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
-            process.exit(1);
+            exit(1);
         }
         logger.error('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
             logger.error('Give up');
-            process.exit(1);
+            exit(1);
         } else {
             logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
-            checkEnv();
+            await checkEnv();
         }
     }
 }
 
 /* eslint-enable */
 
-function sleep(delay) {
+function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {  }
 }
