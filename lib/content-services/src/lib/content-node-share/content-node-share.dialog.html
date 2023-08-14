@@ -31,7 +31,7 @@
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
                     data-automation-id="adf-slide-toggle-checked"
                     class="adf-share-link__date-time-container">
-                    <mat-form-field class="adf-full-width adf-float-label" floatLabel='never'>
+                    <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
                         <mat-label>{{ 'SHARE.EXPIRATION-PLACEHOLDER' | translate }}</mat-label>
                         <mat-datepicker-toggle
                             [disabled]="time.disabled"
@@ -69,7 +69,7 @@
                 </div>
                 <mat-form-field
                     class="adf-full-width adf-float-label"
-                    floatLabel='never'
+                    floatLabel='always'
                     [ngClass]="isLinkWithExpiryDate? 'adf-share-link__border-color' : ''">
                     <input
                         #sharedLinkInput

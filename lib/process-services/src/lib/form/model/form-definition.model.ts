@@ -20,7 +20,6 @@ import { FormSaveRepresentation } from '@alfresco/js-api';
 export class FormDefinitionModel extends FormSaveRepresentation {
     reusable: boolean = false;
     newVersion: boolean = false;
-    formRepresentation: any;
     formImageBase64: string = '';
 
     constructor(id: string, name: any, lastUpdatedByFullName: string, lastUpdated: string, metadata: any) {

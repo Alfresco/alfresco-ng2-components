@@ -69,7 +69,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     /** Underlying form model instance. */
     @Input()
-    form: FormModel;
+    declare form: FormModel;
 
     /** Task id to fetch corresponding form and values. */
     @Input()

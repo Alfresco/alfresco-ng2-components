@@ -68,7 +68,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /** Underlying form model instance. */
     @Input()
-    form: FormModel;
+    declare form: FormModel;
 
     /** Task id to fetch corresponding form and values. */
     @Input()

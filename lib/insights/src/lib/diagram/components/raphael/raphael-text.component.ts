@@ -26,7 +26,7 @@ import { RaphaelService } from './raphael.service';
 @Directive({selector: 'adf-raphael-text, raphael-text'})
 export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     position: Point;

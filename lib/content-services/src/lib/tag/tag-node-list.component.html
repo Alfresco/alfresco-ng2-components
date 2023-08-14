@@ -1,5 +1,5 @@
 <div class="adf-tag-node-list" [class.adf-flex-column]="limitTagsDisplayed && (!calculationsDone || columnFlexDirection)" #nodeListContainer>
-    <mat-chip-list [class.adf-full-width]="limitTagsDisplayed && !calculationsDone">
+    <mat-chip-set [class.adf-full-width]="limitTagsDisplayed && !calculationsDone">
         <mat-chip class="adf-tag-chips"
                   *ngFor="let currentEntry of tagsEntries; let idx = index"
                   (removed)="removeTag(currentEntry.entry.id)">
@@ -8,7 +8,7 @@
                       class="adf-tag-chips-delete-icon" matChipRemove>cancel
             </mat-icon>
         </mat-chip>
-    </mat-chip-list>
+    </mat-chip-set>
     <button mat-button
         [hidden]="!limitTagsDisplayed"
         [style.left.px]="viewMoreButtonLeftOffset"

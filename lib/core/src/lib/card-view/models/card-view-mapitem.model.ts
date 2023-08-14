@@ -21,7 +21,6 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 
 export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'map';
-    value: Map<string, string>;
 
     get displayValue() {
         if (this.value && this.value.size > 0) {

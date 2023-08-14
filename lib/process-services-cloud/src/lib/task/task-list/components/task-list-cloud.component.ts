@@ -148,7 +148,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     private onDestroyTaskList$ = new Subject<boolean>();
 
     rows: TaskInstanceCloudListViewModel[] = [];
-    dataAdapter: TasksListDatatableAdapter | undefined;
 
     private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
     isLoading$ = combineLatest([

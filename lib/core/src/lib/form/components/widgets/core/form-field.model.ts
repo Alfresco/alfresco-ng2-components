@@ -42,12 +42,12 @@ export class FormFieldModel extends FormWidgetModel {
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
 
     // model members
-    fieldType: string;
-    id: string;
-    name: string;
-    type: string;
+    declare id: string;
+    declare name: string;
+    declare type: string;
+    declare tab: string;
+    declare fieldType: string;
     overrideId: boolean;
-    tab: string;
     rowspan: number = 1;
     colspan: number = 1;
     placeholder: string = null;

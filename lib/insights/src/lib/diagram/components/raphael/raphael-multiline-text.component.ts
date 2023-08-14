@@ -28,7 +28,7 @@ const TEXT_PADDING = 3;
 @Directive({ selector: 'adf-raphael-multiline-text, raphael-multiline-text' })
 export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     position: Point;

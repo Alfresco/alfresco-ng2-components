@@ -26,7 +26,7 @@ import { RaphaelService } from './../raphael.service';
 @Directive({selector: 'adf-raphael-icon-timer, raphael-icon-timer'})
 export class RaphaelIconTimerDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     position: Point;

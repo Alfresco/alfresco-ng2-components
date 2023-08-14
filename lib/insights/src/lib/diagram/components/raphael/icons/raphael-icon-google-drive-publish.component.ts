@@ -26,7 +26,7 @@ import { RaphaelService } from './../raphael.service';
 @Directive({selector: 'adf-raphael-icon-google-drive-publish, raphael-icon-google-drive-publish'})
 export class RaphaelIconGoogleDrivePublishDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     position: Point;

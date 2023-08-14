@@ -21,7 +21,7 @@ import { RoleModel } from '../../models/role.model';
 @Component({
     selector: 'adf-user-role-column',
     template: `
-        <mat-form-field floatLabel="never" class="adf-role-selector-field" *ngIf="!readonly">
+        <mat-form-field floatLabel="always" class="adf-role-selector-field" *ngIf="!readonly">
             <mat-select
                 (click)="$event.stopPropagation()"
                 [placeholder]="placeholder | translate"

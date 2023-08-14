@@ -26,7 +26,7 @@ import { RaphaelService } from './../raphael.service';
 @Directive({selector: 'adf-raphael-icon-message, raphael-icon-message'})
 export class RaphaelIconMessageDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     position: Point;

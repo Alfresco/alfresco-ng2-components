@@ -20,7 +20,7 @@ $theme: mat.define-light-theme(
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
 
-$typography: map-get($theme, typography);
+$typography: map.get($theme, typography);
 
 body,
 html {

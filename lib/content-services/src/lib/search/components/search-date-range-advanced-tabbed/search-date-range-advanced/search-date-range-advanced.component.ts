@@ -59,6 +59,14 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     @Output()
     valid = new EventEmitter<boolean>();
 
+    readonly DateRangeType = DateRangeType;
+    readonly InLastDateType = InLastDateType;
+
+    constructor(private formBuilder: FormBuilder,
+        private userPreferencesService: UserPreferencesService,
+        private dateAdapter: DateAdapter<DateFnsAdapter>,
+        @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {}
+
     form = this.formBuilder.group<SearchDateRangeAdvanced>({
         dateRangeType: DateRangeType.ANY,
         inLastValueType: InLastDateType.DAYS,
@@ -70,14 +78,6 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
     private destroy$ = new Subject<void>();
-
-    readonly DateRangeType = DateRangeType;
-    readonly InLastDateType = InLastDateType;
-
-    constructor(private formBuilder: FormBuilder,
-                private userPreferencesService: UserPreferencesService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
-                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {}
 
     readonly endDateValidator = (formControl: UntypedFormControl): ({ [key: string]: boolean } | null) => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {

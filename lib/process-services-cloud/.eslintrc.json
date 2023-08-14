@@ -4,10 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
+      "extends": ["plugin:@nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
       "rules": {
         "jsdoc/newline-after-description": "warn",
         "@typescript-eslint/naming-convention": "warn",
@@ -53,10 +50,7 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
-        "brace-style": [
-          "error",
-          "1tbs"
-        ],
+        "brace-style": ["error", "1tbs"],
         "comma-dangle": "error",
         "default-case": "error",
         "import/order": "off",
@@ -80,7 +74,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"

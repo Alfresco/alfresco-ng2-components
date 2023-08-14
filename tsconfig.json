@@ -15,7 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "target": "es2015",
+    "target": "ES2022",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types"],
@@ -37,14 +37,7 @@
       "@alfresco/js-api": ["node_modules/@alfresco/js-api"]
     }
   },
-  "exclude": [
-    "lib/config",
-    "integration",
-    "scripts",
-    "assets",
-    "tools",
-    "node_modules"
-  ],
+  "exclude": ["lib/config", "integration", "scripts", "assets", "tools", "node_modules"],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,

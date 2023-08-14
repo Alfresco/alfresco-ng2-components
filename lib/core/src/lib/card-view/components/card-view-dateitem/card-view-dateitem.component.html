@@ -60,7 +60,7 @@
 
     <div *ngIf="property.multivalued"
          class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
-        <mat-chip-list #chipList
+        <mat-chip-grid #chipList
                        class="adf-textitem-chip-list">
             <mat-chip *ngFor="let propertyValue of property.displayValue; let idx = index"
                       [removable]="isEditable()"
@@ -69,11 +69,11 @@
                 <mat-icon *ngIf="isEditable()"
                           matChipRemove>cancel</mat-icon>
             </mat-chip>
-        </mat-chip-list>
+        </mat-chip-grid>
 
         <mat-form-field *ngIf="isEditable()"
                         class="adf-property-field adf-dateitem-editable-controls"
-                        [floatLabel]="'never'"
+                        [floatLabel]="'always'"
                         (click)="showDatePicker()">
             <input matInput
                    class="adf-invisible-date-input"

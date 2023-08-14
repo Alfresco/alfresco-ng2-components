@@ -42,6 +42,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     displayValue$ = new Subject<string>();
     autocompleteOptions: AutocompleteOption[] = [];
 
+    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
+
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
         fileSize: undefined,
@@ -82,8 +84,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     set selectedExtensions(extensions: AutocompleteOption[]) {
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
-
-    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {
         if (this.settings) {

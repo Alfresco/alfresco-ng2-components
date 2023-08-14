@@ -46,9 +46,6 @@ import { TranslationService } from '../../../translation/translation.service';
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
 
     @Input()
-    property: CardViewDateItemModel;
-
-    @Input()
     editable: boolean = false;
 
     @Input()

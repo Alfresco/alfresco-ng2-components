@@ -26,7 +26,7 @@ import { RaphaelService } from './raphael.service';
 @Directive({selector: 'adf-raphael-circle, raphael-circle'})
 export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     center: Point;

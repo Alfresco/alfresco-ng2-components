@@ -32,7 +32,7 @@ const SEQUENCE_FLOW_STROKE = 1.5;
 @Directive({selector: 'adf-raphael-flow-arrow, raphael-flow-arrow'})
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     flow: any;

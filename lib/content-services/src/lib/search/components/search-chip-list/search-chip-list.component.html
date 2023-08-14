@@ -1,4 +1,4 @@
-<mat-chip-list>
+<mat-chip-set>
     <ng-container *ngIf="facetFiltersService.selectedBuckets.length">
         <mat-chip *ngIf="clearAll && facetFiltersService.selectedBuckets.length > 1"
             data-automation-id="reset-filter"
@@ -19,4 +19,4 @@
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
     </ng-container>
-</mat-chip-list>
+</mat-chip-set>

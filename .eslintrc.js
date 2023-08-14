@@ -1,6 +1,7 @@
 path = require('path');
 module.exports = {
   root: true,
+
   ignorePatterns: [
     'projects/**/*',
     '**/node_modules/**/*',
@@ -11,6 +12,7 @@ module.exports = {
     '**/scripts',
     '**/docs'
   ],
+
   overrides: [
     {
       files: [
@@ -189,5 +191,7 @@ module.exports = {
       ],
       rules: {}
     }
-  ]
+  ],
+
+  extends: ['plugin:storybook/recommended']
 }

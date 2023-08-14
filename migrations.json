@@ -1,0 +1,18 @@
+{
+  "migrations": [
+    {
+      "version": "16.0.0-0",
+      "description": "Updates the Angular Material to v16",
+      "factory": "./ng-update/index_bundled#updateToV16",
+      "package": "@angular/material",
+      "name": "migration-v16"
+    },
+    {
+      "version": "16.0.0-0",
+      "description": "Updates the Angular CDK to v16",
+      "factory": "./ng-update/index#updateToV16",
+      "package": "@angular/cdk",
+      "name": "migration-v16"
+    }
+  ]
+}

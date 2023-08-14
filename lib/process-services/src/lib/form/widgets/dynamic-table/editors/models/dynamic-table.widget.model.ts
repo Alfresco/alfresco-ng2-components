@@ -30,7 +30,7 @@ import { RequiredCellValidator } from './required-cell-validator.model';
 
 export class DynamicTableModel extends FormWidgetModel {
 
-    field: FormFieldModel;
+    declare field: FormFieldModel;
     columns: DynamicTableColumn[] = [];
     visibleColumns: DynamicTableColumn[] = [];
     rows: DynamicTableRow[] = [];

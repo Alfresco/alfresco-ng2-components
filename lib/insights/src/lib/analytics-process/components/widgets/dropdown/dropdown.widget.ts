@@ -29,9 +29,6 @@ import { WidgetComponent } from './../widget.component';
 })
 export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements OnInit {
 
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 

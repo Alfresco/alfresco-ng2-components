@@ -28,9 +28,6 @@
 })
 export class CheckboxWidgetAnalyticsComponent extends WidgetComponent {
 
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 

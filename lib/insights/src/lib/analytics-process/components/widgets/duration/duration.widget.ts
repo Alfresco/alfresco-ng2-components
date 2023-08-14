@@ -32,15 +32,6 @@ import { NumberWidgetAnalyticsComponent } from './../number/number.widget';
 export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent implements OnInit {
 
     @Input()
-    field: any;
-
-    @Input('group')
-    public formGroup: UntypedFormGroup;
-
-    @Input('controllerName')
-    public controllerName: string;
-
-    @Input()
     required: boolean = false;
 
     duration: ReportParameterDetailsModel;

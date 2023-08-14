@@ -26,7 +26,7 @@ import { RaphaelService } from './raphael.service';
 @Directive({ selector: 'adf-raphael-rect, raphael-rect' })
 export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     @Input()
-    paper: any;
+    declare paper: any;
 
     @Input()
     leftCorner: Point;
