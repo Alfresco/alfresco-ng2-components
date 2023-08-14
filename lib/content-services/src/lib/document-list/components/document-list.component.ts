@@ -236,6 +236,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** @hidden */
     @Input()
     _rowFilter: RowFilter | null = null;
+    documentList: any[];
 
     /**
      * Custom function to choose whether to show or hide rows.
@@ -451,7 +452,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
-        if (Object.keys(this.filterValue).length > 0) {
+        if (this.filterValue && Object.keys(this.filterValue).length > 0) {
             this.showHeader = ShowHeaderMode.Always;
         }
     }
