@@ -236,7 +236,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** @hidden */
     @Input()
     _rowFilter: RowFilter | null = null;
-    documentList: any[];
 
     /**
      * Custom function to choose whether to show or hide rows.
