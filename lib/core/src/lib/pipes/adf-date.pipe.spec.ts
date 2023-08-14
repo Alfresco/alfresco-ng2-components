@@ -26,7 +26,7 @@ describe('DatePipe', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), CoreTestingModule],
-            providers: [ADFDatePipe],
+            providers: [ADFDatePipe]
         });
 
         datePipe = new ADFDatePipe();

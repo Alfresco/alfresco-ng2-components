@@ -113,7 +113,7 @@ describe('Form Renderer Component', () => {
         fixture.destroy();
     });
 
-    describe('Display Date Widget ', async() => {
+    describe('Display Date Widget ', async () => {
         it('Should be able to see a widget when the visibility condition refers to another fields with specific date', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formDateVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
@@ -123,7 +123,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            let formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            const formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
             typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
 
             fixture.detectChanges();
@@ -142,7 +142,7 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            let formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            const formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
             typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
 
             fixture.detectChanges();
