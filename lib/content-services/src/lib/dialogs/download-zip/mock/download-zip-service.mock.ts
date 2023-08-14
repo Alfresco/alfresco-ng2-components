@@ -23,13 +23,13 @@ import { zipNode, downloadEntry } from './download-zip-data.mock';
 export class AlfrescoApiServiceMock {
     nodeUpdated = new Subject<Node>();
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-    alfrescoApi = new AlfrescoApiCompatibilityMock();
+    alfrescoApi = new AlfrescoApiMock();
 
     load() {}
     getInstance = () => this.alfrescoApi;
 }
 
-class AlfrescoApiCompatibilityMock {
+class AlfrescoApiMock {
     core = new CoreMock();
     content = new ContentApiMock();
 
