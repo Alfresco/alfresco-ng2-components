@@ -544,10 +544,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
         if (this.data) {
             if (this.isSingleSelectionMode()) {
-                this.resetSelection();
                 if (row.isSelected) {
+                    this.resetSelection();
                     this.emitRowSelectionEvent('row-unselect', null);
                 } else {
+                    this.resetSelection();
                     this.selectRow(row, true);
                     this.emitRowSelectionEvent('row-select', row);
                 }
