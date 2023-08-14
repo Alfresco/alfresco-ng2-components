@@ -1,18 +1,25 @@
 {
   "migrations": [
     {
-      "version": "16.0.0-0",
-      "description": "Updates the Angular Material to v16",
-      "factory": "./ng-update/index_bundled#updateToV16",
-      "package": "@angular/material",
-      "name": "migration-v16"
+      "version": "16.0.0",
+      "factory": "./update-16/remove-default-project-option",
+      "description": "Remove 'defaultProject' option from workspace configuration. The project to use will be determined from the current working directory.",
+      "package": "@angular/cli",
+      "name": "remove-default-project-option"
     },
     {
-      "version": "16.0.0-0",
-      "description": "Updates the Angular CDK to v16",
-      "factory": "./ng-update/index#updateToV16",
-      "package": "@angular/cdk",
-      "name": "migration-v16"
+      "version": "16.0.0",
+      "factory": "./update-16/replace-default-collection-option",
+      "description": "Replace removed 'defaultCollection' option in workspace configuration with 'schematicCollections'.",
+      "package": "@angular/cli",
+      "name": "replace-default-collection-option"
+    },
+    {
+      "version": "16.0.0",
+      "factory": "./update-16/update-server-builder-config",
+      "description": "Update the '@angular-devkit/build-angular:server' builder configuration to disable 'buildOptimizer' for non optimized builds.",
+      "package": "@angular/cli",
+      "name": "update-server-builder-config"
     }
   ]
 }
