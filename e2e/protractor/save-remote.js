@@ -1,8 +1,8 @@
 const fs = require('fs');
-const rimraf = require('rimraf');
 const path = require('path');
+const child_process = require("child_process");
 const TestConfig = require('../test.config');
-const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
+const { AlfrescoApi, NodesApi, UploadApi } = require('@alfresco/js-api');
 
 function buildNumber() {
     let buildNumber = process.env.GH_BUILD_NUMBER;
@@ -16,17 +16,20 @@ function buildNumber() {
 async function uploadScreenshot(retryCount, suffixFileName) {
     console.log(`Start uploading report ${retryCount}`);
 
-    let alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: TestConfig.screenshot.url
     });
+
+    const nodesApi = new NodesApi(alfrescoJsApi);
+    const uploadApi = new UploadApi(alfrescoJsApi);
 
     await alfrescoJsApi.login(TestConfig.users.screenshot.username, TestConfig.users.screenshot.password);
 
     let folderNode;
 
     try {
-        folderNode = await alfrescoJsApi.nodes.addNode('-my-', {
+        folderNode = await nodesApi.createNode('-my-', {
             'name': `retry-${retryCount}`,
             'relativePath': `Builds/${buildNumber()}/`,
             'nodeType': 'cm:folder'
@@ -34,7 +37,7 @@ async function uploadScreenshot(retryCount, suffixFileName) {
             'overwrite': true
         });
     } catch (error) {
-        folderNode = await alfrescoJsApi.nodes.getNode('-my-', {
+        folderNode = await nodesApi.createNode('-my-', {
             'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
             'nodeType': 'cm:folder'
         }, {}, {
@@ -46,14 +49,14 @@ async function uploadScreenshot(retryCount, suffixFileName) {
 
     fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`))
 
-    const child_process = require("child_process");
     child_process.execSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
         cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`)
     });
 
-    let pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
-    let file = fs.createReadStream(pathFile);
-    await alfrescoJsApi.upload.uploadFile(
+    const pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
+    const file = fs.createReadStream(pathFile);
+
+    await uploadApi.uploadFile(
         file,
         '',
         folderNode.entry.id,
