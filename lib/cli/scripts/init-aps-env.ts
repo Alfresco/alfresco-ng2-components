@@ -17,7 +17,7 @@
 
 import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-import { execSync } from 'node:child_process';
+const cp = require('child_process');
 import { createReadStream } from 'node:fs';
 const program = require('commander');
 const path = require('path');
@@ -434,8 +434,9 @@ async function authorizeUserToContentWithBasic(username: string, contentId: stri
 
 async function downloadLicenseFile(apsLicensePath: string) {
     try {
-        execSync(` aws s3 cp ${apsLicensePath} ./ `, {
-            cwd: path.resolve(__dirname, `./`)
+        cp.execSync(` aws s3 cp ${apsLicensePath} ./ `, {
+            cwd: path.resolve(__dirname, `./`),
+            shell: false
         });
         logger.info(`Aps license file download from S3 bucket`);
         return true;
