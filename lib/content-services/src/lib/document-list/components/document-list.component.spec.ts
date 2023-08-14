@@ -63,6 +63,7 @@ import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
+import { ShareDataTableAdapter } from '../public-api';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
@@ -276,6 +277,15 @@ describe('DocumentList', () => {
         documentList.ngOnChanges(changes);
 
         expect(documentList.selection).toEqual([]);
+    });
+
+    it('should show the header when there are no records in the table but filter is active', () => {
+        documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, []);
+        documentList.filterValue =  { $thumbnail: 'TYPE:"cm:folder"' };
+
+        fixture.detectChanges();
+
+        expect(documentList.showHeader).toEqual('always');
     });
 
     it('should reloadWithoutResettingSelection not reset the selection', () => {
