@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-const alfrescoApi = require('@alfresco/js-api');
+import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi } from '@alfresco/js-api';
+import { argv, exit } from 'node:process';
+import { execSync } from 'node:child_process';
+import { createReadStream } from 'node:fs';
 const program = require('commander');
-const fs = require ('fs');
 const path = require('path');
 import { logger } from './logger';
 const { throwError } = require('rxjs');
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const { AppDefinitionsApi, RuntimeAppDefinitionsApi } = require('@alfresco/js-api');
 const MAX_RETRY = 10;
 let counter = 0;
 const TIMEOUT = 6000;
@@ -31,8 +31,7 @@ const TENANT_DEFAULT_NAME = 'default';
 const CONTENT_DEFAULT_NAME = 'adw-content';
 const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
 
-let alfrescoJsApi;
-let alfrescoJsApiRepo;
+let alfrescoJsApi: AlfrescoApi;
 
 export default async function() {
     await main();
@@ -47,7 +46,7 @@ async function main() {
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
         .option('--license [type]', 'APS license S3 path ')
-        .parse(process.argv);
+        .parse(argv);
 
     await checkEnv();
 
@@ -68,16 +67,16 @@ async function main() {
     let tenantId;
     if (licenceUploaded) {
         logger.info(`***** Step 2 - Check Tenant *****`);
-        logger.info(`is tenandId:${TENANT_DEFAULT_ID} with name:${TENANT_DEFAULT_NAME} present?`);
+        logger.info(`is tenantId:${TENANT_DEFAULT_ID} with name:${TENANT_DEFAULT_NAME} present?`);
         try {
             const hasDefault = await hasDefaultTenant(TENANT_DEFAULT_ID, TENANT_DEFAULT_NAME);
             tenantId = TENANT_DEFAULT_ID;
             if (!hasDefault) {
-                // the tenandId should be equal to TENANT_DEFAULT_ID if we choose 1 as id.
+                // the tenantId should be equal to TENANT_DEFAULT_ID if we choose 1 as id.
                 tenantId = await createDefaultTenant(TENANT_DEFAULT_NAME);
             }
             logger.info(`***** Step 3 - Add Content Repo *****`);
-            const isContentPresent = await isContenRepoPresent(TENANT_DEFAULT_ID, CONTENT_DEFAULT_NAME);
+            const isContentPresent = await isContentRepoPresent(TENANT_DEFAULT_ID, CONTENT_DEFAULT_NAME);
             if (!isContentPresent) {
                 logger.info(`No content repo with name ${CONTENT_DEFAULT_NAME} found`);
                 await addContentRepoWithBasic(TENANT_DEFAULT_ID, CONTENT_DEFAULT_NAME);
@@ -90,7 +89,7 @@ async function main() {
                 }
                 for (let i = 0; i < users.length; i++) {
                     logger.info('Impersonate user: ' + users[i].username);
-                    await alfrescoJsApiRepo.login(users[i].username, 'password');
+                    await alfrescoJsApi.login(users[i].username, 'password');
                     await authorizeUserToContentRepo(users[i]);
 
                     const defaultUser = 'hruser';
@@ -106,11 +105,11 @@ async function main() {
 
         } catch (error) {
             logger.info(`Aps something went wrong. Tenant id ${tenantId}`);
-            process.exit(1);
+            exit(1);
         }
     } else {
         logger.info('APS license error: check the configuration');
-        process.exit(1);
+        exit(1);
     }
 
 }
@@ -129,8 +128,7 @@ async function initializeDefaultApps() {
 }
 async function checkEnv() {
     try {
-
-        alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        alfrescoJsApi = new AlfrescoApi({
             provider: 'ALL',
             hostBpm: program.host,
             hostEcm: program.host,
@@ -140,36 +138,37 @@ async function checkEnv() {
                 clientId: `${program.clientId}`,
                 scope: 'openid'
             }
-        });
-        alfrescoJsApiRepo = alfrescoJsApi;
+        } as any);
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
-            process.exit(1);
+            exit(1);
         }
         logger.info('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
             logger.error('Give up');
-            process.exit(1);
+            exit(1);
         } else {
             logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
-            checkEnv();
+            await checkEnv();
         }
     }
 }
 
-async function hasDefaultTenant(tenantId, tenantName) {
-    let tenant;
+async function hasDefaultTenant(tenantId: number, tenantName: string) {
+    let tenant: TenantRepresentation;
 
     try {
-        tenant = await alfrescoJsApi.activiti.adminTenantsApi.getTenant(tenantId);
+        const adminTenantsApi = new AdminTenantsApi(alfrescoJsApi);
+        tenant = await adminTenantsApi.getTenant(tenantId);
     } catch (error) {
         logger.info(`Aps: does not have tenant with id: ${tenantId}`);
         return false;
     }
+
     if (tenant.name === tenantName) {
         logger.info(`Aps: has default tenantId: ${tenantId} and name ${tenantName}`);
         return true;
@@ -179,7 +178,7 @@ async function hasDefaultTenant(tenantId, tenantName) {
     }
 }
 
-async function createDefaultTenant(tenantName) {
+async function createDefaultTenant(tenantName: string) {
     const tenantPost = {
         active: true,
         maxUsers: 10000,
@@ -187,7 +186,8 @@ async function createDefaultTenant(tenantName) {
     };
 
     try {
-        const tenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(tenantPost);
+        const adminTenantsApi = new AdminTenantsApi(alfrescoJsApi);
+        const tenant = await adminTenantsApi.createTenant(tenantPost);
         logger.info(`APS: Tenant ${tenantName} created with id: ${tenant.id}`);
         return tenant.id;
     } catch (error) {
@@ -195,8 +195,8 @@ async function createDefaultTenant(tenantName) {
     }
 }
 
-async function createUsers(tenandId, user) {
-    logger.info(`Create user ${user.email} on tenant: ${tenandId}`);
+async function createUsers(tenantId: number, user: any) {
+    logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
     const passwordCamelCase = 'Password';
     const userJson = {
         email: user.email,
@@ -205,11 +205,12 @@ async function createUsers(tenandId, user) {
         status: 'active',
         type: 'enterprise',
         password: passwordCamelCase,
-        tenantId: tenandId
+        tenantId
     };
 
     try {
-        const  userInfo = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(userJson);
+        const adminUsersApi = new AdminUsersApi(alfrescoJsApi);
+        const userInfo = await adminUsersApi.createNewUser(userJson);
         logger.info(`APS: User ${userInfo.email} created with id: ${userInfo.id}`);
         return user;
     } catch (error) {
@@ -218,7 +219,7 @@ async function createUsers(tenandId, user) {
 }
 
 async function updateLicense() {
-    const fileContent = fs.createReadStream(path.join(__dirname, '/activiti.lic'));
+    const fileContent = createReadStream(path.join(__dirname, '/activiti.lic'));
 
     try {
         await alfrescoJsApi.oauth2Auth.callCustomApi(
@@ -243,9 +244,9 @@ async function updateLicense() {
 async function isDefaultAppDeployed(appName: string) {
     logger.info(`Verify ${appName} already deployed`);
     try {
-        const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApiRepo);
+        const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
         const availableApps = await runtimeAppDefinitionsApi.getAppDefinitions();
-        const defaultApp = availableApps.data && availableApps.data.filter( app => app.name && app.name.includes(appName));
+        const defaultApp = availableApps.data && availableApps.data.filter(app => app.name && app.name.includes(appName));
         return defaultApp && defaultApp.length > 0;
     } catch (error) {
         logger.error(`Aps app failed to import/Publish!`);
@@ -256,10 +257,10 @@ async function importPublishApp(appName: string) {
     const appNameExtension = `../resources/${appName}.zip`;
     logger.info(`Import app ${appNameExtension}`);
     const pathFile = path.join(__dirname, appNameExtension);
-    const fileContent = fs.createReadStream(pathFile);
+    const fileContent = createReadStream(pathFile);
 
     try {
-        const appdefinitionsApi = new AppDefinitionsApi(alfrescoJsApiRepo);
+        const appdefinitionsApi = new AppDefinitionsApi(alfrescoJsApi);
         const result = await appdefinitionsApi.importAndPublishApp(fileContent, {renewIdmEntries: true});
         logger.info(`Aps app imported and published!`);
         return result;
@@ -268,14 +269,14 @@ async function importPublishApp(appName: string) {
     }
 }
 
-async function deployApp(appDefinitioId) {
-    logger.info(`Deploy app with id ${appDefinitioId}`);
+async function deployApp(appDefinitionId: number) {
+    logger.info(`Deploy app with id ${appDefinitionId}`);
     const body = {
-        appDefinitions: [{id: appDefinitioId}]
+        appDefinitions: [{id: appDefinitionId}]
     };
 
     try {
-        const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApiRepo);
+        const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
         await runtimeAppDefinitionsApi.deployAppDefinitions(body);
         logger.info(`Aps app deployed`);
     } catch (error) {
@@ -283,7 +284,7 @@ async function deployApp(appDefinitioId) {
     }
 }
 
-async function hasLicense() {
+async function hasLicense(): Promise<boolean> {
     try {
         const license = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${program.host}/activiti-app/app/rest/license`,
@@ -308,9 +309,8 @@ async function hasLicense() {
 }
 
 async function getDefaultApsUsersFromRealm() {
-
     try {
-        const users = await alfrescoJsApi.oauth2Auth.callCustomApi(
+        const users: any[] = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${program.host}/auth/admin/realms/alfresco/users`,
             'GET',
             {},
@@ -330,8 +330,7 @@ async function getDefaultApsUsersFromRealm() {
     }
 }
 
-async function isContenRepoPresent(tenantId, contentName) {
-
+async function isContentRepoPresent(tenantId: number, contentName: string): Promise<boolean> {
     try {
         const contentRepos = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${program.host}/activiti-app/app/rest/integration/alfresco?tenantId=${tenantId}`,
@@ -350,8 +349,9 @@ async function isContenRepoPresent(tenantId, contentName) {
     }
 }
 
-async function addContentRepoWithBasic(tenantId, name) {
+async function addContentRepoWithBasic(tenantId: number, name: string) {
     logger.info(`Create Content with name ${name} and basic auth`);
+
     const body = {
         alfrescoTenantId: '',
         authenticationType: 'basic',
@@ -382,10 +382,10 @@ async function addContentRepoWithBasic(tenantId, name) {
     }
 }
 
-async function authorizeUserToContentRepo(user) {
+async function authorizeUserToContentRepo(user: any) {
     logger.info(`Authorize user ${user.email}`);
     try {
-        const content = await alfrescoJsApiRepo.oauth2Auth.callCustomApi(
+        const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${program.host}/activiti-app/app/rest/integration/alfresco`,
             'GET',
             {},
@@ -410,11 +410,11 @@ async function authorizeUserToContentRepo(user) {
     }
 }
 
-async function authorizeUserToContentWithBasic(username, contentId) {
+async function authorizeUserToContentWithBasic(username: string, contentId: string) {
     logger.info(`Authorize ${username} on contentId: ${contentId} in basic auth`);
     try {
         const body = {username, password: 'password'};
-        const content = await alfrescoJsApiRepo.oauth2Auth.callCustomApi(
+        const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${program.host}/activiti-app/app/rest/integration/alfresco/${contentId}/account`,
             'POST',
             {},
@@ -432,12 +432,9 @@ async function authorizeUserToContentWithBasic(username, contentId) {
     }
 }
 
-/* eslint-disable */
-async function downloadLicenseFile(apsLicensePath) {
-
+async function downloadLicenseFile(apsLicensePath: string) {
     try {
-        const child_process = require("child_process");
-        child_process.execSync(` aws s3 cp ${apsLicensePath} ./ `, {
+        execSync(` aws s3 cp ${apsLicensePath} ./ `, {
             cwd: path.resolve(__dirname, `./`)
         });
         logger.info(`Aps license file download from S3 bucket`);
@@ -447,9 +444,8 @@ async function downloadLicenseFile(apsLicensePath) {
         return false;
     }
 }
-/* eslint-enable */
 
-function sleep(delay) {
+function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {  }
 }
