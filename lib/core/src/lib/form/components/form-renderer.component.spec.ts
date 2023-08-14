@@ -48,6 +48,7 @@ import { TextWidgetComponent } from './widgets';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormRulesManager } from '../models/form-rules.model';
+import { format } from 'date-fns';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
@@ -112,7 +113,7 @@ describe('Form Renderer Component', () => {
         fixture.destroy();
     });
 
-    describe('Display Date Widget ', () => {
+    describe('Display Date Widget ', async() => {
         it('Should be able to see a widget when the visibility condition refers to another fields with specific date', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formDateVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
@@ -122,11 +123,13 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
+            let formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
+
             fixture.detectChanges();
             await fixture.whenStable();
 
-            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
+            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
         });
 
@@ -139,11 +142,13 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
+            let formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
+
             fixture.detectChanges();
             await fixture.whenStable();
 
-            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
+            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
         });
 

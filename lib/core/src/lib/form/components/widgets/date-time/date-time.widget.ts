@@ -21,7 +21,6 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import moment, { Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
@@ -29,6 +28,8 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { format, isValid, parse } from 'date-fns';
 
 @Component({
     providers: [
@@ -44,13 +45,15 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    minDate: Moment;
-    maxDate: Moment;
+    DATE_TIME_FORMAT = 'd-M-yyyy hh:mm a';
+
+    minDate: Date;
+    maxDate: Date;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService) {
         super(formService);
     }
@@ -61,16 +64,13 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
-
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment.utc(this.field.minValue, 'YYYY-MM-DDTHH:mm:ssZ');
+                this.minDate = parse(this.field.minValue, this.DATE_TIME_FORMAT, new Date());
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment.utc(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
+                this.maxDate = parse(this.field.maxValue, this.DATE_TIME_FORMAT, new Date());
             }
         }
     }
@@ -81,9 +81,9 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = moment(date).utc().local().format(this.field.dateDisplayFormat);
+        const date = new Date(newDateValue);
+        if (isValid(date)) {
+            this.field.value = format(date, this.DATE_TIME_FORMAT);
         } else {
             this.field.value = newDateValue;
         }
