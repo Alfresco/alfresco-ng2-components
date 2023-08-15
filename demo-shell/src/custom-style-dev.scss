@@ -17,10 +17,13 @@ $theme: mat.define-light-theme(
     )
 );
 
+$typography: map-get($theme, typography);
+
 @include mat.all-component-themes($theme);
+@include mat.all-legacy-component-themes($theme);
+// @include mat.all-component-typographies($typography);
 @include alfresco-material-theme($theme);
 
-$typography: map-get($theme, typography);
 
 body,
 html {
