@@ -17,12 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {
-    AlfrescoApiService,
-    LoginDialogPanelComponent,
-    TranslationService,
-    AuthenticationService
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { DocumentListService, SitesService, SearchService } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
@@ -38,10 +33,10 @@ import { Node } from '@alfresco/js-api';
         DocumentListService,
         SitesService,
         SearchService,
-        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService } ]
+        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService }
+    ]
 })
 export class AttachFileWidgetDialogComponent {
-
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
@@ -50,12 +45,14 @@ export class AttachFileWidgetDialogComponent {
     buttonActionName: string;
     chosenNode: Node[];
 
-    constructor(private translation: TranslationService,
-                @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
-                private externalApiService: AlfrescoApiService,
-                private authenticationService: AuthenticationService,
-                private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>) {
-        (externalApiService as any).init(data.ecmHost, data.context);
+    constructor(
+        private translation: TranslationService,
+        @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
+        private externalApiService: AlfrescoApiService,
+        private authenticationService: AuthenticationService,
+        private matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>
+    ) {
+        (externalApiService as ExternalAlfrescoApiService).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');

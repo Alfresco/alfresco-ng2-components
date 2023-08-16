@@ -17,17 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from '@alfresco/js-api';
-import { ReplaySubject } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Injectable({ providedIn: 'root' })
-export class ExternalAlfrescoApiService {
-    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-    protected alfrescoApi: AlfrescoApi;
-
-    getInstance(): AlfrescoApi {
-        return this.alfrescoApi;
-    }
-
+export class ExternalAlfrescoApiService extends AlfrescoApiService {
     init(ecmHost: string, contextRoot: string) {
         const domainPrefix = this.createPrefixFromHost(ecmHost);
 
@@ -38,11 +31,11 @@ export class ExternalAlfrescoApiService {
             contextRoot,
             domainPrefix
         };
-        this.initAlfrescoApi(config);
+        this.setup(config);
         this.alfrescoApiInitialized.next(true);
     }
 
-    protected initAlfrescoApi(config) {
+    private setup(config) {
         if (this.alfrescoApi) {
             this.alfrescoApi.setConfig(config);
         } else {
