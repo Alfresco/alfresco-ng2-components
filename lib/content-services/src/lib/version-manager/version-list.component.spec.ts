@@ -317,15 +317,26 @@ describe('VersionListComponent', () => {
     });
 
     describe('Actions buttons', () => {
+        const getActionMenuButton = (version = '1.0'): HTMLButtonElement => {
+            fixture.detectChanges();
+            return fixture.debugElement.query(By.css(`[id="adf-version-list-action-menu-button-${version}"]`))?.nativeElement;
+        };
+
+        const getRestoreButton = (version = '1.0'): HTMLButtonElement => {
+            getActionMenuButton(version).click();
+            return fixture.debugElement.query(By.css(`[id="adf-version-list-action-restore-${version}"]`))?.nativeElement;
+        };
 
         describe('showActions', () => {
-
             beforeEach(() => {
                 fixture.detectChanges();
                 component.node = new Node({ id: nodeId });
                 spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
                     list: {
                         entries: [
+                            {
+                                entry: { name: 'test-file-name', id: '1.1', versionComment: 'test-version-comment' }
+                            },
                             {
                                 entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
                             }
@@ -343,10 +354,7 @@ describe('VersionListComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
-
-                    expect(menuButton).not.toBeNull();
+                    expect(getActionMenuButton()).toBeDefined();
                     done();
                 });
             });
@@ -356,10 +364,21 @@ describe('VersionListComponent', () => {
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.0"]');
+                    expect(getActionMenuButton()).toBeUndefined();
+                    done();
+                });
+            });
 
-                    expect(menuButton).toBeNull();
+            it('should show restore action for old version', (done) => {
+                fixture.whenStable().then(() => {
+                    expect(getRestoreButton()).toBeDefined();
+                    done();
+                });
+            });
+
+            it('should show restore action for the latest version', (done) => {
+                fixture.whenStable().then(() => {
+                    expect(getRestoreButton('1.1')).toBeUndefined();
                     done();
                 });
             });
@@ -388,9 +407,7 @@ describe('VersionListComponent', () => {
 
             it('should disable delete action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
-                    menuButton.click();
+                    getActionMenuButton('1.1').click();
 
                     const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
@@ -401,13 +418,7 @@ describe('VersionListComponent', () => {
 
             it('should disable restore action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
-                    menuButton.click();
-
-                    const restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
-
-                    expect(restoreButton.disabled).toBe(true);
+                    expect(getRestoreButton().disabled).toBe(true);
                     done();
                 });
             });
@@ -436,9 +447,7 @@ describe('VersionListComponent', () => {
 
             it('should enable delete action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
-                    menuButton.click();
+                    getActionMenuButton('1.1').click();
 
                     const deleteButton: any = document.querySelector('[id="adf-version-list-action-delete-1.1"]');
 
@@ -449,13 +458,7 @@ describe('VersionListComponent', () => {
 
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    const menuButton = fixture.nativeElement.querySelector('[id="adf-version-list-action-menu-button-1.1"]');
-                    menuButton.click();
-
-                    const restoreButton: any = document.querySelector('[id="adf-version-list-action-restore-1.1"]');
-
-                    expect(restoreButton.disabled).toBe(false);
+                    expect(getRestoreButton().disabled).toBe(false);
                     done();
                 });
             });
