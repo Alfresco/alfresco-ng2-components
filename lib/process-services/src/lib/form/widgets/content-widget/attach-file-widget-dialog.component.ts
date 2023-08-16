@@ -64,13 +64,13 @@ export class AttachFileWidgetDialogComponent {
 
     updateExternalHost() {
         this.authenticationService.onLogin.subscribe(() => this.registerAndClose());
-        if (this.externalApiService.getInstance().isLoggedIn()) {
+        if (this.isLoggedIn()) {
             this.registerAndClose();
         }
     }
 
-    isLoggedIn() {
-        return this.externalApiService.getInstance().isLoggedIn();
+    isLoggedIn(): boolean {
+        return !!this.externalApiService.getInstance()?.isLoggedIn();
     }
 
     performLogin() {
