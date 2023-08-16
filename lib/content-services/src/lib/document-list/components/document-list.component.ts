@@ -374,9 +374,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private lockService: LockService,
                 private dialog: MatDialog) {
 
-        this.nodeService.nodeUpdated.subscribe((node) => {
-            this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
-        });
+        this.nodeService.nodeUpdated
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((node) => {
+                this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
+            });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
