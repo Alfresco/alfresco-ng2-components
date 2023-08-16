@@ -108,6 +108,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             });
         } else {
             this._existingTagsPanelVisible = false;
+            this.clearTagNameInput();
         }
         this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
     }
@@ -250,6 +251,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._existingTagsPanelVisible = false;
         this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
         this.tagNameControlVisibleChange.emit(this.tagNameControlVisible);
+        this.clearTagNameInput();
     }
 
     /**
@@ -260,9 +262,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
             this.hideNameInput();
-            this.tagNameControl.setValue('');
+            this.clearTagNameInput();
             this.checkScrollbarVisibility();
-            this.tagNameControl.markAsUntouched();
             this.tagsChange.emit(this.tags);
         }
     }
@@ -424,5 +425,10 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     private excludeAlreadyAddedTags(tags: TagEntry[]) {
         this._existingTags = tags.filter((tag) => !this.tags.includes(tag.entry.tag));
+    }
+
+    private clearTagNameInput() {
+        this.tagNameControl.setValue('');
+        this.tagNameControl.markAsUntouched();
     }
 }
