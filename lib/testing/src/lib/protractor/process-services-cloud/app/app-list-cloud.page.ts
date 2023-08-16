@@ -45,11 +45,6 @@ export class AppListCloudPage {
         return BrowserActions.getArrayText(this.nameOfAllApps);
     }
 
-    async checkAppIsNotDisplayed(applicationName: string): Promise<void> {
-        const app = this.getAppNameLocatorByAppName(applicationName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(app);
-    }
-
     async checkAppIsDisplayed(applicationName: string): Promise<void> {
         const app = this.getAppNameLocatorByAppName(applicationName);
         await BrowserVisibility.waitUntilElementIsVisible(app);

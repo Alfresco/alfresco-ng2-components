@@ -17,14 +17,9 @@
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
 import { browser, by, element, Key, $, $$ } from 'protractor';
-import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
-
-    appSettingsTogglesClass = new AppSettingsTogglesPage();
-
     formContent = $('adf-form');
-
     formNameField = $('[data-automation-id="card-textitem-value-formName"]');
     formNameButton = $('[data-automation-id="card-textitem-toggle-formName"]');
     assigneeField = $('[data-automation-id="card-textitem-value-assignee"]');
@@ -45,7 +40,6 @@ export class TaskDetailsPage {
     involvePeopleButton = $('div[class*="add-people"]');
     addPeopleField = $('input[data-automation-id="adf-people-search-input"]');
     addInvolvedUserButton = $('button[id="add-people"]');
-    taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = $('div[data-automation-id="app-tasks-details"]');
     taskDetailsEmptySection = $('div[data-automation-id="adf-tasks-details--empty"]');
     completeTask = $('button[id="adf-no-form-complete-button"]');
@@ -58,11 +52,8 @@ export class TaskDetailsPage {
     removeInvolvedPeople = $('button[data-automation-id="Remove"]');
     peopleTitle = $('#people-title');
     noFormMessage = $('span[id*="no-form-message"]');
-    cancelAttachForm = $('#adf-no-form-cancel-button');
     attachFormButton = $('#adf-no-form-attach-form-button');
-    disabledAttachFormButton = $('button[id="adf-no-form-attach-form-button"][disabled]');
     removeAttachForm = $('#adf-attach-form-remove-button');
-    attachFormName = $('.adf-form-title');
     emptyTaskDetails = $('adf-task-details > div > div');
     priority = $('[data-automation-id*="card-textitem-value-priority"]');
     editableAssignee = $('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]');
@@ -94,20 +85,8 @@ export class TaskDetailsPage {
         await this.attachFormDropdown.checkOptionIsSelected(formName);
     }
 
-    async checkAttachFormButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.disabledAttachFormButton);
-    }
-
     async checkAttachFormButtonIsEnabled(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.attachFormButton);
-    }
-
-    async checkAttachFormDropdownIsDisplayed(): Promise<void> {
-        await this.attachFormDropdown.checkDropdownIsVisible();
-    }
-
-    async selectAttachFormOption(option): Promise<void> {
-        await this.attachFormDropdown.selectDropdownOption(option);
     }
 
     async noFormIsDisplayed(): Promise<void> {
@@ -137,10 +116,6 @@ export class TaskDetailsPage {
 
     async checkFormIsAttached(formName: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasValue(this.formNameField, formName);
-    }
-
-    getFormName(): Promise<string> {
-        return BrowserActions.getInputValue(this.formNameField);
     }
 
     async waitFormNameEqual(formName: string): Promise<void> {
@@ -321,18 +296,6 @@ export class TaskDetailsPage {
 
     async clickAuditLogButton(): Promise<void> {
         await BrowserActions.click(this.auditLogButton);
-    }
-
-    appSettingsToggles(): AppSettingsTogglesPage {
-        return this.appSettingsTogglesClass;
-    }
-
-    async taskInfoDrawerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
-    }
-
-    async taskInfoDrawerIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.taskDetailsInfoDrawer);
     }
 
     async checkNoPeopleIsInvolved(): Promise<void> {

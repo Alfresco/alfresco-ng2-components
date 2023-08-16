@@ -626,5 +626,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "Wyświetl {{ count }} więcej"
   },
-  "swsdp": "Przykład: projekt układu witryny internetowej"
+  "swsdp": "Przykład: projekt układu witryny internetowej",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Adres e-mail jednego z odbiorców nie jest prawidłowy, skontaktuj się z działem IT.",
+      "INVALID_SENDER_EMAIL": "Twój adres e-mail musi być poprawny przed żądaniem dołączenia.",
+      "JOIN_CANCEL_FAILED": "Nie można anulować Twojego żądania dołączenia",
+      "JOIN_REQUEST_FAILED": "Nie można dołączyć do biblioteki"
+    },
+    "INFO": {
+      "JOINED": "Dołączono do biblioteki",
+      "JOIN_CANCELED": "Żądanie dołączenia do biblioteki zostało anulowane",
+      "JOIN_REQUESTED": "Żądanie dołączenia do tej biblioteki zostało wysłane"
+    }
+  }
 }

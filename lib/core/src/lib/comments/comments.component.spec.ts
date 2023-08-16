@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommentsServiceMock, commentsResponseMock } from './mocks/comments.service.mock';
-import { ADF_COMMENTS_SERVICE, CommentsService } from './interfaces';
 import { of, throwError } from 'rxjs';
+import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
+import { CommentsService } from './interfaces/comments-service.interface';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -37,7 +38,6 @@ describe('CommentsComponent', () => {
                 TranslateModule.forRoot(),
                 CoreTestingModule
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,
@@ -48,7 +48,7 @@ describe('CommentsComponent', () => {
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
 
-        commentsService = fixture.componentInstance['commentsService'];
+        commentsService = TestBed.inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
         getCommentSpy = spyOn(commentsService, 'get').and.returnValue(commentsResponseMock.getComments());
         addCommentSpy = spyOn(commentsService, 'add').and.returnValue(commentsResponseMock.addComment());
@@ -164,17 +164,6 @@ describe('CommentsComponent', () => {
             fixture.whenStable();
         });
 
-        it('should sanitize comment when user input contains html elements', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = '<div class="text-class"><button onclick=""><h1>action</h1></button></div>';
-            element.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const sanitizedStr = '&lt;div class=&quot;text-class&quot;&gt;&lt;button onclick=&quot;&quot;&gt;&lt;h1&gt;action&lt;/h1&gt;&lt;/button&gt;&lt;/div&gt;';
-            expect(addCommentSpy).toHaveBeenCalledWith('123', sanitizedStr);
-        });
-
         it('should normalize comment when user input contains spaces sequence', async () => {
             const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
             component.message = 'test comment';
@@ -186,15 +175,29 @@ describe('CommentsComponent', () => {
             expect(addCommentSpy).toHaveBeenCalledWith('123', 'test comment');
         });
 
-        it('should add break lines to comment when user input contains new line characters', async () => {
-            const element = fixture.nativeElement.querySelector('.adf-comments-input-add');
-            component.message = 'these\nare\nparagraphs\n';
-            element.dispatchEvent(new Event('click'));
+        it('should support multiline comments with HTML', async () => {
+            const commentText: string = [
+                `<form action="/action_page.php">`,
+                `First name: <input type="text" name="fname"><br>`,
+                `Last name: <input type="text" name="lname"><br>`,
+                `<input type="submit" value="Submit">`,
+                `</form>`
+            ].join('\n');
+
+            getCommentSpy.and.returnValue(of([]));
+            addCommentSpy.and.returnValue(commentsResponseMock.addComment(commentText));
+
+            component.message = commentText;
+            const addButton = fixture.nativeElement.querySelector('.adf-comments-input-add');
+            addButton.dispatchEvent(new Event('click'));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(addCommentSpy).toHaveBeenCalledWith('123', 'these<br/>are<br/>paragraphs');
+            expect(addCommentSpy).toHaveBeenCalledWith('123', commentText);
+
+            const messageElement = fixture.nativeElement.querySelector('.adf-comment-message');
+            expect(messageElement.innerText).toBe(commentText);
         });
 
         it('should call service to add a comment when add button is pressed', async () => {

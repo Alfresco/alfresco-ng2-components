@@ -225,8 +225,8 @@ describe('Task Header cloud component', () => {
     it('[C291991] Should be able to assign a task only to the users that have access to the selected app', async () => {
         await tasksCloudDemoPage.clickStartNewTaskButton();
         const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
-        await expect(currentAssignee).toContain(testUser.firstName, 'Invalid Assignee first name set for the new task');
-        await expect(currentAssignee).toContain(testUser.lastName, 'Invalid Assignee last name set for the new task');
+        await expect(currentAssignee).toContain(testUser.firstName);
+        await expect(currentAssignee).toContain(testUser.lastName);
 
         await peopleCloudComponentPage.searchAssignee('hrUser');
         await peopleCloudComponentPage.selectAssigneeFromList('HR User');

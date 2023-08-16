@@ -7,14 +7,3 @@
         width: calc(100% * (1 / 4) - 10px);
     }
 }
-
-.app-reset-button {
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-}
-
-.app-process-list-error-message {
-    color: var(--theme-warn-color);
-    text-align: center;
-}

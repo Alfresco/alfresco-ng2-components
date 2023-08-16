@@ -74,94 +74,94 @@ export const testUser: any = {
 
 
 export const commentsStoriesData: CommentModel[] = [
-    {
+    new CommentModel({
       id: 1,
       message: `I've done this task, what's next?`,
       created: getDateXMinutesAgo(30),
       createdBy: johnDoe,
       isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
       id: 2,
       message: `I've assigned you another one 🤠`,
       created: getDateXMinutesAgo(15),
       createdBy: janeEod,
       isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
       id: 3,
       message: '+1',
       created: getDateXMinutesAgo(12),
       createdBy: robertSmith,
       isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
       id: 4,
       message: 'Cheers',
       created: new Date(),
       createdBy: johnDoe,
       isSelected: false
-    }
+    })
 ];
 
 export const commentsNodeData: CommentModel[] = [
-    {
+    new CommentModel({
         id: 1,
         message: `I've done this component, is it cool?`,
         created: getDateXMinutesAgo(30),
         createdBy: johnDoe,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 2,
         message: 'Yeah',
         created: getDateXMinutesAgo(15),
         createdBy: janeEod,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 3,
         message: '+1',
         created: getDateXMinutesAgo(12),
         createdBy: robertSmith,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 4,
         message: 'ty',
         created: new Date(),
         createdBy: johnDoe,
         isSelected: false
-    }
+    })
 ];
 
 export const commentsTaskData: CommentModel[] = [
-    {
+    new CommentModel({
         id: 1,
         message: `I've done this task, what's next?`,
         created: getDateXMinutesAgo(30),
         createdBy: johnDoe,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 2,
         message: `I've assigned you another one 🤠`,
         created: getDateXMinutesAgo(15),
         createdBy: janeEod,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 3,
         message: '+1',
         created: getDateXMinutesAgo(12),
         createdBy: robertSmith,
         isSelected: false
-    },
-    {
+    }),
+    new CommentModel({
         id: 4,
         message: 'Cheers',
         created: new Date(),
         createdBy: johnDoe,
         isSelected: false
-    }
+    })
 ];

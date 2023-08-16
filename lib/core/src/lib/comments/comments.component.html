@@ -1,10 +1,10 @@
 <div class="adf-comments-container">
-    <div id="comment-header" class="adf-comments-header">
+    <div id="comment-header" class="adf-comments-header adf-comments-divider">
         {{'COMMENTS.HEADER' | translate: { count: comments?.length } }}
     </div>
-    <div class="adf-comments-input-container" *ngIf="!readOnly">
-            <mat-form-field class="adf-full-width">
-                <textarea 
+    <div *ngIf="!readOnly" class="adf-comments-input-container adf-comments-divider">
+            <mat-form-field>
+                <textarea
                     matInput
                     id="comment-input"
                     [attr.aria-label]="'COMMENTS.ADD' | translate"
@@ -16,7 +16,7 @@
             </mat-form-field>
 
             <div class="adf-comments-input-actions">
-                <button 
+                <button
                     mat-button
                     class="adf-comments-input-add"
                     data-automation-id="comments-input-add"
@@ -29,8 +29,6 @@
             </div>
     </div>
 
-    <div *ngIf="comments.length > 0">
-        <adf-comment-list [comments]="comments">
-        </adf-comment-list>
-    </div>
+    <adf-comment-list *ngIf="comments?.length > 0" [comments]="comments">
+    </adf-comment-list>
 </div>

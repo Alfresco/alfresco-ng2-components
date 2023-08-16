@@ -25,15 +25,12 @@ export interface LoginOptions {
     waitForUserIcon: boolean;
 }
 export class LoginPage {
-
     loginUrl = `${browser.baseUrl}/login`;
-
     ssoButton = $(`[data-automation-id="login-button-sso"]`);
     usernameField = $('#username');
     passwordField = $('#password');
     loginButton = $('input[type="submit"]');
-    userIcon = $(`[data-automation-id*='user-initials']`);
-    loginError = $(`div[data-automation-id="login-error"]`);
+    userIcon = $(`[data-automation-id='user-initials-image']`);
     visibilityLabel = $('#v');
 
     txtUsernameBasicAuth = $('input[id="username"]');
@@ -139,18 +136,9 @@ export class LoginPage {
         await BrowserActions.click(this.loginButton);
     }
 
-    async checkLoginErrorIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.loginError);
-    }
-
-    async getLoginErrorMessage() {
-        return BrowserActions.getText(this.loginError);
-    }
-
     async displayPassword(): Promise<void> {
         await BrowserActions.click(this.visibilityLabel);
         const passwordInputTypeText = $(`input[name="password"][type="text"]`);
         await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
-
 }

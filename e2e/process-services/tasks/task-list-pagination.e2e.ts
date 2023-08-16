@@ -25,7 +25,7 @@ import { createApiService,
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { TasksPage } from './../pages/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Task List Pagination', () => {
@@ -42,7 +42,7 @@ describe('Task List Pagination', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 20;
-    let totalPages;
+    let totalPages: number;
 
     const itemsPerPage = {
         five: '5',

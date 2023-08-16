@@ -15,36 +15,29 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Number widget', () => {
-
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.NUMBER;
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let deployedAppId; let process;
-    let processUserModel;
+    let appModel: AppDefinitionRepresentation;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
+    let processUserModel: UserModel;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -58,11 +51,10 @@ describe('Number widget', () => {
 
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(deployedAppId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -72,7 +64,7 @@ describe('Number widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C269111] Should be able to set general properties for Number Widget', async () => {
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
@@ -91,12 +83,12 @@ describe('Number widget', () => {
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
-        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be less than 3');
+        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be less than 3`);
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
-        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be greater than 100');
+        await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe(`Can't be greater than 100`);
         await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 

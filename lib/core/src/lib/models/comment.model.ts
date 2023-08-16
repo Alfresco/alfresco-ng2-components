@@ -24,6 +24,33 @@ export class CommentModel {
     createdBy: User;
     isSelected: boolean;
 
+    get hasAvatarPicture(): boolean {
+        return !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
+    }
+
+    get userDisplayName(): string {
+        let result = '';
+
+        if (this.createdBy) {
+            result = `${this.createdBy.firstName || ''} ${this.createdBy.lastName || ''}`;
+        }
+
+        return result.trim();
+    }
+
+    get userInitials(): string {
+        let result = '';
+        if (this.createdBy) {
+            if (this.createdBy.firstName) {
+                result = this.createdBy.firstName[0];
+            }
+            if (this.createdBy.lastName) {
+                result += this.createdBy.lastName[0];
+            }
+        }
+        return result.toUpperCase();
+    }
+
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id;

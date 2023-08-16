@@ -1,0 +1,22 @@
+<div class="adf-data-table-widget-container">
+    <div class="adf-data-table-widget-label">
+        <label
+            class="adf-label"
+            [class.adf-left-label]="field.leftLabels"
+            [attr.for]="field.id">
+                {{field.name | translate }}
+        </label>
+    </div>
+
+    <ng-container *ngIf="!previewState; else previewTemplate">
+        <adf-datatable data-automation-id="adf-data-table-widget" [data]="dataSource"></adf-datatable>
+
+        <error-widget *ngIf="dataTableLoadFailed"
+            class="adf-data-table-widget-failed-message"
+            required="{{ 'FORM.FIELD.DATA_TABLE_LOAD_FAILED' | translate }}"></error-widget>
+    </ng-container>
+
+    <ng-template #previewTemplate>
+        <adf-datatable data-automation-id="adf-data-table-widget-preview"></adf-datatable>
+    </ng-template>
+</div>

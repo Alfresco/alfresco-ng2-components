@@ -26,8 +26,8 @@ export class ProcessListDemoPage {
     processDefinitionInput = $('input[data-automation-id="process-definition-id"]');
     processInstanceInput = $('input[data-automation-id="process-instance-id"]');
 
-    stateDropdown = new DropdownPage($('mat-select[data-automation-id="state"'));
-    sortDropdown = new DropdownPage($('mat-select[data-automation-id="sort"'));
+    stateDropdown = new DropdownPage($('mat-select[data-automation-id="state"]'));
+    sortDropdown = new DropdownPage($('mat-select[data-automation-id="sort"]'));
 
     dataTable = new DataTableComponentPage();
 
@@ -43,7 +43,7 @@ export class ProcessListDemoPage {
         await this.stateDropdown.selectDropdownOption(stateOption);
     }
 
-    async addAppId(appId: string): Promise<void> {
+    async addAppId(appId: string | number): Promise<void> {
         await BrowserActions.click(this.appIdInput);
         await this.appIdInput.sendKeys(protractor.Key.ENTER);
         await this.appIdInput.clear();

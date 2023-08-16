@@ -21,10 +21,11 @@ import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions, V
 import { FileModel } from '../../models/ACS/file.model';
 import * as moment from 'moment';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
-
-    let uploadedFolder; let uploadedFolderExtra;
+    let uploadedFolder: NodeEntry;
+    let uploadedFolderExtra: NodeEntry;
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -35,7 +36,8 @@ describe('Document List Component', () => {
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
-    let testFileNode; let pdfBFileNode;
+    let testFileNode: any;
+    let pdfBFileNode: any;
 
     afterEach(async () => {
         await apiService.loginWithProfile('admin');
@@ -281,7 +283,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
         });
 
-        it('[C269086] Should display Islocked field for files', async () => {
+        it('[C269086] Should display IsLocked field for files', async () => {
             const testFileA = new FileModel({
                 name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
                 location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
@@ -306,7 +308,7 @@ describe('Document List Component', () => {
     });
 
     describe('Once uploaded 20 folders', () => {
-        let folderCreated;
+        let folderCreated: NodeEntry[];
 
         beforeAll(async () => {
             folderCreated = [];
@@ -325,8 +327,8 @@ describe('Document List Component', () => {
 
         afterAll(async () => {
             await apiService.loginWithProfile('admin');
-            for (let i = 0; i < folderCreated.length; i++) {
-                await uploadActions.deleteFileOrFolder(folderCreated[i].entry.id);
+            for (const item of folderCreated) {
+                await uploadActions.deleteFileOrFolder(item.entry.id);
             }
             await navigationBarPage.clickLogoutButton();
         });
@@ -345,7 +347,7 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
         });
 
-        let file;
+        let file: any;
         const viewer = new ViewerPage();
 
         beforeAll(async () => {

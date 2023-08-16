@@ -17,10 +17,10 @@
 
 import { browser } from 'protractor';
 import { ModelsActions, createApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
-import { ProcessServicesPage } from './../pages/process-services.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import { AppDefinitionsApi } from '@alfresco/js-api';
+import { AppDefinitionRepresentation, AppDefinitionsApi } from '@alfresco/js-api';
 
 describe('Modify applications', () => {
 
@@ -39,7 +39,8 @@ describe('Modify applications', () => {
     const applicationService = new ApplicationsUtil(apiService);
     const appsApi = new AppDefinitionsApi(apiService.getInstance());
 
-    let firstApp; let appVersionToBeDeleted;
+    let firstApp: AppDefinitionRepresentation;
+    let appVersionToBeDeleted: AppDefinitionRepresentation;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -131,7 +132,7 @@ describe('Modify applications', () => {
                 name: appToBeDeleted.title,
                 description: newDescription,
                 definition: {
-                    models: [firstApp.definition.models[0]],
+                    models: [firstApp['definition'].models[0]],
                     theme: 'theme-4',
                     icon: 'glyphicon-user'
                 }

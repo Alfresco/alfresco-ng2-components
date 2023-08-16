@@ -32,17 +32,17 @@ import CONSTANTS = require('../../util/constants');
 import { SitesApi, SiteEntry, CommentsApi } from '@alfresco/js-api';
 
 describe('Comment', () => {
-
-    const loginPage: LoginPage = new LoginPage();
-    const contentServicesPage: ContentServicesPage = new ContentServicesPage();
-    const viewerPage: ViewerPage = new ViewerPage();
-    const commentsPage: CommentsPage = new CommentsPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const viewerPage = new ViewerPage();
+    const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const commentsApi = new CommentsApi(apiService.getInstance());
 
-    let userFullName; let nodeId;
+    let userFullName: string;
+    let nodeId: string;
     let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
@@ -57,11 +57,6 @@ describe('Comment', () => {
         first: 'This is a comment',
         multiline: 'This is a comment\n' + 'with a new line',
         second: 'This is another comment',
-        codeType: `<form action="/action_page.php">
-        First name: <input type="text" name="fname"><br>
-            Last name: <input type="text" name="lname"><br>
-        <input type="submit" value="Submit">
-        </form>`,
         test: 'Test'
     };
 
@@ -146,22 +141,6 @@ describe('Comment', () => {
 
             await commentsPage.getTotalNumberOfComments('Comments (2)');
             await expect(await commentsPage.getMessage(0)).toEqual(comments.second);
-            await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
-            await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
-        });
-
-        it('[C280022] Should treat HTML code as a regular string', async () => {
-            const resultStr = comments.codeType.replace(/\s\s+/g, ' ');
-            await viewerPage.viewFile(pngFileModel.name);
-            await viewerPage.clickInfoButton();
-            await viewerPage.checkInfoSideBarIsDisplayed();
-            await viewerPage.clickOnCommentsTab();
-
-            await commentsPage.addComment(comments.codeType);
-            await commentsPage.checkUserIconIsDisplayed();
-
-            await commentsPage.getTotalNumberOfComments('Comments (1)');
-            await expect(await commentsPage.getMessage(0)).toEqual(resultStr);
             await expect(await commentsPage.getUserName(0)).toEqual(userFullName);
             await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         });

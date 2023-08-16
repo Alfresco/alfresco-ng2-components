@@ -1,15 +1,3 @@
-@media screen and (max-width: 599px) {
-    app-search-bar {
-        width: 150px;
-    }
-}
-
-@media screen and (max-width: 350px) {
-    app-search-bar {
-        width: 100px;
-    }
-}
-
 adf-file-uploading-dialog {
     z-index: 1100;
 }
@@ -33,18 +21,8 @@ adf-file-uploading-dialog {
         }
     }
 
-    .mat-nav-list .mat-list-item.app-sidenav-link {
-        height: 40px;
-    }
-
     &-menu-spacer {
         flex: 1 1 auto;
-    }
-}
-
-@media screen and (max-width: 959px) {
-    .app-menu {
-        padding-top: 0;
     }
 }
 
@@ -55,8 +33,4 @@ mat-sidenav-content > div {
     > div {
         flex: auto;
     }
-}
-
-[dir='rtl'] .app-sidenav-link__expand-button {
-    transform: rotateY(180deg);
 }

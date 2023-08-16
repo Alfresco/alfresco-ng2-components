@@ -29,15 +29,4 @@ export class UploadButtonPage {
             await this.uploadButton.sendKeys(file.getLocation());
         }
     }
-
-    async isButtonNotDisplayed(): Promise<boolean> {
-        let result = false;
-
-        try {
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
-            result = true;
-        } catch (e) { /* do nothing */ }
-
-        return result;
-    }
 }

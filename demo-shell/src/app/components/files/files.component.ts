@@ -31,26 +31,12 @@ import {
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
-    MinimalNodeEntity,
-    NodePaging,
-    Pagination,
-    MinimalNodeEntryEntity,
-    SiteEntry,
-    SearchEntry,
-    NodeEntry
-} from '@alfresco/js-api';
-import {
-    AlfrescoApiService,
-    AuthenticationService,
-    AppConfigService,
-    AppConfigValues,
-    LogService,
     NotificationService,
     DataRow,
     UserPreferencesService,
     PaginationComponent,
-    FormValues,
     DisplayMode,
     ShowHeaderMode,
     InfinitePaginationComponent,
@@ -65,23 +51,18 @@ import {
     PermissionStyleModel,
     UploadFilesEvent,
     ConfirmDialogComponent,
-    LibraryDialogComponent,
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
     FileUploadEvent,
-    NodesApiService,
-    SharedLinksApiService
+    NodesApiService
 } from '@alfresco/adf-content-services';
-
-import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
-
+import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
-import { ThemePalette } from '@angular/material/core';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -106,12 +87,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayMode = DisplayMode.List;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
 
-    baseShareUrl = (
-        this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
-        this.appConfig.get<string>(AppConfigValues.ECMHOST)) + '/preview/s/';
-
-    toolbarColor: ThemePalette;
-
     selectionModes = [
         {value: 'none', viewValue: 'None'},
         {value: 'single', viewValue: 'Single'},
@@ -121,10 +96,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
     currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
-
-    formValues: FormValues = {};
-
-    processId;
 
     @Input()
     sorting = ['name', 'ASC'];
@@ -240,23 +211,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     stickyHeader: boolean;
-    preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-    noHeaderMode = ShowHeaderMode.Never;
-    enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
-
-    selectedNodes = [];
-
-    enableDownloadPrompt: boolean = this.appConfig.get('viewer.enableDownloadPrompt', false);
-    enableDownloadPromptReminder: boolean = this.appConfig.get('viewer.enableDownloadPromptReminders', false);
-    downloadPromptDelay = this.appConfig.get('viewer.downloadPromptDelay', 50);
-    downloadPromptReminderDelay = this.appConfig.get('viewer.downloadPromptReminderDelay', 30);
-    enableFileAutoDownload: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
-    fileAutoDownloadSizeThresholdInMB: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
@@ -264,15 +223,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 private dialog: MatDialog,
                 private location: Location,
                 private router: Router,
-                private logService: LogService,
-                private appConfig: AppConfigService,
                 private preference: UserPreferencesService,
                 private preview: PreviewService,
                 @Optional() private route: ActivatedRoute,
-                public authenticationService: AuthenticationService,
-                public alfrescoApiService: AlfrescoApiService,
                 private contentMetadataService: ContentMetadataService,
-                private sharedLinksApiService: SharedLinksApiService,
                 private dialogAspectListService: DialogAspectListService,
                 private nodeService: NodesApiService) {
     }
@@ -284,19 +238,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    toggleFolder() {
-        this.multipleFileUpload = false;
-        this.folderUpload = !this.folderUpload;
-        return this.folderUpload;
-    }
-
     toggleThumbnails() {
         this.thumbnails = !this.thumbnails;
-        this.documentList.reload();
-    }
-
-    toggleAllowDropFiles() {
-        this.allowDropFiles = !this.allowDropFiles;
         this.documentList.reload();
     }
 
@@ -327,19 +270,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe((value: any[]) => {
-                let selectedNodes: NodeEntry[] = [];
-
-                if (this.preselectNodes) {
-                    if (value && value.length > 0) {
-                        if (this.selectionMode === 'single') {
-                            selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
-                        } else {
-                            selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
-                        }
-                        this.selectedNodes = [...selectedNodes];
-                    }
-                }
-
                 this.onFileUploadEvent(value[0]);
             });
 
@@ -360,12 +290,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(value => this.onFolderAction(value));
 
         this.contentMetadataService.error
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((err: { message: string }) => {
-                this.notificationService.showError(err.message);
-            });
-
-        this.sharedLinksApiService.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
@@ -421,15 +345,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderCreated(event: FolderCreatedEvent) {
-        this.logService.log('FOLDER CREATED');
-        this.logService.log(event);
         if (event && event.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
     }
 
     onFolderAction(node) {
-        this.logService.log(node);
         if (node && node.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
@@ -459,10 +380,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentListReady.emit(event);
     }
 
-    pageIsEmpty(node: NodePaging) {
-        return node && node.list && node.list.entries.length === 0;
-    }
-
     onContentActionError(errors: any) {
         const errorStatusCode = JSON.parse(errors.message).error.statusCode;
         let message: string;
@@ -479,11 +396,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.openSnackMessageError(message);
-    }
-
-    onContentActionSuccess(message: string) {
-        this.openSnackMessageInfo(message);
-        this.documentList.reload();
     }
 
     onDeleteActionSuccess(message: string) {
@@ -582,24 +494,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    startProcessAction($event: any) {
-        this.formValues['file'] = $event.value.entry;
-
-        const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
-            width: '630px',
-            panelClass: 'adf-version-manager-dialog'
-        });
-
-        dialogRef.afterClosed().subscribe((selectedProcess) => {
-            this.processId = selectedProcess.id;
-        });
-
-    }
-
-    closeStartProcess() {
-        this.processId = null;
-    }
-
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
         this.pagination.maxItems = event.maxItems;
@@ -617,12 +511,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.pagination.maxItems = event.maxItems;
         this.pagination.skipCount = event.skipCount;
         this.turnedNextPage.emit(event);
-    }
-
-    loadNextBatch(event: Pagination): void {
-        this.pagination.maxItems = event.maxItems;
-        this.pagination.skipCount = event.skipCount;
-        this.loadNext.emit(event);
     }
 
     onPrevPage(event: Pagination): void {
@@ -646,10 +534,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.infinitePaginationComponent.reset();
     }
 
-    canDownloadNode(node: MinimalNodeEntity): boolean {
-        return node && node.entry && node.entry.name === 'custom';
-    }
-
     onBeginUpload(event: UploadFilesEvent) {
         if (this.warnOnMultipleUploads && event) {
             const files = event.files || [];
@@ -671,14 +555,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 });
             }
         }
-    }
-
-    isCustomActionDisabled(node: MinimalNodeEntity): boolean {
-        return !(node && node.entry && node.entry.name === 'custom');
-    }
-
-    runCustomAction(event: any) {
-        this.logService.log(event);
     }
 
     onUploadNewVersion(ev) {
@@ -706,16 +582,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getFileFiltering(): string {
         return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
-    }
-
-    createLibrary(): void {
-        const dialogInstance: any = this.dialog.open(LibraryDialogComponent, {
-            width: '400px'
-        });
-
-        dialogInstance.componentInstance.error.subscribe((message: string) => {
-            this.notificationService.openSnackMessage(message);
-        });
     }
 
     searchResultsHighlight(search: SearchEntry): string {
@@ -757,61 +623,4 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.documentList.reload();
     }
-
-    setPreselectNodes(nodes: string) {
-        this.selectedNodes = this.getArrayFromString(nodes);
-        this.documentList.reload();
-    }
-
-    isStringArray(str: string): boolean {
-        try {
-            const result = JSON.parse(str);
-            return Array.isArray(result);
-        } catch (e) {
-            return false;
-        }
-    }
-
-    private getArrayFromString<T = any>(value: string): T[] {
-        if (this.isStringArray(value)) {
-            return JSON.parse(value);
-        } else {
-            return [];
-        }
-    }
-
-    onMultipleFilesUpload() {
-        this.selectedNodes = [];
-    }
-
-    onEnableDownloadPrompt() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPrompt'] = this.enableDownloadPrompt;
-    }
-
-    onDownloadPromptDelayChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptDelay'] = this.downloadPromptDelay;
-    }
-
-    onEnableDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableDownloadPromptReminder'] = this.enableDownloadPromptReminder;
-    }
-
-    onDownloadPromptReminderChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['downloadPromptReminderDelay'] = this.downloadPromptReminderDelay;
-    }
-
-    onEnableFileAutoDownloadChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['enableFileAutoDownload'] = this.enableFileAutoDownload;
-    }
-
-    onFileAutoDownloadSizeThresholdChange() {
-        const previewConfig = this.appConfig?.config['viewer'];
-        previewConfig['fileAutoDownloadSizeThresholdInMB'] = this.fileAutoDownloadSizeThresholdInMB;
-    }
-
 }

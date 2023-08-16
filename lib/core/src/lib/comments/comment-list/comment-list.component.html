@@ -1,30 +1,17 @@
  <mat-list class="adf-comment-list">
     <mat-list-item *ngFor="let comment of comments"
                   (click)="selectComment(comment)"
-                  class="adf-comment-list-item"
-                  [class.adf-is-selected]="comment.isSelected"
-                  id="adf-comment-{{comment?.id}}">
-        <div [attr.id]="'comment-user-icon-' + comment.id" class="adf-comment-img-container">
-            <div
-                *ngIf="!isPictureDefined(comment.createdBy)"
-                class="adf-comment-user-icon">
-                {{getUserShortName(comment.createdBy)}}
-            </div>
-            <div>
-                <img [alt]="comment.createdBy" *ngIf="isPictureDefined(comment.createdBy)"
-                      class="adf-people-img"
-                     [src]="getUserImage(comment.createdBy)" />
-            </div>
+                  class="adf-comment-list-item">
+        <div class="adf-comment-img-container">
+            <div *ngIf="!comment.hasAvatarPicture" class="adf-comment-user-icon">{{ comment.userInitials }}</div>
+            <img *ngIf="comment.hasAvatarPicture" class="adf-people-img"
+                 [alt]="'COMMENTS.PROFILE_IMAGE' | translate"
+                 [src]="getUserImage(comment.createdBy)" />
         </div>
         <div class="adf-comment-contents">
-            <div matLine [attr.id]="'comment-user-' + comment.id" class="adf-comment-user-name">
-                {{comment.createdBy?.firstName}} {{comment.createdBy?.lastName}}
-            </div>
-            <div matLine [attr.id]="'comment-message-' + comment.id" class="adf-comment-message" [innerHTML]="comment.message">
-            </div>
-            <div matLine [attr.id]="'comment-time-' + comment.id" class="adf-comment-message-time">
-                {{ comment.created | adfTimeAgo: currentLocale }}
-            </div>
+            <div matLine class="adf-comment-user-name">{{ comment.userDisplayName }}</div>
+            <div matLine class="adf-comment-message">{{ comment.message }}</div>
+            <div matLine class="adf-comment-message-time">{{ comment.created | adfTimeAgo }}</div>
         </div>
     </mat-list-item>
 </mat-list>

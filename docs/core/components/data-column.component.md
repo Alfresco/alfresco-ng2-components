@@ -213,7 +213,7 @@ within the document list.
 
 ```html
 <data-column
-    title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
+    title="Tag"
     key="id"
     sortable="true"
     class="full-width ellipsis-cell">

@@ -65,7 +65,7 @@ export class ApplicationsUtil {
         return publishApp;
     }
 
-    async importPublishDeployApp(appFileLocation: string, option = {}): Promise<any> {
+    async importPublishDeployApp(appFileLocation: string, option = {}): Promise<AppDefinitionRepresentation> {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.publishDeployApp(appCreated.id);

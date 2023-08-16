@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     ApplicationsUtil,
     LoginPage,
     ProcessUtil,
     UsersActions,
-    Widget
+    Widget, UserModel
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Dynamic Table widget ', () => {
-
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
@@ -40,8 +41,9 @@ describe('Dynamic Table widget ', () => {
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let processUserModel;
-    let deployedAppId; let process;
+    let processUserModel: UserModel;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
 
     describe('with Date Time Widget App', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
@@ -60,8 +62,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -117,8 +118,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
@@ -173,8 +173,7 @@ describe('Dynamic Table widget ', () => {
         beforeEach(async () => {
             await loginPage.login(processUserModel.username, processUserModel.password);
 
-            await navigationBarPage.clickHomeButton();
-            await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+            await new ProcessServicesPage().goToAppByAppId(`${deployedAppId}`);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
@@ -189,15 +188,15 @@ describe('Dynamic Table widget ', () => {
 
             await widget.dynamicTable().setDatatableInput('name', app.CUSTOM_VALIDATOR.FIELD.NAME);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Id\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Id' is required.`);
 
             await widget.dynamicTable().setDatatableInput('id', app.CUSTOM_VALIDATOR.FIELD.ID);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Number\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Number' is required.`);
 
             await widget.dynamicTable().setDatatableInput('12', app.CUSTOM_VALIDATOR.FIELD.NUM);
             await widget.dynamicTable().clickSaveButton();
-            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Address\' is required.');
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe(`Field 'Address' is required.`);
 
             await widget.dynamicTable().setDatatableInput('address', app.CUSTOM_VALIDATOR.FIELD.ADDRESS);
             await widget.dynamicTable().clickSaveButton();

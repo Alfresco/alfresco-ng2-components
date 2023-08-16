@@ -176,15 +176,10 @@ describe('Search Date Range Filter', () => {
     });
 
     describe('configuration change', () => {
-        let jsonFile;
-
-        beforeAll(async () => {
-            jsonFile = SearchConfiguration.getConfiguration();
-        });
-
         it('[C277117] Should be able to change date format', async () => {
             await navigationBar.navigateToContentServices();
 
+            const jsonFile= SearchConfiguration.getConfiguration();
             jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));

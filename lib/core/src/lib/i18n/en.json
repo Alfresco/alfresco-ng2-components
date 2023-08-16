@@ -47,6 +47,7 @@
       "REQUIRED": "This is a required field",
       "REST_API_FAILED": "The server `{{ hostname }}` is not reachable",
       "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
       "FILE_NAME": "File Name",
       "NO_FILE_ATTACHED": "No file attached",
       "VALIDATOR": {
@@ -174,30 +175,6 @@
       "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
       "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
     },
-    "HOST_SETTINGS": {
-      "TYPE-AUTH": "Authentication type",
-      "BASIC": "Basic Authentication",
-      "SSO": "SSO",
-      "IMPLICIT-FLOW": "Implicit Flow",
-      "CODE-FLOW": "Code Flow",
-      "PROVIDER": "Provider",
-      "REQUIRED": "This field is required",
-      "CS_URL_ERROR": "Content Services address doesn't match the URL format",
-      "PS_URL_ERROR": "Process Services address doesn't match the URL format",
-      "TITLE": "Settings",
-      "CS-HOST": "Content Services URL",
-      "BP-HOST": "Process Services URL",
-      "BACK": "Back",
-      "APPLY": "APPLY",
-      "NOT_VALID": "http(s)://host|ip:port(/path) not recognized, try a different URL.",
-      "REDIRECT": "Redirect URI",
-      "REDIRECT_LOGOUT": "Redirect URI Logout",
-      "SILENT": "Silent Login",
-      "SCOPE": "Scope",
-      "CLIENT": "Client ID",
-      "PUBLIC_URLS": "Public urls silent Login",
-      "SECRET": "Secret"
-    },
     "CARDVIEW": {
       "KEYVALUEPAIRS": {
         "ADD": "Add New",
@@ -266,6 +243,7 @@
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profile Image",
     "NONE": "No comments",
     "ADD": "Add",
     "HEADER": "Comments ({{ count }})",

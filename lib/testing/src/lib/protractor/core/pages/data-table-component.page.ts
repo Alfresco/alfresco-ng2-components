@@ -32,7 +32,6 @@ export class DataTableComponentPage {
     selectedRowNumber: ElementFinder;
     allSelectedRows: ElementArrayFinder;
     selectAll: ElementFinder;
-    copyColumnTooltip: ElementFinder;
     emptyList: ElementFinder;
     emptyListTitle: ElementFinder;
     emptyListSubtitle: ElementFinder;
@@ -51,7 +50,6 @@ export class DataTableComponentPage {
         this.selectedRowNumber = this.rootElement.$(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`);
         this.allSelectedRows = this.rootElement.$$(`adf-datatable-row[class*='is-selected']`);
         this.selectAll = this.rootElement.$(`div[class*='adf-datatable-header'] mat-checkbox`);
-        this.copyColumnTooltip = this.rootElement.$(`adf-copy-content-tooltip span`);
         this.emptyList = this.rootElement.$(`adf-empty-content`);
         this.emptyListTitle = this.rootElement.$(`.adf-empty-content__title`);
         this.emptyListSubtitle = this.rootElement.$(`.adf-empty-content__subtitle`);
@@ -112,28 +110,6 @@ export class DataTableComponentPage {
         await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
         await this.selectRow(columnName, columnValue);
         await browser.actions().sendKeys(protractor.Key.NULL).perform();
-    }
-
-    async selectMultipleRows(columnName: string, items: string[]): Promise<void> {
-        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        await this.clearRowsSelection();
-        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
-        for (const item of items) {
-            await this.selectRow(columnName, item);
-        }
-        await browser.actions().sendKeys(protractor.Key.NULL).perform();
-    }
-
-    async clearRowsSelection(): Promise<void> {
-        try {
-            const count = await this.getNumberOfSelectedRows();
-            if (count !== 0) {
-                await browser.refresh();
-                await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
-            }
-        } catch (error) {
-            Logger.error('------ clearSelection catch : ', error);
-        }
     }
 
     async checkRowIsSelected(columnName: string, columnValue: string): Promise<void> {
@@ -228,12 +204,6 @@ export class DataTableComponentPage {
         return BrowserActions.getAttribute(this.getCellElementByValue(columnName, columnValue), 'title');
     }
 
-    async rightClickOnRowByIndex(index: number): Promise<void> {
-        const row = this.getRowByIndex(index);
-        await BrowserActions.rightClick(row);
-        await BrowserVisibility.waitUntilElementIsVisible($('#adf-context-menu-content'));
-    }
-
     async rightClickOnItem(columnName: string, columnValue: string): Promise<void> {
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.rightClick(row);
@@ -289,6 +259,7 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
+    /** @deprecated Use Playwright API instead */
     async getFirstElementDetail(detail: string): Promise<string> {
         const firstNode = $$(`adf-datatable div[title="${detail}"] span`).first();
         return BrowserActions.getText(firstNode);
@@ -356,6 +327,7 @@ export class DataTableComponentPage {
         return this.rootElement.all(by.xpath(`//div[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`)).first();
     }
 
+    /** @deprecated use Playwright instead **/
     getRowByIndex(index: number): ElementFinder {
         return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//adf-datatable-row[contains(@class,'adf-datatable-row')][${index}]`));
     }
@@ -374,7 +346,6 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
-
         if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
@@ -429,10 +400,7 @@ export class DataTableComponentPage {
         }
     }
 
-    async checkColumnIsDisplayed(columnKey: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($(`div[data-automation-id="auto_id_${columnKey}"]`));
-    }
-
+    /** @deprecated use Playwright instead **/
     async isColumnDisplayed(columnTitle: string): Promise<boolean> {
         const isColumnDisplated = (await this.allColumns).some(
             async column => {
@@ -444,10 +412,7 @@ export class DataTableComponentPage {
         return isColumnDisplated;
     }
 
-    async checkNoContentContainerIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
-    }
-
+    /** @deprecated use Playwright instead **/
     async getNumberOfColumns(): Promise<number> {
         return this.allColumns.count();
     }
@@ -520,46 +485,6 @@ export class DataTableComponentPage {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async getCopyContentTooltip(): Promise<string> {
-        return BrowserActions.getText(this.copyColumnTooltip);
-    }
-
-    async copyContentTooltipIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsStale(this.copyColumnTooltip);
-    }
-
-    async mouseOverColumn(columnName: string, columnValue: string): Promise<void> {
-        const column = this.getCellElementByValue(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(column);
-        await browser.actions().mouseMove(column).perform();
-    }
-
-    async clickColumn(columnName: string, columnValue: string): Promise<void> {
-        await BrowserActions.clickExecuteScript(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`);
-    }
-
-    async selectMultipleItems(names: string[]): Promise<void> {
-        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
-        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
-        for (const name of names) {
-            await this.selectRowByContent(name);
-        }
-        await this.clearSelection();
-    }
-
-    async clearSelection(): Promise<void> {
-        await browser.actions().sendKeys(protractor.Key.NULL).perform();
-    }
-
-    async getEmptyListText(): Promise<string> {
-        const isEmpty = await this.isEmpty();
-        if (isEmpty) {
-            return this.rootElement.$('adf-custom-empty-content-template').getText();
-        }
-        return '';
-    }
-
     async isEmpty(): Promise<boolean> {
         await browser.sleep(500);
 
@@ -574,26 +499,6 @@ export class DataTableComponentPage {
         Logger.log(`empty page isDisplayed ${isDisplayed}`);
 
         return isDisplayed;
-    }
-
-    async waitForEmptyState(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.emptyList);
-    }
-
-    async getEmptyStateTitle(): Promise<string> {
-        const isEmpty = await this.isEmpty();
-        if (isEmpty) {
-            return this.emptyListTitle.getText();
-        }
-        return '';
-    }
-
-    async getEmptyStateSubtitle(): Promise<string> {
-        const isEmpty = await this.isEmpty();
-        if (isEmpty) {
-            return this.emptyListSubtitle.getText();
-        }
-        return '';
     }
 
     private async isSpinnerPresent(): Promise<boolean> {

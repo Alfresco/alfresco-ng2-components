@@ -141,7 +141,7 @@ describe('Search Radio Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
-                    name: 'APP.SEARCH.RADIO.FOLDER',
+                    name: 'Folder',
                     value: 'TYPE:\'cm:folder\''
                 });
             }
@@ -199,7 +199,7 @@ describe('Search Radio Component', () => {
 
             for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
                 jsonFile.categories[5].component.settings.options.push({
-                    name: 'APP.SEARCH.RADIO.FOLDER',
+                    name: 'Folder',
                     value: 'TYPE:\'cm:folder\''
                 });
             }

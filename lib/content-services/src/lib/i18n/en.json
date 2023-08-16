@@ -683,5 +683,18 @@
   "TAG_NODE_LIST": {
     "VIEW_MORE": "View {{ count }} more"
   },
-  "swsdp": "Sample: Web Site Design Project"
+  "swsdp": "Sample: Web Site Design Project",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
+      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
+      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
+      "JOIN_REQUEST_FAILED": "Cannot join the library"
+    },
+    "INFO": {
+      "JOINED": "Library joined",
+      "JOIN_CANCELED": "Canceled the request to join the library",
+      "JOIN_REQUESTED": "Request sent to join this library"
+    }
+  }
 }

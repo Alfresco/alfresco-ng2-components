@@ -28,6 +28,7 @@ import { FormFieldRule } from './form-field-rule';
 import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
+import { DataColumn } from '../../../../datatable/data/data-column.model';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -83,6 +84,7 @@ export class FormFieldModel extends FormWidgetModel {
     groupsRestriction: string[];
     leftLabels: boolean = false;
     variableConfig: VariableConfig;
+    schemaDefinition: DataColumn[];
 
     // container model members
     numberOfColumns: number = 1;
@@ -197,6 +199,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.selectLoggedUser = json.selectLoggedUser;
             this.groupsRestriction = json.groupsRestriction?.groups;
             this.variableConfig = json.variableConfig;
+            this.schemaDefinition = json.schemaDefinition;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

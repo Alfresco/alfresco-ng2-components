@@ -25,7 +25,7 @@ import { createApiService,
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { TasksPage } from './../pages/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import { CommentsPage } from '../../core/pages/comments.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ActivitiCommentsApi, TaskActionsApi } from '@alfresco/js-api';
@@ -47,7 +47,9 @@ describe('Comment component for Processes', () => {
     const activitiCommentsApi = new ActivitiCommentsApi(apiService.getInstance());
     const taskActionsApi = new TaskActionsApi(apiService.getInstance());
 
-    let user; let appId; let secondUser;
+    let user: UserModel;
+    let appId: number;
+    let secondUser: UserModel;
 
     const taskName = {
         completed_task: 'Test Completed',

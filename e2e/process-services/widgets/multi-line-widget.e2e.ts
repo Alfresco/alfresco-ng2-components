@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-import { createApiService,
-    ApplicationsUtil,
-    LoginPage,
-    ProcessUtil,
-    UsersActions,
-    Widget
-} from '@alfresco/adf-testing';
+import { createApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions, Widget, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { ProcessServicesPage } from '../pages/process-services.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { AppDefinitionRepresentation, ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 describe('Multi-line Widget', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
@@ -34,34 +28,33 @@ describe('Multi-line Widget', () => {
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const navigationBarPage = new NavigationBarPage();
 
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
     const processUtil = new ProcessUtil(apiService);
 
-    let appModel;
-    let processUserModel;
-    let deployedAppId; let process;
+    let appModel: AppDefinitionRepresentation;
+    let processUserModel: UserModel;
+    let deployedAppId: number;
+    let process: ProcessInstanceRepresentation;
 
     beforeAll(async () => {
-       await apiService.loginWithProfile('admin');
+        await apiService.loginWithProfile('admin');
 
-       processUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser();
 
-       await apiService.login(processUserModel.username, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        await apiService.login(processUserModel.username, processUserModel.password);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-       deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
+        deployedAppId = await applicationsService.getAppDefinitionId(appModel.id);
 
-       process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.username, processUserModel.password);
-   });
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.username, processUserModel.password);
+    });
 
     beforeEach(async () => {
-        await navigationBarPage.clickHomeButton();
-        await (new ProcessServicesPage()).goToAppByAppId(deployedAppId);
+        await new ProcessServicesPage().goToAppByAppId(deployedAppId);
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -71,7 +64,7 @@ describe('Multi-line Widget', () => {
         await processUtil.cancelProcessInstance(process.id);
         await apiService.loginWithProfile('admin');
         await usersActions.deleteTenant(processUserModel.tenantId);
-   });
+    });
 
     it('[C268182] Should be able to set general properties for Multi-line Text Widget', async () => {
         const label = await widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);

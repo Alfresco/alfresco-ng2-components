@@ -71,8 +71,7 @@ describe('Task Assignee', () => {
                     tenantId: user.tenantId,
                     type: 1
                 });
-            } catch (e) {
-            }
+            } catch {}
 
             await apiService.login(user.username, user.password);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });

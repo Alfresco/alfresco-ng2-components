@@ -60,26 +60,27 @@ describe('BaseViewerWidgetComponent', () => {
     });
 
     it('should set the file id corretly when the field value is an array', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: [fakePngAnswer] });
-        widget.field = fakeField;
+        assertFileId([fakePngAnswer], '1933', fakeForm, widget, fixture, done);
+    });
 
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            expect(widget.field.value).toBe('1933');
-            done();
-        });
+    it('should set the file id corretly when the field value is an object', (done) => {
+        assertFileId(fakePngAnswer, '1933', fakeForm, widget, fixture, done);
     });
 
     it('should set the file id corretly when the field value is a string', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
-        widget.field = fakeField;
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            expect(widget.field.value).toBe('fakeValue');
-            done();
-        });
+        assertFileId('fakeValue', 'fakeValue', fakeForm, widget, fixture, done);
     });
 });
+
+function assertFileId(value: any, expectedFileId: string, fakeForm: FormModel, widget: BaseViewerWidgetComponent, fixture: ComponentFixture<BaseViewerWidgetComponent>, done: DoneFn) {
+    const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value });
+    widget.field = fakeField;
+
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+        expect(widget.field.value).toBe(expectedFileId);
+        done();
+    });
+}
+

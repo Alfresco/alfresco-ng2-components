@@ -1,9 +1,6 @@
 {
   "$schema": "../../../lib/extensions/src/lib/config/schema/app-extension.schema.json",
-  "$references": [
-    "plugin1.json",
-    "plugin2.json"
-  ],
+  "$references": [],
   "$dependencies": [],
 
   "features": {

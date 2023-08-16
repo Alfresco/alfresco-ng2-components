@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
 import { CommentModel } from '../../models/comment.model';
-import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { User } from '../../models/general-user.model';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
@@ -29,8 +27,7 @@ import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
     styleUrls: ['./comment-list.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
-export class CommentListComponent implements OnInit, OnDestroy {
+export class CommentListComponent {
 
     /** The comments data used to populate the list. */
     @Input()
@@ -38,57 +35,15 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
     /** Emitted when the user clicks on one of the comment rows. */
     @Output()
-    clickRow: EventEmitter<CommentModel> = new EventEmitter<CommentModel>();
+    clickRow = new EventEmitter<CommentModel>();
 
-    selectedComment: CommentModel;
-    currentLocale;
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(
-        @Inject(ADF_COMMENTS_SERVICE) private commentsService: Partial<CommentsService>,
-        public userPreferenceService: UserPreferencesService
-    ) {
-    }
-
-    ngOnInit() {
-        this.userPreferenceService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.currentLocale = locale);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
+    private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
     selectComment(comment: CommentModel): void {
-        if (this.selectedComment) {
-            this.selectedComment.isSelected = false;
-        }
-        comment.isSelected = true;
-        this.selectedComment = comment;
-        this.clickRow.emit(this.selectedComment);
+        this.clickRow.emit(comment);
     }
 
-    getUserShortName(user: any): string {
-        let shortName = '';
-        if (user) {
-            if (user.firstName) {
-                shortName = user.firstName[0].toUpperCase();
-            }
-            if (user.lastName) {
-                shortName += user.lastName[0].toUpperCase();
-            }
-        }
-        return shortName;
-    }
-
-    isPictureDefined(user: any): boolean {
-        return user.pictureId || user.avatarId;
-    }
-
-    getUserImage(user: any): string {
+    getUserImage(user: User): string {
         return this.commentsService.getUserImage(user);
     }
 }

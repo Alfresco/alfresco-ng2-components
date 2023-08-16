@@ -18,25 +18,25 @@
 import { PermissionsPage } from '../../content-services/pages/permissions.page';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { createApiService,
+import {
+    createApiService,
     BrowserActions, Logger,
     LoginPage,
-    NotificationHistoryPage,
     PermissionActions,
     SearchService,
     StringUtil,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    SnackbarPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
-import { NotificationDemoPage } from '../../core/pages/notification.page';
-import { GroupsApi } from '@alfresco/js-api';
+import { GroupsApi, NodeEntry } from '@alfresco/js-api';
 
 describe('Permissions Component', () => {
 
@@ -47,7 +47,7 @@ describe('Permissions Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
-    const notificationPage = new NotificationDemoPage();
+    const snackbarPage = new SnackbarPage();
     const searchService = new SearchService(apiService);
     const permissionActions = new PermissionActions(apiService);
     const groupsApi = new GroupsApi(apiService.getInstance());
@@ -55,7 +55,6 @@ describe('Permissions Component', () => {
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
-    const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
     let file;
     const fileModel = new FileModel({
@@ -88,11 +87,11 @@ describe('Permissions Component', () => {
     const roleContributorFolderModel = new FolderModel({ name: 'roleContributor' + StringUtil.generateRandomString() });
     const roleEditorFolderModel = new FolderModel({ name: 'roleEditor' + StringUtil.generateRandomString() });
 
-    let roleConsumerFolder;
-    let roleCoordinatorFolder;
-    let roleContributorFolder;
-    let roleCollaboratorFolder;
-    let roleEditorFolder;
+    let roleConsumerFolder: NodeEntry;
+    let roleCoordinatorFolder: NodeEntry;
+    let roleContributorFolder: NodeEntry;
+    let roleCollaboratorFolder: NodeEntry;
+    let roleEditorFolder: NodeEntry;
 
     beforeAll(async () => {
         try {
@@ -177,7 +176,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.selectRole(groupBody.displayName, 'Consumer');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('Added 0 user(s) 1 group(s)');
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('Added 0 user(s) 1 group(s)');
             await permissionsPage.checkUserIsAdded(groupBody.id);
         });
 
@@ -198,8 +197,8 @@ describe('Permissions Component', () => {
             await permissionsPage.checkPermissionListDisplayed();
             await expect(await permissionsPage.isInherited()).toBe(true, 'Inherited permission should be on');
             await permissionsPage.toggleInheritPermission();
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toContain('Disabled inherited permission', 'Disabled notification not shown');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await expect(await snackbarPage.getSnackBarMessage()).toContain('Disabled inherited permission', 'Disabled notification not shown');
+            await snackbarPage.waitForSnackBarToClose();
             await expect(await permissionsPage.isInherited()).toBe(false, 'Inherited permission should be off');
         });
     });
@@ -226,8 +225,8 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.selectRole(filePermissionUser.fullName, 'Contributor');
             await expect(await permissionsPage.addPermissionsDialog.addButtonIsEnabled()).toBe(true, 'button should be enabled');
             await permissionsPage.addPermissionsDialog.clickAddButton();
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('Added 1 user(s) 0 group(s)');
+            await snackbarPage.waitForSnackBarToClose();
             await permissionsPage.checkUserIsAdded(filePermissionUser.username);
         });
 
@@ -250,19 +249,19 @@ describe('Permissions Component', () => {
 
             await BrowserActions.closeMenuAndDialogs();
             await permissionsPage.changePermission(filePermissionUser.username, 'Collaborator');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await snackbarPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Collaborator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Coordinator');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await snackbarPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Coordinator');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Editor');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await snackbarPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Editor');
 
             await permissionsPage.changePermission(filePermissionUser.username, 'Consumer');
-            await notificationPage.snackbarPage.waitForSnackBarToClose();
+            await snackbarPage.waitForSnackBarToClose();
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Consumer');
         });
 
@@ -281,7 +280,7 @@ describe('Permissions Component', () => {
             await expect(await permissionsPage.getRoleCellValue(filePermissionUser.username)).toEqual('Contributor');
             await permissionsPage.clickDeletePermissionButton(filePermissionUser.username);
             await permissionsPage.checkUserIsDeleted(filePermissionUser.username);
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('User/Group deleted');
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('User/Group deleted');
         });
     });
 
@@ -303,12 +302,10 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('You don\'t have access to do this.');
-            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('You don\'t have access to do this.');
             await browser.sleep(3000);
             await contentServicesPage.uploadFile(fileLocation);
-            await expect(await notificationPage.snackbarPage.getSnackBarMessage()).toEqual('You don\'t have the create permission to upload the content');
-            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            await expect(await snackbarPage.getSnackBarMessage()).toEqual('You don\'t have the create permission to upload the content');
         });
 
         it('[C276996] Role Contributor', async () => {
@@ -323,7 +320,6 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleContributor' + fileModel.name);
-            await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
             await contentServicesPage.uploadFile(testFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             await uploadDialog.fileIsUploaded(testFileModel.name);
@@ -350,7 +346,6 @@ describe('Permissions Component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(fileLocation);
-            await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 
         it('[C277003] Role Collaborator', async () => {

@@ -1,88 +1,16 @@
-.app-no-form-container {
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
-}
-
 .app-grid {
     flex-direction: row;
     display: flex;
     max-height: 100%;
     place-content: stretch flex-start;
     align-items: stretch;
+    background-color: white;
 
     .app-grid-item {
         flex: 1;
         margin: 4px;
-        box-shadow:
-            0 2px 2px 0 rgba(0, 0, 0, 0.14),
-            0 3px 1px -2px rgba(0, 0, 0, 0.2),
-            0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(0, 0, 0, 0.14);
         padding: 10px;
-
-        .app-filter-process-definitions-inputs {
-            flex-direction: column;
-            display: flex;
-            max-width: 100%;
-            place-content: stretch space-around;
-            align-items: stretch;
-        }
-    }
-
-    .app-list-buttons {
-        margin-bottom: 24px;
-    }
-
-    .app-tasks-list.app-small-pagination,
-    .app-processes-list.app-small-pagination {
-        .app-pagination {
-            flex-wrap: wrap;
-            padding-bottom: 24px;
-            padding-top: 8px;
-
-            &__range-block.app-pagination__block:first-child {
-                order: 1;
-                width: 60%;
-                flex: 0 0 auto;
-                box-sizing: border-box;
-                padding-left: 2px;
-                justify-content: flex-start;
-            }
-
-            &__perpage-block {
-                order: 3;
-                width: 60%;
-                box-sizing: border-box;
-                padding-left: 2px;
-                justify-content: flex-start;
-            }
-
-            &__actualinfo-block {
-                order: 2;
-                width: 40%;
-                box-sizing: border-box;
-                padding-right: 2px;
-                justify-content: flex-end;
-            }
-
-            &__controls-block {
-                order: 4;
-                width: 40%;
-                box-sizing: border-box;
-                padding-right: 2px;
-                justify-content: flex-end;
-            }
-        }
-    }
-
-    .app-list {
-        .app-datatable-list {
-            border: none;
-        }
-    }
-
-    mat-slide-toggle {
-        margin: 10px;
     }
 
     @media screen and (min-width: 1280px) {
@@ -104,13 +32,7 @@
             min-width: 225px;
         }
 
-        .app-settings-menu {
-            flex: 1 1 300px;
-            max-width: 300px;
-            min-width: 300px;
-        }
-
-        .app-tasks-details, .app-tasks-start, .app-processes-details, .app-processes-start, .app-settings-details {
+        .app-tasks-details, .app-tasks-start, .app-processes-details, .app-processes-start {
             flex: 1 1 auto;
             min-width: auto;
         }
@@ -128,26 +50,5 @@
         flex-direction: column;
         max-width: 100%;
         max-height: initial;
-    }
-}
-
-.app-accordion-panel {
-    .mat-expansion-panel {
-        background: inherit;
-    }
-
-    .mat-expansion-panel-header-title,
-    .mat-expansion-panel-header-description {
-        flex-basis: 0;
-        align-items: center;
-    }
-
-    .mat-expansion-panel-header-description {
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .app-accordion-title-padding {
-        padding-left: 20px;
     }
 }

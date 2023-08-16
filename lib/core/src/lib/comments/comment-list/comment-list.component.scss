@@ -1,10 +1,5 @@
-.adf-is-selected {
-    background: var(--adf-theme-primary-100);
-}
-
 .adf {
     &-comment-img-container {
-        float: left;
         width: 40px;
         height: 100%;
         display: flex;
@@ -13,28 +8,12 @@
     }
 
     &-comment-list-item {
-        /* stylelint-disable */
         white-space: initial;
-        /* stylelint-enable */
         display: table-row-group;
         padding-top: 12px;
         overflow: hidden;
         height: 100% !important;
-        transition: background 0.8s;
         background-position: center;
-
-        &:hover {
-            background:
-                var(--adf-theme-primary-100)
-                radial-gradient(circle, transparent 1%, var(--adf-theme-primary-100) 1%)
-                center/15000%;
-        }
-
-        &:active {
-            background-color: var(--adf-theme-primary-300);
-            background-size: 100%;
-            transition: background 0s;
-        }
     }
 
     &-comment-user-icon {
@@ -50,21 +29,16 @@
     }
 
     &-comment-user-name {
-        float: left;
-        width: calc(100% - 10%);
+        width: 100%;
         padding: 2px 10px;
         font-weight: 600;
         font-size: var(--theme-body-1-font-size);
     }
 
     &-comment-message {
-        float: left;
-        width: calc(100% - 10px);
+        width: 100%;
         padding: 2px 10px;
-        font-style: italic;
-        /* stylelint-disable */
-        white-space: initial !important;
-        /* stylelint-enable */
+        white-space: pre-line !important;
         font-size: var(--theme-body-1-font-size);
         letter-spacing: -0.2px;
         line-height: 1.43;
@@ -72,17 +46,16 @@
     }
 
     &-comment-message-time {
-        float: left;
-        width: calc(100% - 10%);
+        margin-top: 5px;
+        width: 100%;
         padding: 2px 10px;
-        font-size: var(--theme-caption-font-size) !important;
+        font-size: var(--theme-caption-font-size);
         color: var(--adf-theme-foreground-text-color);
     }
 
     &-comment-contents {
-        width: calc(100% - 10px);
+        width: 100%;
         padding-top: 12px;
-        padding-bottom: 12px;
         padding-left: 5px;
     }
 

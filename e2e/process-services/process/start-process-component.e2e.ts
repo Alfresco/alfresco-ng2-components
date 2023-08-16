@@ -17,12 +17,10 @@
 
 import CONSTANTS = require('../../util/constants');
 import { createApiService,
-    ApplicationsUtil, BrowserActions,
+    ApplicationsUtil,
     FileBrowserUtil,
-    LocalStorageUtil,
     LoginPage, ModelsActions,
     ProcessInstanceTasksPage,
-    SelectAppsDialog,
     StartProcessPage,
     StringUtil,
     UserModel,
@@ -32,21 +30,17 @@ import { createApiService,
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessServicesPage } from './../pages/process-services.page';
-import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.page';
-import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
-import { ProcessInstancesApi } from '@alfresco/js-api';
+import { AttachmentListPage } from '../pages/attachment-list.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessServicesPage } from '../pages/process-services.page';
+import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
+import { AppDefinitionRepresentation, ProcessInstancesApi } from '@alfresco/js-api';
 
 describe('Start Process Component', () => {
-
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-    const startProcessAttachFileApp = browser.params.resources.Files.START_PROCESS_ATTACH_FILE;
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -57,8 +51,6 @@ describe('Start Process Component', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
     const processInstanceTasksPage = new ProcessInstanceTasksPage();
-    const contentServicesPage = new ContentServicesPage();
-    const selectAppsDialog = new SelectAppsDialog();
     const widget = new Widget();
 
     const apiService = createApiService();
@@ -69,7 +61,9 @@ describe('Start Process Component', () => {
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
-    let appCreated; let simpleAppCreated; let dateFormAppCreated;
+    let appCreated: AppDefinitionRepresentation;
+    let simpleAppCreated: AppDefinitionRepresentation;
+    let dateFormAppCreated: AppDefinitionRepresentation;
 
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
@@ -84,7 +78,6 @@ describe('Start Process Component', () => {
     });
 
     describe('Provider: BPM', () => {
-
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
 
@@ -128,7 +121,6 @@ describe('Start Process Component', () => {
         });
 
         describe(' Once logged with user with app', () => {
-
             beforeEach(async () => {
                 await loginPage.login(secondProcUserModel.username, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
@@ -271,7 +263,9 @@ describe('Start Process Component', () => {
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.enterProcessName('Type');
                 await expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
                 await startProcessPage.clickStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Type');
@@ -285,7 +279,9 @@ describe('Start Process Component', () => {
                 await startProcessPage.typeProcessDefinition('process');
 
                 await startProcessPage.pressDownArrowAndEnter();
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
             });
 
             it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
@@ -295,7 +291,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await expect(await startProcessPage.getProcessDefinitionValue()).toBe(
+                    browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name
+                );
                 await startProcessPage.clickProcessDropdownArrow();
 
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe('');
@@ -471,70 +469,4 @@ describe('Start Process Component', () => {
             });
         });
     });
-
-    describe('Provider: ALL', () => {
-        const uploadDialog = new UploadDialogPage();
-        let processUserModel;
-        const imageUploaded = new FileModel({
-            name: browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
-            location: browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location
-        });
-
-        beforeAll(async () => {
-            const apiServiceAll = createApiService({
-                provider: 'ALL',
-                hostEcm: browser.params.testConfig.appConfig.ecmHost,
-                hostBpm: browser.params.testConfig.appConfig.bpmHost
-            });
-
-            const usersActionsAll = new UsersActions(apiServiceAll);
-
-            await apiServiceAll.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
-
-            processUserModel = await usersActionsAll.createUser();
-
-            const alfrescoJsBPMAdminUser = createApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
-
-            await alfrescoJsBPMAdminUser.login(processUserModel.username, processUserModel.password);
-
-            const applicationsService = new ApplicationsUtil(alfrescoJsBPMAdminUser);
-
-            await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
-        });
-
-        it('[C260490] Should be able to start a Process within ACS', async () => {
-            await BrowserActions.getUrl(`${browser.baseUrl}/settings`);
-
-            await LocalStorageUtil.setStorageItem('providers', 'ALL');
-
-            await loginPage.login(processUserModel.username, processUserModel.password);
-
-            await contentServicesPage.goToDocumentList();
-            await contentServicesPage.uploadFile(imageUploaded.location);
-            await contentServicesPage.checkContentIsDisplayed(imageUploaded.name);
-            await uploadDialog.clickOnCloseButton();
-            await uploadDialog.dialogIsNotDisplayed();
-            await contentServicesPage.checkContentIsDisplayed(imageUploaded.name);
-
-            await contentServicesPage.getDocumentList().rightClickOnRow(imageUploaded.name);
-            await contentServicesPage.checkContextActionIsVisible('Start Process');
-            await contentServicesPage.pressContextMenuActionNamed('Start Process');
-            await selectAppsDialog.checkSelectAppsDialogIsDisplayed();
-            await selectAppsDialog.selectApp('start process app');
-            await selectAppsDialog.clickContinueButton();
-            await startProcessPage.enterProcessName('Test Process');
-
-            await attachmentListPage.checkFileIsAttached(imageUploaded.name);
-            await startProcessPage.clickFormStartProcessButton();
-            await navigationBarPage.navigateToProcessServicesPage();
-            await processServicesPage.checkApsContainer();
-            await processServicesPage.goToApp(startProcessAttachFileApp.title);
-
-            await processServiceTabBarPage.clickProcessButton();
-            await processFiltersPage.clickCompletedFilterButton();
-            await processFiltersPage.selectFromProcessList('Test Process');
-            await expect(await processDetailsPage.auditLogEmptyListMessage.getText()).toBe('This list is empty');
-        });
-    });
-
 });

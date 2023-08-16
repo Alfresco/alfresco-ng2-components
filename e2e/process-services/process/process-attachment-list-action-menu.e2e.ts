@@ -24,9 +24,9 @@ import { createApiService,
     ViewerPage,
     ModelsActions
 } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from './../pages/process-filters.page';
-import { ProcessDetailsPage } from './../pages/process-details.page';
-import { AttachmentListPage } from './../pages/attachment-list.page';
+import { ProcessFiltersPage } from '../pages/process-filters.page';
+import { ProcessDetailsPage } from '../pages/process-details.page';
+import { AttachmentListPage } from '../pages/attachment-list.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -53,7 +53,9 @@ describe('Attachment list action menu for processes', () => {
     });
 
     const downloadedPngFile = pngFile.name;
-    let tenantId; let appId;
+    let tenantId: number;
+    let appId: number;
+
     const processName = {
         active: 'Active Process',
         completed: 'Completed Process',

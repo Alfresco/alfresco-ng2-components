@@ -6,7 +6,8 @@
             [properties]="properties"
             [editable]="isEditable"
             [displayClearAction]="showClearDateAction"
-            [displayNoneOption]="showNoneOption">
+            [displayNoneOption]="showNoneOption"
+            [displayLabelForChips]="showLabelForChips">
         </adf-card-view>
     </mat-card>
 
@@ -38,9 +39,14 @@
         (change)="toggleNoneOption()"
         [checked]="showNoneOption">
         Show none option
+    </mat-slide-toggle><br>
+    <mat-slide-toggle
+        id="app-toggle-label-multivalued-chip"
+        [color]="'primary'"
+        (change)="toggleLabelForChips()"
+        [checked]="showLabelForChips">
+        Show label for chips property
     </mat-slide-toggle>
 </p>
 
-<button mat-button id="adf-reset-card-log" (click)="reset()" color="primary">Reset Log</button>
-
-<br>
+<button mat-raised-button id="adf-reset-card-log" (click)="reset()">Reset Log</button>

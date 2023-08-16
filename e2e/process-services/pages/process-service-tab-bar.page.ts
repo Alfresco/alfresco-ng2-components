@@ -23,7 +23,6 @@ export class ProcessServiceTabBarPage {
     tasksButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Tasks')).first();
     processButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Process')).first();
     reportsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Reports')).first();
-    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
     reportsButtonSelected = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div[aria-selected="true"]', 'Reports')).first();
 
     async clickTasksButton(): Promise<void> {
@@ -33,11 +32,6 @@ export class ProcessServiceTabBarPage {
 
     async clickProcessButton(): Promise<void> {
         await BrowserActions.click(this.processButton);
-        await browser.sleep(500);
-    }
-
-    async clickSettingsButton(): Promise<void> {
-        await BrowserActions.click(this.settingsButton);
         await browser.sleep(500);
     }
 
