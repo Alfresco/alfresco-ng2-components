@@ -30,8 +30,9 @@ async function checkEnv() {
     try {
         const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: program.host
-        } as any);
+            hostEcm: program.host,
+            contextRoot: 'alfresco'
+        });
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (error) {
@@ -61,8 +62,9 @@ async function checkDiskSpaceFullEnv() {
 
         const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: program.host
-        } as any);
+            hostEcm: program.host,
+            contextRoot: 'alfresco'
+        });
 
         const nodesApi = new NodesApi(alfrescoJsApi);
         const uploadApi = new UploadApi(alfrescoJsApi);
@@ -82,9 +84,10 @@ async function checkDiskSpaceFullEnv() {
 
         } catch (error) {
             folder = await nodesApi.createNode('-my-', {
+                name: `retry-env`,
                 relativePath: `Builds/try-env`,
                 nodeType: 'cm:folder'
-            } as any, {}, {
+            }, {}, {
                 overwrite: true
             });
         }
@@ -115,15 +118,13 @@ async function checkDiskSpaceFullEnv() {
             logger.info('================ Not able to upload a file ==================');
             logger.info('================ Possible cause CS is full ==================');
             logger.info('=============================================================');
-            process.exit(1);
+            exit(1);
         } else {
             logger.error(`Retry N ${counter} ${error?.error?.status}`);
             sleep(time);
             await checkDiskSpaceFullEnv();
         }
-
     }
-
 }
 
 function sleep(delay: number) {

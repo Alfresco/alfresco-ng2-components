@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const child_process = require("child_process");
+const { spawnSync} = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
 const TestConfig = require('../test.config');
 const { AlfrescoApi, NodesApi, UploadApi } = require('@alfresco/js-api');
 
@@ -49,8 +49,9 @@ async function uploadScreenshot(retryCount, suffixFileName) {
 
     fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`))
 
-    child_process.execSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
-        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`)
+    spawnSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
+        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`),
+        shell: false
     });
 
     const pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);

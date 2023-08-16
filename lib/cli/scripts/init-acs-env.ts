@@ -121,7 +121,7 @@ async function uploadFile(fileName: string, fileDestination: string) {
     return uploadedFile;
 }
 
-async function lockFile(nodeId) {
+async function lockFile(nodeId: string) {
     const data = {
         type: 'ALLOW_OWNER_CHANGES'
     };
@@ -133,7 +133,7 @@ async function lockFile(nodeId) {
     }
 }
 
-async function shareFile(nodeId) {
+async function shareFile(nodeId: string) {
     const data = {
         nodeId
     };
@@ -145,7 +145,7 @@ async function shareFile(nodeId) {
     }
 }
 
-async function favoriteFile(nodeId) {
+async function favoriteFile(nodeId: string) {
     const data = {
         target: {
           ['file']: {
@@ -171,9 +171,11 @@ async function checkEnv() {
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
                 clientId: `${program.clientId}`,
-                scope: 'openid'
-            }
-        } as any);
+                scope: 'openid',
+                redirectUri: '/'
+            },
+            contextRoot: 'alfresco'
+        });
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {

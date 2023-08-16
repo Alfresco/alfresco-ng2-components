@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi } from '@alfresco/js-api';
+import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi, UserRepresentation } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
 import { spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
@@ -133,12 +133,14 @@ async function checkEnv() {
             hostBpm: program.host,
             hostEcm: program.host,
             authType: 'OAUTH',
+            contextRoot: 'alfresco',
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
                 clientId: `${program.clientId}`,
-                scope: 'openid'
+                scope: 'openid',
+                redirectUri: '/'
             }
-        } as any);
+        });
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {
@@ -198,7 +200,7 @@ async function createDefaultTenant(tenantName: string) {
 async function createUsers(tenantId: number, user: any) {
     logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
     const passwordCamelCase = 'Password';
-    const userJson = {
+    const userJson = new UserRepresentation({
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -206,7 +208,7 @@ async function createUsers(tenantId: number, user: any) {
         type: 'enterprise',
         password: passwordCamelCase,
         tenantId
-    };
+    });
 
     try {
         const adminUsersApi = new AdminUsersApi(alfrescoJsApi);
