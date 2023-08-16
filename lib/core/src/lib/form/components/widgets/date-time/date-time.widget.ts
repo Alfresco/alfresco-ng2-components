@@ -29,7 +29,7 @@ import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
-import { format, isValid, parse } from 'date-fns';
+import { format, isValid, parseISO } from 'date-fns';
 
 @Component({
     providers: [
@@ -47,8 +47,8 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     DATE_TIME_FORMAT = 'd-M-yyyy hh:mm a';
 
-    minDate: Date;
-    maxDate: Date;
+    minDate: string;
+    maxDate: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -66,11 +66,11 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = parse(this.field.minValue, this.DATE_TIME_FORMAT, new Date());
+                this.minDate = format(parseISO(this.field.minValue), `yyyy-MM-dd'T'HH:mm:ssXXX`);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = parse(this.field.maxValue, this.DATE_TIME_FORMAT, new Date());
+                this.maxDate = format(parseISO(this.field.maxValue), `yyyy-MM-dd'T'HH:mm:ssXXX`);
             }
         }
     }

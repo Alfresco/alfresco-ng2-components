@@ -21,7 +21,7 @@ import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
-import { addDays, format, isSameDay, subDays } from 'date-fns';
+import { addDays, format, subDays } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
 
@@ -42,7 +42,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '3-3-1982';
+        const minValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -52,7 +52,7 @@ describe('DateWidgetComponent', () => {
         widget.ngOnInit();
 
         const expected = format(new Date(minValue), widget.DATE_FORMAT);
-        expect(isSameDay(new Date(widget.minDate), new Date(expected))).toBeTruthy();
+        expect(widget.minDate).toEqual(expected);
     });
 
     it('should date field be present', () => {
@@ -68,14 +68,14 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '3-3-1982';
+        const maxValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
             maxValue
         });
         widget.ngOnInit();
 
         const expected = format(new Date(maxValue), widget.DATE_FORMAT);
-        expect(isSameDay(new Date(widget.maxDate), new Date(expected))).toBeTruthy();
+        expect(widget.maxDate).toEqual(expected);
     });
 
     it('should eval visibility on date changed', () => {

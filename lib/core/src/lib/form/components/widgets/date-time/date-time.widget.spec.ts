@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
-import { isSameDay, parse } from 'date-fns';
+import { format, parse, parseISO } from 'date-fns';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -52,7 +52,8 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '7-8-2023 02:45 PM';
+        const minValue = '1982-03-13T00:00:00.000Z';
+
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -62,8 +63,8 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const expected = parse(minValue, widget.DATE_TIME_FORMAT, new Date());
-        expect(isSameDay(widget.minDate, expected)).toBeTruthy();
+        const expected = format(parseISO(minValue), `yyyy-MM-dd'T'HH:mm:ssXXX`);
+        expect(widget.minDate).toBe(expected);
     });
 
     it('should date field be present', () => {
@@ -79,14 +80,14 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '20-9-2023 02:45 PM';
+        const maxValue = '1982-03-13T00:00:00.000Z';
         widget.field = new FormFieldModel(null, {
             maxValue
         });
         fixture.detectChanges();
 
-        const expected = parse(maxValue, widget.DATE_TIME_FORMAT, new Date());
-        expect(isSameDay(widget.maxDate, expected)).toBeTruthy();
+        const expected = format(parseISO(maxValue), `yyyy-MM-dd'T'HH:mm:ssXXX`);
+        expect(widget.maxDate).toBe(expected);
     });
 
     it('should eval visibility on date changed', () => {
