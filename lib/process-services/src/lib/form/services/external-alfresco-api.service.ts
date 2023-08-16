@@ -16,35 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi, ContentApi, Node, NodesApi } from '@alfresco/js-api';
-import { ReplaySubject, Subject } from 'rxjs';
+import { AlfrescoApi } from '@alfresco/js-api';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ExternalAlfrescoApiService {
-    /**
-     * Publish/subscribe to events related to node updates.
-     */
-    nodeUpdated = new Subject<Node>();
-
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-
     protected alfrescoApi: AlfrescoApi;
-
-    private _contentApi: ContentApi;
-    private _nodesApi: NodesApi;
 
     getInstance(): AlfrescoApi {
         return this.alfrescoApi;
-    }
-
-    get contentApi(): ContentApi {
-        this._contentApi = this._contentApi ?? new ContentApi(this.getInstance());
-        return this._contentApi;
-    }
-
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.getInstance());
-        return this._nodesApi;
     }
 
     init(ecmHost: string, contextRoot: string) {
@@ -64,6 +45,8 @@ export class ExternalAlfrescoApiService {
     protected initAlfrescoApi(config) {
         if (this.alfrescoApi) {
             this.alfrescoApi.setConfig(config);
+        } else {
+            this.alfrescoApi = new AlfrescoApi(config);
         }
     }
 
