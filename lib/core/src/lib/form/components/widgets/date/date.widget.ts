@@ -26,7 +26,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { format, isValid } from 'date-fns';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
-import { DateFnsUtils } from '../../../../../..';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 @Component({
     selector: 'date-widget',
