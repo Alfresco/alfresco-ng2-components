@@ -179,6 +179,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await metadataViewPage.clickSaveGeneralMetadata();
         });
+
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
@@ -225,13 +226,13 @@ describe('Metadata component', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
-        fit('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
+        it('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
             await contentServicesPage.metadataContent(folderName);
 
             await metadataViewPage.clickEditIconGeneral();
 
             await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
-            await metadataViewPage.generaleditIconDisplayed();
+            await metadataViewPage.clickResetButton();
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
 
             await metadataViewPage.clickEditIconGeneral();

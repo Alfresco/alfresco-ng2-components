@@ -231,7 +231,7 @@ describe('Aspect oriented config', () => {
         await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
    });
 
-    it('[C279968] Should be possible use a custom preset', async () => {
+    fit('[C279968] Should be possible use a custom preset', async () => {
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
