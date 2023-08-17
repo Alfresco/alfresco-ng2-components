@@ -370,20 +370,6 @@ describe('VersionListComponent', () => {
                     done();
                 });
             });
-
-            it('should show restore action for old version', (done) => {
-                fixture.whenStable().then(() => {
-                    expect(getRestoreButton()).toBeDefined();
-                    done();
-                });
-            });
-
-            it('should show restore action for the latest version', (done) => {
-                fixture.whenStable().then(() => {
-                    expect(getRestoreButton('1.1')).toBeUndefined();
-                    done();
-                });
-            });
         });
 
         describe('disabled', () => {
@@ -406,7 +392,14 @@ describe('VersionListComponent', () => {
 
             it('should disable restore action if is not allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    expect(getRestoreButton().disabled).toBe(true);
+                    expect(getRestoreButton().disabled).toBeTrue();
+                    done();
+                });
+            });
+
+            it('should disable restore action for the latest version', (done) => {
+                fixture.whenStable().then(() => {
+                    expect(getRestoreButton('1.1').disabled).toBeTrue();
                     done();
                 });
             });
@@ -432,7 +425,7 @@ describe('VersionListComponent', () => {
 
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    expect(getRestoreButton().disabled).toBe(false);
+                    expect(getRestoreButton().disabled).toBeFalse();
                     done();
                 });
             });

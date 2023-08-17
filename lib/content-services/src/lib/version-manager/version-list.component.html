@@ -22,8 +22,7 @@
                 </ng-container>
                 <button
                     [id]="'adf-version-list-action-restore-'+version.entry.id"
-                    [disabled]="!canUpdate()"
-                    *ngIf="!latestVersion"
+                    [disabled]="!canUpdate() || latestVersion"
                     mat-menu-item
                     (click)="restore(version.entry.id)">
                     {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
