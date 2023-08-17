@@ -293,8 +293,8 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
 
             const todayDate = new Date();
-            const expected = subDays(todayDate, widget.field.minDateRangeValue);
-            expect(widget.minDate).toEqual(format(expected, widget.DATE_FORMAT));
+            const expected = format(subDays(todayDate, widget.field.minDateRangeValue), widget.DATE_FORMAT);
+            expect(widget.minDate).toEqual(expected);
         });
 
         it('should min date and max date be undefined if dynamic min and max date are not set', async () => {
@@ -343,8 +343,8 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
 
             const todayDate = new Date();
-            const expected = addDays(todayDate, widget.field.maxDateRangeValue);
-            expect(widget.maxDate).toEqual(format(expected, widget.DATE_FORMAT));
+            const expected = format(addDays(todayDate, widget.field.maxDateRangeValue), widget.DATE_FORMAT);
+            expect(widget.maxDate).toEqual(expected);
         });
 
         it('should maxDate and minDate be undefined if minDateRangeValue and maxDateRangeValue are null', async () => {

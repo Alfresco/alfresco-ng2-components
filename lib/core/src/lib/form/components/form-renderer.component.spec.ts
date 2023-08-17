@@ -113,7 +113,7 @@ describe('Form Renderer Component', () => {
         fixture.destroy();
     });
 
-    describe('Display Date Widget ', async () => {
+    describe('Display Date Widget ', () => {
         it('Should be able to see a widget when the visibility condition refers to another fields with specific date', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formDateVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
