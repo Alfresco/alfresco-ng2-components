@@ -1,5 +1,5 @@
 <mat-list class="adf-version-list" *ngIf="!isLoading; else loading_template">
-    <mat-list-item *ngFor="let version of versions; let idx = index">
+    <mat-list-item *ngFor="let version of versions; let idx = index; let latestVersion = first">
         <mat-icon mat-list-icon>insert_drive_file</mat-icon>
         <p mat-line class="adf-version-list-item-name" [id]="'adf-version-list-item-name-' + version.entry.id" >{{version.entry.name}}</p>
         <p mat-line>
@@ -22,7 +22,7 @@
                 </ng-container>
                 <button
                     [id]="'adf-version-list-action-restore-'+version.entry.id"
-                    [disabled]="!canUpdate()"
+                    [disabled]="!canUpdate() || latestVersion"
                     mat-menu-item
                     (click)="restore(version.entry.id)">
                     {{ 'ADF_VERSION_LIST.ACTIONS.RESTORE' | translate }}
