@@ -16,12 +16,12 @@
                         {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                     </mat-panel-title>
                 </div>
-                <button *ngIf="!editable"
+                <button *ngIf="!editable && !readOnly && hasAllowableOperations()"
                         mat-icon-button
                         (click)="toggleGeneralEdit($event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                        data-automation-id="meta-data-card-toggle-generalInfo-edit"
+                        data-automation-id="meta-data-generalInfo-edit"
                         class="adf-edit-icon-buttons">
                     <mat-icon>mode_edit</mat-icon>
                 </button>
@@ -29,7 +29,7 @@
                     class="adf-metadata-action-buttons">
                     <button mat-icon-button 
                             (click)="cancelGeneralInfoChanges($event)"
-                            data-automation-id="reset-general-metadata">
+                            data-automation-id="reset-metadata">
                         <mat-icon>clear</mat-icon>
                     </button>
                     <button mat-icon-button
@@ -191,7 +191,7 @@
                                     {{ group.title | translate }}
                                 </mat-panel-title>
                             </div>
-                            <button *ngIf="!group.editable"
+                            <button *ngIf="!group.editable && !readOnly && hasAllowableOperations()"
                                     mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
