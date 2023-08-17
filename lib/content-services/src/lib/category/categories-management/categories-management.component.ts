@@ -89,6 +89,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
              this._existingCategoriesPanelVisible = true;
          } else {
             this._existingCategoriesPanelVisible = false;
+            this.clearCategoryNameInput();
          }
      }
 
@@ -211,6 +212,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.categoryNameControlVisible = false;
         this.categoryNameControlVisibleChange.emit(false);
         this._existingCategoriesPanelVisible = false;
+        this.clearCategoryNameInput();
     }
 
     /**
@@ -222,8 +224,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             const newCat = new Category({ id: newCatName, name: newCatName });
             this.categories.push(newCat);
             this.hideNameInput();
-            this.categoryNameControl.setValue('');
-            this.categoryNameControl.markAsUntouched();
+            this.clearCategoryNameInput();
             this._existingCategories = null;
             this.categoriesChange.emit(this.categories);
         }
@@ -335,5 +336,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     private sortCategoriesList(categoriesList: Category[]) {
         categoriesList.sort((category1, category2) => category1.name.localeCompare(category2.name));
+    }
+
+    private clearCategoryNameInput() {
+        this.categoryNameControl.setValue('');
+        this.categoryNameControl.markAsUntouched();
     }
 }

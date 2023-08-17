@@ -388,9 +388,11 @@ describe('ContentMetadataComponent', () => {
     });
 
     describe('Reseting', () => {
-        it('should reset changedProperties on reset click', async () => {
+        it('should reset properties on reset click', async () => {
             component.changedProperties = { properties: { 'property-key': 'updated-value' } };
             component.hasMetadataChanged = true;
+            component.tagNameControlVisible = true;
+            component.categoryControlVisible = true;
             component.editable = true;
             const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -403,6 +405,9 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             expect(component.changedProperties).toEqual({});
             expect(nodesApiService.updateNode).not.toHaveBeenCalled();
+            expect(component.hasMetadataChanged).toBeFalse();
+            expect(component.tagNameControlVisible).toBeFalse();
+            expect(component.categoryControlVisible).toBeFalse();
         });
     });
 
