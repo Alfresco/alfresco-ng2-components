@@ -20,7 +20,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ADFDatePipe } from './adf-date.pipe';
 
-describe('DatePipe', () => {
+describe('ADFDatePipe', () => {
     let datePipe: ADFDatePipe;
 
     beforeEach(() => {
