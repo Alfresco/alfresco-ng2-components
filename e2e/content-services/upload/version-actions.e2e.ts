@@ -91,9 +91,8 @@ describe('Version component actions', () => {
 
     it('[C280004] Should not be possible restore the version if there is only one version', async () => {
         await versionManagePage.clickActionButton('1.0');
-        await expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isEnabled()).toBe(false);
+        await expect(await element(by.css(`[id="adf-version-list-action-restore-1.0"]`)).isPresent()).toBe(false);
         await versionManagePage.closeActionsMenu();
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`[id="adf-version-list-action-restore-1.0"]`)));
     });
 
     it('[C280005] Should be showed all the default action when you have more then one version', async () => {
