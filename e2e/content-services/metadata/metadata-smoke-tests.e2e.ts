@@ -151,11 +151,11 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.editIconIsDisplayed();
+            await metadataViewPage.generalEditIconDisplayed();
 
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.editIconGeneralClick();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:name');
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
@@ -177,7 +177,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
-            await metadataViewPage.clickSaveMetadata();
+            await metadataViewPage.clickSaveGeneralMetadata();
 
             await viewerPage.clickCloseButton();
             await contentServicesPage.waitForTableBody();
@@ -186,19 +186,20 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            // await metadataViewPage.editIconIsDisplayed();
+            await metadataViewPage.generalEditIconDisplayed();
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.editIconGeneralClick();
             await metadataViewPage.enterPropertyText('properties.cm:name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(
                 browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
             );
             await metadataViewPage.clickSaveMetadata();
         });
+
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
@@ -230,7 +231,7 @@ describe('Metadata component', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.generaleditIconDisplayed();
+        await metadataViewPage.generalEditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 

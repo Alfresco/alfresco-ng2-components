@@ -45,6 +45,7 @@ import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { AllowableOperationsEnum, ContentService } from '../../../common';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -163,7 +164,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private appConfig: AppConfigService,
         private tagService: TagService,
         private categoryService: CategoryService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private contentService: ContentService,
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -426,6 +428,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     canExpandProperties(): boolean {
         return !this.expanded || this.displayAspect === 'Properties';
+    }
+
+    hasAllowableOperations() {
+        return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }
 
     keyDown(event: KeyboardEvent) {
