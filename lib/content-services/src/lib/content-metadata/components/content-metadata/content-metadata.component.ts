@@ -514,6 +514,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return !this.expanded || this.displayAspect === 'Properties';
     }
 
+    hasAllowableOperations() {
+        return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
+    }
+
     keyDown(event: KeyboardEvent) {
         if (event.keyCode === 37 || event.keyCode === 39) {
             // ArrowLeft && ArrowRight

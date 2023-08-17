@@ -194,6 +194,7 @@ describe('Metadata component', () => {
             );
             await metadataViewPage.clickSaveMetadata();
         });
+
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
