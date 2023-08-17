@@ -327,23 +327,25 @@ describe('VersionListComponent', () => {
             return fixture.debugElement.query(By.css(`[id="adf-version-list-action-restore-${version}"]`))?.nativeElement;
         };
 
+        beforeEach(() => {
+            fixture.detectChanges();
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
+                list: {
+                    entries: [
+                        {
+                            entry: { name: 'test-file-two', id: '1.1', versionComment: 'test-version-comment' }
+                        },
+                        {
+                            entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+                        }
+                    ]
+                }
+            })));
+        });
+
         describe('showActions', () => {
             beforeEach(() => {
-                fixture.detectChanges();
                 component.node = new Node({ id: nodeId });
-                spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
-                    list: {
-                        entries: [
-                            {
-                                entry: { name: 'test-file-name', id: '1.1', versionComment: 'test-version-comment' }
-                            },
-                            {
-                                entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
-                            }
-                        ]
-                    }
-                })));
-
                 component.ngOnChanges();
             });
 
@@ -387,21 +389,7 @@ describe('VersionListComponent', () => {
         describe('disabled', () => {
 
             beforeEach(() => {
-                fixture.detectChanges();
                 component.node = { id: nodeId } as Node;
-                spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
-                    list: {
-                        entries: [
-                            {
-                                entry: { name: 'test-file-two', id: '1.1', versionComment: 'test-version-comment' }
-                            },
-                            {
-                                entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
-                            }
-                        ]
-                    }
-                })));
-
                 component.ngOnChanges();
             });
 
@@ -427,21 +415,7 @@ describe('VersionListComponent', () => {
         describe('enabled', () => {
 
             beforeEach(() => {
-                fixture.detectChanges();
                 component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
-                spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
-                    list: {
-                        entries: [
-                            {
-                                entry: { name: 'test-file-name', id: '1.1', versionComment: 'test-version-comment' }
-                            },
-                            {
-                                entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
-                            }
-                        ]
-                    }
-                })));
-
                 component.ngOnChanges();
             });
 
