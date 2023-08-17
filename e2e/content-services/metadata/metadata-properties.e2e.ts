@@ -90,7 +90,6 @@ describe('CardView Component - properties', () => {
 
         await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.clickMetadataGroup('EXIF');
 
@@ -108,11 +107,8 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.editIconIsDisplayed();
 
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
-
-        await metadataViewPage.editIconIsNotDisplayed();
     });
 
     it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
@@ -120,8 +116,7 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-
-        await metadataViewPage.clickOnInformationButton();
+        await metadataViewPage.clickMetadataGroup('properties');
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
@@ -167,8 +162,6 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-
-        await metadataViewPage.informationButtonIsDisplayed();
 
         await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
 
