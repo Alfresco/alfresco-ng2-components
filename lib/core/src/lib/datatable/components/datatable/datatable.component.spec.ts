@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { SimpleChange, NO_ERRORS_SCHEMA, QueryList, Component, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA, QueryList, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
@@ -563,11 +563,11 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should NOT unselect the row with [single] selection mode', (done) => {
+    it('should unselect the row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
-                { name: '1', isSelected: true },
+                {name: '1'},
                 { name: '2' }
             ],
             [new ObjectDataColumn({ key: 'name' })]
@@ -575,13 +575,17 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
         dataTable.ngOnChanges({});
         fixture.detectChanges();
-
-        dataTable.rowClick.subscribe(() => {
-            expect(rows[0].isSelected).toBeTruthy();
-            expect(rows[1].isSelected).toBeFalsy();
-            done();
-        });
         dataTable.onRowClick(rows[0], new MouseEvent('click'));
+        dataTable.rowClick.pipe(take(1)).subscribe(() => {
+            expect(rows[0].isSelected).toBeTrue();
+            expect(rows[1].isSelected).toBeFalse();
+            dataTable.onRowClick(rows[0], new MouseEvent('click'));
+            dataTable.rowClick.pipe(take(1)).subscribe(() => {
+                expect(rows[0].isSelected).toBeFalse();
+                expect(rows[1].isSelected).toBeFalse();
+                done();
+            });
+        });
     });
 
     it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
