@@ -15,9 +15,21 @@
  * limitations under the License.
  */
 
-import { fakeEcmUserList, createNewPersonMock, fakeEcmUser, fakeEcmAdminUser } from '../mocks/ecm-user.service.mock';
-import { AuthenticationService, AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule, LogService } from '@alfresco/adf-core';
-import { PeopleContentService, PeopleContentQueryRequestModel } from './people-content.service';
+import {
+    createNewPersonMock,
+    fakeEcmAdminUser,
+    fakeEcmUser,
+    fakeEcmUser2,
+    fakeEcmUserList
+} from '../mocks/ecm-user.service.mock';
+import {
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    AuthenticationService,
+    CoreTestingModule,
+    LogService
+} from '@alfresco/adf-core';
+import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 
@@ -134,5 +146,19 @@ describe('PeopleContentService', () => {
 
         authenticationService.onLogout.next(true);
         expect(peopleContentService.isCurrentUserAdmin()).toBe(false);
+    });
+
+    it('should not change current user on every getPerson call', async () => {
+        const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({entry: fakeEcmAdminUser} as any));
+        await peopleContentService.getCurrentUserInfo().toPromise();
+
+        getCurrentPersonSpy.and.returnValue(Promise.resolve({entry: fakeEcmUser2} as any));
+        await peopleContentService.getPerson('fake-id').toPromise();
+
+        expect(getCurrentPersonSpy.calls.count()).toEqual(2);
+        const currentUser = await peopleContentService.getCurrentUserInfo().toPromise();
+        expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
+        expect(currentUser.id).toEqual(fakeEcmAdminUser.id);
+        expect(currentUser.id).not.toEqual(fakeEcmUser2.id);
     });
 });
