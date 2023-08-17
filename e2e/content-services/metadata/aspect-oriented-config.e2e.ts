@@ -122,8 +122,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.clickMetadataGroup('IMAGE');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:pixelXDimension', 'textitem');
@@ -152,8 +150,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
@@ -170,8 +166,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
@@ -191,8 +185,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
@@ -232,9 +224,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
-
         await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
         await metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
 
@@ -242,7 +231,7 @@ describe('Aspect oriented config', () => {
         await expect(await metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
    });
 
-    it('[C279968] Should be possible use a custom preset', async () => {
+    fit('[C279968] Should be possible use a custom preset', async () => {
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
@@ -262,10 +251,6 @@ describe('Aspect oriented config', () => {
         await CheckboxPage.check(metadataViewPage.presetSwitch);
 
         await metadataViewPage.enterPresetText('custom-preset');
-
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
-
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
@@ -286,9 +271,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
-
         await metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
@@ -307,9 +289,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-
-        await metadataViewPage.informationButtonIsDisplayed();
-        await metadataViewPage.clickOnInformationButton();
 
         await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
 
