@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UrlService, LogService, ContentLinkModel, FormService, DownloadService } from '@alfresco/adf-core';
+import { UrlService, ContentLinkModel, FormService, DownloadService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -27,7 +27,6 @@ import { ProcessContentService } from '../../services/process-content.service';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentWidgetComponent implements OnChanges {
-
     /** The content id to show. */
     @Input()
     id: string;
@@ -54,12 +53,12 @@ export class ContentWidgetComponent implements OnChanges {
 
     content: ContentLinkModel;
 
-    constructor(protected formService: FormService,
-                private logService: LogService,
-                private downloadService: DownloadService,
-                private urlService: UrlService,
-                private processContentService: ProcessContentService) {
-    }
+    constructor(
+        protected formService: FormService,
+        private downloadService: DownloadService,
+        private urlService: UrlService,
+        private processContentService: ProcessContentService
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const contentId = changes['id'];
@@ -69,18 +68,16 @@ export class ContentWidgetComponent implements OnChanges {
     }
 
     loadContent(id: number) {
-        this.processContentService
-            .getFileContent(id)
-            .subscribe(
-                (response: ContentLinkModel) => {
-                    this.content = new ContentLinkModel(response);
-                    this.contentLoaded.emit(this.content);
-                    this.loadThumbnailUrl(this.content);
-                },
-                (error) => {
-                    this.error.emit(error);
-                }
-            );
+        this.processContentService.getFileContent(id).subscribe(
+            (response: ContentLinkModel) => {
+                this.content = new ContentLinkModel(response);
+                this.contentLoaded.emit(this.content);
+                this.loadThumbnailUrl(this.content);
+            },
+            (error) => {
+                this.error.emit(error);
+            }
+        );
     }
 
     loadThumbnailUrl(content: ContentLinkModel) {
@@ -101,7 +98,6 @@ export class ContentWidgetComponent implements OnChanges {
                     },
                     (error) => {
                         this.error.emit(error);
-
                     }
                 );
             }
@@ -117,7 +113,6 @@ export class ContentWidgetComponent implements OnChanges {
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.contentClick.emit(content);
-                this.logService.info('Content clicked' + content.id);
                 this.formService.formContentClicked.next(content);
             },
             (error) => {
