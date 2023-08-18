@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
-import moment from 'moment';
+import { add, endOfDay, endOfMonth, endOfQuarter, endOfYear, startOfDay, startOfMonth, startOfQuarter, startOfYear } from 'date-fns';
 
 describe('Date Range Filter service', () => {
 
@@ -30,32 +30,32 @@ describe('Date Range Filter service', () => {
 
     it('should return today range', () => {
         const expectedDate = {
-            startDate: moment().startOf('day').toISOString(true),
-            endDate: moment().endOf('day').toISOString(true)
+            startDate: startOfDay(new Date()).toISOString(),
+            endDate: endOfDay(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.TODAY)).toEqual(expectedDate);
     });
 
     it('should return month range', () => {
         const expectedDate = {
-            startDate: moment().startOf('month').toISOString(true),
-            endDate: moment().endOf('month').toISOString(true)
+            startDate: startOfMonth(new Date()).toISOString(),
+            endDate: endOfMonth(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.MONTH)).toEqual(expectedDate);
     });
 
     it('should return year range', () => {
         const expectedDate = {
-            startDate: moment().startOf('year').toISOString(true),
-            endDate: moment().endOf('year').toISOString(true)
+            startDate: startOfYear(new Date()).toISOString(),
+            endDate: endOfYear(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.YEAR)).toEqual(expectedDate);
     });
 
     it('should return quarter range', () => {
         const expectedDate = {
-            startDate: moment().startOf('quarter').toISOString(true),
-            endDate: moment().endOf('quarter').toISOString(true)
+            startDate: startOfQuarter(new Date()).toISOString(),
+            endDate: endOfQuarter(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.QUARTER)).toEqual(expectedDate);
     });
@@ -70,16 +70,16 @@ describe('Date Range Filter service', () => {
 
     it('should return tomorow range', () => {
         const expectedDate = {
-            startDate: moment().endOf('day').toISOString(true),
-            endDate: moment().add(1, 'days').endOf('day').toISOString(true)
+            startDate: endOfDay(new Date()).toISOString(),
+            endDate: add(endOfDay(new Date()), { days: 1 }).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.TOMORROW)).toEqual(expectedDate);
     });
 
     it('should return next 7 days range', () => {
         const expectedDate = {
-            startDate: moment().startOf('day').toISOString(true),
-            endDate: moment().add(7, 'days').endOf('day').toISOString(true)
+            startDate: startOfDay(new Date()).toISOString(),
+            endDate: add(endOfDay(new Date()), { days: 7 }).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.NEXT_7_DAYS)).toEqual(expectedDate);
     });

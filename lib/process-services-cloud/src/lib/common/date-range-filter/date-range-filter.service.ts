@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import moment from 'moment';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
+import { add, endOfDay, endOfMonth, endOfQuarter, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfQuarter, startOfWeek, startOfYear } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -52,50 +52,50 @@ export class DateRangeFilterService {
 
     private getNext7DaysDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('day').toISOString(true),
-            endDate: moment().add(7, 'days').endOf('day').toISOString(true)
+            startDate: startOfDay(new Date()).toISOString(),
+            endDate: add(endOfDay(new Date()), { days: 7 }).toISOString()
         };
     }
 
     private getTomorrowDateRange(): DateRangeFilter {
         return {
-            startDate: moment().endOf('day').toISOString(true),
-            endDate: moment().add(1, 'days').endOf('day').toISOString(true)
+            startDate: endOfDay(new Date()).toISOString(),
+            endDate: add(endOfDay(new Date()), { days: 1 }).toISOString()
         };
     }
 
     private getCurrentYearDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('year').toISOString(true),
-            endDate: moment().endOf('year').toISOString(true)
+            startDate: startOfYear(new Date()).toISOString(),
+            endDate: endOfYear(new Date()).toISOString()
         };
     }
 
     private getTodayDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('day').toISOString(true),
-            endDate: moment().endOf('day').toISOString(true)
+            startDate: startOfDay(new Date()).toISOString(),
+            endDate: endOfDay(new Date()).toISOString()
         };
     }
 
     private getCurrentWeekRange(): DateRangeFilter {
         return  {
-            startDate: moment().startOf('week').toISOString(true),
-            endDate: moment().endOf('week').toISOString(true)
+            startDate: startOfWeek(new Date()).toISOString(),
+            endDate: endOfWeek(new Date()).toISOString()
         };
     }
 
     private getCurrentMonthDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('month').toISOString(true),
-            endDate: moment().endOf('month').toISOString(true)
+            startDate: startOfMonth(new Date()).toISOString(),
+            endDate: endOfMonth(new Date()).toISOString()
         };
     }
 
     private getQuarterDateRange(): DateRangeFilter {
         return {
-            startDate: moment().startOf('quarter').toISOString(true),
-            endDate: moment().endOf('quarter').toISOString(true)
+            startDate: startOfQuarter(new Date()).toISOString(),
+            endDate: endOfQuarter(new Date()).toISOString()
         };
     }
 }
