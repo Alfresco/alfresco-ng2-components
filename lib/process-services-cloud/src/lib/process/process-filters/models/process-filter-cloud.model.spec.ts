@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { ProcessFilterCloudModel } from './process-filter-cloud.model';
+import { endOfDay, startOfDay } from 'date-fns';
 
 describe('ProcessFilterCloudModel', () => {
     it('should use appVersion from the provided object', () => {
@@ -43,8 +43,8 @@ describe('ProcessFilterCloudModel', () => {
         const model = new ProcessFilterCloudModel({
             suspendedDateType: DateCloudFilterType.TODAY
         });
-        expect(model.suspendedFrom).toEqual(moment(date).startOf('day').toISOString(true));
-        expect(model.suspendedTo).toEqual(moment(date).endOf('day').toISOString(true));
+        expect(model.suspendedFrom).toEqual(startOfDay(date).toISOString());
+        expect(model.suspendedTo).toEqual(endOfDay(date).toISOString());
     });
 
     it('should get completed date start and end date if date type is today', () => {
@@ -52,8 +52,8 @@ describe('ProcessFilterCloudModel', () => {
         const model = new ProcessFilterCloudModel({
             completedDateType: DateCloudFilterType.TODAY
         });
-        expect(model.completedFrom).toEqual(moment(date).startOf('day').toISOString(true));
-        expect(model.completedTo).toEqual(moment(date).endOf('day').toISOString(true));
+        expect(model.completedFrom).toEqual(startOfDay(date).toISOString());
+        expect(model.completedTo).toEqual(endOfDay(date).toISOString());
     });
 
     it('should get started date start and end date if date type is today', () => {
@@ -61,7 +61,7 @@ describe('ProcessFilterCloudModel', () => {
         const model = new ProcessFilterCloudModel({
             startedDateType: DateCloudFilterType.TODAY
         });
-        expect(model.startFrom).toEqual(moment(date).startOf('day').toISOString(true));
-        expect(model.startTo).toEqual(moment(date).endOf('day').toISOString(true));
+        expect(model.startFrom).toEqual(startOfDay(date).toISOString());
+        expect(model.startTo).toEqual(endOfDay(date).toISOString());
     });
 });
