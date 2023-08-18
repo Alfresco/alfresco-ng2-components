@@ -22,8 +22,8 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { MatSelectChange } from '@angular/material/select';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
-import moment from 'moment';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
+import { add, endOfDay } from 'date-fns';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -92,8 +92,8 @@ describe('DateRangeFilterComponent', () => {
 
     it('should return correct date when any type is selected', () => {
         const expectedDate = {
-            startDate: moment().endOf('day').toISOString(true),
-            endDate: moment().add(1, 'days').endOf('day').toISOString(true)
+            startDate: endOfDay(new Date()).toISOString(),
+            endDate: add(endOfDay(new Date()), { days: 1 }).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.TOMORROW)).toEqual(expectedDate);
     });
@@ -126,9 +126,9 @@ describe('DateRangeFilterComponent', () => {
         fixture.detectChanges();
 
         // eslint-disable-next-line no-underscore-dangle
-        expect(component.dateRangeForm.get('from').value).toEqual(moment(mockFilterProperty.value._startFrom));
+        expect(component.dateRangeForm.get('from').value).toEqual(mockFilterProperty.value._startFrom);
         // eslint-disable-next-line no-underscore-dangle
-        expect(component.dateRangeForm.get('to').value).toEqual(moment(mockFilterProperty.value._startTo));
+        expect(component.dateRangeForm.get('to').value).toEqual(mockFilterProperty.value._startTo);
     });
 
     it('should have floating labels when values are present', () => {
