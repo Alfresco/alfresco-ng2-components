@@ -23,7 +23,8 @@ export default async function main(_args: string[]) {
         .parse(argv);
 
     await checkEnv();
-    await checkDiskSpaceFullEnv();
+    // TODO: temporary to investigate the JS-API issues
+    // await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
@@ -55,11 +56,11 @@ async function checkEnv() {
     }
 }
 
+// @ts-ignore
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
     try {
-
         const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: program.host,
@@ -74,40 +75,43 @@ async function checkDiskSpaceFullEnv() {
         let folder;
 
         try {
-            folder = await nodesApi.createNode('-my-', {
-                name: `try-env`,
-                relativePath: `Builds`,
-                nodeType: 'cm:folder'
-            }, {}, {
-                overwrite: true
-            });
-
+            folder = await nodesApi.createNode(
+                '-my-',
+                {
+                    name: `try-env`,
+                    relativePath: `Builds`,
+                    nodeType: 'cm:folder'
+                },
+                {},
+                {
+                    overwrite: true
+                }
+            );
         } catch (error) {
-            folder = await nodesApi.createNode('-my-', {
-                name: `retry-env`,
-                relativePath: `Builds/try-env`,
-                nodeType: 'cm:folder'
-            }, {}, {
-                overwrite: true
-            });
+            folder = await nodesApi.createNode(
+                '-my-',
+                {
+                    name: `retry-env`,
+                    relativePath: `Builds/try-env`,
+                    nodeType: 'cm:folder'
+                },
+                {},
+                {
+                    overwrite: true
+                }
+            );
         }
         const pathFile = path.join(__dirname, '../', 'README.md');
 
         const file = fs.createReadStream(pathFile);
 
-        const uploadedFile = await uploadApi.uploadFile(
-            file,
-            '',
-            folder.entry.id,
-            null,
-            {
-                name: 'README.md',
-                nodeType: 'cm:content',
-                autoRename: true
-            }
-        );
+        const uploadedFile = await uploadApi.uploadFile(file, '', folder.entry.id, null, {
+            name: 'README.md',
+            nodeType: 'cm:content',
+            autoRename: true
+        });
 
-        await nodesApi.deleteNode(uploadedFile.entry.id, {permanent: true});
+        await nodesApi.deleteNode(uploadedFile.entry.id, { permanent: true });
     } catch (error) {
         counter++;
 
@@ -129,5 +133,5 @@ async function checkDiskSpaceFullEnv() {
 
 function sleep(delay: number) {
     const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {  }
+    while (new Date().getTime() < start + delay) {}
 }
