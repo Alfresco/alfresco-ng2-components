@@ -23,7 +23,7 @@ export default async function main(_args: string[]) {
         .parse(argv);
 
     await checkEnv();
-    // TODO: temporary to investigate the JS-API issues
+    // TODO: https://alfresco.atlassian.net/browse/ACS-5873
     // await checkDiskSpaceFullEnv();
 }
 
