@@ -124,7 +124,8 @@ async function checkDiskSpaceFullEnv() {
             logger.info('=============================================================');
             exit(1);
         } else {
-            logger.error(`Retry N ${counter} ${error?.error?.status}`);
+            logger.error(`Retry N ${counter}`);
+            logger.error(JSON.stringify(error));
             sleep(time);
             await checkDiskSpaceFullEnv();
         }
