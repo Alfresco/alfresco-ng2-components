@@ -17,12 +17,10 @@
 
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
+import { AlfrescoApi } from '@alfresco/js-api';
 
 export class PluginConfiguration {
-    constructor(
-        private plugInInfo: PluginInterface,
-        private alfrescoJsApi: any
-    ) {}
+    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {}
 
     async getAppConfig(url: string) {
         return this.callCustomApi(url);
@@ -52,10 +50,7 @@ export class PluginConfiguration {
 
             return response;
         } catch (error) {
-            logger.error(
-                `${this.plugInInfo.host} is not reachable error: `,
-                error
-            );
+            logger.error(`${this.plugInInfo.host} is not reachable error: `, error);
             return {};
         }
     }

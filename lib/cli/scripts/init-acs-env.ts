@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi } from '@alfresco/js-api';
+import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi, NodeEntry } from '@alfresco/js-api';
 import { exit, argv } from 'node:process';
 const program = require('commander');
 const fs = require('fs');
@@ -78,7 +78,7 @@ async function initializeDefaultFiles() {
 }
 
 async function createFolder(folderName: string, parentId: string) {
-    let createdFolder: any;
+    let createdFolder: NodeEntry;
     const body = {
         name: folderName,
         nodeType: 'cm:folder'
@@ -96,10 +96,10 @@ async function createFolder(folderName: string, parentId: string) {
     return createdFolder;
 }
 
-async function uploadFile(fileName: string, fileDestination: string) {
+async function uploadFile(fileName: string, fileDestination: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
     const file = fs.createReadStream(path.join(__dirname, filePath));
-    let uploadedFile: any;
+    let uploadedFile: NodeEntry;
     try {
         uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(file, '', fileDestination, null, {
             name: fileName,
@@ -114,13 +114,14 @@ async function uploadFile(fileName: string, fileDestination: string) {
     return uploadedFile;
 }
 
-async function lockFile(nodeId: string) {
+async function lockFile(nodeId: string): Promise<NodeEntry> {
     const data = {
         type: 'ALLOW_OWNER_CHANGES'
     };
     try {
-        await new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
+        const result = new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
         logger.info('File was locked');
+        return result;
     } catch (error) {
         logger.error('Failed to lock file with error: ', error.stack);
     }
