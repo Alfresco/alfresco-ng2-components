@@ -18,7 +18,7 @@
 import { AlfrescoApi, SharedlinksApi, FavoritesApi, NodesApi, UploadApi } from '@alfresco/js-api';
 import { exit, argv } from 'node:process';
 const program = require('commander');
-const fs = require ('fs');
+const fs = require('fs');
 const path = require('path');
 import { logger } from './logger';
 const MAX_RETRY = 10;
@@ -26,9 +26,9 @@ let counter = 0;
 const TIMEOUT = 6000;
 const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
 
-let alfrescoJsApi;
+let alfrescoJsApi: AlfrescoApi;
 
-export default async function() {
+export default async function () {
     await main();
 }
 
@@ -45,7 +45,6 @@ async function main() {
 
     logger.info(`***** Step initialize ACS *****`);
     await initializeDefaultFiles();
-
 }
 
 async function initializeDefaultFiles() {
@@ -79,22 +78,22 @@ async function initializeDefaultFiles() {
 }
 
 async function createFolder(folderName: string, parentId: string) {
-        let createdFolder: any;
-        const body = {
-            name: folderName,
-            nodeType: 'cm:folder'
-        };
-        try {
-            createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body, {overwrite: true});
+    let createdFolder: any;
+    const body = {
+        name: folderName,
+        nodeType: 'cm:folder'
+    };
+    try {
+        createdFolder = await new NodesApi(alfrescoJsApi).createNode(parentId, body, { overwrite: true });
 
-            logger.info(`Folder ${folderName} was created`);
-        } catch (err) {
-            if (err.status === 409) {
-                const relativePath = `/${folderName}`;
-                createdFolder = await new NodesApi(alfrescoJsApi).getNode('-my-', { relativePath });
-             }
+        logger.info(`Folder ${folderName} was created`);
+    } catch (err) {
+        if (err.status === 409) {
+            const relativePath = `/${folderName}`;
+            createdFolder = await new NodesApi(alfrescoJsApi).getNode('-my-', { relativePath });
         }
-        return createdFolder;
+    }
+    return createdFolder;
 }
 
 async function uploadFile(fileName: string, fileDestination: string) {
@@ -102,18 +101,12 @@ async function uploadFile(fileName: string, fileDestination: string) {
     const file = fs.createReadStream(path.join(__dirname, filePath));
     let uploadedFile: any;
     try {
-        uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(
-            file,
-            '',
-            fileDestination,
-            null,
-            {
-                name: fileName,
-                nodeType: 'cm:content',
-                renditions: 'doclib',
-                overwrite: true
-            }
-        );
+        uploadedFile = await new UploadApi(alfrescoJsApi).uploadFile(file, '', fileDestination, null, {
+            name: fileName,
+            nodeType: 'cm:content',
+            renditions: 'doclib',
+            overwrite: true
+        });
         logger.info(`File ${fileName} was uploaded`);
     } catch (err) {
         logger.error(`Failed to upload file with error: `, err.stack);
@@ -128,7 +121,7 @@ async function lockFile(nodeId: string) {
     try {
         await new NodesApi(alfrescoJsApi).lockNode(nodeId, data);
         logger.info('File was locked');
-     } catch (error) {
+    } catch (error) {
         logger.error('Failed to lock file with error: ', error.stack);
     }
 }
@@ -140,7 +133,7 @@ async function shareFile(nodeId: string) {
     try {
         await new SharedlinksApi(alfrescoJsApi).createSharedLink(data);
         logger.info('File was shared');
-     } catch (error) {
+    } catch (error) {
         logger.error('Failed to share file with error: ', error.stack);
     }
 }
@@ -148,9 +141,9 @@ async function shareFile(nodeId: string) {
 async function favoriteFile(nodeId: string) {
     const data = {
         target: {
-          ['file']: {
-            guid: nodeId
-          }
+            ['file']: {
+                guid: nodeId
+            }
         }
     };
     try {
@@ -199,5 +192,5 @@ async function checkEnv() {
 
 function sleep(delay: number) {
     const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {  }
+    while (new Date().getTime() < start + delay) {}
 }

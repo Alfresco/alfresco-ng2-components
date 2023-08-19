@@ -22,15 +22,10 @@ import { logger } from './../logger';
 const TIMEOUT = 6000;
 const MAX_RETRY = 10;
 export class CheckEnv {
-    _alfrescoJsApi: any;
+    _alfrescoJsApi: AlfrescoApi;
     counter = 0;
 
-    constructor(
-        private host: string,
-        private username: string,
-        private password: string,
-        private clientId: string = 'alfresco'
-    ) {}
+    constructor(private host: string, private username: string, private password: string, private clientId: string = 'alfresco') {}
 
     async checkEnv() {
         try {
@@ -39,12 +34,14 @@ export class CheckEnv {
                 hostBpm: this.host,
                 hostEcm: this.host,
                 authType: 'OAUTH',
+                contextRoot: 'alfresco',
                 oauth2: {
                     host: `${this.host}/auth/realms/alfresco`,
                     clientId: `${this.clientId}`,
-                    scope: 'openid'
+                    scope: 'openid',
+                    redirectUri: '/'
                 }
-            } as any);
+            });
             await this.alfrescoJsApi.login(this.username, this.password);
         } catch (e) {
             if (e.error.code === 'ETIMEDOUT') {
@@ -57,20 +54,18 @@ export class CheckEnv {
                 logger.error('Give up');
                 exit(1);
             } else {
-                logger.error(
-                    `Retry in 1 minute at main();tempt N ${this.counter}`
-                );
+                logger.error(`Retry in 1 minute at main();tempt N ${this.counter}`);
                 this.sleep(TIMEOUT);
                 await this.checkEnv();
             }
         }
     }
 
-    public get alfrescoJsApi() {
+    public get alfrescoJsApi(): AlfrescoApi {
         return this._alfrescoJsApi;
     }
 
-    public set alfrescoJsApi(alfrescoJsApi: any) {
+    public set alfrescoJsApi(alfrescoJsApi: AlfrescoApi) {
         this._alfrescoJsApi = alfrescoJsApi;
     }
 

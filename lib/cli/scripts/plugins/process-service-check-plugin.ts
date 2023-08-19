@@ -20,37 +20,35 @@
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { ProcessServiceHealth } from './process-services-health';
+import { AlfrescoApi } from '@alfresco/js-api';
 
 export class ProcessServiceCheckPlugin {
     processServiceHealth: ProcessServiceHealth;
 
-    constructor(
-        private plugInInfo: PluginInterface,
-        private alfrescoJsApi: any
-    ) {
-        this.processServiceHealth = new ProcessServiceHealth(
-            this.plugInInfo,
-            this.alfrescoJsApi
-        );
+    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+        this.processServiceHealth = new ProcessServiceHealth(this.plugInInfo, this.alfrescoJsApi);
     }
 
-    async checkProcessServicesPlugin() {
+    async checkProcessServicesPlugin(): Promise<void> {
         let pluginStatus;
         try {
             const isPluginEnabled = await this.processServiceHealth.isPluginEnabledFromAppConfiguration();
             const isBackendActive = await this.processServiceHealth.checkBackendHealth();
 
             if (isPluginEnabled && isBackendActive) {
-                logger.info(
-                    `The plugin ${
-                        this.plugInInfo.name
-                    } has been correctly configured`
-                );
+                logger.info(`The plugin ${this.plugInInfo.name} has been correctly configured`);
                 pluginStatus = [{ PluginName: this.plugInInfo.name, Status: `${'Active'}`, BE: 'UP', FE: 'Enabled' }];
                 console.table(pluginStatus);
             } else {
                 this.logConfigurationError();
-                pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: isBackendActive ? 'UP' : 'DOWN', FE: isPluginEnabled ? 'Enabled' : 'Disabled' }];
+                pluginStatus = [
+                    {
+                        PluginName: this.plugInInfo.name,
+                        Status: 'Inactive',
+                        BE: isBackendActive ? 'UP' : 'DOWN',
+                        FE: isPluginEnabled ? 'Enabled' : 'Disabled'
+                    }
+                ];
                 console.table(pluginStatus);
                 process.exit(1);
             }
@@ -62,12 +60,7 @@ export class ProcessServiceCheckPlugin {
         }
     }
 
-    private logConfigurationError(error?: any) {
-        logger.error(
-            `The plugin ${
-                this.plugInInfo.name
-            } has not been correctly configured`,
-            error
-        );
+    private logConfigurationError(error?: any): void {
+        logger.error(`The plugin ${this.plugInInfo.name} has not been correctly configured`, error);
     }
 }
