@@ -8,7 +8,7 @@
                              (opened)="generalTogglePanelState()"
                              (closed)="generalTogglePanelState()">
             <mat-expansion-panel-header>
-                <div class="adf-toggle-icons">
+                <div class="adf-metadata-properties-panel-content">
                     <mat-icon>
                         {{ generalInfoPanelState ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
@@ -58,7 +58,7 @@
                             (closed)="handleTagPanelClose()" hideToggle
                             [expanded]="tagsPanelState">
                 <mat-expansion-panel-header>
-                    <div class="adf-toggle-icons">
+                    <div class="adf-metadata-properties-panel-content">
                         <mat-icon>
                             {{ tagsPanelState ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
@@ -118,7 +118,7 @@
                             hideToggle
                             [expanded]="categoriesPanelState">
                 <mat-expansion-panel-header>
-                    <div class="adf-toggle-icons">
+                    <div class="adf-metadata-properties-panel-content">
                         <mat-icon>
                             {{ categoriesPanelState ? 'expand_more' : 'chevron_right'}}</mat-icon>
                         <mat-panel-title class="adf-metadata-properties-title">{{
@@ -183,7 +183,7 @@
                                          [attr.data-automation-id]="'adf-metadata-group-' + group.title"
                                          [expanded]="canExpandTheCard(group.title) || !displayDefaultProperties && first">
                         <mat-expansion-panel-header>
-                            <div class="adf-toggle-icons">
+                            <div class="adf-metadata-properties-panel-content">
                                 <mat-icon>
                                     {{ group.expanded ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>

@@ -115,10 +115,6 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
     }
 
-    async generaleditIconNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.editIconGeneral);
-    }
-
     async editIconClick(): Promise<void> {
         await BrowserActions.clickExecuteScript('button[data-automation-id="meta-data-card-toggle-edit"]');
     }
