@@ -1,14 +1,30 @@
-/* eslint-disable */
-import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { AlfrescoApi, NodeEntry, NodesApi, UploadApi } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
 const program = require('commander');
 const path = require('path');
-/* eslint-enable */
 import { logger } from './logger';
 import { createReadStream } from 'node:fs';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
+let alfrescoJsApi: AlfrescoApi;
 
 export default async function main(_args: string[]) {
     program
@@ -24,12 +40,12 @@ export default async function main(_args: string[]) {
 
     await checkEnv();
     // TODO: https://alfresco.atlassian.net/browse/ACS-5873
-    // await checkDiskSpaceFullEnv();
+    await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
     try {
-        const alfrescoJsApi = new AlfrescoApi({
+        alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: program.host,
             contextRoot: 'alfresco'
@@ -61,18 +77,10 @@ async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
     try {
-        const alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: program.host,
-            contextRoot: 'alfresco'
-        });
-
         const nodesApi = new NodesApi(alfrescoJsApi);
         const uploadApi = new UploadApi(alfrescoJsApi);
 
-        await alfrescoJsApi.login(program.username, program.password);
-
-        let folder;
+        let folder: NodeEntry;
 
         try {
             folder = await nodesApi.createNode(
