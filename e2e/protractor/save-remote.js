@@ -1,4 +1,4 @@
-const { spawnSync} = require('node:child_process');
+const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const TestConfig = require('../test.config');
@@ -29,25 +29,31 @@ async function uploadScreenshot(retryCount, suffixFileName) {
     let folderNode;
 
     try {
-        folderNode = await nodesApi.createNode('-my-', {
-            'name': `retry-${retryCount}`,
-            'relativePath': `Builds/${buildNumber()}/`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
-        });
+        folderNode = await nodesApi.createNode(
+            '-my-',
+            {
+                name: `retry-${retryCount}`,
+                relativePath: `Builds/${buildNumber()}/`,
+                nodeType: 'cm:folder'
+            },
+            {},
+            {
+                overwrite: true
+            }
+        );
     } catch (error) {
-        folderNode = await nodesApi.createNode('-my-', {
-            'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
-            'nodeType': 'cm:folder'
-        }, {}, {
-            'overwrite': true
+        folderNode = await nodesApi.getNode('-my-', {
+            relativePath: `Builds/${buildNumber()}/retry-${retryCount}`,
+            nodeType: 'cm:folder'
         });
     }
 
     suffixFileName = suffixFileName.replace(/\//g, '-');
 
-    fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`))
+    fs.renameSync(
+        path.resolve(__dirname, '../../e2e-output/'),
+        path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`)
+    );
 
     spawnSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
         cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}-${process.env.GH_ACTION_RETRY_COUNT}/`),
@@ -57,17 +63,11 @@ async function uploadScreenshot(retryCount, suffixFileName) {
     const pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
     const file = fs.createReadStream(pathFile);
 
-    await uploadApi.uploadFile(
-        file,
-        '',
-        folderNode.entry.id,
-        null,
-        {
-            'name': `e2e-result-${suffixFileName}-${retryCount}.tar`,
-            'nodeType': 'cm:content',
-            'autoRename': true
-        }
-    );
+    await uploadApi.uploadFile(file, '', folderNode.entry.id, null, {
+        name: `e2e-result-${suffixFileName}-${retryCount}.tar`,
+        nodeType: 'cm:content',
+        autoRename: true
+    });
 }
 
 module.exports = {
