@@ -28,6 +28,7 @@ const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
 
 let alfrescoJsApi: AlfrescoApi;
 
+// eslint-disable-next-line space-before-function-paren
 export default async function () {
     await main();
 }
