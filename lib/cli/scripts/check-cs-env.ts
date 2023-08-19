@@ -23,8 +23,7 @@ export default async function main(_args: string[]) {
         .parse(argv);
 
     await checkEnv();
-    // TODO: https://alfresco.atlassian.net/browse/ACS-5873
-    // await checkDiskSpaceFullEnv();
+    await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
@@ -56,7 +55,6 @@ async function checkEnv() {
     }
 }
 
-// @ts-ignore
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
@@ -88,18 +86,10 @@ async function checkDiskSpaceFullEnv() {
                 }
             );
         } catch (error) {
-            folder = await nodesApi.createNode(
-                '-my-',
-                {
-                    name: `retry-env`,
-                    relativePath: `Builds/try-env`,
-                    nodeType: 'cm:folder'
-                },
-                {},
-                {
-                    overwrite: true
-                }
-            );
+            folder = await nodesApi.getNode('-my-', {
+                relativePath: `Builds/try-env`,
+                nodeType: 'cm:folder'
+            });
         }
         const pathFile = path.join(__dirname, '../', 'README.md');
 
