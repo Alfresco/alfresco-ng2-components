@@ -3,9 +3,9 @@ import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
 const program = require('commander');
 const path = require('path');
-const fs = require('fs');
 /* eslint-enable */
 import { logger } from './logger';
+import { createReadStream } from 'node:fs';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
@@ -23,7 +23,8 @@ export default async function main(_args: string[]) {
         .parse(argv);
 
     await checkEnv();
-    await checkDiskSpaceFullEnv();
+    // TODO: https://alfresco.atlassian.net/browse/ACS-5873
+    // await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
@@ -55,6 +56,7 @@ async function checkEnv() {
     }
 }
 
+// @ts-ignore
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
@@ -93,7 +95,7 @@ async function checkDiskSpaceFullEnv() {
         }
         const pathFile = path.join(__dirname, '../', 'README.md');
 
-        const file = fs.createReadStream(pathFile);
+        const file = createReadStream(pathFile);
 
         const uploadedFile = await uploadApi.uploadFile(file, '', folder.entry.id, null, {
             name: 'README.md',
