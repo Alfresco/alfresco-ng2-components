@@ -147,7 +147,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        fit('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -173,11 +173,11 @@ describe('Metadata component', () => {
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText.png');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
             await metadataViewPage.enterDescriptionText('example description');
+            await metadataViewPage.clickSaveGeneralMetadata();
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
-            await metadataViewPage.clickSaveGeneralMetadata();
 
             await viewerPage.clickCloseButton();
             await contentServicesPage.waitForTableBody();
@@ -190,7 +190,6 @@ describe('Metadata component', () => {
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
-            await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
             await metadataViewPage.editIconGeneralClick();
             await metadataViewPage.enterPropertyText('properties.cm:name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);

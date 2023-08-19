@@ -114,6 +114,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.generalEditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         const defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
@@ -138,6 +139,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.generalEditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         const customType  = (await metadataViewPage.hasContentType(type.title)) || (await metadataViewPage.hasContentType(`${model.namespacePrefix}:${type.name}`));
@@ -153,6 +155,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.generalEditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         let defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
@@ -175,6 +178,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await metadataViewPage.generalEditIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
