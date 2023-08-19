@@ -335,7 +335,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     toggleGeneralEdit(event: Event): void {
         event.stopPropagation();
         this.editable = !this.editable;
-        if (!this.panel.expanded) {
+        if (this.editable) {
             this.panel.open();
         }
     }
@@ -370,34 +370,29 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    handlePanelOpen() {
+    handleTagPanelOpen() {
         this.tagsPanelState = true;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
+        this.cdr.detectChanges();
     }
     
-    handlePanelClose() {
+    handleTagPanelClose() {
         this.tagsPanelState = false;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
+        this.cdr.detectChanges();
     }
 
-    handleGneralPanelOpen() {
-        this.generalInfoPanelState = true;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
-    }
-    
-    handleGeneralPanelClose() {
-        this.generalInfoPanelState = false;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
+    generalTogglePanelState() {
+        this.generalInfoPanelState = !this.generalInfoPanelState;
+        this.cdr.detectChanges();
     }
 
     handleCategoryPanelOpen() {
         this.categoriesPanelState = true;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
+        this.cdr.detectChanges();
     }
     
     handleCategoryPanelClose() {
         this.categoriesPanelState = false;
-        this.cdr.detectChanges(); // Explicitly trigger change detection
+        this.cdr.detectChanges();
     }
     
     showGroup(group: CardViewGroup): boolean {
