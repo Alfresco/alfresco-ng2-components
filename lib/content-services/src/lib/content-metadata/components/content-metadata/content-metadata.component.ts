@@ -351,7 +351,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     toggleGeneralEdit(event: Event): void {
         event.stopPropagation();
         this.editable = !this.editable;
-        if (!this.panel.expanded) {
+        if (this.editable) {
             this.panel.open();
         }
     }
@@ -386,23 +386,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    handlePanelOpen() {
+    handleTagPanelOpen() {
         this.tagsPanelState = true;
         this.cdr.detectChanges();
     }
     
-    handlePanelClose() {
+    handleTagPanelClose() {
         this.tagsPanelState = false;
         this.cdr.detectChanges();
     }
 
-    handleGneralPanelOpen() {
-        this.generalInfoPanelState = true;
-        this.cdr.detectChanges();
-    }
-    
-    handleGeneralPanelClose() {
-        this.generalInfoPanelState = false;
+    generalTogglePanelState() {
+        this.generalInfoPanelState = !this.generalInfoPanelState;
         this.cdr.detectChanges();
     }
 

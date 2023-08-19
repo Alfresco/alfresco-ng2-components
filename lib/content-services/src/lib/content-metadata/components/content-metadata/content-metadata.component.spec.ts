@@ -432,6 +432,109 @@ describe('ContentMetadataComponent', () => {
         }));
     });
 
+    describe('cancelChanges', () => {
+        it('should cancel group changes and set group editable to false', () => {
+            const group = { editable: true };
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.cancelGroupChanges(group, event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(group.editable).toBe(false);
+        });
+
+        it('should cancel general info changes and toggle editable', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editable= true;
+            component.cancelGeneralInfoChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editable).toBe(false);
+        });
+
+        it('should cancel tags changes and toggle editableTags', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editableTags = true;
+            component.CancelTagsChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editableTags).toBe(false);
+        });
+
+        it('should cancel categories changes and toggle editableCategories', () => {
+            const event = new Event('click');
+            spyOn(component, 'cancelChanges');
+            component.editableCategories = true;
+            component.cancelCategoriesChanges(event);
+            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+            expect(component.editableCategories).toBe(false);
+        });
+    })
+
+    describe('editing', () => {
+        it('should toggle categories edit and set categoriesPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.editableCategories = false;
+            component.categoriesPanelState = false;
+            component.toggleCategoriesEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editableCategories).toBe(true);
+            expect(component.categoriesPanelState).toBe(true);
+            component.toggleCategoriesEdit(event);
+            expect(component.editableCategories).toBe(false);
+            expect(component.categoriesPanelState).toBe(false);
+        });
+
+        it('should toggle group edit and expand the panel if editable', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            const group = { editable: false, expanded: false };
+            component.toggleEdit(group, event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(group.editable).toBe(true);
+            expect(group.expanded).toBe(true);
+        });
+        
+        it('should toggle group edit but not expand the panel if not editable', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            const group = { editable: true, expanded: true };
+            component.toggleEdit(group, event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(group.editable).toBe(false);
+            expect(group.expanded).toBe(true);
+        });
+        
+
+        it('should toggle general info edit and set generalInfoPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.generalInfoPanelState = true;
+            component.editable = false;
+            component.toggleGeneralEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editable).toBe(true);
+            expect(component.generalInfoPanelState).toBe(true);
+            component.toggleGeneralEdit(event);
+            expect(component.editable).toBe(false);
+            expect(component.generalInfoPanelState).toBe(true);
+        });
+
+        it('should toggle tags edit and set tagsPanelState accordingly', () => {
+            const event = new Event('click');
+            spyOn(event, 'stopPropagation');
+            component.editableTags = false;
+            component.tagsPanelState = false;
+            component.toggleTagsEdit(event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+            expect(component.editableTags).toBe(true);
+            expect(component.tagsPanelState).toBe(true);
+            component.toggleTagsEdit(event);
+            expect(component.editableTags).toBe(false);
+            expect(component.tagsPanelState).toBe(false);
+        });
+    })
+
     describe('Reseting', () => {
         it('should reset properties on reset click', async () => {
             component.changedProperties = { properties: { 'property-key': 'updated-value' } };
