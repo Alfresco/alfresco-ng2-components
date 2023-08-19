@@ -5,8 +5,8 @@
                              [expanded]="canExpandProperties()"
                              [attr.data-automation-id]="'adf-metadata-group-properties'"
                              hideToggle
-                             (opened)="handleGneralPanelOpen()"
-                             (closed)="handleGeneralPanelClose()">
+                             (opened)="generalTogglePanelState()"
+                             (closed)="generalTogglePanelState()">
             <mat-expansion-panel-header>
                 <div class="adf-toggle-icons">
                     <mat-icon>
@@ -54,8 +54,8 @@
         </mat-expansion-panel>
         <ng-container *ngIf="displayTags">
             <mat-expansion-panel 
-                            (opened)="handlePanelOpen()"
-                            (closed)="handlePanelClose()" hideToggle
+                            (opened)="handleTagPanelOpen()"
+                            (closed)="handleTagPanelClose()" hideToggle
                             [expanded]="tagsPanelState">
                 <mat-expansion-panel-header>
                     <div class="adf-toggle-icons">

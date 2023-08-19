@@ -2,7 +2,8 @@
     <div *ngIf="((!categoryNameControlVisible && categories.length)) || categoryNameControlVisible"
          class="adf-category-name-field">
         <input #categoryNameInput
-               matInput autocomplete="off"
+               matInput 
+               autocomplete="off"
                [formControl]="categoryNameControl"
                (keyup.enter)="addCategory()"
                aria-labelledby="adf-category-name-input-label"
