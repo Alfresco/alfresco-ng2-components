@@ -9,7 +9,8 @@
                (keyup.enter)="addCategory()"
                aria-labelledby="adf-category-name-input-label"
                placeholder="{{'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate }}"
-               adf-auto-focus />
+               adf-auto-focus 
+               />
             <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
         </mat-form-field>
     </div>
@@ -17,7 +18,7 @@
         <span
             *ngFor="let category of categories"
             [class.adf-categories-padded]="!isCRUDMode"
-                class="adf-assigned-categories">
+            class="adf-assigned-categories">
             {{ category.name }}
             <button
                 data-automation-id="categories-remove-category-button"
@@ -37,7 +38,7 @@
 <div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
     <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
         <span class="adf-create-category-label"
-        (click)="addCategory()"
+              (click)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
         </span>
@@ -62,8 +63,8 @@
             </mat-selection-list>
         </ng-container>
         <mat-spinner
-               *ngIf="existingCategoriesLoading"
-               [diameter]="50"
+            *ngIf="existingCategoriesLoading"
+            [diameter]="50"
             [attr.aria-label]="'CATEGORIES_MANAGEMENT.LOADING' | translate">
         </mat-spinner>
     </div>
