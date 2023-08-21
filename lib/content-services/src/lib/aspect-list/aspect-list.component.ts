@@ -58,7 +58,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         if (this.nodeId) {
             const node$ = this.nodeApiService.getNode(this.nodeId);
-            const customAspect$ = this.aspectListService.getCustomAspects()
+            const customAspect$ = this.aspectListService.getCustomAspects(this.aspectListService.getVisibleAspects())
             .pipe(map(
                 (customAspects) => customAspects.flatMap((customAspect) => customAspect.entry.id)
             ));
