@@ -18,31 +18,22 @@
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { PluginConfiguration } from './plugin-config';
+import { AlfrescoApi } from '@alfresco/js-api';
 
 export class ProcessAutomationHealth {
     config: PluginConfiguration;
 
-    constructor(
-        private plugInInfo: PluginInterface,
-        private alfrescoJsApi: any
-    ) {
-        this.config = new PluginConfiguration(
-            this.plugInInfo,
-            this.alfrescoJsApi
-        );
+    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {
+        this.config = new PluginConfiguration(this.plugInInfo, this.alfrescoJsApi);
     }
 
-    async isPluginEnabledFromAppConfiguration() {
+    async isPluginEnabledFromAppConfiguration(): Promise<boolean> {
         try {
             const url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/ui/${this.plugInInfo.uiName}/app.config.json`;
             const appConfig = await this.config.getAppConfig(url);
             let isEnabled = true;
             if (appConfig && appConfig.plugins && appConfig.plugins[this.plugInInfo.name]) {
-                logger.info(
-                    `The plugin ${
-                        this.plugInInfo.name
-                    } has been correctly configured in app.config.json`
-                );
+                logger.info(`The plugin ${this.plugInInfo.name} has been correctly configured in app.config.json`);
             } else {
                 this.logConfigurationError();
                 isEnabled = false;
@@ -55,7 +46,7 @@ export class ProcessAutomationHealth {
         }
     }
 
-    async checkBackendHealth() {
+    async checkBackendHealth(): Promise<boolean> {
         const url = `${this.plugInInfo.host}/${this.plugInInfo.appName}/rb/actuator/health`;
         let isBackendActive = true;
         try {
@@ -68,20 +59,12 @@ export class ProcessAutomationHealth {
             }
             return isBackendActive;
         } catch (error) {
-            logger.error(
-                `${this.plugInInfo.host} is not reachable error: `,
-                error
-            );
+            logger.error(`${this.plugInInfo.host} is not reachable error: `, error);
             return false;
         }
     }
 
-    private logConfigurationError(error?: any) {
-        logger.error(
-            `The plugin ${
-                this.plugInInfo.name
-            } has not been correctly configured in app.config.json`,
-            error
-        );
+    private logConfigurationError(error?: any): void {
+        logger.error(`The plugin ${this.plugInInfo.name} has not been correctly configured in app.config.json`, error);
     }
 }

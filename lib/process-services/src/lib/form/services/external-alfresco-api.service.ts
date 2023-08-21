@@ -16,43 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    AlfrescoApiCompatibility,
-    ContentApi,
-    Node, NodesApi
-} from '@alfresco/js-api';
-import { ReplaySubject, Subject } from 'rxjs';
+import { AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ExternalAlfrescoApiService {
-
-    /**
-     * Publish/subscribe to events related to node updates.
-     */
-    nodeUpdated = new Subject<Node>();
-
-    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
-
-    protected alfrescoApi: AlfrescoApiCompatibility;
-    _nodesApi: NodesApi;
-
-    getInstance(): AlfrescoApiCompatibility {
-        return this.alfrescoApi;
-    }
-
-    get contentApi(): ContentApi {
-        return this.getInstance().content;
-    }
-
-    get nodesApi(): NodesApi {
-        this._nodesApi = this._nodesApi ?? new NodesApi(this.getInstance());
-        return this._nodesApi;
-    }
-
+@Injectable({ providedIn: 'root' })
+export class ExternalAlfrescoApiService extends AlfrescoApiService {
     init(ecmHost: string, contextRoot: string) {
-
         const domainPrefix = this.createPrefixFromHost(ecmHost);
 
         const config = {
@@ -62,15 +31,15 @@ export class ExternalAlfrescoApiService {
             contextRoot,
             domainPrefix
         };
-        this.initAlfrescoApi(config);
+        this.setup(config);
         this.alfrescoApiInitialized.next(true);
     }
 
-    protected initAlfrescoApi(config) {
+    private setup(config) {
         if (this.alfrescoApi) {
-            this.alfrescoApi.configureJsApi(config);
+            this.alfrescoApi.setConfig(config);
         } else {
-            this.alfrescoApi = new AlfrescoApiCompatibility(config);
+            this.alfrescoApi = new AlfrescoApi(config);
         }
     }
 

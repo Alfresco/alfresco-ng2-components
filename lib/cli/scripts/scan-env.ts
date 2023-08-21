@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { AlfrescoApi, PeopleApi, NodesApi, GroupsApi, SitesApi, SearchApi } from '@alfresco/js-api';
+import { argv, exit } from 'node:process';
 import program from 'commander';
 import { logger } from './logger';
 
-interface PeopleTally { enabled: number; disabled: number }
-interface RowToPrint { label: string; value: number }
+interface PeopleTally {
+    enabled: number;
+    disabled: number;
+}
+interface RowToPrint {
+    label: string;
+    value: number;
+}
 
 const MAX_ATTEMPTS = 1;
 const TIMEOUT = 180000;
@@ -35,11 +42,10 @@ const bright = '\x1b[1m';
 const red = '\x1b[31m';
 const green = '\x1b[32m';
 
-let jsApiConnection: any;
+let alfrescoApi: AlfrescoApi;
 let loginAttempts: number = 0;
 
 export default async function main(_args: string[]) {
-
     // eslint-disable-next-line no-console
     console.log = () => {};
 
@@ -49,7 +55,7 @@ export default async function main(_args: string[]) {
         .option('--clientId [type]', 'sso client', 'alfresco')
         .option('-p, --password <type>', 'password ')
         .option('-u, --username <type>', 'username ')
-        .parse(process.argv);
+        .parse(argv);
 
     logger.info(`${cyan}${bright}Initiating environment scan...${reset}`);
     await attemptLogin();
@@ -67,20 +73,26 @@ export default async function main(_args: string[]) {
 }
 
 function generateTable(rowsToPrint: Array<RowToPrint>) {
-    const columnWidths = rowsToPrint.reduce((maxWidths, row: RowToPrint) => ({
+    const columnWidths = rowsToPrint.reduce(
+        (maxWidths, row: RowToPrint) => ({
             labelColumn: Math.max(maxWidths.labelColumn, row.label.length),
             valueColumn: Math.max(maxWidths.valueColumn, row.value.toString().length)
-        }), { labelColumn: 12, valueColumn: 1 });
+        }),
+        { labelColumn: 12, valueColumn: 1 }
+    );
 
     const horizontalLine = ''.padEnd(columnWidths.labelColumn + columnWidths.valueColumn + 5, '═');
-    const headerText = 'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ')
-        + 'ENT SCAN'.padEnd(Math.ceil((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ');
+    const headerText =
+        'ENVIRONM'.padStart(Math.floor((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ') +
+        'ENT SCAN'.padEnd(Math.ceil((columnWidths.labelColumn + columnWidths.valueColumn + 3) / 2), ' ');
 
     let tableString = `${grey}╒${horizontalLine}╕${reset}
 ${grey}│ ${bright}${cyan}${headerText} ${grey}│${reset}
 ${grey}╞${horizontalLine}╡${reset}`;
-    rowsToPrint.forEach(row => {
-        tableString += `\n${grey}│${reset} ${row.label.padEnd(columnWidths.labelColumn, ' ')}   ${yellow}${row.value.toString().padEnd(columnWidths.valueColumn, ' ')} ${grey}│${reset}`;
+    rowsToPrint.forEach((row) => {
+        tableString += `\n${grey}│${reset} ${row.label.padEnd(columnWidths.labelColumn, ' ')}   ${yellow}${row.value
+            .toString()
+            .padEnd(columnWidths.valueColumn, ' ')} ${grey}│${reset}`;
     });
     tableString += `\n${grey}╘${horizontalLine}╛${reset}`;
 
@@ -90,11 +102,12 @@ ${grey}╞${horizontalLine}╡${reset}`;
 async function attemptLogin() {
     logger.info(`    Logging into ${yellow}${program.host}${reset} with user ${yellow}${program.username}${reset}`);
     try {
-        jsApiConnection = new AlfrescoApi({
+        alfrescoApi = new AlfrescoApi({
             provider: 'ALL',
             hostBpm: program.host,
             hostEcm: program.host,
             authType: 'OAUTH',
+            contextRoot: 'alfresco',
             oauth2: {
                 host: `${program.host}/auth/realms/alfresco`,
                 clientId: `${program.clientId}`,
@@ -102,8 +115,8 @@ async function attemptLogin() {
                 redirectUri: '/',
                 implicitFlow: false
             }
-        } as unknown as AlfrescoApiConfig);
-        await jsApiConnection.login(program.username, program.password);
+        });
+        await alfrescoApi.login(program.username, program.password);
         logger.info(`    ${green}Login SSO successful${reset}`);
     } catch (err) {
         await handleLoginError(err);
@@ -117,7 +130,7 @@ async function handleLoginError(loginError) {
     checkEnvReachable(loginError);
     loginAttempts++;
     if (MAX_ATTEMPTS === loginAttempts) {
-        if (loginError && loginError.response && loginError?.response?.text) {
+        if (loginError?.response?.text) {
             try {
                 const parsedJson = JSON.parse(loginError?.response?.text);
                 if (typeof parsedJson === 'object' && parsedJson.error) {
@@ -150,20 +163,23 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
         logger.info(`    Fetching number of users`);
     }
     try {
-        const peopleApi = new PeopleApi(jsApiConnection);
+        const peopleApi = new PeopleApi(alfrescoApi);
         const apiResult = await peopleApi.listPeople({
             fields: ['enabled'],
             maxItems: MAX_PEOPLE_PER_PAGE,
             skipCount
         });
-        const result: PeopleTally = apiResult.list.entries.reduce((peopleTally: PeopleTally, currentPerson) => {
-            if (currentPerson.entry.enabled) {
-                peopleTally.enabled++;
-            } else {
-                peopleTally.disabled++;
-            }
-            return peopleTally;
-        }, { enabled: 0, disabled: 0 });
+        const result: PeopleTally = apiResult.list.entries.reduce(
+            (peopleTally: PeopleTally, currentPerson) => {
+                if (currentPerson.entry.enabled) {
+                    peopleTally.enabled++;
+                } else {
+                    peopleTally.disabled++;
+                }
+                return peopleTally;
+            },
+            { enabled: 0, disabled: 0 }
+        );
         if (apiResult.list.pagination.hasMoreItems) {
             const more = await getPeopleCount(apiResult.list.pagination.skipCount + MAX_PEOPLE_PER_PAGE);
             result.enabled += more.enabled;
@@ -178,7 +194,7 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
 async function getHomeFoldersCount(): Promise<number> {
     logger.info(`    Fetching number of home folders`);
     try {
-        const nodesApi = new NodesApi(jsApiConnection);
+        const nodesApi = new NodesApi(alfrescoApi);
         const homesFolderApiResult = await nodesApi.listNodeChildren('-root-', {
             maxItems: 1,
             relativePath: USERS_HOME_RELATIVE_PATH
@@ -192,7 +208,7 @@ async function getHomeFoldersCount(): Promise<number> {
 async function getGroupsCount(): Promise<number> {
     logger.info(`    Fetching number of groups`);
     try {
-        const groupsApi = new GroupsApi(jsApiConnection);
+        const groupsApi = new GroupsApi(alfrescoApi);
         const groupsApiResult = await groupsApi.listGroups({ maxItems: 1 });
         return groupsApiResult.list.pagination.totalItems;
     } catch (error) {
@@ -203,7 +219,7 @@ async function getGroupsCount(): Promise<number> {
 async function getSitesCount(): Promise<number> {
     logger.info(`    Fetching number of sites`);
     try {
-        const sitesApi = new SitesApi(jsApiConnection);
+        const sitesApi = new SitesApi(alfrescoApi);
         const sitesApiResult = await sitesApi.listSites({ maxItems: 1 });
         return sitesApiResult.list.pagination.totalItems;
     } catch (error) {
@@ -214,7 +230,7 @@ async function getSitesCount(): Promise<number> {
 async function getFilesCount(): Promise<number> {
     logger.info(`    Fetching number of files`);
     try {
-        const searchApi = new SearchApi(jsApiConnection);
+        const searchApi = new SearchApi(alfrescoApi);
         const searchApiResult = await searchApi.search({
             query: {
                 query: 'select * from cmis:document',
@@ -248,11 +264,11 @@ function handleError(error) {
 
 function failScript() {
     logger.error(`${red}${bright}Environment scan failed. Exiting${reset}`);
-    process.exit(0);
+    exit(0);
 }
 
 async function wait(ms: number) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
 }

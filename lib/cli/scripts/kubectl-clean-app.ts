@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv, exit } from 'node:process';
 import program from 'commander';
 import moment from 'moment';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
@@ -40,11 +41,12 @@ export interface ConfigArgs {
     intervalTime: string;
 }
 
-function getAlfrescoJsApiInstance(args: ConfigArgs) {
-    const config = {
+function getAlfrescoJsApiInstance(args: ConfigArgs): AlfrescoApi {
+    const config: AlfrescoApiConfig = {
         provider: 'BPM',
         hostBpm: `${args.host}`,
         authType: 'OAUTH',
+        contextRoot: 'alfresco',
         oauth2: {
             host: `${args.oauth}/auth/realms/alfresco`,
             clientId: `${args.clientId}`,
@@ -55,21 +57,21 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
             redirectUri: '/'
         }
     };
-    return new AlfrescoApi(config as unknown as AlfrescoApiConfig);
+    return new AlfrescoApi(config);
 }
 
-async function login(username: string, password: string, alfrescoJsApi: any) {
+async function login(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     logger.info(`Perform login...`);
     try {
-    await alfrescoJsApi.login(username, password);
+        await alfrescoJsApi.login(username, password);
     } catch (error) {
         logger.error(`Not able to login. Credentials ${username}:${password} are not valid`);
-        process.exit(1);
+        exit(1);
     }
     logger.info(`Perform done...`);
 }
 
-async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string) {
+async function deleteDescriptor(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Delete the descriptor ${name}`);
 
     const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
@@ -84,13 +86,25 @@ async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string)
     const accepts = ['application/json'];
 
     try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
+        return await apiService.oauth2Auth.callCustomApi(
+            url,
+            'DELETE',
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts
+        );
     } catch (error) {
-        logger.error(`Not possible to delete the descriptor ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
+        logger.error(
+            `Not possible to delete the descriptor ${name} status:  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`
+        );
     }
 }
 
-async function deleteProject(args: ConfigArgs, apiService: any, projectId: string) {
+async function deleteProject(args: ConfigArgs, apiService: AlfrescoApi, projectId: string) {
     logger.warn(`Delete the project ${projectId}`);
 
     const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
@@ -105,13 +119,25 @@ async function deleteProject(args: ConfigArgs, apiService: any, projectId: strin
     const accepts = ['application/json'];
 
     try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
+        return await apiService.oauth2Auth.callCustomApi(
+            url,
+            'DELETE',
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts
+        );
     } catch (error) {
-        logger.error(`Not possible to delete the project ${projectId} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
+        logger.error(
+            `Not possible to delete the project ${projectId} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`
+        );
     }
 }
 
-async function deleteProjectByName(args: ConfigArgs, apiService: any, name: string) {
+async function deleteProjectByName(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Get the project by name ${name}`);
     const url = `${args.host}/modeling-service/v1/projects?name=${name}`;
 
@@ -124,20 +150,29 @@ async function deleteProjectByName(args: ConfigArgs, apiService: any, name: stri
     const accepts = ['application/json'];
 
     try {
-        const data = await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-        for (let i = 0; i < data.list.entries.length;  i++ ) {
+        const data = await apiService.oauth2Auth.callCustomApi(
+            url,
+            'GET',
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts
+        );
+        for (let i = 0; i < data.list.entries.length; i++) {
             if (data.list.entries[i].entry.name === name) {
                 await deleteProject(args, apiService, data.list.entries[i].entry.id);
             }
         }
     } catch (error) {
         logger.error(`Not possible to get the project with name ${name} ` + JSON.stringify(error));
-        process.exit(1);
+        exit(1);
     }
 }
 
-async function getApplicationsByName(args: ConfigArgs, apiService: any, name: string) {
+async function getApplicationsByName(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Get the applications by name ${name}`);
     const url = `${args.host}/deployment-service/v1/applications?name=${name}`;
 
@@ -150,8 +185,17 @@ async function getApplicationsByName(args: ConfigArgs, apiService: any, name: st
     const accepts = ['application/json'];
 
     try {
-        const apps =  await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
+        const apps = await apiService.oauth2Auth.callCustomApi(
+            url,
+            'GET',
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts
+        );
         return apps ? apps.list.entries : [];
     } catch (error) {
         logger.error(`Not possible to get the applications with name ${name} ` + JSON.stringify(error));
@@ -159,7 +203,7 @@ async function getApplicationsByName(args: ConfigArgs, apiService: any, name: st
     }
 }
 
-async function undeployApplication(args: ConfigArgs, apiService: any, name: string) {
+async function undeployApplication(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Undeploy the application ${name}`);
 
     const url = `${args.host}/deployment-service/v1/applications/${name}`;
@@ -174,22 +218,36 @@ async function undeployApplication(args: ConfigArgs, apiService: any, name: stri
     const accepts = ['application/json'];
 
     try {
-        return await apiService.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam, contentTypes, accepts);
+        return await apiService.oauth2Auth.callCustomApi(
+            url,
+            'DELETE',
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts
+        );
     } catch (error) {
-        logger.error(`Not possible to undeploy the applications ${name} status  :  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`);
+        logger.error(
+            `Not possible to undeploy the applications ${name} status:  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`
+        );
     }
 }
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export default async function(args: ConfigArgs) {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions,space-before-function-paren
+export default async function (args: ConfigArgs) {
     await main(args);
 }
 
 const main = async (args: ConfigArgs) => {
     program
         .version('0.1.0')
-        .description('The following command is in charge of cleaning the releases/application/descriptor related to an app passed as input' +
-            'adf-cli kubectl-clean-app --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --oauth "identity_env" --username "username" --password "password"')
+        .description(
+            'The following command is in charge of cleaning the releases/application/descriptor related to an app passed as input' +
+                'adf-cli kubectl-clean-app --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --oauth "identity_env" --username "username" --password "password"'
+        )
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('--clusterEnv [type]', 'cluster Envirorment')
@@ -204,28 +262,34 @@ const main = async (args: ConfigArgs) => {
         .option('--apps [type]', 'Application prefix')
         .option('--enableLike [boolean]', 'Enable the like for app name')
         .option('--intervalTime [string]', 'In case of enableLike it specify the time related to the createDate')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
 
     const alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
-    await login(args.modelerUsername, args.modelerPassword, alfrescoJsApiModeler).then(() => {
-        logger.info('login SSO ok');
-    }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)}`);
-        process.exit(1);
-    });
+    await login(args.modelerUsername, args.modelerPassword, alfrescoJsApiModeler).then(
+        () => {
+            logger.info('login SSO ok');
+        },
+        (error) => {
+            logger.info(`login SSO error ${JSON.stringify(error)}`);
+            exit(1);
+        }
+    );
 
     const alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
-    await login(args.devopsUsername, args.devopsPassword, alfrescoJsApiDevops).then(() => {
-        logger.info('login SSO ok');
-    }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)}`);
-        process.exit(1);
-    });
+    await login(args.devopsUsername, args.devopsPassword, alfrescoJsApiDevops).then(
+        () => {
+            logger.info('login SSO ok');
+        },
+        (error) => {
+            logger.info(`login SSO error ${JSON.stringify(error)}`);
+            exit(1);
+        }
+    );
 
     if (args.apps !== undefined) {
         kube.setCluster(args.clusterEnv, args.clusterUrl);
@@ -238,13 +302,13 @@ const main = async (args: ConfigArgs) => {
         const extractTimeRange = parseInt(interval.split(' ')[0], 10);
         logger.info(`Extract time ${extractTimeRange} from interval: ${interval}`);
 
-        for (let i = 0; i < applications.length;  i++ ) {
+        for (let i = 0; i < applications.length; i++) {
             logger.info(`Perform action on app: ${applications[i]}`);
             if (args.enableLike) {
                 const applicationsByName = await getApplicationsByName(args, alfrescoJsApiDevops, applications[i]);
                 logger.info(`Found  ${applicationsByName.length} apps`);
 
-                for (let y = 0; y < applicationsByName.length;  y++ ) {
+                for (let y = 0; y < applicationsByName.length; y++) {
                     const application = applicationsByName[y].entry;
                     logger.info(`Analyze app:  ${application.name} `);
                     const diffAsMinutes = moment.duration(moment().diff(moment(application.createdAt))).asMinutes();
