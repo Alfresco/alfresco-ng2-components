@@ -432,6 +432,44 @@ describe('ContentMetadataComponent', () => {
         }));
     });
 
+    describe('saveChanges', () => {
+        it('should save general info changes and toggle editable', () => {
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.editable = true;
+            component.saveGeneralInfoChanges(event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(component.editable).toBe(false);
+        });
+
+        it('should save tags changes and toggle editableTags', () => {
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.editableTags = true;
+            component.saveTagsChanges(event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(component.editableTags).toBe(false);
+        });
+
+          it('should save categories changes and toggle editableCategories', () => {
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.editableCategories = true;
+            component.saveCategoriesChanges(event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(component.editableTags).toBe(false);
+          });
+        
+          it('should save group changes and toggle group.editable', () => {
+            const group = { editable: true };
+            const event = new Event('click');
+            spyOn(component, 'saveChanges');
+            component.saveGroupChanges(group, event);
+            expect(component.saveChanges).toHaveBeenCalledWith(event);
+            expect(group.editable).toBe(false);
+          });
+    })
+
     describe('cancelChanges', () => {
         it('should cancel group changes and set group editable to false', () => {
             const group = { editable: true };
@@ -1245,7 +1283,6 @@ describe('ContentMetadataComponent', () => {
             const tagName2 = 'New tag 3';
 
             updateService.update(property, 'updated-value');
-            // tick(800);
 
             fixture.detectChanges();
             tagsCreator.tagsChange.emit([tagName1, tagName2]);

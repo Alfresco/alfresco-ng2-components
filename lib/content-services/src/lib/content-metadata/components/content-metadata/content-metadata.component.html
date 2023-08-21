@@ -55,7 +55,8 @@
         <ng-container *ngIf="displayTags">
             <mat-expansion-panel 
                             (opened)="handleTagPanelOpen()"
-                            (closed)="handleTagPanelClose()" hideToggle
+                            (closed)="handleTagPanelClose()"
+                            hideToggle
                             [expanded]="tagsPanelState">
                 <mat-expansion-panel-header>
                     <div class="adf-metadata-properties-panel-content">
@@ -86,7 +87,8 @@
                         <button mat-icon-button
                                 (click)="saveTagsChanges($event)"
                                 color="primary"
-                                data-automation-id="save-tags-metadata" [disabled]="!hasMetadataChanged">
+                                data-automation-id="save-tags-metadata"
+                                [disabled]="!hasMetadataChanged">
                             <mat-icon>check</mat-icon>
                         </button>
                     </div>
@@ -127,7 +129,8 @@
                     </div>
                     <div class="adf-metadata-categories-title">
                         <button *ngIf="!editableCategories" 
-                                mat-icon-button (click)="toggleCategoriesEdit($event)"
+                                mat-icon-button
+                                (click)="toggleCategoriesEdit($event)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                 [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                 data-automation-id="meta-data-card-toggle-categoeies-edit"

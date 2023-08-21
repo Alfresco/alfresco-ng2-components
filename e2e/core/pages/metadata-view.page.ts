@@ -45,7 +45,6 @@ export class MetadataViewPage {
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-generalInfo-metadata']`);
-    resetGeneralMetadataButton = $(`[data-automation-id='reset-general-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
