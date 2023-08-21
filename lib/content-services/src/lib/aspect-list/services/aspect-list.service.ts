@@ -62,7 +62,7 @@ export class AspectListService {
             );
     }
 
-    getCustomAspects(whiteList: string[]): Observable<AspectEntry[]> {
+    getCustomAspects(whiteList?: string[]): Observable<AspectEntry[]> {
         const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
         const opts: any = {
             where,

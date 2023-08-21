@@ -76,10 +76,27 @@ describe('AspectListService', () => {
         });
     });
 
-    it('should get all custom aspects', (done) => {
+    it('should get all custom aspects (visible aspects as undefined)', (done) => {
+        const visibleAspects = undefined;
+        spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
+        aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
+            expect(response).toEqual([cstAspect1, cstAspect2, cstAspect3]);
+            done();
+        });
+    });
+
+    it('should get all custom aspects (visible aspects as empty array)', (done) => {
         const visibleAspects = [];
         spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
         aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
+            expect(response).toEqual([cstAspect1, cstAspect2, cstAspect3]);
+            done();
+        });
+    });
+
+    it('should get all custom aspects (visible aspects not supplied)', (done) => {
+        spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
+        aspectListService.getCustomAspects().subscribe((response) => {
             expect(response).toEqual([cstAspect1, cstAspect2, cstAspect3]);
             done();
         });
