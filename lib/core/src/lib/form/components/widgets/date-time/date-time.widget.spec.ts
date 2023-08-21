@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
-import { format, parse, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -102,7 +102,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         widget.field = field;
-        const mockDate = parse('1982-03-13T10:00:000Z', widget.DATE_TIME_FORMAT, new Date());
+        const mockDate = format(new Date('1982-03-13 10:00 AM'), "yyyy-MM-dd'\T'hh:mm:ssxxx");
         widget.onDateChanged(mockDate);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
@@ -199,7 +199,7 @@ describe('DateTimeWidgetComponent', () => {
                 id: 'date-field-id',
                 name: 'date-name',
                 value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                dateDisplayFormat: 'MM-dd-yyyy hh:mm a',
                 type: 'datetime',
                 readOnly: 'false'
             });
@@ -218,7 +218,7 @@ describe('DateTimeWidgetComponent', () => {
                 id: 'date-field-id',
                 name: 'date-name',
                 value: '12-30-9999 10:30 AM',
-                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                dateDisplayFormat: 'MM-dd-yyyy hh:mm a',
                 type: 'datetime',
                 readOnly: 'false'
             });
@@ -244,7 +244,7 @@ describe('DateTimeWidgetComponent', () => {
             readOnly: 'false'
         });
         field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A';
+        field.dateDisplayFormat = 'MM-dd-yyyy hh:mm a';
         widget.field = field;
         fixture.detectChanges();
 

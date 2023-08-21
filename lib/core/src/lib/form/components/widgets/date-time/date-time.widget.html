@@ -25,7 +25,7 @@
         <input
             type="hidden"
             [matDatetimepicker]="datetimePicker"
-            [value]="field.value | adfDate: DATE_TIME_FORMAT"
+            [value]="field.value | adfDate: field.dateDisplayFormat"
             [min]="minDate"
             [max]="maxDate"
             [disabled]="field.readOnly"

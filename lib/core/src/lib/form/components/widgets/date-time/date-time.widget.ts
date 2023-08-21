@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
 import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
@@ -45,8 +45,6 @@ import { format, isValid, parseISO } from 'date-fns';
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    DATE_TIME_FORMAT = 'd-M-yyyy hh:mm a';
-
     minDate: string;
     maxDate: string;
 
@@ -54,7 +52,8 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     constructor(public formService: FormService,
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
-                private userPreferencesService: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {
         super(formService);
     }
 
@@ -63,6 +62,8 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(locale));
+
+            this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
 
         if (this.field) {
             if (this.field.minValue) {
@@ -83,7 +84,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     onDateChanged(newDateValue) {
         const date = new Date(newDateValue);
         if (isValid(date)) {
-            this.field.value = format(date, this.DATE_TIME_FORMAT);
+            this.field.value = format(date, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

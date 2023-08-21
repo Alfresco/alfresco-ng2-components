@@ -16,7 +16,6 @@
  */
 
 /* eslint-disable @angular-eslint/component-selector */
-import moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -29,6 +28,7 @@ import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
+import { format, isValid, parse } from 'date-fns';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -37,8 +37,8 @@ export class FormFieldModel extends FormWidgetModel {
     private _isValid: boolean = true;
     private _required: boolean = false;
 
-    readonly defaultDateFormat: string = 'D-M-YYYY';
-    readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
+    readonly defaultDateFormat: string = 'd-M-yyyy';
+    readonly defaultDateTimeFormat: string = 'd-M-yyyy hh:mm a';
 
     // model members
     fieldType: string;
@@ -340,12 +340,14 @@ export class FormFieldModel extends FormWidgetModel {
             if (value) {
                 let dateValue;
                 if (isNumberValue(value)) {
-                    dateValue = moment(value);
+                    dateValue = new Date(value);
                 } else {
-                    dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = this.isDateTimeField(json)
+                        ? parse(value, 'yyyy-MM-dd hh:mm a', new Date())
+                        : parse(value.split('T')[0], 'yyyy-M-d', new Date());
                 }
-                if (dateValue?.isValid()) {
-                    value = dateValue.utc().format(this.dateDisplayFormat);
+                if (isValid(dateValue)) {
+                    value = format(dateValue, this.dateDisplayFormat);
                 }
             }
         }
@@ -414,12 +416,13 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.DATE:
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                    this.value = format(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateValue = moment(this.value, this.dateDisplayFormat, true);
-                if (dateValue?.isValid()) {
-                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                const dateValue = parse(this.value, this.dateDisplayFormat, new Date());
+
+                if (isValid(dateValue)) {
+                    this.form.values[this.id] = `${format(dateValue, 'yyyy-MM-dd')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;
@@ -427,13 +430,13 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.DATETIME:
                 if (typeof this.value === 'string' && this.value === 'now') {
-                    this.value = moment(new Date()).utc().format(this.dateDisplayFormat);
+                    this.value = format(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateTimeValue = moment.utc(this.value, this.dateDisplayFormat, true);
-                if (dateTimeValue?.isValid()) {
-                    /* cspell:disable-next-line */
-                    this.form.values[this.id] = `${dateTimeValue.utc().format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
+                const dateTimeValue = parse(this.value, this.dateDisplayFormat, new Date());
+                
+                if (isValid(dateTimeValue)) {
+                    this.form.values[this.id] = `${format(dateTimeValue, 'yyyy-MM-dd\'T\'HH:mm:ss')}.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;

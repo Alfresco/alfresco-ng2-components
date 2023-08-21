@@ -22,7 +22,7 @@ import { DateWidgetComponent } from './date.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
-import { isSameDay, parse } from 'date-fns';
+import { format, isSameDay, parse } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
 
@@ -103,7 +103,7 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         widget.field = field;
-        widget.onDateChanged({ value: parse('12/12/2012', widget.DATE_FORMAT, new Date()) });
+        widget.onDateChanged({ value: format(new Date('12/12/2012'), widget.field.dateDisplayFormat) });
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -172,7 +172,7 @@ describe('DateWidgetComponent', () => {
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
-            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
+            widget.field.dateDisplayFormat = 'MM-dd-yyyy';
 
             fixture.detectChanges();
 
@@ -180,7 +180,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement.value).toContain('12-30-9999');
 
             widget.field.value = '5-6-2019 00:00';
-            widget.field.dateDisplayFormat = 'D-M-YYYY HH:mm';
+            widget.field.dateDisplayFormat = 'd-M-yyyy HH:mm';
 
             fixture.detectChanges();
 
@@ -188,7 +188,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement.value).toContain('5-6-2019 00:00');
 
             widget.field.value = '05.06.2019';
-            widget.field.dateDisplayFormat = 'DD.MM.YYYY';
+            widget.field.dateDisplayFormat = 'dd.MM.yyyy';
 
             fixture.detectChanges();
 
@@ -244,7 +244,7 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY';
+        field.dateDisplayFormat = 'MM-dd-yyyy';
         widget.field = field;
         fixture.detectChanges();
 

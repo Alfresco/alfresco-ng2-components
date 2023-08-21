@@ -18,8 +18,8 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
@@ -59,7 +59,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     constructor(public formService: FormService,
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
-                private userPreferencesService: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {
         super(formService);
     }
 
@@ -68,6 +69,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
+
+            this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
 
         if (this.field) {
             this.minDate = isValid(this.field.minValue) ? format(new Date(this.field.minValue), this.DATE_FORMAT) : this.field.minValue;
@@ -83,7 +86,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     onDateChanged(newDateValue) {
         const date = new Date(newDateValue);
         if (isValid(date)) {
-            this.field.value = format(date, this.DATE_FORMAT);
+            this.field.value = format(date, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

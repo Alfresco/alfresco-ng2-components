@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
+import { format, startOfDay } from 'date-fns';
 
 describe('FormFieldModel', () => {
 
@@ -167,7 +167,7 @@ describe('FormFieldModel', () => {
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'MM-DD-YYYY'
+            dateDisplayFormat: 'MM-dd-yyyy'
         });
         expect(field.value).toBe('04-28-2017');
         expect(form.values['mmddyyyy']).toEqual('2017-04-28T00:00:00.000Z');
@@ -193,7 +193,7 @@ describe('FormFieldModel', () => {
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'MM-YY-DD'
+            dateDisplayFormat: 'MM-yy-dd'
         });
         expect(field.value).toBe('04-17-28');
         expect(form.values['mmyydd']).toEqual('2017-04-28T00:00:00.000Z');
@@ -219,7 +219,7 @@ describe('FormFieldModel', () => {
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'DD-MM-YYYY'
+            dateDisplayFormat: 'dd-MM-yyyy'
         });
         expect(field.value).toBe('28-04-2017');
         expect(form.values['ddmmyyy']).toEqual('2017-04-28T00:00:00.000Z');
@@ -245,7 +245,7 @@ describe('FormFieldModel', () => {
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'DD-MM-YYYY'
+            dateDisplayFormat: 'dd-MM-yyyy'
         });
         expect(field.value).toBe('28-04-2017');
     });
@@ -257,7 +257,7 @@ describe('FormFieldModel', () => {
             id: 'ddmmyyy',
             name: 'DD-MM-YYYY',
             type: 'date',
-            value: 'today',
+            value: startOfDay(new Date()),
             required: false,
             readOnly: false,
             params: {
@@ -265,17 +265,17 @@ describe('FormFieldModel', () => {
                     id: 'ddmmyyy',
                     name: 'DD-MM-YYYY',
                     type: 'date',
-                    value: 'today',
+                    value: startOfDay(new Date()),
                     required: false,
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'DD-MM-YYYY'
+            dateDisplayFormat: 'dd-MM-yyyy'
         });
 
-        const currentDate = moment(new Date());
-        const expectedDate = moment(currentDate).format('DD-MM-YYYY');
-        const expectedDateFormat = `${currentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
+        const currentDate = new Date();
+        const expectedDate = format(currentDate, 'dd-MM-yyyy');
+        const expectedDateFormat = `${format(currentDate, 'yyyy-MM-dd')}T00:00:00.000Z`;
 
         expect(field.value).toBe(expectedDate);
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);
@@ -288,7 +288,7 @@ describe('FormFieldModel', () => {
             id: 'datetime',
             name: 'date and time',
             type: 'datetime',
-            value: 'now',
+            value: new Date(),
             required: false,
             readOnly: false,
             params: {
@@ -296,17 +296,17 @@ describe('FormFieldModel', () => {
                     id: 'datetime',
                     name: 'date and time',
                     type: 'datetime',
-                    value: 'now',
+                    value: new Date(),
                     required: false,
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'YYYY-MM-DD HH:mm'
+            dateDisplayFormat: 'yyyy-MM-dd hh:mm'
         });
 
-        const currentDateTime = moment(new Date());
-        const expectedDateTime = moment.utc(currentDateTime).format('YYYY-MM-DD HH:mm');
-        const expectedDateTimeFormat = `${currentDateTime.utc().format('YYYY-MM-DDTHH:mm:00')}.000Z`;
+        const currentDateTime = new Date();
+        const expectedDateTime = format(currentDateTime, 'yyyy-MM-dd hh:mm');
+        const expectedDateTimeFormat = `${format(currentDateTime, "yyyy-MM-dd'\T'hh:mm")}:00.000Z`;
 
         expect(field.value).toBe(expectedDateTime);
         expect(form.values['datetime']).toEqual(expectedDateTimeFormat);

@@ -1842,7 +1842,7 @@ export const dateWidgetFormVisibilityMock = {
                                     existingColspan: 1,
                                     maxColspan: 2
                                 },
-                                dateDisplayFormat: 'D-M-YYYY'
+                                dateDisplayFormat: 'd-M-yyyy'
                             }
                         ]
                     }
