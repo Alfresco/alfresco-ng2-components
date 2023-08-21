@@ -41,7 +41,7 @@ describe('AspectListService', () => {
     });
 
     it('should get one standard aspect', (done) => {
-        const visibleAspects = ["std:standardAspectOne"];
+        const visibleAspects = ['std:standardAspectOne'];
         spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(standardAspectPagingMock));
         aspectListService.getStandardAspects(visibleAspects).subscribe((response) => {
             expect(response).toEqual([stdAspect1]);
@@ -50,7 +50,7 @@ describe('AspectListService', () => {
     });
 
     it('should get two standard aspects', (done) => {
-        const visibleAspects = ["std:standardAspectTwo", "std:standardAspectThree"];
+        const visibleAspects = ['std:standardAspectTwo', 'std:standardAspectThree'];
         spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(standardAspectPagingMock));
         aspectListService.getStandardAspects(visibleAspects).subscribe((response) => {
             expect(response).toEqual([stdAspect2, stdAspect3]);
@@ -59,7 +59,7 @@ describe('AspectListService', () => {
     });
 
     it('should get one custom aspect', (done) => {
-        const visibleAspects = ["cst:customAspectTwo"];
+        const visibleAspects = ['cst:customAspectTwo'];
         spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
         aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
             expect(response).toEqual([cstAspect2]);
@@ -68,7 +68,7 @@ describe('AspectListService', () => {
     });
 
     it('should get two custom aspects', (done) => {
-        const visibleAspects = ["cst:customAspectOne", "cst:customAspectThree"];
+        const visibleAspects = ['cst:customAspectOne', 'cst:customAspectThree'];
         spyOn(aspectsApi, 'listAspects').and.returnValue(Promise.resolve(customAspectPagingMock));
         aspectListService.getCustomAspects(visibleAspects).subscribe((response) => {
             expect(response).toEqual([cstAspect1, cstAspect3]);
