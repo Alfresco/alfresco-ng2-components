@@ -2,7 +2,7 @@ adf-tags-creator {
     display: block;
 
     .adf-label-with-icon-button {
-        background: var(--adf-metadata-tags-background-color);
+        background: var(--adf-metadata-buttons-background-color);
         width: fit-content;
         height: 32px;
         display: inline-flex;
@@ -39,16 +39,31 @@ adf-tags-creator {
             padding-right: 3px;
             font-size: 14px;
         }
+    
+        .mat-form-field-appearance-fill .mat-form-field-flex {
+            background: none;
+        }
+        
+        .mat-form-field-appearance-fill .mat-form-field-infix {
+            padding: 0;
+        }
     }
 
     .adf-tag-search-field {
-        width: 752px;
-        background: var(--adf-metadata-tags-background-color);
+        background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
         align-items: center;
         display: flex;
         padding: 0 12px;
+        
+        .mat-form-field-underline {
+            display: none;
+        }
+
+        .mat-form-field-wrapper {
+            width: 100%;
+        }
     }
 
     .adf-create-tag-label {
