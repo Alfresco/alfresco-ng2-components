@@ -39,7 +39,7 @@ export default async function main(_args: string[]) {
 
     await checkEnv();
     // TODO: https://alfresco.atlassian.net/browse/ACS-5873
-    await checkDiskSpaceFullEnv();
+    // await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
