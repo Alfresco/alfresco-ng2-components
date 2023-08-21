@@ -96,13 +96,12 @@ async function checkDiskSpaceFullEnv() {
             );
         } catch (error) {
             folder = await nodesApi.getNode('-my-', {
-                relativePath: `Builds/try-env`,
-                nodeType: 'cm:folder'
+                relativePath: `Builds/try-env`
             });
         }
 
         const fileContent = 'x'.repeat(1024 * 1024);
-        const file = Buffer.from(fileContent);
+        const file = Buffer.from(fileContent, 'utf8');
 
         const uploadedFile = await uploadApi.uploadFile(file, '', folder.entry.id, null, {
             name: 'README.md',

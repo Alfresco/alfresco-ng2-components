@@ -43,8 +43,7 @@ async function uploadScreenshot(retryCount, suffixFileName) {
         );
     } catch (error) {
         folderNode = await nodesApi.getNode('-my-', {
-            relativePath: `Builds/${buildNumber()}/retry-${retryCount}`,
-            nodeType: 'cm:folder'
+            relativePath: `Builds/${buildNumber()}/retry-${retryCount}`
         });
     }
 
