@@ -271,7 +271,7 @@ describe('StartFormComponent', () => {
 
             expect(dateWidget).toBeTruthy();
             expect(labelField.type).toBe('date');
-            expect(dateLabelElement.innerText).toBe('date (D-M-YYYY)');
+            expect(dateLabelElement.innerText).toBe('date (d-M-yyyy)');
         });
 
         it('should fetch and define form fields with proper type', () => {
@@ -312,7 +312,7 @@ describe('StartFormComponent', () => {
             expect(selectElement).toBeDefined();
 
             expect(translate.instant(inputLabelElement.textContent)).toBe('ClientName*');
-            expect(translate.instant(dateLabelElement.innerText)).toBe('BillDate (D-M-YYYY)');
+            expect(translate.instant(dateLabelElement.innerText)).toBe('BillDate (d-M-yyyy)');
             expect(translate.instant(selectLabelElement.innerText)).toBe('ClaimType');
         });
 

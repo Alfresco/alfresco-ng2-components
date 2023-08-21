@@ -1186,7 +1186,7 @@ describe('Multilingual Form', () => {
 
         expect(getLabelValue('textField')).toEqual('Champ de texte');
         expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
-        expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
+        expect(getLabelValue('dateField')).toEqual('Champ de date (d-M-yyyy)');
         expect(getLabelValue('amountField')).toEqual('Champ Montant');
 
         await translateService.use('en').toPromise();
@@ -1196,7 +1196,7 @@ describe('Multilingual Form', () => {
 
         expect(getLabelValue('textField')).toEqual('Text field');
         expect(getLabelValue('fildUploadField')).toEqual('File Upload');
-        expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
+        expect(getLabelValue('dateField')).toEqual('Date field (d-M-yyyy)');
         expect(getLabelValue('amountField')).toEqual('Amount field');
     });
 

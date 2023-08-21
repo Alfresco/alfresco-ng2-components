@@ -372,7 +372,7 @@ export const cloudFormMock = {
                             existingColspan: 1,
                             maxColspan: 2
                         },
-                        dateDisplayFormat: 'D-M-YYYY'
+                        dateDisplayFormat: 'd-M-yyyy'
                     }
                 ],
                 2: [
@@ -393,7 +393,7 @@ export const cloudFormMock = {
                             existingColspan: 1,
                             maxColspan: 2
                         },
-                        dateDisplayFormat: 'D-M-YYYY'
+                        dateDisplayFormat: 'd-M-yyyy'
                     }
                 ]
             }
@@ -1037,7 +1037,7 @@ export const multilingualForm: any = {
                                     existingColspan: 1,
                                     maxColspan: 2
                                 },
-                                dateDisplayFormat: 'D-M-YYYY'
+                                dateDisplayFormat: 'd-M-yyyy'
                             }
                         ],
                         2: []

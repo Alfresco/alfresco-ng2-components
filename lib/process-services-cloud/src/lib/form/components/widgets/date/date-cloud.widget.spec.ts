@@ -191,7 +191,7 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY';
+        field.dateDisplayFormat = 'MM-dd-yyyy';
         widget.field = field;
         widget.ngOnInit();
         fixture.detectChanges();

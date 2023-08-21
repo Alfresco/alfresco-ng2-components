@@ -434,7 +434,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 const dateTimeValue = parse(this.value, this.dateDisplayFormat, new Date());
-                
+
                 if (isValid(dateTimeValue)) {
                     this.form.values[this.id] = `${format(dateTimeValue, 'yyyy-MM-dd\'T\'HH:mm:ss')}.000Z`;
                 } else {

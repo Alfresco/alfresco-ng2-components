@@ -102,7 +102,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         widget.field = field;
-        const mockDate = format(new Date('1982-03-13 10:00 AM'), "yyyy-MM-dd'T'hh:mm:ssxxx");
+        const mockDate = format(new Date('1982-03-13 10:00 AM'), `yyyy-MM-dd'T'hh:mm:ssxxx`);
         widget.onDateChanged(mockDate);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
