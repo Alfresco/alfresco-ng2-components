@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, NodeEntry, NodesApi, UploadApi } from '@alfresco/js-api';
+import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
 import { Buffer } from 'node:buffer';
 const program = require('commander');
@@ -79,31 +79,10 @@ async function checkDiskSpaceFullEnv() {
         const nodesApi = new NodesApi(alfrescoJsApi);
         const uploadApi = new UploadApi(alfrescoJsApi);
 
-        let folder: NodeEntry;
-
-        try {
-            folder = await nodesApi.createNode(
-                '-my-',
-                {
-                    name: `try-env`,
-                    relativePath: `Builds`,
-                    nodeType: 'cm:folder'
-                },
-                {},
-                {
-                    overwrite: true
-                }
-            );
-        } catch (error) {
-            folder = await nodesApi.getNode('-my-', {
-                relativePath: `Builds/try-env`
-            });
-        }
-
         const fileContent = 'x'.repeat(1024 * 1024);
         const file = Buffer.from(fileContent, 'utf8');
 
-        const uploadedFile = await uploadApi.uploadFile(file, '', folder.entry.id, null, {
+        const uploadedFile = await uploadApi.uploadFile(file, '', '-my-', null, {
             name: 'README.md',
             nodeType: 'cm:content',
             autoRename: true
