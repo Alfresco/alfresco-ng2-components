@@ -17,10 +17,9 @@
 
 import { AlfrescoApi, NodeEntry, NodesApi, UploadApi } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
+import { Buffer } from 'node:buffer';
 const program = require('commander');
-const path = require('path');
 import { logger } from './logger';
-import { createReadStream } from 'node:fs';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
@@ -101,9 +100,9 @@ async function checkDiskSpaceFullEnv() {
                 nodeType: 'cm:folder'
             });
         }
-        const pathFile = path.join(__dirname, '../', 'README.md');
 
-        const file = createReadStream(pathFile);
+        const fileContent = 'x'.repeat(1024 * 1024);
+        const file = Buffer.from(fileContent);
 
         const uploadedFile = await uploadApi.uploadFile(file, '', folder.entry.id, null, {
             name: 'README.md',
