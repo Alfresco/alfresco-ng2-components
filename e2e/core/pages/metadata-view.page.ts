@@ -302,10 +302,6 @@ export class MetadataViewPage {
         await BrowserActions.click(this.saveGeneralMetadataButton);
     }
 
-    async clickResetGeneralMetadata(): Promise<void> {
-        await BrowserActions.click(this.resetGeneralMetadataButton);
-    }
-
     async generalSaveIconDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.saveGeneralMetadataButton);
     }

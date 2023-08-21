@@ -1,6 +1,6 @@
 <div class="adf-tags-creation">
     <div class="adf-tag-name-field" *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible">
-        <div class="adf-tag-search-field">
+        <mat-form-field class="adf-tag-search-field" appearance="fill">
             <input #tagNameInput
                     matInput 
                     autocomplete="off"
@@ -10,8 +10,8 @@
                     adf-auto-focus
                     placeholder="{{'TAG.TAGS_CREATOR.INPUT_PLACEHOLDER' | translate}}" 
             />
-    <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
-        </div>
+            <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
+        </mat-form-field >
     </div>
     <p
        class="adf-no-tags-message"
@@ -30,7 +30,8 @@
                 data-automation-id="remove-tag-button"
                 mat-icon-button
                 (click)="removeTag(tag)"
-                [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate" [disabled]="disabledTagsRemoving"
+                [attr.title]="'TAG.TAGS_CREATOR.TOOLTIPS.DELETE_TAG' | translate"
+                [disabled]="disabledTagsRemoving"
                 class="adf-remove-tag">
                 <mat-icon>close</mat-icon>
             </button>

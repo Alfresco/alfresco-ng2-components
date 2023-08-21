@@ -5,7 +5,7 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        background: var(--adf-metadata-tags-background-color);
+        background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
         align-items: center;
@@ -17,6 +17,18 @@
 
         .adf-btn-padded {
             margin-right: -14px;
+        }
+
+        .mat-form-field-underline {
+            display: none;
+        }
+
+        .mat-form-field-wrapper {
+            width: 100%;
+        }
+        
+        .mat-form-field-appearance-fill .mat-form-field-flex {
+            background: none;
         }
     }
 
