@@ -449,6 +449,16 @@ describe('CategoriesManagementComponent', () => {
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
 
+        it('should clear and not hide input after category is created', fakeAsync(() => {
+            createCategory('test');
+            const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
+
+            expect(categoryControl.hidden).toBeFalse();
+            expect(getExistingCategoriesList()).toEqual([]);
+            expect(component.categoryNameControl.value).toBe('');
+            expect(component.categoryNameControl.untouched).toBeTrue();
+        }));
+
         it('should be able to remove added category', fakeAsync(() => {
             createCategory('test');
 
