@@ -306,7 +306,7 @@ describe('FormFieldModel', () => {
 
         const currentDateTime = new Date();
         const expectedDateTime = format(currentDateTime, 'yyyy-MM-dd hh:mm');
-        const expectedDateTimeFormat = `${format(currentDateTime, "yyyy-MM-dd'\T'hh:mm")}:00.000Z`;
+        const expectedDateTimeFormat = `${format(currentDateTime, "yyyy-MM-dd'T'hh:mm")}:00.000Z`;
 
         expect(field.value).toBe(expectedDateTime);
         expect(form.values['datetime']).toEqual(expectedDateTimeFormat);
