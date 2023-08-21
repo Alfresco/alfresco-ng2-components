@@ -121,6 +121,22 @@ describe('ContentMetadataComponent', () => {
         return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
     }
 
+    async function updateAspectProperty(newValue: string): Promise<void> {
+        component.editable = true;
+        const property = {key: 'properties.property-key', value: 'original-value'} as CardViewBaseItemModel;
+        const expectedNode = {...node, name: 'some-modified-value'};
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+
+        updateService.update(property, newValue);
+        tick(600);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        clickOnSave();
+
+        await fixture.whenStable();
+    }
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -242,37 +258,15 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(async () => {
-            component.editable = true;
-            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-            updateService.update(property, 'updated-value');
-            tick(600);
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            clickOnSave();
-
-            await fixture.whenStable();
+            await updateAspectProperty('updated-value');
             expect(component.node).toEqual(expectedNode);
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
         it('should save changedProperties which delete property and update node on save click', fakeAsync(async () => {
-            component.editable = true;
-            const property = {key: 'properties.property-key', value: 'original-value'} as CardViewBaseItemModel;
             const expectedNode = {...node, name: 'some-modified-value'};
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-            updateService.update(property, '');
-            tick(600);
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            clickOnSave();
-
-            await fixture.whenStable();
+            await updateAspectProperty('');
             expect(component.node).toEqual({...expectedNode, properties: {}});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
