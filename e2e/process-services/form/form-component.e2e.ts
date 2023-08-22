@@ -39,9 +39,9 @@ describe('Form Component', () => {
     const message = {
         test: 'Text Test',
         warningNumberAndAmount: 'Use a different number format',
-        warningDate: 'D-M-YYYY',
+        warningDate: 'd-M-yyyy',
         errorLogNumber: 'Error Label4 Use a different number format',
-        errorLogDate: 'Error Label7 D-M-YYYY',
+        errorLogDate: 'Error Label7 d-M-yyyy',
         errorLogAmount: 'Error Label11 Use a different number format',
         errorLabel: 'Error Label4'
     };

@@ -52,8 +52,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     minDate: string;
     maxDate: string;
 
-    DATE_FORMAT = 'd-M-yyyy';
-
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
