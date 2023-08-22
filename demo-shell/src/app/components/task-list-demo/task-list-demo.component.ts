@@ -19,8 +19,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import moment from 'moment';
 import { Subject } from 'rxjs';
+import { set } from 'date-fns';
 
 const DEFAULT_SIZE = 20;
 
@@ -160,11 +160,10 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     }
 
     setDueAfterFilter(date): string {
-        const dueDateFilter = moment(date);
-        dueDateFilter.set({
-            hour: 23,
-            minute: 59,
-            second: 59
+        const dueDateFilter = set(new Date(date), {
+            hours: 23,
+            minutes: 59,
+            seconds: 59
         });
         return dueDateFilter.toString();
     }

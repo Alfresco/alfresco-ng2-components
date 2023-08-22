@@ -267,6 +267,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     revertChanges() {
         this.changedProperties = {};
         this.hasMetadataChanged = false;
+        this.tagNameControlVisible = false;
+        this.categoryControlVisible = false;
     }
 
     cancelChanges() {

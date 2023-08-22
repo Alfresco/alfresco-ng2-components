@@ -15,65 +15,61 @@
  * limitations under the License.
  */
 
+import { AlfrescoApi } from '@alfresco/js-api';
+import { exit } from 'node:process';
 import { logger } from './../logger';
-import alfrescoApi = require('@alfresco/js-api');
 
 const TIMEOUT = 6000;
 const MAX_RETRY = 10;
 export class CheckEnv {
-    _alfrescoJsApi: any;
+    _alfrescoJsApi: AlfrescoApi;
     counter = 0;
 
-    constructor(
-        private host: string,
-        private username: string,
-        private password: string,
-        private clientId: string = 'alfresco'
-    ) {}
+    constructor(private host: string, private username: string, private password: string, private clientId: string = 'alfresco') {}
 
     async checkEnv() {
         try {
-            this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+            this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'ALL',
                 hostBpm: this.host,
                 hostEcm: this.host,
                 authType: 'OAUTH',
+                contextRoot: 'alfresco',
                 oauth2: {
                     host: `${this.host}/auth/realms/alfresco`,
                     clientId: `${this.clientId}`,
-                    scope: 'openid'
+                    scope: 'openid',
+                    redirectUri: '/'
                 }
-            } as any);
+            });
             await this.alfrescoJsApi.login(this.username, this.password);
         } catch (e) {
             if (e.error.code === 'ETIMEDOUT') {
                 logger.error('The env is not reachable. Terminating');
-                process.exit(1);
+                exit(1);
             }
             logger.error('Login error environment down or inaccessible');
             this.counter++;
             if (MAX_RETRY === this.counter) {
                 logger.error('Give up');
-                process.exit(1);
+                exit(1);
             } else {
-                logger.error(
-                    `Retry in 1 minute at main();tempt N ${this.counter}`
-                );
+                logger.error(`Retry in 1 minute at main();tempt N ${this.counter}`);
                 this.sleep(TIMEOUT);
-                this.checkEnv();
+                await this.checkEnv();
             }
         }
     }
 
-    public get alfrescoJsApi() {
+    public get alfrescoJsApi(): AlfrescoApi {
         return this._alfrescoJsApi;
     }
 
-    public set alfrescoJsApi(alfrescoJsApi: any) {
+    public set alfrescoJsApi(alfrescoJsApi: AlfrescoApi) {
         this._alfrescoJsApi = alfrescoJsApi;
     }
 
-    sleep(delay) {
+    sleep(delay: number) {
         const start = new Date().getTime();
         while (new Date().getTime() < start + delay) {}
     }

@@ -1,14 +1,29 @@
-/* eslint-disable */
-const alfrescoApi = require('@alfresco/js-api');
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { AlfrescoApi } from '@alfresco/js-api';
+import { exit, argv } from 'node:process';
 const program = require('commander');
-/* eslint-enable */
 import { logger } from './logger';
 const MAX_RETRY = 10;
 const TIMEOUT = 60000;
 let counter = 0;
 
 export default async function main(_args: string[]) {
-
     program
         .version('0.1.0')
         .description('Check Process service is up ')
@@ -16,38 +31,39 @@ export default async function main(_args: string[]) {
         .option('--host [type]', 'Remote environment host adf.lab.com ')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
-        .parse(process.argv);
+        .parse(argv);
 
     await checkEnv();
 }
 
 async function checkEnv() {
     try {
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        const alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
-            hostBpm:  program.host
+            hostBpm: program.host,
+            contextRoot: 'alfresco'
         });
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         if (e.error.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
-            process.exit(1);
+            exit(1);
         }
         logger.error('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
             logger.error('Give up');
-            process.exit(1);
+            exit(1);
         } else {
             logger.error(`Retry in 1 minute attempt N ${counter}`);
             sleep(TIMEOUT);
-            checkEnv();
+            await checkEnv();
         }
     }
 }
 
-function sleep(delay) {
+function sleep(delay: number) {
     const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {  }
+    while (new Date().getTime() < start + delay) {}
 }

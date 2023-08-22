@@ -211,7 +211,6 @@ describe('TagsCreatorComponent', () => {
             expect(getAddedTags().length).toBe(0);
         }));
 
-
         it('should remove specific tag after clicking at remove icon', fakeAsync(() => {
             const tag1 = 'Tag 1';
             const tag2 = 'Tag 2';
@@ -266,8 +265,9 @@ describe('TagsCreatorComponent', () => {
             expect(tagNameField.query(By.directive(MatFormField))).toBeTruthy();
         });
 
-        it('should be hidden after clicking button for hiding input', fakeAsync(() => {
+        it('should be hidden and cleared after clicking button for hiding input', fakeAsync(() => {
             component.tagNameControlVisible = true;
+            typeTag('test');
             fixture.detectChanges();
             tick(100);
 
@@ -275,6 +275,12 @@ describe('TagsCreatorComponent', () => {
 
             const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
             expect(tagNameField).toBeFalsy();
+
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
+            tick(100);
+
+            expect(getNameInput().value).toBe('');
         }));
 
         it('should input be autofocused', fakeAsync(() => {
@@ -295,6 +301,25 @@ describe('TagsCreatorComponent', () => {
             tick(100);
 
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
+        }));
+
+        it('should be hidden and cleared on discard changes', fakeAsync(() => {
+            component.tagNameControlVisible = true;
+            component.tags = ['Passed tag 1', 'Passed tag 2'];
+            typeTag('test');
+            fixture.detectChanges();
+            tick(100);
+            expect(getNameInput().value).toBe('test');
+
+            component.tagNameControlVisible = false;
+            fixture.detectChanges();
+            tick(100);
+            expect(getNameInput()).toBeFalsy();
+
+            component.tagNameControlVisible = true;
+            fixture.detectChanges();
+            tick(100);
+            expect(getNameInput().value).toBe('');
         }));
 
         describe('Errors', () => {

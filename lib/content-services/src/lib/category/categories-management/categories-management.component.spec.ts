@@ -187,7 +187,8 @@ describe('CategoriesManagementComponent', () => {
                 expect(categoryControlLabel.textContent.trim()).toBe('CATEGORIES_MANAGEMENT.NAME');
             });
 
-            it('should hide category control and existing categories panel on clicking hide button', () => {
+            it('should hide and clear category control and existing categories panel on clicking hide button', fakeAsync(() => {
+                typeCategory('test');
                 const categoryControlHideBtn: HTMLButtonElement = fixture.debugElement.query(By.css('.adf-category-name-field button')).nativeElement;
                 const controlVisibilityChangeSpy = spyOn(component.categoryNameControlVisibleChange, 'emit').and.callThrough();
                 categoryControlHideBtn.click();
@@ -198,7 +199,12 @@ describe('CategoriesManagementComponent', () => {
                 expect(component.categoryNameControlVisible).toBeFalse();
                 expect(component.existingCategoriesPanelVisible).toBeFalse();
                 expect(controlVisibilityChangeSpy).toHaveBeenCalledOnceWith(false);
-            });
+
+                component.categoryNameControlVisible = true;
+                fixture.detectChanges();
+                tick(100);
+                expect(getCategoryControlInput().value).toBe('');
+            }));
         });
 
         describe('Spinner', () => {

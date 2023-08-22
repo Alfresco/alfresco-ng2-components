@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, of } from 'rxjs';
-import { AuthenticationService, AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { from, Observable, of, throwError } from 'rxjs';
+import { AlfrescoApiService, AuthenticationService, LogService } from '@alfresco/adf-core';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PeopleApi, PersonBodyCreate, Pagination, PersonBodyUpdate } from '@alfresco/js-api';
+import { Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { ContentService } from './content.service';
 
@@ -77,7 +77,6 @@ export class PeopleContentService {
         return from(this.peopleApi.getPerson(personId))
             .pipe(
                 map((personEntry) => new EcmUserModel(personEntry.entry)),
-                tap(user => this.currentUser = user),
                 catchError((error) => this.handleError(error)));
     }
 
@@ -94,7 +93,7 @@ export class PeopleContentService {
         if (this.currentUser) {
             return of(this.currentUser);
         }
-        return this.getPerson('-me-');
+        return this.getPerson('-me-').pipe(tap(user => (this.currentUser = user)));
     }
 
     /**

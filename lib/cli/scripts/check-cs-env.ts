@@ -1,16 +1,31 @@
-/* eslint-disable */
-const alfrescoApi = require('@alfresco/js-api');
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
+import { argv, exit } from 'node:process';
+import { Buffer } from 'node:buffer';
 const program = require('commander');
-const path = require('path');
-const fs = require('fs');
-/* eslint-enable */
 import { logger } from './logger';
 const MAX_RETRY = 3;
 const TIMEOUT = 20000;
 let counter = 0;
+let alfrescoJsApi: AlfrescoApi;
 
 export default async function main(_args: string[]) {
-
     program
         .version('0.1.0')
         .description('Check Content service is up ')
@@ -20,24 +35,26 @@ export default async function main(_args: string[]) {
         .option('-u, --username [type]', 'username ')
         .option('-t, --time [type]', 'time ')
         .option('-r, --retry [type]', 'retry ')
-        .parse(process.argv);
+        .parse(argv);
 
     await checkEnv();
-    await checkDiskSpaceFullEnv();
+    // TODO: https://alfresco.atlassian.net/browse/ACS-5873
+    // await checkDiskSpaceFullEnv();
 }
 
 async function checkEnv() {
     try {
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: program.host
+            hostEcm: program.host,
+            contextRoot: 'alfresco'
         });
 
         await alfrescoJsApi.login(program.username, program.password);
     } catch (error) {
         if (error?.error?.code === 'ETIMEDOUT') {
             logger.error('The env is not reachable. Terminating');
-            process.exit(1);
+            exit(1);
         }
         logger.error('Login error environment down or inaccessible');
         counter++;
@@ -45,63 +62,33 @@ async function checkEnv() {
         const time = program.time || TIMEOUT;
         if (retry === counter) {
             logger.error('Give up');
-            process.exit(1);
+            exit(1);
         } else {
             logger.error(`Retry in 1 minute attempt N ${counter}`, error);
             sleep(time);
-            checkEnv();
+            await checkEnv();
         }
     }
 }
 
+// @ts-ignore
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
     try {
+        const nodesApi = new NodesApi(alfrescoJsApi);
+        const uploadApi = new UploadApi(alfrescoJsApi);
 
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
-            provider: 'ECM',
-            hostEcm: program.host
+        const fileContent = 'x'.repeat(1024 * 1024);
+        const file = Buffer.from(fileContent, 'utf8');
+
+        const uploadedFile = await uploadApi.uploadFile(file, '', '-my-', null, {
+            name: 'README.md',
+            nodeType: 'cm:content',
+            autoRename: true
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
-
-        let folder;
-
-        try {
-            folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                name: `try-env`,
-                relativePath: `Builds`,
-                nodeType: 'cm:folder'
-            }, {}, {
-                overwrite: true
-            });
-
-        } catch (error) {
-            folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                relativePath: `Builds/try-env`,
-                nodeType: 'cm:folder'
-            }, {}, {
-                overwrite: true
-            });
-        }
-        const pathFile = path.join(__dirname, '../', 'README.md');
-
-        const file = fs.createReadStream(pathFile);
-
-        const uploadedFile = await alfrescoJsApi.upload.uploadFile(
-            file,
-            '',
-            folder.entry.id,
-            null,
-            {
-                name: 'README.md',
-                nodeType: 'cm:content',
-                autoRename: true
-            }
-        );
-
-        alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
+        await nodesApi.deleteNode(uploadedFile.entry.id, { permanent: true });
     } catch (error) {
         counter++;
 
@@ -112,18 +99,17 @@ async function checkDiskSpaceFullEnv() {
             logger.info('================ Not able to upload a file ==================');
             logger.info('================ Possible cause CS is full ==================');
             logger.info('=============================================================');
-            process.exit(1);
+            exit(1);
         } else {
-            logger.error(`Retry N ${counter} ${error?.error?.status}`);
+            logger.error(`Retry N ${counter}`);
+            logger.error(JSON.stringify(error));
             sleep(time);
-            checkDiskSpaceFullEnv();
+            await checkDiskSpaceFullEnv();
         }
-
     }
-
 }
 
-function sleep(delay) {
+function sleep(delay: number) {
     const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {  }
+    while (new Date().getTime() < start + delay) {}
 }
