@@ -435,17 +435,23 @@ async function authorizeUserToContentWithBasic(username: string, contentId: stri
 }
 
 async function downloadLicenseFile(apsLicensePath: string) {
-    try {
-        spawnSync(` aws s3 cp ${apsLicensePath} ./ `, {
-            cwd: path.resolve(__dirname, `./`),
-            shell: false
-        });
-        logger.info(`Aps license file download from S3 bucket`);
-        return true;
-    } catch (error) {
-        logger.error(`Not able to download the APS license from S3 bucket` );
+    const args = [
+        `s3`,
+        `cp`,
+        apsLicensePath,
+        `./`
+    ];
+    const result = spawnSync(`aws`, args, {
+        cwd: path.resolve(__dirname, `./`),
+        shell: false
+    });
+
+    if (result.status !== 0) {
+        logger.error(`Not able to download the APS license from S3 bucket.\nCommand aws ${args.join(' ')} - failed with:\n${result.output}`);
         return false;
     }
+    logger.info(`Aps license file download from S3 bucket`);
+    return true;
 }
 
 function sleep(delay: number) {
