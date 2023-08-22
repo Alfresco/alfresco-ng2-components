@@ -238,7 +238,7 @@ async function updateLicense() {
         logger.info(`Aps License uploaded!`);
         return true;
     } catch (error) {
-        logger.error(`Aps License failed!` );
+        logger.error(`Aps License failed!`, error.message);
         return false;
     }
 }
