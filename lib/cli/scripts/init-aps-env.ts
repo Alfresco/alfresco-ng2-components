@@ -435,13 +435,13 @@ async function authorizeUserToContentWithBasic(username: string, contentId: stri
 }
 
 async function downloadLicenseFile(apsLicensePath: string) {
-    let args = [
+    const args = [
         `s3`,
         `cp`,
         apsLicensePath,
         `./`
-    ]
-    let result = spawnSync(`aws`, args, {
+    ];
+    const result = spawnSync(`aws`, args, {
         cwd: path.resolve(__dirname, `./`),
         shell: false
     });
