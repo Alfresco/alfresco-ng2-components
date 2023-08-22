@@ -18,10 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LocalizedDatePipe, ThumbnailService } from '@alfresco/adf-core';
+import { LocalizedDatePipe, ThumbnailService, FormFieldModel } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
-
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
@@ -40,19 +39,19 @@ export class FilePropertiesTableCloudComponent {
     selectedNode: Node;
 
     @Input()
-    field;
+    field: FormFieldModel;
 
     @Input()
-    displayedColumns;
+    displayedColumns: string[];
 
     @Input()
-    mimeTypeIcon;
+    mimeTypeIcon: string;
 
     @Output()
     rowClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
-    showClicked: EventEmitter<any> = new EventEmitter<any>();
+    showClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
     downloadClicked: EventEmitter<Node> = new EventEmitter<Node>();
@@ -61,26 +60,26 @@ export class FilePropertiesTableCloudComponent {
     newVersionClicked: EventEmitter<NewVersionUploaderDialogData> = new EventEmitter<NewVersionUploaderDialogData>();
 
     @Output()
-    retrieveMetadataClicked: EventEmitter<any> = new EventEmitter<Node>();
+    retrieveMetadataClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     @Output()
-    removeClicked: EventEmitter<any> = new EventEmitter<any>();
+    removeClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
 
-    onRowClicked(file?: Node) {
-        this.rowClicked.emit(file);
+    onRowClicked(node: Node) {
+        this.rowClicked.emit(node);
     }
 
-    onShowClicked(nodeSelector: any) {
-        this.showClicked.emit(nodeSelector);
+    onShowClicked(node: Node) {
+        this.showClicked.emit(node);
     }
 
-    onDownloadClicked(file: Node) {
-        this.downloadClicked.emit(file);
+    onDownloadClicked(node: Node) {
+        this.downloadClicked.emit(node);
     }
 
-    onNewVersionClicked(customEvent: any, node: Node){
+    onNewVersionClicked(customEvent: CustomEvent, node: Node) {
         const newVersionUploaderDialogData: NewVersionUploaderDialogData = {
             file: customEvent.detail.files[0].file,
             node
@@ -88,38 +87,38 @@ export class FilePropertiesTableCloudComponent {
         this.newVersionClicked.emit(newVersionUploaderDialogData);
     }
 
-    onRetrieveMetadataClicked(file?: any) {
-        this.retrieveMetadataClicked.emit(file);
+    onRetrieveMetadataClicked(node: Node) {
+        this.retrieveMetadataClicked.emit(node);
     }
 
-    onRemoveClicked(file: any) {
-        this.removeClicked.emit(file);
+    onRemoveClicked(node: Node) {
+        this.removeClicked.emit(node);
     }
 
     getIcon(mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    getColumnValue(file, displayableCMProperty): string {
-        if (!file.properties[displayableCMProperty.prefixedName]) {
+    displayMenuOption(option: string): boolean {
+        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== RETRIEVE_METADATA_OPTION;
+    }
+
+    getColumnValue(node: Node, displayableCMProperty): string {
+        if (!node.properties[displayableCMProperty.prefixedName]) {
             const fieldProperty = this.field.params.displayableCMProperties?.find(property => property.name === displayableCMProperty.name);
             return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--' ;
         }
-        return file.properties[displayableCMProperty.prefixedName] ?
-            this.checkDateTypeAndTransform(displayableCMProperty.dataType, file.properties[displayableCMProperty.prefixedName]) :
+        return node.properties[displayableCMProperty.prefixedName] ?
+            this.checkDateTypeAndTransform(displayableCMProperty.dataType, node.properties[displayableCMProperty.prefixedName]) :
             '--' ;
     }
 
-    checkDateTypeAndTransform(dataType, value): string {
+    private checkDateTypeAndTransform(dataType: string, value: string): string {
         if (dataType === 'd:date') {
             return this.localizedDatePipe.transform(value);
         } else if (dataType === 'd:datetime') {
             return this.localizedDatePipe.transform(value, 'medium');
         }
         return value;
-    }
-
-    displayMenuOption(option: string): boolean {
-        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== RETRIEVE_METADATA_OPTION;
     }
 }

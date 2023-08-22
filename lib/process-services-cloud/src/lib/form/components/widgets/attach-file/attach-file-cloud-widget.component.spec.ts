@@ -643,7 +643,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
-        it('should be called onInit when widget has only one file', async () => {
+        it('should be called during initialization when widget has only one file', async () => {
             widget.field.value = [fakeNodeWithProperties];
             widget.ngOnInit();
 

@@ -107,6 +107,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     onRemoveFile(file: File | RelatedContentRepresentation | Node) {
+        if(!file['id']) {
+            return;
+        }
         this.removeFile(file);
         if (file['id'] === this.selectedNode?.id) {
             this.selectedNode = null;
@@ -144,7 +147,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
-                if(!this.lastSentToViewers) {
+                if (!this.lastSentToViewers) {
                     this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
                 }
             });
@@ -215,8 +218,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return selections.filter(opt => !existingNode.some((node) => node.id === opt.id));
     }
 
-    onDownloadFile(file: Node): void {
-        this.processCloudContentService.downloadFile(file.id);
+    onDownloadNode(node: Node): void {
+        this.processCloudContentService.downloadFile(node.id);
     }
 
     onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
@@ -229,9 +232,12 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         );
     }
 
-    onShowFile(nodeSelector: any) {
-        nodeSelector.nodeId = nodeSelector.id;
-        this.fileClicked(new ContentLinkModel(nodeSelector));
+    onViewNode(node: Node) {
+        const contentLinkModel = new ContentLinkModel({
+            ...node,
+            nodeId: node.id
+        });
+        this.fileClicked(contentLinkModel);
     }
 
     getWidgetIcon(): string {

@@ -82,7 +82,7 @@
                         <button
                             [adf-upload]="true"
                             [mode]="['click']"
-                            (upload-files)="onNewVersionClicked($event, element);"
+                            (upload-files)="onNewVersionClicked($any($event), element);"
                             id="{{'file-'+ element?.id +'-upload-new-version'}}"
                             mat-menu-item>
                                 <mat-icon class="mat-24">file_upload</mat-icon>
