@@ -16,6 +16,7 @@ Displays and edits metadata related to a node.
 -   [Basic Usage](#basic-usage)
 -   [Class members](#class-members)
     -   [Properties](#properties)
+    -   [Events](#events)
 -   [Details](#details)
     -   [Application config presets](#application-config-presets)
     -   [Layout oriented config](#layout-oriented-config)
@@ -51,6 +52,13 @@ Displays and edits metadata related to a node.
 | preset | `string \| `[`PresetConfig`](../../../lib/content-services/src/lib/content-metadata/interfaces/preset-config.interface.ts) |  | (required) Name or configuration of the metadata preset, which defines aspects and their properties. |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
 | displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
+| editable | `boolean` |  | (optional) This flag toggles editable of content. |
+
+### Events
+
+| Name           | Type                                                                  | Description                                       |
+|----------------|-----------------------------------------------------------------------|---------------------------------------------------|
+| editableChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's editable state is changed. |
 
 ## Details
 
