@@ -40,7 +40,7 @@ export class AspectListService {
     getAspects(): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();
         const standardAspects$ = this.getStandardAspects(visibleAspectList);
-        const customAspects$ = this.getCustomAspects();
+        const customAspects$ = this.getCustomAspects(visibleAspectList);
         return zip(standardAspects$, customAspects$).pipe(
             map(([standardAspectList, customAspectList]) => [...standardAspectList, ...customAspectList])
         );
@@ -62,7 +62,7 @@ export class AspectListService {
             );
     }
 
-    getCustomAspects(): Observable<AspectEntry[]> {
+    getCustomAspects(whiteList?: string[]): Observable<AspectEntry[]> {
         const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
         const opts: any = {
             where,
@@ -70,7 +70,7 @@ export class AspectListService {
         };
         return from(this.aspectsApi.listAspects(opts))
             .pipe(
-                map((result: AspectPaging) => result?.list?.entries),
+                map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
                 catchError((error) => {
                     this.logService.error(error);
                     return of([]);
