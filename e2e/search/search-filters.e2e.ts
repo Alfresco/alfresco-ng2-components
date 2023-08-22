@@ -34,7 +34,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
-import * as moment from 'moment';
+import { getYear } from 'date-fns';
 
 describe('Search Filters', () => {
 
@@ -123,7 +123,7 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
-        const currentYear = moment().year();
+        const currentYear = getYear(new Date());
 
         jsonFile.facetQueries.queries[0] = {
             query: `created:${currentYear}`,
