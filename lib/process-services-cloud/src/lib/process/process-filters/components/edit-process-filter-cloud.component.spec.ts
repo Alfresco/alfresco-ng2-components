@@ -41,6 +41,7 @@ import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud
 import { mockAppVersions } from '../mock/process-filters-cloud.mock';
 import { DATE_FORMAT_CLOUD } from '../../../models/date-format-cloud.model';
 import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
+import { endOfDay, startOfDay } from 'date-fns';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -1048,8 +1049,8 @@ describe('EditProcessFilterCloudComponent', () => {
 
             component.filterChange.subscribe(() => {
                 const dateFilter = {
-                    startFrom: moment().startOf('day').toISOString(true),
-                    startTo: moment().endOf('day').toISOString(true)
+                    startFrom: startOfDay(new Date()).toISOString(),
+                    startTo: endOfDay(new Date()).toISOString()
                 };
                 expect(component.processFilter.completedFrom).toEqual(dateFilter.startFrom);
                 expect(component.processFilter.completedTo).toEqual(dateFilter.startTo);

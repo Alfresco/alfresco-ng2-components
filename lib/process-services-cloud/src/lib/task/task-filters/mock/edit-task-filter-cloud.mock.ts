@@ -16,8 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import moment from 'moment';
 import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
+import { endOfDay, startOfDay } from 'date-fns';
 
 export const mockAlfrescoApi: any = {
     oauth2Auth: {
@@ -64,13 +64,13 @@ export const mockDefaultTaskFilter = {
 };
 
 export const mockDateFilterFromTo = {
-    startFrom: moment().startOf('day').toISOString(true),
-    startTo: moment().endOf('day').toISOString(true)
+    startFrom: startOfDay(new Date()).toISOString(),
+    startTo: endOfDay(new Date()).toISOString()
 };
 
 export const mockDateFilterStartEnd = {
-    startDate: moment().startOf('day').toISOString(true),
-    endDate: moment().endOf('day').toISOString(true)
+    startDate: startOfDay(new Date()).toISOString(),
+    endDate: endOfDay(new Date()).toISOString()
 };
 
 export const mockDueDateFilter = {

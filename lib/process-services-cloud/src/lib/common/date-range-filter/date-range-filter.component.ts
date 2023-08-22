@@ -20,7 +20,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
-import moment from 'moment';
+import { endOfDay, startOfDay } from 'date-fns';
 
 @Component({
      selector: 'adf-cloud-date-range-filter',
@@ -70,8 +70,8 @@ import moment from 'moment';
 
     onDateRangeClosed() {
         const dateRange = {
-            startDate: moment(this.dateRangeForm.controls.from.value).startOf('day').toISOString(true),
-            endDate: moment(this.dateRangeForm.controls.to.value).endOf('day').toISOString(true)
+            startDate: startOfDay(new Date(this.dateRangeForm.controls.from.value)).toISOString(),
+            endDate: endOfDay(new Date(this.dateRangeForm.controls.to.value)).toISOString()
         };
         this.dateChanged.emit(dateRange);
     }
@@ -85,8 +85,8 @@ import moment from 'moment';
         const to = this.getFilterAttribute('to');
         const type = this.getFilterAttribute('dateType');
 
-        this.dateRangeForm.get('from').setValue(moment(this.getFilterValue(from)));
-        this.dateRangeForm.get('to').setValue(moment(this.getFilterValue(to)));
+        this.dateRangeForm.get('from').setValue(this.getFilterValue(from));
+        this.dateRangeForm.get('to').setValue(this.getFilterValue(to));
         this.type = this.getFilterValue(type);
     }
 
