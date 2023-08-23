@@ -27,7 +27,7 @@ import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserProcessModel } from '../../common/models/user-process.model';
-import { format } from 'date-fns';
+import { isValid, parse } from 'date-fns';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 const FORMAT_DATE = 'dd/MM/yyyy';
@@ -187,16 +187,16 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let date: string | Date;
+            let date: Date;
 
             if (typeof newDateValue === 'string') {
-                date = format(new Date(newDateValue), FORMAT_DATE);
+                date = parse(newDateValue, FORMAT_DATE, new Date());
             } else {
                 date = newDateValue;
             }
 
-            if (date) {
-                this.taskDetailsModel.dueDate = new Date(date);
+            if (isValid(date)) {
+                this.taskDetailsModel.dueDate = date;
             } else {
                 this.dateError = true;
                 this.taskDetailsModel.dueDate = null;
