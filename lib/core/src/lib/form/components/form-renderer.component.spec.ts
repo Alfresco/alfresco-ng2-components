@@ -123,13 +123,13 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            const formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            const formattedDate = format(new Date('2019-11-19'), 'yyyy-M-d');
             typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
+            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeVisible(displayTextElementContainer);
         });
 
@@ -142,13 +142,13 @@ describe('Form Renderer Component', () => {
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            const formattedDate = format(new Date('2019-11-19'), 'd-M-yyyy');
+            const formattedDate = format(new Date('2019-11-19'), 'yyyy-M-d');
             typeIntoDate(inputDateTestOne, { srcElement: { value: formattedDate } });
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
+            displayTextElementContainer = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeHidden(displayTextElementContainer);
         });
 

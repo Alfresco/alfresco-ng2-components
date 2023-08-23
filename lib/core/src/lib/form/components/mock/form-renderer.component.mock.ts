@@ -1505,7 +1505,7 @@ export const formDateVisibility = {
                     existingColspan: 1,
                     maxColspan: 2
                   },
-                  dateDisplayFormat: 'd-M-yyyy'
+                  dateDisplayFormat: 'yyyy-M-d'
                 }
               ],
               2: [
@@ -1525,7 +1525,7 @@ export const formDateVisibility = {
                     leftType: 'field',
                     leftValue: 'Date0hwq20',
                     operator: '==',
-                    rightValue: '19-11-2019',
+                    rightValue: '2019-11-19',
                     rightType: 'value',
                     nextConditionOperator: '',
                     nextCondition: null
@@ -1562,7 +1562,7 @@ export const formDateVisibility = {
                     leftType: 'field',
                     leftValue: 'Date0hwq20',
                     operator: '!=',
-                    rightValue: '19-11-2019',
+                    rightValue: '2019-11-19',
                     rightType: 'value',
                     nextConditionOperator: '',
                     nextCondition: null

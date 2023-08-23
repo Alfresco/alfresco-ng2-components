@@ -71,7 +71,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                const today = this.getTodaysFormattedDate();
+                const today = this.getTodaysDate();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
                     this.minDate = format(subDays(today, this.field.minDateRangeValue), DATE_FORMAT_CLOUD);
                     this.field.minValue = this.minDate;
@@ -93,7 +93,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         }
     }
 
-    getTodaysFormattedDate() {
+    getTodaysDate() {
         return new Date();
     }
 

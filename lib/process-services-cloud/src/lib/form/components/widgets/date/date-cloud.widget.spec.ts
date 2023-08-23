@@ -392,7 +392,7 @@ describe('DateWidgetComponent', () => {
 
         describe('check date validation by dynamic date ranges', () => {
             it('should minValue be equal to today date minus minDateRangeValue', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue(new Date('2022-07-22'));
+                spyOn(widget, 'getTodaysDate').and.returnValue(new Date('2022-07-22'));
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: null,
@@ -412,7 +412,7 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue be equal to today date plus maxDateRangeValue', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue(new Date('2022-07-22'));
+                spyOn(widget, 'getTodaysDate').and.returnValue(new Date('2022-07-22'));
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: 8,
@@ -432,7 +432,7 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue and minValue be null if maxDateRangeValue and minDateRangeValue are null', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue(new Date('22-07-2022'));
+                spyOn(widget, 'getTodaysDate').and.returnValue(new Date('22-07-2022'));
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: null,
@@ -451,7 +451,7 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue and minValue not be null if maxDateRangeVale and minDateRangeValue are not null', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue(new Date('2022-07-22'));
+                spyOn(widget, 'getTodaysDate').and.returnValue(new Date('2022-07-22'));
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: 8,
