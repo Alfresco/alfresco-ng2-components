@@ -180,7 +180,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     onDateChanged(newDateValue) {
-        //console.log('from component', newDateValue);
         this.dateError = false;
 
         if (newDateValue) {
