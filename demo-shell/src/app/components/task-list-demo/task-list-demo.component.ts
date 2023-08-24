@@ -20,6 +20,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, A
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { set } from 'date-fns';
 
 const DEFAULT_SIZE = 20;
 
@@ -141,7 +142,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
-        this.dueAfter = taskFilter.taskDueAfter;
+        this.dueAfter = taskFilter.taskDueAfter ? this.setDueAfterFilter(taskFilter.taskDueAfter) : null;
         this.dueBefore = taskFilter.taskDueBefore;
 
         if (taskFilter.taskSize) {
@@ -156,6 +157,15 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         }
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
+    }
+
+    setDueAfterFilter(date): string {
+        const dueDateFilter = set(new Date(date), {
+            hours: 23,
+            minutes: 59,
+            seconds: 59
+        });
+        return dueDateFilter.toString();
     }
 
     resetTaskForm() {
