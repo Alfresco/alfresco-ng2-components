@@ -20,7 +20,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, A
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { set } from 'date-fns';
 
 const DEFAULT_SIZE = 20;
 
@@ -105,19 +104,19 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     buildForm() {
         this.taskListForm = this.formBuilder.group({
             taskAppId: new UntypedFormControl(this.defaultAppId, [Validators.pattern('^[0-9]*$')]),
-            taskName: new UntypedFormControl(''),
-            taskId: new UntypedFormControl(''),
-            taskProcessDefinitionId: new UntypedFormControl(''),
-            taskProcessInstanceId: new UntypedFormControl(''),
-            taskAssignment: new UntypedFormControl(''),
-            taskState: new UntypedFormControl(''),
-            taskSort: new UntypedFormControl(''),
-            taskSize: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            taskPage: new UntypedFormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
-            taskDueAfter: new UntypedFormControl(''),
-            taskDueBefore: new UntypedFormControl(''),
-            taskStart: new UntypedFormControl('', [Validators.pattern('^[0-9]*$')]),
-            taskIncludeProcessInstance: new UntypedFormControl('')
+            taskName: new UntypedFormControl(),
+            taskId: new UntypedFormControl(),
+            taskProcessDefinitionId: new UntypedFormControl(),
+            taskProcessInstanceId: new UntypedFormControl(),
+            taskAssignment: new UntypedFormControl(),
+            taskState: new UntypedFormControl(),
+            taskSort: new UntypedFormControl(),
+            taskSize: new UntypedFormControl(null, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            taskPage: new UntypedFormControl(null, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            taskDueAfter: new UntypedFormControl(),
+            taskDueBefore: new UntypedFormControl(),
+            taskStart: new UntypedFormControl(null, [Validators.pattern('^[0-9]*$')]),
+            taskIncludeProcessInstance: new UntypedFormControl()
         });
 
         this.taskListForm.valueChanges
@@ -142,7 +141,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
-        this.dueAfter = this.setDueAfterFilter(taskFilter.taskDueAfter);
+        this.dueAfter = taskFilter.taskDueAfter;
         this.dueBefore = taskFilter.taskDueBefore;
 
         if (taskFilter.taskSize) {
@@ -157,15 +156,6 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
         }
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
-    }
-
-    setDueAfterFilter(date): string {
-        const dueDateFilter = set(new Date(date), {
-            hours: 23,
-            minutes: 59,
-            seconds: 59
-        });
-        return dueDateFilter.toString();
     }
 
     resetTaskForm() {
