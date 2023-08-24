@@ -307,7 +307,7 @@ describe('FormFieldModel', () => {
         const currentDateTime = new Date();
         const formattedDate = format(currentDateTime, 'yyyy-MM-dd');
         const formattedTime = format(currentDateTime, 'hh:mm');
-        
+
         const expectedDateTime = format(currentDateTime, 'yyyy-MM-dd hh:mm');
         const expectedDateTimeFormat = formattedDate + `T${formattedTime}:00.000Z`;
 
