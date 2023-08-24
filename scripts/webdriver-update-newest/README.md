@@ -16,6 +16,16 @@ Example `./update-to-newest-webdriver.sh win64` - will set driver for windows
 4. Copies and replaces the files to the webdriver node_modules
 5. Executes command to to update-webdriver using updated code
 
+## Troubleshooting
+If the script fails for any reason. You can do some of these actions manually:
+1. Find the two files (chrome_xml.js and update.js) in node_modules/webdriver-manager
+2. Replace its contents with (chrome_xml_schema.js and update_schema.js) keep the original names.
+3. Change version for specific OS in both files
+    chrome_xml.js -> ['platform'] == 'mac-x64' e.g. ['platform'] == 'win64' Line 70
+    update.js -> 'chromedriver-mac-x64' e.g 'chromedriver-win64' Line 240
+4. Run standard command to update webdriver `./node_modules/webdriver-manager/bin/webdriver-manager update --gecko=false`
+
+
 
 ## Reason
 Latest ChromeDriver Binaries https://googlechromelabs.github.io/chrome-for-testing/
