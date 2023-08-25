@@ -63,7 +63,7 @@ import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
-import { ShareDataTableAdapter } from '../public-api';
+import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
