@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import moment from 'moment';
+import { getTime } from 'date-fns';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
@@ -31,7 +31,7 @@ export class ProcessNamePipe implements PipeTransform {
     transform(processNameFormat: string, processInstance?: ProcessInstance): string {
         let processName = processNameFormat;
         if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
-            const presentDateTime = moment.now();
+            const presentDateTime = getTime(new Date());
             processName = processName.replace(
                 DATE_TIME_IDENTIFIER_REG_EXP,
                 this.localizedDatePipe.transform(presentDateTime, 'medium')
