@@ -37,6 +37,8 @@ describe('ContentMetadataCardComponent', () => {
     const preset = 'custom-preset';
     let nodeAspectService: NodeAspectService = null;
 
+    const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -150,11 +152,19 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        button.triggerEventHandler('click', {});
+        getToggleEditButton().triggerEventHandler('click', {});
         fixture.detectChanges();
 
         expect(component.editable).toBe(false);
+    });
+
+    it('should emit editableChange by clicking on toggle edit button', () => {
+        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
+        fixture.detectChanges();
+        spyOn(component.editableChange, 'emit');
+
+        getToggleEditButton().nativeElement.click();
+        expect(component.editableChange.emit).toHaveBeenCalledWith(true);
     });
 
     it('should toggle expanded by clicking on the button', () => {
@@ -190,8 +200,7 @@ describe('ContentMetadataCardComponent', () => {
         component.readOnly = true;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        expect(button).toBeNull();
+        expect(getToggleEditButton()).toBeNull();
     });
 
     it('should hide the edit button if node does not have `update` permissions', () => {
@@ -199,8 +208,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = null;
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        expect(button).toBeNull();
+        expect(getToggleEditButton()).toBeNull();
     });
 
     it('should show the edit button if node does has `update` permissions', () => {
@@ -208,8 +216,7 @@ describe('ContentMetadataCardComponent', () => {
         component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
-        expect(button).not.toBeNull();
+        expect(getToggleEditButton()).not.toBeNull();
     });
 
     it('should expand the card when custom display aspect is valid', () => {
