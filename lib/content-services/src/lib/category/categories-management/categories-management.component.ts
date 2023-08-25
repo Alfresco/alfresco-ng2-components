@@ -224,8 +224,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             const newCat = new Category({ id: newCatName, name: newCatName });
             this.categories.push(newCat);
             this.clearCategoryNameInput();
-            this.categoryNameControl.setValue('');
-            this.categoryNameControl.markAsUntouched();
             this._existingCategories = null;
             this.categoriesChange.emit(this.categories);
         }

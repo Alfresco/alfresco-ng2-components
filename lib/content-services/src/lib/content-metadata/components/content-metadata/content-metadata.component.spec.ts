@@ -742,7 +742,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should hide card views group when the grouped properties are empty', async () => {
 
-            spyOn(contentMetadataService, 'getGroupedProperties');
+            spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
