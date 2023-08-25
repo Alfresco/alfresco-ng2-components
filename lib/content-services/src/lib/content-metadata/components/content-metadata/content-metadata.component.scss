@@ -123,14 +123,12 @@
 
 .acs-details-container {
     .mat-tab-body-content {
-        .adf-content-metadata-card {
-            .adf-metadata-properties {
-                .mat-expansion-panel {
-                    width: 755px;
-                    border: 1px solid var(--adf-metadata-property-panel-border-color);
-                    margin: 24px;
-                    border-radius: 12px !important;
-                }
+        .adf-metadata-properties {
+            .mat-expansion-panel {
+                width: 755px;
+                border: 1px solid var(--adf-metadata-property-panel-border-color);
+                margin: 24px;
+                border-radius: 12px !important;
             }
         }
     }
