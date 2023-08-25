@@ -324,7 +324,7 @@ describe('CategoriesManagementComponent', () => {
         it('should have no required validator set for category control', () => {
             expect(component.categoryNameControl.hasValidator(Validators.required)).toBeFalse();
         });
-        
+       
         it('should display validation error when searching for empty category', fakeAsync(() => {
             typeCategory('   ');
 
