@@ -17,11 +17,10 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import {
-    MOMENT_DATE_FORMATS, MomentDateAdapter,
+    DateFnsUtils,
     LogService,
     UserPreferencesService,
     UserPreferenceValues
@@ -34,17 +33,19 @@ import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
+import { isValid, parse } from 'date-fns';
 
 const MAX_NAME_LENGTH = 255;
-const DATE_FORMAT: string = 'DD/MM/YYYY';
+const DATE_FORMAT: string = 'dd/MM/yyyy';
 
 @Component({
     selector: 'adf-cloud-start-task',
     templateUrl: './start-task-cloud.component.html',
     styleUrls: ['./start-task-cloud.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: DateAdapter, useClass: DateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskCloudComponent implements OnInit, OnDestroy {
@@ -105,7 +106,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskCloudService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: UntypedFormBuilder,
                 private identityUserService: IdentityUserService,
@@ -116,7 +117,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.loadCurrentUser();
         this.buildForm();
         this.loadDefaultPriorities();
@@ -182,8 +183,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            const momentDate = moment(newDateValue, DATE_FORMAT, true);
-            if (!momentDate.isValid()) {
+            const date = parse(newDateValue, DATE_FORMAT, new Date());
+
+            if (!isValid(date)) {
                 this.dateError = true;
             }
         }
@@ -219,8 +221,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     public whitespaceValidator(control: UntypedFormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
-        const isValid = control.value.length === 0 || !isWhitespace;
-        return isValid ? null : { whitespace: true };
+        const isControlValid = control.value.length === 0 || !isWhitespace;
+        return isControlValid ? null : { whitespace: true };
     }
 
     get nameController(): UntypedFormControl {
