@@ -20,7 +20,6 @@ import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, 
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
-import moment, { Moment } from 'moment';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -32,6 +31,9 @@ import { IdentityUserModel } from '../../../../people/models/identity-user.model
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
+import {format,isValid} from 'date-fns';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -141,7 +143,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     constructor(
         protected formBuilder: UntypedFormBuilder,
-        protected dateAdapter: DateAdapter<Moment>,
+        protected dateAdapter: DateAdapter<DateFnsAdapter>,
         protected userPreferencesService: UserPreferencesService,
         protected appsProcessCloudService: AppsProcessCloudService,
         protected taskCloudService: TaskCloudService,
@@ -153,7 +155,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(locale)
+            );
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -287,11 +290,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE, true);
+            const date = format(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
             const controller = this.getPropertyController(dateProperty);
 
-            if (momentDate.isValid()) {
-                controller.setValue(momentDate.toISOString(true));
+            if (isValid(date)) {
+             controller.setValue( new Date(date).toISOString() );
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });
