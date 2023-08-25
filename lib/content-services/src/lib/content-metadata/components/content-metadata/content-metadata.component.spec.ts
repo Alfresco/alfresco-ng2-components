@@ -1153,7 +1153,6 @@ describe('ContentMetadataComponent', () => {
         it('should render tags after loading tags in ngOnInit', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
-            fixture.whenStable();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);
