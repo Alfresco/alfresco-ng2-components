@@ -83,7 +83,7 @@ describe('ContentMetadataComponent', () => {
         fixture.detectChanges();
     };
 
-    const findSaveGeneralInfoButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-generalInfo-metadata]')).nativeElement;
+    const findSaveGeneralInfoButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-general-info-metadata]')).nativeElement;
     const findSaveTagsButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-tags-metadata]')).nativeElement;
     const findSaveCategoriesButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-categories-metadata]')).nativeElement;
 
