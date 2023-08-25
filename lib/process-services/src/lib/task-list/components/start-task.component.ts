@@ -16,10 +16,12 @@
  */
 
 import {
-    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel, DateFnsUtils
+    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel,
+    MOMENT_DATE_FORMATS, MomentDateAdapter
 } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import moment, { Moment } from 'moment';
 import { Observable, of, Subject } from 'rxjs';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -27,10 +29,8 @@ import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserProcessModel } from '../../common/models/user-process.model';
-import { format } from 'date-fns';
-import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
-const FORMAT_DATE = 'dd/MM/yyyy';
+const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
 
 @Component({
@@ -38,8 +38,8 @@ const MAX_LENGTH = 255;
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
@@ -75,7 +75,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskListService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
+                private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: UntypedFormBuilder,
                 private logService: LogService) {
@@ -93,7 +93,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
         this.loadFormsTask();
         this.buildForm();
@@ -187,16 +187,16 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let date: string | Date;
+            let momentDate: moment.Moment;
 
             if (typeof newDateValue === 'string') {
-                date = format(new Date(newDateValue), FORMAT_DATE);
+                momentDate = moment(newDateValue, FORMAT_DATE, true);
             } else {
-                date = newDateValue;
+                momentDate = newDateValue;
             }
 
-            if (date) {
-                this.taskDetailsModel.dueDate = new Date(date);
+            if (momentDate.isValid()) {
+                this.taskDetailsModel.dueDate = momentDate.toDate();
             } else {
                 this.dateError = true;
                 this.taskDetailsModel.dueDate = null;
