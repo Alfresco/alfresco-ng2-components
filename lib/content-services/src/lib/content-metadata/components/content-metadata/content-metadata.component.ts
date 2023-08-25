@@ -273,24 +273,28 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    saveGeneralInfoChanges(event:Event) {
+    saveEditChanges(buttonType: string, event: Event, group?: any) {
         this.saveChanges(event);
-        this.editable = !this.editable;
-    }
-
-    saveTagsChanges(event: Event) {
-        this.saveChanges(event);
-        this.editableTags = !this.editableTags;
-    }
-    
-    saveCategoriesChanges(event: Event) {
-        this.saveChanges(event);
-        this.editableCategories = !this.editableCategories;
-    }
-
-    saveGroupChanges(group: any, event:Event) {
-        this.saveChanges(event);
-        group.editable = !group.editable;
+        
+        switch (buttonType) {
+            case 'generalInfo':
+                this.editable = !this.editable;
+                break;
+            case 'tags':
+                this.editableTags = !this.editableTags;
+                break;
+            case 'categories':
+                this.editableCategories = !this.editableCategories;
+                break;
+            case 'group':
+                if (group) {
+                    group.editable = !group.editable;
+                }
+                break;
+            
+            default:
+                break;
+        }
     }
 
     /**
@@ -328,24 +332,28 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
     }
 
-    cancelGroupChanges(group: any, event: Event) {
+    cancelEditChanges(buttonType: string, event: Event, group?: any) {
         this.cancelChanges(event);
-        group.editable = !group.editable;
-    }
-
-    CancelTagsChanges(event: Event) {
-        this.cancelChanges(event);
-        this.editableTags = !this.editableTags;
-    }
-
-    cancelCategoriesChanges(event: Event) {
-        this.cancelChanges(event);
-        this.editableCategories = !this.editableCategories;
-    }
-
-    cancelGeneralInfoChanges(event: Event) {
-        this.cancelChanges(event);
-        this.editable = !this.editable;
+        
+        switch (buttonType) {
+            case 'generalInfo':
+                this.editable = !this.editable;
+                break;
+            case 'tags':
+                this.editableTags = !this.editableTags;
+                break;
+            case 'categories':
+                this.editableCategories = !this.editableCategories;
+                break;
+            case 'group':
+                if (group) {
+                    group.editable = !group.editable;
+                }
+                break;
+            
+            default:
+                break;
+        }
     }
 
     toggleGeneralEdit(event: Event): void {
@@ -386,28 +394,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    handleTagPanelOpen() {
-        this.tagsPanelState = true;
-        this.cdr.detectChanges();
-    }
-    
-    handleTagPanelClose() {
-        this.tagsPanelState = false;
-        this.cdr.detectChanges();
-    }
-
     generalTogglePanelState() {
         this.generalInfoPanelState = !this.generalInfoPanelState;
         this.cdr.detectChanges();
     }
 
-    handleCategoryPanelOpen() {
-        this.categoriesPanelState = true;
+    handleTagsPanelState(tagPanelState: boolean) {
+        this.tagsPanelState = tagPanelState;
         this.cdr.detectChanges();
     }
-    
-    handleCategoryPanelClose() {
-        this.categoriesPanelState = false;
+
+    handleCategoriesPanelState(categoriesPanelState: boolean) {
+        this.categoriesPanelState= categoriesPanelState;
         this.cdr.detectChanges();
     }
     

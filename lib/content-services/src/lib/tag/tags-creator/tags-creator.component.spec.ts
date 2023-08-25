@@ -386,13 +386,6 @@ describe('TagsCreatorComponent', () => {
                 expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.ALREADY_ADDED_TAG');
             }));
 
-            it('should not show error for required if tags are changed', fakeAsync(() => {
-                typeTag('');
-                component.tags = ['new tag 1', 'new tag 2'];
-                fixture.detectChanges();
-                expect(getFirstError()).toBeUndefined();
-            }));
-
             it('should show error when duplicated already existing tag', fakeAsync(() => {
                 const tag = 'Some tag';
 

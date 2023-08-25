@@ -220,7 +220,7 @@ describe('CategoriesManagementComponent', () => {
                 component.categoryNameControlVisible = true;
                 fixture.detectChanges();
             });
-            it('should be hidden initially', () => {
+            it('should not hide category name control when categoryNameControlVisible is false', () => {
                 component.categoryNameControlVisible = false;
                 fixture.detectChanges();
                 const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
@@ -308,7 +308,7 @@ describe('CategoriesManagementComponent', () => {
         it('should have no required validator set for category control', () => {
             expect(component.categoryNameControl.hasValidator(Validators.required)).toBeFalse();
         });
-        
+       
         it('should display validation error when searching for empty category', fakeAsync(() => {
             typeCategory('   ');
 
