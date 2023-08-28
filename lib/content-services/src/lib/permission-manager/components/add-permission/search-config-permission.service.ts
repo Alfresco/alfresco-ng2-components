@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 import { Injectable, Optional, Inject, InjectionToken } from '@angular/core';
 import { SearchConfigurationInterface } from '../../../common/interfaces/search-configuration.interface';
 
@@ -26,15 +26,14 @@ export interface QueryProvider {
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
-
     constructor(
         @Optional()
         @Inject(SEARCH_QUERY_TOKEN)
-        private queryProvider: QueryProvider) {
-    }
+        private queryProvider: QueryProvider
+    ) {}
 
-    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
-        const defaultQueryBody: QueryBody = {
+    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
+        return new SearchRequest({
             query: {
                 query: this.getQuery(searchTerm)
             },
@@ -45,17 +44,15 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
             },
             filterQueries: [
                 /* eslint-disable-next-line */
-                { query: "TYPE:'cm:authority'" }]
-        };
-
-        return defaultQueryBody;
+                { query: "TYPE:'cm:authority'" }
+            ]
+        });
     }
 
-    private getQuery(searchTerm: string) {
+    private getQuery(searchTerm: string): string {
         let query: string;
         if (this.queryProvider && this.queryProvider.query) {
-            query = this.queryProvider.query.replace(
-                new RegExp(/\${([^}]+)}/g), searchTerm);
+            query = this.queryProvider.query.replace(new RegExp(/\${([^}]+)}/g), searchTerm);
         } else {
             query = `(email:*${searchTerm}* OR firstName:*${searchTerm}* OR lastName:*${searchTerm}* OR displayName:*${searchTerm}* OR authorityName:*${searchTerm}* OR authorityDisplayName:*${searchTerm}*) AND ANAME:(\"0/APP.DEFAULT\")`;
         }

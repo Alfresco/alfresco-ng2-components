@@ -16,7 +16,7 @@
  */
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { SiteBody, FavoriteBody, FavoriteEntry, FavoritesApi } from '@alfresco/js-api';
+import { FavoritesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 
@@ -34,7 +34,7 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     private targetLibrary = null;
 
-    _favoritesApi: FavoritesApi;
+    private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
         return this._favoritesApi;
@@ -57,8 +57,7 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     ngOnChanges(changes) {
         if (!changes.library.currentValue) {
@@ -87,12 +86,12 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    private addFavorite(favoriteBody: FavoriteBody) {
+    private addFavorite(favoriteBody: any) {
         this.favoritesApi
             .createFavorite('-me-', favoriteBody)
-            .then((libraryEntry: FavoriteEntry) => {
+            .then((res) => {
                 this.targetLibrary.isFavorite = true;
-                this.toggle.emit(libraryEntry);
+                this.toggle.emit(res);
             })
             .catch((error) => this.error.emit(error));
     }
@@ -100,9 +99,9 @@ export class LibraryFavoriteDirective implements OnChanges {
     private removeFavorite(favoriteId: string) {
         this.favoritesApi
             .deleteFavorite('-me-', favoriteId)
-            .then((libraryBody: SiteBody) => {
+            .then((res) => {
                 this.targetLibrary.isFavorite = false;
-                this.toggle.emit(libraryBody);
+                this.toggle.emit(res);
             })
             .catch((error) => this.error.emit(error));
     }

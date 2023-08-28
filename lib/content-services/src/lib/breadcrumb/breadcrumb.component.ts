@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewChild,
-    ViewEncapsulation,
-    OnDestroy
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { Node, PathElementEntity } from '@alfresco/js-api';
+import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -40,7 +30,6 @@ import { takeUntil } from 'rxjs/operators';
     host: { class: 'adf-breadcrumb' }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
-
     /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
     folderNode: Node = null;
@@ -79,10 +68,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     maxItems: number;
 
-    previousNodes: PathElementEntity[];
-    lastNodes: PathElementEntity[];
+    previousNodes: PathElement[];
+    lastNodes: PathElement[];
 
-    route: PathElementEntity[] = [];
+    route: PathElement[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -96,18 +85,16 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when the user clicks on a breadcrumb. */
     @Output()
-    navigate = new EventEmitter<PathElementEntity>();
+    navigate = new EventEmitter<PathElement>();
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
 
         if (this.target) {
-            this.target.$folderNode
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((folderNode: Node) => {
-                    this.folderNode = folderNode;
-                    this.recalculateNodes();
-                });
+            this.target.$folderNode.pipe(takeUntil(this.onDestroy$)).subscribe((folderNode: Node) => {
+                this.folderNode = folderNode;
+                this.recalculateNodes();
+            });
         }
     }
 
@@ -141,7 +128,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return !!this.previousNodes;
     }
 
-    parseRoute(node: Node): PathElementEntity[] {
+    parseRoute(node: Node): PathElement[] {
         if (node && node.path) {
             const route = (node.path.elements || []).slice();
 
@@ -149,7 +136,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
                 id: node.id,
                 name: node.name,
                 node
-            } as PathElementEntity);
+            } as PathElement);
 
             const rootPos = this.getElementPosition(route, this.rootId);
             if (rootPos > 0) {
@@ -170,7 +157,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return [];
     }
 
-    private getElementPosition(route: PathElementEntity[], nodeId: string): number {
+    private getElementPosition(route: PathElement[], nodeId: string): number {
         let position: number = -1;
 
         if (route && route.length > 0 && nodeId) {
@@ -184,7 +171,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return !this.readOnly && !lastItem;
     }
 
-    onRoutePathClick(route: PathElementEntity, event?: Event): void {
+    onRoutePathClick(route: PathElement, event?: Event): void {
         if (event && event.type === 'click') {
             event.preventDefault();
         }
@@ -192,7 +179,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         this.onRouteClick(route);
     }
 
-    onRouteClick(route: PathElementEntity) {
+    onRouteClick(route: PathElement) {
         if (route && !this.readOnly) {
             this.navigate.emit(route);
 
