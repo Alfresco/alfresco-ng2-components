@@ -14,7 +14,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-
     - name: set TAG_NPM
       shell: bash
       run: |
@@ -25,13 +24,21 @@ runs:
             # Pre-release versions
             if [[ $VERSION_IN_PACKAGE_JSON =~ ^[0-9]*\.[0-9]*\.[0-9]*-A\.[0-9]*$ ]];
             then
+                echo "Set next tag"
                 TAG_NPM=next
             # Stable major versions
             else
+                echo "Set latest tag"
                 TAG_NPM=latest
             fi
         fi
         if [[ ${{ inputs.branch_name }} =~ ^develop(-patch.*)?$ ]]; then
+            echo "Set Alpha tag"
             TAG_NPM=alpha
         fi
+        if [[ ${{ contains(github.event.head_commit.message , '[release-branch:*]')  && github.event_name == 'pull_request' }} ]]; then
+            echo "Set Branch tag"
+            TAG_NPM=branch
+        fi
+
         echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
