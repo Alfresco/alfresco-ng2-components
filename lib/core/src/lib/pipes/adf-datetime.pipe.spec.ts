@@ -1,0 +1,75 @@
+/*!
+ * @license
+ * Copyright © 2005-2023 Hyland Software, Inc. and its affiliates. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { ADFDateTimePipe } from './adf-datetime.pipe';
+import { isValid } from 'date-fns';
+
+describe('ADFDateTimePipe', () => {
+    let pipe: ADFDateTimePipe;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
+            providers: [ADFDateTimePipe]
+        });
+
+        pipe = new ADFDateTimePipe();
+    });
+
+    it('should transform string input to date format', () => {
+        const value = '2023-08-24 12:00:00';
+        const dateFormat = 'yyyy-MM-dd HH:mm:ss';
+        const transformedDate = pipe.transform(value, dateFormat);
+        console.log("FORMATTEDD DATE", transformedDate);
+        expect(transformedDate instanceof Date).toBe(true);
+        expect(isValid(transformedDate)).toBe(true);
+
+        const expectedDate = new Date(value);
+        expect(transformedDate).toEqual(expectedDate);
+    });
+
+    it('should transform Date input', () => {
+        const value = new Date(2023, 7, 24, 12, 0, 0);
+        const dateFormat = 'yyyy-MM-dd HH:mm:ss';
+        const transformedDate = pipe.transform(value, dateFormat);
+        expect(transformedDate instanceof Date).toBe(true);
+        expect(isValid(transformedDate)).toBe(true);
+
+        expect(transformedDate).toEqual(value);
+
+    });
+
+    it('should transform number input to date format', () => {
+        const value = 1671920000000;
+        const dateFormat = 'yyyy-MM-dd HH:mm:ss';
+        const transformedDate = pipe.transform(value, dateFormat);
+        expect(transformedDate instanceof Date).toBe(true);
+        expect(isValid(transformedDate)).toBe(true);
+
+        const expectedDate = new Date(value);
+        expect(transformedDate).toEqual(expectedDate);
+    });
+
+    it('should throw error for invalid input type', () => {
+        const value = undefined;
+        const dateFormat = 'yyyy-MM-dd HH:mm:ss';
+        expect(() => pipe.transform(value, dateFormat)).toThrowError('Invalid value type');
+    });
+});
