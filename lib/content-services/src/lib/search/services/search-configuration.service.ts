@@ -16,37 +16,32 @@
  */
 
 import { Injectable } from '@angular/core';
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '../../common/interfaces/search-configuration.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchConfigurationService implements SearchConfigurationInterface {
-
     /**
      * Generates a QueryBody object with custom search parameters.
      *
      * @param searchTerm Term text to search for
-     * @param maxResults Maximum number of search results to show in a page
+     * @param maxItems Maximum number of search results to show in a page
      * @param skipCount The offset of the start of the page within the results list
      * @returns Query body defined by the parameters
      */
-    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
-        const defaultQueryBody: QueryBody = {
+    generateQueryBody(searchTerm: string, maxItems: number, skipCount: number): SearchRequest {
+        return new SearchRequest({
             query: {
                 query: searchTerm ? `'${searchTerm}*' OR name:'${searchTerm}*'` : searchTerm
             },
             include: ['path', 'allowableOperations'],
             paging: {
-                maxItems: maxResults,
+                maxItems,
                 skipCount
             },
-            filterQueries: [
-                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
-                { query: 'NOT cm:creator:System' }]
-        };
-
-        return defaultQueryBody;
+            filterQueries: [{ query: `TYPE:'cm:folder' OR TYPE:'cm:content'` }, { query: 'NOT cm:creator:System' }]
+        });
     }
 }
