@@ -31,6 +31,7 @@ import {
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import moment from 'moment';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
@@ -38,9 +39,8 @@ import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { format } from 'date-fns'
 
-const FORMAT_DATE_ACTIVITI = 'yyyy-MM-dd';
+const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
 
 @Component({
     selector: 'adf-analytics-report-parameters',
@@ -194,11 +194,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     convertMomentDate(date: string) {
-        return format(new Date(date), FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+        return moment(date, FORMAT_DATE_ACTIVITI, true).format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
     getTodayDate() {
-        return format(new Date(), FORMAT_DATE_ACTIVITI);
+        return moment().format(FORMAT_DATE_ACTIVITI);
     }
 
     convertNumber(value: string): number {
