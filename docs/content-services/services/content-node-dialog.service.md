@@ -73,7 +73,7 @@ constructor(private contentDialogService: ContentNodeDialogService){}
 yourFunctionOnCopyOrMove(){
         this.contentDialogService
             .openCopyMoveDialog(actionName, targetNode, neededPermissionForAction)
-            .subscribe((selections: MinimalNode[]) => {
+            .subscribe((selections: Node[]) => {
                 // place your action here on operation success!
             });
 }

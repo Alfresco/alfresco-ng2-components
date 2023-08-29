@@ -16,14 +16,14 @@
  */
 
 import { CardViewBaseItemModel, UpdateNotification } from '@alfresco/adf-core';
-import { MinimalNode } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 
 export interface BaseCardViewContentUpdate {
     itemUpdated$: Subject<UpdateNotification>;
-    updatedAspect$: Subject<MinimalNode>;
+    updatedAspect$: Subject<Node>;
 
     update(property: CardViewBaseItemModel, newValue: any);
     updateElement(notification: CardViewBaseItemModel);
-    updateNodeAspect(node: MinimalNode);
+    updateNodeAspect(node: Node);
 }

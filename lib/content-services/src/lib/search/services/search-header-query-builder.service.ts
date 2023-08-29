@@ -20,7 +20,7 @@ import { AlfrescoApiService, AppConfigService, DataSorting } from '@alfresco/adf
 import { SearchConfiguration } from '../models/search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from '../models/search-category.interface';
-import { MinimalNode, QueryBody } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchSortingDefinition } from '../models/search-sorting-definition.interface';
@@ -31,18 +31,14 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
     providedIn: 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
-
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService,
-                alfrescoApiService: AlfrescoApiService,
-                private nodeApiService: NodesApiService) {
+    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
 
-        this.updated.pipe(
-            filter((query: QueryBody) => !!query)).subscribe(() => {
+        this.updated.pipe(filter((query) => !!query)).subscribe(() => {
             this.execute();
         });
     }
@@ -56,9 +52,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setupCurrentPagination(maxItems: number, skipCount: number) {
-        if (!this.paging ||
-            (this.paging &&
-                this.paging.maxItems !== maxItems || this.paging.skipCount !== skipCount)) {
+        if (!this.paging || (this.paging && this.paging.maxItems !== maxItems) || this.paging.skipCount !== skipCount) {
             this.paging = { maxItems, skipCount };
             this.execute();
         }
@@ -118,7 +112,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     private getSortingFieldFromColumnName(columnName: string) {
         if (this.sortingOptions.length > 0) {
-            const sortOption: SearchSortingDefinition = this.sortingOptions.find((option: SearchSortingDefinition) => option.key === columnName);
+            const sortOption = this.sortingOptions.find((option) => option.key === columnName);
             return sortOption ? sortOption.field : '';
         }
         return '';
@@ -127,25 +121,23 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     getCategoryForColumn(columnKey: string): SearchCategory {
         let foundCategory = null;
         if (this.categories !== null) {
-            foundCategory = this.categories.find(
-                category => category.columnKey === columnKey
-            );
+            foundCategory = this.categories.find((category) => category.columnKey === columnKey);
         }
         return foundCategory;
     }
 
     setCurrentRootFolderId(currentFolderId: string) {
-        const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
-            filterQueries.query.includes(currentFolderId)
-        );
+        const alreadyAddedFilter = this.filterQueries.find((filterQueries) => filterQueries.query.includes(currentFolderId));
 
         if (alreadyAddedFilter !== undefined) {
             this.filterQueries = [];
         }
 
-        this.filterQueries = [{
-            query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
-        }];
+        this.filterQueries = [
+            {
+                query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
+            }
+        ];
 
         this.execute();
     }
@@ -154,8 +146,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return this.customSources.includes(currentNodeId);
     }
 
-    getNodeIdForCustomSource(customSourceId: string): Observable<MinimalNode> {
+    getNodeIdForCustomSource(customSourceId: string): Observable<Node> {
         return this.nodeApiService.getNode(customSourceId);
     }
-
 }

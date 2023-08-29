@@ -26,10 +26,10 @@ import {
     DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
-    ThumbnailService, AppConfigService
+    ThumbnailService,
+    AppConfigService
 } from '@alfresco/adf-core';
 import { ContentService } from '../../common/services/content.service';
-
 import { Subject, of, throwError } from 'rxjs';
 import {
     FileNode,
@@ -45,15 +45,13 @@ import {
     mockNode3
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
-import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
 import { ImageResolver } from './../data/image-resolver.model';
 import { RowFilter } from './../data/row-filter.model';
-
 import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { FavoritePaging, NodeEntry } from '@alfresco/js-api';
+import { FavoritePaging, NodeEntry, NodePaging, Node } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -69,7 +67,6 @@ const mockDialog = {
 };
 
 describe('DocumentList', () => {
-
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
     let apiService: AlfrescoApiService;
@@ -87,14 +84,9 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [
-                { provide: MatDialog, useValue: mockDialog }
-            ]
+            providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {
             preventDefault: () => {}
@@ -120,7 +112,9 @@ describe('DocumentList', () => {
         documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve(new FavoritePaging({ list: { entries: [] } })));
+        spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
+            Promise.resolve(new FavoritePaging({ list: { entries: [] } }))
+        );
     });
 
     afterEach(() => {
@@ -128,7 +122,6 @@ describe('DocumentList', () => {
     });
 
     describe('presets', () => {
-
         const validatePreset = (keys: string[]) => {
             const columns = documentList.data.getColumns();
             expect(columns.length).toBe(keys.length);
@@ -144,14 +137,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'name',
-                'path',
-                'content.sizeInBytes',
-                'archivedAt',
-                'archivedByUser.displayName'
-            ]);
+            validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'archivedAt', 'archivedByUser.displayName']);
         });
 
         it('should load -sites- preset', async () => {
@@ -160,11 +146,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'title',
-                'visibility'
-            ]);
+            validatePreset(['$thumbnail', 'title', 'visibility']);
         });
 
         it('shuld load -mysites- preset', async () => {
@@ -173,11 +155,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'title',
-                'visibility'
-            ]);
+            validatePreset(['$thumbnail', 'title', 'visibility']);
         });
 
         it('should load -favorites- preset', async () => {
@@ -186,14 +164,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'name',
-                'path',
-                'content.sizeInBytes',
-                'modifiedAt',
-                'modifiedByUser.displayName'
-            ]);
+            validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'modifiedAt', 'modifiedByUser.displayName']);
         });
 
         it('should load -recent- preset', async () => {
@@ -202,13 +173,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'name',
-                'path',
-                'content.sizeInBytes',
-                'modifiedAt'
-            ]);
+            validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'modifiedAt']);
         });
 
         it('should load -sharedlinks- preset', async () => {
@@ -234,13 +199,7 @@ describe('DocumentList', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            validatePreset([
-                '$thumbnail',
-                'name',
-                'content.sizeInBytes',
-                'modifiedAt',
-                'modifiedByUser.displayName'
-            ]);
+            validatePreset(['$thumbnail', 'name', 'content.sizeInBytes', 'modifiedAt', 'modifiedByUser.displayName']);
         });
     });
 
@@ -330,8 +289,7 @@ describe('DocumentList', () => {
     it('should call action handler with node', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {
-        };
+        action.handler = () => {};
 
         spyOn(action, 'handler').and.stub();
 
@@ -342,8 +300,7 @@ describe('DocumentList', () => {
     it('should call action handler with node and permission', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {
-        };
+        action.handler = () => {};
         action.permission = 'fake-permission';
         spyOn(action, 'handler').and.stub();
 
@@ -355,8 +312,7 @@ describe('DocumentList', () => {
     it('should call action execute with node if it is defined', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.execute = () => {
-        };
+        action.execute = () => {};
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -369,8 +325,7 @@ describe('DocumentList', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => {
-        };
+        action.execute = () => {};
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -482,10 +437,7 @@ describe('DocumentList', () => {
         const documentMenu = new ContentActionModel();
         documentMenu.target = 'document';
 
-        documentList.actions = [
-            folderMenu,
-            documentMenu
-        ];
+        documentList.actions = [folderMenu, documentMenu];
 
         let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
@@ -505,9 +457,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
@@ -594,9 +544,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
@@ -614,9 +562,7 @@ describe('DocumentList', () => {
             title: 'FolderAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
@@ -634,9 +580,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
@@ -653,9 +597,7 @@ describe('DocumentList', () => {
             title: 'FileAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = {
             entry: {
@@ -682,9 +624,7 @@ describe('DocumentList', () => {
 
         spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('lockOwner');
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = {
             entry: {
@@ -715,9 +655,7 @@ describe('DocumentList', () => {
 
         spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('jerryTheKillerCow');
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = {
             entry: {
@@ -747,9 +685,7 @@ describe('DocumentList', () => {
             title: 'FolderAction'
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = {
             entry: {
@@ -773,9 +709,7 @@ describe('DocumentList', () => {
             disableWithNoPermission: false
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
@@ -793,9 +727,7 @@ describe('DocumentList', () => {
             disableWithNoPermission: false
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
@@ -813,9 +745,7 @@ describe('DocumentList', () => {
             disableWithNoPermission: true
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
@@ -834,9 +764,7 @@ describe('DocumentList', () => {
             disableWithNoPermission: true
         });
 
-        documentList.actions = [
-            documentMenu
-        ];
+        documentList.actions = [documentMenu];
 
         const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
@@ -852,7 +780,7 @@ describe('DocumentList', () => {
         documentButton.target = 'document';
         documentList.actions = [documentButton];
 
-        let node = new NodeMinimalEntry();
+        let node = new NodeEntry();
         expect(documentList.getNodeActions(node)).toEqual([]);
 
         node = new FileNode();
@@ -1022,7 +950,7 @@ describe('DocumentList', () => {
         expect(documentList.navigateTo(null)).toBeFalsy();
     });
 
-    it('should perform navigation through corret linked folder', () => {
+    it('should perform navigation through correct linked folder', () => {
         const linkFolder = new FolderNode();
         linkFolder.entry.id = 'link-folder';
         linkFolder.entry.nodeType = 'app:folderlink';
@@ -1040,7 +968,7 @@ describe('DocumentList', () => {
         let called = false;
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        documentList.preview.subscribe(() => called = true);
+        documentList.preview.subscribe(() => (called = true));
 
         documentList.onNodeClick(file);
         expect(called).toBeFalsy();
@@ -1065,7 +993,7 @@ describe('DocumentList', () => {
     });
 
     it('should display folder content from loadFolder on reload if folderNode defined', () => {
-        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode = new Node();
 
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
@@ -1203,7 +1131,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit [nodeClick] event on row click', () => {
-        const node = new NodeMinimalEntry();
+        const node = new NodeEntry();
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onNodeClick(node);
@@ -1211,7 +1139,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit node-click DOM event', () => {
-        const node = new NodeMinimalEntry();
+        const node = new NodeEntry();
 
         document.addEventListener('node-click', (res) => {
             expect(res).toBeDefined();
@@ -1221,7 +1149,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
-        const node = new NodeMinimalEntry();
+        const node = new NodeEntry();
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onNodeDblClick(node);
@@ -1229,7 +1157,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit node-dblclick DOM event', () => {
-        const node = new NodeMinimalEntry();
+        const node = new NodeEntry();
 
         document.addEventListener('node-dblclick', (res) => {
             expect(res).toBeDefined();
@@ -1316,7 +1244,7 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode = new Node();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
         spyFolderNode.and.returnValue(of({ entry: fakeNodeWithNoPermission }));
@@ -1330,7 +1258,9 @@ describe('DocumentList', () => {
     });
 
     it('should allow to perform navigation for virtual sources', () => {
-        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() => of(new DocumentLoaderNode(null, { list: { pagination: {} } })));
+        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
+            of(new DocumentLoaderNode(null, { list: { pagination: {} } }))
+        );
 
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
@@ -1502,13 +1432,17 @@ describe('DocumentList', () => {
 
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
-            where: undefined,
-            maxItems: 25,
-            skipCount: 0,
-            orderBy: ['isFolder desc', 'name asc'],
-            rootFolderId: 'fake-id'
-        }, ['test-include']);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(
+            null,
+            {
+                where: undefined,
+                maxItems: 25,
+                skipCount: 0,
+                orderBy: ['isFolder desc', 'name asc'],
+                rootFolderId: 'fake-id'
+            },
+            ['test-include']
+        );
     });
 
     it('should add where in the server request when present', () => {
@@ -1518,13 +1452,17 @@ describe('DocumentList', () => {
 
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
-            where: '(isFolder=true)',
-            maxItems: 25,
-            skipCount: 0,
-            orderBy: ['isFolder desc', 'name asc'],
-            rootFolderId: 'fake-id'
-        }, ['test-include']);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(
+            null,
+            {
+                where: '(isFolder=true)',
+                maxItems: 25,
+                skipCount: 0,
+                orderBy: ['isFolder desc', 'name asc'],
+                rootFolderId: 'fake-id'
+            },
+            ['test-include']
+        );
     });
 
     it('should add orderBy in the server request', () => {
@@ -1535,13 +1473,17 @@ describe('DocumentList', () => {
 
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
-            maxItems: 25,
-            skipCount: 0,
-            where: null,
-            orderBy: ['isFolder desc', 'size desc'],
-            rootFolderId: 'fake-id'
-        }, ['test-include']);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(
+            null,
+            {
+                maxItems: 25,
+                skipCount: 0,
+                where: null,
+                orderBy: ['isFolder desc', 'size desc'],
+                rootFolderId: 'fake-id'
+            },
+            ['test-include']
+        );
     });
 
     it('should reset the pagination when enter in a new folder', () => {
@@ -1553,23 +1495,31 @@ describe('DocumentList', () => {
             skipCount: 10
         });
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, Object({
-            maxItems: 10,
-            skipCount: 10,
-            orderBy: ['isFolder desc', 'name asc'],
-            rootFolderId: 'no-node',
-            where: undefined
-        }), undefined);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(
+            null,
+            Object({
+                maxItems: 10,
+                skipCount: 10,
+                orderBy: ['isFolder desc', 'name asc'],
+                rootFolderId: 'no-node',
+                where: undefined
+            }),
+            undefined
+        );
 
         documentList.onNodeClick(folder);
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, Object({
-            maxItems: 25,
-            skipCount: 0,
-            orderBy: ['isFolder desc', 'name asc'],
-            rootFolderId: 'folder-id',
-            where: undefined
-        }), undefined);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(
+            null,
+            Object({
+                maxItems: 25,
+                skipCount: 0,
+                orderBy: ['isFolder desc', 'name asc'],
+                rootFolderId: 'folder-id',
+                where: undefined
+            }),
+            undefined
+        );
     });
 
     it('should display fileAutoDownload dialog if node size exceeds appConfig.viewer.fileAutoDownloadSizeThresholdInMB', async () => {
@@ -1581,13 +1531,15 @@ describe('DocumentList', () => {
             }
         };
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        const node = { entry: {
+        const node = {
+            entry: {
                 ...mockNode1,
                 content: {
                     ...mockNode1.content,
                     sizeInBytes: 104857600
                 }
-            } };
+            }
+        };
         documentList.onNodeClick(node);
 
         fixture.detectChanges();
@@ -1597,7 +1549,6 @@ describe('DocumentList', () => {
     });
 
     describe('Preselect nodes', () => {
-
         beforeEach(() => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);
         });
@@ -1634,7 +1585,10 @@ describe('DocumentList', () => {
 
         it('should call the datatable select row method for each preselected node', async () => {
             const datatableSelectRowSpy = spyOn(documentList.dataTable, 'selectRow');
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
 
             spyOn(documentList, 'preselectRowsOfPreselectedNodes');
             documentList.preselectedRows = fakeDatatableRows;
@@ -1665,7 +1619,10 @@ describe('DocumentList', () => {
 
         it('should return only the first preselected row when selection mode is single', () => {
             documentList.selectionMode = 'single';
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             documentList.preselectedRows = fakeDatatableRows;
             const preselectedRows = documentList.getPreselectedRowsBasedOnSelectionMode();
 
@@ -1675,7 +1632,10 @@ describe('DocumentList', () => {
 
         it('should return all the preselected rows when selection mode is multiple', () => {
             documentList.selectionMode = 'multiple';
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             documentList.preselectedRows = fakeDatatableRows;
             const preselectedRows = documentList.getPreselectedRowsBasedOnSelectionMode();
 
@@ -1692,7 +1652,10 @@ describe('DocumentList', () => {
 
         it('should the combined selection be only the first preselected row when selection mode is single', () => {
             const getSelectionFromAdapterSpy = spyOn(documentList.data, 'getSelectedRows');
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             documentList.preselectedRows = fakeDatatableRows;
             documentList.selectionMode = 'single';
             const selection = documentList.getSelectionBasedOnSelectionMode();
@@ -1703,7 +1666,10 @@ describe('DocumentList', () => {
         });
 
         it('should get the selection from the adapter when selection mode is multiple', () => {
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             fakeDatatableRows[0].isSelected = true;
             fakeDatatableRows[1].isSelected = false;
             documentList.data.setRows(fakeDatatableRows);
@@ -1747,7 +1713,10 @@ describe('DocumentList', () => {
             const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
             const onNodeUnselectSpy = spyOn(documentList, 'onNodeUnselect');
 
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             fakeDatatableRows[0].isSelected = true;
             documentList.data.setRows(fakeDatatableRows);
             let selection = documentList.data.getSelectedRows();
@@ -1766,7 +1735,10 @@ describe('DocumentList', () => {
         it('should preselect the rows of the preselected nodes', () => {
             const getRowByNodeIdSpy = spyOn(documentList.data, 'getRowByNodeId').and.callThrough();
 
-            const fakeDatatableRows = [new ShareDataRow(mockPreselectedNodes[0], contentService, null), new ShareDataRow(mockPreselectedNodes[1], contentService, null)];
+            const fakeDatatableRows = [
+                new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+                new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+            ];
             documentList.data.setRows(fakeDatatableRows);
 
             documentList.selectionMode = 'multiple';
@@ -1814,7 +1786,7 @@ describe('DocumentList', () => {
 
 @Component({
     template: `
-        <adf-document-list  #customDocumentList>
+        <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
                 <span id="custom-loading-template">This is a custom loading template</span>
             </adf-custom-loading-content-template>
@@ -1840,12 +1812,7 @@ describe('DocumentListComponent rendering', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [CustomTemplateComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule,
-                DataTableModule,
-                DocumentListModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule, DataTableModule, DocumentListModule]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;
@@ -1905,5 +1872,4 @@ describe('DocumentListComponent rendering', () => {
         const cell3 = fixture.nativeElement.querySelector('div[title="Id"][data-automation-id="Name 3"]');
         expect(cell3.innerText).toBe('3');
     });
-
 });

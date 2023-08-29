@@ -31,7 +31,7 @@ import {
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, Pagination, Node, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
     NotificationService,
     DataRow,
@@ -71,12 +71,9 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        {provide: FormRenderingService, useClass: ProcessFormRenderingService}
-    ]
+    providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }]
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
-
     protected onDestroy$ = new Subject<boolean>();
 
     errorMessage: string = null;
@@ -88,9 +85,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
 
     selectionModes = [
-        {value: 'none', viewValue: 'None'},
-        {value: 'single', viewValue: 'Single'},
-        {value: 'multiple', viewValue: 'Multiple'}
+        { value: 'none', viewValue: 'None' },
+        { value: 'single', viewValue: 'Single' },
+        { value: 'multiple', viewValue: 'Multiple' }
     ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -199,13 +196,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('documentList', {static: true})
+    @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent, {static: true})
+    @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
     permissionsStyle: PermissionStyleModel[] = [];
@@ -217,19 +214,20 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
 
-    constructor(private notificationService: NotificationService,
-                private uploadService: UploadService,
-                private contentService: ContentService,
-                private dialog: MatDialog,
-                private location: Location,
-                private router: Router,
-                private preference: UserPreferencesService,
-                private preview: PreviewService,
-                @Optional() private route: ActivatedRoute,
-                private contentMetadataService: ContentMetadataService,
-                private dialogAspectListService: DialogAspectListService,
-                private nodeService: NodesApiService) {
-    }
+    constructor(
+        private notificationService: NotificationService,
+        private uploadService: UploadService,
+        private contentService: ContentService,
+        private dialog: MatDialog,
+        private location: Location,
+        private router: Router,
+        private preference: UserPreferencesService,
+        private preview: PreviewService,
+        @Optional() private route: ActivatedRoute,
+        private contentMetadataService: ContentMetadataService,
+        private dialogAspectListService: DialogAspectListService,
+        private nodeService: NodesApiService
+    ) {}
 
     showFile(event) {
         const entry = event.value.entry;
@@ -273,27 +271,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 this.onFileUploadEvent(value[0]);
             });
 
-        this.uploadService.fileUploadDeleted
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadDeleted.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFileUploadEvent(value));
 
-        this.contentService.folderCreated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => this.onFolderCreated(value));
+        this.contentService.folderCreated.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFolderCreated(value));
 
-        this.contentService.folderCreate
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => this.onFolderAction(value));
+        this.contentService.folderCreate.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFolderAction(value));
 
-        this.contentService.folderEdit
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(value => this.onFolderAction(value));
+        this.contentService.folderEdit.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFolderAction(value));
 
-        this.contentMetadataService.error
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((err: { message: string }) => {
-                this.notificationService.showError(err.message);
-            });
+        this.contentMetadataService.error.pipe(takeUntil(this.onDestroy$)).subscribe((err: { message: string }) => {
+            this.notificationService.showError(err.message);
+        });
     }
 
     onFileUploadEvent(event: FileUploadEvent) {
@@ -326,9 +314,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         } as Pagination;
     }
 
-    getCurrentDocumentListNode(): MinimalNodeEntity[] {
+    getCurrentDocumentListNode(): NodeEntry[] {
         if (this.documentList.folderNode) {
-            return [{entry: this.documentList.folderNode}];
+            return [{ entry: this.documentList.folderNode }];
         } else {
             return [];
         }
@@ -416,7 +404,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: {contentEntry, showComments, allowDownload},
+                data: { contentEntry, showComments, allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -427,7 +415,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onAspectUpdate(event: any) {
         this.dialogAspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
-            this.nodeService.updateNode(event.value.entry.id, {aspectNames: [...aspectList]}).subscribe(() => {
+            this.nodeService.updateNode(event.value.entry.id, { aspectNames: [...aspectList] }).subscribe(() => {
                 this.openSnackMessageInfo('Node Aspects Updated');
             });
         });
@@ -476,7 +464,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return null;
     }
 
-    canEditFolder(selection: Array<MinimalNodeEntity>): boolean {
+    canEditFolder(selection: Array<NodeEntry>): boolean {
         if (selection && selection.length === 1) {
             const entry = selection[0].entry;
 
@@ -487,7 +475,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    canCreateContent(parentNode: MinimalNodeEntryEntity): boolean {
+    canCreateContent(parentNode: Node): boolean {
         if (parentNode) {
             return this.contentService.hasAllowableOperations(parentNode, 'create');
         }
@@ -521,10 +509,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     toggleGalleryView(): void {
         this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
-        const url = this
-            .router
-            .createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode])
-            .toString();
+        const url = this.router.createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode]).toString();
 
         this.location.go(url);
     }
@@ -611,7 +596,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             objectFromMap[filter.key] = paramValue;
         });
 
-        this.router.navigate([], {relativeTo: this.route, queryParams: objectFromMap});
+        this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
     }
 
     clearFilterNavigation() {

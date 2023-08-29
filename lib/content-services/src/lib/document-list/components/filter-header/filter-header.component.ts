@@ -22,16 +22,14 @@ import { SearchHeaderQueryBuilderService } from '../../../search/services/search
 import { FilterSearch } from './../../../search/models/filter-search.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NodePaging, MinimalNode } from '@alfresco/js-api';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 
 @Component({
     selector: 'adf-filter-header',
     templateUrl: './filter-header.component.html',
-    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService}]
+    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }]
 })
 export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
-
     /** (optional) Initial filter value to sort . */
     @Input()
     value: any = {};
@@ -47,18 +45,18 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
-                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
+    constructor(
+        @Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any,
+        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService
+    ) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
-        this.searchFilterQueryBuilder.executed
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((newNodePaging: NodePaging) => {
-                this.documentList.node = newNodePaging;
-                this.documentList.reload();
-            });
+        this.searchFilterQueryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((newNodePaging) => {
+            this.documentList.node = newNodePaging;
+            this.documentList.reload();
+        });
 
         this.initDataPagination();
         this.initDataSorting();
@@ -84,24 +82,20 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     initDataPagination() {
-        this.documentList.pagination
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((newPagination: PaginationModel) => {
-                this.searchFilterQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
-            });
+        this.documentList.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((newPagination: PaginationModel) => {
+            this.searchFilterQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
+        });
     }
 
     initDataSorting() {
-        this.documentList.sortingSubject
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((sorting: DataSorting[]) => {
-                this.searchFilterQueryBuilder.setSorting(sorting);
-            });
+        this.documentList.sortingSubject.pipe(takeUntil(this.onDestroy$)).subscribe((sorting: DataSorting[]) => {
+            this.searchFilterQueryBuilder.setSorting(sorting);
+        });
     }
 
     private configureSearchParent(currentFolderId: string) {
         if (this.searchFilterQueryBuilder.isCustomSourceNode(currentFolderId)) {
-            this.searchFilterQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node: MinimalNode) => {
+            this.searchFilterQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node) => {
                 this.initSearchHeader(node.id);
             });
         } else {
@@ -116,7 +110,6 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
                 this.searchFilterQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
             });
         }
-
     }
 
     ngOnDestroy() {

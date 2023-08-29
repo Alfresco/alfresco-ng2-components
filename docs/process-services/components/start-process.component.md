@@ -133,9 +133,9 @@ to _alfresco-1002_ as follows:
 You then need to pass the node as the input `values` object with the other properties:
 
 ```ts
-let node: MinimalNode = null;
+let node: Node = null;
 
- this.nodesApiService.getNode(NODE_ID).subscribe((minimalNode) => this.node = minimalNode);
+ this.nodesApiService.getNode(NODE_ID).subscribe((res) => this.node = res);
 
 const formValues: FormValues  = {
     'file' : node

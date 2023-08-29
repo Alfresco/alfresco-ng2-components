@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-import { MinimalNode } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CardViewContentUpdateService } from './card-view-content-update.service';
 
 describe('CardViewContentUpdateService', () => {
+    let cardViewContentUpdateService: CardViewContentUpdateService;
 
-  let cardViewContentUpdateService: CardViewContentUpdateService;
+    beforeEach(() => {
+        cardViewContentUpdateService = TestBed.inject(CardViewContentUpdateService);
+    });
 
-        beforeEach(() => {
-          cardViewContentUpdateService = TestBed.inject(CardViewContentUpdateService);
+    it('should send updated node when aspect changed', fakeAsync(() => {
+        const fakeNode = { id: 'Bigfoot' } as Node;
+        cardViewContentUpdateService.updatedAspect$.subscribe((node) => {
+            expect(node.id).toBe('Bigfoot');
         });
 
-        it('should send updated node when aspect changed', fakeAsync(() => {
-            const fakeNode: MinimalNode = { id: 'Bigfoot'} as MinimalNode;
-            cardViewContentUpdateService.updatedAspect$.subscribe((node: MinimalNode) => {
-                expect(node.id).toBe('Bigfoot');
-            });
-
-            cardViewContentUpdateService.updateNodeAspect(fakeNode);
-        }));
+        cardViewContentUpdateService.updateNodeAspect(fakeNode);
+    }));
 });

@@ -15,11 +15,11 @@ Extends from [`BaseCardViewUpdate`](../../../lib/core/src/lib/card-view/interfac
 ```ts
 export interface BaseCardViewContentUpdate {
     itemUpdated$: Subject<UpdateNotification>;
-    updatedAspect$: Subject<MinimalNode>;
+    updatedAspect$: Subject<Node>;
 
     update(property: CardViewBaseItemModel, newValue: any);
     updateElement(notification: CardViewBaseItemModel);
-    updateNodeAspect(node: MinimalNode);
+    updateNodeAspect(node: Node);
 }
 ```
 

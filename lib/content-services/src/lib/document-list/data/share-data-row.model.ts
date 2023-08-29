@@ -16,7 +16,7 @@
  */
 
 import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
-import { MinimalNode, NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ContentService } from './../../common/services/content.service';
 
@@ -38,16 +38,19 @@ export class ShareDataRow implements DataRow {
         this.cache = {};
     }
 
-    constructor(private obj: NodeEntry,
-                private contentService: ContentService,
-                private permissionsStyle: PermissionStyleModel[],
-                private thumbnailService?: ThumbnailService,
-                private allowDropFiles?: boolean) {
+    constructor(
+        private obj: NodeEntry,
+        private contentService: ContentService,
+        private permissionsStyle: PermissionStyleModel[],
+        private thumbnailService?: ThumbnailService,
+        private allowDropFiles?: boolean
+    ) {
         if (!obj) {
             throw new Error(ERR_OBJECT_NOT_FOUND);
         }
 
-        this.isDropTarget = allowDropFiles !== undefined ? this.allowDropFiles && this.checkNodeTypeAndPermissions(obj) : this.checkNodeTypeAndPermissions(obj);
+        this.isDropTarget =
+            allowDropFiles !== undefined ? this.allowDropFiles && this.checkNodeTypeAndPermissions(obj) : this.checkNodeTypeAndPermissions(obj);
         if (permissionsStyle) {
             this.cssClass = this.getPermissionClass(obj);
         }
@@ -62,25 +65,25 @@ export class ShareDataRow implements DataRow {
         let permissionsClasses = '';
 
         this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
-
-            if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
-
+            if (
+                this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) ||
+                this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)
+            ) {
                 if (this.contentService.hasAllowableOperations(nodeEntity.entry, currentPermissionsStyle.permission)) {
                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
                 }
             }
-
         });
 
         return permissionsClasses;
     }
 
-    private applyPermissionStyleToFile(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFile && node.isFile);
+    private applyPermissionStyleToFile(node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
+        return currentPermissionsStyle.isFile && node.isFile;
     }
 
-    private applyPermissionStyleToFolder(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFolder && node.isFolder);
+    private applyPermissionStyleToFolder(node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
+        return currentPermissionsStyle.isFolder && node.isFolder;
     }
 
     isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {

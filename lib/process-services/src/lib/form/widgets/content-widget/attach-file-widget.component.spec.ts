@@ -18,14 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
-import {
-    FormFieldModel,
-    FormModel,
-    FormFieldTypes,
-    FormService,
-    FormFieldMetadata,
-    DownloadService
-} from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes, FormService, FormFieldMetadata, DownloadService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
@@ -101,7 +94,7 @@ const externalDefinedSourceParams = {
     }
 } as FormFieldMetadata;
 
-const fakeMinimalNode: Node = {
+const fakeNode = {
     id: 'fake',
     name: 'fake-name',
     content: {
@@ -140,7 +133,6 @@ const fakePngAnswer: any = {
 };
 
 describe('AttachFileWidgetComponent', () => {
-
     let widget: AttachFileWidgetComponent;
     let fixture: ComponentFixture<AttachFileWidgetComponent>;
     let element: HTMLInputElement;
@@ -153,11 +145,7 @@ describe('AttachFileWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule,
-                ContentModule.forRoot()
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule, ContentModule.forRoot()]
         });
         fixture = TestBed.createComponent(AttachFileWidgetComponent);
         widget = fixture.componentInstance;
@@ -218,7 +206,7 @@ describe('AttachFileWidgetComponent', () => {
         expect(fakeRepoOption2[0]).not.toBeNull();
     });
 
-    it ('should show only remote repos when just link to files is true', async () => {
+    it('should show only remote repos when just link to files is true', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -252,7 +240,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should isLink property of the selected node become true when the widget has link enabled', async () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -271,13 +259,13 @@ describe('AttachFileWidgetComponent', () => {
         await fixture.whenStable();
 
         fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeMinimalNode, isLink: true }, undefined, 'alfresco-1000-SHAREME');
+        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: true }, undefined, 'alfresco-1000-SHAREME');
     });
 
     it('should isLink property of the selected node become false when the widget has link disabled', async () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -296,13 +284,13 @@ describe('AttachFileWidgetComponent', () => {
         await fixture.whenStable();
 
         fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeMinimalNode, isLink: false }, undefined, 'alfresco-1000-SHAREME');
+        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: false }, undefined, 'alfresco-1000-SHAREME');
     });
 
     it('should be able to upload files coming from content node selector', async () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -337,7 +325,7 @@ describe('AttachFileWidgetComponent', () => {
         };
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValues(of(fakePngAnswer), of(fakePngUpload));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -374,7 +362,7 @@ describe('AttachFileWidgetComponent', () => {
         widget.field.params = definedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByFolderId').and.returnValue(of([fakeNode]));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -430,7 +418,6 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     describe('when a file is uploaded', () => {
-
         beforeEach(async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
@@ -557,7 +544,6 @@ describe('AttachFileWidgetComponent', () => {
             await fixture.whenStable();
             const downloadOption = fixture.debugElement.query(By.css('#file-1155-download-file')).nativeElement as HTMLButtonElement;
             expect(downloadOption.disabled).toBeFalsy();
-
         });
 
         it('should not display the show button file when there is no contentAvailable', async () => {
@@ -572,7 +558,7 @@ describe('AttachFileWidgetComponent', () => {
             const showOption = fixture.debugElement.query(By.css('#file-1155-show-file')).nativeElement as HTMLButtonElement;
             expect(showOption.disabled).toBeTruthy();
         });
-   });
+    });
 
     it('should be able to upload files when a defined folder from external content service', async () => {
         widget.field = new FormFieldModel(new FormModel(), { type: FormFieldTypes.UPLOAD, value: [] });
@@ -580,7 +566,7 @@ describe('AttachFileWidgetComponent', () => {
         widget.field.params = externalDefinedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
-        spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));
+        spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeNode]));
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -605,7 +591,7 @@ describe('AttachFileWidgetComponent', () => {
         widget.field.params = externalDefinedSourceParams;
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
-        const openLoginSpy = spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeMinimalNode]));
+        const openLoginSpy = spyOn(attachFileWidgetDialogService, 'openLogin').and.returnValue(of([fakeNode]));
 
         fixture.detectChanges();
         await fixture.whenStable();

@@ -18,22 +18,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    MinimalNode,
-    Node,
-    NodeEntry,
-    NodePaging,
-    ResultSetPaging,
-    SiteEntry,
-    SitePaging,
-    UserInfo
-} from '@alfresco/js-api';
-import {
-    AppConfigService,
-    DataRow,
-    ThumbnailService,
-    DataColumn
-} from '@alfresco/adf-core';
+import { Node, NodeEntry, NodePaging, ResultSetPaging, SiteEntry, SitePaging, UserInfo } from '@alfresco/js-api';
+import { AppConfigService, DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
@@ -90,17 +76,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
     };
 
     beforeEach(() => {
-       TestBed.configureTestingModule({
-           imports: [
-               TranslateModule.forRoot(),
-               ContentTestingModule
-           ],
-           schemas: [CUSTOM_ELEMENTS_SCHEMA]
-       });
+        TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        });
     });
 
     describe('General component features', () => {
-
         beforeEach(() => {
             fixture = TestBed.createComponent(ContentNodeSelectorPanelComponent);
             component = fixture.componentInstance;
@@ -116,10 +98,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
             searchQueryBuilderService = component.queryBuilderService;
             component.queryBuilderService.resetToDefaults();
 
-            spyOn(nodeService, 'getNode').and.returnValue(of(new MinimalNode({
-                id: 'fake-node',
-                path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
-            })));
+            spyOn(nodeService, 'getNode').and.returnValue(
+                of(
+                    new Node({
+                        id: 'fake-node',
+                        path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
+                    })
+                )
+            );
             const fakeSite = new SiteEntry({
                 entry: {
                     id: 'fake-site',
@@ -136,7 +122,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Site selection', () => {
-
             beforeEach(() => {
                 spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
                 component.currentFolderId = 'fake-starting-folder';
@@ -167,7 +152,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Parameters', () => {
-
             let documentListService: DocumentListService;
 
             beforeEach(() => {
@@ -175,14 +159,15 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry()));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({
-                    list: {
-                        entries: [
-                            { entry: { guid: 'namek', id: 'namek' } },
-                            { entry: { guid: 'blog', id: 'blog' } }
-                        ]
-                    }
-                })));
+                spyOn(sitesService, 'getSites').and.returnValue(
+                    of(
+                        new SitePaging({
+                            list: {
+                                entries: [{ entry: { guid: 'namek', id: 'namek' } }, { entry: { guid: 'blog', id: 'blog' } }]
+                            }
+                        })
+                    )
+                );
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -207,8 +192,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
-                    .toBe(false, 'did not filter out blog');
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(false, 'did not filter out blog');
             });
 
             it('should still be able to filter out the exclude site content after rowFilter changes', () => {
@@ -227,13 +211,17 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     properties: { 'st:componentId': 'blog' },
                     isFile: true
                 });
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
-                    .toBe(false, 'did not filter out blog with filterFunction1');
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(
+                    false,
+                    'did not filter out blog with filterFunction1'
+                );
 
                 component.rowFilter = filterFunction2;
                 fixture.detectChanges();
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null))
-                    .toBe(false, 'did not filter out blog with filterFunction2');
+                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(
+                    false,
+                    'did not filter out blog with filterFunction2'
+                );
             });
 
             it('should NOT filter out any site content by default', () => {
@@ -245,33 +233,28 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should render search input by default', () => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
-                    .not.toBe(null);
+                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input')).not.toBe(null);
             });
 
             it('should not render search input if `showSearch` is false', () => {
                 component.showSearch = false;
                 fixture.detectChanges();
-                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input'))
-                    .toBe(null);
+                expect(fixture.debugElement.nativeElement.querySelector('.adf-content-node-selector-content-input')).toBe(null);
             });
 
             it('should render sites list dropdown by default', () => {
                 fixture.detectChanges();
-                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
-                    .not.toBe(null);
+                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown')).not.toBe(null);
             });
 
             it('should not render sites list dropdown if `showDropdownSiteList` is false', () => {
                 component.showDropdownSiteList = false;
                 fixture.detectChanges();
-                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown'))
-                    .toBe(null);
+                expect(fixture.debugElement.nativeElement.querySelector('adf-sites-dropdown')).toBe(null);
             });
         });
 
         describe('Breadcrumbs', () => {
-
             let documentListService: DocumentListService;
 
             beforeEach(() => {
@@ -292,7 +275,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
                 expect(breadcrumb.componentInstance.folderNode).toEqual(undefined);
-
             });
 
             it('should not show the breadcrumb if search was performed as last action', async () => {
@@ -314,7 +296,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
-
             });
 
             it('should show the breadcrumb in search results for a valid node selection', async () => {
@@ -377,7 +358,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     name: 'trans-node-name',
                     path: { elements: [{ id: 'testId', name: 'testName' }] }
                 };
-                component.breadcrumbTransform = (() => transformedFolderNode);
+                component.breadcrumbTransform = () => transformedFolderNode;
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -391,7 +372,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Chosen node', () => {
-
             const entry: Node = { id: 'fakeid' } as Node;
             const nodePage: NodePaging = { list: { pagination: {} } };
             let hasAllowableOperations;
@@ -464,7 +444,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             describe('in the case when isSelectionValid is a custom function for checking permissions,', () => {
-
                 beforeEach(() => {
                     component.isSelectionValid = returnHasPermission;
                 });
@@ -528,7 +507,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             describe('in the case when isSelectionValid is null', () => {
-
                 beforeEach(() => {
                     component.isSelectionValid = null;
                 });
@@ -579,7 +557,6 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             describe('in the case when isSelectionValid is not defined', () => {
-
                 beforeEach(() => {
                     component.isSelectionValid = undefined;
                 });
@@ -632,10 +609,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     const isUploadingSpy = spyOn(uploadService, 'isUploading').and.returnValue(true);
                     const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
 
-                    const fakeFileModels = [new FileModel({
-                        name: 'fake-name',
-                        size: 100
-                    } as File), new FileModel({ name: 'fake-name-2', size: 200 } as File)];
+                    const fakeFileModels = [
+                        new FileModel({
+                            name: 'fake-name',
+                            size: 100
+                        } as File),
+                        new FileModel({ name: 'fake-name-2', size: 200 } as File)
+                    ];
                     const fileUploadCompleteEvent = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
                     uploadService.fileUploadComplete.next(fileUploadCompleteEvent);
 
@@ -698,11 +678,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     expect(component.getPreselectNodesBasedOnSelectionMode()).toEqual([]);
                 });
             });
-
         });
 
         describe('Search panel', () => {
-
             beforeEach(() => {
                 contentNodeSelectorPanelService.customModels = undefined;
             });
