@@ -522,10 +522,8 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(
-                new Promise((resolve) => resolve({ entry: fakeNodeWithProperties }))
-            );
-            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(new Promise((resolve) => resolve('fake-properties')));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(Promise.resolve({ entry: fakeNodeWithProperties }));
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(Promise.resolve('fake-properties'));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
@@ -641,9 +639,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('contentModelFormFileHandler', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(
-                new Promise((resolve) => resolve({ entry: fakeNodeWithProperties }))
-            );
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(Promise.resolve({ entry: fakeNodeWithProperties }));
             contentModelFormFileHandlerSpy = spyOn(widget, 'contentModelFormFileHandler').and.callThrough();
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
             contentClickedSpy = spyOn(formService.formContentClicked, 'next');
