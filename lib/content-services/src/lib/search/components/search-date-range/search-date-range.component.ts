@@ -227,11 +227,11 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         this.setFromMaxDate();
     }
 
-    setLocale(locale) {
+    setLocale(locale: string) {
         this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
     }
 
-    hasParseError(formControl): boolean {
+    hasParseError(formControl: UntypedFormControl): boolean {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 

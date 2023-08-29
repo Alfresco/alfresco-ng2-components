@@ -38,7 +38,7 @@ import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
 
 const FORMAT_DATE_ACTIVITI = 'yyyy-MM-dd';
 
