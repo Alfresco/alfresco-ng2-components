@@ -24,70 +24,74 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
 import { AspectListService } from './services/aspect-list.service';
 import { delay } from 'rxjs/operators';
-import { AspectEntry, MinimalNode } from '@alfresco/js-api';
+import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
-const aspectListMock: AspectEntry[] = [{
-    entry: {
-        parentId: 'frs:aspectZero',
-        id: 'frs:AspectOne',
-        description: 'First Aspect with random description',
-        title: 'FirstAspect',
-        properties: [
-            {
-                id: 'channelPassword',
-                title: 'The authenticated channel password',
-                dataType: 'd:encrypted'
-            },
-            {
-                id: 'channelUsername',
-                title: 'The authenticated channel username',
-                dataType: 'd:encrypted'
-            }
-        ]
+const aspectListMock: AspectEntry[] = [
+    {
+        entry: {
+            parentId: 'frs:aspectZero',
+            id: 'frs:AspectOne',
+            description: 'First Aspect with random description',
+            title: 'FirstAspect',
+            properties: [
+                {
+                    id: 'channelPassword',
+                    title: 'The authenticated channel password',
+                    dataType: 'd:encrypted'
+                },
+                {
+                    id: 'channelUsername',
+                    title: 'The authenticated channel username',
+                    dataType: 'd:encrypted'
+                }
+            ]
+        }
+    },
+    {
+        entry: {
+            parentId: 'frs:AspectZer',
+            id: 'frs:SecondAspect',
+            description: 'Second Aspect description',
+            title: 'SecondAspect',
+            properties: [
+                {
+                    id: 'assetId',
+                    title: 'Published Asset Id',
+                    dataType: 'd:text'
+                },
+                {
+                    id: 'assetUrl',
+                    title: 'Published Asset URL',
+                    dataType: 'd:text'
+                }
+            ]
+        }
     }
-},
-{
-    entry: {
-        parentId: 'frs:AspectZer',
-        id: 'frs:SecondAspect',
-        description: 'Second Aspect description',
-        title: 'SecondAspect',
-        properties: [
-            {
-                id: 'assetId',
-                title: 'Published Asset Id',
-                dataType: 'd:text'
-            },
-            {
-                id: 'assetUrl',
-                title: 'Published Asset URL',
-                dataType: 'd:text'
-            }
-        ]
-    }
-}];
+];
 
-const customAspectListMock: AspectEntry[] = [{
-    entry: {
-        parentId: 'cst:customAspect',
-        id: 'cst:customAspect',
-        description: 'Custom Aspect with random description',
-        title: 'CustomAspect',
-        properties: [
-            {
-                id: 'channelPassword',
-                title: 'The authenticated channel password',
-                dataType: 'd:propA'
-            },
-            {
-                id: 'channelUsername',
-                title: 'The authenticated channel username',
-                dataType: 'd:propB'
-            }
-        ]
+const customAspectListMock: AspectEntry[] = [
+    {
+        entry: {
+            parentId: 'cst:customAspect',
+            id: 'cst:customAspect',
+            description: 'Custom Aspect with random description',
+            title: 'CustomAspect',
+            properties: [
+                {
+                    id: 'channelPassword',
+                    title: 'The authenticated channel password',
+                    dataType: 'd:propA'
+                },
+                {
+                    id: 'channelUsername',
+                    title: 'The authenticated channel username',
+                    dataType: 'd:propB'
+                }
+            ]
+        }
     }
-}];
+];
 
 describe('AspectListDialogComponent', () => {
     let fixture: ComponentFixture<AspectListDialogComponent>;
@@ -97,10 +101,9 @@ describe('AspectListDialogComponent', () => {
     const event = new KeyboardEvent('keydown', {
         bubbles: true,
         keyCode: 27
-    } as KeyboardEventInit );
+    } as KeyboardEventInit);
 
     describe('Without passing node id', () => {
-
         beforeEach(async () => {
             data = {
                 title: 'Title',
@@ -110,11 +113,7 @@ describe('AspectListDialogComponent', () => {
             };
 
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    ContentTestingModule,
-                    MatDialogModule
-                ],
+                imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
                 providers: [
                     { provide: MAT_DIALOG_DATA, useValue: data },
                     {
@@ -156,7 +155,9 @@ describe('AspectListDialogComponent', () => {
             expect(dialogTitle).not.toBeNull();
             expect(dialogTitle.innerText).toBe(data.title);
 
-            const dialogDescription = fixture.nativeElement.querySelector('[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-description');
+            const dialogDescription = fixture.nativeElement.querySelector(
+                '[data-automation-id="aspect-list-dialog-title"] .adf-aspect-list-dialog-description'
+            );
             expect(dialogDescription).not.toBeNull();
             expect(dialogDescription.innerText).toBe(data.description);
 
@@ -228,7 +229,11 @@ describe('AspectListDialogComponent', () => {
         });
 
         it('should complete the select stream Cancel button is clicked', (done) => {
-            data.select.subscribe(() => { }, () => { }, () => done());
+            data.select.subscribe(
+                () => {},
+                () => {},
+                () => done()
+            );
             const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel');
             expect(cancelButton).toBeDefined();
             cancelButton.click();
@@ -237,7 +242,6 @@ describe('AspectListDialogComponent', () => {
     });
 
     describe('Passing the node id', () => {
-
         beforeEach(async () => {
             data = {
                 title: 'Title',
@@ -248,11 +252,7 @@ describe('AspectListDialogComponent', () => {
             };
 
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    ContentTestingModule,
-                    MatDialogModule
-                ],
+                imports: [TranslateModule.forRoot(), ContentTestingModule, MatDialogModule],
                 providers: [
                     { provide: MAT_DIALOG_DATA, useValue: data },
                     {
@@ -274,7 +274,9 @@ describe('AspectListDialogComponent', () => {
             spyOn(aspectListService, 'getAspects').and.returnValue(of([...aspectListMock, ...customAspectListMock]));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
-            spyOn(nodeService, 'getNode').and.returnValue(of(new MinimalNode({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0)));
+            spyOn(nodeService, 'getNode').and.returnValue(
+                of(new Node({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
+            );
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.componentInstance.data.select = new Subject<string[]>();
             fixture.detectChanges();
@@ -326,5 +328,4 @@ describe('AspectListDialogComponent', () => {
             expect(applyButton.disabled).toBe(false);
         });
     });
-
 });

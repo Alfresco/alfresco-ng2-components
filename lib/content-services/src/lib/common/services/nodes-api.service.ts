@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
 import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { catchError, map } from 'rxjs/operators';
@@ -26,7 +26,6 @@ import { NodeMetadata } from '../models/node-metadata.model';
     providedIn: 'root'
 })
 export class NodesApiService {
-
     /**
      * Publish/subscribe to events related to node updates.
      */
@@ -44,11 +43,9 @@ export class NodesApiService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private preferences: UserPreferencesService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
-    private getEntryFromEntity(entity: NodeEntry) {
+    private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
     }
 
@@ -59,7 +56,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Node information
      */
-    getNode(nodeId: string, options: any = {}): Observable<MinimalNode> {
+    getNode(nodeId: string, options: any = {}): Observable<Node> {
         const defaults = {
             include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
@@ -86,9 +83,7 @@ export class NodesApiService {
         };
         const queryOptions = Object.assign(defaults, options);
 
-        return from(this.nodesApi.listNodeChildren(nodeId, queryOptions)).pipe(
-            catchError((err) => throwError(err))
-        );
+        return from(this.nodesApi.listNodeChildren(nodeId, queryOptions)).pipe(catchError((err) => throwError(err)));
     }
 
     /**
@@ -99,7 +94,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new node
      */
-    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
+    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
         return from(this.nodesApi.createNode(parentNodeId, nodeBody, options)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
@@ -114,7 +109,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new folder
      */
-    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
+    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
         const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
         return this.createNode(parentNodeId, body, options);
     }
@@ -127,7 +122,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
-    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
+    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
         const defaults = {
             include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
         };
@@ -147,9 +142,7 @@ export class NodesApiService {
      * @returns Empty result that notifies when the deletion is complete
      */
     deleteNode(nodeId: string, options: any = {}): Observable<any> {
-        return from(this.nodesApi.deleteNode(nodeId, options)).pipe(
-            catchError((err) => throwError(err))
-        );
+        return from(this.nodesApi.deleteNode(nodeId, options)).pipe(catchError((err) => throwError(err)));
     }
 
     /**
@@ -158,7 +151,7 @@ export class NodesApiService {
      * @param nodeId ID of the node to restore
      * @returns Details of the restored node
      */
-    restoreNode(nodeId: string): Observable<MinimalNode> {
+    restoreNode(nodeId: string): Observable<Node> {
         return from(this.trashcanApi.restoreDeletedNode(nodeId)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
@@ -172,8 +165,7 @@ export class NodesApiService {
      * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return from(this.nodesApi.getNode(nodeId))
-            .pipe(map(this.cleanMetadataFromSemicolon));
+        return from(this.nodesApi.getNode(nodeId)).pipe(map(this.cleanMetadataFromSemicolon));
     }
 
     /**
@@ -204,10 +196,7 @@ export class NodesApiService {
      * @returns Content data
      */
     getNodeContent(nodeId: string): Observable<any> {
-        return from(this.nodesApi.getNodeContent(nodeId))
-            .pipe(
-                catchError((err) => throwError(err))
-            );
+        return from(this.nodesApi.getNodeContent(nodeId)).pipe(catchError((err) => throwError(err)));
     }
 
     /**
@@ -231,8 +220,8 @@ export class NodesApiService {
 
     private generateUuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            const r = (Math.random() * 16) | 0;
+            const v = c === 'x' ? r : (r & 0x3) | 0x8;
             return v.toString(16);
         });
     }
@@ -244,9 +233,9 @@ export class NodesApiService {
             for (const key in nodeEntry.entry.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {
-                        metadata [key.split(':')[1]] = nodeEntry.entry.properties[key];
+                        metadata[key.split(':')[1]] = nodeEntry.entry.properties[key];
                     } else {
-                        metadata [key] = nodeEntry.entry.properties[key];
+                        metadata[key] = nodeEntry.entry.properties[key];
                     }
                 }
             }
@@ -254,5 +243,4 @@ export class NodesApiService {
 
         return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
     }
-
 }

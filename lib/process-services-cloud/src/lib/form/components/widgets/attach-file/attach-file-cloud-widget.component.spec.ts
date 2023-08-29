@@ -34,7 +34,7 @@ import {
 import {
     allSourceParams,
     contentSourceParam,
-    fakeMinimalNode,
+    fakeNode,
     mockNodeId,
     fakeLocalPngResponse,
     onlyLocalParams,
@@ -61,13 +61,18 @@ import {
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ContentModule, ContentNodeSelectorPanelService, NewVersionUploaderDataAction, NewVersionUploaderService } from '@alfresco/adf-content-services';
+import {
+    ContentModule,
+    ContentNodeSelectorPanelService,
+    NewVersionUploaderDataAction,
+    NewVersionUploaderService
+} from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { FormCloudModule } from '../../../form-cloud.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const mockNodeToBeVersioned: any = ({
+const mockNodeToBeVersioned: any = {
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: '2017-05-24T15:08:55.640Z',
@@ -83,10 +88,13 @@ const mockNodeToBeVersioned: any = ({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -94,7 +102,7 @@ const mockNodeToBeVersioned: any = ({
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
     properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
     allowableOperations: ['delete', 'update']
-});
+};
 
 describe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
@@ -115,7 +123,15 @@ describe('AttachFileCloudWidgetComponent', () => {
     let newVersionUploaderService: NewVersionUploaderService;
     let notificationService: NotificationService;
 
-    const createUploadWidgetField = (form: FormModel, fieldId: string, value?: any, params?: any, multiple?: boolean, name?: string, readOnly?: boolean) => {
+    const createUploadWidgetField = (
+        form: FormModel,
+        fieldId: string,
+        value?: any,
+        params?: any,
+        multiple?: boolean,
+        name?: string,
+        readOnly?: boolean
+    ) => {
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.UPLOAD,
             value,
@@ -134,12 +150,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                FormCloudModule,
-                ContentModule.forRoot()
-            ],
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         downloadService = TestBed.inject(DownloadService);
@@ -147,15 +158,11 @@ describe('AttachFileCloudWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         processCloudContentService = TestBed.inject(ProcessCloudContentService);
-        contentCloudNodeSelectorService = TestBed.inject(
-            ContentCloudNodeSelectorService
-        );
-        appConfigService = TestBed.inject(
-            AppConfigService
-        );
+        contentCloudNodeSelectorService = TestBed.inject(ContentCloudNodeSelectorService);
+        appConfigService = TestBed.inject(AppConfigService);
         formService = TestBed.inject(FormService);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
-        openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
+        openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeNode]));
         localizedDataPipe = new LocalizedDatePipe();
     });
 
@@ -234,7 +241,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('when is required', () => {
-
         it('should be able to display label with asterisk', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.UPLOAD,
@@ -252,7 +258,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('Upload widget with displayable ContentModel properties', () => {
-
         it('should display CM Properties if the file contains value', async () => {
             createUploadWidgetField(new FormModel(), 'attach-file-alfresco', [fakeLocalPngHavingCMProperties], displayableCMParams);
             fixture.detectChanges();
@@ -291,7 +296,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('destinationFolderPath', () => {
-
         it('should be able to fetch nodeId if destinationFolderPath is defined', async () => {
             const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
 
@@ -328,7 +332,9 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be able to use mapped string variable value if the destinationFolderPath set to string type variable', async () => {
-            const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeIdBasedOnStringVariableValue);
+            const getNodeIdFromPathSpy = spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(
+                mockNodeIdBasedOnStringVariableValue
+            );
 
             const form = new FormModel({ formVariables, processVariables });
             createUploadWidgetField(form, 'attach-file-alfresco', [], mockAllFileSourceWithStringVariablePathType);
@@ -469,7 +475,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('when is readonly', () => {
-
         it('should show empty list message when there are no file', async () => {
             createUploadWidgetField(new FormModel(), 'empty-test', [], onlyLocalParams, null, null, true);
 
@@ -517,8 +522,10 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('when a file is uploaded', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({ entry: fakeNodeWithProperties })));
-            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(new Promise(resolve => resolve('fake-properties')));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(
+                new Promise((resolve) => resolve({ entry: fakeNodeWithProperties }))
+            );
+            spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(new Promise((resolve) => resolve('fake-properties')));
             openUploadFileDialogSpy.and.returnValue(of([fakeNodeWithProperties]));
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
@@ -575,11 +582,9 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should preview file when show is clicked', async () => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
-            await formService.formContentClicked.subscribe(
-                (fileClicked: any) => {
-                    expect(fileClicked.nodeId).toBe('fake-properties');
-                }
-            );
+            await formService.formContentClicked.subscribe((fileClicked: any) => {
+                expect(fileClicked.nodeId).toBe('fake-properties');
+            });
 
             fixture.detectChanges();
             const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
@@ -598,7 +603,8 @@ describe('AttachFileCloudWidgetComponent', () => {
             menuButton.click();
             fixture.detectChanges();
 
-            const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata')).nativeElement as HTMLButtonElement;
+            const retrieveMetadataOption = fixture.debugElement.query(By.css('#file-fake-properties-retrieve-file-metadata'))
+                .nativeElement as HTMLButtonElement;
             retrieveMetadataOption.click();
             expect(apiServiceSpy).toHaveBeenCalledWith(fakeNodeWithProperties.id);
 
@@ -609,9 +615,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should display the default menu options if no options are provided', async () => {
             widget.field.params = onlyLocalParams;
-            const inputDebugElement = fixture.debugElement.query(
-                By.css('#attach-file-alfresco')
-            );
+            const inputDebugElement = fixture.debugElement.query(By.css('#attach-file-alfresco'));
             inputDebugElement.triggerEventHandler('change', {
                 target: { files: [fakeLocalPngAnswer] }
             });
@@ -637,7 +641,9 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     describe('contentModelFormFileHandler', () => {
         beforeEach(async () => {
-            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(new Promise(resolve => resolve({ entry: fakeNodeWithProperties })));
+            apiServiceSpy = spyOn(widget['nodesApi'], 'getNode').and.returnValue(
+                new Promise((resolve) => resolve({ entry: fakeNodeWithProperties }))
+            );
             contentModelFormFileHandlerSpy = spyOn(widget, 'contentModelFormFileHandler').and.callThrough();
             updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
             contentClickedSpy = spyOn(formService.formContentClicked, 'next');
@@ -673,7 +679,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should not be called onInit when widget has more than one file', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -681,19 +687,19 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should not be called on remove node if node removed is not the selected one', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
             widget.selectedNode = fakeNodeWithProperties;
 
             fixture.detectChanges();
 
-            widget.onRemoveAttachFile(fakeMinimalNode);
+            widget.onRemoveAttachFile(fakeNode);
 
             await fixture.whenStable();
             expect(contentModelFormFileHandlerSpy).not.toHaveBeenCalled();
         });
 
         it('should have been called on remove node if node removed is the selected one', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
             widget.selectedNode = fakeNodeWithProperties;
             fixture.detectChanges();
 
@@ -718,7 +724,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should not be called on attach file when has a file previously', async () => {
             spyOn(contentCloudNodeSelectorService, 'getNodeIdFromPath').and.returnValue(mockNodeId);
-            widget.field.value = [fakeMinimalNode];
+            widget.field.value = [fakeNode];
 
             clickOnAttachFileWidget('attach-file-alfresco');
             fixture.detectChanges();
@@ -728,7 +734,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be called when selecting a row if no previous row was selected', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
             widget.selectedNode = null;
 
             widget.onRowClicked(fakeNodeWithProperties);
@@ -743,8 +749,8 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be called when selecting a row and previous row was selected', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
-            widget.selectedNode = fakeMinimalNode;
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
+            widget.selectedNode = fakeNode;
 
             widget.onRowClicked(fakeNodeWithProperties);
 
@@ -758,7 +764,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('should be called when deselecting a row', async () => {
-            widget.field.value = [fakeNodeWithProperties, fakeMinimalNode];
+            widget.field.value = [fakeNodeWithProperties, fakeNode];
             widget.selectedNode = fakeNodeWithProperties;
 
             widget.onRowClicked(fakeNodeWithProperties);
@@ -850,8 +856,9 @@ describe('AttachFileCloudWidgetComponent', () => {
         beforeEach(() => {
             notificationService = TestBed.inject(NotificationService);
             newVersionUploaderService = TestBed.inject(NewVersionUploaderService);
-            spyOnOpenUploadNewVersionDialog = spyOn(newVersionUploaderService, 'openUploadNewVersionDialog')
-                .and.returnValue(of({ action: NewVersionUploaderDataAction.refresh }));
+            spyOnOpenUploadNewVersionDialog = spyOn(newVersionUploaderService, 'openUploadNewVersionDialog').and.returnValue(
+                of({ action: NewVersionUploaderDataAction.refresh })
+            );
             spyOnReplaceOldFileVersionWithNew = spyOn(widget, 'replaceOldFileVersionWithNew');
             spyOnShowError = spyOn(notificationService, 'showError');
         });
@@ -876,18 +883,16 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
 
         it('Should show notification error if new version uploader dialog return error', async () => {
-            const mockError = {value: 'Upload error'};
+            const mockError = { value: 'Upload error' };
             spyOnOpenUploadNewVersionDialog.and.returnValue(throwError(mockError));
             await fixture.whenStable();
             widget.onUploadNewFileVersion(mockNodeToBeVersioned);
             expect(spyOnReplaceOldFileVersionWithNew).not.toHaveBeenCalled();
             expect(spyOnShowError).toHaveBeenCalledWith(mockError.value);
         });
-
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.UPLOAD,
@@ -905,7 +910,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
             expect(tooltipElement).toBeTruthy();
             expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+        });
 
         it('should hide tooltip', async () => {
             const attachButton = fixture.nativeElement.querySelector('button');

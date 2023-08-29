@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
+import { ContentApi, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { PermissionsEnum } from '../models/permissions.enum';
@@ -33,10 +33,9 @@ export interface FolderCreatedEvent {
     providedIn: 'root'
 })
 export class ContentService {
-
-    folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
-    folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
-    folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
+    folderCreated = new Subject<FolderCreatedEvent>();
+    folderCreate = new Subject<Node>();
+    folderEdit = new Subject<Node>();
 
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {
@@ -44,10 +43,7 @@ export class ContentService {
         return this._contentApi;
     }
 
-    constructor(public authService: AuthenticationService,
-                public apiService: AlfrescoApiService) {
-    }
-
+    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService) {}
 
     /**
      * Gets a content URL for the given node.
@@ -89,17 +85,16 @@ export class ContentService {
         let hasPermissions = false;
         userId = userId ?? this.authService.getEcmUsername();
 
-        const permissions = [...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || [])]
-            .filter((currentPermission) => currentPermission.authorityId === userId);
+        const permissions = [...(node.permissions?.locallySet || []), ...(node.permissions?.inherited || [])].filter(
+            (currentPermission) => currentPermission.authorityId === userId
+        );
         if (permissions.length) {
             if (permission && permission.startsWith('!')) {
                 hasPermissions = !permissions.find((currentPermission) => currentPermission.name === permission.replace('!', ''));
             } else {
                 hasPermissions = !!permissions.find((currentPermission) => currentPermission.name === permission);
             }
-
         } else {
-
             if (permission === PermissionsEnum.CONSUMER) {
                 hasPermissions = true;
             } else if (permission === PermissionsEnum.NOT_CONSUMER) {
@@ -124,11 +119,12 @@ export class ContentService {
 
         if (node && node.allowableOperations) {
             if (allowableOperation && allowableOperation.startsWith('!')) {
-                hasAllowableOperations = !node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', ''));
+                hasAllowableOperations = !node.allowableOperations.find(
+                    (currentOperation) => currentOperation === allowableOperation.replace('!', '')
+                );
             } else {
                 hasAllowableOperations = !!node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation);
             }
-
         } else {
             if (allowableOperation && allowableOperation.startsWith('!')) {
                 hasAllowableOperations = true;
@@ -149,5 +145,4 @@ export class ContentService {
 
         return hasAllowableOperations;
     }
-
 }
