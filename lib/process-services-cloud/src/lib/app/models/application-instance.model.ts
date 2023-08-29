@@ -27,6 +27,7 @@ export interface ApplicationInstanceModel {
     icon?: string;
     description?: string;
     connectors?: any;
+    rollback?: boolean;
     descriptor?: Descriptor;
     environmentId?: string;
     environment?: string;

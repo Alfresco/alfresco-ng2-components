@@ -16,19 +16,28 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
-import { Observable, Subject, of, zip, forkJoin } from 'rxjs';
 import {
+    Category,
+    CategoryEntry,
+    CategoryLinkBody,
+    CategoryPaging,
+    Node,
+    TagBody,
+    TagEntry,
+    TagPaging
+} from '@alfresco/js-api';
+import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
+import {
+    AppConfigService,
+    CardViewBaseItemModel,
     CardViewItem,
     LogService,
     TranslationService,
-    AppConfigService,
-    CardViewBaseItemModel,
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
-import { takeUntil, debounceTime, catchError, map } from 'rxjs/operators';
+import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
@@ -310,6 +319,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             }))
             .subscribe((result) => {
                 if (result) {
+                    this.updateUndefinedNodeProperties(result.updatedNode);
                     if (this.hasContentTypeChanged(this.changedProperties)) {
                         this.cardViewContentUpdateService.updateNodeAspect(this.node);
                     }
@@ -331,6 +341,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private hasContentTypeChanged(changedProperties): boolean {
         return !!changedProperties?.nodeType;
+    }
+
+    private updateUndefinedNodeProperties(node: Node): void {
+        if (!node.properties) {
+            node.properties = {};
+        }
     }
 
     private loadProperties(node: Node) {

@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ProcessNamePipe } from './process-name.pipe';
 import { TranslateModule } from '@ngx-translate/core';
-import moment from 'moment';
 import { LocalizedDatePipe, CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessInstance } from '../process-list';
 
@@ -57,13 +56,13 @@ describe('ProcessNamePipe', () => {
     });
 
     it('should add the current datetime to the process name', () => {
-        spyOn(moment, 'now').and.returnValue(mockCurrentDate);
+        spyOn(Date.prototype, 'getTime').and.returnValue(mockCurrentDate);
         const transformResult = processNamePipe.transform(nameWithDatetimeIdentifier);
         expect(transformResult).toEqual(`${defaultName} - ${mockLocalizedCurrentDate}`);
     });
 
     it('should add the current datetime and the selected process definition name when both identifiers are present', () => {
-        spyOn(moment, 'now').and.returnValue(mockCurrentDate);
+        spyOn(Date.prototype, 'getTime').and.returnValue(mockCurrentDate);
         const transformResult = processNamePipe.transform(nameWithAllIdentifiers, fakeProcessInstanceDetails);
         expect(transformResult).toEqual(`${defaultName} ${fakeProcessInstanceDetails.processDefinitionName} - ${mockLocalizedCurrentDate}`);
     });

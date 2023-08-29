@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
 import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferenceValues, UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { differenceInDays, formatDistance } from 'date-fns';
+import * as Locales from 'date-fns/locale';
 
 @Pipe({
     name: 'adfTimeAgo'
@@ -50,13 +51,12 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
     transform(value: Date, locale?: string) {
         if (value !== null && value !== undefined ) {
             const actualLocale = locale || this.defaultLocale;
-            const then = moment(value);
-            const diff = moment().locale(actualLocale).diff(then, 'days');
+            const diff = differenceInDays(new Date(), new Date(value));
             if ( diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
-                return then.locale(actualLocale).fromNow();
+                return formatDistance(new Date(value) , new Date(), { addSuffix: true , locale: Locales[actualLocale] });
             }
         }
         return '';

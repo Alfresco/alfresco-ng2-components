@@ -15,25 +15,46 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks, flush } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Category, CategoryPaging, ClassesApi, MinimalNode, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import {
+    Category,
+    CategoryPaging,
+    ClassesApi,
+    MinimalNode,
+    Node,
+    Tag,
+    TagBody,
+    TagEntry,
+    TagPaging,
+    TagPagingList
+} from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import {
-    CardViewBaseItemModel, CardViewComponent,
-    LogService, AppConfigService, UpdateNotification
+    AppConfigService,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    LogService,
+    UpdateNotification
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { throwError, of, EMPTY } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService, TagsCreatorComponent, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
+import {
+    CategoriesManagementComponent,
+    CategoriesManagementMode,
+    CategoryService,
+    TagsCreatorComponent,
+    TagsCreatorMode,
+    TagService
+} from '@alfresco/adf-content-services';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -98,6 +119,22 @@ describe('ContentMetadataComponent', () => {
 
     function getAssignCategoriesBtn(): HTMLButtonElement {
         return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
+    }
+
+    async function updateAspectProperty(newValue: string): Promise<void> {
+        component.editable = true;
+        const property = {key: 'properties.property-key', value: 'original-value'} as CardViewBaseItemModel;
+        const expectedNode = {...node, name: 'some-modified-value'};
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
+
+        updateService.update(property, newValue);
+        tick(600);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        clickOnSave();
+
+        await fixture.whenStable();
     }
 
     beforeEach(() => {
@@ -221,20 +258,16 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should save changedProperties on save click', fakeAsync(async () => {
-            component.editable = true;
-            const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
-
-            updateService.update(property, 'updated-value');
-            tick(600);
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            clickOnSave();
-
-            await fixture.whenStable();
+            await updateAspectProperty('updated-value');
             expect(component.node).toEqual(expectedNode);
+            expect(nodesApiService.updateNode).toHaveBeenCalled();
+        }));
+
+        it('should save changedProperties which delete property and update node on save click', fakeAsync(async () => {
+            const expectedNode = {...node, name: 'some-modified-value'};
+            await updateAspectProperty('');
+            expect(component.node).toEqual({...expectedNode, properties: {}});
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
