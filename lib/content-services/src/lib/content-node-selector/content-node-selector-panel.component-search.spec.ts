@@ -118,7 +118,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Search functionality', () => {
-            let getCorrespondingNodeIdsSpy;
+            let getCorrespondingNodeIdsSpy: jasmine.Spy;
             let customResourcesService: CustomResourcesService;
             const entry: Node = { id: 'fakeid' } as Node;
 
@@ -253,14 +253,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 tick(debounceSearch);
 
-                expect(searchSpy.calls.count()).toBe(1, 'Search count should be one after only one search');
+                expect(searchSpy.calls.count()).toBe(1);
 
                 component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
                 const expectedQueryBody = mockQueryBody;
                 expectedQueryBody.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/namek'` }];
 
-                expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
+                expect(searchSpy.calls.count()).toBe(2);
                 expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
             }));
 
@@ -298,10 +298,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 tick(debounceSearch);
 
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(
-                    1,
-                    "getCorrespondingNodeIdsSpy calls count should be one after the site changes to known alias '-sites-"
-                );
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
             }));
 
@@ -328,10 +325,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 tick(debounceSearch);
 
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(
-                    0,
-                    'getCorrespondingNodeIdsSpy calls count should be 0 when no site is selected'
-                );
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0);
             }));
 
             it('should NOT get the corresponding node ids on search when NO known alias is selected from dropdown', fakeAsync(() => {
@@ -352,7 +346,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 typeToSearchBox('vegeta');
                 tick(debounceSearch);
 
-                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
+                expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0);
 
                 component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
@@ -366,8 +360,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
                 const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
 
-                expect(searchIcon).not.toBeNull('Search icon should be in the DOM');
-                expect(clearIcon).toBeNull('Clear icon should NOT be in the DOM');
+                expect(searchIcon).not.toBeNull();
+                expect(clearIcon).toBeNull();
             }));
 
             it('should show the X (clear) icon without the search icon when the search contains at least one character', fakeAsync(() => {
@@ -380,8 +374,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const searchIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-icon"]'));
                 const clearIcon = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
 
-                expect(searchIcon).toBeNull('Search icon should NOT be in the DOM');
-                expect(clearIcon).not.toBeNull('Clear icon should be in the DOM');
+                expect(searchIcon).toBeNull();
+                expect(clearIcon).not.toBeNull();
             }));
 
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', async () => {
@@ -422,7 +416,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
 
-                component.queryBuilderService.execute({ query: { query: 'search' } });
+                await component.queryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -466,7 +460,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                component.queryBuilderService.execute({ query: { query: 'search' } });
+                await component.queryBuilderService.execute({ query: { query: 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -516,9 +510,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy.calls.count()).toBe(1, 'no other search has been performed');
+                expect(searchSpy.calls.count()).toBe(1);
                 expect(component.clearSearch).toHaveBeenCalled();
-                expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku', 'back to the folder in which the search was performed');
+                expect(component.folderIdToShow).toBe('cat-girl-nuku-nuku');
                 flush();
             }));
 
@@ -560,7 +554,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it("should show the current folder's content instead of search results if search was not performed", async () => {
                 const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
@@ -572,7 +566,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList).not.toBeNull();
                 expect(
                     documentList.componentInstance.rowFilter({
                         node: {
@@ -600,8 +594,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.rowFilter).toBeTruthy('Document list should have had a rowFilter');
+                expect(documentList).not.toBeNull();
+                expect(documentList.componentInstance.rowFilter).toBeTruthy();
 
                 const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
                 expect(documentList.componentInstance.rowFilter({ node: { entry: testSiteContent } }, null, null)).toBe(false);
@@ -614,7 +608,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
 
@@ -626,7 +620,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     fixture.detectChanges();
                     const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                    expect(documentList).not.toBeNull('Document list should be shown');
+                    expect(documentList).not.toBeNull();
                     expect(component.hasValidQuery).toEqual(true);
                     expect(documentList.componentInstance.currentFolderId).toBeNull();
                     done();
@@ -671,12 +665,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     fixture.whenStable().then(() => {
                         const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
-                        expect(clearButton).not.toBeNull('Clear button should be in DOM');
+                        expect(clearButton).not.toBeNull();
                         clearButton.triggerEventHandler('click', {});
                         fixture.detectChanges();
 
                         const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                        expect(documentList).not.toBeNull('Document list should be shown');
+                        expect(documentList).not.toBeNull();
                         expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
                         done();
                     });
