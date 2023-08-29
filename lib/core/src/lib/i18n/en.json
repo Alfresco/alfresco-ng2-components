@@ -401,10 +401,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Page {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "More information",
-        "LESS_INFORMATION": "Less information"
       }
     },
     "PDF_DIALOG": {
