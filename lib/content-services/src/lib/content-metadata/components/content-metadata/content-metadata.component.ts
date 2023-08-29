@@ -117,7 +117,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayCategories = false;
 
-     /** (optional) This flag sets the metadata in read only mode
+    /** (optional) This flag sets the metadata in read only mode
      * preventing changes.
      */
      @Input()
@@ -160,7 +160,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private tagService: TagService,
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
-        private contentService: ContentService,
+        private contentService: ContentService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -270,7 +270,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     saveEditChanges(buttonType: string, event: Event, group?: any) {
         this.saveChanges(event);
-        
         switch (buttonType) {
             case 'generalInfo':
                 this.editable = !this.editable;
@@ -286,7 +285,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.editable = !group.editable;
                 }
                 break;
-            
             default:
                 break;
         }
@@ -329,7 +327,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     cancelEditChanges(buttonType: string, event: Event, group?: any) {
         this.cancelChanges(event);
-        
         switch (buttonType) {
             case 'generalInfo':
                 this.editable = !this.editable;
@@ -345,7 +342,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.editable = !group.editable;
                 }
                 break;
-            
             default:
                 break;
         }
@@ -367,13 +363,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.tagsPanelState = true;
         } else {
             this.tagsPanelState = false;
-        }  
+        }
     }
 
     toggleCategoriesEdit(event: Event): void {
         event.stopPropagation();
         this.editableCategories = !this.editableCategories;
-        this.categoryControlVisible = true
+        this.categoryControlVisible = true;
         if (this.editableCategories) {
             this.categoriesPanelState = true;
         } else {
@@ -389,7 +385,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    generalTogglePanelState() {
+    handleGeneralInfoPanelState() {
         this.generalInfoPanelState = !this.generalInfoPanelState;
         this.cdr.detectChanges();
     }
@@ -402,12 +398,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     handleCategoriesPanelState(categoriesPanelState: boolean) {
         this.categoriesPanelState= categoriesPanelState;
         this.cdr.detectChanges();
-    }
-    
-    showGroup(group: CardViewGroup): boolean {
-        const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
-
-        return properties.length > 0;
     }
 
     canExpandTheCard(group: CardViewGroup): boolean {
@@ -497,10 +487,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 const filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
                 return [...properties, ...filteredProperties];
             }));
-    }
-
-    private isEmpty(value: any): boolean {
-        return value === undefined || value === null || value === '';
     }
 
     private loadCategoriesForNode(nodeId: string) {
