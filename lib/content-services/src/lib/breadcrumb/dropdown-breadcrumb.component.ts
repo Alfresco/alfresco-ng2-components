@@ -17,7 +17,7 @@
 
 import { Component, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { PathElementEntity, Node } from '@alfresco/js-api';
+import { PathElement, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 @Component({
@@ -28,12 +28,11 @@ import { BreadcrumbComponent } from './breadcrumb.component';
     host: { class: 'adf-dropdown-breadcrumb' }
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
-
     @ViewChild('dropdown')
     dropdown: MatSelect;
 
-    currentNode: PathElementEntity;
-    previousNodes: PathElementEntity[];
+    currentNode: PathElement;
+    previousNodes: PathElement[];
 
     /**
      * Calculate the current and previous nodes from the route array

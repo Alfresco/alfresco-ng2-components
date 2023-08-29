@@ -121,7 +121,7 @@ will trigger the same action.) You can also add your own handler by implementing
 `execute` event.
 
 Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../../lib/content-services/src/lib/document-list/models/document-library.model.ts) as its
+function in the same action. The `execute` function is passed a **NodeEntry** as its
 parameter. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
 type, and other details of the item just deleted:

@@ -15,85 +15,70 @@
  * limitations under the License.
  */
 
-import {
-    ContentInfo,
-    NodeMinimal,
-    NodeMinimalEntry,
-    NodePaging,
-    NodePagingList,
-    PathInfoEntity
-} from '../document-list';
+import { ContentInfo, Node, NodeEntry, PathInfo } from '@alfresco/js-api';
 
-export class PageNode extends NodePaging {
-    constructor(entries?: NodeMinimalEntry[]) {
-        super();
-        this.list = new NodePagingList();
-        this.list.entries = entries || [];
-    }
-}
-
-export class FileNode extends NodeMinimalEntry {
+export class FileNode extends NodeEntry {
     constructor(name?: string, mimeType?: string, id?: string) {
         super();
-        this.entry = new NodeMinimal();
+        this.entry = new Node();
         this.entry.id = id || 'file-id';
         this.entry.isFile = true;
         this.entry.isFolder = false;
         this.entry.name = name;
-        this.entry.path = new PathInfoEntity();
+        this.entry.path = new PathInfo();
         this.entry.content = new ContentInfo();
         this.entry.content.mimeType = mimeType || 'text/plain';
     }
 }
 
-export class FolderNode extends NodeMinimalEntry {
+export class FolderNode extends NodeEntry {
     constructor(name?: string) {
         super();
-        this.entry = new NodeMinimal();
+        this.entry = new Node();
         this.entry.id = 'folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
         this.entry.name = name;
-        this.entry.path = new PathInfoEntity();
+        this.entry.path = new PathInfo();
         this.entry.aspectNames = ['cm:folder'];
     }
 }
 
-export class SmartFolderNode extends NodeMinimalEntry {
+export class SmartFolderNode extends NodeEntry {
     constructor(name?: string) {
         super();
-        this.entry = new NodeMinimal();
+        this.entry = new Node();
         this.entry.id = 'smart-folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
         this.entry.name = name;
-        this.entry.path = new PathInfoEntity();
+        this.entry.path = new PathInfo();
         this.entry.aspectNames = ['smf:systemConfigSmartFolder'];
     }
 }
 
-export class RuleFolderNode extends NodeMinimalEntry {
+export class RuleFolderNode extends NodeEntry {
     constructor(name?: string) {
         super();
-        this.entry = new NodeMinimal();
+        this.entry = new Node();
         this.entry.id = 'rule-folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
         this.entry.name = name;
-        this.entry.path = new PathInfoEntity();
+        this.entry.path = new PathInfo();
         this.entry.aspectNames = ['rule:rules'];
     }
 }
 
-export class LinkFolderNode extends NodeMinimalEntry {
+export class LinkFolderNode extends NodeEntry {
     constructor(name?: string) {
         super();
-        this.entry = new NodeMinimal();
+        this.entry = new Node();
         this.entry.id = 'link-folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
         this.entry.nodeType = 'app:folderlink';
         this.entry.name = name;
-        this.entry.path = new PathInfoEntity();
+        this.entry.path = new PathInfo();
     }
 }
