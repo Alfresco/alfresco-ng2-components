@@ -28,6 +28,7 @@ export class FileNode extends NodeEntry {
         this.entry.path = new PathInfo();
         this.entry.content = new ContentInfo();
         this.entry.content.mimeType = mimeType || 'text/plain';
+        this.entry.properties = {};
     }
 }
 
@@ -41,6 +42,7 @@ export class FolderNode extends NodeEntry {
         this.entry.name = name;
         this.entry.path = new PathInfo();
         this.entry.aspectNames = ['cm:folder'];
+        this.entry.properties = {};
     }
 }
 
@@ -54,6 +56,7 @@ export class SmartFolderNode extends NodeEntry {
         this.entry.name = name;
         this.entry.path = new PathInfo();
         this.entry.aspectNames = ['smf:systemConfigSmartFolder'];
+        this.entry.properties = {};
     }
 }
 
@@ -67,6 +70,7 @@ export class RuleFolderNode extends NodeEntry {
         this.entry.name = name;
         this.entry.path = new PathInfo();
         this.entry.aspectNames = ['rule:rules'];
+        this.entry.properties = {};
     }
 }
 
@@ -80,5 +84,6 @@ export class LinkFolderNode extends NodeEntry {
         this.entry.nodeType = 'app:folderlink';
         this.entry.name = name;
         this.entry.path = new PathInfo();
+        this.entry.properties = {};
     }
 }

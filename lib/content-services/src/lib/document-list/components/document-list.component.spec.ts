@@ -950,7 +950,7 @@ describe('DocumentList', () => {
         expect(documentList.navigateTo(null)).toBeFalsy();
     });
 
-    it('should perform navigation through corret linked folder', () => {
+    it('should perform navigation through correct linked folder', () => {
         const linkFolder = new FolderNode();
         linkFolder.entry.id = 'link-folder';
         linkFolder.entry.nodeType = 'app:folderlink';
