@@ -601,10 +601,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
-    private isEmpty(value: any): boolean {
-        return value === undefined || value === null || value === '';
-    }
-
     private loadCategoriesForNode(nodeId: string) {
         this.assignedCategories = [];
         this.categoryService.getCategoryLinksForNode(nodeId).subscribe((categoryPaging) => {
