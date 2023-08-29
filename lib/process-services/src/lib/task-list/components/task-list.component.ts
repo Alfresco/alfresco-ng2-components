@@ -28,7 +28,6 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
-import moment from 'moment';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { TaskDetailsModel } from '../models/task-details.model';
 
@@ -407,8 +406,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     private createRequestNode() {
         const requestNode = {
             appDefinitionId: this.appId,
-            dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
-            dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
+            dueAfter: this.dueAfter ? new Date(this.dueAfter) : null,
+            dueBefore: this.dueBefore ? new Date(this.dueBefore) : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
             text: this.name,
