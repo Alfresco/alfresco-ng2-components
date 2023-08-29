@@ -22,7 +22,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class TestSearchConfigurationService implements SearchConfigurationInterface {
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
-        return new SearchRequest({
+        return {
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
             },
@@ -36,6 +36,6 @@ export class TestSearchConfigurationService implements SearchConfigurationInterf
                 { query: "TYPE:'cm:folder'" },
                 { query: 'NOT cm:creator:System' }
             ]
-        });
+        };
     }
 }

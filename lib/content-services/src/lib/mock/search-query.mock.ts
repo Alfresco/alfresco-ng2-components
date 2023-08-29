@@ -17,7 +17,7 @@
 
 import { SearchRequest } from '@alfresco/js-api';
 
-export const mockQueryBody = new SearchRequest({
+export const mockQueryBody = {
     query: {
         query: '(search-term*)',
         language: 'afts'
@@ -38,4 +38,4 @@ export const mockQueryBody = new SearchRequest({
     },
     highlight: null,
     facetFormat: 'V2'
-});
+} as SearchRequest;

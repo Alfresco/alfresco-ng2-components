@@ -341,7 +341,7 @@ export abstract class BaseQueryBuilderService {
         }
 
         if (query) {
-            const result = new SearchRequest({
+            const result: SearchRequest = {
                 query: {
                     query,
                     language: 'afts'
@@ -355,7 +355,7 @@ export abstract class BaseQueryBuilderService {
                 facetFields: this.facetFields,
                 sort: this.sort,
                 highlight: this.highlight
-            });
+            };
 
             if (this.scope) {
                 result.scope = this.scope;
