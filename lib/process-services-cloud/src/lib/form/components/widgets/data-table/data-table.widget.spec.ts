@@ -24,12 +24,15 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
-    mockCountriesData,
+    mockEuropeCountriesData,
+    mockAmericaCountriesData,
     mockInvalidSchemaDefinition,
     mockJsonFormVariable,
     mockJsonFormVariableWithIncorrectData,
     mockJsonProcessVariables,
-    mockSchemaDefinition
+    mockSchemaDefinition,
+    mockJsonResponseEuropeCountriesData,
+    mockJsonResponseFormVariable
 } from '../../../mocks/data-table-widget.mock';
 
 describe('DataTableWidgetComponent', () => {
@@ -106,11 +109,54 @@ describe('DataTableWidgetComponent', () => {
         ));
     });
 
+    it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, mockJsonProcessVariables, mockJsonFormVariable);
+        widget.field.value = mockAmericaCountriesData;
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
+        expectedData.getRows().forEach(row => row.cssClass = '');
+
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    });
+
+    it('should properly initialize data source based on field value', () => {
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], []);
+        widget.field.value = mockAmericaCountriesData;
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
+        expectedData.getRows().forEach(row => row.cssClass = '');
+
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    });
+
+    it('should properly initialize json response data source based on field value', () => {
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], []);
+        widget.field.value = mockJsonResponseEuropeCountriesData;
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
+        expectedData.getRows().forEach(row => row.cssClass = '');
+
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    });
+
+    it('should properly initialize json response data source based on variable', () => {
+        widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonResponseFormVariable);
+        fixture.detectChanges();
+
+        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
+        expectedData.getRows().forEach(row => row.cssClass = '');
+
+        expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
+    });
+
     it('should properly initialize data source based on form variable', () => {
         widget.field = getDataVariable('json-form-variable', mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
+        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
         expectedData.getRows().forEach(row => row.cssClass = '');
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
@@ -120,7 +166,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field = getDataVariable('json-variable', mockSchemaDefinition, mockJsonProcessVariables);
         fixture.detectChanges();
 
-        const expectedData = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
+        const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
         expectedData.getRows().forEach(row => row.cssClass = '');
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
@@ -172,15 +218,14 @@ describe('DataTableWidgetComponent', () => {
         expect(widget.dataSource.getRows()).toEqual([]);
     });
 
-    it('should be able to display and log error if variable is not found', () => {
-        const notFoundVariable = 'not-found-json-variable';
-        widget.field = getDataVariable(notFoundVariable, mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
+    it('should be able to display and log error if data source is not found', () => {
+        widget.field = getDataVariable('not-found-data-source', mockSchemaDefinition, [], mockJsonFormVariableWithIncorrectData);
         fixture.detectChanges();
 
         const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
 
         expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.DATA_TABLE_LOAD_FAILED'));
-        expect(logServiceSpy).toHaveBeenCalledWith(`${notFoundVariable} not found`);
+        expect(logServiceSpy).toHaveBeenCalledWith('Data source not found');
         expect(widget.dataSource).toBeUndefined();
     });
 });
