@@ -125,15 +125,6 @@ export class ContentMetadataCardComponent implements OnChanges {
         this.expanded = !this._displayDefaultProperties;
     }
 
-    toggleEdit(): void {
-        this.editable = !this.editable;
-        this.editableChange.emit(this.editable);
-    }
-
-    toggleExpanded(): void {
-        this.expanded = !this.expanded;
-    }
-
     hasAllowableOperations() {
         return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }

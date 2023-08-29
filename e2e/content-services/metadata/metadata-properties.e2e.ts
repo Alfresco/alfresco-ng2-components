@@ -37,10 +37,6 @@ describe('CardView Component - properties', () => {
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
         DEFAULT_ASPECT: 'Properties',
-        MORE_INFO_BUTTON: 'More information',
-        LESS_INFO_BUTTON: 'Less information',
-        ARROW_DOWN: 'keyboard_arrow_down',
-        ARROW_UP: 'keyboard_arrow_up',
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 

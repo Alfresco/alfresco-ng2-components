@@ -244,24 +244,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Hide input for typing name for new tag or for searching. When input is hidden then panel of existing tags is hidden as well.
-     */
-    hideNameInput(): void {
-        this.tagNameControlVisible = false;
-        this._existingTagsPanelVisible = false;
-        this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
-        this.tagNameControlVisibleChange.emit(this.tagNameControlVisible);
-        this.clearTagNameInput();
-    }
-
-    /**
      * Add tags to top list using value which is set in input. Adding tag is not allowed when value in input is invalid
      * or if user is still typing what means that validation for input is not called yet.
      */
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
-            this.hideNameInput();
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
             this.tagsChange.emit(this.tags);
