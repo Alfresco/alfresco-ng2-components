@@ -552,7 +552,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.folderIdToShow).toBe('namek');
             }));
 
-            it("should show the current folder's content instead of search results if search was not performed", async () => {
+            it('should show the current folder content instead of search results if search was not performed', async () => {
                 const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
