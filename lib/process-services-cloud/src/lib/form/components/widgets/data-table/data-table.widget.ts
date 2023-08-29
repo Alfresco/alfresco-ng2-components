@@ -66,6 +66,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private rowsData: DataRow[];
     private columnsSchema: DataColumn[];
     private variableName: string;
+    private defaultResponseProperty = 'data';
 
     constructor(
         public formService: FormService,
@@ -82,12 +83,10 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private getTableData(): void {
-        const processVariables = this.field?.form?.processVariables;
-        const formVariables = this.field?.form?.variables;
-
         this.variableName = this.field?.variableConfig?.variableName;
         this.columnsSchema = this.field?.schemaDefinition;
-        this.rowsData = this.getDataFromVariable(processVariables, formVariables);
+
+        this.getRowsData();
     }
 
     private initDataTable(): void {
@@ -100,11 +99,23 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
                 this.handleError('Data source has corrupted model or structure');
             }
         } else {
-            this.handleError(`${this.variableName} not found`);
+            this.handleError('Data source not found');
         }
     }
 
-    private getDataFromVariable(processVariables: TaskVariableCloud[], formVariables: TaskVariableCloud[]): any {
+    private getRowsData(): void {
+        const fieldValue = this.field?.value;
+        const rowsData = fieldValue ? fieldValue : this.getDataFromVariable();
+
+        if (rowsData) {
+            this.rowsData = rowsData[this.defaultResponseProperty] || rowsData as DataRow[];
+        }
+    }
+
+    private getDataFromVariable(): any {
+        const processVariables = this.field?.form?.processVariables;
+        const formVariables = this.field?.form?.variables;
+
         const processVariableDropdownOptions = this.getVariableValueByName(processVariables, this.variableName);
         const formVariableDropdownOptions = this.getVariableValueByName(formVariables, this.variableName);
 

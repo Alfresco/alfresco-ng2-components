@@ -69,7 +69,7 @@ export const mockInvalidSchemaDefinition: DataColumn[] = [
     }
 ];
 
-export const mockCountriesData = [
+export const mockEuropeCountriesData = [
     {
         id: 'PL',
         name: 'Poland'
@@ -81,6 +81,38 @@ export const mockCountriesData = [
     {
         id: 'UK',
         name: 'United Kingdom'
+    }
+];
+
+export const mockJsonResponseEuropeCountriesData = {
+    data: [
+        {
+            id: 'PL',
+            name: 'Poland'
+        },
+        {
+            id: 'IT',
+            name: 'Italy'
+        },
+        {
+            id: 'UK',
+            name: 'United Kingdom'
+        }
+    ]
+};
+
+export const mockAmericaCountriesData = [
+    {
+        id: 'CA',
+        name: 'Canada'
+    },
+    {
+        id: 'US',
+        name: 'United States'
+    },
+    {
+        id: 'MX',
+        name: 'Mexico'
     }
 ];
 
@@ -98,10 +130,14 @@ export const mockJsonFormVariableWithIncorrectData = [
 ];
 
 export const mockJsonFormVariable = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesData, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockEuropeCountriesData, type: 'json', id: 'fake-id-1' })
+];
+
+export const mockJsonResponseFormVariable = [
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockJsonResponseEuropeCountriesData, type: 'json', id: 'fake-id-1' })
 ];
 
 export const mockJsonProcessVariables = [
-    new TaskVariableCloud({ name: 'variables.json-variable', value: mockCountriesData, type: 'json', id: 'fake-id-1' }),
+    new TaskVariableCloud({ name: 'variables.json-variable', value: mockEuropeCountriesData, type: 'json', id: 'fake-id-1' }),
     new TaskVariableCloud({ name: 'variables.different-variable', value: 'fake-value', type: 'json', id: 'fake-id-2' })
 ];
