@@ -186,7 +186,7 @@ export class NodesApiService {
             }
         }
 
-        return this.createNodeInsideRoot(name || this.generateUuid(), nodeType, properties, path);
+        return this.createNodeInsideRoot(name || window.crypto.randomUUID(), nodeType, properties, path);
     }
 
     /**
@@ -216,14 +216,6 @@ export class NodesApiService {
             relativePath: path
         };
         return from(this.nodesApi.createNode('-root-', body, {}));
-    }
-
-    private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-            const r = (Math.random() * 16) | 0;
-            const v = c === 'x' ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-        });
     }
 
     private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
