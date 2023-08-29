@@ -16,14 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '../../common/interfaces/search-configuration.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchConfigurationService implements SearchConfigurationInterface {
-
     /**
      * Generates a QueryBody object with custom search parameters.
      *
@@ -32,8 +31,8 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
      * @param skipCount The offset of the start of the page within the results list
      * @returns Query body defined by the parameters
      */
-    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
-        const defaultQueryBody: QueryBody = {
+    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
+        return new SearchRequest({
             query: {
                 query: searchTerm ? `'${searchTerm}*' OR name:'${searchTerm}*'` : searchTerm
             },
@@ -42,11 +41,7 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
                 maxItems: maxResults,
                 skipCount
             },
-            filterQueries: [
-                { query: `TYPE:'cm:folder' OR TYPE:'cm:content'` },
-                { query: 'NOT cm:creator:System' }]
-        };
-
-        return defaultQueryBody;
+            filterQueries: [{ query: `TYPE:'cm:folder' OR TYPE:'cm:content'` }, { query: 'NOT cm:creator:System' }]
+        });
     }
 }

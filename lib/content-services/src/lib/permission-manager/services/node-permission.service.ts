@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService,
-    TranslationService
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
-import {
-    Group,
-    GroupMemberEntry,
-    GroupMemberPaging, GroupsApi,
-    Node,
-    PathElement,
-    PermissionElement,
-    QueryBody
-} from '@alfresco/js-api';
+import { Group, GroupMemberEntry, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
 import { SearchService } from '../../search/services/search.service';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
@@ -41,18 +30,18 @@ import { RoleModel } from '../models/role.model';
     providedIn: 'root'
 })
 export class NodePermissionService {
-
     private _groupsApi: GroupsApi;
     get groupsApi(): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
         return this._groupsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchApiService: SearchService,
-                private nodeService: NodesApiService,
-                private translation: TranslationService) {
-    }
+    constructor(
+        private apiService: AlfrescoApiService,
+        private searchApiService: SearchService,
+        private nodeService: NodesApiService,
+        private translation: TranslationService
+    ) {}
 
     /**
      * Gets a list of roles for the current node.
@@ -61,18 +50,17 @@ export class NodePermissionService {
      * @returns Array of strings representing the roles
      */
     getNodeRoles(node: Node): Observable<string[]> {
-        const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
-            .pipe(
-                switchMap((siteNodeList: any) => {
-                    if (siteNodeList.list.entries.length > 0) {
-                        const siteName = siteNodeList.list.entries[0].entry.name;
-                        return this.getGroupMembersBySiteName(siteName);
-                    } else {
-                        return of(node.permissions?.settable);
-                    }
-                })
-            );
+        const retrieveSiteQueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
+        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody).pipe(
+            switchMap((siteNodeList: any) => {
+                if (siteNodeList.list.entries.length > 0) {
+                    const siteName = siteNodeList.list.entries[0].entry.name;
+                    return this.getGroupMembersBySiteName(siteName);
+                } else {
+                    return of(node.permissions?.settable);
+                }
+            })
+        );
     }
 
     getNodePermissions(node: Node): PermissionDisplayModel[] {
@@ -121,9 +109,7 @@ export class NodePermissionService {
      * @returns Node with updated permissions
      */
     updateNodePermissions(nodeId: string, permissionList: PermissionElement[]): Observable<Node> {
-        return this.nodeService.getNode(nodeId).pipe(
-            switchMap((node) => this.updateLocallySetPermissions(node, permissionList))
-        );
+        return this.nodeService.getNode(nodeId).pipe(switchMap((node) => this.updateLocallySetPermissions(node, permissionList)));
     }
 
     /**
@@ -138,7 +124,9 @@ export class NodePermissionService {
         const permissionList = permissions;
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
-            const list = duplicatedPermissions.map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name).join(', ');
+            const list = duplicatedPermissions
+                .map((permission) => 'authority -> ' + permission.authorityId + ' / role -> ' + permission.name)
+                .join(', ');
             const duplicatePermissionMessage: string = this.translation.instant('PERMISSION_MANAGER.ERROR.DUPLICATE-PERMISSION', { list });
             return throwError(duplicatePermissionMessage);
         }
@@ -160,9 +148,11 @@ export class NodePermissionService {
     }
 
     private isEqualPermission(oldPermission: PermissionElement, newPermission: PermissionElement): boolean {
-        return oldPermission.accessStatus === newPermission.accessStatus &&
+        return (
+            oldPermission.accessStatus === newPermission.accessStatus &&
             oldPermission.authorityId === newPermission.authorityId &&
-            oldPermission.name === newPermission.name;
+            oldPermission.name === newPermission.name
+        );
     }
 
     /**
@@ -187,16 +177,15 @@ export class NodePermissionService {
 
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
-        return this.getGroupMemberByGroupName(groupName)
-            .pipe(
-                map((groupMemberPaging: GroupMemberPaging) => {
-                    const displayResult: string[] = [];
-                    groupMemberPaging.list.entries.forEach((member: GroupMemberEntry) => {
-                        displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
-                    });
-                    return displayResult;
-                })
-            );
+        return this.getGroupMemberByGroupName(groupName).pipe(
+            map((groupMemberPaging: GroupMemberPaging) => {
+                const displayResult: string[] = [];
+                groupMemberPaging.list.entries.forEach((member: GroupMemberEntry) => {
+                    displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
+                });
+                return displayResult;
+            })
+        );
     }
 
     /**
@@ -214,7 +203,7 @@ export class NodePermissionService {
         return displayName.replace(siteName + '_', '');
     }
 
-    private buildRetrieveSiteQueryBody(nodePath: PathElement[]): QueryBody {
+    private buildRetrieveSiteQueryBody(nodePath: PathElement[]): SearchRequest {
         const pathNames = nodePath.map((node: PathElement) => 'name: "' + node.name + '"');
         const builtPathNames = pathNames.join(' OR ');
 
@@ -229,8 +218,7 @@ export class NodePermissionService {
             include: ['aspectNames', 'properties'],
             filterQueries: [
                 {
-                    query:
-                        `TYPE:'st:site'`
+                    query: `TYPE:'st:site'`
                 }
             ]
         };
@@ -302,15 +290,15 @@ export class NodePermissionService {
      */
     getNodeWithRoles(nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
         return this.nodeService.getNode(nodeId).pipe(
-            switchMap(node => forkJoin({
-                node: of(node),
-                roles: this.getNodeRoles(node)
-                    .pipe(
+            switchMap((node) =>
+                forkJoin({
+                    node: of(node),
+                    roles: this.getNodeRoles(node).pipe(
                         catchError(() => of(node.permissions?.settable)),
-                        map(_roles => _roles.map(role => ({ role, label: role }))
-                        )
+                        map((_roles) => _roles.map((role) => ({ role, label: role })))
                     )
-            }))
+                })
+            )
         );
     }
 

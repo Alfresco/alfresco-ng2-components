@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, from, ReplaySubject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import {
-    QueryBody,
+    SearchRequest,
     RequestFacetFields,
     RequestSortDefinitionInner,
     ResultSetPaging,
@@ -41,7 +41,6 @@ import { SearchForm } from '../models/search-form.interface';
     providedIn: 'root'
 })
 export abstract class BaseQueryBuilderService {
-
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
@@ -52,7 +51,7 @@ export abstract class BaseQueryBuilderService {
     configUpdated = new Subject<SearchConfiguration>();
 
     /*  Stream that emits the query before search whenever user search  */
-    updated = new Subject<QueryBody>();
+    updated = new Subject<SearchRequest>();
 
     /*  Stream that emits the results whenever user search  */
     executed = new Subject<ResultSetPaging>();
@@ -152,12 +151,14 @@ export abstract class BaseQueryBuilderService {
                 selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
             }));
         } else if (!!configurations) {
-            return [{
-                index: 0,
-                name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
-                default: true,
-                selected: true
-            }];
+            return [
+                {
+                    index: 0,
+                    name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
+                    default: true,
+                    selected: true
+                }
+            ];
         }
         return [];
     }
@@ -165,9 +166,7 @@ export abstract class BaseQueryBuilderService {
     private setUpSearchConfiguration(currentConfiguration: SearchConfiguration) {
         if (currentConfiguration) {
             this.config = JSON.parse(JSON.stringify(currentConfiguration));
-            this.categories = (this.config.categories || []).filter(
-                category => category.enabled
-            );
+            this.categories = (this.config.categories || []).filter((category) => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
             this.userFacetBuckets = {};
             if (this.config.sorting) {
@@ -213,8 +212,7 @@ export abstract class BaseQueryBuilderService {
     removeUserFacetBucket(field: string, bucket: FacetFieldBucket) {
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
-            this.userFacetBuckets[field] = buckets
-                .filter((facetBucket) => facetBucket.label !== bucket.label);
+            this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);
         }
     }
 
@@ -239,8 +237,7 @@ export abstract class BaseQueryBuilderService {
      */
     removeFilterQuery(query: string): void {
         if (query) {
-            this.filterQueries = this.filterQueries
-                .filter((filterQuery) => filterQuery.query !== query);
+            this.filterQueries = this.filterQueries.filter((filterQuery) => filterQuery.query !== query);
         }
     }
 
@@ -289,7 +286,7 @@ export abstract class BaseQueryBuilderService {
     /**
      * Builds the current query and triggers the `updated` event.
      */
-    update(queryBody?: QueryBody): void {
+    update(queryBody?: SearchRequest): void {
         const query = queryBody ? queryBody : this.buildQuery();
         this.updated.next(query);
     }
@@ -299,7 +296,7 @@ export abstract class BaseQueryBuilderService {
      *
      * @returns Nothing
      */
-    async execute(queryBody?: QueryBody) {
+    async execute(queryBody?: SearchRequest) {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
@@ -320,7 +317,7 @@ export abstract class BaseQueryBuilderService {
         }
     }
 
-    search(queryBody: QueryBody): Observable<ResultSetPaging> {
+    search(queryBody: SearchRequest): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
         promise.then((resultSetPaging) => {
@@ -335,7 +332,7 @@ export abstract class BaseQueryBuilderService {
      *
      * @returns The finished query
      */
-    buildQuery(): QueryBody {
+    buildQuery(): SearchRequest {
         const query = this.getFinalQuery();
 
         const include = this.config.include || [];
@@ -344,8 +341,7 @@ export abstract class BaseQueryBuilderService {
         }
 
         if (query) {
-
-            const result: QueryBody = {
+            const result = new SearchRequest({
                 query: {
                     query,
                     language: 'afts'
@@ -359,10 +355,10 @@ export abstract class BaseQueryBuilderService {
                 facetFields: this.facetFields,
                 sort: this.sort,
                 highlight: this.highlight
-            };
+            });
 
             if (this.scope) {
-                result['scope'] = this.scope;
+                result.scope = this.scope;
             }
 
             result['facetFormat'] = 'V2';
@@ -412,10 +408,7 @@ export abstract class BaseQueryBuilderService {
      * @returns True if defined, false otherwise
      */
     get hasFacetQueries(): boolean {
-        if (this.config
-            && this.config.facetQueries
-            && this.config.facetQueries.queries
-            && this.config.facetQueries.queries.length > 0) {
+        if (this.config && this.config.facetQueries && this.config.facetQueries.queries && this.config.facetQueries.queries.length > 0) {
             return true;
         }
         return false;
@@ -427,11 +420,7 @@ export abstract class BaseQueryBuilderService {
      * @returns True if defined, false otherwise
      */
     get hasFacetIntervals(): boolean {
-        return this.config
-            && this.config.facetIntervals
-            && this.config.facetIntervals.intervals
-            && this.config.facetIntervals.intervals.length > 0;
-
+        return this.config && this.config.facetIntervals && this.config.facetIntervals.intervals && this.config.facetIntervals.intervals.length > 0;
     }
 
     get hasFacetHighlight(): boolean {
@@ -439,11 +428,14 @@ export abstract class BaseQueryBuilderService {
     }
 
     protected get sort(): RequestSortDefinitionInner[] {
-        return this.sorting.map((def) => new RequestSortDefinitionInner({
-            type: def.type,
-            field: def.field,
-            ascending: def.ascending
-        }));
+        return this.sorting.map(
+            (def) =>
+                new RequestSortDefinitionInner({
+                    type: def.type,
+                    field: def.field,
+                    ascending: def.ascending
+                })
+        );
     }
 
     protected get facetQueries(): FacetQuery[] {
@@ -462,17 +454,23 @@ export abstract class BaseQueryBuilderService {
             const configIntervals = this.config.facetIntervals;
 
             return {
-                intervals: configIntervals.intervals.map((interval) => ({
-                    label: this.getSupportedLabel(interval.label),
-                    field: interval.field,
-                    sets: interval.sets.map((set) => ({
-                            label: this.getSupportedLabel(set.label),
-                            start: set.start,
-                            end: set.end,
-                            startInclusive: set.startInclusive,
-                            endInclusive: set.endInclusive
-                        } as any))
-                } as any))
+                intervals: configIntervals.intervals.map(
+                    (interval) =>
+                        ({
+                            label: this.getSupportedLabel(interval.label),
+                            field: interval.field,
+                            sets: interval.sets.map(
+                                (set) =>
+                                    ({
+                                        label: this.getSupportedLabel(set.label),
+                                        start: set.start,
+                                        end: set.end,
+                                        startInclusive: set.startInclusive,
+                                        endInclusive: set.endInclusive
+                                    } as any)
+                            )
+                        } as any)
+                )
             };
         }
 
@@ -496,9 +494,7 @@ export abstract class BaseQueryBuilderService {
             }
         });
 
-        let result = [this.userQuery, query]
-            .filter((entry) => entry)
-            .join(' AND ');
+        let result = [this.userQuery, query].filter((entry) => entry).join(' AND ');
 
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
@@ -523,14 +519,17 @@ export abstract class BaseQueryBuilderService {
 
         if (facetFields && facetFields.length > 0) {
             return {
-                facets: facetFields.map((facet) => ({
-                    field: facet.field,
-                    mincount: facet.mincount,
-                    label: this.getSupportedLabel(facet.label),
-                    limit: facet.limit,
-                    offset: facet.offset,
-                    prefix: facet.prefix
-                } as any))
+                facets: facetFields.map(
+                    (facet) =>
+                        ({
+                            field: facet.field,
+                            mincount: facet.mincount,
+                            label: this.getSupportedLabel(facet.label),
+                            limit: facet.limit,
+                            offset: facet.offset,
+                            prefix: facet.prefix
+                        } as any)
+                )
             };
         }
 

@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TestSearchConfigurationService implements SearchConfigurationInterface {
-
-    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
-        const defaultQueryBody: QueryBody = {
+    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
+        return new SearchRequest({
             query: {
                 query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
             },
@@ -35,9 +34,8 @@ export class TestSearchConfigurationService implements SearchConfigurationInterf
             filterQueries: [
                 /* eslint-disable-next-line */
                 { query: "TYPE:'cm:folder'" },
-                { query: 'NOT cm:creator:System' }]
-        };
-
-        return defaultQueryBody;
+                { query: 'NOT cm:creator:System' }
+            ]
+        });
     }
 }

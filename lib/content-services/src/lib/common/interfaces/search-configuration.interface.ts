@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 
 export interface SearchConfigurationInterface {
-
     /**
      * Generates a QueryBody object with custom search parameters.
      *
@@ -27,6 +26,5 @@ export interface SearchConfigurationInterface {
      * @param skipCount The offset of the start of the page within the results list
      * @returns Query body defined by the parameters
      */
-    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody;
-
+    generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest;
 }
