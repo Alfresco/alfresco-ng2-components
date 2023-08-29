@@ -206,16 +206,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Hides and emits categoryNameControl and hides existing categories panel.
-     */
-    hideNameInput() {
-        this.categoryNameControlVisible = false;
-        this.categoryNameControlVisibleChange.emit(false);
-        this._existingCategoriesPanelVisible = false;
-        this.clearCategoryNameInput();
-    }
-
-    /**
      * Adds category that has been typed to a categoryNameControl and hides it afterwards.
      */
     addCategory() {

@@ -5,8 +5,8 @@
                              [expanded]="canExpandProperties()"
                              [attr.data-automation-id]="'adf-metadata-group-properties'"
                              hideToggle
-                             (opened)="generalTogglePanelState()"
-                             (closed)="generalTogglePanelState()">
+                             (opened)="handleGeneralInfoPanelState()"
+                             (closed)="handleGeneralInfoPanelState()">
             <mat-expansion-panel-header>
                 <div class="adf-metadata-properties-panel-content">
                     <mat-icon>
