@@ -80,7 +80,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
             forkJoin(batch).subscribe(
                 () => {
-                    this.favorites.map((selected) => (selected.entry.isFavorite = false));
+                    this.favorites.forEach((selected) => (selected.entry.isFavorite = false));
                     this.toggle.emit();
                 },
                 (error) => this.error.emit(error)
@@ -93,7 +93,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
             from(this.favoritesApi.createFavorite('-me-', body as any)).subscribe(
                 () => {
-                    notFavorite.map((selected) => (selected.entry.isFavorite = true));
+                    notFavorite.forEach((selected) => (selected.entry.isFavorite = true));
                     this.toggle.emit();
                 },
                 (error) => this.error.emit(error)
