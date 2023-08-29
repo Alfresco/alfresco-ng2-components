@@ -34,9 +34,6 @@ export class MetadataViewPage {
     titleProperty = $(`span[data-automation-id='card-textitem-value-properties.cm:title'] span`);
     editIcon = $(`button[data-automation-id='meta-data-card-toggle-edit']`);
     editIconGeneral = $(`button[data-automation-id='meta-data-general-info-edit']`);
-    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
-    informationSpan = $(`span[data-automation-id='meta-data-card-toggle-expand-label']`);
-    informationIcon = $(`span[data-automation-id='meta-data-card-toggle-expand-label'] ~ mat-icon`);
     displayEmptySwitch = $(`#adf-metadata-empty`);
     readonlySwitch = $(`#adf-metadata-readonly`);
     multiSwitch = $(`#adf-metadata-multi`);
@@ -120,26 +117,6 @@ export class MetadataViewPage {
 
     async editIconGeneralClick(): Promise<void> {
         await BrowserActions.click(this.editIconGeneral);
-    }
-
-    async informationButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
-    }
-
-    async informationButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
-    }
-
-    async clickOnInformationButton(): Promise<void> {
-        await BrowserActions.click(this.informationButton);
-    }
-
-    async getInformationButtonText(): Promise<string> {
-        return BrowserActions.getText(this.informationSpan);
-    }
-
-    async getInformationIconText(): Promise<string> {
-        return BrowserActions.getText(this.informationIcon);
     }
 
     async clickOnPropertiesTab(): Promise<void> {
@@ -327,9 +304,5 @@ export class MetadataViewPage {
 
     async clickSaveGeneralMetadata(): Promise<void> {
         await BrowserActions.click(this.saveGeneralMetadataButton);
-    }
-
-    async generalSaveIconDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.saveGeneralMetadataButton);
     }
 }
