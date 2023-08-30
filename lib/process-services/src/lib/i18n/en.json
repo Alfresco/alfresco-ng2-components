@@ -29,7 +29,7 @@
       "THUMBNAIL": "Thumbnail",
       "DURATION": "Duration",
       "PARENT_TASK_ID": "Parent task id",
-      "NAME": "Name",
+      "NAME": "Task Name",
       "ASSIGNEE": "Assignee",
       "ASSIGNEE_DEFAULT": "No assignee",
       "PRIORITY": "Priority",
