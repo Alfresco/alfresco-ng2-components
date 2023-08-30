@@ -303,11 +303,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             this.queryBuilderService.update();
         });
 
-        this.queryBuilderService.updated.pipe(takeUntil(this.onDestroy$)).subscribe((queryBody) => {
-            if (queryBody) {
+        this.queryBuilderService.updated.pipe(takeUntil(this.onDestroy$)).subscribe((searchRequest) => {
+            if (searchRequest) {
                 this.hasValidQuery = true;
-                this.prepareDialogForNewSearch(queryBody);
-                this.queryBuilderService.execute(queryBody);
+                this.prepareDialogForNewSearch(searchRequest);
+                this.queryBuilderService.execute(searchRequest);
             } else {
                 this.hasValidQuery = false;
                 this.resetFolderToShow();
@@ -444,8 +444,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Prepares the dialog for a new search
      */
-    prepareDialogForNewSearch(queryBody: SearchRequest): void {
-        this.target = queryBody ? null : this.documentList;
+    prepareDialogForNewSearch(searchRequest: SearchRequest): void {
+        this.target = searchRequest ? null : this.documentList;
         if (this.target) {
             this.infinitePaginationComponent.reset();
         }

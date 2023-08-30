@@ -24,7 +24,7 @@ import { SearchConfigurationInterface } from '../../common/interfaces/search-con
 })
 export class SearchConfigurationService implements SearchConfigurationInterface {
     /**
-     * Generates a QueryBody object with custom search parameters.
+     * Generates a request object with custom search parameters.
      *
      * @param searchTerm Term text to search for
      * @param maxResults Maximum number of search results to show in a page

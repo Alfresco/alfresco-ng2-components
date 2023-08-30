@@ -28,7 +28,7 @@ import { CustomResourcesService } from '../document-list/services/custom-resourc
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchQueryBuilderService } from '../search';
-import { mockQueryBody } from '../mock/search-query.mock';
+import { mockSearchRequest } from '../mock/search-query.mock';
 import { SitesService } from '../common/services/sites.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 
@@ -168,16 +168,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.searchTerm).toEqual('search-term');
             }));
 
-            it('should perform a search when the queryBody gets updated and it is defined', fakeAsync(() => {
+            it('should perform a search when the search request gets updated and it is defined', fakeAsync(() => {
                 typeToSearchBox('search-term');
 
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(mockSearchRequest);
             }));
 
-            it('should NOT perform a search and clear the results when the queryBody gets updated and it is NOT defined', async () => {
+            it('should NOT perform a search and clear the results when the search request gets updated and it is NOT defined', async () => {
                 spyOn(component, 'clearSearch');
 
                 searchQueryBuilderService.userQuery = '';
@@ -212,22 +212,22 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(mockSearchRequest);
             }));
 
             it('should the query include the show files filterQuery', fakeAsync(() => {
                 component.showFilesInResult = true;
                 typeToSearchBox('search-term');
 
-                const expectedQueryBody = mockQueryBody;
-                expectedQueryBody.filterQueries.push({
+                const expectedRequest = mockSearchRequest;
+                expectedRequest.filterQueries.push({
                     query: `TYPE:'cm:folder' OR TYPE:'cm:content'`
                 });
 
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(expectedRequest);
             }));
 
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
@@ -257,11 +257,11 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
 
-                const expectedQueryBody = mockQueryBody;
-                expectedQueryBody.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/namek'` }];
+                const expectedRequest = mockSearchRequest;
+                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/namek'` }];
 
                 expect(searchSpy.calls.count()).toBe(2);
-                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(expectedRequest);
             }));
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
@@ -277,8 +277,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
 
-                const expectedQueryBodyWithSiteChange = mockQueryBody;
-                expectedQueryBodyWithSiteChange.filterQueries = [
+                const expectedRequest = mockSearchRequest;
+                expectedRequest.filterQueries = [
                     {
                         query: `ANCESTOR:'workspace://SpacesStore/-sites-' OR ANCESTOR:'workspace://SpacesStore/123456testId' OR ANCESTOR:'workspace://SpacesStore/09876543testId'`
                     }
@@ -286,8 +286,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy).toHaveBeenCalled();
                 expect(searchSpy.calls.count()).toBe(2);
-                expect(searchSpy).toHaveBeenCalledWith(mockQueryBody);
-                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBodyWithSiteChange);
+                expect(searchSpy).toHaveBeenCalledWith(mockSearchRequest);
+                expect(searchSpy).toHaveBeenCalledWith(expectedRequest);
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
@@ -404,10 +404,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 typeToSearchBox('search-term');
                 tick(debounceSearch);
 
-                const expectedQueryBody = mockQueryBody;
-                expectedQueryBody.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-root-id'` }];
+                const expectedRequest = mockSearchRequest;
+                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-root-id'` }];
 
-                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBody);
+                expect(searchSpy).toHaveBeenCalledWith(expectedRequest);
             }));
 
             it('should emit showingSearch event with true while searching', async () => {
@@ -476,10 +476,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.restrictRootToCurrentFolderId = true;
                 component.siteChanged({ entry: { guid: 'my-site-id' } } as SiteEntry);
 
-                const expectedQueryBodyWithSiteChange = mockQueryBody;
-                expectedQueryBodyWithSiteChange.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-site-id'` }];
+                const expectedRequest = mockSearchRequest;
+                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-site-id'` }];
 
-                expect(searchSpy).toHaveBeenCalledWith(expectedQueryBodyWithSiteChange);
+                expect(searchSpy).toHaveBeenCalledWith(expectedRequest);
             });
 
             it('should restrict the breadcrumb to the currentFolderId in case restrictedRoot is true', async () => {
@@ -735,7 +735,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 });
 
                 it('should set its loading state to true to perform a new search', async () => {
-                    component.prepareDialogForNewSearch(mockQueryBody);
+                    component.prepareDialogForNewSearch(mockSearchRequest);
                     fixture.detectChanges();
                     await fixture.whenStable();
 

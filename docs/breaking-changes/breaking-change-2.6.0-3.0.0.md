@@ -30,7 +30,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
     This modification has enabled us to remove some code duplication between the two modules.
 
 -   [PR ADF-1873](https://github.com/Alfresco/alfresco-ng2-components/pull/4145):
-    -   `adf-search-control`: The `QueryBody`, and
+    -   `adf-search-control`: The `SearchRequest`, and
         `customQueryBody` inputs of the [`SearchControlComponent`](../content-services/components/search-control.component.md) have been removed in favor of the
         [custom search configuration interface](../core/interfaces/search-configuration.interface.md).
         The inputs were deprecated in v2.1.0.

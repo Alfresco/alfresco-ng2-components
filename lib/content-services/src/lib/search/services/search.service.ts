@@ -82,7 +82,7 @@ export class SearchService {
     }
 
     /**
-     * Performs a search with its parameters supplied by a QueryBody object.
+     * Performs a search with its parameters supplied by a request object.
      *
      * @param queryBody Object containing the search parameters
      * @returns List of search results

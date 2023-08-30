@@ -13,18 +13,17 @@ Provides fine control of parameters to a search.
 
 ### Methods
 
--   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `QueryBody`<br/>
-    Generates a QueryBody object with custom search parameters.
+-   **generateQueryBody**(searchTerm: `string`, maxResults: `number`, skipCount: `number`): `SearchRequest`<br/>
+    Generates a request object with custom search parameters.
     -   _searchTerm:_ `string`  - Term text to search for
     -   _maxResults:_ `number`  - Maximum number of search results to show in a page
     -   _skipCount:_ `number`  - The offset of the start of the page within the results list
-    -   **Returns** `QueryBody` - Query body defined by the parameters
+    -   **Returns** `SearchRequest` - Query body defined by the parameters
 
 ## Details
 
-The `generateQueryBody` method returns a
-[QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
-object. This configures the search to use `searchTerm` along with `maxResults` and `skipCount`
+The `generateQueryBody` method returns a **SearchRequest** object. 
+This configures the search to use `searchTerm` along with `maxResults` and `skipCount`
 specified for the paging of the search results.
 
 This service is a standard implementation of the

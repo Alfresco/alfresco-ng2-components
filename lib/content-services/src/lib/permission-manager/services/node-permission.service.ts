@@ -50,8 +50,8 @@ export class NodePermissionService {
      * @returns Array of strings representing the roles
      */
     getNodeRoles(node: Node): Observable<string[]> {
-        const retrieveSiteQueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody).pipe(
+        const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
+        return this.searchApiService.searchByQueryBody(searchRequest).pipe(
             switchMap((siteNodeList: any) => {
                 if (siteNodeList.list.entries.length > 0) {
                     const siteName = siteNodeList.list.entries[0].entry.name;

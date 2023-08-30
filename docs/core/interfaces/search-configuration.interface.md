@@ -10,14 +10,13 @@ Provides fine control of parameters to a search.
 
 ## Methods
 
-`generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody`<br/>
-Generates a QueryBody object with custom search parameters.
+`generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): SearchRequest`<br/>
+Generates a request object with custom search parameters.
 
 ## Details
 
 The interface defines a service that generates a custom
-[QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
-object. This object can then be supplied to a search operation to refine the search parameters.
+**SearchRequest** object. This object can then be supplied to a search operation to refine the search parameters.
 
 A standard implementation, the
 [Search Configuration service](../services/search-configuration.service.md) is provided in the ADF Core library
@@ -29,37 +28,30 @@ described below.
 1.  Implement the service class
 
     Create your own service class to implement the [`SearchConfigurationInterface`](../../core/interfaces/search-configuration.interface.md). This defines the
-    the `generateQueryBody` method that returns the QueryBody object. See the
-    [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
-    page in the Alfresco JS API for further details about the options this object provides.
+    `generateQueryBody` method that returns the query object. 
 
     An example implementation is given below:
 
     ```ts
-    import { QueryBody } from '@alfresco/js-api';
+    import { SearchRequest } from '@alfresco/js-api';
     import { SearchConfigurationInterface } from '@alfresco/adf-core';
 
     export class TestSearchConfigurationService implements SearchConfigurationInterface {
 
-        constructor() {
-        }
-
-        public generateQueryBody(searchTerm: string, maxResults: string, skipCount: string): QueryBody {
-            const defaultQueryBody: QueryBody = {
+        generateQueryBody(searchTerm: string, maxItems: string, skipCount: string): SearchRequest {
+            return {
                 query: {
                     query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
                 },
                 include: ['path', 'allowableOperations'],
                 paging: {
-                    maxItems: maxResults,
-                    skipCount: skipCount
+                    maxItems,
+                    skipCount
                 },
                 filterQueries: [
                     { query: "TYPE:'cm:folder'" },
                     { query: 'NOT cm:creator:System' }]
             };
-
-            return defaultQueryBody;
         }
     }
     ```

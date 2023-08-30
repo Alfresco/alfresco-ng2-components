@@ -17,7 +17,7 @@
 
 import { SearchRequest } from '@alfresco/js-api';
 
-export const mockQueryBody = {
+export const mockSearchRequest = {
     query: {
         query: '(search-term*)',
         language: 'afts'
