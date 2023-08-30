@@ -24,7 +24,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
@@ -56,7 +56,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     public static SORT: string = 'sort';
     public static ORDER: string = 'order';
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
-    public static FORMAT_DATE: string = 'DD/MM/YYYY';
+    public static FORMAT_DATE: string = 'dd-MM-yyyy';
     public static ACTIONS_DISABLED_BY_DEFAULT = [
         BaseEditTaskFilterCloudComponent.ACTION_SAVE,
         BaseEditTaskFilterCloudComponent.ACTION_DELETE
@@ -155,7 +155,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale)
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale))
             );
     }
 
