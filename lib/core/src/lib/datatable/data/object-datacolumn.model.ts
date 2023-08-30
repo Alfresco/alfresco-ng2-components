@@ -37,6 +37,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     isHidden: boolean;
     customData?: T;
     width?: number;
+    order?: number;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -56,5 +57,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.isHidden = input.isHidden ?? false;
         this.customData = input.customData;
         this.width = input.width;
+        this.order = input.order;
     }
 }

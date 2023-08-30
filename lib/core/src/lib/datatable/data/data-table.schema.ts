@@ -82,6 +82,8 @@ export abstract class DataTableSchema<T = unknown> {
 
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
+        } else {
+            customSchemaColumns.sort((col1, col2) => (col1.order || 0) - (col2.order || 0));
         }
 
         return customSchemaColumns;
