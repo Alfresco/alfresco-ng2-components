@@ -17,26 +17,27 @@
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Moment } from 'moment';
+// import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { startOfMinute, format, isBefore, isValid, endOfMinute } from 'date-fns';
 
 export interface DatetimeRangeValue {
     from: string;
     to: string;
 }
 
-declare let moment: any;
 
-const DEFAULT_DATETIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
+const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
 
 @Component({
     selector: 'adf-search-datetime-range',
@@ -69,7 +70,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DatetimeAdapter<Moment>,
+    constructor(private dateAdapter: DatetimeAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService) {
     }
 
@@ -101,7 +102,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         ]);
 
         if (this.settings && this.settings.maxDatetime) {
-            this.maxDatetime = moment(this.settings.maxDatetime);
+            this.maxDatetime = new Date(this.settings.maxDatetime);
         }
 
         if (this.startValue) {
@@ -133,8 +134,9 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = moment.utc(model.from).startOf('minute').format();
-            const end = moment.utc(model.to).endOf('minute').format();
+            const start = format(startOfMinute(new Date(model.from)),`yyyy-MM-dd'T'HH:mm:ss'Z'`);
+            const end = format(endOfMinute(new Date(model.to)),`yyyy-MM-dd'T'HH:mm:ss'Z'`);
+
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.updateDisplayValue();
@@ -210,7 +212,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
         const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datetimePickerFormat);
-        if (formatDate && formatDate.isValid()) {
+        if (formatDate && isValid(formatDate)) {
             formControl.setValue(formatDate);
         } else if (formatDate) {
             formControl.setErrors({
@@ -222,8 +224,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     setLocale(locale) {
-        this.dateAdapter.setLocale(locale);
-        moment.locale(locale);
+        this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
     }
 
     hasParseError(formControl): boolean {
@@ -235,6 +236,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     setFromMaxDatetime() {
-        this.fromMaxDatetime = (!this.to.value || this.maxDatetime && (moment(this.maxDatetime).isBefore(this.to.value))) ? this.maxDatetime : moment(this.to.value);
+        this.fromMaxDatetime = (!this.to.value || this.maxDatetime && (isBefore(this.maxDatetime, this.to.value))) ? this.maxDatetime : this.to.value;
     }
 }
