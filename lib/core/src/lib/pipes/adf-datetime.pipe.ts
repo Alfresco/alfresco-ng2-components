@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { addMinutes, parse } from 'date-fns';
+import { addMinutes, fromUnixTime, parse } from 'date-fns';
 
 @Pipe({ name: 'adfDateTime' })
 export class ADFDateTimePipe implements PipeTransform {
@@ -28,7 +28,7 @@ export class ADFDateTimePipe implements PipeTransform {
         } else if (value instanceof Date) {
             parsedValue = value;
         } else if (typeof value === 'number') {
-            parsedValue = new Date(value);
+            parsedValue = fromUnixTime(value);
         } else {
             throw new Error('Invalid value type');
         }

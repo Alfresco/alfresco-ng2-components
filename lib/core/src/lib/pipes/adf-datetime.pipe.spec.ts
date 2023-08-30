@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ADFDateTimePipe } from './adf-datetime.pipe';
-import { isValid } from 'date-fns';
+import { addMinutes, isValid } from 'date-fns';
 
 describe('ADFDateTimePipe', () => {
     let pipe: ADFDateTimePipe;
@@ -37,12 +37,11 @@ describe('ADFDateTimePipe', () => {
         const value = '2023-08-24 12:00:00';
         const dateFormat = 'yyyy-MM-dd HH:mm:ss';
         const transformedDate = pipe.transform(value, dateFormat);
-        console.log("FORMATTEDD DATE", transformedDate);
         expect(transformedDate instanceof Date).toBe(true);
         expect(isValid(transformedDate)).toBe(true);
 
         const expectedDate = new Date(value);
-        expect(transformedDate).toEqual(expectedDate);
+        expect(transformedDate).toEqual(addMinutes(new Date(expectedDate), new Date().getTimezoneOffset()));
     });
 
     it('should transform Date input', () => {
@@ -57,13 +56,16 @@ describe('ADFDateTimePipe', () => {
     });
 
     it('should transform number input to date format', () => {
-        const value = 1671920000000;
+        const value = 1693373300; // 30 August 2023 10:58:20
         const dateFormat = 'yyyy-MM-dd HH:mm:ss';
         const transformedDate = pipe.transform(value, dateFormat);
         expect(transformedDate instanceof Date).toBe(true);
         expect(isValid(transformedDate)).toBe(true);
 
-        const expectedDate = new Date(value);
+        const originalDate = new Date(2023, 7, 30, 10, 58, 20);
+        const timeZoneOffsetMinutes = -330; // 5 hours * 60 minutes/hour + 30 minutes
+        const expectedDate = addMinutes(originalDate, timeZoneOffsetMinutes);
+
         expect(transformedDate).toEqual(expectedDate);
     });
 
