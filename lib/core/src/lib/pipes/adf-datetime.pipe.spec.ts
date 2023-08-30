@@ -52,7 +52,6 @@ describe('ADFDateTimePipe', () => {
         expect(isValid(transformedDate)).toBe(true);
 
         expect(transformedDate).toEqual(value);
-
     });
 
     it('should transform number input to date format', () => {
