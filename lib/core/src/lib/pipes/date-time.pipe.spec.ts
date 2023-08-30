@@ -18,19 +18,19 @@
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ADFDateTimePipe } from './adf-datetime.pipe';
+import { DateTimePipe } from './date-time.pipe';
 import { addMinutes, isValid } from 'date-fns';
 
-describe('ADFDateTimePipe', () => {
-    let pipe: ADFDateTimePipe;
+describe('DateTimePipe', () => {
+    let pipe: DateTimePipe;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), CoreTestingModule],
-            providers: [ADFDateTimePipe]
+            providers: [DateTimePipe]
         });
 
-        pipe = new ADFDateTimePipe();
+        pipe = new DateTimePipe();
     });
 
     it('should transform string input to date format', () => {
@@ -66,11 +66,5 @@ describe('ADFDateTimePipe', () => {
         const expectedDate = addMinutes(originalDate, timeZoneOffsetMinutes);
 
         expect(transformedDate).toEqual(expectedDate);
-    });
-
-    it('should throw error for invalid input type', () => {
-        const value = undefined;
-        const dateFormat = 'yyyy-MM-dd HH:mm:ss';
-        expect(() => pipe.transform(value, dateFormat)).toThrowError('Invalid value type');
     });
 });

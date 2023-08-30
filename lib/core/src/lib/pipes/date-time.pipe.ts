@@ -19,7 +19,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { addMinutes, fromUnixTime, parse } from 'date-fns';
 
 @Pipe({ name: 'adfDateTime' })
-export class ADFDateTimePipe implements PipeTransform {
+export class DateTimePipe implements PipeTransform {
     transform(value: string | Date | number, dateFormat: string): Date {
         let parsedValue: Date;
 
@@ -29,8 +29,6 @@ export class ADFDateTimePipe implements PipeTransform {
             parsedValue = value;
         } else if (typeof value === 'number') {
             parsedValue = fromUnixTime(value);
-        } else {
-            throw new Error('Invalid value type');
         }
 
         const offsetMinutes = parsedValue.getTimezoneOffset();

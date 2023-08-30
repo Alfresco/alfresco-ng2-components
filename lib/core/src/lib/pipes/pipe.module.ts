@@ -35,7 +35,7 @@ import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
 import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
-import { ADFDateTimePipe } from './adf-datetime.pipe';
+import { DateTimePipe } from './date-time.pipe';
 
 @NgModule({
     imports: [
@@ -57,7 +57,7 @@ import { ADFDateTimePipe } from './adf-datetime.pipe';
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
-        ADFDateTimePipe,
+        DateTimePipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ],
@@ -75,7 +75,7 @@ import { ADFDateTimePipe } from './adf-datetime.pipe';
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
-        ADFDateTimePipe,
+        DateTimePipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ],
@@ -94,7 +94,7 @@ import { ADFDateTimePipe } from './adf-datetime.pipe';
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
-        ADFDateTimePipe,
+        DateTimePipe,
         FilterStringPipe,
         FilterOutArrayObjectsByPropPipe
     ]
