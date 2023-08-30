@@ -27,7 +27,7 @@ export class DateTimePipe implements PipeTransform {
             parsedValue = parse(value, dateFormat, new Date());
         } else if (value instanceof Date) {
             parsedValue = value;
-        } else if (typeof value === 'number') {
+        } else {
             parsedValue = fromUnixTime(value);
         }
 

@@ -1,11 +1,11 @@
 ---
 Title: Date Time Pipe
-Added: v1.0.0
+Added: v6.2.0
 Status: Active
 Last reviewed: 2023-08-30
 ---
 
-# [Date Time Pipe](../../../lib/pipes/date-time.pipe.ts "Defined in date-time.pipe.ts")
+# [Date Time Pipe](../../../lib/core/src/lib/pipes/date-time.pipe.ts "Defined in date-time.pipe.ts")
 
 Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset.
 
@@ -24,7 +24,7 @@ Converts a given input value into a Date object and adjusts it according to the 
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| value | string, Date, Number | The input value to be converted to a Date object |
+| value | string, Date, number | The input value to be converted to a Date object |
 | dateFormat | string | The format to use for parsing the input string value |
 | returns | Date | The adjusted Date object, accounted with timezone offset |
 
