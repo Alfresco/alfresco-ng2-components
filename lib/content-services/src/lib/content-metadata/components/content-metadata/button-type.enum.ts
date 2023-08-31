@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { CardViewItem } from '@alfresco/adf-core';
-
-export interface CardViewGroup {
-    title: string;
-    properties: CardViewItem[];
-    editable: boolean;
-    expanded: boolean;
+// eslint-disable-next-line no-shadow
+export enum ButtonType {
+    GeneralInfo = 'generalInfo',
+    Tags = 'tags',
+    Categories = 'categories',
+    Group = 'group'
 }

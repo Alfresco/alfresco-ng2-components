@@ -31,6 +31,7 @@ import { CardViewContentUpdateService } from '../../../common/services/card-view
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import {
+    CardViewGroup,
     CategoriesManagementComponent,
     CategoriesManagementMode,
     CategoryService,
@@ -38,6 +39,7 @@ import {
     TagsCreatorMode,
     TagService
 } from '@alfresco/adf-content-services';
+import { ButtonType } from './button-type.enum';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -49,7 +51,6 @@ describe('ContentMetadataComponent', () => {
     let folderNode: Node;
     let tagService: TagService;
     let categoryService: CategoryService;
-    let classesApi: ClassesApi;
     let getClassSpy: jasmine.Spy;
 
     const preset = 'custom-preset';
@@ -90,12 +91,12 @@ describe('ContentMetadataComponent', () => {
     const clickOnGeneralInfoSave = () => {
         findSaveGeneralInfoButton().click();
         fixture.detectChanges();
-    }
+    };
 
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
         fixture.detectChanges();
-    }
+    };
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
 
@@ -144,9 +145,8 @@ describe('ContentMetadataComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const buttonType = 'group';
         const event = new MouseEvent('click');
-        component.saveGroupChanges(buttonType, event);
+        component.saveChanges(ButtonType.Group, event);
         await fixture.whenStable();
     }
 
@@ -186,7 +186,7 @@ describe('ContentMetadataComponent', () => {
         tagService = TestBed.inject(TagService);
         categoryService = TestBed.inject(CategoryService);
         const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
-        classesApi = propertyDescriptorsService['classesApi'];
+        const classesApi = propertyDescriptorsService['classesApi'];
 
         node = {
             id: 'node-id',
@@ -285,7 +285,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should call removeTag and assignTagsToNode on TagService on save click', fakeAsync(() => {
-            component.editable = true;
+            component.editableTags = true;
             component.displayTags = true;
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -297,21 +297,20 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             const tagName1 = tagPaging.list.entries[0].entry.tag;
             const tagName2 = 'New tag 3';
-
             updateService.update(property, 'updated-value');
-
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagName1, tagName2]);
-            const mockEvent = new Event('click');
-            component.saveChanges(mockEvent);
-
+            fixture.detectChanges();
+            tick(600);
+            clickOnTagsSave();
+            tick(100);
             const tag1 = new TagBody();
             tag1.tag = tagName1;
             const tag2 = new TagBody();
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-        }));
+          }));
 
         it('should call getTagsByNodeId on TagService on save click', () => {
             component.editableTags = true;
@@ -330,8 +329,8 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             findTagsCreator().tagsChange.emit([tagPaging.list.entries[0].entry.tag, 'New tag 3']);
             getTagsByNodeIdSpy.calls.reset();
-            const mockEvent = new Event('click');
-            component.saveChanges(mockEvent);
+            const mockEvent = new MouseEvent('click');
+            component.saveChanges(ButtonType.Tags, mockEvent);
 
             expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(node.id);
         });
@@ -433,171 +432,86 @@ describe('ContentMetadataComponent', () => {
         }));
     });
 
-    describe('saveEditChanges', () => {
-        it('should save general info changes and toggle editable flag', () => {
-            const event = new Event('click');
-            const buttonType = 'generalInfo';
-            component.editable = true;
-    
-            spyOn(component, 'saveChanges');
-            component.saveEditChanges(buttonType, event);
-    
-            expect(component.saveChanges).toHaveBeenCalledWith(event);
-            expect(component.editable).toBe(false);
-        });
-    
-        it('should save tags changes and toggle editableTags flag', () => {
-            const event = new Event('click');
-            const buttonType = 'tags';
-            component.editableTags = true;
-    
-            spyOn(component, 'saveChanges');
-            component.saveEditChanges(buttonType, event);
-    
-            expect(component.saveChanges).toHaveBeenCalledWith(event);
+    describe('editable', () => {
+        it('should toggle general editable', () => {
+            const eventMock = new MouseEvent('click');
+            component.editable = false;
+            component.toggleGeneralEdit(eventMock);
+            expect(component.editable).toBe(true);
             expect(component.editableTags).toBe(false);
-        });
-
-        it('should save categories changes and toggle editableCategories flag', () => {
-            const event = new Event('click');
-            const buttonType = 'categories';
-            component.editableCategories = true;
-    
-            spyOn(component, 'saveChanges');
-            component.saveEditChanges(buttonType, event);
-    
-            expect(component.saveChanges).toHaveBeenCalledWith(event);
             expect(component.editableCategories).toBe(false);
         });
-    
-        it('should save group changes and toggle editable flag', () => {
-            const group = { editable: true };
-            const event = new Event('click');
-            const buttonType = 'group';
-    
-            spyOn(component, 'saveChanges');
-            component.saveEditChanges(buttonType, event, group);
-    
-            expect(component.saveChanges).toHaveBeenCalledWith(event);
-            expect(group.editable).toBe(false);
-        });
-    });
-    
-    describe('cancelChanges', () => {
-        it('should cancel group changes and set group editable to false', () => {
-            const group = { editable: true };
-            const event = new Event('click');
-            const buttonType = 'group';
-    
-            spyOn(component, 'cancelChanges');
-            component.cancelEditChanges(buttonType, event, group);
-    
-            expect(component.cancelChanges).toHaveBeenCalledWith(event);
-            expect(group.editable).toBe(false);
-        });
-    
-        it('should cancel general info changes and toggle editable flag', () => {
-            const event = new Event('click');
-            const buttonType = 'generalInfo';
-            component.editable = true;
-    
-            spyOn(component, 'cancelChanges');
-            component.cancelEditChanges(buttonType, event);
-    
-            expect(component.cancelChanges).toHaveBeenCalledWith(event);
+
+        it('should toggle tags editable', () => {
+            const eventMock = new MouseEvent('click');
+            component.editableTags = false;
+            component.toggleTagsEdit(eventMock);
+            expect(component.editableTags).toBe(true);
+            expect(component.tagNameControlVisible).toBe(true);
+            expect(component.tagsPanelState).toBe(true);
             expect(component.editable).toBe(false);
-        });
-    
-        it('should cancel tags changes and toggle editableTags flag', () => {
-            const event = new Event('click');
-            const buttonType = 'tags';
-            component.editableTags = true;
-    
-            spyOn(component, 'cancelChanges');
-            component.cancelEditChanges(buttonType, event);
-    
-            expect(component.cancelChanges).toHaveBeenCalledWith(event);
-            expect(component.editableTags).toBe(false);
-        });
-    
-        it('should cancel categories changes and toggle editableCategories flag', () => {
-            const event = new Event('click');
-            const buttonType = 'categories';
-            component.editableCategories = true;
-    
-            spyOn(component, 'cancelChanges');
-            component.cancelEditChanges(buttonType, event);
-    
-            expect(component.cancelChanges).toHaveBeenCalledWith(event);
             expect(component.editableCategories).toBe(false);
         });
-    });
-    
 
-    describe('editing', () => {
-        it('should toggle categories edit and set categoriesPanelState accordingly', () => {
-            const event = new Event('click');
-            spyOn(event, 'stopPropagation');
+        it('should toggle categories editable', () => {
+            const eventMock = new MouseEvent('click');
             component.editableCategories = false;
-            component.categoriesPanelState = false;
-            component.toggleCategoriesEdit(event);
-            expect(event.stopPropagation).toHaveBeenCalled();
+            component.toggleCategoriesEdit(eventMock);
             expect(component.editableCategories).toBe(true);
+            expect(component.categoryControlVisible).toBe(true);
             expect(component.categoriesPanelState).toBe(true);
-            component.toggleCategoriesEdit(event);
-            expect(component.editableCategories).toBe(false);
-            expect(component.categoriesPanelState).toBe(false);
-        });
+            expect(component.editable).toBe(false);
+            expect(component.editableTags).toBe(false);
+          });
 
-        it('should toggle group edit and expand the panel if editable', () => {
-            const event = new Event('click');
-            spyOn(event, 'stopPropagation');
-            const group = { editable: false, expanded: false };
-            component.toggleEdit(group, event);
-            expect(event.stopPropagation).toHaveBeenCalled();
+          it('should toggle group editable', () => {
+            const eventMock = new MouseEvent('click');
+            const group: CardViewGroup = {
+                editable: false, expanded: false,
+                title: '',
+                properties: []
+            };
+            component.editableGroup = null;
+            component.toggleEdit(eventMock, group);
             expect(group.editable).toBe(true);
             expect(group.expanded).toBe(true);
-        });
-        
-        it('should toggle group edit but not expand the panel if not editable', () => {
-            const event = new Event('click');
-            spyOn(event, 'stopPropagation');
-            const group = { editable: true, expanded: true };
-            component.toggleEdit(group, event);
-            expect(event.stopPropagation).toHaveBeenCalled();
-            expect(group.editable).toBe(false);
-            expect(group.expanded).toBe(true);
-        });
-        
-
-        it('should toggle general info edit and set generalInfoPanelState accordingly', () => {
-            const event = new Event('click');
-            spyOn(event, 'stopPropagation');
-            component.generalInfoPanelState = true;
-            component.editable = false;
-            component.toggleGeneralEdit(event);
-            expect(event.stopPropagation).toHaveBeenCalled();
-            expect(component.editable).toBe(true);
-            expect(component.generalInfoPanelState).toBe(true);
-            component.toggleGeneralEdit(event);
+            expect(component.editableGroup).toBe(group);
             expect(component.editable).toBe(false);
-            expect(component.generalInfoPanelState).toBe(true);
+            expect(component.editableTags).toBe(false);
+            expect(component.editableCategories).toBe(false);
+          });
+    });
+
+    describe('toggleEditMode', () => {
+        it('should toggle general editable', () => {
+            component.editable = false;
+            component.toggleEditMode(ButtonType.GeneralInfo);
+            expect(component.editable).toBe(true);
+          });
+
+        it('should toggle tags editable', () => {
+            component.editableTags = false;
+            component.toggleEditMode(ButtonType.Tags);
+            expect(component.editableTags).toBe(true);
         });
 
-        it('should toggle tags edit and set tagsPanelState accordingly', () => {
-            const event = new Event('click');
-            spyOn(event, 'stopPropagation');
-            component.editableTags = false;
-            component.tagsPanelState = false;
-            component.toggleTagsEdit(event);
-            expect(event.stopPropagation).toHaveBeenCalled();
-            expect(component.editableTags).toBe(true);
-            expect(component.tagsPanelState).toBe(true);
-            component.toggleTagsEdit(event);
-            expect(component.editableTags).toBe(false);
-            expect(component.tagsPanelState).toBe(false);
+        it('should toggle categories editable', () => {
+            component.editableCategories = false;
+            component.toggleEditMode(ButtonType.Categories);
+            expect(component.editableCategories).toBe(true);
         });
-    })
+
+        it('should toggle group editable', () => {
+            const group: CardViewGroup = {
+                editable: false, expanded: false,
+                title: '',
+                properties: []
+            };
+            component.editableGroup = null;
+            component.toggleEditMode(ButtonType.Group, group);
+            expect(group.editable).toBe(true);
+        });
+    });
 
     describe('Reseting', () => {
         it('should reset properties on reset click', async () => {
@@ -791,6 +705,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Display properties with aspect oriented config', () => {
         let appConfig: AppConfigService;
+        let classesApi: ClassesApi;
         let expectedNode: Node;
 
         const verResponse: PropertyGroup = {
@@ -1285,14 +1200,6 @@ describe('ContentMetadataComponent', () => {
             expect(tagsCreator.disabledTagsRemoving).toBeFalse();
         });
 
-        it('should have assigned true to disabledTagsRemoving after clicking on update button', () => {
-            tagsCreator.tagsChange.emit([]);
-            fixture.detectChanges();
-
-            clickOnTagsSave();
-            expect(tagsCreator.disabledTagsRemoving).toBeTrue();
-        });
-
         it('should have assigned false to disabledTagsRemoving if forkJoin fails', () => {
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
@@ -1312,15 +1219,6 @@ describe('ContentMetadataComponent', () => {
             clickOnTagsSave();
 
             expect(tagsCreator.disabledTagsRemoving).toBeFalse();
-        });
-
-        it('should have assigned false to tagNameControlVisible after clicking on update button', () => {
-            tagsCreator.tagNameControlVisibleChange.emit(true);
-            tagsCreator.tagsChange.emit([]);
-            fixture.detectChanges();
-
-            clickOnTagsSave();
-            expect(tagsCreator.tagNameControlVisible).toBeFalse();
         });
 
         describe('Setting tags', () => {
