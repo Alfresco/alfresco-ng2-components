@@ -16,22 +16,21 @@
  */
 
 import { SearchDateRangeComponent } from './search-date-range.component';
-import { MomentDateAdapter } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-
-declare let moment: any;
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { endOfDay, endOfToday, format, isValid, parse, startOfDay } from 'date-fns';
 
 describe('SearchDateRangeComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeComponent>;
     let component: SearchDateRangeComponent;
-    let adapter: MomentDateAdapter;
+    let adapter: DateFnsAdapter;
     const fromDate = '2016-10-16';
     const toDate = '2017-10-16';
     const maxDate = '10-Mar-20';
-    const dateFormatFixture = 'DD-MMM-YY';
+    const dateFormatFixture = 'dd-MMM-yy';
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,17 +40,17 @@ describe('SearchDateRangeComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeComponent);
-        adapter = fixture.debugElement.injector.get(DateAdapter) as MomentDateAdapter;
+        adapter = fixture.debugElement.injector.get(DateAdapter) as DateFnsAdapter;
         component = fixture.componentInstance;
     });
 
     afterEach(() => fixture.destroy());
 
-    it('should use moment adapter', () => {
+    it('should use date-fns adapter', () => {
         fixture.detectChanges();
 
-        expect(adapter instanceof MomentDateAdapter).toBe(true);
-        expect(component.datePickerFormat).toBe('DD/MM/YYYY');
+        expect(adapter instanceof DateFnsAdapter).toBe(true);
+        expect(component.datePickerFormat).toBe('dd-MMM-yy');
     });
 
     it('should setup form elements on init', () => {
@@ -62,11 +61,11 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form).toBeDefined();
     });
 
-    it('should setup the format of the date from configuration', () => {
+    it('should check the format of the date from component', () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         fixture.detectChanges();
 
-        expect(adapter.overrideDisplayFormat).toBe(dateFormatFixture);
+        expect(component.datePickerFormat).toBe(dateFormatFixture);
     });
 
     it('should setup form control with formatted valid date on change', () => {
@@ -74,13 +73,13 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const inputString = '20-feb-18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const dateFromInput = parse(inputString, dateFormatFixture, new Date());
 
-        expect(momentFromInput.isValid()).toBeTruthy();
+        expect(isValid(dateFromInput)).toBeTruthy();
 
         component.onChangedHandler({ value: inputString }, component.from);
 
-        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
+        expect(component.from.value.toString()).toEqual(dateFromInput.toString());
     });
 
     it('should NOT setup form control with invalid date on change', () => {
@@ -88,13 +87,13 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const inputString = '20.f.18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const dateFromInput = parse(inputString, dateFormatFixture, new Date());
 
-        expect(momentFromInput.isValid()).toBeFalsy();
+        expect(isValid(dateFromInput)).toBeFalsy();
 
         component.onChangedHandler({ value: inputString }, component.from);
 
-        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
+        expect(component.from.value.toString()).not.toEqual(dateFromInput.toString());
     });
 
     it('should reset form', () => {
@@ -157,8 +156,8 @@ describe('SearchDateRangeComponent', () => {
             to: toDate
         }, true);
 
-        const startDate = moment(fromDate).startOf('day').format();
-        const endDate = moment(toDate).endOf('day').format();
+        const startDate = format(startOfDay(new Date(fromDate)), `yyyy-MM-dd'T'HH:mm:ssxx`);
+        const endDate = format(endOfDay(new Date(toDate)), `yyyy-MM-dd'T'HH:mm:ssxx`);
 
         const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
 
@@ -214,7 +213,7 @@ describe('SearchDateRangeComponent', () => {
     it('should be able to set the maximum date to today', async () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: 'today' };
         fixture.detectChanges();
-        const today = adapter.today().endOf('day').toString().slice(0, -3);
+        const today = endOfToday().toString().slice(0,30);
 
         const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="' + today + '"]');
 
