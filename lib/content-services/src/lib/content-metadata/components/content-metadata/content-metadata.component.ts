@@ -196,6 +196,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     group: CardViewGroup;
 
+     /** Emitted when content's editable state is changed. **/
+    @Output()
+    editableChange = new EventEmitter<boolean>();
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -569,6 +573,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 return [...properties, ...filteredProperties];
             })
         );
+    }
+
+    private isEmpty(value: any): boolean {
+        return value === undefined || value === null || value === '';
     }
 
     private loadCategoriesForNode(nodeId: string) {
