@@ -112,6 +112,12 @@
     }
 }
 
+.app-metadata-tab .adf-metadata-properties .mat-expansion-panel {
+    border: 1px solid var(--adf-metadata-property-panel-border-color);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
 .acs-details-container {
     .mat-tab-body-content {
         .adf-metadata-properties {
@@ -129,10 +135,4 @@
     .mat-card:not([class*='mat-elevation-z']) {
         box-shadow: none;
     }
-}
-
-.app-metadata-tab .adf-metadata-properties .mat-expansion-panel {
-    border: 1px solid var(--adf-metadata-property-panel-border-color);
-    border-radius: 12px;
-    margin-bottom: 12px;
 }
