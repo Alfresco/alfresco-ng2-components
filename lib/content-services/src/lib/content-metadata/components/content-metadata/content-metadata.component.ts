@@ -351,6 +351,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     toggleGeneralEdit(event: MouseEvent): void {
         event.stopPropagation();
         this.editable = !this.editable;
+        this.editableChange.emit(this.editable);
         this.cancelEditChanges();
         if (this.editable) {
             this.panel.open();
@@ -362,10 +363,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     toggleTagsEdit(event: MouseEvent): void {
         event.stopPropagation();
         this.editableTags = !this.editableTags;
+        this.tagsPanelState = this.editableTags;
         this.cancelEditChanges();
         this.tagNameControlVisible = true;
         if (this.editableTags) {
-            this.tagsPanelState = true;
             this.editable = false;
             this.editableCategories = false;
         }
@@ -375,9 +376,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         event.stopPropagation();
         this.cancelEditChanges();
         this.editableCategories = !this.editableCategories;
+        this.categoriesPanelState = this.editableCategories;
         this.categoryControlVisible = true;
         if (this.editableCategories) {
-            this.categoriesPanelState = true;
             this.editable = false;
             this.editableTags = false;
         }
@@ -389,6 +390,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.editableGroup.editable = false;
         }
         group.editable = !group.editable;
+        this.editableChange.emit(this.editable);
         this.editableGroup = group.editable ? group : null;
         if (group.editable) {
             group.expanded = true;

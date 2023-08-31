@@ -99,7 +99,7 @@
                     class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
-                <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-tags-added">
+                <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableTags" class="adf-metadata-properties-tags">
@@ -157,7 +157,7 @@
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
-                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-categories-added">
+                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-item-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
@@ -219,7 +219,7 @@
                             </div>
                         </mat-expansion-panel-header>
                         <mat-divider class="adf-mat-divider"></mat-divider>
-                        <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-tags-added">
+                        <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
                             {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
                         </div>
                         <adf-card-view
