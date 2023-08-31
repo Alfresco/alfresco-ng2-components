@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { AuthenticationService } from '@alfresco/adf-core';
-import moment, { Moment } from 'moment';
+import { isAfter } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -55,9 +55,9 @@ export class LockService {
         return node.properties['cm:lockType'] === 'WRITE_LOCK' && node.properties['cm:lockLifetime'] === 'PERSISTENT';
     }
 
-    private getLockExpiryTime(node: Node): Moment | undefined {
+    private getLockExpiryTime(node: Node): Date | undefined {
         if (node.properties['cm:expiryDate']) {
-            return moment(node.properties['cm:expiryDate'], 'yyyy-MM-ddThh:mm:ssZ');
+            return new Date(node.properties['cm:expiryDate']);
         }
         return undefined;
     }
@@ -65,7 +65,7 @@ export class LockService {
     private isLockExpired(node: Node): boolean {
         const expiryLockTime = this.getLockExpiryTime(node);
         if (expiryLockTime) {
-            return moment().isAfter(expiryLockTime);
+            return isAfter(new Date(), expiryLockTime);
         }
         return false;
     }
