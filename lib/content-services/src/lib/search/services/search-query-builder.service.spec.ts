@@ -23,7 +23,6 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('SearchQueryBuilder', () => {
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule]
@@ -38,14 +37,8 @@ describe('SearchQueryBuilder', () => {
 
     it('should reset to defaults', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: true } as any
-            ],
-            filterQueries: [
-                { query: 'query1' },
-                { query: 'query2' }
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
+            filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
@@ -86,11 +79,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should use only enabled categories', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: false } as any,
-                { id: 'cat3', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: false } as any, { id: 'cat3', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -104,10 +93,7 @@ describe('SearchQueryBuilder', () => {
     it('should fetch filter queries from config', () => {
         const config: SearchConfiguration = {
             categories: [],
-            filterQueries: [
-                { query: 'query1' },
-                { query: 'query2' }
-            ]
+            filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
@@ -202,9 +188,7 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetQueries: {
-                queries: [
-                    { query: 'q1', label: 'query1' }
-                ]
+                queries: [{ query: 'q1', label: 'query1' }]
             }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -259,9 +243,7 @@ describe('SearchQueryBuilder', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetFields: {
-                fields: [
-                    { field: 'content.size', mincount: 1, label: 'Label with spaces' }
-                ]
+                fields: [{ field: 'content.size', mincount: 1, label: 'Label with spaces' }]
             }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -275,9 +257,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should require a query fragment to build query', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -290,9 +270,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with single fragment', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -306,10 +284,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with multiple fragments', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -319,18 +294,13 @@ describe('SearchQueryBuilder', () => {
         builder.queryFragments['cat2'] = 'NOT cm:creator:System';
 
         const compiled = builder.buildQuery();
-        expect(compiled.query.query).toBe(
-            '(cm:name:test) AND (NOT cm:creator:System)'
-        );
+        expect(compiled.query.query).toBe('(cm:name:test) AND (NOT cm:creator:System)');
     });
 
     it('should build query with custom fields', () => {
         const config: SearchConfiguration = {
             fields: ['field1', 'field2'],
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -345,10 +315,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with empty custom fields', () => {
         const config: SearchConfiguration = {
             fields: [],
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -362,9 +329,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom filter queries', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -373,20 +338,14 @@ describe('SearchQueryBuilder', () => {
         builder.addFilterQuery('query1');
 
         const compiled = builder.buildQuery();
-        expect(compiled.filterQueries).toEqual(
-            [{ query: 'query1' }]
-        );
+        expect(compiled.filterQueries).toEqual([{ query: 'query1' }]);
     });
 
     it('should build query with custom facet queries', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ],
+            categories: [{ id: 'cat1', enabled: true } as any],
             facetQueries: {
-                queries: [
-                    { query: 'q1', label: 'q2', group: 'group-name' }
-                ]
+                queries: [{ query: 'q1', label: 'q2', group: 'group-name' }]
             }
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
@@ -400,9 +359,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom facet fields', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ],
+            categories: [{ id: 'cat1', enabled: true } as any],
             facetFields: {
                 fields: [
                     { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
@@ -430,9 +387,7 @@ describe('SearchQueryBuilder', () => {
         };
 
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ],
+            categories: [{ id: 'cat1', enabled: true } as any],
             facetFields: {
                 fields: [
                     {
@@ -468,9 +423,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build query with custom facet intervals', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ],
+            categories: [{ id: 'cat1', enabled: true } as any],
             facetIntervals: {
                 intervals: [
                     {
@@ -516,9 +469,7 @@ describe('SearchQueryBuilder', () => {
         };
 
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ],
+            categories: [{ id: 'cat1', enabled: true } as any],
             facetIntervals: {
                 intervals: [
                     {
@@ -557,10 +508,7 @@ describe('SearchQueryBuilder', () => {
     it('should build query with sorting', () => {
         const config: SearchConfiguration = {
             fields: [],
-            categories: [
-                { id: 'cat1', enabled: true } as any,
-                { id: 'cat2', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
@@ -575,9 +523,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should use pagination settings', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
@@ -593,9 +539,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should build final request with user and custom queries', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
@@ -629,9 +573,7 @@ describe('SearchQueryBuilder', () => {
         ];
 
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -671,9 +613,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should emit error event', () => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -689,9 +629,7 @@ describe('SearchQueryBuilder', () => {
 
     it('should emit empty results on error', (done) => {
         const config: SearchConfiguration = {
-            categories: [
-                { id: 'cat1', enabled: true } as any
-            ]
+            categories: [{ id: 'cat1', enabled: true } as any]
         };
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
@@ -712,9 +650,9 @@ describe('SearchQueryBuilder', () => {
 
         const builder = new SearchQueryBuilderService(buildConfig({}), alfrescoApiService);
         builder.userQuery = 'nuka cola quantum';
-        const queryBody = builder.buildQuery();
+        const searchRequest = builder.buildQuery();
 
-        expect(queryBody.include).toEqual(['path', 'allowableOperations']);
+        expect(searchRequest.include).toEqual(['path', 'allowableOperations']);
     });
 
     it('should fetch the include config from the app config', () => {
@@ -726,9 +664,9 @@ describe('SearchQueryBuilder', () => {
 
         const builder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
         builder.userQuery = 'nuka cola quantum';
-        const queryBody = builder.buildQuery();
+        const searchRequest = builder.buildQuery();
 
-        expect(queryBody.include).toEqual(includeConfig);
+        expect(searchRequest.include).toEqual(includeConfig);
     });
 
     it('should the query contain the pagination', () => {
@@ -741,9 +679,9 @@ describe('SearchQueryBuilder', () => {
             skipCount: 0
         };
         builder.paging = mockPagination;
-        const queryBody = builder.buildQuery();
+        const searchRequest = builder.buildQuery();
 
-        expect(queryBody.paging).toEqual(mockPagination);
+        expect(searchRequest.paging).toEqual(mockPagination);
     });
 
     it('should the query contain the scope in case it is defined', () => {
@@ -753,9 +691,9 @@ describe('SearchQueryBuilder', () => {
         const mockScope = { locations: 'mock-location' };
         builder.userQuery = 'nuka cola quantum';
         builder.setScope(mockScope);
-        const queryBody = builder.buildQuery();
+        const searchRequest = builder.buildQuery();
 
-        expect(queryBody.scope).toEqual(mockScope);
+        expect(searchRequest.scope).toEqual(mockScope);
     });
 
     it('should return empty if array of search config not found', (done) => {
@@ -774,32 +712,19 @@ describe('SearchQueryBuilder', () => {
         beforeEach(() => {
             configs = [
                 {
-                    categories: [
-                        { id: 'cat1', enabled: true } as any,
-                        { id: 'cat2', enabled: true } as any
-                    ],
-                    filterQueries: [
-                        { query: 'query1' },
-                        { query: 'query2' }
-                    ],
+                    categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
+                    filterQueries: [{ query: 'query1' }, { query: 'query2' }],
                     name: 'config1',
                     default: true
                 },
                 {
-                    categories: [
-                        { id: 'mouse', enabled: true } as any
-                    ],
-                    filterQueries: [
-                        { query: 'query1' },
-                        { query: 'query2' }
-                    ],
+                    categories: [{ id: 'mouse', enabled: true } as any],
+                    filterQueries: [{ query: 'query1' }, { query: 'query2' }],
                     name: 'config2',
                     default: false
                 },
                 {
-                    categories: [
-                        { id: 'cat_and_mouse', enabled: true } as any
-                    ],
+                    categories: [{ id: 'cat_and_mouse', enabled: true } as any],
                     default: false
                 }
             ];

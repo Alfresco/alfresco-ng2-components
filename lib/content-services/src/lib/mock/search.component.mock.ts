@@ -17,13 +17,13 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
-import { QueryBody, ResultSetPaging } from '@alfresco/js-api';
+import { SearchRequest, ResultSetPaging } from '@alfresco/js-api';
 
 const entryItem = {
     entry: {
         id: '123',
         name: 'MyDoc',
-        isFile : true,
+        isFile: true,
         content: {
             mimeType: 'text/plain'
         },
@@ -40,7 +40,7 @@ const entryDifferentItem = {
     entry: {
         id: '999',
         name: 'TEST_DOC',
-        isFile : true,
+        isFile: true,
         content: {
             mimeType: 'text/plain'
         },
@@ -55,27 +55,19 @@ const entryDifferentItem = {
 
 export const result = new ResultSetPaging({
     list: {
-        entries: [
-            entryItem
-        ]
+        entries: [entryItem]
     }
 });
 
 export const differentResult = new ResultSetPaging({
     list: {
-        entries: [
-            entryDifferentItem
-        ]
+        entries: [entryDifferentItem]
     }
 });
 
 export const results = {
     list: {
-        entries: [
-            entryItem,
-            entryItem,
-            entryItem
-        ]
+        entries: [entryItem, entryItem, entryItem]
     }
 };
 
@@ -86,8 +78,8 @@ export const folderResult = {
                 entry: {
                     id: '123',
                     name: 'MyFolder',
-                    isFile : false,
-                    isFolder : true,
+                    isFile: false,
+                    isFolder: true,
                     createdByUser: {
                         displayName: 'John Doe'
                     },
@@ -118,35 +110,36 @@ export const errorJson = {
 
 @Component({
     template: `
-    <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
-        (error)="showSearchResult('ERROR')"
-        (success)="showSearchResult('success')" #search>
-       <ng-template let-data>
-            <ul id="autocomplete-search-result-list">
-                <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked(item)">
-                    <div id="result_option_{{idx}}">
-                        <span>{{ item?.entry.name }}</span>
-                    </div>
-                </li>
-            </ul>
-        </ng-template>
-    </adf-search>
-    <span id="component-result-message">{{message}}</span>
+        <adf-search
+            [searchTerm]="searchedWord"
+            [maxResults]="maxResults"
+            (error)="showSearchResult('ERROR')"
+            (success)="showSearchResult('success')"
+            #search
+        >
+            <ng-template let-data>
+                <ul id="autocomplete-search-result-list">
+                    <li *ngFor="let item of data?.list?.entries; let idx = index" (click)="elementClicked()">
+                        <div id="result_option_{{ idx }}">
+                            <span>{{ item?.entry.name }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
+        </adf-search>
+        <span id="component-result-message">{{ message }}</span>
     `
-  })
-
-  export class SimpleSearchTestComponent {
-
+})
+export class SimpleSearchTestComponent {
     @ViewChild('search', { static: true })
     search: SearchComponent;
 
     message: string = '';
     searchedWord = '';
     maxResults: number = 5;
-    searchNode: QueryBody;
+    searchNode: SearchRequest;
 
-    constructor() {
-    }
+    constructor() {}
 
     showSearchResult(event: any) {
         this.message = event;
@@ -160,7 +153,7 @@ export const errorJson = {
         this.searchedWord = str;
     }
 
-    setSearchNodeTo(searchNode: QueryBody) {
+    setSearchNodeTo(searchNode: SearchRequest) {
         this.searchNode = searchNode;
     }
 
@@ -171,5 +164,4 @@ export const errorJson = {
     forceHidePanel() {
         this.search.hidePanel();
     }
-
-  }
+}
