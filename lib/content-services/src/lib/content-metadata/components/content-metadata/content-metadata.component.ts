@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     Category,
     CategoryEntry,
@@ -46,6 +46,7 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { AllowableOperationsEnum, ContentService } from '../../../common';
+import { ButtonType } from './button-type.enum';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -57,7 +58,8 @@ const DEFAULT_SEPARATOR = ', ';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
-    @ViewChild(MatExpansionPanel) panel: MatExpansionPanel;
+    @ViewChild(MatExpansionPanel)
+    panel: MatExpansionPanel;
     protected onDestroy$ = new Subject<boolean>();
 
     /** (required) The node entity to fetch metadata about */
@@ -129,6 +131,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      @Input()
      readOnly = false;
 
+     /** Emitted when content's editable state is changed. **/
+    @Output()
+    editableChange = new EventEmitter<boolean>();
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -152,9 +158,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     classifiableChanged = this.classifiableChangedSubject.asObservable();
     generalInfoPanelState: boolean;
     tagsPanelState: boolean;
-    editableTags: boolean = false;
+    editableTags = false;
     categoriesPanelState: boolean;
-    editableCategories: boolean = false;
+    editableCategories = false;
+    hasAllowableOperations = false;
+    editableGroup: any;
+    buttonType = ButtonType;
+    group: CardViewGroup;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -192,6 +202,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
+        this.hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }
 
     get assignedTags(): string[] {
@@ -260,8 +271,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges(event: Event) {
+    saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
+        this.toggleEditMode(buttonType, group);
         this._saving = true;
         this.tagNameControlVisible = false;
         this.categoryControlVisible = false;
@@ -274,19 +286,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    saveEditChanges(buttonType: string, event: Event, group?: any) {
-        this.saveChanges(event);
+    toggleEditMode(buttonType: ButtonType, group?: CardViewGroup) {
         switch (buttonType) {
-            case 'generalInfo':
+            case ButtonType.GeneralInfo:
                 this.editable = !this.editable;
                 break;
-            case 'tags':
+            case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 break;
-            case 'categories':
+            case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 break;
-            case 'group':
+            case ButtonType.Group:
                 if (group) {
                     group.editable = !group.editable;
                 }
@@ -325,69 +336,65 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.categoryControlVisible = false;
     }
 
-    cancelChanges(event: Event) {
+    cancelChanges(buttonType: ButtonType, event: MouseEvent) {
         event.stopPropagation();
+        this.toggleEditMode(buttonType);
         this.revertChanges();
         this.loadProperties(this.node);
     }
 
-    cancelEditChanges(buttonType: string, event: Event, group?: any) {
-        this.cancelChanges(event);
-        switch (buttonType) {
-            case 'generalInfo':
-                this.editable = !this.editable;
-                break;
-            case 'tags':
-                this.editableTags = !this.editableTags;
-                break;
-            case 'categories':
-                this.editableCategories = !this.editableCategories;
-                break;
-            case 'group':
-                if (group) {
-                    group.editable = !group.editable;
-                }
-                break;
-            default:
-                break;
-        }
+    cancelEditChanges() {
+        this.revertChanges();
+        this.loadProperties(this.node);
     }
 
-    toggleGeneralEdit(event: Event): void {
+    toggleGeneralEdit(event: MouseEvent): void {
         event.stopPropagation();
         this.editable = !this.editable;
+        this.cancelEditChanges();
         if (this.editable) {
             this.panel.open();
+            this.editableTags = false;
+            this.editableCategories = false;
         }
     }
 
-    toggleTagsEdit(event: Event): void {
+    toggleTagsEdit(event: MouseEvent): void {
         event.stopPropagation();
         this.editableTags = !this.editableTags;
+        this.cancelEditChanges();
         this.tagNameControlVisible = true;
         if (this.editableTags) {
             this.tagsPanelState = true;
-        } else {
-            this.tagsPanelState = false;
+            this.editable = false;
+            this.editableCategories = false;
         }
     }
 
-    toggleCategoriesEdit(event: Event): void {
+    toggleCategoriesEdit(event: MouseEvent): void {
         event.stopPropagation();
+        this.cancelEditChanges();
         this.editableCategories = !this.editableCategories;
         this.categoryControlVisible = true;
         if (this.editableCategories) {
             this.categoriesPanelState = true;
-        } else {
-            this.categoriesPanelState = false;
+            this.editable = false;
+            this.editableTags = false;
         }
     }
 
-    toggleEdit(group: any, event: Event): void {
+    toggleEdit(event: MouseEvent, group: CardViewGroup): void {
         event.stopPropagation();
+        if (this.editableGroup && this.editableGroup !== group) {
+            this.editableGroup.editable = false;
+        }
         group.editable = !group.editable;
-        if(group.editable) {
+        this.editableGroup = group.editable ? group : null;
+        if (group.editable) {
             group.expanded = true;
+            this.editable = false;
+            this.editableTags = false;
+            this.editableCategories = false;
         }
     }
 
@@ -412,10 +419,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     canExpandProperties(): boolean {
         return !this.expanded || this.displayAspect === 'Properties';
-    }
-
-    hasAllowableOperations() {
-        return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }
 
     keyDown(event: KeyboardEvent) {
@@ -493,6 +496,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 const filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
                 return [...properties, ...filteredProperties];
             }));
+    }
+
+    private isEmpty(value: any): boolean {
+        return value === undefined || value === null || value === '';
     }
 
     private loadCategoriesForNode(nodeId: string) {
