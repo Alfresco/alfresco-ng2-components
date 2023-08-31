@@ -221,6 +221,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     group: CardViewGroup;
 
+     /** Emitted when content's editable state is changed. **/
+    @Output()
+    editableChange = new EventEmitter<boolean>();
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -514,10 +518,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return !this.expanded || this.displayAspect === 'Properties';
     }
 
-    hasAllowableOperations() {
-        return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
-    }
-
     keyDown(event: KeyboardEvent) {
         if (event.keyCode === 37 || event.keyCode === 39) {
             // ArrowLeft && ArrowRight
@@ -599,6 +599,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 return [...properties, ...filteredProperties];
             })
         );
+    }
+
+    private isEmpty(value: any): boolean {
+        return value === undefined || value === null || value === '';
     }
 
     private loadCategoriesForNode(nodeId: string) {

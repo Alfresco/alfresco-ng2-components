@@ -110,7 +110,7 @@ describe('ContentMetadataComponent', () => {
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
         fixture.detectChanges();
-    }
+    };
 
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
@@ -823,6 +823,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Display properties with aspect oriented config', () => {
         let appConfig: AppConfigService;
+        let classesApi: ClassesApi;
         let expectedNode: Node;
 
         const verResponse: PropertyGroup = {
