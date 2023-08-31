@@ -19,9 +19,9 @@ import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import * as moment from 'moment';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
+import { format } from 'date-fns';
 
 describe('Document List Component', () => {
     let uploadedFolder: NodeEntry;
@@ -146,7 +146,7 @@ describe('Document List Component', () => {
         it('[C279929] Should be able to display the date with date type', async () => {
             await apiService.login(acsUser.username, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
-            const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
+            const createdDate = format(new Date(mediumDateUploadedNode.createdAt), 'PPpp');
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
