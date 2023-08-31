@@ -9,7 +9,6 @@
         height: 32px;
         border-radius: 12px;
         align-items: center;
-        padding: 0 12px;
 
         mat-form-field {
             width: 100%;
@@ -27,8 +26,14 @@
             width: 100%;
         }
 
-        .mat-form-field-appearance-fill .mat-form-field-flex {
-            background: none;
+        .mat-form-field-appearance-fill {
+            .mat-form-field-flex {
+                background: none;
+            }
+        
+            .mat-form-field-infix {
+                padding: 0;
+            }
         }
     }
 
@@ -49,6 +54,13 @@
 
     [hidden] {
         visibility: hidden;
+    }
+
+    .adf-no-categories-message {
+        margin-left: 9px;
+        margin-top: 28.5px;
+        margin-bottom: 0;
+        height: 30px;
     }
 }
 
