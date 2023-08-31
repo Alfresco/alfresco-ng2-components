@@ -17,10 +17,16 @@
 
 import { LogService } from '../../common/services/log.service';
 import { Injectable } from '@angular/core';
-import moment from 'moment';
-import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core';
+import {
+    FormFieldModel,
+    FormModel,
+    TabModel,
+    ContainerModel,
+    FormOutcomeModel
+} from '../components/widgets/core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
+import { isMatch } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -128,7 +134,7 @@ export class WidgetVisibilityService {
         } else if (visibilityObj.rightType === WidgetTypeEnum.field) {
             valueFound = this.getFormValue(form, visibilityObj.rightValue);
         } else {
-            if (moment(visibilityObj.rightValue, 'YYYY-MM-DD', true).isValid()) {
+            if (isMatch(visibilityObj.rightValue, 'yyyy-MM-dd')) {
                 valueFound = visibilityObj.rightValue + 'T00:00:00.000Z';
             } else {
                 valueFound = visibilityObj.rightValue;
