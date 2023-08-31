@@ -105,7 +105,7 @@ describe('ContentMetadataComponent', () => {
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
         fixture.detectChanges();
-    }
+    };
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
 
@@ -324,7 +324,7 @@ describe('ContentMetadataComponent', () => {
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-        }));
+          }));
 
         it('should call getTagsByNodeId on TagService on save click', () => {
             component.editableTags = true;
@@ -813,6 +813,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Display properties with aspect oriented config', () => {
         let appConfig: AppConfigService;
+        let classesApi: ClassesApi;
         let expectedNode: Node;
 
         const verResponse: PropertyGroup = {
