@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -236,7 +236,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
                 expect(deleteButton.disabled).toBe(false);
             });
 
-            it('should enable save button if the filter is changed for custom task filters', (done) => {
+            it('should enable save button if the filter is changed for custom task filters', fakeAsync(() => {
                 const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
                 component.ngOnChanges({ id: taskFilterIdChange });
                 fixture.detectChanges();
@@ -246,22 +246,18 @@ describe('EditServiceTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
-                component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(500))
-                    .subscribe(() => {
-                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                        fixture.detectChanges();
-                        expect(saveButton.disabled).toBe(false);
-                        done();
-                    });
-
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 sortOptions[3].nativeElement.click();
                 fixture.detectChanges();
-            });
+
+                tick(500);
+                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                fixture.detectChanges();
+                expect(saveButton.disabled).toBe(false);
+            }));
 
             it('should disable save button if the filter is not changed for custom filter', async () => {
                 component.toggleFilterActions = true;
