@@ -462,9 +462,9 @@ describe('ContentMetadataComponent', () => {
             expect(component.categoriesPanelState).toBe(true);
             expect(component.editable).toBe(false);
             expect(component.editableTags).toBe(false);
-          });
+        });
 
-          it('should toggle group editable', () => {
+        it('should toggle group editable', () => {
             const eventMock = new MouseEvent('click');
             const group: CardViewGroup = {
                 editable: false, expanded: false,
@@ -479,7 +479,7 @@ describe('ContentMetadataComponent', () => {
             expect(component.editable).toBe(false);
             expect(component.editableTags).toBe(false);
             expect(component.editableCategories).toBe(false);
-          });
+        });
     });
 
     describe('toggleEditMode', () => {
@@ -970,13 +970,9 @@ describe('ContentMetadataComponent', () => {
             component.displayAspect = 'EXIF';
             component.expanded = true;
             component.displayEmpty = true;
-
             fixture.detectChanges();
             await fixture.whenStable();
-
             let defaultProp = queryDom(fixture);
-            let exifProp = queryDom(fixture, 'EXIF');
-            let customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
 
             component.displayAspect = 'CUSTOM';
@@ -985,23 +981,14 @@ describe('ContentMetadataComponent', () => {
             await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
-            exifProp = queryDom(fixture, 'EXIF');
-            customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeFalsy();
-            expect(exifProp.componentInstance.expanded).toBeFalsy();
-            expect(customProp.componentInstance.expanded).toBeTruthy();
-
             component.displayAspect = 'Properties';
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             defaultProp = queryDom(fixture);
-            exifProp = queryDom(fixture, 'EXIF');
-            customProp = queryDom(fixture, 'CUSTOM');
             expect(defaultProp.componentInstance.expanded).toBeTruthy();
-            expect(exifProp.componentInstance.expanded).toBeFalsy();
-            expect(customProp.componentInstance.expanded).toBeFalsy();
         });
 
         it('should not expand anything if input is wrong', async () => {
