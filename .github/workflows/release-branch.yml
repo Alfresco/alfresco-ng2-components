@@ -125,7 +125,7 @@ jobs:
       - name: build libraries
         run: |
           set -u;
-          ./scripts/github/build/bumpversion.sh
+          ./scripts/update-version.sh -gnu -nextalpha|| exit 1;
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - uses: actions/setup-node@v3
@@ -134,7 +134,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch|| exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@v3
@@ -143,7 +143,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
