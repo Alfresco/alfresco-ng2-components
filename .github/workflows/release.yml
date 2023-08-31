@@ -177,18 +177,7 @@ jobs:
         with:
           dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: check PR number
-        id: action
-        uses: kamatama41/get-pr-number-action@5c77b38a1b4974ebf8a9521a689f38a5898eadd6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: save PR number
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          echo "PR_NUMBER=${{ steps.action.outputs.number }}" >> $GITHUB_ENV
-      - name: build libraries
+         - name: build libraries
         run: |
           set -u;
           ./scripts/github/build/bumpversion.sh
