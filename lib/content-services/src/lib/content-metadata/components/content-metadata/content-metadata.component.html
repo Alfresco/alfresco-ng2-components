@@ -16,7 +16,7 @@
                         {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                     </mat-panel-title>
                 </div>
-                <button *ngIf="!editable && !readOnly && hasAllowableOperations()"
+                <button *ngIf="!editable && !readOnly && hasAllowableOperations"
                         mat-icon-button
                         (click)="toggleGeneralEdit($event)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -28,12 +28,12 @@
                 <div *ngIf="editable"
                     class="adf-metadata-action-buttons">
                     <button mat-icon-button 
-                            (click)="cancelEditChanges('generalInfo', $event)"
+                            (click)="cancelChanges(buttonType.GeneralInfo, $event)"
                             data-automation-id="reset-metadata">
                         <mat-icon>clear</mat-icon>
                     </button>
                     <button mat-icon-button
-                            (click)="saveEditChanges('generalInfo', $event)"
+                            (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
                             color="primary"
                             data-automation-id="save-general-info-metadata"
                             [disabled]="!hasMetadataChanged">
@@ -68,7 +68,7 @@
                         </mat-panel-title>
                     </div>
                     <div class="adf-tags-buttons">
-                        <button *ngIf="!editableTags"
+                        <button *ngIf="!editableTags && !readOnly && hasAllowableOperations"
                                 mat-icon-button
                                 (click)="toggleTagsEdit($event)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -80,12 +80,12 @@
                     </div>
                     <div *ngIf="editableTags" class="adf-metadata-action-buttons">
                         <button mat-icon-button
-                                (click)="cancelEditChanges('tags', $event)"
+                                (click)="cancelChanges(buttonType.Tags, $event)"
                                 data-automation-id="reset-tags-metadata">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
-                                (click)="saveEditChanges('tags', $event)"
+                                (click)="saveChanges(buttonType.Tags, $event, group)"
                                 color="primary"
                                 data-automation-id="save-tags-metadata"
                                 [disabled]="!hasMetadataChanged">
@@ -128,7 +128,7 @@
                         </mat-panel-title>
                     </div>
                     <div class="adf-metadata-categories-title">
-                        <button *ngIf="!editableCategories" 
+                        <button *ngIf="!editableCategories && !readOnly && hasAllowableOperations"
                                 mat-icon-button
                                 (click)="toggleCategoriesEdit($event)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -140,12 +140,12 @@
                     </div>
                     <div *ngIf="editableCategories" class="adf-metadata-action-buttons">
                         <button mat-icon-button
-                                (click)="cancelEditChanges('categories', $event)"
+                                (click)="cancelChanges(buttonType.Categories, $event)"
                                 data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
-                                (click)="saveEditChanges('categories', $event)"
+                                (click)="saveChanges(buttonType.Categories, $event, group)"
                                 color="primary"
                                 data-automation-id="save-categories-metadata"
                                 [disabled]="!hasMetadataChanged">
@@ -157,7 +157,7 @@
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
-                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-catagories-added">
+                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-categories-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
@@ -194,22 +194,23 @@
                                     {{ group.title | translate }}
                                 </mat-panel-title>
                             </div>
-                            <button *ngIf="!group.editable && !readOnly && hasAllowableOperations()"
+                            <button *ngIf="!group.editable && !readOnly && hasAllowableOperations"
                                     mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                                    data-automation-id="meta-data-card-toggle-edit" class="adf-edit-icon-buttons"
-                                    (click)="toggleEdit(group, $event)">
+                                    data-automation-id="meta-data-card-toggle-edit"
+                                    class="adf-edit-icon-buttons"
+                                    (click)="toggleEdit($event, group)">
                                 <mat-icon>mode_edit</mat-icon>
                             </button>
                             <div class="adf-metadata-action-buttons" *ngIf="group.editable">
                                 <button mat-icon-button
-                                        (click)="cancelEditChanges('group', $event, group)"
+                                        (click)="cancelChanges(buttonType.Group, $event)"
                                         data-automation-id="reset-metadata">
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button
-                                        (click)="saveEditChanges('group', $event, group)"
+                                        (click)="saveChanges(buttonType.Group, $event, group)"
                                         color="primary"
                                         data-automation-id="save-metadata"
                                         [disabled]="!hasMetadataChanged">
@@ -218,6 +219,9 @@
                             </div>
                         </mat-expansion-panel-header>
                         <mat-divider class="adf-mat-divider"></mat-divider>
+                        <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-tags-added">
+                            {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
+                        </div>
                         <adf-card-view
                             (keydown)="keyDown($event)"
                             [properties]="group.properties"
