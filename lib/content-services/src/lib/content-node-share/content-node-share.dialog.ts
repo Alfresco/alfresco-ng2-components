@@ -18,17 +18,21 @@
 import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
+import {
+    UntypedFormGroup,
+    UntypedFormControl,
+    AbstractControl,
+    Validators,
+    ValidationErrors
+} from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
-
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate, SharedLinkEntry } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import { ContentNodeShareSettings } from './content-node-share.settings';
-import { takeUntil, debounceTime } from 'rxjs/operators';
 import { RenditionService } from '../common/services/rendition.service';
-import { format, add, endOfDay } from 'date-fns';
+import { format, add, endOfDay, isBefore } from 'date-fns';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -40,6 +44,10 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
+    private minDateValidator = (control: AbstractControl): ValidationErrors | null => {
+        return isBefore(endOfDay(new Date(control.value)), this.minDate) ? {invalidDate: true} : null;
+    };
+
     minDate = add(new Date(), { days: 1 });
     sharedId: string;
     fileName: string;
@@ -49,7 +57,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isLinkWithExpiryDate = false;
     form: UntypedFormGroup = new UntypedFormGroup({
         sharedUrl: new UntypedFormControl(''),
-        time: new UntypedFormControl({ value: '', disabled: true })
+        time: new UntypedFormControl({value: '', disabled: true}, [Validators.required, this.minDateValidator])
     });
     type: DatePickerType = 'date';
     maxDebounceTime = 500;
@@ -90,12 +98,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 this.isLinkWithExpiryDate ? this.time.enable() : this.time.disable();
             }
         }
-
-        this.time.valueChanges.pipe(debounceTime(this.maxDebounceTime), takeUntil(this.onDestroy$)).subscribe((value) => this.onTimeChanged(value));
     }
 
-    onTimeChanged(date: Date) {
-        this.updateNode(date);
+    onTimeChanged() {
+        if (this.time.valid) {
+            this.updateNode(this.time.value);
+        }
     }
 
     get time(): AbstractControl {
@@ -137,10 +145,15 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     onDatePickerClosed() {
-        this.datePickerInput.nativeElement.blur();
+        this.onTimeChanged();
         if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
+    }
+
+    preventIncorrectCharacters(e: KeyboardEvent): boolean {
+        const regex = /[^\d\/.\-]/;
+        return e.key.length == 1 ? !regex.test(e.key) : true;
     }
 
     private openConfirmationDialog() {

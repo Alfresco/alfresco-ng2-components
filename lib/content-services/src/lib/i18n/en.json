@@ -533,7 +533,8 @@
       "REMOVE": "Remove"
     },
     "UNSHARE_ERROR": "Error unsharing this file",
-    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file"
+    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
