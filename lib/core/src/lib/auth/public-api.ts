@@ -24,7 +24,6 @@ export * from './guard/auth-guard-bpm.service';
 export * from './guard/auth-guard-sso-role.service';
 
 export * from './services/authentication.service';
-export * from './services/base-authentication.service';
 export * from './services/identity-role.service';
 export * from './services/identity-user.service';
 export * from './services/identity-group.service';
@@ -45,5 +44,3 @@ export * from './models/identity-role.model';
 
 export * from './models/user-access.model';
 export * from './models/application-access.model';
-
-
