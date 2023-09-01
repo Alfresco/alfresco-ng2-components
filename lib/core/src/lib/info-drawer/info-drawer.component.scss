@@ -1,12 +1,22 @@
 .adf {
     &-info-drawer {
-        display: block;
+        .adf-metadata-properties-panel{
+            display:block;
+            margin:0;
+        }
 
         .mat-tab-label {
             min-width: 0;
         }
 
         & &-layout {
+
+            .adf-info-drawer-icon{
+                display: inline-block; 
+                vertical-align: middle;
+                margin-right:10px;
+            }
+
             &-content {
                 padding: 0;
 
@@ -42,7 +52,7 @@
                     }
 
                     .mat-tab-body {
-                        padding: 10px;
+                        padding: 24px;
                     }
 
                     .mat-tab-body-content {
@@ -55,3 +65,4 @@
         }
     }
 }
+

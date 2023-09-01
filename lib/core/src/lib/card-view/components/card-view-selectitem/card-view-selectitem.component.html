@@ -2,6 +2,7 @@
     <div
         [attr.data-automation-id]="'card-select-label-' + property.key"
         class="adf-property-label"
+        [ngClass]="{'adf-property-label-not-editable' : !isEditable() && editable}"
     >{{ property.label | translate }}</div>
     <div class="adf-property-field">
         <div
@@ -15,6 +16,7 @@
                 <mat-select
                     [(value)]="value"
                     panelClass="adf-select-filter"
+                    [ngClass]="{'adf-property-select-edit-mode' : isEditable(),'adf-property-normal-mode':!isEditable(),'adf-property-label-not-editable' : !isEditable() && editable}"
                     (selectionChange)="onChange($event)"
                     data-automation-class="select-box"
                     [aria-label]="property.label | translate"

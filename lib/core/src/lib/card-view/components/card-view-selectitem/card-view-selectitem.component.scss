@@ -3,13 +3,8 @@
 }
 
 .adf-select-item-padding {
-    padding-top: 6px;
-    padding-bottom: 20px;
-}
-
-.adf-select-item-padding-editable {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    display: flex;
+    padding: 6px 0;
 }
 
 .adf-select-filter-input {

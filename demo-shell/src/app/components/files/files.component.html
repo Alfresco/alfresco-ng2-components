@@ -289,7 +289,7 @@
         <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar">
             <div info-drawer-content>
 
-                <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">
+                <adf-info-drawer [drawerIcon]="documentList.selection[0].entry" [title]="'Details'" *ngIf="documentList.selection[0]">
                     <adf-info-drawer-tab label="Properties">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry"

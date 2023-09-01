@@ -132,7 +132,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        it('[C245654] Should be possible to edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -141,13 +141,6 @@ describe('Metadata component', () => {
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
             await metadataViewPage.editIconGeneralClick();
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:name');
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
-
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:name')).toEqual('Edit');
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:title')).toEqual('Edit');
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:description')).toEqual('Edit');
 
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText');
             await metadataViewPage.clickResetMetadata();
@@ -178,6 +171,35 @@ describe('Metadata component', () => {
             await metadataViewPage.enterPropertyText('properties.cm:name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await metadataViewPage.clickSaveGeneralMetadata();
+        });
+
+        it('[C261157] Should be possible to use the metadata component When the node is a Folder', async () => {
+            await contentServicesPage.metadataContent(folderName);
+
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
+            
+            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(`${acsUser.firstName} ${acsUser.lastName}`);
+            await BrowserActions.closeMenuAndDialogs();
+        });
+
+        it('[C261158] Should be possible to edit the metadata When the node is a Folder', async () => {
+            await contentServicesPage.metadataContent(folderName);
+
+            await metadataViewPage.editIconGeneralClick();
+
+            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
+            await metadataViewPage.clickResetButton();
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
+
+            await metadataViewPage.editIconGeneralClick();
+            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
+            await metadataViewPage.clickSaveGeneralMetadata();
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('newnameFolder');
+            await metadataViewPage.editIconGeneralClick();
+
+            await metadataViewPage.enterPropertyText('properties.cm:name', folderName);
+            await metadataViewPage.clickSaveGeneralMetadata();
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
         });
 
         it('[C260181] Should be possible edit all the metadata aspect', async () => {
@@ -218,33 +240,6 @@ describe('Metadata component', () => {
             await navigationBarPage.clickLogoutButton();
         });
 
-        it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {
-            await contentServicesPage.metadataContent(folderName);
-
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
-            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(`${acsUser.firstName} ${acsUser.lastName}`);
-            await BrowserActions.closeMenuAndDialogs();
-        });
-
-        it('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
-            await contentServicesPage.metadataContent(folderName);
-
-            await metadataViewPage.editIconGeneralClick();
-
-            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
-            await metadataViewPage.clickResetButton();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
-
-            await metadataViewPage.editIconGeneralClick();
-            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
-            await metadataViewPage.clickSaveGeneralMetadata();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('newnameFolder');
-            await metadataViewPage.editIconGeneralClick();
-
-            await metadataViewPage.enterPropertyText('properties.cm:name', folderName);
-            await metadataViewPage.clickSaveGeneralMetadata();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
-        });
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
