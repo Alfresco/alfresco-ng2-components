@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
-import * as moment from 'moment';
+import { addDays, format } from 'date-fns';
 
 describe('Start Task - Custom App', () => {
 
@@ -64,8 +64,8 @@ describe('Start Task - Custom App', () => {
     const totalNrOfPages = 'of 4';
     const currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
     const currentDate = DateUtil.formatDate('MM/DD/YYYY');
-    const beforeDate = moment().add(-1, 'days').format('MM/DD/YYYY');
-    const afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
+    const beforeDate = format(addDays(new Date(),-1), 'MM/dd/yyyy');
+    const afterDate = format(addDays(new Date(),1), 'MM/dd/yyyy');
     let taskWithDueDate;
     let processDefinitionId;
 
