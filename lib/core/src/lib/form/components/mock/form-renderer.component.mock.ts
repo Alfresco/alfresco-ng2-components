@@ -1505,7 +1505,7 @@ export const formDateVisibility = {
                     existingColspan: 1,
                     maxColspan: 2
                   },
-                  dateDisplayFormat: 'yyyy-M-d'
+                  dateDisplayFormat: 'yyyy-MM-dd'
                 }
               ],
               2: [

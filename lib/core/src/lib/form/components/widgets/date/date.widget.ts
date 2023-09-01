@@ -50,7 +50,7 @@ import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
-    DATE_FORMAT = 'd-M-yyyy';
+    DATE_FORMAT = 'dd-M-yyyy';
 
     minDate: string;
     maxDate: string;

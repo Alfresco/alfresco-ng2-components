@@ -301,14 +301,14 @@ describe('FormFieldModel', () => {
                     readOnly: false
                 }
             },
-            dateDisplayFormat: 'yyyy-MM-dd hh:mm'
+            dateDisplayFormat: 'yyyy-MM-dd HH:mm'
         });
 
         const currentDateTime = new Date();
         const formattedDate = format(currentDateTime, 'yyyy-MM-dd');
-        const formattedTime = format(currentDateTime, 'hh:mm');
+        const formattedTime = format(currentDateTime, 'HH:mm');
 
-        const expectedDateTime = format(currentDateTime, 'yyyy-MM-dd hh:mm');
+        const expectedDateTime = format(currentDateTime, 'yyyy-MM-dd HH:mm');
         const expectedDateTimeFormat = formattedDate + `T${formattedTime}:00.000Z`;
 
         expect(field.value).toBe(expectedDateTime);

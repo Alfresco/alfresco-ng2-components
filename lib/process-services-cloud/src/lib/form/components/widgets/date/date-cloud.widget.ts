@@ -71,7 +71,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                const today = this.getTodaysDate();
+                const today = new Date();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
                     this.minDate = format(subDays(today, this.field.minDateRangeValue), DATE_FORMAT_CLOUD);
                     this.field.minValue = this.minDate;
@@ -91,10 +91,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
                 }
             }
         }
-    }
-
-    getTodaysDate() {
-        return new Date();
     }
 
     ngOnDestroy() {
