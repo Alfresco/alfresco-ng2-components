@@ -177,7 +177,7 @@ jobs:
         with:
           dry-run-flag: ${{ inputs.dry-run-flag }}
       - uses: ./.github/actions/download-node-modules-and-artifacts
-         - name: build libraries
+      - name: build libraries
         run: |
           set -u;
           ./scripts/github/build/bumpversion.sh
