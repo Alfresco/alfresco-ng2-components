@@ -261,15 +261,10 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
-
         component.form.controls['time'].setValue(new Date());
-
         fixture.detectChanges();
-
         clickExpireToggleButton();
-
         fixture.detectChanges();
-
         await fixture.whenStable();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
@@ -366,7 +361,6 @@ describe('ShareDialogComponent', () => {
         it('should not accept alphabets in the datepicker input', () => {
             fixture.detectChanges();
             clickExpireToggleButton();
-
             fillInDatepickerInput('test');
 
             expect(component.form.invalid).toBeTrue();
