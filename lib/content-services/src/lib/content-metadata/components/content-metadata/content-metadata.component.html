@@ -1,237 +1,241 @@
 <div class="adf-metadata-properties">
     <mat-accordion displayMode="flat"
                    [multi]="multi">
-        <mat-expansion-panel *ngIf="displayDefaultProperties"
-                             [expanded]="canExpandProperties()"
-                             [attr.data-automation-id]="'adf-metadata-group-properties'"
-                             hideToggle
-                             (opened)="handleGeneralInfoPanelState()"
-                             (closed)="handleGeneralInfoPanelState()">
-            <mat-expansion-panel-header>
-                <div class="adf-metadata-properties-panel-content">
-                    <mat-icon>
-                        {{ generalInfoPanelState ? 'expand_more' : 'chevron_right'}}
-                    </mat-icon>
-                    <mat-panel-title class="adf-metadata-properties-title">
-                        {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
-                    </mat-panel-title>
-                </div>
-                <button *ngIf="!editable && !readOnly && hasAllowableOperations"
-                        mat-icon-button
-                        (click)="toggleGeneralEdit($event)"
-                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                        data-automation-id="meta-data-general-info-edit"
-                        class="adf-edit-icon-buttons">
-                    <mat-icon>mode_edit</mat-icon>
-                </button>
-                <div *ngIf="editable"
-                    class="adf-metadata-action-buttons">
-                    <button mat-icon-button 
-                            (click)="cancelChanges(buttonType.GeneralInfo, $event)"
-                            data-automation-id="reset-metadata">
-                        <mat-icon>clear</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                            (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
-                            color="primary"
-                            data-automation-id="save-general-info-metadata"
-                            [disabled]="!hasMetadataChanged">
-                        <mat-icon>check</mat-icon>
-                    </button>
-                </div>
-            </mat-expansion-panel-header>
-            <mat-divider class="adf-mat-divider"></mat-divider>
-            <adf-card-view
-                (keydown)="keyDown($event)"
-                [properties]="basicProperties$ | async"
-                [editable]="editable"
-                [displayEmpty]="displayEmpty"
-                [copyToClipboardAction]="copyToClipboardAction"
-                [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-                [multiValueSeparator]="multiValueSeparator">
-            </adf-card-view>
-        </mat-expansion-panel>
-        <ng-container *ngIf="displayTags">
-            <mat-expansion-panel 
-                            (opened)="handleTagsPanelState(true)"
-                            (closed)="handleTagsPanelState(false)"
-                            hideToggle
-                            [expanded]="tagsPanelState">
-                <mat-expansion-panel-header>
+                <div class="adf-metadata-properties-panel">
+                    <mat-expansion-panel *ngIf="displayDefaultProperties"
+                                    [expanded]="canExpandProperties()"
+                                    [attr.data-automation-id]="'adf-metadata-group-properties'"
+                                    hideToggle
+                                    (opened)="handleGeneralInfoPanelState()"
+                                    (closed)="handleGeneralInfoPanelState()">
+                    <mat-expansion-panel-header>
                     <div class="adf-metadata-properties-panel-content">
                         <mat-icon>
-                            {{ tagsPanelState ? 'expand_more' : 'chevron_right'}}
+                            {{ generalInfoPanelState ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
                         <mat-panel-title class="adf-metadata-properties-title">
-                            {{ 'METADATA.BASIC.TAGS' | translate }}
+                            {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                         </mat-panel-title>
                     </div>
-                    <div class="adf-tags-buttons">
-                        <button *ngIf="!editableTags && !readOnly && hasAllowableOperations"
-                                mat-icon-button
-                                (click)="toggleTagsEdit($event)"
-                                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                                data-automation-id="showing-tag-input-button"
-                                class="adf-edit-icon-buttons">
-                            <mat-icon>mode_edit</mat-icon>
-                        </button>
-                    </div>
-                    <div *ngIf="editableTags" class="adf-metadata-action-buttons">
-                        <button mat-icon-button
-                                (click)="cancelChanges(buttonType.Tags, $event)"
-                                data-automation-id="reset-tags-metadata">
-                            <mat-icon>clear</mat-icon>
-                        </button>
-                        <button mat-icon-button
-                                (click)="saveChanges(buttonType.Tags, $event, group)"
-                                color="primary"
-                                data-automation-id="save-tags-metadata"
-                                [disabled]="!hasMetadataChanged">
-                            <mat-icon>check</mat-icon>
-                        </button>
-                    </div>
-                </mat-expansion-panel-header>
-                <mat-divider class="adf-mat-divider"></mat-divider>
-                <div
-                    *ngIf="!editableTags"
-                    class="adf-metadata-properties-tags">
-                    <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
-                </div>
-                <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-item-added">
-                    {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
-                </div>
-                <div *ngIf="editableTags" class="adf-metadata-properties-tags">
-                    <adf-tags-creator
-                        [(tagNameControlVisible)]="tagNameControlVisible"
-                        (tagsChange)="storeTagsToAssign($event)"
-                        [mode]="tagsCreatorMode"
-                        [tags]="assignedTags"
-                        [disabledTagsRemoving]="saving">
-                    </adf-tags-creator>
-                </div>
-            </mat-expansion-panel>
-        </ng-container>
-        <ng-container *ngIf="displayCategories">
-            <mat-expansion-panel
-                            (opened)="handleCategoriesPanelState(true)"
-                            (closed)="handleCategoriesPanelState(false)"
-                            hideToggle
-                            [expanded]="categoriesPanelState">
-                <mat-expansion-panel-header>
-                    <div class="adf-metadata-properties-panel-content">
-                        <mat-icon>
-                            {{ categoriesPanelState ? 'expand_more' : 'chevron_right'}}</mat-icon>
-                        <mat-panel-title class="adf-metadata-properties-title">{{
-                            'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}
-                        </mat-panel-title>
-                    </div>
-                    <div class="adf-metadata-categories-title">
-                        <button *ngIf="!editableCategories && !readOnly && hasAllowableOperations"
-                                mat-icon-button
-                                (click)="toggleCategoriesEdit($event)"
-                                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                                [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                                data-automation-id="meta-data-card-toggle-categoeies-edit"
-                                class="adf-edit-icon-buttons">
-                            <mat-icon>mode_edit</mat-icon>
-                        </button>
-                    </div>
-                    <div *ngIf="editableCategories" class="adf-metadata-action-buttons">
-                        <button mat-icon-button
-                                (click)="cancelChanges(buttonType.Categories, $event)"
+                    <button *ngIf="!editable && !readOnly && hasAllowableOperations"
+                            mat-icon-button
+                            (click)="toggleGeneralEdit($event)"
+                            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                            data-automation-id="meta-data-general-info-edit"
+                            class="adf-edit-icon-buttons">
+                        <mat-icon>mode_edit</mat-icon>
+                    </button>
+                    <div *ngIf="editable"
+                        class="adf-metadata-action-buttons">
+                        <button mat-icon-button 
+                                (click)="cancelChanges(buttonType.GeneralInfo, $event)"
                                 data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
-                                (click)="saveChanges(buttonType.Categories, $event, group)"
+                                (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
                                 color="primary"
-                                data-automation-id="save-categories-metadata"
+                                data-automation-id="save-general-info-metadata"
                                 [disabled]="!hasMetadataChanged">
                             <mat-icon>check</mat-icon>
                         </button>
                     </div>
-                </mat-expansion-panel-header>
-                <mat-divider class="adf-mat-divider"></mat-divider>
-                <div *ngIf="!editableCategories">
-                    <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
-                </div>
-                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-item-added">
-                    {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
-                </div>
-                <div *ngIf="editableCategories" class="adf-metadata-categories-header">
-                    <adf-categories-management
-                        [(categoryNameControlVisible)]="categoryControlVisible"
-                        [disableRemoval]="saving"
-                        [categories]="categories"
-                        [managementMode]="categoriesManagementMode"
-                        [classifiableChanged]="classifiableChanged"
-                        (categoriesChange)="storeCategoriesToAssign($event)">
-                    </adf-categories-management>
-                </div>
-            </mat-expansion-panel>
-        </ng-container>
-            <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
-                <div *ngFor="let group of groupedProperties; let first = first;"
-                     class="adf-metadata-grouped-properties-container">
-                    <mat-expansion-panel
-                                    [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                                    [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first || group.expanded"
-                                    (opened)="group.expanded = true"
-                                    (closed)="group.expanded = false"
-                                    hideToggle>
+                    </mat-expansion-panel-header>
+                    <mat-divider class="adf-mat-divider"></mat-divider>
+                    <adf-card-view
+                    (keydown)="keyDown($event)"
+                    [properties]="basicProperties$ | async"
+                    [editable]="editable"
+                    [displayEmpty]="displayEmpty"
+                    [copyToClipboardAction]="copyToClipboardAction"
+                    [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+                    [multiValueSeparator]="multiValueSeparator">
+                    </adf-card-view>
+                    </mat-expansion-panel>
+                    <div class="adf-metadata-properties-nested-panel">
+                        <ng-container *ngIf="displayTags">
+                        <mat-expansion-panel 
+                                    (opened)="handleTagsPanelState(true)"
+                                    (closed)="handleTagsPanelState(false)"
+                                    hideToggle
+                                    [expanded]="tagsPanelState">
                         <mat-expansion-panel-header>
                             <div class="adf-metadata-properties-panel-content">
                                 <mat-icon>
-                                    {{ group.expanded ? 'expand_more' : 'chevron_right'}}
+                                    {{ tagsPanelState ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
                                 <mat-panel-title class="adf-metadata-properties-title">
-                                    {{ group.title | translate }}
+                                    {{ 'METADATA.BASIC.TAGS' | translate }}
                                 </mat-panel-title>
                             </div>
-                            <button *ngIf="!group.editable && !readOnly && hasAllowableOperations"
-                                    mat-icon-button
-                                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                                    [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                                    data-automation-id="meta-data-card-toggle-edit"
-                                    class="adf-edit-icon-buttons"
-                                    (click)="toggleEdit($event, group)">
-                                <mat-icon>mode_edit</mat-icon>
-                            </button>
-                            <div class="adf-metadata-action-buttons" *ngIf="group.editable">
+                            <div class="adf-tags-buttons">
+                                <button *ngIf="!editableTags && !readOnly && hasAllowableOperations"
+                                        mat-icon-button
+                                        (click)="toggleTagsEdit($event)"
+                                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                                        data-automation-id="showing-tag-input-button"
+                                        class="adf-edit-icon-buttons">
+                                    <mat-icon>mode_edit</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngIf="editableTags" class="adf-metadata-action-buttons">
                                 <button mat-icon-button
-                                        (click)="cancelChanges(buttonType.Group, $event)"
-                                        data-automation-id="reset-metadata">
+                                        (click)="cancelChanges(buttonType.Tags, $event)"
+                                        data-automation-id="reset-tags-metadata">
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button
-                                        (click)="saveChanges(buttonType.Group, $event, group)"
+                                        (click)="saveChanges(buttonType.Tags, $event, group)"
                                         color="primary"
-                                        data-automation-id="save-metadata"
+                                        data-automation-id="save-tags-metadata"
                                         [disabled]="!hasMetadataChanged">
                                     <mat-icon>check</mat-icon>
                                 </button>
                             </div>
                         </mat-expansion-panel-header>
                         <mat-divider class="adf-mat-divider"></mat-divider>
-                        <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
-                            {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
+                        <div
+                            *ngIf="!editableTags"
+                            class="adf-metadata-properties-tags">
+                            <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                         </div>
-                        <adf-card-view
-                            (keydown)="keyDown($event)"
-                            [properties]="group.properties"
-                            [editable]="group.editable"
-                            [displayEmpty]="displayEmpty"
-                            [copyToClipboardAction]="copyToClipboardAction"
-                            [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-                            [multiValueSeparator]="multiValueSeparator"
-                            [displayLabelForChips]="true">
-                        </adf-card-view>
-                    </mat-expansion-panel>
+                        <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-item-added">
+                            {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
+                        </div>
+                        <div *ngIf="editableTags" class="adf-metadata-properties-tags">
+                            <adf-tags-creator
+                                [(tagNameControlVisible)]="tagNameControlVisible"
+                                (tagsChange)="storeTagsToAssign($event)"
+                                [mode]="tagsCreatorMode"
+                                [tags]="assignedTags"
+                                [disabledTagsRemoving]="saving">
+                            </adf-tags-creator>
+                        </div>
+                        </mat-expansion-panel>
+                        </ng-container>
+                        <ng-container *ngIf="displayCategories">
+                        <mat-expansion-panel
+                                    (opened)="handleCategoriesPanelState(true)"
+                                    (closed)="handleCategoriesPanelState(false)"
+                                    hideToggle
+                                    [expanded]="categoriesPanelState">
+                        <mat-expansion-panel-header>
+                            <div class="adf-metadata-properties-panel-content">
+                                <mat-icon>
+                                    {{ categoriesPanelState ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                                <mat-panel-title class="adf-metadata-properties-title">{{
+                                    'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}
+                                </mat-panel-title>
+                            </div>
+                            <div class="adf-metadata-categories-title">
+                                <button *ngIf="!editableCategories && !readOnly && hasAllowableOperations"
+                                        mat-icon-button
+                                        (click)="toggleCategoriesEdit($event)"
+                                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                                        [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                                        data-automation-id="meta-data-card-toggle-categoeies-edit"
+                                        class="adf-edit-icon-buttons">
+                                    <mat-icon>mode_edit</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngIf="editableCategories" class="adf-metadata-action-buttons">
+                                <button mat-icon-button
+                                        (click)="cancelChanges(buttonType.Categories, $event)"
+                                        data-automation-id="reset-metadata">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                                <button mat-icon-button
+                                        (click)="saveChanges(buttonType.Categories, $event, group)"
+                                        color="primary"
+                                        data-automation-id="save-categories-metadata"
+                                        [disabled]="!hasMetadataChanged">
+                                    <mat-icon>check</mat-icon>
+                                </button>
+                            </div>
+                        </mat-expansion-panel-header>
+                        <mat-divider class="adf-mat-divider"></mat-divider>
+                        <div *ngIf="!editableCategories">
+                            <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
+                        </div>
+                        <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-item-added">
+                            {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
+                        </div>
+                        <div *ngIf="editableCategories" class="adf-metadata-categories-header">
+                            <adf-categories-management
+                                [(categoryNameControlVisible)]="categoryControlVisible"
+                                [disableRemoval]="saving"
+                                [categories]="categories"
+                                [managementMode]="categoriesManagementMode"
+                                [classifiableChanged]="classifiableChanged"
+                                (categoriesChange)="storeCategoriesToAssign($event)">
+                            </adf-categories-management>
+                        </div>
+                        </mat-expansion-panel>
+                        </ng-container>
+                        <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
+                        <div *ngFor="let group of groupedProperties; let first = first;"
+                                class="adf-metadata-grouped-properties-container">
+                            <mat-expansion-panel
+                                            [attr.data-automation-id]="'adf-metadata-group-' + group.title"
+                                            [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first || group.expanded"
+                                            (opened)="group.expanded = true"
+                                            (closed)="group.expanded = false"
+                                            hideToggle>
+                                <mat-expansion-panel-header>
+                                    <div class="adf-metadata-properties-panel-content">
+                                        <mat-icon>
+                                            {{ group.expanded ? 'expand_more' : 'chevron_right'}}
+                                        </mat-icon>
+                                        <mat-panel-title class="adf-metadata-properties-title">
+                                            {{ group.title | translate }}
+                                        </mat-panel-title>
+                                    </div>
+                                    <button *ngIf="!group.editable && !readOnly && hasAllowableOperations"
+                                            mat-icon-button
+                                            [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                                            [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
+                                            data-automation-id="meta-data-card-toggle-edit"
+                                            class="adf-edit-icon-buttons"
+                                            (click)="toggleEdit($event, group)">
+                                        <mat-icon>mode_edit</mat-icon>
+                                    </button>
+                                    <div class="adf-metadata-action-buttons" *ngIf="group.editable">
+                                        <button mat-icon-button
+                                                (click)="cancelChanges(buttonType.Group, $event)"
+                                                data-automation-id="reset-metadata">
+                                            <mat-icon>clear</mat-icon>
+                                        </button>
+                                        <button mat-icon-button
+                                                (click)="saveChanges(buttonType.Group, $event, group)"
+                                                color="primary"
+                                                data-automation-id="save-metadata"
+                                                [disabled]="!hasMetadataChanged">
+                                            <mat-icon>check</mat-icon>
+                                        </button>
+                                    </div>
+                                </mat-expansion-panel-header>
+                                <mat-divider class="adf-mat-divider"></mat-divider>
+                                <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
+                                    {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
+                                </div>
+                                <adf-card-view
+                                    (keydown)="keyDown($event)"
+                                    [properties]="group.properties"
+                                    [editable]="group.editable"
+                                    [displayEmpty]="displayEmpty"
+                                    [copyToClipboardAction]="copyToClipboardAction"
+                                    [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+                                    [multiValueSeparator]="multiValueSeparator"
+                                    [displayLabelForChips]="true">
+                                </adf-card-view>
+                            </mat-expansion-panel>
+                        </div>
+                        </ng-container>
+                    </div>
                 </div>
-            </ng-container>
-            <ng-template #loading>
+                <ng-template #loading>
                 <mat-progress-bar mode="indeterminate" [attr.aria-label]="'DATA_LOADING' | translate">
                 </mat-progress-bar>
             </ng-template>

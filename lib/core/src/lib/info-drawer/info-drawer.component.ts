@@ -17,6 +17,9 @@
 
 import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ThumbnailService } from '../common/services/thumbnail.service';
+import { Node } from '@alfresco/js-api';
+
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content></ng-content></ng-template>',
@@ -43,9 +46,15 @@ export class InfoDrawerTabComponent {
     host: { class: 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
+
+    constructor(private thumbnailService: ThumbnailService) {}
+
     /** The title of the info drawer (string or translation key). */
     @Input()
     title: string|null = null;
+
+    @Input()
+    drawerIcon: Node|null = null;
 
     /** The selected index tab. */
     @Input()
@@ -79,4 +88,45 @@ export class InfoDrawerComponent {
     onTabChange(event: MatTabChangeEvent) {
         this.currentTab.emit(event.index);
     }
+
+    getInfoDrawerIcon(node: Node) {
+        if( node.isFolder ){
+          return this.getFolderIcon(node);
+        }
+        if( node.isFile ){
+          return this.thumbnailService.getMimeTypeIcon(node.content.mimeType);
+        }
+        return this.thumbnailService.getDefaultMimeTypeIcon();
+      }
+
+      private getFolderIcon(node: Node) {
+          if (this.isSmartFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('smartFolder');
+          } else if (this.isRuleFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('ruleFolder');
+          } else if (this.isALinkFolder(node)) {
+            return this.thumbnailService.getMimeTypeIcon('linkFolder');
+          } else {
+            return this.thumbnailService.getMimeTypeIcon('folder');
+          }
+      }
+
+      isSmartFolder(node: Node) {
+        const nodeAspects = this.getNodeAspectNames(node);
+        return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 || nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1;
+      }
+
+      isRuleFolder(node: Node) {
+        const nodeAspects = this.getNodeAspectNames(node);
+        return nodeAspects.indexOf('rule:rules') > -1 || nodeAspects.indexOf('rule:rules') > -1;
+      }
+
+      isALinkFolder(node: Node) {
+        const nodeType = node.nodeType;
+        return nodeType === 'app:folderlink';
+      }
+
+      private getNodeAspectNames(node: Node): any[] {
+        return node.aspectNames ? node.aspectNames : [];
+      }
 }

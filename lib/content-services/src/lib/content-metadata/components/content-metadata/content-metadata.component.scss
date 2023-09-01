@@ -1,7 +1,8 @@
 .adf {
     &-metadata-properties {
         mat-expansion-panel-header {
-            height: 56px;
+            height: 64px;
+            padding: 0 12px;
 
             .adf-metadata-properties-title {
                 font-weight: normal;
@@ -12,6 +13,12 @@
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
+            border: solid 1px;
+            border-color: #0000001f;
+        }
+
+        .mat-expansion-panel-body {
+            padding: 0 24px 12px;
         }
 
         .adf-mat-divider {
@@ -114,9 +121,7 @@
     .mat-tab-body-content {
         .adf-metadata-properties {
             .mat-expansion-panel {
-                width: 755px;
-                border: 1px solid var(--adf-metadata-property-panel-border-color);
-                margin: 24px;
+                width: 100%;
                 border-radius: 12px;
             }
         }
@@ -127,4 +132,11 @@
     .mat-card:not([class*='mat-elevation-z']) {
         box-shadow: none;
     }
+}
+
+.adf-metadata-properties-panel {
+    display: flex;
+    flex-direction: row;
+    margin: 24px;
+    gap: 24px;
 }
