@@ -146,7 +146,7 @@ describe('Document List Component', () => {
         it('[C279929] Should be able to display the date with date type', async () => {
             await apiService.login(acsUser.username, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
-            const createdDate = format(new Date(mediumDateUploadedNode.createdAt), 'PPpp');
+            const createdDate = format(new Date(mediumDateUploadedNode.createdAt), 'PP');
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
