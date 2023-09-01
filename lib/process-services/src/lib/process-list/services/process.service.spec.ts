@@ -22,8 +22,7 @@ import { ProcessInstanceVariable } from '../models/process-instance-variable.mod
 import { ProcessService } from './process.service';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-
-declare let moment: any;
+import { format } from 'date-fns';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -289,7 +288,7 @@ describe('ProcessService', () => {
                 const task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
                 expect(task.name).toBe(fakeTasks[0].name);
-                expect(task.created).toEqual(moment(new Date('2016-11-10T00:00:00+00:00'), 'YYYY-MM-DD').format());
+                expect(task.created).toEqual(format(new Date('2016-11-10T00:00:00+00:00'), 'yyyy-MM-dd'));
                 done();
             });
         });
