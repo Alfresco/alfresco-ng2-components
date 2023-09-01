@@ -64,8 +64,8 @@ describe('Start Task - Custom App', () => {
     const totalNrOfPages = 'of 4';
     const currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
     const currentDate = DateUtil.formatDate('MM/DD/YYYY');
-    const beforeDate = format(subDays(new Date(),1), 'MM/dd/yyyy');
-    const afterDate = format(addDays(new Date(),1), 'MM/dd/yyyy');
+    const beforeDate = format(subDays(new Date(), 1), 'MM/dd/yyyy');
+    const afterDate = format(addDays(new Date(), 1), 'MM/dd/yyyy');
     let taskWithDueDate;
     let processDefinitionId;
 
