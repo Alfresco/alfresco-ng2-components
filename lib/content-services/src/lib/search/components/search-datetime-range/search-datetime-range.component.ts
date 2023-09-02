@@ -129,8 +129,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.onDestroy$.complete();
     }
 
-    apply(model: { from: string; to: string }, isValid: boolean) {
-        if (isValid && this.id && this.context && this.settings && this.settings.field) {
+    apply(model: { from: string; to: string }, isDateValid: boolean) {
+        if (isDateValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
             const start = format(startOfMinute(new Date(model.from)),`yyyy-MM-dd'T'HH:mm:ss'Z'`);
