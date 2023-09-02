@@ -310,7 +310,7 @@ describe('ContentMetadataComponent', () => {
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-          }));
+        }));
 
         it('should call getTagsByNodeId on TagService on save click', () => {
             component.editableTags = true;

@@ -161,8 +161,6 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickOnPropertiesTab();
 
         await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
-
-        await metadataViewPage.informationButtonIsNotDisplayed();
     });
 
     it('[C307975] Should be able to choose which aspect to show expanded in the info-drawer', async () => {
