@@ -451,6 +451,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
+        if (this.filterValue && Object.keys(this.filterValue).length > 0) {
+            this.showHeader = ShowHeaderMode.Always;
+        }
     }
 
     ngAfterContentInit() {
