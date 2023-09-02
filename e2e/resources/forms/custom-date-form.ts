@@ -93,7 +93,7 @@ export const customDateFormAPS1 = `{
                                     "existingColspan": 1,
                                     "maxColspan": 2
                                 },
-                                "dateDisplayFormat": "yy-M-d",
+                                "dateDisplayFormat": "YY-M-D",
                                 "layout": {
                                     "row": -1,
                                     "column": -1,
@@ -157,7 +157,7 @@ export const customDateFormAPS2 = `{
                            "existingColspan":1,
                            "maxColspan":2
                         },
-                        "dateDisplayFormat":"yy-M-d"
+                        "dateDisplayFormat":"YY-M-D"
                      }
                   ],
                   "2":[

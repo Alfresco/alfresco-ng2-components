@@ -107,6 +107,7 @@ describe('Date widget', () => {
         beforeAll(async () => {
             const urlFormDemoPage = `${browser.baseUrl}/form`;
             await BrowserActions.getUrl(urlFormDemoPage);
+            await formDemoPage.updateDateFormat(formJson);
         });
 
         it('[C313199] Should display the validation for min and max date values with custom date format', async () => {
