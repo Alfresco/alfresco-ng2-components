@@ -34,7 +34,7 @@ import { ProcessContentService } from '../../services/process-content.service';
 const fakePngAnswer = new RelatedContentRepresentation({
     id: 1155,
     name: 'a_png_file.png',
-    created: '2017-07-25T17:17:37.099Z',
+    created: new Date('2017-07-25T17:17:37.099Z'),
     createdBy: {id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin'},
     relatedContent: false,
     contentAvailable: true,
