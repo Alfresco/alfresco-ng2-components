@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
-import { NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadErrorPromise } from '../../mock/upload.service.mock';
@@ -28,7 +28,6 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../../common/events/file.event';
 
 describe('UploadButtonComponent', () => {
-
     const file = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
     const fakeEvent = {
         currentTarget: {
@@ -38,15 +37,7 @@ describe('UploadButtonComponent', () => {
     };
 
     const fakeFolderNodeWithPermission = new NodeEntry({
-        entry: {
-            allowableOperations: [
-                'create',
-                'update'
-            ],
-            isFolder: true,
-            name: 'Folder Fake Name',
-            nodeType: 'cm:folder'
-        }
+        entry: new Node({ name: 'Folder Fake Name', nodeType: 'cm:folder', isFolder: true, allowableOperations: ['create', 'update'] })
     });
 
     let component: UploadButtonComponent;
@@ -56,10 +47,7 @@ describe('UploadButtonComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.inject(UploadService);
@@ -214,11 +202,7 @@ describe('UploadButtonComponent', () => {
     });
 
     describe('fileSize', () => {
-
-        const files: File[] = [
-            { name: 'bigFile.png', size: 1000 } as File,
-            { name: 'smallFile.png', size: 10 } as File
-        ];
+        const files: File[] = [{ name: 'bigFile.png', size: 1000 } as File, { name: 'smallFile.png', size: 10 } as File];
 
         let addToQueueSpy;
 
@@ -245,9 +229,7 @@ describe('UploadButtonComponent', () => {
         });
 
         it('should allow file of 0 size when the max file size is set to 0', () => {
-            const zeroFiles: File[] = [
-                { name: 'zeroFile.png', size: 0 } as File
-            ];
+            const zeroFiles: File[] = [{ name: 'zeroFile.png', size: 0 } as File];
             component.maxFilesSize = 0;
 
             component.uploadFiles(zeroFiles);
@@ -284,12 +266,7 @@ describe('UploadButtonComponent', () => {
     });
 
     describe('uploadFiles', () => {
-
-        const files: File[] = [
-            { name: 'phobos.jpg' } as File,
-            { name: 'deimos.png' } as File,
-            { name: 'ganymede.bmp' } as File
-        ];
+        const files: File[] = [{ name: 'phobos.jpg' } as File, { name: 'deimos.png' } as File, { name: 'ganymede.bmp' } as File];
 
         let addToQueueSpy;
 
@@ -344,8 +321,7 @@ describe('UploadButtonComponent', () => {
 
         beforeEach(() => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
-            fakeNodeWithNoPermission = {
-            };
+            fakeNodeWithNoPermission = {};
         });
 
         it('should not call uploadFiles for node without permission', () => {

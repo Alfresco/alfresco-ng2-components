@@ -28,7 +28,7 @@ import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.
 import { AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
-import { NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
+import { NodeBodyCreate, NodesApi, UploadApi, VersionsApi } from '@alfresco/js-api';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -237,7 +237,7 @@ export class UploadService {
         if (file.id) {
             return this.nodesApi.updateNodeContent(file.id, file.file as any, opts);
         } else {
-            const nodeBody = {...file.options};
+            const nodeBody: NodeBodyCreate = { ...file.options, name: file.name, nodeType: file.options.nodeType };
             delete nodeBody['versioningEnabled'];
 
             return this.uploadApi.uploadFile(

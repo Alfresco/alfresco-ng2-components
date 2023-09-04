@@ -20,10 +20,10 @@ import { Node, NodePaging, NodeEntry } from '@alfresco/js-api';
 export const fakeNodeWithCreatePermission = new Node({
     isFile: false,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
-    modifiedAt: '2017-06-08T13:53:46.495Z',
+    modifiedAt: new Date('2017-06-08T13:53:46.495Z'),
     nodeType: 'cm:folder',
     parentId: '55052317-7e59-4058-8e07-769f41e615e1',
-    createdAt: '2017-05-22T11:36:11.270Z',
+    createdAt: new Date('2017-05-22T11:36:11.270Z'),
     path: {
         name: '/Company Home/User Homes',
         isComplete: true,
@@ -43,11 +43,11 @@ export const fakeNodeWithCreatePermission = new Node({
 export const fakeNodeWithNoPermission = new Node({
     isFile: false,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
-    modifiedAt: '2017-06-08T13:53:46.495Z',
+    modifiedAt: new Date('2017-06-08T13:53:46.495Z'),
     nodeType: 'cm:folder',
     parentId: '55052317-7e59-4058-8e07-769f41e615e1',
     aspectNames: ['cm:ownable', 'cm:auditable'],
-    createdAt: '2017-05-22T11:36:11.270Z',
+    createdAt: new Date('2017-05-22T11:36:11.270Z'),
     path: {
         name: '/Company Home/User Homes',
         isComplete: true,
@@ -219,7 +219,7 @@ export const fakeNodePaging: NodePaging = {
 export const mockNode1 = new Node({
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
-    modifiedAt: '2017-05-24T15:08:55.640Z',
+    modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
     nodeType: 'cm:content',
     content: {
         mimeType: 'application/rtf',
@@ -228,7 +228,7 @@ export const mockNode1 = new Node({
         encoding: 'UTF-8'
     },
     parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
-    createdAt: '2017-05-24T15:08:55.640Z',
+    createdAt: new Date('2017-05-24T15:08:55.640Z'),
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
@@ -248,7 +248,7 @@ export const mockNode1 = new Node({
 export const mockNode2 = new Node({
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
-    modifiedAt: '2017-05-24T15:08:55.640Z',
+    modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
     nodeType: 'cm:content',
     content: {
         mimeType: 'application/rtf',
@@ -257,7 +257,7 @@ export const mockNode2 = new Node({
         encoding: 'UTF-8'
     },
     parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
-    createdAt: '2017-05-24T15:08:55.640Z',
+    createdAt: new Date('2017-05-24T15:08:55.640Z'),
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
@@ -277,7 +277,7 @@ export const mockNode2 = new Node({
 export const mockNode3 = new Node({
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
-    modifiedAt: '2017-05-24T15:08:55.640Z',
+    modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
     nodeType: 'cm:content',
     content: {
         mimeType: 'application/rtf',
@@ -286,7 +286,7 @@ export const mockNode3 = new Node({
         encoding: 'UTF-8'
     },
     parentId: 'd124de26-6ba0-4f40-8d98-4907da2d337a',
-    createdAt: '2017-05-24T15:08:55.640Z',
+    createdAt: new Date('2017-05-24T15:08:55.640Z'),
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,

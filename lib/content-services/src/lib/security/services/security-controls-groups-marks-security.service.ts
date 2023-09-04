@@ -277,11 +277,11 @@ export class SecurityControlsService {
      * Delete security group
      *
      * @param securityGroupId The key for the security group id.
-     * @return Observable<SecurityGroupEntry>
+     * @return Observable<void>
      */
     deleteSecurityGroup(
         securityGroupId: string
-    ): Observable<SecurityGroupEntry> {
+    ): Observable<void> {
         this.loadingSource.next(true);
         const promise = this.groupsApi.deleteSecurityGroup(securityGroupId);
 

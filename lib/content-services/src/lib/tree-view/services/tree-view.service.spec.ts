@@ -22,28 +22,39 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TranslateModule } from '@ngx-translate/core';
-import { NodePaging } from '@alfresco/js-api';
+import { Node, NodePaging } from '@alfresco/js-api';
 
 describe('TreeViewService', () => {
-
     let service: TreeViewService;
     let nodeService: NodesApiService;
 
-    const fakeNodeList = new NodePaging({ list: { entries: [
-            { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } }
-        ] } });
+    const fakeNodeList = new NodePaging({
+        list: {
+            entries: [
+                {
+                    entry: new Node({
+                        id: 'fake-node-id',
+                        name: 'fake-node-name',
+                        isFolder: true,
+                        isFile: false,
+                        nodeType: 'cm:folder',
+                        createdByUser: null,
+                        modifiedByUser: null,
+                        createdAt: new Date(),
+                        modifiedAt: new Date()
+                    })
+                }
+            ]
+        }
+    });
 
-    const fakeMixedNodeList = new NodePaging({ list: { entries: [
-        { entry: { id: 'fake-node-id', name: 'fake-node-name', isFolder: true } },
-        { entry: { id: 'fake-file-id', name: 'fake-file-name', isFolder: false } }
-    ] } });
+    const fakeMixedNodeList = new NodePaging({
+        list: { entries: [fakeNodeList.list.entries[0], { entry: new Node({ id: 'fake-file-id', name: 'fake-file-name', isFolder: false }) }] }
+    });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         service = TestBed.inject(TreeViewService);
         nodeService = TestBed.inject(NodesApiService);

@@ -17,41 +17,41 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
-import { SearchRequest, ResultSetPaging } from '@alfresco/js-api';
+import { SearchRequest, ResultSetPaging, ResultSetRowEntry, ContentInfo, UserInfo, ResultNode } from '@alfresco/js-api';
 
-const entryItem = {
-    entry: {
+const entryItem = new ResultSetRowEntry({
+    entry: new ResultNode({
         id: '123',
         name: 'MyDoc',
         isFile: true,
-        content: {
+        content: new ContentInfo({
             mimeType: 'text/plain'
-        },
-        createdByUser: {
+        }),
+        createdByUser: new UserInfo({
             displayName: 'John Doe'
-        },
-        modifiedByUser: {
+        }),
+        modifiedByUser: new UserInfo({
             displayName: 'John Doe'
-        }
-    }
-};
+        })
+    })
+});
 
-const entryDifferentItem = {
-    entry: {
+const entryDifferentItem = new ResultSetRowEntry({
+    entry: new ResultNode({
         id: '999',
         name: 'TEST_DOC',
         isFile: true,
-        content: {
+        content: new ContentInfo({
             mimeType: 'text/plain'
-        },
-        createdByUser: {
+        }),
+        createdByUser: new UserInfo({
             displayName: 'John TEST'
-        },
-        modifiedByUser: {
+        }),
+        modifiedByUser: new UserInfo({
             displayName: 'John TEST'
-        }
-    }
-};
+        })
+    })
+});
 
 export const result = new ResultSetPaging({
     list: {

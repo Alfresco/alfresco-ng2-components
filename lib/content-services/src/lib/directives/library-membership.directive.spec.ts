@@ -113,7 +113,7 @@ describe('LibraryMembershipDirective', () => {
             mockSupportedVersion = false;
             getMembershipSpy = spyOn(directive['sitesApi'], 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
             addMembershipSpy = spyOn(directive['sitesApi'], 'createSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
-            deleteMembershipSpy = spyOn(directive['sitesApi'], 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({}));
+            deleteMembershipSpy = spyOn(directive['sitesApi'], 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve());
         });
 
         it('should do nothing if there is no selected library ', fakeAsync(() => {

@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
+import { ContentInfo, Node, NodePagingList, UserInfo } from '@alfresco/js-api';
+
 export const fakeSearch = {
-    list: {
+    list: new NodePagingList({
         pagination: {
             count: 1,
             hasMoreItems: false,
@@ -26,22 +28,20 @@ export const fakeSearch = {
         },
         entries: [
             {
-                entry: {
+                entry: new Node({
                     id: '123',
                     name: 'MyDoc',
-                    content: {
-                        mimetype: 'text/plain'
-                    },
-                    createdByUser: {
+                    content: new ContentInfo({ mimeType: 'text/plain' }),
+                    createdByUser: new UserInfo({
                         displayName: 'John Doe'
-                    },
-                    modifiedByUser: {
+                    }),
+                    modifiedByUser: new UserInfo({
                         displayName: 'John Doe'
-                    }
-                }
+                    })
+                })
             }
         ]
-    }
+    })
 };
 
 export const mockError = {
@@ -55,7 +55,5 @@ export const mockError = {
 };
 
 export const searchMockApi: any = {
-
     findNodes: () => Promise.resolve(fakeSearch)
-
 };

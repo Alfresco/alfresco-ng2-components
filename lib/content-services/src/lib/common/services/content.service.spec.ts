@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ContentService } from './content.service';
 import { AppConfigService, AuthenticationService, StorageService, CoreTestingModule } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
+import { Node, PermissionsInfo } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
@@ -140,12 +140,12 @@ describe('ContentService', () => {
         });
 
         it('should havePermission return true if the permissions is empty and the permission to check is Consumer', () => {
-            const permissionNode = new Node({ permissions: [] });
+            const permissionNode = new Node({ permissions: new PermissionsInfo() });
             expect(contentService.hasPermissions(permissionNode, 'Consumer', 'user1')).toBeTruthy();
         });
 
         it('should havePermission return false if the permissions is empty and the permission to check is not Consumer', () => {
-            const permissionNode = new Node({ permissions: [] });
+            const permissionNode = new Node({ permissions: new PermissionsInfo() });
             expect(contentService.hasPermissions(permissionNode, '!Consumer', 'user1')).toBeFalsy();
         });
 

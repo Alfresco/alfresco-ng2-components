@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, NodeEntry, NodePaging, ResultSetPaging, SiteEntry, SitePaging, UserInfo } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, PathElement, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
 import { AppConfigService, DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
@@ -123,7 +123,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Site selection', () => {
             beforeEach(() => {
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
                 component.currentFolderId = 'fake-starting-folder';
             });
 
@@ -138,7 +138,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
-                const fakeSiteEntry = new SiteEntry({ entry: { title: 'fake-new-site', guid: 'fake-new-site' } });
+                const fakeSiteEntry = new SiteEntry({ entry: new Site({ title: 'fake-new-site', guid: 'fake-new-site' }) });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
@@ -162,9 +162,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(sitesService, 'getSites').and.returnValue(
                     of(
                         new SitePaging({
-                            list: {
-                                entries: [{ entry: { guid: 'namek', id: 'namek' } }, { entry: { guid: 'blog', id: 'blog' } }]
-                            }
+                            list: new SitePagingList({
+                                entries: [{ entry: new Site({ guid: 'namek', id: 'namek' }) }, { entry: new Site({ guid: 'blog', id: 'blog' }) }]
+                            })
                         })
                     )
                 );
@@ -262,7 +262,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry()));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -303,7 +303,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: ['one'] } });
+                const chosenNode = new Node({ path: { elements: [new PathElement({ name: 'one' })] } });
                 component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
@@ -318,7 +318,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: ['fake-path'] }, isFile: false, isFolder: true });
+                const chosenNode = new Node({ path: { elements: [new PathElement({ name: 'fake-path' })] }, isFile: false, isFolder: true });
                 component.onCurrentSelection([{ entry: chosenNode }]);
                 fixture.detectChanges();
 
@@ -384,7 +384,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const rows = [{}, {}] as DataRow[];
                 component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
                 spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
             });
 
             it('should the selection become the currently navigated folder when the folder loads (Acts as destination for cases like copy action)', () => {
@@ -655,7 +655,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should return only the last uploaded node to become preselected when the selection mode is single', () => {
                     fixture.detectChanges();
-                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    const fakeNodes = [
+                        new NodeEntry({ entry: new Node({ id: 'fakeNode1' }) }),
+                        new NodeEntry({ entry: new Node({ id: 'fakeNode2' }) })
+                    ];
                     component.currentUploadBatch = fakeNodes;
                     component.selectionMode = 'single';
 
@@ -664,7 +667,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should return all the uploaded nodes to become preselected when the selection mode is multiple', () => {
                     fixture.detectChanges();
-                    const fakeNodes = [new NodeEntry({ id: 'fakeNode1' }), new NodeEntry({ id: 'fakeNode2' })];
+                    const fakeNodes = [
+                        new NodeEntry({ entry: new Node({ id: 'fakeNode1' }) }),
+                        new NodeEntry({ entry: new Node({ id: 'fakeNode2' }) })
+                    ];
                     component.currentUploadBatch = fakeNodes;
                     component.selectionMode = 'multiple';
 
