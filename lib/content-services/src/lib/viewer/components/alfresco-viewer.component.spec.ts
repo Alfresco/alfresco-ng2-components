@@ -429,7 +429,7 @@ describe('AlfrescoViewerComponent', () => {
 
     describe('error handling', () => {
         it('should show unknown view when node file not found', (done) => {
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.reject({}));
+            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.reject('error'));
 
             component.nodeId = 'the-node-id-of-the-file-to-preview';
             component.mimeType = null;
@@ -443,7 +443,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should show unknown view when sharedLink file not found', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject('error'));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -458,7 +458,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should raise an event when the shared link is invalid', fakeAsync(() => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject('error'));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -662,7 +662,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should not render close viewer button if it is a shared link', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject('error'));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
