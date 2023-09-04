@@ -357,11 +357,11 @@ export class ProcessService {
         return name;
     }
 
-    private getFormatDate(value: Date, format: string) {
+    private getFormatDate(value: Date, dateFormat: string) {
         const datePipe = new DatePipe('en-US');
 
         try {
-            return datePipe.transform(value, format);
+            return datePipe.transform(value, dateFormat);
         } catch (err) {
             return '';
         }
