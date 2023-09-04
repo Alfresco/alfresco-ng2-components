@@ -18,7 +18,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { Observable, from, merge } from 'rxjs';
+import { Observable, Subject, from } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
 import ee from 'event-emitter';
@@ -29,13 +29,21 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 })
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
-    onLogin: Observable<any>;
+    onLogin: Subject<any>;
 
     constructor(
         private injector: Injector,
         private redirectAuthService: RedirectAuthService
     ) {
-        this.onLogin = merge(this.redirectAuthService.onLogin, this.basicAlfrescoAuthService.onLogin);
+
+        this.redirectAuthService.onLogin.subscribe(
+            (value) => this.onLogin.next(value)
+        );
+
+        this.basicAlfrescoAuthService.onLogin.subscribe(
+            (value) => this.onLogin.next(value)
+        );
+
     }
 
     get on(): ee.EmitterMethod {
