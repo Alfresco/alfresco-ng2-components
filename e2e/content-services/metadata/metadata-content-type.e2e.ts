@@ -114,13 +114,13 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.generalEditIconDisplayed();
+        await metadataViewPage.editGeneralIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         const defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
         await expect(defaultType).toBe(true, 'Content type not found');
 
-        await metadataViewPage.editIconGeneralClick();
+        await metadataViewPage.clickEditIconGeneral();
 
         await expect(await metadataViewPage.changeContentType(type.title)).toBe(true, 'Failed to update node type.');
         await metadataViewPage.clickSaveGeneralMetadata();
@@ -139,7 +139,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.generalEditIconDisplayed();
+        await metadataViewPage.editGeneralIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         const customType  = (await metadataViewPage.hasContentType(type.title)) || (await metadataViewPage.hasContentType(`${model.namespacePrefix}:${type.name}`));
@@ -155,13 +155,13 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.generalEditIconDisplayed();
+        await metadataViewPage.editGeneralIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         let defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));
         await expect(defaultType).toBe(true, 'Content type not found');
 
-        await metadataViewPage.editIconGeneralClick();
+        await metadataViewPage.clickEditIconGeneral();
 
         await expect(await metadataViewPage.changeContentType(type.title)).toBe(true, 'Failed to update node type.');
         await metadataViewPage.clickSaveGeneralMetadata();
@@ -178,7 +178,7 @@ describe('content type', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.generalEditIconDisplayed();
+        await metadataViewPage.editGeneralIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual('PROPERTIES');
         defaultType  = (await metadataViewPage.hasContentType('Content')) || (await metadataViewPage.hasContentType('cm:content'));

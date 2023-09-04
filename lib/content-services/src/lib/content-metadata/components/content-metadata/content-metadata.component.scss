@@ -104,23 +104,10 @@
     }
 }
 
-.app-metadata-tab .adf-metadata-properties .mat-expansion-panel {
+.adf-info-drawer-layout-content .adf-content-metadata-card .adf-metadata-properties .mat-expansion-panel {
     border: 1px solid var(--adf-metadata-property-panel-border-color);
     border-radius: 12px;
     margin-bottom: 12px;
-}
-
-.acs-details-container {
-    .mat-tab-body-content {
-        .adf-metadata-properties {
-            .mat-expansion-panel {
-                width: 755px;
-                border: 1px solid var(--adf-metadata-property-panel-border-color);
-                margin: 24px;
-                border-radius: 12px;
-            }
-        }
-    }
 }
 
 .adf-content-metadata-card {

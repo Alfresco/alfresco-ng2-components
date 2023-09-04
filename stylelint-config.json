@@ -91,7 +91,7 @@
     "max-line-length": 240,
     "linebreaks": "unix",
     "selector-class-pattern": [
-      "^_?(adf|adf-|app|app-|cdk-|example-|demo-|mat-|material-|textLayer|canvasWrapper|page|acs)",
+      "^_?(adf|adf-|app|app-|cdk-|example-|demo-|mat-|material-|textLayer|canvasWrapper|page)",
       {
         "resolveNestedSelectors": true
       }
