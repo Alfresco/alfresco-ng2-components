@@ -42,8 +42,4 @@ export class FormDemoPage {
         await this.goToRenderedForm();
         await BrowserVisibility.waitUntilElementIsVisible(form);
     }
-
-    async updateDateFormat(formJson: any): Promise<void> {
-        formJson.formRepresentation.formDefinition.fields[0].fields[1][0].dateDisplayFormat = 'yy-M-d';
-    }
 }
