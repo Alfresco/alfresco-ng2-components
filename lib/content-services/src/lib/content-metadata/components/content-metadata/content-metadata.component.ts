@@ -125,7 +125,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     readOnly = false;
 
-     /** Emitted when content's editable state is changed. **/
+    /** Emitted when content's editable state is changed. **/
     @Output()
     editableChange = new EventEmitter<boolean>();
 
@@ -156,7 +156,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesPanelState: boolean;
     editableCategories = false;
     hasAllowableOperations = false;
-    editableGroup: any;
+    editableGroup: CardViewGroup;
     buttonType = ButtonType;
     group: CardViewGroup;
 
@@ -265,9 +265,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
+    saveChanges(buttonType: ButtonType, event: MouseEvent) {
         event.stopPropagation();
-        this.toggleEditMode(buttonType, group);
+        this.toggleEditMode(buttonType);
         this._saving = true;
         this.tagNameControlVisible = false;
         this.categoryControlVisible = false;
@@ -405,7 +405,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     handleCategoriesPanelState(categoriesPanelState: boolean) {
-        this.categoriesPanelState= categoriesPanelState;
+        this.categoriesPanelState = categoriesPanelState;
         this.cdr.detectChanges();
     }
 
