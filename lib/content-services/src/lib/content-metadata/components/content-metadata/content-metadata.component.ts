@@ -128,8 +128,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /** (optional) This flag sets the metadata in read only mode
      * preventing changes.
      */
-     @Input()
-     readOnly = false;
+    @Input()
+    readOnly = false;
 
      /** Emitted when content's editable state is changed. **/
     @Output()
