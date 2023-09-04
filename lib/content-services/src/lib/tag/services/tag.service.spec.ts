@@ -66,8 +66,8 @@ describe('TagService', () => {
         });
 
         it('should trigger a refresh event on removeTag() call', async () => {
-            await service.refresh.subscribe((res) => {
-                expect(res).toBeDefined();
+            await service.refresh.subscribe(() => {
+                expect(service.tagsApi.deleteTagFromNode).toHaveBeenCalledWith('fake-node-id', 'fake-tag');
             });
 
             service.removeTag('fake-node-id', 'fake-tag');
@@ -390,7 +390,7 @@ describe('TagService', () => {
                 );
 
                 service.assignTagsToNode(nodeId, tags).subscribe((tagsResult) => {
-                    expect(tagsResult).toEqual(singleResult);
+                    expect(tagsResult).toEqual(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }));
                 });
                 tick();
             }));

@@ -301,6 +301,7 @@ describe('VersionListComponent', () => {
 
         beforeEach(() => {
             fixture.detectChanges();
+            versionTest[1].entry.id = '1.1';
             spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
                 Promise.resolve(
                     new VersionPaging({
@@ -392,7 +393,7 @@ describe('VersionListComponent', () => {
 
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    expect(getRestoreButton().disabled).toBeFalse();
+                    expect(getRestoreButton('1.1').disabled).toBeFalse();
                     done();
                 });
             });

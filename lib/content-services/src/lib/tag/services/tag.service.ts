@@ -99,8 +99,8 @@ export class TagService {
     removeTag(nodeId: string, tag: string): Observable<void> {
         const observableRemove = from(this.tagsApi.deleteTagFromNode(nodeId, tag));
 
-        observableRemove.subscribe((data) => {
-            this.refresh.emit(data);
+        observableRemove.subscribe(() => {
+            this.refresh.emit();
         }, (err) => {
             this.handleError(err);
         });
