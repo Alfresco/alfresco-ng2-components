@@ -76,6 +76,6 @@ describe('Process Instance Details', () => {
 
     it('[C307031] Should display the created date in the default format', async () => {
         await processDetailsPage.checkProcessHeaderDetailsAreVisible();
-        await expect(await processDetailsPage.getCreated()).toEqual(format(new Date(process.started), PROCESS_DATE_FORMAT));
+        await expect(await processDetailsPage.getCreated()).toEqual(format(process.started, PROCESS_DATE_FORMAT));
     });
 });
