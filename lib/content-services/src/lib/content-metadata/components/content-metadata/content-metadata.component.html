@@ -33,7 +33,7 @@
                         <mat-icon>clear</mat-icon>
                     </button>
                     <button mat-icon-button
-                            (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
+                            (click)="saveChanges(buttonType.GeneralInfo, $event)"
                             color="primary"
                             data-automation-id="save-general-info-metadata"
                             [disabled]="!hasMetadataChanged">
@@ -85,7 +85,7 @@
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
-                                (click)="saveChanges(buttonType.Tags, $event, group)"
+                                (click)="saveChanges(buttonType.Tags, $event)"
                                 color="primary"
                                 data-automation-id="save-tags-metadata"
                                 [disabled]="!hasMetadataChanged">
@@ -145,7 +145,7 @@
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
-                                (click)="saveChanges(buttonType.Categories, $event, group)"
+                                (click)="saveChanges(buttonType.Categories, $event)"
                                 color="primary"
                                 data-automation-id="save-categories-metadata"
                                 [disabled]="!hasMetadataChanged">
@@ -210,7 +210,7 @@
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button
-                                        (click)="saveChanges(buttonType.Group, $event, group)"
+                                        (click)="saveChanges(buttonType.Group, $event)"
                                         color="primary"
                                         data-automation-id="save-metadata"
                                         [disabled]="!hasMetadataChanged">
