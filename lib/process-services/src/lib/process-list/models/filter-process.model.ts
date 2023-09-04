@@ -16,7 +16,7 @@
  */
 
 import {
-    ProcessFilterRequestRepresentation,
+    ProcessInstanceQueryRepresentation,
     ProcessInstanceFilterRepresentation,
     UserProcessInstanceFilterRepresentation
 } from '@alfresco/js-api';
@@ -50,7 +50,7 @@ export class FilterProcessRepresentationModel implements UserProcessInstanceFilt
 /**
  * This object represent the parameters of a process filter.
  */
-export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
+export class ProcessFilterParamRepresentationModel implements ProcessInstanceQueryRepresentation {
 
     processDefinitionId?: string;
     processInstanceId?: string;

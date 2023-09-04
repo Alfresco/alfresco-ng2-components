@@ -30,7 +30,8 @@ import {
     SecurityGroupPaging,
     AuthorityClearanceApi,
     AuthorityClearanceGroupPaging,
-    NodeSecurityMarkBody
+    NodeSecurityMarkBody,
+    GsGroupInclude
 } from '@alfresco/js-api';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { finalize } from 'rxjs/operators';
@@ -125,8 +126,8 @@ export class SecurityControlsService {
         const payload: SecurityGroupBody = {
             ...input
         };
-        const opts = {
-            DEFAULT_INCLUDE
+        const opts: GsGroupInclude = {
+            include: DEFAULT_INCLUDE
         };
         const promise = this.groupsApi.createSecurityGroup(payload, opts);
 

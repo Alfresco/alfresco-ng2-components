@@ -18,7 +18,7 @@
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {
     SiteEntry,
-    SiteMembershipRequestBody,
+    SiteMembershipRequestBodyCreate,
     SiteMemberEntry,
     SiteMembershipRequestEntry,
     SitesApi
@@ -208,7 +208,7 @@ export class LibraryMembershipDirective implements OnChanges {
     private joinLibraryRequest(): Observable<SiteMembershipRequestEntry> {
         const memberBody = {
             id: this.targetSite.id
-        } as SiteMembershipRequestBody;
+        } as SiteMembershipRequestBodyCreate;
 
         if (this.versionCompatibilityService.isVersionSupported('7.0.0')) {
             memberBody.client = 'workspace';
