@@ -124,13 +124,13 @@ export interface SearchOptions {
     include?: string[];
 
     /**
-     * String to control the order of the entities returned in a list. You can use this
+     * String array to control the order of the entities returned in a list. You can use this
      * parameter to sort the list by one or more fields. Each field has a default sort order,
      * which is normally ascending order (but see the JS-API docs to check if any fields used
      * in a method have a descending default search order). To sort the entities in a specific
      * order, you can use the "ASC" and "DESC" keywords for any field.
      */
-    orderBy?: string;
+    orderBy?: string[];
 
     /**
      * List of field names. You can use this parameter to restrict the fields returned within
