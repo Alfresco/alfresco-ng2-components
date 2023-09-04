@@ -169,4 +169,9 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     isOauth(): boolean {
         return this.basicAlfrescoAuthService.isOauth();
     }
+
+    isKerberosEnabled(): boolean {
+        return !this.isOauth() ? this.basicAlfrescoAuthService.isKerberosEnabled() : false;
+    }
+
 }

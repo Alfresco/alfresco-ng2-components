@@ -73,6 +73,23 @@ describe('AuthenticationService', () => {
             });
             appConfigService.load();
         });
+
+        it('should kerberos be disabled if is oauth', () => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            expect(authService.isKerberosEnabled()).toEqual(false);
+        });
+
+        it('should kerberos not enabled if is oauth is false and basic auth return false', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(false);
+            expect(authService.isKerberosEnabled()).toEqual(false);
+        });
+
+        it('should kerberos be enabled if is oauth is false and basic auth return true', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(true);
+            expect(authService.isKerberosEnabled()).toEqual(true);
+        });
     });
 
     describe('when the setting is ECM', () => {
