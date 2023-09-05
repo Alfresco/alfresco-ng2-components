@@ -350,7 +350,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             (this.editable && this.hasMetadataChanged) ||
             (this.editableTags  && this.hasMetadataChanged ) ||
             (this.editableCategories  && this.hasMetadataChanged) ||
-            ((this.editableGroup && this.editableGroup.editable)  && this.hasMetadataChanged)
+            ((this.editableGroup?.editable)  && this.hasMetadataChanged)
         );
     }
 
