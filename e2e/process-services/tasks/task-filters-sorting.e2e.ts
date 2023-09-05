@@ -91,7 +91,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Newest first',
             icon: 'glyphicon-filter',
-            filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
+            filter: { sort: 'created-desc', state: 'completed' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -108,7 +108,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Newest last',
             icon: 'glyphicon-filter',
-            filter: { sort: 'created-asc', state: 'completed', assignment: 'involved' }
+            filter: { sort: 'created-asc', state: 'completed' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -125,7 +125,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Due first',
             icon: 'glyphicon-filter',
-            filter: { sort: 'due-desc', state: 'completed', assignment: 'involved' }
+            filter: { sort: 'due-desc', state: 'completed' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -142,7 +142,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Due last',
             icon: 'glyphicon-filter',
-            filter: { sort: 'due-asc', state: 'completed', assignment: 'involved' }
+            filter: { sort: 'due-asc', state: 'completed' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -159,7 +159,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Newest first Open',
             icon: 'glyphicon-filter',
-            filter: { sort: 'created-desc', state: 'open', assignment: 'involved' }
+            filter: { sort: 'created-desc', state: 'open' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -176,7 +176,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Newest last Open',
             icon: 'glyphicon-filter',
-            filter: { sort: 'created-asc', state: 'open', assignment: 'involved' }
+            filter: { sort: 'created-asc', state: 'open' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -193,7 +193,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Due first Open',
             icon: 'glyphicon-filter',
-            filter: { sort: 'due-desc', state: 'open', assignment: 'involved' }
+            filter: { sort: 'due-desc', state: 'open' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
@@ -210,7 +210,7 @@ describe('Task Filters Sorting', () => {
             appId,
             name: 'Due last Open',
             icon: 'glyphicon-filter',
-            filter: { sort: 'due-asc', state: 'open', assignment: 'involved' }
+            filter: { sort: 'due-asc', state: 'open' }
         });
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
