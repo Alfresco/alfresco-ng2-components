@@ -174,6 +174,64 @@ export const getFakeSitePagingWithMembers = () =>
                         id: 'MODERATED-SITE',
                         preset: 'site-dashboard',
                         title: 'FAKE-MODERATED-SITE'
+                    },
+                    relations: {
+                        members: {
+                            list: {
+                                pagination: {
+                                    count: 3,
+                                    hasMoreItems: false,
+                                    skipCount: 0,
+                                    maxItems: 100
+                                },
+                                entries: [
+                                    {
+                                        entry: {
+                                            role: 'SiteManager',
+                                            person: {
+                                                firstName: 'Administrator',
+                                                emailNotificationsEnabled: true,
+                                                company: {},
+                                                id: 'admin',
+                                                enabled: true,
+                                                email: 'admin@alfresco.com'
+                                            },
+                                            id: 'admin'
+                                        }
+                                    },
+                                    {
+                                        entry: {
+                                            role: 'SiteCollaborator',
+                                            person: {
+                                                lastName: 'Beecher',
+                                                userStatus: 'Helping to design the look and feel of the new web site',
+                                                jobTitle: 'Graphic Designer',
+                                                statusUpdatedAt: new Date('2011-02-15T20:20:13.432+0000'),
+                                                mobile: '0112211001100',
+                                                emailNotificationsEnabled: true,
+                                                description: 'Alice is a demo user for the sample Alfresco Team site.',
+                                                telephone: '0112211001100',
+                                                enabled: false,
+                                                firstName: 'Alice',
+                                                skypeId: 'abeecher',
+                                                avatarId: '198500fc-1e99-4f5f-8926-248cea433366',
+                                                location: 'Tilbury, UK',
+                                                company: {
+                                                    organization: 'Moresby, Garland and Wedge',
+                                                    address1: '200 Butterwick Street',
+                                                    address2: 'Tilbury',
+                                                    address3: 'UK',
+                                                    postcode: 'ALF1 SAM1'
+                                                },
+                                                id: 'abeecher',
+                                                email: 'abeecher@example.com'
+                                            },
+                                            id: 'abeecher'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
                     }
                 },
                 {
@@ -194,6 +252,34 @@ export const getFakeSitePagingWithMembers = () =>
                         id: 'MEMBER-SITE',
                         preset: 'site-dashboard',
                         title: 'FAKE-PRIVATE-SITE-MEMBER'
+                    },
+                    relations: {
+                        members: {
+                            list: {
+                                pagination: {
+                                    count: 3,
+                                    hasMoreItems: false,
+                                    skipCount: 0,
+                                    maxItems: 100
+                                },
+                                entries: [
+                                    {
+                                        entry: {
+                                            role: 'SiteManager',
+                                            person: {
+                                                firstName: 'Administrator',
+                                                emailNotificationsEnabled: true,
+                                                company: {},
+                                                id: 'admin',
+                                                enabled: true,
+                                                email: 'admin@alfresco.com'
+                                            },
+                                            id: 'test'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
                     }
                 }
             ]

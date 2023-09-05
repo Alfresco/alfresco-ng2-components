@@ -94,12 +94,11 @@ describe('SecurityControlsService', () => {
 
     it('should be able to get the list of Security Marks', async () => {
         const getMarkSpy = spyOn(service.marksApi, 'getSecurityMarks').and.returnValue(Promise.resolve(fakeMarksApiResponse));
-        const markPromise = service.getSecurityMark(securityGroupId, 0, 'inUse');
+        const markPromise = service.getSecurityMark(securityGroupId, 0);
         const mark = await markPromise;
 
         expect(getMarkSpy).toHaveBeenCalledWith(securityGroupId, {
-            skipCount: 0,
-            include: 'inUse'
+            skipCount: 0
         });
 
         expect(mark.pagination.skipCount).toBe(0);

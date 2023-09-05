@@ -170,19 +170,16 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param skipCount The number of entities that exist in the collection before those included in this list.
-     * @param include The key for the security mark is in use or not
      * @return Promise<SecurityControlsMarkResponse>
      */
     getSecurityMark(
         securityGroupId: string,
         skipCount = DEFAULT_SKIP_COUNT,
-        include = DEFAULT_INCLUDE
     ): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
             this.marksApi
                 .getSecurityMarks(securityGroupId, {
-                    include,
                     skipCount
                 })
                 .then((response: SecurityMarkPaging) => {
