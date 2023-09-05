@@ -115,3 +115,8 @@
         box-shadow: none;
     }
 }
+
+.adf-snackbar-message {
+    background-color: var(--adf-snackbar-message-background-color);
+    color: var(--adf-snackbar-message-color);
+}

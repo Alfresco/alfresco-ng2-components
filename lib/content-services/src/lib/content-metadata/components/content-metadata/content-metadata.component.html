@@ -18,7 +18,7 @@
                 </div>
                 <button *ngIf="!editable && !readOnly && hasAllowableOperations"
                         mat-icon-button
-                        (click)="toggleGeneralEdit($event)"
+                        (click)="toggleEdit($event, group, buttonType.GeneralInfo)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                         data-automation-id="meta-data-general-info-edit"
@@ -70,7 +70,7 @@
                     <div class="adf-tags-buttons">
                         <button *ngIf="!editableTags && !readOnly && hasAllowableOperations"
                                 mat-icon-button
-                                (click)="toggleTagsEdit($event)"
+                                (click)="toggleEdit($event, group, buttonType.Tags)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                 [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                 data-automation-id="showing-tag-input-button"
@@ -130,7 +130,7 @@
                     <div class="adf-metadata-categories-title">
                         <button *ngIf="!editableCategories && !readOnly && hasAllowableOperations"
                                 mat-icon-button
-                                (click)="toggleCategoriesEdit($event)"
+                                (click)="toggleEdit($event, group, buttonType.Categories)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                 [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                 data-automation-id="meta-data-card-toggle-categories-edit"
@@ -200,7 +200,7 @@
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                     data-automation-id="meta-data-card-toggle-edit"
                                     class="adf-edit-icon-buttons"
-                                    (click)="toggleEdit($event, group)">
+                                    (click)="toggleEdit($event, group, buttonType.Group)">
                                 <mat-icon>mode_edit</mat-icon>
                             </button>
                             <div class="adf-metadata-action-buttons" *ngIf="group.editable">
