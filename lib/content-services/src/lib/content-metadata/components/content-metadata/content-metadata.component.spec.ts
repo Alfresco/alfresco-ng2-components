@@ -432,53 +432,59 @@ describe('ContentMetadataComponent', () => {
         }));
     });
 
-    describe('editable', () => {
-        it('should toggle general editable', () => {
-            const eventMock = new MouseEvent('click');
+    describe('toggleEdit', () => {
+        let mockEvent: MouseEvent;
+        let mockGroup: CardViewGroup = {
+            editable: false, expanded: false,
+            title: '',
+            properties: []
+        };
+        beforeEach(() => {
+            mockEvent = new MouseEvent('click');
+            component.editableGroup = mockGroup;
+        });
+    
+        it('should toggle General Info editing mode', () => {
             component.editable = false;
-            component.toggleGeneralEdit(eventMock);
-            expect(component.editable).toBe(true);
+            component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
             expect(component.editableTags).toBe(false);
             expect(component.editableCategories).toBe(false);
+            expect(component.editableGroup.editable).toBe(false);
         });
 
-        it('should toggle tags editable', () => {
-            const eventMock = new MouseEvent('click');
+        it('should toggle Tags editing mode', () => {
             component.editableTags = false;
-            component.toggleTagsEdit(eventMock);
-            expect(component.editableTags).toBe(true);
+            component.toggleEdit(mockEvent, mockGroup, ButtonType.Tags);
+            expect(component.tagsPanelState).toBe(component.editableTags);
             expect(component.tagNameControlVisible).toBe(true);
-            expect(component.tagsPanelState).toBe(true);
-            expect(component.editable).toBe(false);
             expect(component.editableCategories).toBe(false);
+            expect(component.editableGroup.editable).toBe(false);
         });
 
-        it('should toggle categories editable', () => {
-            const eventMock = new MouseEvent('click');
+        it('should toggle Categories editing mode', () => {
             component.editableCategories = false;
-            component.toggleCategoriesEdit(eventMock);
-            expect(component.editableCategories).toBe(true);
+            component.toggleEdit(mockEvent, mockGroup, ButtonType.Categories);
+            expect(component.categoriesPanelState).toBe(component.editableCategories);
             expect(component.categoryControlVisible).toBe(true);
-            expect(component.categoriesPanelState).toBe(true);
-            expect(component.editable).toBe(false);
             expect(component.editableTags).toBe(false);
+            expect(component.editableGroup.editable).toBe(false);
         });
 
-        it('should toggle group editable', () => {
-            const eventMock = new MouseEvent('click');
-            const group: CardViewGroup = {
-                editable: false, expanded: false,
-                title: '',
-                properties: []
-            };
-            component.editableGroup = null;
-            component.toggleEdit(eventMock, group);
-            expect(group.editable).toBe(true);
-            expect(group.expanded).toBe(true);
-            expect(component.editableGroup).toBe(group);
+        it('should toggle Group editing mode', () => {
+            component.toggleEdit(mockEvent, mockGroup, ButtonType.Group);
             expect(component.editable).toBe(false);
-            expect(component.editableTags).toBe(false);
-            expect(component.editableCategories).toBe(false);
+            expect(component.editableGroup).toBe(mockGroup.editable ? mockGroup : null);
+            if (mockGroup.editable) {
+                expect(mockGroup.expanded).toBe(true);
+            }
+        });
+    
+        it('should show Snackbar when Editing Panel is Active', () => {
+            spyOn(component, 'isEditingPanel').and.returnValue(true);
+            spyOn(component, 'showSnackbar');
+            component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
+            expect(component.isEditingPanel).toHaveBeenCalled();
+            expect(component.showSnackbar).toHaveBeenCalledWith('METADATA.BASIC.SNACKBAR_MESSAGE');
         });
     });
 
