@@ -368,6 +368,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
+        if (this.editableGroup && this.editableGroup !== group) {
+            this.editableGroup.editable = false;
+        }
+
         event.stopPropagation();
     
         switch (buttonType) {
@@ -376,27 +380,21 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.panel.open();
                 this.editableTags = false;
                 this.editableCategories = false;
-                this.editableGroup.editable = false;
                 break;
     
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.tagsPanelState = this.editableTags;
                 this.tagNameControlVisible = true;
-                this.editableGroup.editable = false;
                 break;
     
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.categoriesPanelState = this.editableCategories;
                 this.categoryControlVisible = true;
-                this.editableGroup.editable = false;
                 break;
     
             case ButtonType.Group:
-                if (this.editableGroup && this.editableGroup !== group) {
-                    this.editableGroup.editable = false;
-                }
                 group.editable = !group.editable;
                 this.editableChange.emit(this.editable);
                 this.editableGroup = group.editable ? group : null;
