@@ -30,8 +30,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { Activiti, RelatedContentRepresentation } from '@alfresco/js-api';
-import ContentApi = Activiti.ContentApi;
+import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 
 describe('Attachment list action menu for tasks', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -46,8 +45,7 @@ describe('Attachment list action menu for tasks', () => {
     const usersActions = new UsersActions(apiService);
     const modelsActions = new ModelsActions(apiService);
     const taskUtil = new TaskUtil(apiService);
-    const contentApi = new ContentApi();
-    contentApi.init(apiService.getInstance());
+    const contentApi = new ActivitiContentApi(apiService.getInstance());
 
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
