@@ -29,7 +29,7 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 })
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
-    onLogin: Subject<any> = new Subject<any>;
+    onLogin: Subject<any> = new Subject<any>();
 
     constructor(
         private injector: Injector,
