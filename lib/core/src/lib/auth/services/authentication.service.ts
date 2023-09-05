@@ -30,6 +30,7 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
     onLogin: Subject<any> = new Subject<any>();
+    onLogout: Subject<any> = new Subject<any>();
 
     constructor(
         private injector: Injector,
@@ -44,6 +45,15 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
             (value) => this.onLogin.next(value)
         );
 
+        if (this.isOauth()) {
+            this.oidcAuthenticationService.onLogout.subscribe(
+                (value) => this.onLogout.next(value)
+            );
+        } else {
+            this.basicAlfrescoAuthService.onLogout.subscribe(
+                (value) => this.onLogout.next(value)
+            );
+        }
     }
 
     get on(): ee.EmitterMethod {
@@ -60,10 +70,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
 
     get emit(): (type: string, ...args: any[]) => void {
         return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
-    }
-
-    get onLogout(): Observable<any> {
-        return this.isOauth() ? this.oidcAuthenticationService.onLogout : this.basicAlfrescoAuthService.onLogout;
     }
 
     get onError(): Observable<any> {
