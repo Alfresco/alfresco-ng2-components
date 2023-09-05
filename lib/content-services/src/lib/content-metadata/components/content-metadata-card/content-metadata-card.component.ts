@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
@@ -77,10 +77,6 @@ export class ContentMetadataCardComponent implements OnChanges {
     /** (optional) This flag toggles editable of content. **/
     @Input()
     editable = false;
-
-    /** Emitted when content's editable state is changed. **/
-    @Output()
-    editableChange = new EventEmitter<boolean>();
 
     private _displayDefaultProperties: boolean = true;
 
