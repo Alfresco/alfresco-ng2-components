@@ -21,7 +21,6 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { parse, isValid } from 'date-fns';
 
-
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
     let component: SearchDatetimeRangeComponent;
