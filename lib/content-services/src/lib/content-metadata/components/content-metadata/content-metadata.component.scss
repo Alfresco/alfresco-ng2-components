@@ -1,20 +1,20 @@
 .adf {
     &-metadata-properties {
-        mat-expansion-panel-header {
-            height: 64px;
+        .mat-expansion-panel-header {
+            height: 56px;
             padding: 0 12px;
 
             .adf-metadata-properties-title {
-                font-weight: normal;
-                font-size: 15px;
+                font-weight: 700;
+                font-size: 14px;
                 padding-left: 12px;
             }
         }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
-            border: solid 1px;
-            border-color: #0000001f;
+            border: 1px solid var(--adf-metadata-property-panel-border-color);
+            border-radius: 12px;
         }
 
         .mat-expansion-panel-body {
@@ -54,7 +54,7 @@
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            padding: 24px;
+            padding: 18px 0 5px;
         }
 
         &-tags {
@@ -98,7 +98,7 @@
             justify-content: space-between;
             align-items: center;
             font-size: 15px;
-            height: 64px;
+            height: 56px;
 
             button {
                 margin-right: -14px;
@@ -121,8 +121,10 @@
     .mat-tab-body-content {
         .adf-metadata-properties {
             .mat-expansion-panel {
-                width: 100%;
+                width: 755px;
+                border: 1px solid var(--adf-metadata-property-panel-border-color);
                 border-radius: 12px;
+                margin: 24px;
             }
         }
     }
@@ -132,11 +134,4 @@
     .mat-card:not([class*='mat-elevation-z']) {
         box-shadow: none;
     }
-}
-
-.adf-metadata-properties-panel {
-    display: flex;
-    flex-direction: row;
-    margin: 24px;
-    gap: 24px;
 }

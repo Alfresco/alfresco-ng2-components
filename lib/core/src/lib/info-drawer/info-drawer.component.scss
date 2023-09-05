@@ -10,6 +10,13 @@
         }
 
         & &-layout {
+
+            .adf-info-drawer-icon{
+                display: inline-block; 
+                vertical-align: middle;
+                margin-right:10px;
+            }
+
             &-content {
                 padding: 0;
 
@@ -40,12 +47,6 @@
                         }
                     }
 
-                    .adf-info-drawer-icon{
-                        display: inline-block; 
-                        vertical-align: -webkit-baseline-middle;
-                        margin-right:10px;
-                    }
-
                     .mat-ink-bar {
                         height: 4px;
                     }
@@ -64,3 +65,4 @@
         }
     }
 }
+
