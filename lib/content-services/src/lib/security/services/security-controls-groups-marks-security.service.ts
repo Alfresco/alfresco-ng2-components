@@ -174,7 +174,7 @@ export class SecurityControlsService {
      */
     getSecurityMark(
         securityGroupId: string,
-        skipCount = DEFAULT_SKIP_COUNT,
+        skipCount = DEFAULT_SKIP_COUNT
     ): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
