@@ -493,7 +493,7 @@ describe('ContentMetadataComponent', () => {
             component.editable = false;
             component.toggleEditMode(ButtonType.GeneralInfo);
             expect(component.editable).toBe(true);
-          });
+        });
 
         it('should toggle tags editable', () => {
             component.editableTags = false;

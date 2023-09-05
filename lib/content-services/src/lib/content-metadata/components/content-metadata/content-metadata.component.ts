@@ -367,7 +367,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.showSnackbar('METADATA.BASIC.SNACKBAR_MESSAGE');
             return;
         }
-    
+
         event.stopPropagation();
     
         switch (buttonType) {
