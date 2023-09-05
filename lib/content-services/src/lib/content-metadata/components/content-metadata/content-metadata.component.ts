@@ -47,6 +47,7 @@ import { CategoriesManagementMode } from '../../../category/categories-managemen
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { AllowableOperationsEnum, ContentService } from '../../../common';
 import { ButtonType } from './button-type.enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -176,7 +177,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private tagService: TagService,
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
-        private contentService: ContentService
+        private contentService: ContentService,
+        private snackBar: MatSnackBar
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -343,59 +345,79 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
     }
 
-    cancelEditChanges() {
-        this.revertChanges();
-        this.loadProperties(this.node);
+    isEditingPanel(): boolean {
+        return (
+            (this.editable && this.hasMetadataChanged) ||
+            (this.editableTags  && this.hasMetadataChanged ) ||
+            (this.editableCategories  && this.hasMetadataChanged) ||
+            ((this.editableGroup && this.editableGroup.editable)  && this.hasMetadataChanged)
+        );
     }
 
-    toggleGeneralEdit(event: MouseEvent): void {
-        event.stopPropagation();
-        this.editable = !this.editable;
-        this.editableChange.emit(this.editable);
-        this.cancelEditChanges();
-        if (this.editable) {
-            this.panel.open();
-            this.editableTags = false;
-            this.editableCategories = false;
+    showSnackbar(message: string): void {
+        this.snackBar.open(message, '', {
+            duration: 3000,
+            verticalPosition: 'bottom',
+            panelClass: ['adf-snackbar-message']
+        });
+    }
+
+    toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
+        if (this.isEditingPanel()) {
+            this.showSnackbar('METADATA.BASIC.SNACKBAR_MESSAGE');
+            return;
         }
-    }
-
-    toggleTagsEdit(event: MouseEvent): void {
+    
         event.stopPropagation();
-        this.editableTags = !this.editableTags;
-        this.tagsPanelState = this.editableTags;
-        this.cancelEditChanges();
-        this.tagNameControlVisible = true;
-        if (this.editableTags) {
+    
+        switch (buttonType) {
+            case ButtonType.GeneralInfo:
+                this.editable = !this.editable;
+                this.panel.open();
+                this.editableTags = false;
+                this.editableCategories = false;
+                this.editableGroup.editable = false;
+                break;
+    
+            case ButtonType.Tags:
+                this.editableTags = !this.editableTags;
+                this.tagsPanelState = this.editableTags;
+                this.tagNameControlVisible = true;
+                this.editableGroup.editable = false;
+                break;
+    
+            case ButtonType.Categories:
+                this.editableCategories = !this.editableCategories;
+                this.categoriesPanelState = this.editableCategories;
+                this.categoryControlVisible = true;
+                this.editableGroup.editable = false;
+                break;
+    
+            case ButtonType.Group:
+                if (this.editableGroup && this.editableGroup !== group) {
+                    this.editableGroup.editable = false;
+                }
+                group.editable = !group.editable;
+                this.editableChange.emit(this.editable);
+                this.editableGroup = group.editable ? group : null;
+                if (group.editable) {
+                    group.expanded = true;
+                }
+                break;
+    
+            default:
+                break;
+        }
+    
+        if (buttonType !== ButtonType.GeneralInfo) {
             this.editable = false;
-            this.editableCategories = false;
         }
-    }
-
-    toggleCategoriesEdit(event: MouseEvent): void {
-        event.stopPropagation();
-        this.cancelEditChanges();
-        this.editableCategories = !this.editableCategories;
-        this.categoriesPanelState = this.editableCategories;
-        this.categoryControlVisible = true;
-        if (this.editableCategories) {
-            this.editable = false;
+    
+        if (buttonType !== ButtonType.Tags) {
             this.editableTags = false;
         }
-    }
-
-    toggleEdit(event: MouseEvent, group: CardViewGroup): void {
-        event.stopPropagation();
-        if (this.editableGroup && this.editableGroup !== group) {
-            this.editableGroup.editable = false;
-        }
-        group.editable = !group.editable;
-        this.editableChange.emit(this.editable);
-        this.editableGroup = group.editable ? group : null;
-        if (group.editable) {
-            group.expanded = true;
-            this.editable = false;
-            this.editableTags = false;
+    
+        if (buttonType !== ButtonType.Categories) {
             this.editableCategories = false;
         }
     }
