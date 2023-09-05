@@ -118,7 +118,7 @@ export class InfoDrawerComponent {
 
       isRuleFolder(node: Node) {
         const nodeAspects = this.getNodeAspectNames(node);
-        return nodeAspects.indexOf('rule:rules') > -1 || nodeAspects.indexOf('rule:rules') > -1;
+        return nodeAspects.indexOf('rule:rules') > -1;
       }
 
       isALinkFolder(node: Node) {
