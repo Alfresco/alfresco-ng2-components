@@ -20,7 +20,7 @@
     "clientId": "alfresco",
     "scope": "openid profile email",
     "secret": "",
-    "implicitFlow": true,
+    "codeFlow": true,
     "silentLogin": true,
     "redirectSilentIframeUri": "{protocol}//{hostname}{:port}/assets/silent-refresh.html",
     "redirectUri": "/",

@@ -28,8 +28,8 @@ if [ -n "${APP_CONFIG_OAUTH2_CLIENTID}" ]; then
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
-if [ -n "${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}" ]; then
-  sed -e "s/\"implicitFlow\": [^,]*/\"implicitFlow\": ${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}/g" \
+if [ -n "${APP_CONFIG_OAUTH2_CODE_FLOW}" ]; then
+  sed -e "s/\"codeFlow\": [^,]*/\"codeFlow\": ${APP_CONFIG_OAUTH2_CODE_FLOW}/g" \
     -i "${NGINX_ENVSUBST_OUTPUT_DIR}/app.config.json"
 fi
 
