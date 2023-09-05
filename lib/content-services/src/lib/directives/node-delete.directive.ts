@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntity, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
+import { NodeEntry, Node, DeletedNodeEntry, DeletedNode, TrashcanApi, NodesApi } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { map, catchError, retry } from 'rxjs/operators';
@@ -51,7 +51,7 @@ interface ProcessStatus {
 export class NodeDeleteDirective implements OnChanges {
     /** Array of nodes to delete. */
     @Input('adf-delete')
-    selection: NodeEntry[] | DeletedNodeEntity[];
+    selection: NodeEntry[] | DeletedNodeEntry[];
 
     /** If true then the nodes are deleted immediately rather than being put in the trash */
     @Input()
@@ -97,7 +97,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.elementRef.nativeElement.disabled = disable;
     }
 
-    private process(selection: NodeEntry[] | DeletedNodeEntity[]) {
+    private process(selection: NodeEntry[] | DeletedNodeEntry[]) {
         if (selection && selection.length) {
 
             const batch = this.getDeleteNodesBatch(selection);
@@ -118,7 +118,7 @@ export class NodeDeleteDirective implements OnChanges {
         return selection.map((node) => this.deleteNode(node));
     }
 
-    private deleteNode(node: NodeEntry | DeletedNodeEntity): Observable<ProcessedNodeData> {
+    private deleteNode(node: NodeEntry | DeletedNodeEntry): Observable<ProcessedNodeData> {
         const id = (node.entry as any).nodeId || node.entry.id;
 
         let promise: Promise<any>;

@@ -17,7 +17,7 @@
 
 import { SearchConfigurationService } from '../../../search/services/search-configuration.service';
 import { SearchService } from '../../../search/services/search.service';
-import { NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry } from '@alfresco/js-api';
 import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -30,10 +30,7 @@ import { MatSelectionList } from '@angular/material/list';
     templateUrl: './add-permission-panel.component.html',
     styleUrls: ['./add-permission-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService },
-        SearchService
-    ]
+    providers: [{ provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService }, SearchService]
 })
 export class AddPermissionPanelComponent {
 
@@ -54,15 +51,13 @@ export class AddPermissionPanelComponent {
     selectedItems: NodeEntry[] = [];
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    EVERYONE: NodeEntry = new NodeEntry({ entry: { nodeType: 'cm:authorityContainer', properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
+    EVERYONE: NodeEntry = new NodeEntry({
+        entry: new Node({ nodeType: 'cm:authorityContainer', properties: { 'cm:authorityName': 'GROUP_EVERYONE' } })
+    });
 
     constructor() {
-        this.searchInput.valueChanges
-        .pipe(
-            debounceTime(this.debounceSearch)
-        )
-        .subscribe((searchValue) => {
-            const selectionOptions = this.matSelectionList.selectedOptions.selected.map(option => option.value);
+        this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch)).subscribe((searchValue) => {
+            const selectionOptions = this.matSelectionList.selectedOptions.selected.map((option) => option.value);
             this.selectedItems.push(...selectionOptions);
             this.matSelectionList.deselectAll();
             this.searchedWord = searchValue;
@@ -73,15 +68,14 @@ export class AddPermissionPanelComponent {
     }
 
     onSelectionChange() {
-        const currentSelection = this.matSelectionList.selectedOptions.selected.map(option => option.value);
-        const uniqueSelection = [ ...currentSelection, ...this.selectedItems ]
-            .reduce((uniquesElements, currentElement) => {
-            const isExist = uniquesElements.find(uniqueElement => uniqueElement.entry.id === currentElement.entry.id);
+        const currentSelection = this.matSelectionList.selectedOptions.selected.map((option) => option.value);
+        const uniqueSelection = [...currentSelection, ...this.selectedItems].reduce((uniquesElements, currentElement) => {
+            const isExist = uniquesElements.find((uniqueElement) => uniqueElement.entry.id === currentElement.entry.id);
             if (!isExist) {
                 uniquesElements.push(currentElement);
             }
             return uniquesElements;
-            }, []);
+        }, []);
         this.select.emit(uniqueSelection);
     }
 
