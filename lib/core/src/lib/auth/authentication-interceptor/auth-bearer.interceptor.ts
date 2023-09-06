@@ -32,7 +32,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
   private loadExcludedUrlsRegex() {
     const excludedUrls = this.authService.getBearerExcludedUrls();
-    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'i')) || [];
+    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(`^https?://[^/]+/${urlPattern}`, 'i')) || [];
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
