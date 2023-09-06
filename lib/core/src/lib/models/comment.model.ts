@@ -25,7 +25,7 @@ export class CommentModel {
     isSelected: boolean;
 
     get hasAvatarPicture(): boolean {
-        return !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
+        return !!this.createdBy && !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
     }
 
     get userDisplayName(): string {
