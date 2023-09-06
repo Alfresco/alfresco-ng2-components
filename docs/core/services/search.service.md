@@ -24,9 +24,9 @@ Accesses the Content Services Search API.
     -   _maxResults:_ `number`  - Maximum number of items in the list of results
     -   _skipCount:_ `number`  - Number of higher-ranked items to skip over in the list
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - List of search results
--   **searchByQueryBody**(queryBody: `QueryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
-    Performs a search with its parameters supplied by a QueryBody object.
-    -   _queryBody:_ `QueryBody`  - Object containing the search parameters
+-   **searchByQueryBody**(queryBody: `SearchRequest`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+    Performs a search with its parameters supplied by a SearchRequest object.
+    -   _queryBody:_ `SearchRequest`  - Object containing the search parameters
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - List of search results
 
 ## Details

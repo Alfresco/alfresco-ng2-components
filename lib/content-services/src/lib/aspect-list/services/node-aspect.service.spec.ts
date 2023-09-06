@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MinimalNode } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -27,7 +27,6 @@ import { CardViewContentUpdateService } from '../../common/services/card-view-co
 import { TagService } from '@alfresco/adf-content-services';
 
 describe('NodeAspectService', () => {
-
     let dialogAspectListService: DialogAspectListService;
     let nodeAspectService: NodeAspectService;
     let nodeApiService: NodesApiService;
@@ -35,10 +34,7 @@ describe('NodeAspectService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
@@ -81,7 +77,7 @@ describe('NodeAspectService', () => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
         });
-        const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
@@ -92,7 +88,7 @@ describe('NodeAspectService', () => {
             expect(nodeUpdated.id).toBe('fake-node-id');
             expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
         });
-        const fakeNode = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
@@ -101,7 +97,7 @@ describe('NodeAspectService', () => {
     it('should call emit on refresh from TagService', () => {
         const tagService = TestBed.inject(TagService);
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
-        const node = new MinimalNode({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const node = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(node));
         spyOn(tagService.refresh, 'emit');
         nodeAspectService.updateNodeAspects('some node id', 'some-selector');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentationModel, TaskDetailsModel } from '../../task-list';
+import { TaskDetailsModel } from '../../task-list';
 import { ProcessDefinitionRepresentation } from '../../process-list/models/process-definition.model';
 
 export const mockError = {
@@ -23,38 +23,21 @@ export const mockError = {
     messageKey: 'GENERAL.ERROR.FORBIDDEN'
 };
 
-export const fakeApp1 = new AppDefinitionRepresentationModel({
-    deploymentId: 26,
-    name: 'HR processes',
-    icon: 'glyphicon-cloud',
-    description: null,
-    theme: 'theme-6',
-    modelId: 4,
-    id: 1
-});
-
-export const fakeApp2 = new AppDefinitionRepresentationModel({
-    deploymentId: 2501,
-    name: 'Sales onboarding',
-    icon: 'glyphicon-asterisk',
-    description: null,
-    theme: 'theme-1',
-    modelId: 1002,
-    id: 1000
-});
-
 export const fakeTasksList = {
-    data: [new TaskDetailsModel({
-        id: 1,
-        name: 'Task 1',
-        processInstanceId: 1000,
-        created: '2016-11-10T03:37:30.010+0000'
-    }), new TaskDetailsModel({
-        id: 2,
-        name: 'Task 2',
-        processInstanceId: 1000,
-        created: '2016-11-10T03:37:30.010+0000'
-    })]
+    data: [
+        new TaskDetailsModel({
+            id: 1,
+            name: 'Task 1',
+            processInstanceId: 1000,
+            created: '2016-11-10T03:37:30.010+0000'
+        }),
+        new TaskDetailsModel({
+            id: 2,
+            name: 'Task 2',
+            processInstanceId: 1000,
+            created: '2016-11-10T03:37:30.010+0000'
+        })
+    ]
 };
 
 export const fakeProcessDef = new ProcessDefinitionRepresentation({

@@ -20,12 +20,12 @@ Stores information from all the custom search and faceted search widgets, compil
     Adds a facet bucket to a field.
     -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/models/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/models/facet-field-bucket.interface.ts)  - Bucket to add
--   **buildQuery**(): `QueryBody`<br/>
+-   **buildQuery**(): `SearchRequest`<br/>
     Builds the current query.
-    -   **Returns** `QueryBody` - The finished query
--   **execute**(queryBody?: `QueryBody`)<br/>
+    -   **Returns** `SearchRequest` - The finished query
+-   **execute**(queryBody?: `SearchRequest`)<br/>
     Builds and executes the current query.
-    -   _queryBody:_ `QueryBody`  - (Optional)
+    -   _queryBody:_ `SearchRequest`  - (Optional)
 -   **getDefaultConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined`<br/>
 
     -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)`|undefined` - 
@@ -81,18 +81,18 @@ Stores information from all the custom search and faceted search widgets, compil
     -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/models/facet-field-bucket.interface.ts)  - Bucket to remove
 -   **resetToDefaults**()<br/>
 
--   **search**(queryBody: `QueryBody`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
+-   **search**(queryBody: `SearchRequest`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>`<br/>
 
-    -   _queryBody:_ `QueryBody`  - 
+    -   _queryBody:_ `SearchRequest`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ResultSetPaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/search-rest-api/docs/ResultSetPaging.md)`>` - 
 
 -   **setScope**(scope: `RequestScope`)<br/>
 
     -   _scope:_ `RequestScope`  - 
 
--   **update**(queryBody?: `QueryBody`)<br/>
+-   **update**(queryBody?: `SearchRequest`)<br/>
     Builds the current query and triggers the `updated` event.
-    -   _queryBody:_ `QueryBody`  - (Optional)
+    -   _queryBody:_ `SearchRequest`  - (Optional)
 -   **updateSelectedConfiguration**(index: `number`)<br/>
 
     -   _index:_ `number`  -

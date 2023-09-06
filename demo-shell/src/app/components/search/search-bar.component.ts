@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MinimalNodeEntity } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
@@ -26,9 +26,7 @@ import { PreviewService } from '../../services/preview.service';
     styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
-
-    constructor(public router: Router, private preview: PreviewService) {
-    }
+    constructor(public router: Router, private preview: PreviewService) {}
 
     /**
      * Called when the user submits the search, e.g. hits enter or clicks submit
@@ -37,17 +35,19 @@ export class SearchBarComponent {
      */
     onSearchSubmit(event: KeyboardEvent) {
         const value = (event.target as HTMLInputElement).value;
-        this.router.navigate(['/search', {
-            q: value
-        }]);
+        this.router.navigate([
+            '/search',
+            {
+                q: value
+            }
+        ]);
     }
 
-    onItemClicked(event: MinimalNodeEntity) {
+    onItemClicked(event: NodeEntry) {
         if (event.entry.isFile) {
             this.preview.showResource(event.entry.id);
         } else if (event.entry.isFolder) {
             this.router.navigate(['/files', event.entry.id]);
         }
     }
-
 }

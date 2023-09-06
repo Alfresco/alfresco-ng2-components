@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, QueriesApi, QueryBody, ResultSetPaging, SearchApi } from '@alfresco/js-api';
+import { NodePaging, QueriesApi, SearchRequest, ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { SearchConfigurationService } from './search-configuration.service';
@@ -25,7 +25,6 @@ import { SearchConfigurationService } from './search-configuration.service';
     providedIn: 'root'
 })
 export class SearchService {
-
     dataLoaded: Subject<ResultSetPaging> = new Subject();
 
     private _queriesApi: QueriesApi;
@@ -40,9 +39,7 @@ export class SearchService {
         return this._searchApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchConfigurationService: SearchConfigurationService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private searchConfigurationService: SearchConfigurationService) {}
 
     /**
      * Gets a list of nodes that match the given search criteria.
@@ -54,9 +51,11 @@ export class SearchService {
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
         const promise = this.queriesApi.findNodes(term, options);
 
-        promise.then((nodePaging: NodePaging) => {
-            this.dataLoaded.next(nodePaging);
-        }).catch((err) => this.handleError(err));
+        promise
+            .then((nodePaging) => {
+                this.dataLoaded.next(nodePaging);
+            })
+            .catch((err) => this.handleError(err));
 
         return from(promise);
     }
@@ -70,28 +69,32 @@ export class SearchService {
      * @returns List of search results
      */
     search(searchTerm: string, maxResults: number, skipCount: number): Observable<ResultSetPaging> {
-        const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
+        const searchQuery = this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount);
         const promise = this.searchApi.search(searchQuery);
 
-        promise.then((nodePaging: NodePaging) => {
-            this.dataLoaded.next(nodePaging);
-        }).catch((err) => this.handleError(err));
+        promise
+            .then((nodePaging) => {
+                this.dataLoaded.next(nodePaging);
+            })
+            .catch((err) => this.handleError(err));
 
         return from(promise);
     }
 
     /**
-     * Performs a search with its parameters supplied by a QueryBody object.
+     * Performs a search with its parameters supplied by a request object.
      *
      * @param queryBody Object containing the search parameters
      * @returns List of search results
      */
-    searchByQueryBody(queryBody: QueryBody): Observable<ResultSetPaging> {
+    searchByQueryBody(queryBody: SearchRequest): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
-        promise.then((nodePaging: NodePaging) => {
-            this.dataLoaded.next(nodePaging);
-        }).catch((err) => this.handleError(err));
+        promise
+            .then((nodePaging) => {
+                this.dataLoaded.next(nodePaging);
+            })
+            .catch((err) => this.handleError(err));
 
         return from(promise);
     }

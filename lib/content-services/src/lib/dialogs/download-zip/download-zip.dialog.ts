@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DownloadEntry, MinimalNode } from '@alfresco/js-api';
+import { DownloadEntry } from '@alfresco/js-api';
 import { LogService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
@@ -31,19 +31,19 @@ import { ContentService } from '../../common/services/content.service';
     encapsulation: ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {
-
     // flag for async threads
     cancelled = false;
     downloadId: string;
 
-    constructor(private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
-                @Inject(MAT_DIALOG_DATA)
-                public data: any,
-                private logService: LogService,
-                private downloadZipService: DownloadZipService,
-                private nodeService: NodesApiService,
-                private contentService: ContentService) {
-    }
+    constructor(
+        private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
+        @Inject(MAT_DIALOG_DATA)
+        public data: any,
+        private logService: LogService,
+        private downloadZipService: DownloadZipService,
+        private nodeService: NodesApiService,
+        private contentService: ContentService
+    ) {}
 
     ngOnInit() {
         if (this.data && this.data.nodeIds && this.data.nodeIds.length > 0) {
@@ -63,12 +63,11 @@ export class DownloadZipDialogComponent implements OnInit {
 
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
-
             this.downloadZipService.createDownload({ nodeIds }).subscribe((data: DownloadEntry) => {
                 if (data && data.entry && data.entry.id) {
                     const url = this.contentService.getContentUrl(data.entry.id, true);
 
-                    this.nodeService.getNode(data.entry.id).subscribe((downloadNode: MinimalNode) => {
+                    this.nodeService.getNode(data.entry.id).subscribe((downloadNode) => {
                         this.logService.log(downloadNode);
                         const fileName = downloadNode.name;
                         this.downloadId = data.entry.id;

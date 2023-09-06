@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
+import { ChildAssociationBody, AssociationBody } from '@alfresco/js-api';
 
 export interface FileUploadProgress {
     loaded: number;
@@ -63,7 +63,7 @@ export class FileUploadOptions {
      * You can optionally specify an array of **secondaryChildren** to create one or more secondary child associations,
      * such that the newly created node acts as a parent node.
      */
-    secondaryChildren?: AssocChildBody[];
+    secondaryChildren?: ChildAssociationBody[];
     /**
      * You can optionally specify an array of **targets** to create one or more peer associations such that the newly created node acts as a source node.
      */
@@ -112,9 +112,13 @@ export class FileModel {
             percent: 0
         };
 
-        this.options = Object.assign({}, {
-            newVersion: false
-        }, options);
+        this.options = Object.assign(
+            {},
+            {
+                newVersion: false
+            },
+            options
+        );
     }
 
     get extension(): string {

@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
-} from '@angular/core';
-import {
-    AppConfigService,
-    AppConfigValues,
-    FormValues
-} from '@alfresco/adf-core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { AppConfigService, AppConfigValues, FormValues } from '@alfresco/adf-core';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -35,7 +28,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
-import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
 import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
@@ -48,7 +41,6 @@ const MAX_LENGTH = 255;
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
-
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
      */
@@ -130,24 +122,28 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     movedNodeToPS: FormValues;
 
     private onDestroy$ = new Subject<boolean>();
-    constructor(private activitiProcess: ProcessService,
-                private activitiContentService: ActivitiContentService,
-                private appsProcessService: AppsProcessService,
-                private appConfig: AppConfigService,
-                private processNamePipe: ProcessNamePipe) {
-        }
+    constructor(
+        private activitiProcess: ProcessService,
+        private activitiContentService: ActivitiContentService,
+        private appsProcessService: AppsProcessService,
+        private appConfig: AppConfigService,
+        private processNamePipe: ProcessNamePipe
+    ) {}
 
     ngOnInit() {
-        this.processNameInput = new UntypedFormControl('', [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
+        this.processNameInput = new UntypedFormControl('', [
+            Validators.required,
+            Validators.maxLength(this.maxProcessNameLength),
+            Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')
+        ]);
         this.processDefinitionInput = new UntypedFormControl();
 
         this.load();
 
-        this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges
-            .pipe(
-                map((value) => this._filter(value)),
-                takeUntil(this.onDestroy$)
-            );
+        this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges.pipe(
+            map((value) => this._filter(value)),
+            takeUntil(this.onDestroy$)
+        );
 
         this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
             if (repoList && repoList[0]) {
@@ -199,34 +195,40 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.isProcessDefinitionsLoading = true;
         this.resetSelectedProcessDefinition();
 
-        this.activitiProcess.getProcessDefinitions(appId).pipe(
-            map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
-                let currentProcessDef: ProcessDefinitionRepresentation;
+        this.activitiProcess
+            .getProcessDefinitions(appId)
+            .pipe(
+                map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
+                    let currentProcessDef: ProcessDefinitionRepresentation;
 
-                if (processDefinitionRepresentations.length === 1) {
-                    currentProcessDef = processDefinitionRepresentations[0];
-                }
-
-                if (this.processDefinitionName) {
-                    const filteredProcessDefinition = processDefinitionRepresentations.find((processDefinition) => processDefinition.name === this.processDefinitionName);
-                    if (filteredProcessDefinition) {
-                        currentProcessDef = filteredProcessDefinition;
+                    if (processDefinitionRepresentations.length === 1) {
+                        currentProcessDef = processDefinitionRepresentations[0];
                     }
-                }
 
-                return { currentProcessDef, processDefinitionRepresentations };
-            })
-        ).subscribe(
-            (filteredProcessDefinitions) => {
-                this.processDefinitions = filteredProcessDefinitions.processDefinitionRepresentations;
-                this.processDefinitionSelectionChanged(filteredProcessDefinitions.currentProcessDef);
-                this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
-                this.isProcessDefinitionsLoading = false;
-            },
-            (error) => {
-                this.isProcessDefinitionsLoading = false;
-                this.error.emit(error);
-            });
+                    if (this.processDefinitionName) {
+                        const filteredProcessDefinition = processDefinitionRepresentations.find(
+                            (processDefinition) => processDefinition.name === this.processDefinitionName
+                        );
+                        if (filteredProcessDefinition) {
+                            currentProcessDef = filteredProcessDefinition;
+                        }
+                    }
+
+                    return { currentProcessDef, processDefinitionRepresentations };
+                })
+            )
+            .subscribe(
+                (filteredProcessDefinitions) => {
+                    this.processDefinitions = filteredProcessDefinitions.processDefinitionRepresentations;
+                    this.processDefinitionSelectionChanged(filteredProcessDefinitions.currentProcessDef);
+                    this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
+                    this.isProcessDefinitionsLoading = false;
+                },
+                (error) => {
+                    this.isProcessDefinitionsLoading = false;
+                    this.error.emit(error);
+                }
+            );
     }
 
     filterProcessDefinitionByName() {
@@ -244,7 +246,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.isAppsLoading = true;
         this.appsProcessService
             .getDeployedApplications()
-            .pipe(map((response: AppDefinitionRepresentationModel[]) => {
+            .pipe(
+                map((response: AppDefinitionRepresentationModel[]) => {
                     const applications = this.removeDefaultApps(response);
                     let currentApplication: AppDefinitionRepresentationModel;
 
@@ -252,7 +255,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                         currentApplication = applications[0];
                     }
 
-                    const filteredApp = applications.find( app => app.id === +this.appId );
+                    const filteredApp = applications.find((app) => app.id === +this.appId);
 
                     if (filteredApp) {
                         currentApplication = filteredApp;
@@ -261,7 +264,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     return { currentApplication, applications };
                 })
             )
-            .subscribe((filteredApps) => {
+            .subscribe(
+                (filteredApps) => {
                     this.applications = filteredApps.applications;
                     this.selectedApplication = filteredApps.currentApplication;
                     this.applicationSelection.emit(this.selectedApplication);
@@ -274,7 +278,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.error.emit(err);
                 }
             );
-
     }
 
     loadProcessDefinitionsBasedOnSelectedApp() {
@@ -328,10 +331,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
-                const contents = currentValue.filter((value: any) => value && value.isFile)
-                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
+                const contents = currentValue
+                    .filter((value: any) => value && value.isFile)
+                    .map((content: Node) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
-                    this.movedNodeToPS = { [key]: [...res]};
+                    this.movedNodeToPS = { [key]: [...res] };
                 });
             }
         }
@@ -435,7 +439,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return !!(this.selectedApplication && this.selectedApplication.id);
     }
 
-    private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
+    private removeDefaultApps(apps: AppDefinitionRepresentationModel[]): AppDefinitionRepresentationModel[] {
         return apps.filter((app) => app.id);
     }
 
@@ -466,8 +470,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private isProcessDefinitionChanged(changes: SimpleChanges) {
-        return changes['processDefinitionName'] && changes['processDefinitionName'].currentValue &&
-        changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue;
+        return (
+            changes['processDefinitionName'] &&
+            changes['processDefinitionName'].currentValue &&
+            changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue
+        );
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {

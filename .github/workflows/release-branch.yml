@@ -1,20 +1,14 @@
-name: "release"
+name: Release lib on branch
+run-name: Release lib on branch ${{ github.ref_name }}
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       dry-run-flag:
         description: 'enable dry-run on artifact push'
         required: false
         type: boolean
         default: true
-  pull_request:
-    types: [closed]
-    branches:
-      - develop
-      - master
-      - develop-patch*
-      - master-patch*
 
 env:
   BASE_REF: ${{ github.base_ref }}
@@ -83,10 +77,15 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     name: "Setup"
     runs-on: ubuntu-22.04
     steps:
+      - name: set TAG_NPM BRANCH
+        shell: bash
+        run: |
+          TAG_NPM="branch"
+          echo "Set TAG with name: ${TAG_NPM}"
+          echo "TAG_NPM=${TAG_NPM}" >> $GITHUB_ENV
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -102,63 +101,9 @@ jobs:
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  release-demoshell:
-    needs: [setup]
-    timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-      - run: git fetch --all
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: false
-          enable-node-modules-cache: false
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Demoshell docker
-        run: |
-          npx nx build demoshell --configuration production
-          . ./scripts/github/release/docker-tag.sh
-          ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
-
-  release-storybook:
-    needs: [setup]
-    timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-      - run: git fetch --all
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: false
-          enable-node-modules-cache: false
-          act: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Storybook docker
-        run: |
-          npx nx run stories:build-storybook --configuration ci
-          . ./scripts/github/release/docker-tag.sh
-          ./scripts/github/release/release-storybook-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
-
   release-npm:
     needs: [setup]
     timeout-minutes: 30
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -180,7 +125,7 @@ jobs:
       - name: build libraries
         run: |
           set -u;
-          ./scripts/github/build/bumpversion.sh
+          ./scripts/update-version.sh -gnu -nextalpha|| exit 1;
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
       - uses: actions/setup-node@v3
@@ -189,7 +134,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch|| exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@v3
@@ -198,32 +143,15 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=$TAG_NPM || exit 1
+      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
       - uses: ./.github/actions/npm-check-bundle
-
-  finalize:
-      if: always()
-      runs-on: ubuntu-latest
-      name: Final Results
-      needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
-      steps:
-
-        - uses: slackapi/slack-github-action@v1.23.0
-          name: Nofify FE hxp-front-end-apps workflow failed
-          if: ${{ contains(toJson(needs.*.result), 'failure') }}
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          with:
-            channel-id: 'C04N93XU491' #hxp-front-end-apps
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"

@@ -201,29 +201,6 @@ export const allSourceWithStringTypeEmptyValue = {
     }
 };
 
-export const allSourceWithFolderTypeEmptyValue = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: null,
-            name: 'folderVariableName',
-            type: DestinationFolderPathType.FOLDER_TYPE
-        }
-    }
-};
-
-export const allSourceWithRootParams = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: '-root-',
-            type: DestinationFolderPathType.STATIC_TYPE
-        }
-    }
-};
-
 export const allSourceWithWrongAliasParams = {
     fileSource: {
         name: 'all file sources',
@@ -248,22 +225,7 @@ export const allSourceWithNoAliasParams = {
     }
 };
 
-export const allSourceWithoutDestinationFolderPath = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID
-    }
-};
-
-export const allSourceWithoutValueProperty = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: '-mockAlias-'
-    }
-};
-
-export const fakeMinimalNode = {
+export const fakeNode = {
     id: 'fake',
     name: 'fake-name',
     content: {
@@ -296,10 +258,6 @@ export const mockMyNodeId = Promise.resolve('-my-');
 
 export const mockNodeIdBasedOnStringVariableValue = new Promise<string>((resolve) => {
     resolve('mock-string-value-node-id');
-});
-
-export const mockNodeIdBasedOnFolderVariableValue = new Promise((resolve) => {
-    resolve('mock-folder-value-node-id');
 });
 
 export const fakeLocalPngAnswer = {
@@ -447,7 +405,7 @@ export const processVariables = [
         createTime: 1566989626283,
         lastUpdatedTime: 1566989626283,
         executionId: null,
-        value: [{ id: 'mock-folder-id'}],
+        value: [{ id: 'mock-folder-id' }],
         markedAsDeleted: false,
         processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
         taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',

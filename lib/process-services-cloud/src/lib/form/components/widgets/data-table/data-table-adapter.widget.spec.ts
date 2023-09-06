@@ -17,7 +17,7 @@
 
 import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import {
-    mockCountriesData,
+    mockEuropeCountriesData,
     mockCountriesIncorrectData,
     mockInvalidSchemaDefinition,
     mockSchemaDefinition,
@@ -29,11 +29,11 @@ describe('WidgetDataTableAdapter', () => {
     let widgetDataTableAdapter: WidgetDataTableAdapter;
 
     beforeEach(() => {
-        widgetDataTableAdapter = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinition);
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
     });
 
     it('should set columns type to "text" during initialization', () => {
-        widgetDataTableAdapter = new WidgetDataTableAdapter(mockCountriesData, mockSchemaDefinitionWithDifferentTypes);
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinitionWithDifferentTypes);
 
         widgetDataTableAdapter.getColumns().forEach(column =>
             expect(column.type).toBe('text')
@@ -60,7 +60,7 @@ describe('WidgetDataTableAdapter', () => {
     });
 
     it('should return an empty array if columns have invalid structure', () => {
-        widgetDataTableAdapter = new WidgetDataTableAdapter(mockCountriesData, mockInvalidSchemaDefinition);
+        widgetDataTableAdapter = new WidgetDataTableAdapter(mockEuropeCountriesData, mockInvalidSchemaDefinition);
         const rows = widgetDataTableAdapter.getRows();
         const isDataSourceValid = widgetDataTableAdapter.isDataSourceValid();
 

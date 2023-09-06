@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { QueryBody } from '@alfresco/js-api';
+import { SearchRequest } from '@alfresco/js-api';
 
-export const mockQueryBody: QueryBody = {
+export const mockSearchRequest = {
     query: {
         query: '(search-term*)',
         language: 'afts'
@@ -38,4 +38,4 @@ export const mockQueryBody: QueryBody = {
     },
     highlight: null,
     facetFormat: 'V2'
-} as QueryBody;
+} as SearchRequest;

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntryEntity, Version, NodeChildAssociation, Node } from '@alfresco/js-api';
+import { Version, NodeChildAssociation, Node } from '@alfresco/js-api';
 import { NodeEntityEvent } from '../../document-list';
 
 export interface NewVersionUploaderDialogData {
     title?: string;
-    node: MinimalNodeEntryEntity;
+    node: Node;
     file?: File;
     currentVersion?: Version;
     showVersionsOnly?: boolean;

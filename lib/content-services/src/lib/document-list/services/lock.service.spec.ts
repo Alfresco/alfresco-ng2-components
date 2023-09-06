@@ -19,8 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { LockService } from './lock.service';
 import { CoreTestingModule, AlfrescoApiService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
-import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
+import { addDays, subDays } from 'date-fns';
 
 describe('PeopleProcessService', () => {
 
@@ -75,7 +75,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
                     'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': moment().subtract(4, 'days')
+                    'cm:expiryDate': subDays(new Date(), 4)
                 }
         } as Node;
 
@@ -88,7 +88,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
                     'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': moment().add(4, 'days')
+                    'cm:expiryDate': addDays(new Date(), 4)
                 }
         } as Node;
 
@@ -127,7 +127,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
                     'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': moment().subtract(4, 'days')
+                    'cm:expiryDate': subDays(new Date(), 4)
                 }
         } as Node;
 
@@ -140,7 +140,7 @@ describe('PeopleProcessService', () => {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
                     'cm:lockOwner': { id: 'lock-owner-user' },
-                    'cm:expiryDate': moment().add(4, 'days')
+                    'cm:expiryDate': addDays(new Date(), 4)
                 }
         } as Node;
 

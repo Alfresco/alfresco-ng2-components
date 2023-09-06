@@ -183,6 +183,7 @@ for more information about installing and using the source code.
 | [Text Highlight pipe](core/pipes/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/src/lib/pipes/text-highlight.pipe.ts) |
 | [Time Ago pipe](core/pipes/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/src/lib/pipes/time-ago.pipe.ts) |
 | [User Initial pipe](core/pipes/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/src/lib/pipes/user-initial.pipe.ts) |
+| [Date Time pipe](core/pipes/date-time.pipe.md) | Converts a given input value into a Date object and adjusts it according to the specified format and timezone offset. | [Source](../lib/core/src/lib/pipes/date-time.pipe.ts) |
 
 ### Services
 

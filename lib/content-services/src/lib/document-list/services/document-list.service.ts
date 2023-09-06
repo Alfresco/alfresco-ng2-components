@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-c
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
 import { Injectable } from '@angular/core';
-import { MinimalNode, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { Observable, from, throwError, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -32,18 +32,18 @@ const ROOT_ID = '-root-';
     providedIn: 'root'
 })
 export class DocumentListService implements DocumentListLoader {
-
     private _nodesApi: NodesApi;
     get nodes(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(private nodesApiService: NodesApiService,
-                private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private customResourcesService: CustomResourcesService) {
-    }
+    constructor(
+        private nodesApiService: NodesApiService,
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private customResourcesService: CustomResourcesService
+    ) {}
 
     /**
      * Deletes a node.
@@ -63,9 +63,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.nodes.copyNode(nodeId, { targetParentId })).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.nodes.copyNode(nodeId, { targetParentId })).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -76,9 +74,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the moved node
      */
     moveNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.nodes.moveNode(nodeId, { targetParentId })).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.nodes.moveNode(nodeId, { targetParentId })).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -95,8 +91,9 @@ export class DocumentListService implements DocumentListLoader {
             rootNodeId = opts.rootFolderId;
         }
 
-        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields].filter(
+            (element, index, array) => index === array.indexOf(element)
+        );
 
         const params: any = {
             includeSource: true,
@@ -122,9 +119,7 @@ export class DocumentListService implements DocumentListLoader {
             }
         }
 
-        return from(this.nodes.listNodeChildren(rootNodeId, params)).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.nodes.listNodeChildren(rootNodeId, params)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -134,9 +129,10 @@ export class DocumentListService implements DocumentListLoader {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNode> {
-        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'definition', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
+    getNode(nodeId: string, includeFields: string[] = []): Observable<Node> {
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'definition', ...includeFields].filter(
+            (element, index, array) => index === array.indexOf(element)
+        );
 
         const opts: any = {
             includeSource: true,
@@ -154,17 +150,16 @@ export class DocumentListService implements DocumentListLoader {
      * @returns Details of the folder
      */
     getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
-        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields].filter(
+            (element, index, array) => index === array.indexOf(element)
+        );
 
         const opts: any = {
             includeSource: true,
             include: includeFieldsRequest
         };
 
-        return from(this.nodes.getNode(nodeId, opts)).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.nodes.getNode(nodeId, opts)).pipe(catchError((err) => this.handleError(err)));
     }
 
     isCustomSourceService(nodeId): boolean {
@@ -181,28 +176,43 @@ export class DocumentListService implements DocumentListLoader {
      * @param orderBy order by node property
      * @returns Details of the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderBy?: string[]): Observable<DocumentLoaderNode> {
+    loadFolderByNodeId(
+        nodeId: string,
+        pagination: PaginationModel,
+        includeFields: string[],
+        where?: string,
+        orderBy?: string[]
+    ): Observable<DocumentLoaderNode> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
-            return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields, where).pipe(
-                map((result: any) => new DocumentLoaderNode(null, result))
-            );
+            return this.customResourcesService
+                .loadFolderByNodeId(nodeId, pagination, includeFields, where)
+                .pipe(map((result: any) => new DocumentLoaderNode(null, result)));
         } else {
             return this.retrieveDocumentNode(nodeId, pagination, includeFields, where, orderBy);
         }
     }
 
-    private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderBy?: string[]): Observable<DocumentLoaderNode> {
+    private retrieveDocumentNode(
+        nodeId: string,
+        pagination: PaginationModel,
+        includeFields: string[],
+        where?: string,
+        orderBy?: string[]
+    ): Observable<DocumentLoaderNode> {
         return forkJoin([
             this.getFolderNode(nodeId, includeFields),
-            this.getFolder(null, {
-                maxItems: pagination.maxItems,
-                skipCount: pagination.skipCount,
-                orderBy,
-                rootFolderId: nodeId,
-                where
-            }, includeFields)]).pipe(
-                map((results) => new DocumentLoaderNode(results[0], results[1]))
-            );
+            this.getFolder(
+                null,
+                {
+                    maxItems: pagination.maxItems,
+                    skipCount: pagination.skipCount,
+                    orderBy,
+                    rootFolderId: nodeId,
+                    where
+                },
+                includeFields
+            )
+        ]).pipe(map((results) => new DocumentLoaderNode(results[0], results[1])));
     }
 
     private handleError(error: any) {

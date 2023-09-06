@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
+import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '@alfresco/adf-core';
@@ -30,7 +30,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
-    _favoritesApi: FavoritesApi;
+    private _favoritesApi: FavoritesApi;
     get favoritesApi(): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
         return this._favoritesApi;
@@ -41,20 +41,19 @@ export class NodeFavoriteDirective implements OnChanges {
     selection: NodeEntry[] = [];
 
     /** Emitted when the favorite setting is complete. */
-    @Output() toggle: EventEmitter<any> = new EventEmitter();
+    @Output() toggle = new EventEmitter<any>();
 
     /** Emitted when the favorite setting fails. */
-    @Output() error: EventEmitter<any> = new EventEmitter();
+    @Output() error = new EventEmitter<any>();
 
     @HostListener('click')
     onClick() {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue.length) {
             this.favorites = [];
 
@@ -81,7 +80,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
             forkJoin(batch).subscribe(
                 () => {
-                    this.favorites.map((selected) => selected.entry.isFavorite = false);
+                    this.favorites.forEach((selected) => (selected.entry.isFavorite = false));
                     this.toggle.emit();
                 },
                 (error) => this.error.emit(error)
@@ -90,23 +89,21 @@ export class NodeFavoriteDirective implements OnChanges {
 
         if (!every) {
             const notFavorite = this.favorites.filter((node) => !node.entry.isFavorite);
-            const body: FavoriteBody[] = notFavorite.map((node) => this.createFavoriteBody(node));
+            const body = notFavorite.map((node) => this.createFavoriteBody(node));
 
-            from(this.favoritesApi.createFavorite('-me-', body as any))
-                .subscribe(
-                    () => {
-                        notFavorite.map((selected) => selected.entry.isFavorite = true);
-                        this.toggle.emit();
-                    },
-                    (error) => this.error.emit(error)
-                );
+            from(this.favoritesApi.createFavorite('-me-', body as any)).subscribe(
+                () => {
+                    notFavorite.forEach((selected) => (selected.entry.isFavorite = true));
+                    this.toggle.emit();
+                },
+                (error) => this.error.emit(error)
+            );
         }
     }
 
     markFavoritesNodes(selection: NodeEntry[]) {
         if (selection.length <= this.favorites.length) {
-            const newFavorites = this.reduce(this.favorites, selection);
-            this.favorites = newFavorites;
+            this.favorites = this.reduce(this.favorites, selection);
         }
 
         const result = this.diff(selection, this.favorites);
@@ -125,8 +122,8 @@ export class NodeFavoriteDirective implements OnChanges {
         return this.favorites.every((selected) => selected.entry.isFavorite);
     }
 
-    private getProcessBatch(selection): any[] {
-        return selection.map((selected: NodeEntry) => this.getFavorite(selected));
+    private getProcessBatch(selection: NodeEntry[]): Observable<any>[] {
+        return selection.map((selected) => this.getFavorite(selected));
     }
 
     private getFavorite(selected: NodeEntry | SharedLinkEntry): Observable<any> {
@@ -153,22 +150,24 @@ export class NodeFavoriteDirective implements OnChanges {
                     isFavorite: true
                 }
             })),
-            catchError(() => of({
-                entry: {
-                    id,
-                    isFolder,
-                    isFile,
-                    name,
-                    isFavorite: false
-                }
-            }))
+            catchError(() =>
+                of({
+                    entry: {
+                        id,
+                        isFolder,
+                        isFile,
+                        name,
+                        isFavorite: false
+                    }
+                })
+            )
         );
     }
 
-    private createFavoriteBody(node): FavoriteBody {
+    private createFavoriteBody(node: NodeEntry): FavoriteBodyCreate {
         const type = this.getNodeType(node);
         // shared files have nodeId
-        const id = node.entry.nodeId || node.entry.id;
+        const id = node.entry['nodeId'] || node.entry.id;
 
         return {
             target: {
@@ -179,7 +178,7 @@ export class NodeFavoriteDirective implements OnChanges {
         };
     }
 
-    private getNodeType(node): string {
+    private getNodeType(node: NodeEntry): string {
         // shared could only be files
         if (!node.entry.isFile && !node.entry.isFolder) {
             return 'file';
@@ -188,15 +187,15 @@ export class NodeFavoriteDirective implements OnChanges {
         return node.entry.isFile ? 'file' : 'folder';
     }
 
-    private diff(list, patch): any[] {
+    private diff(list: NodeEntry[], patch: any[]): NodeEntry[] {
         const ids = patch.map((item) => item.entry.id);
 
-        return list.filter((item) => ids.includes(item.entry.id) ? null : item);
+        return list.filter((item) => (ids.includes(item.entry.id) ? null : item));
     }
 
-    private reduce(patch, comparator): any[] {
+    private reduce(patch: any[], comparator: NodeEntry[]): any[] {
         const ids = comparator.map((item) => item.entry.id);
 
-        return patch.filter((item) => ids.includes(item.entry.id) ? item : null);
+        return patch.filter((item) => (ids.includes(item.entry.id) ? item : null));
     }
 }

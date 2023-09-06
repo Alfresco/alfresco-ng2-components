@@ -18,12 +18,7 @@
 import { AlfrescoApiService, LogService, ExternalContent, ExternalContentLink } from '@alfresco/adf-core';
 import { SitesService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
-import {
-    IntegrationAlfrescoOnPremiseApi,
-    MinimalNode,
-    RelatedContentRepresentation,
-    ActivitiContentApi
-} from '@alfresco/js-api';
+import { IntegrationAlfrescoOnPremiseApi, Node, RelatedContentRepresentation, ActivitiContentApi } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -31,13 +26,13 @@ import { map, catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ActivitiContentService {
-
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
     get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
-        this._integrationAlfrescoOnPremiseApi = this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
+        this._integrationAlfrescoOnPremiseApi =
+            this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
         return this._integrationAlfrescoOnPremiseApi;
     }
 
@@ -47,10 +42,7 @@ export class ActivitiContentService {
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private sitesService: SitesService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private logService: LogService, private sitesService: SitesService) {}
 
     /**
      * Returns a list of child nodes below the specified folder
@@ -60,11 +52,10 @@ export class ActivitiContentService {
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
         const accountShortId = accountId.replace('alfresco-', '');
-        return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId))
-            .pipe(
-                map(this.toJsonArray),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId)).pipe(
+            map(this.toJsonArray),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -78,11 +69,10 @@ export class ActivitiContentService {
             tenantId,
             includeAccounts: includeAccount ? includeAccount : true
         };
-        return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts))
-            .pipe(
-                map(this.toJsonArray),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts)).pipe(
+            map(this.toJsonArray),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -93,20 +83,21 @@ export class ActivitiContentService {
      * @param siteId
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        return from(this.contentApi.createTemporaryRelatedContent({
-            link: true,
-            name: node.title,
-            simpleType: node.simpleType,
-            source: accountId,
-            sourceId: node.id + '@' + siteId
-        }))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
+        return from(
+            this.contentApi.createTemporaryRelatedContent({
+                link: true,
+                name: node.title,
+                simpleType: node.simpleType,
+                source: accountId,
+                sourceId: node.id + '@' + siteId
+            })
+        ).pipe(
+            map(this.toJson),
+            catchError((err) => this.handleError(err))
+        );
     }
 
-    applyAlfrescoNode(node: MinimalNode, siteId: string, accountId: string) {
+    applyAlfrescoNode(node: Node, siteId: string, accountId: string) {
         const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
@@ -115,11 +106,10 @@ export class ActivitiContentService {
             name: node.name,
             link: node.isLink
         };
-        return from(this.contentApi.createTemporaryRelatedContent(params))
-            .pipe(
-                map(this.toJson),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.contentApi.createTemporaryRelatedContent(params)).pipe(
+            map(this.toJson),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     toJson(res: any) {
@@ -139,8 +129,11 @@ export class ActivitiContentService {
     handleError(error: any): Observable<any> {
         let errMsg = ActivitiContentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : ActivitiContentService.GENERIC_ERROR_MESSAGE;
+            errMsg = error.message
+                ? error.message
+                : error.status
+                ? `${error.status} - ${error.statusText}`
+                : ActivitiContentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
         return throwError(errMsg);

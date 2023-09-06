@@ -151,8 +151,7 @@ By doing this, you can get the results as the user types into the input text.
 ### Custom search configuration
 
 You can get finer control over the parameters of a search by defining them in a custom
-[QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
-object. The recommended way to do this is with a custom implementation of the
+**SearchRequest** object. The recommended way to do this is with a custom implementation of the
 [Search Configuration interface](../../core/interfaces/search-configuration.interface.md). The ADF source provides a standard implementation of this
 interface, [`SearchConfigurationService`](../../core/services/search-configuration.service.md) that you can use as a base to adapt to your needs. See the
 [Search Configuration interface](../../core/interfaces/search-configuration.interface.md) page for full details of how to

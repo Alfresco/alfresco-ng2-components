@@ -17,7 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
 import { NotificationService } from '@alfresco/adf-core';
 import { FileUploadErrorEvent } from '@alfresco/adf-content-services';
@@ -27,19 +27,19 @@ import { FileUploadErrorEvent } from '@alfresco/adf-content-services';
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerDialogAdapterComponent {
-
-    public contentEntry: MinimalNodeEntryEntity;
-    public newFileVersion: File;
-
+    contentEntry: Node;
+    newFileVersion: File;
     showComments = true;
     allowDownload = true;
     readOnly = false;
     showVersionComparison = false;
 
-    constructor(private previewService: PreviewService,
-                private notificationService: NotificationService,
-                @Inject(MAT_DIALOG_DATA) data: any,
-                private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {
+    constructor(
+        private previewService: PreviewService,
+        private notificationService: NotificationService,
+        @Inject(MAT_DIALOG_DATA) data: any,
+        private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>
+    ) {
         this.contentEntry = data.contentEntry;
         this.newFileVersion = data.hasOwnProperty('newFileVersion') ? data.newFileVersion : this.newFileVersion;
         this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
@@ -47,8 +47,7 @@ export class VersionManagerDialogAdapterComponent {
     }
 
     uploadError(event: FileUploadErrorEvent) {
-        const errorMessage = event.error;
-        this.notificationService.showError(errorMessage);
+        this.notificationService.showError(event.error);
     }
 
     close() {

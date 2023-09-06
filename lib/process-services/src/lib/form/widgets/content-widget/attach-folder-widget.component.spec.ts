@@ -25,13 +25,13 @@ import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-const fakeMinimalNode: Node = {
+const fakeNode = {
     id: 'fake',
     name: 'fake-name'
 } as Node;
 
 const definedSourceParams = {
-    folderSource : {
+    folderSource: {
         serviceId: 'goofy-sources',
         name: 'pippo-baudo',
         selectedFolder: {
@@ -42,7 +42,6 @@ const definedSourceParams = {
 };
 
 describe('AttachFolderWidgetComponent', () => {
-
     let widget: AttachFolderWidgetComponent;
     let fixture: ComponentFixture<AttachFolderWidgetComponent>;
     let element: HTMLInputElement;
@@ -51,10 +50,7 @@ describe('AttachFolderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;
@@ -80,7 +76,7 @@ describe('AttachFolderWidgetComponent', () => {
     });
 
     it('should show the folder selected by content node', async () => {
-        spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(of([fakeNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -99,7 +95,7 @@ describe('AttachFolderWidgetComponent', () => {
     });
 
     it('should show the folder selected by content node opening on a configured folder', async () => {
-        spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(of([fakeNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -120,7 +116,7 @@ describe('AttachFolderWidgetComponent', () => {
     });
 
     it('should retrieve the node information on init', async () => {
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',
@@ -136,7 +132,7 @@ describe('AttachFolderWidgetComponent', () => {
     });
 
     it('should remove the folder via the remove button', async () => {
-        spyOn(nodeService, 'getNode').and.returnValue(of(fakeMinimalNode));
+        spyOn(nodeService, 'getNode').and.returnValue(of(fakeNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
             type: 'select-folder',

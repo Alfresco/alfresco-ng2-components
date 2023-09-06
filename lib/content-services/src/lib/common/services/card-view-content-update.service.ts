@@ -16,43 +16,41 @@
  */
 
 import { UpdateNotification, CardViewBaseItemModel, CardViewUpdateService } from '@alfresco/adf-core';
-import { MinimalNode } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BaseCardViewContentUpdate } from '../../interfaces/base-card-view-content-update.interface';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CardViewContentUpdateService implements BaseCardViewContentUpdate {
+    itemUpdated$ = new Subject<UpdateNotification>();
+    updatedAspect$ = new Subject<Node>();
 
-  itemUpdated$ = new Subject<UpdateNotification>();
+    constructor(private cardViewUpdateService: CardViewUpdateService) {
+        this.linkVariables();
+    }
 
-  updatedAspect$ = new Subject<MinimalNode>();
+    update(property: CardViewBaseItemModel, newValue: any) {
+        this.cardViewUpdateService.update(property, newValue);
+    }
 
-  constructor(private cardViewUpdateService: CardViewUpdateService) {
-    this.linkVariables();
-  }
+    updateElement(notification: CardViewBaseItemModel) {
+        this.cardViewUpdateService.updateElement(notification);
+    }
 
-  update(property: CardViewBaseItemModel, newValue: any) {
-    this.cardViewUpdateService.update(property, newValue);
-  }
+    updateNodeAspect(node: Node) {
+        this.updatedAspect$.next(node);
+    }
 
-  updateElement(notification: CardViewBaseItemModel) {
-    this.cardViewUpdateService.updateElement(notification);
-  }
+    private linkVariables() {
+        this.linkItemUpdated();
+    }
 
-  updateNodeAspect(node: MinimalNode) {
-    this.updatedAspect$.next(node);
-  }
-
-  private linkVariables() {
-    this.linkItemUpdated();
-  }
-
-  private linkItemUpdated() {
-    this.cardViewUpdateService.itemUpdated$.subscribe(res => {
-      this.itemUpdated$.next(res);
-    });
-  }
+    private linkItemUpdated() {
+        this.cardViewUpdateService.itemUpdated$.subscribe((res) => {
+            this.itemUpdated$.next(res);
+        });
+    }
 }

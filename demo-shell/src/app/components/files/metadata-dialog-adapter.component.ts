@@ -17,20 +17,17 @@
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './metadata-dialog-adapter.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class MetadataDialogAdapterComponent {
-
-    public contentEntry: MinimalNodeEntryEntity;
-
+    contentEntry: Node;
     displayEmptyMetadata = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: any,
-                private containingDialog?: MatDialogRef<MetadataDialogAdapterComponent>) {
+    constructor(@Inject(MAT_DIALOG_DATA) data: any, private containingDialog?: MatDialogRef<MetadataDialogAdapterComponent>) {
         this.contentEntry = data.contentEntry;
         this.displayEmptyMetadata = data.displayEmptyMetadata;
     }
