@@ -58,6 +58,10 @@
             flex: 1 1 23%;
         }
 
+        .mat-select-value {
+            overflow: visible;
+        }
+
         @media screen and (max-width: 600px) {
             flex-flow: column;
 
