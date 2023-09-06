@@ -107,7 +107,7 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editIcon);
     }
 
-    async editGeneralIconDisplayed(): Promise<void> {
+    async isEditGeneralIconDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
     }
 
