@@ -136,7 +136,7 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.editGeneralIconDisplayed();
+            await metadataViewPage.isEditGeneralIconDisplayed();
 
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
@@ -169,7 +169,7 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.editGeneralIconDisplayed();
+            await metadataViewPage.isEditGeneralIconDisplayed();
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('exampleText.png');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('example title');
@@ -255,7 +255,7 @@ describe('Metadata component', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.editGeneralIconDisplayed();
+        await metadataViewPage.isEditGeneralIconDisplayed();
 
         await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
