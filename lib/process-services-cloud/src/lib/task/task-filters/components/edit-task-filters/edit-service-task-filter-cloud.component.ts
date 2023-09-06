@@ -17,7 +17,6 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -29,6 +28,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { DatetimeAdapter } from '@mat-datetimepicker/core';
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',
@@ -42,7 +42,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         dialog: MatDialog,
         translateService: TranslationService,
         private serviceTaskFilterCloudService: ServiceTaskFilterCloudService,
-        dateAdapter: DateAdapter<DateFnsAdapter>,
+        dateAdapter: DatetimeAdapter<DateFnsAdapter>,
         userPreferencesService: UserPreferencesService,
         appsProcessCloudService: AppsProcessCloudService,
         taskCloudService: TaskCloudService) {

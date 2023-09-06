@@ -23,7 +23,6 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cl
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { DateAdapter } from '@angular/material/core';
 import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,6 +32,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
 import {format,isValid} from 'date-fns';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { DatetimeAdapter } from '@mat-datetimepicker/core';
 
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -143,7 +143,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     constructor(
         protected formBuilder: UntypedFormBuilder,
-        protected dateAdapter: DateAdapter<DateFnsAdapter>,
+        protected dateAdapter: DatetimeAdapter<DateFnsAdapter>,
         protected userPreferencesService: UserPreferencesService,
         protected appsProcessCloudService: AppsProcessCloudService,
         protected taskCloudService: TaskCloudService,
@@ -155,10 +155,13 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale))
+            .subscribe(locale => this.setLocale(locale)
             );
     }
 
+    setLocale(locale) {
+        this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
+    }
     ngOnChanges(changes: SimpleChanges) {
         const { id } = changes;
         if (id && id.currentValue !== id.previousValue) {
