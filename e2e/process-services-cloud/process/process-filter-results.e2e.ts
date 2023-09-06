@@ -37,6 +37,7 @@ import { EditProcessFilterConfiguration } from './../config/edit-process-filter.
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 import { addDays, format, subDays } from 'date-fns';
 
+
 describe('Process filters cloud', () => {
 
     // en-US values for the process status
