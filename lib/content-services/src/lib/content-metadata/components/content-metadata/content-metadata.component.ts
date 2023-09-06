@@ -348,9 +348,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     isEditingPanel(): boolean {
         return (
             (this.editable && this.hasMetadataChanged) ||
-            (this.editableTags  && this.hasMetadataChanged ) ||
-            (this.editableCategories  && this.hasMetadataChanged) ||
-            ((this.editableGroup?.editable)  && this.hasMetadataChanged)
+            (this.editableTags && this.hasMetadataChanged) ||
+            (this.editableCategories && this.hasMetadataChanged) ||
+            (this.editableGroup?.editable && this.hasMetadataChanged)
         );
     }
 
@@ -373,7 +373,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         event.stopPropagation();
-    
+
         switch (buttonType) {
             case ButtonType.GeneralInfo:
                 this.editable = !this.editable;
@@ -381,19 +381,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.editableTags = false;
                 this.editableCategories = false;
                 break;
-    
+
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.tagsPanelState = this.editableTags;
                 this.tagNameControlVisible = true;
                 break;
-    
+
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.categoriesPanelState = this.editableCategories;
                 this.categoryControlVisible = true;
                 break;
-    
+
             case ButtonType.Group:
                 group.editable = !group.editable;
                 this.editableChange.emit(this.editable);
@@ -402,19 +402,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.expanded = true;
                 }
                 break;
-    
+
             default:
                 break;
         }
-    
+
         if (buttonType !== ButtonType.GeneralInfo) {
             this.editable = false;
         }
-    
+
         if (buttonType !== ButtonType.Tags) {
             this.editableTags = false;
         }
-    
+
         if (buttonType !== ButtonType.Categories) {
             this.editableCategories = false;
         }
