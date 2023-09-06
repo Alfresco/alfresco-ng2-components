@@ -103,7 +103,7 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
-        await metadataViewPage.editGeneralIconDisplayed();
+        await metadataViewPage.isEditGeneralIconDisplayed();
 
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
     });
