@@ -54,7 +54,7 @@ export class InfoDrawerComponent {
     title: string|null = null;
 
     @Input()
-    drawerIcon: Node|null = null;
+    drawerIcon: Node | null = null;
 
     /** The selected index tab. */
     @Input()
@@ -89,44 +89,44 @@ export class InfoDrawerComponent {
         this.currentTab.emit(event.index);
     }
 
-    getInfoDrawerIcon(node: Node) {
-        if( node.isFolder ){
-          return this.getFolderIcon(node);
+    getInfoDrawerIcon(node: Node): string {
+        if (node.isFolder) {
+            return this.getFolderIcon(node);
         }
-        if( node.isFile ){
-          return this.thumbnailService.getMimeTypeIcon(node.content.mimeType);
+        if (node.isFile) {
+            return this.thumbnailService.getMimeTypeIcon(node.content.mimeType);
         }
         return this.thumbnailService.getDefaultMimeTypeIcon();
-      }
+    }
 
-      private getFolderIcon(node: Node) {
-          if (this.isSmartFolder(node)) {
+    private getFolderIcon(node: Node): string {
+        if (this.isSmartFolder(node)) {
             return this.thumbnailService.getMimeTypeIcon('smartFolder');
-          } else if (this.isRuleFolder(node)) {
+        } else if (this.isRuleFolder(node)) {
             return this.thumbnailService.getMimeTypeIcon('ruleFolder');
-          } else if (this.isALinkFolder(node)) {
+        } else if (this.isLinkFolder(node)) {
             return this.thumbnailService.getMimeTypeIcon('linkFolder');
-          } else {
+        } else {
             return this.thumbnailService.getMimeTypeIcon('folder');
-          }
-      }
+        }
+    }
 
-      isSmartFolder(node: Node) {
+    isSmartFolder(node: Node): boolean {
         const nodeAspects = this.getNodeAspectNames(node);
-        return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 || nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1;
-      }
+        return nodeAspects.includes('smf:customConfigSmartFolder') || nodeAspects.includes('smf:systemConfigSmartFolder');
+    }
 
-      isRuleFolder(node: Node) {
+    isRuleFolder(node: Node): boolean {
         const nodeAspects = this.getNodeAspectNames(node);
-        return nodeAspects.indexOf('rule:rules') > -1;
-      }
+        return nodeAspects.includes('rule:rules');
+    }
 
-      isALinkFolder(node: Node) {
+    isLinkFolder(node: Node): boolean {
         const nodeType = node.nodeType;
         return nodeType === 'app:folderlink';
-      }
+    }
 
-      private getNodeAspectNames(node: Node): any[] {
+    private getNodeAspectNames(node: Node): string[] {
         return node.aspectNames ? node.aspectNames : [];
-      }
+    }
 }

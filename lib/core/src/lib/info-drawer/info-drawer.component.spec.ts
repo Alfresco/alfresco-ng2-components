@@ -27,7 +27,7 @@ import { ESCAPE } from '@angular/cdk/keycodes';
 import { Node } from '@alfresco/js-api';
 import { ThumbnailService } from '../common/services/thumbnail.service';
 
-const mockNode: Node = ({
+const mockNode: Node = {
     isFile: true,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
@@ -43,10 +43,13 @@ const mockNode: Node = ({
     path: {
         name: '/Company Home/Guest Home',
         isComplete: true,
-        elements: [{
-            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-            name: 'Company Home'
-        }, { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }]
+        elements: [
+            {
+                id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                name: 'Company Home'
+            },
+            { id: 'd124de26-6ba0-4f40-8d98-4907da2d337a', name: 'Guest Home' }
+        ]
     },
     isFolder: false,
     modifiedByUser: { id: 'admin', displayName: 'Administrator' },
@@ -54,7 +57,7 @@ const mockNode: Node = ({
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
     properties: { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
     allowableOperations: ['delete', 'update']
-});
+};
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
@@ -65,7 +68,7 @@ describe('InfoDrawerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule.forRoot(),
+                TranslateModule.forRoot(), 
                 CoreTestingModule
             ]
         });
@@ -118,69 +121,61 @@ describe('InfoDrawerComponent', () => {
 
     describe('Info Drawer header Icon', () => {
         let thumbnailService: ThumbnailService;
-        beforeEach(() => {
-          thumbnailService = TestBed.inject(ThumbnailService);
-          component.drawerIcon = mockNode;
 
+        beforeEach(() => {
+            thumbnailService = TestBed.inject(ThumbnailService);
+            component.drawerIcon = mockNode;
         });
 
+        function testInfoDrawerIcon(iconPath: string, isFolder: boolean, isFile: boolean) {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(iconPath);
+            mockNode.isFolder = isFolder;
+            mockNode.isFile = isFile;
+            const value = component.getInfoDrawerIcon(mockNode);
+            expect(value).toContain(iconPath);
+        }
+
         it('should resolve folder icon', () => {
-          spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder.svg`);
-          mockNode.isFolder = true;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_folder`);
+            testInfoDrawerIcon('assets/images/ft_ic_folder.svg', true, false);
         });
 
         it('should resolve smart folder icon', () => {
-          spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_smart_folder.svg`);
-          mockNode.isFolder = true;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_smart_folder`);
+            testInfoDrawerIcon('assets/images/ft_ic_smart_folder.svg', true, false);
         });
 
         it('should resolve link folder icon', () => {
-          spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_shortcut_link.svg`);
-          mockNode.isFolder = true;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_folder_shortcut_link`);
+            testInfoDrawerIcon('assets/images/ft_ic_folder_shortcut_link.svg', true, false);
         });
 
         it('should resolve rule folder icon', () => {
-          spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_folder_rule.svg`);
-          mockNode.isFolder = true;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_folder_rule`);
+            testInfoDrawerIcon('assets/images/ft_ic_folder_rule.svg', true, false);
         });
 
         it('should resolve file icon for content type', () => {
-          spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_raster_image.svg`);
-          mockNode.isFile = true;
-          mockNode.isFolder = false;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_raster_image`);
+            testInfoDrawerIcon('assets/images/ft_ic_raster_image.svg', false, true);
         });
 
         it('should resolve fallback file icon for unknown node', () => {
-          spyOn(thumbnailService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
-          mockNode.isFile = false;
-          mockNode.isFolder = false;
-          const value = component.getInfoDrawerIcon(mockNode);
-          expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+            spyOn(thumbnailService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
+            mockNode.isFile = false;
+            mockNode.isFolder = false;
+            const value = component.getInfoDrawerIcon(mockNode);
+            expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
         });
     });
 });
 
 @Component({
     template: `
-    <adf-info-drawer [selectedIndex]="tabIndex" drawerIcon="mockNode" title="Fake Title Custom">
-        <adf-info-drawer-tab label="Tab1">
-        </adf-info-drawer-tab>
-        <adf-info-drawer-tab label="Tab2">
-        </adf-info-drawer-tab>
-        <adf-info-drawer-tab label="Tab3" icon="tab-icon">
-        </adf-info-drawer-tab>
-    </adf-info-drawer>
-       `
+        <adf-info-drawer [selectedIndex]="tabIndex" drawerIcon="mockNode" title="Fake Title Custom">
+            <adf-info-drawer-tab label="Tab1">
+            </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab2">
+            </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab3" icon="tab-icon">
+            </adf-info-drawer-tab>
+        </adf-info-drawer>
+    `
 })
 class CustomInfoDrawerComponent extends InfoDrawerComponent {
     tabIndex: number;
@@ -256,7 +251,7 @@ describe('Custom InfoDrawer', () => {
     template: `
     <adf-info-drawer [showHeader]="showHeader" drawerIcon="mockNode" title="Fake Visibility Info Drawer Title">
     </adf-info-drawer>
-       `
+        `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;

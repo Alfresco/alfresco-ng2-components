@@ -12,19 +12,19 @@
     }
 
     &-property-label{
-        color:#212328B2;
+        color: var(--adf-metadata-property-panel-text-color);
         display: flex;
         padding: 6px 0;
         line-height: 20px;
     }
 
     &-property-dateitem-edit-mode{
-        background-color: #2121210D;
+        background-color: var(--adf-metadata-buttons-background-color);
         border-radius: 6px;
         padding-left: 12px;
 
         .mat-select-value{
-            color:#212328B2;
+            color: var(--adf-metadata-property-panel-text-color);
         }
     }
     

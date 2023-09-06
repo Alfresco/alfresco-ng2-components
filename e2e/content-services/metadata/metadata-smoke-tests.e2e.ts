@@ -132,7 +132,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        it('[C245654] Should be possible to edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -173,7 +173,7 @@ describe('Metadata component', () => {
             await metadataViewPage.clickSaveGeneralMetadata();
         });
 
-        it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {
+        it('[C261157] Should be possible to use the metadata component When the node is a Folder', async () => {
             await contentServicesPage.metadataContent(folderName);
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
@@ -182,7 +182,7 @@ describe('Metadata component', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
+        it('[C261158] Should be possible to edit the metadata When the node is a Folder', async () => {
             await contentServicesPage.metadataContent(folderName);
 
             await metadataViewPage.editIconGeneralClick();
