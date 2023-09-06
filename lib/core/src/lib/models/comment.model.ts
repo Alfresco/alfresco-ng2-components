@@ -18,7 +18,7 @@
 import { User } from './general-user.model';
 
 export class CommentModel {
-    id: number;
+    id: string | number;
     message: string;
     created: Date;
     createdBy: User;
@@ -51,7 +51,7 @@ export class CommentModel {
         return result.toUpperCase();
     }
 
-    constructor(obj?: any) {
+    constructor(obj?: Partial<CommentModel>) {
         if (obj) {
             this.id = obj.id;
             this.message = obj.message;

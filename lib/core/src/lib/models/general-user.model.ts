@@ -15,6 +15,21 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel } from '../auth/models/identity-user.model';
+export class User {
+    displayName?: string;
+    username?: string
+    id?: string | number;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    createdTimestamp?: any;
+    emailVerified?: boolean;
+    enabled?: boolean;
+    readonly?: boolean;
 
-export type User = (IdentityUserModel) & { displayName?: string } & { username?: string };
+    constructor(user?: Partial<User>) {
+        if (user) {
+            Object.assign(this, user);
+        }
+    }
+};
