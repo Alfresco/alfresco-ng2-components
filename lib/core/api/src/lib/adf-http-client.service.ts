@@ -216,7 +216,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 }
 
                 eventEmitter.emit('error', err);
-                apiClientEmitter.emit('error', err);
+                apiClientEmitter.emit('error', { ...err, response: { req: err } });
 
                 if (err.status === 401) {
                     eventEmitter.emit('unauthorized');
