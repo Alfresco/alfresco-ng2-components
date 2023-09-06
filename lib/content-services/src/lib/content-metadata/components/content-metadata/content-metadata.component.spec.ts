@@ -77,16 +77,19 @@ describe('ContentMetadataComponent', () => {
     const findTagElements = (): DebugElement[] => fixture.debugElement.queryAll(By.css('.adf-metadata-properties .adf-metadata-properties-tag'));
 
     const findCancelButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=reset-metadata]')).nativeElement;
-    const findCancelTagsButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=reset-tags-metadata]')).nativeElement;
+    const findCancelTagsButton = (): HTMLButtonElement =>
+        fixture.debugElement.query(By.css('[data-automation-id=reset-tags-metadata]')).nativeElement;
 
     const clickOnCancel = () => {
         findCancelButton().click();
         fixture.detectChanges();
     };
 
-    const findSaveGeneralInfoButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-general-info-metadata]')).nativeElement;
+    const findSaveGeneralInfoButton = (): HTMLButtonElement =>
+        fixture.debugElement.query(By.css('[data-automation-id=save-general-info-metadata]')).nativeElement;
     const findSaveTagsButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-tags-metadata]')).nativeElement;
-    const findSaveCategoriesButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('[data-automation-id=save-categories-metadata]')).nativeElement;
+    const findSaveCategoriesButton = (): HTMLButtonElement =>
+        fixture.debugElement.query(By.css('[data-automation-id=save-categories-metadata]')).nativeElement;
 
     const clickOnGeneralInfoSave = () => {
         findSaveGeneralInfoButton().click();
@@ -415,7 +418,8 @@ describe('ContentMetadataComponent', () => {
     describe('toggleEdit', () => {
         let mockEvent: MouseEvent;
         let mockGroup: CardViewGroup = {
-            editable: false, expanded: false,
+            editable: false,
+            expanded: false,
             title: '',
             properties: []
         };
@@ -423,7 +427,7 @@ describe('ContentMetadataComponent', () => {
             mockEvent = new MouseEvent('click');
             component.editableGroup = mockGroup;
         });
-    
+
         it('should toggle General Info editing mode', () => {
             component.editable = false;
             component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
@@ -458,7 +462,7 @@ describe('ContentMetadataComponent', () => {
                 expect(mockGroup.expanded).toBe(true);
             }
         });
-    
+
         it('should show Snackbar when Editing Panel is Active', () => {
             spyOn(component, 'isEditingPanel').and.returnValue(true);
             spyOn(component, 'showSnackbar');
@@ -489,7 +493,8 @@ describe('ContentMetadataComponent', () => {
 
         it('should toggle group editable', () => {
             const group: CardViewGroup = {
-                editable: false, expanded: false,
+                editable: false,
+                expanded: false,
                 title: '',
                 properties: []
             };
@@ -641,7 +646,6 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should hide card views group when the grouped properties are empty', async () => {
-
             spyOn(contentMetadataService, 'getGroupedProperties').and.stub();
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
@@ -1364,7 +1368,7 @@ describe('ContentMetadataComponent', () => {
             expect(categoriesManagementComponent.disableRemoval).toBeFalse();
         });
 
-        it('should not disable removal if forkJoin fails',() => {
+        it('should not disable removal if forkJoin fails', () => {
             const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;
             const expectedNode = { ...node, name: 'some-modified-value' };
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
