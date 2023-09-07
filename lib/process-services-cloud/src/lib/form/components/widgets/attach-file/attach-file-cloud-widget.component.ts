@@ -89,7 +89,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.hasFile && this.field.value.length === 1) {
+        if (this.hasFile && this.field.value.length > 0) {
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
@@ -109,8 +109,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.removeFile(file);
         if (file['id'] === this.selectedNode?.id) {
             this.selectedNode = null;
-            this.contentModelFormFileHandler();
         }
+        this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
     }
 
     fetchAppNameFromAppConfig(): string {
@@ -136,9 +136,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
+                const hadFilesAttached = this.field.value?.length > 0;
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
-                if (this.field.value.length === 1) {
-                    this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
+                if(!hadFilesAttached) {
+                    this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
                 }
             });
     }
