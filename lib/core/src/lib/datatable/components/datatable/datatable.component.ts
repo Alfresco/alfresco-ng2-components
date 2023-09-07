@@ -742,7 +742,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             const sorting = this.data.getSorting();
-            return sorting && sorting.key === col.key && sorting.direction.toLocaleLowerCase() === direction;
+            return sorting &&
+                (sorting.key === col.key || sorting.key === col.sortingKey) &&
+                sorting.direction?.toLocaleLowerCase() === direction;
         }
         return false;
     }
