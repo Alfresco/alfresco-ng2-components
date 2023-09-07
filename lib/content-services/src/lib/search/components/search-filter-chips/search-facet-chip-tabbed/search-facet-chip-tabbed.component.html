@@ -33,18 +33,7 @@
                 {{ tabbedFacet.label | translate }}
             </ng-container>
             <ng-container ngProjectAs="filter-content">
-                <adf-search-filter-tabbed>
-                    <ng-container *ngFor="let field of tabbedFacet.fields">
-                        <adf-search-chip-autocomplete-input
-                            *adf-search-filter-tab="tabbedFacet.facets[field]?.label"
-                            [autocompleteOptions]="autocompleteOptions[field]"
-                            [onReset$]="reset$"
-                            [allowOnlyPredefinedValues]="true"
-                            [compareOption]="optionComparator"
-                            (optionsChanged)="onOptionsChange($event, field)">
-                        </adf-search-chip-autocomplete-input>
-                    </ng-container>
-                </adf-search-filter-tabbed>
+                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet"></adf-search-facet-tabbed-content>
             </ng-container>
             <ng-container ngProjectAs="filter-actions">
                 <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">

@@ -15,17 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { Subject } from 'rxjs';
-import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search-query-service.token';
-import { FacetWidget } from '../../../models/facet-widget.interface';
-import { TranslationService } from '@alfresco/adf-core';
-import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
-import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
 
 @Component({
   selector: 'adf-search-facet-chip-tabbed',
@@ -33,7 +27,7 @@ import { AutocompleteOption } from '../../../models/autocomplete-option.interfac
   styleUrls: ['./search-facet-chip-tabbed.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetWidget {
+export class SearchFacetChipTabbedComponent implements OnInit {
     @Input()
     tabbedFacet: TabbedFacetField;
 
@@ -53,11 +47,7 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
     selectedOptions = {};
     isPopulated = false;
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService,
-                private translationService: TranslationService,
-                private searchFacetFiltersService: SearchFacetFiltersService,
-                private focusTrapFactory: ConfigurableFocusTrapFactory) {
-    }
+    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
     ngOnInit() {
         this.tabbedFacet.fields.forEach((field) => {
@@ -68,18 +58,18 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.tabbedFacet) {
-            this.isPopulated = this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0);
-            this.tabbedFacet.fields.forEach((field) => {
-                const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ value: item.display }));
-                Object.defineProperty(this.autocompleteOptions, field, {
-                    value: options,
-                    writable: true
-                });
-            });
-        }
-    }
+    // ngOnChanges(changes: SimpleChanges) {
+    //     if (changes.tabbedFacet) {
+    //         this.isPopulated = this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0);
+    //         this.tabbedFacet.fields.forEach((field) => {
+    //             const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ value: item.display }));
+    //             Object.defineProperty(this.autocompleteOptions, field, {
+    //                 value: options,
+    //                 writable: true
+    //             });
+    //         });
+    //     }
+    // }
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {
@@ -95,12 +85,12 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
     }
 
     onRemove() {
-        this.reset();
+        // this.reset();
         this.menuTrigger.closeMenu();
     }
 
     onApply() {
-        this.submitValues();
+        // this.submitValues();
         this.menuTrigger.closeMenu();
     }
 
@@ -120,55 +110,55 @@ export class SearchFacetChipTabbedComponent implements OnInit, OnChanges, FacetW
         }
     }
 
-    onOptionsChange(selectedOptions: AutocompleteOption[], field: string) {
-        this.selectedOptions[field] = selectedOptions.map((selectedOption) => selectedOption.value);
-        this.isPopulated = this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0);
-        this.updateDisplayValue();
-        this.updateUserFacetBuckets();
-        this.queryBuilder.update();
-    }
+    // onOptionsChange(selectedOptions: AutocompleteOption[], field: string) {
+    //     this.selectedOptions[field] = selectedOptions.map((selectedOption) => selectedOption.value);
+    //     this.isPopulated = this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0);
+    //     this.updateDisplayValue();
+    //     this.updateUserFacetBuckets();
+    //     this.queryBuilder.update();
+    // }
 
-    updateDisplayValue() {
-        let displayValue = '';
-        this.tabbedFacet.fields.forEach((field) => {
-            if (this.selectedOptions[field].length > 0) {
-                const stackedOptions = this.selectedOptions[field].join(', ');
-                displayValue += `${this.translationService.instant(this.tabbedFacet.facets[field].label + '_LABEL')}: ${stackedOptions} `;
-            }
-        });
-        this.displayValue$.next(displayValue);
-    }
+    // updateDisplayValue() {
+    //     let displayValue = '';
+    //     this.tabbedFacet.fields.forEach((field) => {
+    //         if (this.selectedOptions[field].length > 0) {
+    //             const stackedOptions = this.selectedOptions[field].join(', ');
+    //             displayValue += `${this.translationService.instant(this.tabbedFacet.facets[field].label + '_LABEL')}: ${stackedOptions} `;
+    //         }
+    //     });
+    //     this.displayValue$.next(displayValue);
+    // }
 
-    reset() {
-        this.resetSubject$.next();
-        this.updateUserFacetBuckets();
-        this.updateDisplayValue();
-        this.queryBuilder.update();
-    }
+    // reset() {
+    //     this.resetSubject$.next();
+    //     this.updateUserFacetBuckets();
+    //     this.updateDisplayValue();
+    //     this.queryBuilder.update();
+    // }
+    //
+    // submitValues() {
+    //     this.updateUserFacetBuckets();
+    //     this.searchFacetFiltersService.updateSelectedBuckets();
+    //     this.updateDisplayValue();
+    //     this.queryBuilder.update();
+    // }
 
-    submitValues() {
-        this.updateUserFacetBuckets();
-        this.searchFacetFiltersService.updateSelectedBuckets();
-        this.updateDisplayValue();
-        this.queryBuilder.update();
-    }
+    // optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
+    //     return option1.value.toUpperCase() === option2.value.toUpperCase();
+    // }
 
-    optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
-        return option1.value.toUpperCase() === option2.value.toUpperCase();
-    }
-
-    private updateUserFacetBuckets() {
-        this.tabbedFacet.fields.forEach((field) => {
-            this.tabbedFacet.facets[field].buckets.items.forEach((item) => {
-                const matchedOption = this.selectedOptions[field].find((option) => option === item.display);
-                if (matchedOption) {
-                    item.checked = true;
-                    this.queryBuilder.addUserFacetBucket(field, item);
-                } else {
-                    item.checked = false;
-                    this.queryBuilder.removeUserFacetBucket(field, item);
-                }
-            });
-        });
-    }
+    // private updateUserFacetBuckets() {
+    //     this.tabbedFacet.fields.forEach((field) => {
+    //         this.tabbedFacet.facets[field].buckets.items.forEach((item) => {
+    //             const matchedOption = this.selectedOptions[field].find((option) => option === item.display);
+    //             if (matchedOption) {
+    //                 item.checked = true;
+    //                 this.queryBuilder.addUserFacetBucket(field, item);
+    //             } else {
+    //                 item.checked = false;
+    //                 this.queryBuilder.removeUserFacetBucket(field, item);
+    //             }
+    //         });
+    //     });
+    // }
 }

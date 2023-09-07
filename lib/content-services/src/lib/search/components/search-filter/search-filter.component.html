@@ -24,6 +24,18 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
+    <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ facetFiltersService.tabbedFacet.label | translate }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <adf-search-facet-tabbed-content
+                [tabbedFacet]="facetFiltersService.tabbedFacet"
+                [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label">
+            </adf-search-facet-tabbed-content>
+        </mat-expansion-panel>
+    </ng-container>
+
     <ng-container *ngIf="facetFiltersService.responseFacets && showContextFacets">
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of facetFiltersService.responseFacets"
                              [expanded]="shouldExpand(field)">
