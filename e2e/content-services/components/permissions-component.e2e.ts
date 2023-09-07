@@ -339,8 +339,8 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
-            await metadataViewPage.editIconIsDisplayed();
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.isEditGeneralIconDisplayed();
+            await metadataViewPage.clickEditIconGeneral();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
@@ -360,8 +360,8 @@ describe('Permissions Component', () => {
             await BrowserActions.closeMenuAndDialogs();
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleCollaborator' + fileModel.name);
-            await metadataViewPage.editIconIsDisplayed();
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.isEditGeneralIconDisplayed();
+            await metadataViewPage.clickEditIconGeneral();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
@@ -382,8 +382,8 @@ describe('Permissions Component', () => {
             await viewerPage.clickCloseButton();
             await contentList.waitForTableBody();
             await contentServicesPage.metadataContent('RoleCoordinator' + fileModel.name);
-            await metadataViewPage.editIconIsDisplayed();
-            await metadataViewPage.editIconClick();
+            await metadataViewPage.isEditGeneralIconDisplayed();
+            await metadataViewPage.clickEditIconGeneral();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
@@ -398,7 +398,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
         });
 
-        it('[C279881] No Permission User', async () => {
+        fit('[C279881] No Permission User', async () => {
             await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
