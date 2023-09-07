@@ -15,17 +15,20 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    Category,
-    CategoryEntry,
-    CategoryLinkBody,
-    CategoryPaging,
-    Node,
-    TagBody,
-    TagEntry,
-    TagPaging
-} from '@alfresco/js-api';
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
@@ -150,8 +153,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     editableTags = false;
 
-    
-
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -192,7 +193,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
         private contentService: ContentService,
-        private  notificationService: NotificationService
+        private notificationService: NotificationService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -201,20 +202,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.cardViewContentUpdateService.itemUpdated$
-            .pipe(
-                debounceTime(500),
-                takeUntil(this.onDestroy$))
-            .subscribe(
-                (updatedNode: UpdateNotification) => {
-                    this.hasMetadataChanged = true;
-                    this.targetProperty = updatedNode.target;
-                    this.updateChanges(updatedNode.changed);
-                }
-            );
+            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
+            .subscribe((updatedNode: UpdateNotification) => {
+                this.hasMetadataChanged = true;
+                this.targetProperty = updatedNode.target;
+                this.updateChanges(updatedNode.changed);
+            });
 
-        this.cardViewContentUpdateService.updatedAspect$.pipe(
-            debounceTime(500),
-            takeUntil(this.onDestroy$))
+        this.cardViewContentUpdateService.updatedAspect$
+            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
@@ -244,8 +240,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {
-        }
+        } catch {}
 
         let message = `METADATA.ERRORS.${statusCode}`;
 
@@ -369,7 +364,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     showSnackbar(message: string): void {
-        this.notificationService.showError(message)
+        this.notificationService.showError(message);
     }
 
     toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
@@ -456,7 +451,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
