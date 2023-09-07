@@ -34,7 +34,8 @@ export class AlfrescoApiNoAuthService extends AlfrescoApiService {
 
     override createInstance(config: AlfrescoApiConfig) {
         return new AlfrescoApi({
-            ...config
+            ...config,
+            oauthInit: false
         }, this.adfHttpClient);
     }
 }
