@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
@@ -134,13 +134,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
                             list: {
                                 pagination: {},
                                 entries: [],
-                                source: {}
+                                source: new Node()
                             }
                         })
                     )
                 );
 
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
 
                 customResourcesService = TestBed.inject(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and.callFake((id) => {

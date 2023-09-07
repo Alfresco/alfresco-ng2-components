@@ -19,7 +19,8 @@ import {
     AlfrescoApiService,
     LogService,
     CommentModel,
-    CommentsService
+    CommentsService,
+    User
 } from '@alfresco/adf-core';
 import { CommentEntry, CommentsApi, Comment } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
@@ -98,7 +99,7 @@ export class NodeCommentsService implements CommentsService {
       id: comment.id,
       message: comment.content,
       created: comment.createdAt,
-      createdBy: comment.createdBy
+      createdBy: new User(comment.createdBy)
     });
   }
 

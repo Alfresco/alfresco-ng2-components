@@ -17,7 +17,7 @@
 
 import { PersonEntry, Person, PersonPaging } from '@alfresco/js-api';
 
-export const fakeEcmUser = {
+export const fakeEcmUser: Person = {
     id: 'fake-id',
     firstName: 'fake-ecm-first-name',
     lastName: 'fake-ecm-last-name',
@@ -32,7 +32,7 @@ export const fakeEcmUser = {
     location: 'fake location',
     mobile: '000000000',
     telephone: '11111111',
-    statusUpdatedAt: 'fake-date',
+    statusUpdatedAt: new Date(),
     userStatus: 'active',
     enabled: true,
     emailNotificationsEnabled: true

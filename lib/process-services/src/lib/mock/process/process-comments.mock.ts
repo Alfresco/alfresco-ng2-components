@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '@alfresco/adf-core';
+import { CommentModel, User } from '@alfresco/adf-core';
 
 export const mockProcessInstanceComments = [
-    new CommentModel({ message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }),
-    new CommentModel({ message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }),
-    new CommentModel({ message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} })
+    new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({firstName: 'Admin', lastName: 'User'}) }),
+    new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({firstName: 'Admin', lastName: 'User'}) }),
+    new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({firstName: 'Admin', lastName: 'User'}) })
 ];

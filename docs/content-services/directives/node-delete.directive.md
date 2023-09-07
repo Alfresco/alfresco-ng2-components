@@ -31,7 +31,7 @@ Deletes multiple files and folders.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | permanent | `boolean` | false | If true then the nodes are deleted immediately rather than being put in the trash |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
+| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[] \| DeletedNodeEntry[]` |  | Array of nodes to delete. |
 
 ### Events
 
@@ -41,7 +41,7 @@ Deletes multiple files and folders.
 
 ## Details
 
-Note that if a target item is already in the trashcan (and is therefore a `DeletedNodeEntity`) then
+Note that if a target item is already in the trashcan (and is therefore a `DeletedNodeEntry`) then
 this action will delete the file permanently.
 
 ## See also

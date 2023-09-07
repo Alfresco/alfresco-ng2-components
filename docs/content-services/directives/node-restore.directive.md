@@ -38,7 +38,7 @@ Restores deleted nodes to their original location.
         this.documentList.reload();
     }
 
-    navigateLocation(path: PathInfoEntity) {
+    navigateLocation(path: PathInfo) {
         const parent = path.elements[path.elements.length - 1];
         this.router.navigate(['files/', parent.id]);
     }

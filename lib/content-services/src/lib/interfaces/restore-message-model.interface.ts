@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { PathInfoEntity } from '@alfresco/js-api';
+import { PathInfo } from '@alfresco/js-api';
 
 export class RestoreMessageModel {
     message: string;
-    path: PathInfoEntity;
+    path: PathInfo;
     action: string;
 }

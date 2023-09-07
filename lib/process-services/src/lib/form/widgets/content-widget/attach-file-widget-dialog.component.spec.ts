@@ -25,7 +25,7 @@ import { AuthenticationService, AlfrescoApiService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Node, SiteEntry, NodeEntry, SitePaging } from '@alfresco/js-api';
+import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileWidgetDialogComponent', () => {
@@ -78,7 +78,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } })));
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
-        spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+        spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
         spyOn(widget, 'isLoggedIn').and.callFake(() => isLogged);
     });
 

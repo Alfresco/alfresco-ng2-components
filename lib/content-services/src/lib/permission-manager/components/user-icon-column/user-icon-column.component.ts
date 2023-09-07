@@ -16,7 +16,7 @@
  */
 
 import { User } from '@alfresco/adf-core';
-import { NodeEntry } from '@alfresco/js-api';
+import { Group, NodeEntry } from '@alfresco/js-api';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
@@ -48,7 +48,7 @@ export class UserIconColumnComponent implements OnInit {
     @Input()
     selected: boolean = false;
 
-    displayText$ = new BehaviorSubject<User>(null);
+    displayText$ = new BehaviorSubject<User | Group>(null);
     group = false;
 
     get isSelected(): boolean {
@@ -61,13 +61,15 @@ export class UserIconColumnComponent implements OnInit {
         if (this.context) {
             const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
             this.group = this.isGroup(group, authorityId);
-            this.displayText$.next(person || group || { displayName: authorityId });
+            const user = person ? new User(person) : undefined;
+            this.displayText$.next(user || group || { displayName: authorityId });
         }
 
         if (this.node) {
             const { person, group } = this.nodePermissionService.transformNodeToUserPerson(this.node.entry);
             this.group = this.isGroup(group, null);
-            this.displayText$.next(person || group);
+            const user = person ? new User(person) : undefined;
+            this.displayText$.next(user || group);
         }
     }
 

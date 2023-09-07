@@ -24,7 +24,6 @@ import { throwError } from 'rxjs';
 import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 
 describe('TagService', () => {
-
     let service: TagService;
     let logService: LogService;
     let userPreferencesService: UserPreferencesService;
@@ -43,37 +42,32 @@ describe('TagService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         service = TestBed.inject(TagService);
         logService = TestBed.inject(LogService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
 
-        spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(
-            Promise.resolve({})
-        );
-        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(
-            Promise.resolve(new TagEntry({}))
-        );
+        spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(Promise.resolve());
+        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(Promise.resolve(new TagEntry({})));
     });
 
     describe('Content tests', () => {
-
         it('should catch errors on getTagsByNodeId  call', async () => {
-            spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({error : 'error'}));
-            await service.getTagsByNodeId('fake-node-id').subscribe(() => {
-                throwError('This call should fail');
-            }, (error) => {
-                expect(error.error).toBe('error');
-            });
+            spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({ error: 'error' }));
+            await service.getTagsByNodeId('fake-node-id').subscribe(
+                () => {
+                    throwError('This call should fail');
+                },
+                (error) => {
+                    expect(error.error).toBe('error');
+                }
+            );
         });
 
         it('should trigger a refresh event on removeTag() call', async () => {
-            await service.refresh.subscribe((res) => {
-                expect(res).toBeDefined();
+            await service.refresh.subscribe(() => {
+                expect(service.tagsApi.deleteTagFromNode).toHaveBeenCalledWith('fake-node-id', 'fake-tag');
             });
 
             service.removeTag('fake-node-id', 'fake-tag');
@@ -108,12 +102,14 @@ describe('TagService', () => {
             });
 
             it('should emit refresh when tags creation is success', fakeAsync(() => {
-                const tags: TagEntry[] = [{
-                    entry: {
-                        id: 'Some id 1',
-                        tag: 'Some tag 1'
+                const tags: TagEntry[] = [
+                    {
+                        entry: {
+                            id: 'Some id 1',
+                            tag: 'Some tag 1'
+                        }
                     }
-                }];
+                ];
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tags));
                 service.createTags([]);
@@ -140,11 +136,14 @@ describe('TagService', () => {
 
             it('should call listTags on TagsApi with correct parameters when includedCounts is true', () => {
                 spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
-                const skipCount =  10;
+                const skipCount = 10;
 
-                service.getAllTheTags({
-                    skipCount
-                }, true);
+                service.getAllTheTags(
+                    {
+                        skipCount
+                    },
+                    true
+                );
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
                     include: ['count'],
                     skipCount
@@ -153,11 +152,14 @@ describe('TagService', () => {
 
             it('should call listTags on TagsApi with correct parameters when includedCounts is false', () => {
                 spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.resolve(result));
-                const skipCount =  10;
+                const skipCount = 10;
 
-                service.getAllTheTags({
-                    skipCount
-                }, false);
+                service.getAllTheTags(
+                    {
+                        skipCount
+                    },
+                    false
+                );
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
                     include: undefined,
                     skipCount
@@ -264,7 +266,7 @@ describe('TagService', () => {
                     id: 'fake-node-id'
                 }
             };
-            const tagBody: TagBody = {tag: 'updated-tag'};
+            const tagBody: TagBody = { tag: 'updated-tag' };
             const updatedTag: TagEntry = {
                 entry: {
                     ...tagBody,
@@ -361,7 +363,9 @@ describe('TagService', () => {
             });
 
             it('should call assignTagsToNode on TagsApi with correct parameters', () => {
-                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(Promise.resolve(singleResult));
+                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(
+                    Promise.resolve(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }))
+                );
 
                 service.assignTagsToNode(nodeId, tags);
                 expect(service.tagsApi.assignTagsToNode).toHaveBeenCalledWith(nodeId, tags);
@@ -381,10 +385,12 @@ describe('TagService', () => {
             }));
 
             it('should return observable which emits single tag', fakeAsync(() => {
-                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(Promise.resolve(singleResult));
+                spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(
+                    Promise.resolve(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }))
+                );
 
                 service.assignTagsToNode(nodeId, tags).subscribe((tagsResult) => {
-                    expect(tagsResult).toEqual(singleResult);
+                    expect(tagsResult).toEqual(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }));
                 });
                 tick();
             }));

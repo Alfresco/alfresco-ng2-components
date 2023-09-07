@@ -30,7 +30,8 @@ import {
     SecurityGroupPaging,
     AuthorityClearanceApi,
     AuthorityClearanceGroupPaging,
-    NodeSecurityMarkBody
+    NodeSecurityMarkBody,
+    GsGroupInclude
 } from '@alfresco/js-api';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { finalize } from 'rxjs/operators';
@@ -125,8 +126,8 @@ export class SecurityControlsService {
         const payload: SecurityGroupBody = {
             ...input
         };
-        const opts = {
-            DEFAULT_INCLUDE
+        const opts: GsGroupInclude = {
+            include: DEFAULT_INCLUDE
         };
         const promise = this.groupsApi.createSecurityGroup(payload, opts);
 
@@ -169,19 +170,16 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param skipCount The number of entities that exist in the collection before those included in this list.
-     * @param include The key for the security mark is in use or not
      * @return Promise<SecurityControlsMarkResponse>
      */
     getSecurityMark(
         securityGroupId: string,
-        skipCount = DEFAULT_SKIP_COUNT,
-        include = DEFAULT_INCLUDE
+        skipCount = DEFAULT_SKIP_COUNT
     ): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
             this.marksApi
                 .getSecurityMarks(securityGroupId, {
-                    include,
                     skipCount
                 })
                 .then((response: SecurityMarkPaging) => {
@@ -276,11 +274,11 @@ export class SecurityControlsService {
      * Delete security group
      *
      * @param securityGroupId The key for the security group id.
-     * @return Observable<SecurityGroupEntry>
+     * @return Observable<void>
      */
     deleteSecurityGroup(
         securityGroupId: string
-    ): Observable<SecurityGroupEntry> {
+    ): Observable<void> {
         this.loadingSource.next(true);
         const promise = this.groupsApi.deleteSecurityGroup(securityGroupId);
 

@@ -104,7 +104,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             file,
             '',
             nodeId,
-            '',
+            null,
             { overwrite: true }
         )).pipe(
             map((res: any) => res.entry)

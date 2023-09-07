@@ -24,7 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NodeEntry, VersionEntry } from '@alfresco/js-api';
+import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import { CoreTestingModule, EventMock, ViewUtilService, ViewerComponent } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -45,8 +45,7 @@ import { By } from '@angular/platform-browser';
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomToolbarComponent {
-}
+class ViewerWithCustomToolbarComponent {}
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
@@ -60,8 +59,7 @@ class ViewerWithCustomToolbarComponent {
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomToolbarActionsComponent {
-}
+class ViewerWithCustomToolbarActionsComponent {}
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
@@ -73,15 +71,13 @@ class ViewerWithCustomToolbarActionsComponent {
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomSidebarComponent {
-}
+class ViewerWithCustomSidebarComponent {}
 
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``
 })
-class DummyDialogComponent {
-}
+class DummyDialogComponent {}
 
 @Component({
     selector: 'adf-viewer-container-open-with',
@@ -104,8 +100,7 @@ class DummyDialogComponent {
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomOpenWithComponent {
-}
+class ViewerWithCustomOpenWithComponent {}
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
@@ -128,12 +123,9 @@ class ViewerWithCustomOpenWithComponent {
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomMoreActionsComponent {
-}
-
+class ViewerWithCustomMoreActionsComponent {}
 
 describe('AlfrescoViewerComponent', () => {
-
     let component: AlfrescoViewerComponent;
     let fixture: ComponentFixture<AlfrescoViewerComponent>;
     let element: HTMLElement;
@@ -148,13 +140,7 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatButtonModule,
-                MatIconModule
-            ],
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CoreTestingModule, MatButtonModule, MatIconModule],
             declarations: [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
@@ -164,12 +150,13 @@ describe('AlfrescoViewerComponent', () => {
             ],
             providers: [
                 {
-                    provide: RenditionService, useValue: {
+                    provide: RenditionService,
+                    useValue: {
                         getNodeRendition: () => throwError('thrown'),
                         generateMediaTracksRendition: () => {}
                     }
                 },
-                {provide: Location, useClass: SpyLocation},
+                { provide: Location, useClass: SpyLocation },
                 MatDialog
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -191,11 +178,8 @@ describe('AlfrescoViewerComponent', () => {
         fixture.destroy();
     });
 
-
     describe('Extension Type Test', () => {
-
-
-       it('should use external viewer to display node by id', fakeAsync(() => {
+        it('should use external viewer to display node by id', fakeAsync(() => {
             const extension: ViewerExtensionRef = {
                 component: 'custom.component',
                 id: 'custom.component.id',
@@ -210,7 +194,7 @@ describe('AlfrescoViewerComponent', () => {
             element = fixture.nativeElement;
             component = fixture.componentInstance;
 
-            spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({entry: {}})));
+            spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({ entry: new Node() })));
 
             component.nodeId = '37f7f34d-4e64-4db6-bb3f-5c89f7844251';
             component.ngOnChanges();
@@ -223,20 +207,17 @@ describe('AlfrescoViewerComponent', () => {
             expect(renditionService.generateMediaTracksRendition).not.toHaveBeenCalled();
             expect(element.querySelector('[data-automation-id="custom.component"]')).not.toBeNull();
         }));
-
-
     });
 
     describe('MimeType handling', () => {
-
         it('should node without content show unkonwn', (done) => {
             const displayName = 'the-name';
             const contentUrl = '/content/url/path';
 
             component.nodeId = '12';
-            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({
-                entry: {content: {name: displayName, id: '12'}}
-            })));
+            spyOn(component['nodesApi'], 'getNode').and.returnValue(
+                Promise.resolve(new NodeEntry({ entry: new Node({ name: displayName, id: '12', content: new ContentInfo() }) }))
+            );
 
             spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
 
@@ -251,8 +232,8 @@ describe('AlfrescoViewerComponent', () => {
 
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(component['nodesApi'], 'getNode').and.returnValues(
-            Promise.resolve(new NodeEntry({entry: {name: 'file1', content: {}}})),
-            Promise.resolve(new NodeEntry({entry: {name: 'file2', content: {}}}))
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
         );
 
         component.showViewer = true;
@@ -272,13 +253,15 @@ describe('AlfrescoViewerComponent', () => {
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
         spyOn(component['nodesApi'], 'getNode').and.returnValue(
-            Promise.resolve(new NodeEntry({
-                entry: {
-                    name: 'file1.pdf',
-                    content: {},
-                    properties: {'cm:versionLabel': '10'}
-                }
-            }))
+            Promise.resolve(
+                new NodeEntry({
+                    entry: new Node({
+                        name: 'file1.pdf',
+                        content: new ContentInfo(),
+                        properties: { 'cm:versionLabel': '10' }
+                    })
+                })
+            )
         );
         spyOn(component['versionsApi'], 'getVersion').and.returnValue(Promise.resolve(undefined));
 
@@ -293,14 +276,14 @@ describe('AlfrescoViewerComponent', () => {
         expect(component.urlFileContent).toContain('/public/alfresco/versions/1/nodes/id1/content?attachment=false&10');
     }));
 
-    it('should change display name every time node\`s version changes', fakeAsync(() => {
+    it('should change display name every time node`s version changes', fakeAsync(() => {
         spyOn(component['nodesApi'], 'getNode').and.returnValue(
-            Promise.resolve(new NodeEntry({entry: {name: 'node1', content: {}}}))
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'node1', content: new ContentInfo() }) }))
         );
 
         spyOn(component['versionsApi'], 'getVersion').and.returnValues(
-            Promise.resolve(new VersionEntry({entry: {name: 'file1', content: {}}})),
-            Promise.resolve(new VersionEntry({entry: {name: 'file2', content: {}}}))
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
+            Promise.resolve(new VersionEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
         );
 
         component.nodeId = 'id1';
@@ -321,7 +304,7 @@ describe('AlfrescoViewerComponent', () => {
 
     it('should update node only if node name changed', fakeAsync(() => {
         spyOn(component['nodesApi'], 'getNode').and.returnValues(
-            Promise.resolve(new NodeEntry({entry: {name: 'file1', content: {}}}))
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) }))
         );
 
         component.showViewer = true;
@@ -333,15 +316,15 @@ describe('AlfrescoViewerComponent', () => {
 
         expect(component.fileName).toBe('file1');
 
-        nodesApiService.nodeUpdated.next({id: 'id1', name: 'file2'} as any);
+        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file2' } as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file2');
 
-        nodesApiService.nodeUpdated.next({id: 'id1', name: 'file3'} as any);
+        nodesApiService.nodeUpdated.next({ id: 'id1', name: 'file3' } as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file3');
 
-        nodesApiService.nodeUpdated.next({id: 'id2', name: 'file4'} as any);
+        nodesApiService.nodeUpdated.next({ id: 'id2', name: 'file4' } as any);
         fixture.detectChanges();
         expect(component.fileName).toBe('file3');
         expect(component.nodeId).toBe('id1');
@@ -357,7 +340,6 @@ describe('AlfrescoViewerComponent', () => {
     });
 
     describe('Viewer Example Component Rendering', () => {
-
         it('should use custom toolbar', (done) => {
             const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
@@ -414,7 +396,6 @@ describe('AlfrescoViewerComponent', () => {
                 expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
                 done();
             });
-
         });
 
         it('should stop propagation on sidebar keydown event [keydown]', fakeAsync(() => {
@@ -447,10 +428,8 @@ describe('AlfrescoViewerComponent', () => {
     });
 
     describe('error handling', () => {
-
         it('should show unknown view when node file not found', (done) => {
-            spyOn(component['nodesApi'], 'getNode')
-                .and.returnValue(Promise.reject({}));
+            spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.reject(new Error('error')));
 
             component.nodeId = 'the-node-id-of-the-file-to-preview';
             component.mimeType = null;
@@ -464,8 +443,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should show unknown view when sharedLink file not found', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink')
-                .and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -477,12 +455,10 @@ describe('AlfrescoViewerComponent', () => {
                 expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
                 done();
             });
-
         });
 
         it('should raise an event when the shared link is invalid', fakeAsync(() => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink')
-                .and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -494,11 +470,10 @@ describe('AlfrescoViewerComponent', () => {
 
             component.ngOnChanges();
         }));
-//
+        //
     });
 
     describe('Toolbar', () => {
-
         it('should show only next file button', async () => {
             component.allowNavigate = true;
             component.canNavigateBefore = false;
@@ -658,7 +633,7 @@ describe('AlfrescoViewerComponent', () => {
             component.nodeId = '12';
             const displayName = 'the-name';
             const nodeDetails = {
-                entry: {name: displayName, id: '12', content: {mimeType: 'txt'}}
+                entry: new Node({ name: displayName, id: '12', content: new ContentInfo({ mimeType: 'txt' }) })
             };
 
             const contentUrl = '/content/url/path';
@@ -687,8 +662,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         it('should not render close viewer button if it is a shared link', (done) => {
-            spyOn(component['sharedLinksApi'], 'getSharedLink')
-                .and.returnValue(Promise.reject({}));
+            spyOn(component['sharedLinksApi'], 'getSharedLink').and.returnValue(Promise.reject(new Error('error')));
 
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
@@ -700,11 +674,9 @@ describe('AlfrescoViewerComponent', () => {
                 done();
             });
         });
-
     });
 
     describe('Base component', () => {
-
         beforeEach(() => {
             component.mimeType = 'application/pdf';
             component.nodeId = 'id1';
@@ -713,7 +685,6 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('SideBar Test', () => {
-
             it('should NOT display sidebar if is not allowed', (done) => {
                 component.showRightSidebar = true;
                 component.allowRightSidebar = false;
@@ -748,7 +719,6 @@ describe('AlfrescoViewerComponent', () => {
                     expect(sidebar).toBeNull();
                     done();
                 });
-
             });
 
             it('should display sidebar on the left side', (done) => {
@@ -765,9 +735,7 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('View', () => {
-
             describe('Overlay mode true', () => {
-
                 beforeEach(() => {
                     component.overlayMode = true;
                     component.fileName = 'fake-test-file.pdf';
@@ -843,7 +811,6 @@ describe('AlfrescoViewerComponent', () => {
             });
 
             describe('Overlay mode false', () => {
-
                 beforeEach(() => {
                     component.overlayMode = false;
                     fixture.detectChanges();
@@ -863,7 +830,6 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('Attribute', () => {
-
             it('should FileNodeId present not thrown any error ', () => {
                 component.showViewer = true;
                 component.nodeId = 'file-node-id';
@@ -872,7 +838,6 @@ describe('AlfrescoViewerComponent', () => {
                     component.ngOnChanges();
                 }).not.toThrow();
             });
-
 
             it('should showViewer default value  be true', () => {
                 expect(component.showViewer).toBe(true);
@@ -887,22 +852,18 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('Events', () => {
-
             it('should update version when emitted by image-viewer and user has update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {
-                });
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 spyOn(uploadService, 'addToQueue');
                 component.readOnly = false;
                 component.nodeEntry = new NodeEntry({
-                    entry: {
-                        name: 'fakeImage.png',
-                        id: '12',
-                        content: {mimeType: 'img/png'}
-                    }
+                    entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })
                 });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-                const fakeBlob = new Blob([data], {type: 'image/png'});
-                const newImageFile: File = new File([fakeBlob], component?.nodeEntry?.entry?.name, {type: component?.nodeEntry?.entry?.content?.mimeType});
+                const fakeBlob = new Blob([data], { type: 'image/png' });
+                const newImageFile: File = new File([fakeBlob], component?.nodeEntry?.entry?.name, {
+                    type: component?.nodeEntry?.entry?.content?.mimeType
+                });
                 const newFile = new FileModel(
                     newImageFile,
                     {
@@ -921,24 +882,18 @@ describe('AlfrescoViewerComponent', () => {
             });
 
             it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {
-                });
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
                 component.readOnly = true;
                 component.nodeEntry = new NodeEntry({
-                    entry: {
-                        name: 'fakeImage.png',
-                        id: '12',
-                        content: {mimeType: 'img/png'}
-                    }
+                    entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })
                 });
                 const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-                const fakeBlob = new Blob([data], {type: 'image/png'});
+                const fakeBlob = new Blob([data], { type: 'image/png' });
                 component.onSubmitFile(fakeBlob);
                 fixture.detectChanges();
 
                 expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
             });
         });
-
     });
 });

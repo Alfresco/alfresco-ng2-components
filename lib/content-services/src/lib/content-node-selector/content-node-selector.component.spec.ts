@@ -19,7 +19,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
+import { Node, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { FileModel } from '../common/models/file.model';
 import { FileUploadEvent } from '../common/events/file.event';
@@ -88,7 +88,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         spyOn(documentListService, 'getFolder');
         spyOn(documentListService, 'getFolderNode');
-        spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: { entries: [] } })));
+        spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
@@ -97,15 +97,12 @@ describe('ContentNodeSelectorComponent', () => {
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
         const fakeFolderNodeWithPermission = new NodeEntry({
-            entry: {
-                allowableOperations: [
-                    'create',
-                    'update'
-                ],
+            entry: new Node({
+                allowableOperations: ['create', 'update'],
                 isFolder: true,
                 name: 'Folder Fake Name',
                 nodeType: 'cm:folder'
-            }
+            })
         });
 
         const nodesApiService = TestBed.inject(NodesApiService);

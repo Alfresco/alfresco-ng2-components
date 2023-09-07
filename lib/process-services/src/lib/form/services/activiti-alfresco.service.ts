@@ -64,7 +64,7 @@ export class ActivitiContentService {
      * @param tenantId
      * @param includeAccount
      */
-    getAlfrescoRepositories(tenantId?: number, includeAccount?: boolean): Observable<any> {
+    getAlfrescoRepositories(tenantId?: string, includeAccount?: boolean): Observable<any> {
         const opts = {
             tenantId,
             includeAccounts: includeAccount ? includeAccount : true

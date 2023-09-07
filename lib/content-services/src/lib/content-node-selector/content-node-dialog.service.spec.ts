@@ -50,11 +50,11 @@ const fakeSiteList: SitePaging = new SitePaging({
         },
         entries: [
             {
-                entry: {
+                entry: new Site({
                     id: 'FAKE',
                     guid: 'FAKE-GUID',
                     title: 'FAKE-SITE-TITLE'
-                }
+                })
             }
         ]
     }

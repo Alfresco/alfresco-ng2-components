@@ -58,7 +58,7 @@ export class ProcessCloudContentService {
     ): Observable<Node> {
 
         return from(
-            this.uploadApi.uploadFile(file, '', nodeId, '', {overwrite: true})
+            this.uploadApi.uploadFile(file, '', nodeId, null, {overwrite: true})
         ).pipe(
             map((res: any) => ({
                 ...res.entry,

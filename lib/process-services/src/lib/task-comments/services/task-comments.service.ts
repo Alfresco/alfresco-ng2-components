@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, CommentModel, CommentsService } from '@alfresco/adf-core';
+import { AlfrescoApiService, CommentModel, CommentsService, User } from '@alfresco/adf-core';
 import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError } from 'rxjs';
@@ -100,7 +100,7 @@ export class TaskCommentsService implements CommentsService {
       id: representation.id,
       message: representation.message,
       created: representation.created,
-      createdBy: representation.createdBy
+      createdBy: new User(representation.createdBy)
     });
   }
 

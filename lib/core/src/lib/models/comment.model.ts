@@ -18,14 +18,14 @@
 import { User } from './general-user.model';
 
 export class CommentModel {
-    id: number;
+    id: string | number;
     message: string;
     created: Date;
     createdBy: User;
     isSelected: boolean;
 
     get hasAvatarPicture(): boolean {
-        return !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
+        return !!this.createdBy && !!(this.createdBy['pictureId'] || this.createdBy['avatarId']);
     }
 
     get userDisplayName(): string {
@@ -51,7 +51,7 @@ export class CommentModel {
         return result.toUpperCase();
     }
 
-    constructor(obj?: any) {
+    constructor(obj?: Partial<CommentModel>) {
         if (obj) {
             this.id = obj.id;
             this.message = obj.message;

@@ -51,7 +51,7 @@ import { DocumentListService } from './../services/document-list.service';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { FavoritePaging, NodeEntry, NodePaging, Node } from '@alfresco/js-api';
+import { FavoritePaging, NodeEntry, NodePaging, Node, FavoritePagingList } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -106,15 +106,15 @@ describe('DocumentList', () => {
         appConfigService = TestBed.inject(AppConfigService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
-        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: {} })));
-        spyOn(documentList['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: {} })));
+        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: new Node() })));
+        spyOn(documentList['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node() })));
 
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
-            Promise.resolve(new FavoritePaging({ list: { entries: [] } }))
+            Promise.resolve(new FavoritePaging({ list: new FavoritePagingList({ entries: [] }) }))
         );
     });
 
@@ -1208,7 +1208,7 @@ describe('DocumentList', () => {
             expect(folderNode.value.id).toBe('fake-node');
             done();
         });
-        documentList.onNodeDblClick(new NodeEntry({ entry: { id: 'fake-node', isFolder: true } }));
+        documentList.onNodeDblClick(new NodeEntry({ entry: new Node({ id: 'fake-node', isFolder: true }) }));
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {

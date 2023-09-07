@@ -911,8 +911,8 @@ export const fakeUser = new UserRepresentation({
     password: null,
     type: 'enterprise',
     status: 'active',
-    created: '2020-08-14T09:21:52.306Z',
-    lastUpdate: '2020-08-14T09:22:48.147Z',
+    created: new Date('2020-08-14T09:21:52.306Z'),
+    lastUpdate: new Date('2020-08-14T09:22:48.147Z'),
     tenantId: 310,
     groups: [
         {

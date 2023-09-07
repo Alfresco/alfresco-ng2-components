@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { Node, VersionPaging, VersionEntry, NodeEntry } from '@alfresco/js-api';
+import { Node, VersionPaging, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentVersionService } from './content-version.service';
@@ -36,8 +36,8 @@ describe('VersionListComponent', () => {
     const versionId = '1.0';
 
     const versionTest = [
-        { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } } as VersionEntry,
-        { entry: { name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' } } as VersionEntry
+        new VersionEntry({ entry: new Version({ name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }) }),
+        new VersionEntry({ entry: new Version({ name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' }) })
     ];
 
     afterEach(() => {
@@ -47,10 +47,7 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionListComponent);
@@ -61,7 +58,7 @@ describe('VersionListComponent', () => {
         component.node = { id: nodeId, allowableOperations: ['update'] } as Node;
 
         spyOn(component, 'downloadContent').and.stub();
-        spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: { id: 'nodeInfoId' } })));
+        spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node({ id: 'nodeInfoId' }) })));
     });
 
     it('should raise confirmation dialog on delete', () => {
@@ -84,7 +81,7 @@ describe('VersionListComponent', () => {
             afterClosed: () => of(true)
         } as any);
 
-        spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+        spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
 
         component.deleteVersion(versionId);
 
@@ -99,7 +96,7 @@ describe('VersionListComponent', () => {
             afterClosed: () => of(false)
         } as any);
 
-        spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve(true));
+        spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
 
         component.deleteVersion(versionId);
 
@@ -118,10 +115,8 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version history fetching', () => {
-
         it('should use loading bar', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             let loadingProgressBar = fixture.debugElement.query(By.css('[data-automation-id="version-history-loading-bar"]'));
             expect(loadingProgressBar).toBeNull();
@@ -134,8 +129,7 @@ describe('VersionListComponent', () => {
         });
 
         it('should load the versions for a given id', () => {
-            spyOn(component.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
             component.ngOnChanges();
             fixture.detectChanges();
@@ -145,15 +139,15 @@ describe('VersionListComponent', () => {
 
         it('should show the versions after loading', (done) => {
             fixture.detectChanges();
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
-                list: {
-                    entries: [
-                        {
-                            entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
+                Promise.resolve(
+                    new VersionPaging({
+                        list: {
+                            entries: [versionTest[0]]
                         }
-                    ]
-                }
-            })));
+                    })
+                )
+            );
 
             component.ngOnChanges();
 
@@ -171,18 +165,15 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT show the versions comments if input property is set not to show them', (done) => {
-            spyOn(component.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve(
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
+                Promise.resolve(
                     new VersionPaging({
                         list: {
-                            entries: [
-                                {
-                                    entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
-                                }
-                            ]
+                            entries: [versionTest[0]]
                         }
                     })
-                ));
+                )
+            );
 
             component.showComments = false;
             fixture.detectChanges();
@@ -199,14 +190,9 @@ describe('VersionListComponent', () => {
         });
 
         it('should be able to download a version', () => {
-            const versionEntry = {
-                entry: {
-                    name: 'test-file-name',
-                    id: '1.0',
-                    versionComment: 'test-version-comment'
-                }
-            };
-            spyOn(component.versionsApi, 'listVersionHistory').and.returnValue(Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
+            spyOn(component.versionsApi, 'listVersionHistory').and.returnValue(
+                Promise.resolve(new VersionPaging({ list: { entries: [versionTest[0]] } }))
+            );
             spyOn(contentVersionService.contentApi, 'getContentUrl').and.returnValue('the/download/url');
 
             fixture.detectChanges();
@@ -223,15 +209,9 @@ describe('VersionListComponent', () => {
         });
 
         it('should NOT be able to download a version if configured so', () => {
-            const versionEntry = {
-                entry: {
-                    name: 'test-file-name',
-                    id: '1.0',
-                    versionComment: 'test-version-comment'
-                }
-            };
-            spyOn(component.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } })));
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
+                Promise.resolve(new VersionPaging({ list: { entries: [versionTest[0]] } }))
+            );
             const spyOnDownload = spyOn(component.contentApi, 'getContentUrl').and.stub();
 
             component.allowDownload = false;
@@ -243,7 +223,6 @@ describe('VersionListComponent', () => {
     });
 
     describe('Version restoring', () => {
-
         it('should restore version only when restore allowed', () => {
             component.node.allowableOperations = [];
             spyOn(component.versionsApi, 'revertVersion').and.stub();
@@ -255,9 +234,7 @@ describe('VersionListComponent', () => {
             fixture.detectChanges();
             component.versions = versionTest;
 
-            const spyOnRevertVersion = spyOn(component.versionsApi, 'revertVersion').and
-                .callFake(() => Promise.resolve(new VersionEntry(
-                    { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+            const spyOnRevertVersion = spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
 
             component.restore(versionId);
 
@@ -267,12 +244,9 @@ describe('VersionListComponent', () => {
         it('should get node info after restoring the node', fakeAsync(() => {
             fixture.detectChanges();
             component.versions = versionTest;
-            spyOn(component.versionsApi, 'listVersionHistory')
-                .and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
-            spyOn(component.versionsApi, 'revertVersion')
-                .and.callFake(() => Promise.resolve(new VersionEntry(
-                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+            spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
 
             component.restore(versionId);
             fixture.detectChanges();
@@ -284,12 +258,9 @@ describe('VersionListComponent', () => {
         it('should emit with node info data', fakeAsync(() => {
             fixture.detectChanges();
             component.versions = versionTest;
-            spyOn(component.versionsApi, 'listVersionHistory')
-                .and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
 
-            spyOn(component.versionsApi, 'revertVersion')
-                .and.callFake(() => Promise.resolve(new VersionEntry(
-                { entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' } })));
+            spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
 
             spyOn(component.restored, 'emit');
 
@@ -304,8 +275,9 @@ describe('VersionListComponent', () => {
             fixture.detectChanges();
             component.versions = versionTest;
 
-            const spyOnListVersionHistory = spyOn(component.versionsApi, 'listVersionHistory').and
-                .callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+            const spyOnListVersionHistory = spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
+                Promise.resolve({ list: { entries: versionTest } })
+            );
             spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(null));
 
             component.restore(versionId);
@@ -329,18 +301,16 @@ describe('VersionListComponent', () => {
 
         beforeEach(() => {
             fixture.detectChanges();
-            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve(new VersionPaging({
-                list: {
-                    entries: [
-                        {
-                            entry: { name: 'test-file-two', id: '1.1', versionComment: 'test-version-comment' }
-                        },
-                        {
-                            entry: { name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }
+            versionTest[1].entry.id = '1.1';
+            spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() =>
+                Promise.resolve(
+                    new VersionPaging({
+                        list: {
+                            entries: versionTest
                         }
-                    ]
-                }
-            })));
+                    })
+                )
+            );
         });
 
         describe('showActions', () => {
@@ -373,7 +343,6 @@ describe('VersionListComponent', () => {
         });
 
         describe('disabled', () => {
-
             beforeEach(() => {
                 component.node = { id: nodeId } as Node;
                 component.ngOnChanges();
@@ -406,7 +375,6 @@ describe('VersionListComponent', () => {
         });
 
         describe('enabled', () => {
-
             beforeEach(() => {
                 component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
                 component.ngOnChanges();
@@ -425,7 +393,7 @@ describe('VersionListComponent', () => {
 
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
-                    expect(getRestoreButton().disabled).toBeFalse();
+                    expect(getRestoreButton('1.1').disabled).toBeFalse();
                     done();
                 });
             });

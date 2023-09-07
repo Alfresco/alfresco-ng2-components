@@ -49,7 +49,7 @@ export class ModelActions {
         return this.customModelApi.deactivateCustomModel(modelName);
     }
 
-    async deleteCustomModel(modelName: string): Promise<{ entry: CustomModel }> {
+    async deleteCustomModel(modelName: string): Promise<void> {
         return this.customModelApi.deleteCustomModel(modelName);
     }
 

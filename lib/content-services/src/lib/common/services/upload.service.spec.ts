@@ -321,7 +321,7 @@ describe('UploadService', () => {
             },
             undefined,
             undefined,
-            { newVersion: true },
+            { newVersion: true, name: 'fake-name', nodeType:  undefined },
             {
                 renditions: 'doclib',
                 include: ['allowableOperations'],
@@ -376,7 +376,7 @@ describe('UploadService', () => {
                 },
                 undefined,
                 undefined,
-                { newVersion: false },
+                { newVersion: false, name: 'file-name', nodeType: undefined },
                 {
                     include: [ 'allowableOperations' ],
                     renditions: 'doclib',
@@ -402,7 +402,7 @@ describe('UploadService', () => {
                 },
                 undefined,
                 undefined,
-                { newVersion: false },
+                { newVersion: false, name: 'file-name', nodeType: undefined },
                 {
                     include: [ 'allowableOperations' ],
                     renditions: 'doclib',
@@ -434,6 +434,8 @@ describe('UploadService', () => {
             '123',
             {
                 newVersion: false,
+                name: 'fake-name',
+                nodeType: undefined,
                 parentId: '123',
                 path: 'fake-dir',
                 secondaryChildren: [ { assocType: 'assoc-1', childId: 'child-id' }],
@@ -547,7 +549,7 @@ describe('UploadService', () => {
             },
             undefined,
             undefined,
-            { newVersion: true },
+            { newVersion: true, name: 'fake-name', nodeType: undefined },
             {
                 include: ['allowableOperations'],
                 overwrite: true,

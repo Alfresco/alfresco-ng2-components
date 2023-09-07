@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '../../models';
+import { CommentModel, User } from '../../models';
 import { Observable, of } from 'rxjs';
 import { CommentsService } from '../interfaces/comments-service.interface';
 import { testUser } from './comments.stories.mock';
-import { UserLike } from '../../pipes/user-like.interface';
 
 export class CommentsServiceStoriesMock implements Partial<CommentsService> {
 
@@ -33,87 +32,35 @@ export class CommentsServiceStoriesMock implements Partial<CommentsService> {
     }
 }
 
+const commentUser = new User({
+    enabled: true,
+    firstName: 'hruser',
+    displayName: 'hruser',
+    id: 'hruser',
+    email: 'test'
+});
+
 export const commentsResponseMock = {
     getComments: () => of([
         new CommentModel({
             id: 1,
             message: 'Test Comment',
             created: new Date(),
-            createdBy: {
-                enabled: true,
-                firstName: 'hruser',
-                displayName: 'hruser',
-                quota: -1,
-                quotaUsed: 12,
-                emailNotificationsEnabled: true,
-                company: {
-                    organization: 'test',
-                    address1: 'test',
-                    address2: 'test',
-                    address3: 'test',
-                    postcode: 'test',
-                    telephone: 'test',
-                    fax: 'test',
-                    email: 'test'
-                },
-                id: 'hruser',
-                email: 'test',
-                isAdmin: () => false
-            } as UserLike,
+            createdBy: commentUser,
             isSelected: false
         }),
         new CommentModel({
             id: 2,
             message: 'Test Comment',
             created: new Date(),
-            createdBy: {
-                enabled: true,
-                firstName: 'hruser',
-                displayName: 'hruser',
-                quota: -1,
-                quotaUsed: 12,
-                emailNotificationsEnabled: true,
-                company: {
-                    organization: 'test',
-                    address1: 'test',
-                    address2: 'test',
-                    address3: 'test',
-                    postcode: 'test',
-                    telephone: 'test',
-                    fax: 'test',
-                    email: 'test'
-                },
-                id: 'hruser',
-                email: 'test',
-                isAdmin: () => false
-            } as UserLike,
+            createdBy: commentUser,
             isSelected: false
         }),
         new CommentModel({
             id: 3,
             message: 'Test Comment',
             created: new Date(),
-            createdBy: {
-                enabled: true,
-                firstName: 'hruser',
-                displayName: 'hruser',
-                quota: -1,
-                quotaUsed: 12,
-                emailNotificationsEnabled: true,
-                company: {
-                    organization: 'test',
-                    address1: 'test',
-                    address2: 'test',
-                    address3: 'test',
-                    postcode: 'test',
-                    telephone: 'test',
-                    fax: 'test',
-                    email: 'test'
-                },
-                id: 'hruser',
-                email: 'test',
-                isAdmin: () => false
-            } as UserLike,
+            createdBy: commentUser,
             isSelected: false
         })
     ]),

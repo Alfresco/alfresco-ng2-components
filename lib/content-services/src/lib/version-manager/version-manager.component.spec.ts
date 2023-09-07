@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, VersionPaging } from '@alfresco/js-api';
+import { Node, Version, VersionEntry, VersionPaging } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,25 +31,16 @@ describe('VersionManagerComponent', () => {
     let nodesApiService: NodesApiService;
 
     const expectedComment = 'test-version-comment';
-    const  node: Node = new Node({
+    const node: Node = new Node({
         id: '1234',
         name: 'TEST-NODE',
         isFile: true
     });
-    const versionEntry = {
-       entry: {
-           id: '1.0',
-           name: node.name,
-           versionComment: expectedComment
-       }
-    };
+    const versionEntry = new VersionEntry({ entry: new Version({ id: '1.0', name: node.name, versionComment: expectedComment }) });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionManagerComponent);
@@ -57,8 +48,9 @@ describe('VersionManagerComponent', () => {
         component.node = node;
 
         nodesApiService = TestBed.inject(NodesApiService);
-        spyOnListVersionHistory = spyOn(component.versionListComponent['versionsApi'], 'listVersionHistory').and
-            .callFake(() => Promise.resolve(new VersionPaging({ list: { entries: [ versionEntry ] }})));
+        spyOnListVersionHistory = spyOn(component.versionListComponent['versionsApi'], 'listVersionHistory').and.callFake(() =>
+            Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } }))
+        );
     });
 
     it('should load the versions for a given node', () => {
@@ -92,7 +84,7 @@ describe('VersionManagerComponent', () => {
     it('should emit success event upon successful upload of a new version', async () => {
         fixture.detectChanges();
 
-        const emittedData = { value: { entry: node }};
+        const emittedData = { value: { entry: node } };
         await component.uploadSuccess.subscribe((event) => {
             expect(event).toBe(node);
         });
@@ -105,12 +97,11 @@ describe('VersionManagerComponent', () => {
             expect(res).toEqual(node);
         });
 
-        const emittedData = { value: { entry: node }};
+        const emittedData = { value: { entry: node } };
         component.onUploadSuccess(emittedData);
     });
 
     describe('Animation', () => {
-
         it('should upload button be hide by default', () => {
             fixture.detectChanges();
 
@@ -126,5 +117,5 @@ describe('VersionManagerComponent', () => {
 
             expect(component.uploadState).toEqual('open');
         });
-   });
+    });
 });

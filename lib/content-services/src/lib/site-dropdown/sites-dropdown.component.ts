@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { LogService, InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
-import { SitePaging, SiteEntry } from '@alfresco/js-api';
+import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {TranslateService} from '@ngx-translate/core';
@@ -128,11 +128,7 @@ export class DropdownSitesComponent implements OnInit {
 
                     if (!this.hideMyFiles) {
                         const siteEntry = new SiteEntry({
-                            entry: {
-                                id: this.MY_FILES_VALUE,
-                                guid: this.MY_FILES_VALUE,
-                                title: 'DROPDOWN.MY_FILES_OPTION'
-                            }
+                            entry: new Site({ id: this.MY_FILES_VALUE, guid: this.MY_FILES_VALUE, title: 'DROPDOWN.MY_FILES_OPTION' })
                         });
 
                         this.siteList.list.entries.unshift(siteEntry);
@@ -180,7 +176,7 @@ export class DropdownSitesComponent implements OnInit {
         return sites;
     }
 
-    private isCurrentUserMember(site, loggedUserName): boolean {
+    private isCurrentUserMember(site: SiteEntry, loggedUserName: string): boolean {
         return site.entry.visibility === 'PUBLIC' ||
             !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase());
     }
