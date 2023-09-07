@@ -15,31 +15,27 @@
  * limitations under the License.
  */
 
-import { CommentModel } from '@alfresco/adf-core';
+import { CommentModel, User } from '@alfresco/adf-core';
 import { EcmCompanyModel } from '../../common/models/ecm-company.model';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
 
-export const fakeUser1 = {
+export const fakeUser1 = new User({
     enabled: true,
     firstName: 'firstName',
     lastName: 'lastName',
     email: 'fake-email@dom.com',
-    emailNotificationsEnabled: true,
-    company: {},
     id: 'fake-email@dom.com',
     avatarId: '123-123-123'
-};
+});
 
-export const fakeUser2 = {
+export const fakeUser2 = new User({
     enabled: true,
     firstName: 'some',
     lastName: 'one',
     email: 'some-one@somegroup.com',
-    emailNotificationsEnabled: true,
-    company: {},
     id: 'fake-email@dom.com',
     avatarId: '001-001-001'
-};
+});
 
 export const fakeContentComments = {
     list: {
@@ -153,28 +149,28 @@ export const commentsNodeData: CommentModel[] = [
       id: 1,
       message: `I've done this component, is it cool?`,
       created: getDateXMinutesAgo(30),
-      createdBy: johnDoe,
+      createdBy: new User(johnDoe),
       isSelected: false
     }),
     new CommentModel({
       id: 2,
       message: 'Yeah',
       created: getDateXMinutesAgo(15),
-      createdBy: janeEod,
+      createdBy: new User(janeEod),
       isSelected: false
     }),
     new CommentModel({
       id: 3,
       message: '+1',
       created: getDateXMinutesAgo(12),
-      createdBy: robertSmith,
+      createdBy: new User(robertSmith),
       isSelected: false
     }),
     new CommentModel({
       id: 4,
       message: 'ty',
       created: new Date(),
-      createdBy: johnDoe,
+      createdBy: new User(johnDoe),
       isSelected: false
     })
 ];
@@ -184,28 +180,28 @@ export const commentsTaskData: CommentModel[] = [
       id: 1,
       message: `I've done this task, what's next?`,
       created: getDateXMinutesAgo(30),
-      createdBy: johnDoe,
+      createdBy: new User(johnDoe),
       isSelected: false
     }),
     new CommentModel({
       id: 2,
       message: `I've assigned you another one 🤠`,
       created: getDateXMinutesAgo(15),
-      createdBy: janeEod,
+      createdBy: new User(janeEod),
       isSelected: false
     }),
     new CommentModel({
       id: 3,
       message: '+1',
       created: getDateXMinutesAgo(12),
-      createdBy: robertSmith,
+      createdBy: new User(robertSmith),
       isSelected: false
     }),
     new CommentModel({
       id: 4,
       message: 'Cheers',
       created: new Date(),
-      createdBy: johnDoe,
+      createdBy: new User(johnDoe),
       isSelected: false
     })
 ];

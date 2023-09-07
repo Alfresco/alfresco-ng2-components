@@ -17,7 +17,7 @@
 
 export class User {
     displayName?: string;
-    username?: string
+    username?: string;
     id?: string | number;
     firstName?: string;
     lastName?: string;
@@ -26,6 +26,8 @@ export class User {
     emailVerified?: boolean;
     enabled?: boolean;
     readonly?: boolean;
+    pictureId?: number;
+    avatarId: string;
 
     constructor(user?: Partial<User>) {
         if (user) {

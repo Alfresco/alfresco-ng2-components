@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { CommentModel, AlfrescoApiService, LogService, CommentsService } from '@alfresco/adf-core';
+import { CommentModel, AlfrescoApiService, LogService, CommentsService, User } from '@alfresco/adf-core';
 import { map, catchError } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../common/services/people-process.service';
@@ -57,7 +57,7 @@ export class CommentProcessService implements CommentsService {
                             id: comment.id,
                             message: comment.message,
                             created: comment.created,
-                            createdBy: user
+                            createdBy: new User(user)
                         }));
                     });
                     return comments;
@@ -81,7 +81,7 @@ export class CommentProcessService implements CommentsService {
                 id: response.id,
                 message: response.message,
                 created: response.created,
-                createdBy: response.createdBy
+                createdBy: new User(response.createdBy)
             })),
             catchError((err: any) => this.handleError(err))
         );
@@ -92,7 +92,7 @@ export class CommentProcessService implements CommentsService {
         return throwError(error || 'Server error');
     }
 
-    getUserImage(user: any): string {
+    getUserImage(user: UserProcessModel): string {
         return this.peopleProcessService.getUserImage(user);
     }
 }

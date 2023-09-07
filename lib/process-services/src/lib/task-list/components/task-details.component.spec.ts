@@ -24,7 +24,8 @@ import {
     FormOutcomeEvent,
     FormOutcomeModel,
     LogService,
-    CommentModel
+    CommentModel,
+    User
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -101,9 +102,9 @@ describe('TaskDetailsComponent', () => {
         taskCommentsService = TestBed.inject(TaskCommentsService);
 
         spyOn(taskCommentsService, 'get').and.returnValue(of([
-            new CommentModel({ message: 'Test1', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
-            new CommentModel({ message: 'Test2', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } }),
-            new CommentModel({ message: 'Test3', created: Date.now(), createdBy: { firstName: 'Admin', lastName: 'User' } })
+            new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
+            new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
+            new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) })
         ]));
 
         fixture = TestBed.createComponent(TaskDetailsComponent);
