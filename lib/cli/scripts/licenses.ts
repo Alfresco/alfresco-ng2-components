@@ -129,7 +129,7 @@ export default function main(_args: string[], workingDir: string) {
                         pack['licenseExp'] = pack['licenses']
                             .toString()
                             .replace(/\*/, '')
-                            .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
+                            .replace(/[a-zA-Z0-9\-\.]+/g, (match: string) => {
                                 const lowerMatch = match.toLowerCase();
 
                                 if (lowerMatch !== 'and' && lowerMatch !== 'or' && lowerMatch !== 'with') {
