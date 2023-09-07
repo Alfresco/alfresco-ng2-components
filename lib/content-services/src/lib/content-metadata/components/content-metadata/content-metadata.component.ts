@@ -200,6 +200,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     editableChange = new EventEmitter<boolean>();
 
+    /** Emitted when content's editableTags state is changed. **/
+    @Output()
+    editableTagsChange = new EventEmitter<boolean>();
+
+    /** Emitted when content's editableCategories state is changed. **/
+    @Output()
+    editableCategoriesChange = new EventEmitter<boolean>();
+
+    @Input()
+    editableCategories = false;
+
+    @Input()
+    editableTags = false;
+
+    
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
