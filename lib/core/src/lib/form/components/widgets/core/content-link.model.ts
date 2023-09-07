@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
- export class ContentLinkModel {
-
+export class ContentLinkModel {
     contentAvailable: boolean;
     created: Date;
     createdBy: any;
@@ -36,18 +35,18 @@
     thumbnailStatus: string;
 
     constructor(obj?: any) {
-        this.contentAvailable = obj && obj.contentAvailable;
-        this.created = obj && obj.created;
-        this.createdBy = obj && obj.createdBy || {};
-        this.id = obj && obj.id;
-        this.link = obj && obj.link;
-        this.mimeType = obj && obj.mimeType;
-        this.name = obj && obj.name;
-        this.previewStatus = obj && obj.previewStatus;
-        this.relatedContent = obj && obj.relatedContent;
-        this.simpleType = obj && obj.simpleType;
-        this.thumbnailStatus = obj && obj.thumbnailStatus;
-        this.nodeId = obj && obj.nodeId;
+        this.contentAvailable = obj?.contentAvailable;
+        this.created = obj?.created;
+        this.createdBy = obj?.createdBy || {};
+        this.id = obj?.id;
+        this.link = obj?.link;
+        this.mimeType = obj?.mimeType;
+        this.name = obj?.name;
+        this.previewStatus = obj?.previewStatus;
+        this.relatedContent = obj?.relatedContent;
+        this.simpleType = obj?.simpleType;
+        this.thumbnailStatus = obj?.thumbnailStatus;
+        this.nodeId = obj?.nodeId;
     }
 
     hasPreviewStatus(): boolean {

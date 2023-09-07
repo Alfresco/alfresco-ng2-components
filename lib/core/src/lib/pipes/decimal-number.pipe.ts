@@ -28,7 +28,6 @@ import { takeUntil } from 'rxjs/operators';
     pure: false
 })
 export class DecimalNumberPipe implements PipeTransform, OnDestroy {
-
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_MIN_INTEGER_DIGITS = 1;
     static DEFAULT_MIN_FRACTION_DIGITS = 0;
@@ -41,14 +40,11 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
 
     onDestroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(public userPreferenceService?: UserPreferencesService,
-                public appConfig?: AppConfigService) {
-
+    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
-            this.userPreferenceService.select(UserPreferenceValues.Locale)
-                .pipe(
-                    takeUntil(this.onDestroy$)
-                )
+            this.userPreferenceService
+                .select(UserPreferenceValues.Locale)
+                .pipe(takeUntil(this.onDestroy$))
                 .subscribe((locale) => {
                     if (locale) {
                         this.defaultLocale = locale;
@@ -58,15 +54,21 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
 
         if (this.appConfig) {
             this.defaultMinIntegerDigits = this.appConfig.get<number>('decimalValues.minIntegerDigits', DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS);
-            this.defaultMinFractionDigits = this.appConfig.get<number>('decimalValues.minFractionDigits', DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS);
-            this.defaultMaxFractionDigits = this.appConfig.get<number>('decimalValues.maxFractionDigits', DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS);
+            this.defaultMinFractionDigits = this.appConfig.get<number>(
+                'decimalValues.minFractionDigits',
+                DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS
+            );
+            this.defaultMaxFractionDigits = this.appConfig.get<number>(
+                'decimalValues.maxFractionDigits',
+                DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS
+            );
         }
     }
 
     transform(value: any, digitsInfo?: DecimalNumberModel, locale?: string): any {
-        const actualMinIntegerDigits: number = digitsInfo && digitsInfo.minIntegerDigits ? digitsInfo.minIntegerDigits : this.defaultMinIntegerDigits;
-        const actualMinFractionDigits: number = digitsInfo && digitsInfo.minFractionDigits ? digitsInfo.minFractionDigits : this.defaultMinFractionDigits;
-        const actualMaxFractionDigits: number = digitsInfo && digitsInfo.maxFractionDigits ? digitsInfo.maxFractionDigits : this.defaultMaxFractionDigits;
+        const actualMinIntegerDigits: number = digitsInfo?.minIntegerDigits ? digitsInfo.minIntegerDigits : this.defaultMinIntegerDigits;
+        const actualMinFractionDigits: number = digitsInfo?.minFractionDigits ? digitsInfo.minFractionDigits : this.defaultMinFractionDigits;
+        const actualMaxFractionDigits: number = digitsInfo?.maxFractionDigits ? digitsInfo.maxFractionDigits : this.defaultMaxFractionDigits;
 
         const actualDigitsInfo = `${actualMinIntegerDigits}.${actualMinFractionDigits}-${actualMaxFractionDigits}`;
         const actualLocale = locale || this.defaultLocale;

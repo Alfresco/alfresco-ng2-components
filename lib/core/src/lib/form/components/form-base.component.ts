@@ -22,7 +22,6 @@ import { ThemePalette } from '@angular/material/core';
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
-
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
@@ -137,7 +136,7 @@ export abstract class FormBaseComponent {
     }
 
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        if (outcome && outcome.name) {
+        if (outcome?.name) {
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.showCompleteButton;
             }
@@ -162,7 +161,6 @@ export abstract class FormBaseComponent {
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
-
             if (!this.onExecuteOutcome(outcome)) {
                 return false;
             }

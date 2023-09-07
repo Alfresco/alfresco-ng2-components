@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component, ViewEncapsulation, HostListener, AfterViewInit,
-    Optional, Inject, QueryList, ViewChildren
-} from '@angular/core';
+import { Component, ViewEncapsulation, HostListener, AfterViewInit, Optional, Inject, QueryList, ViewChildren } from '@angular/core';
 import { trigger } from '@angular/animations';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { FocusKeyManager } from '@angular/cdk/a11y';
@@ -33,13 +30,15 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
         <div mat-menu class="mat-menu-panel" @panelAnimation>
             <div id="adf-context-menu-content" class="mat-menu-content">
                 <ng-container *ngFor="let link of links">
-                    <button *ngIf="link.model?.visible"
-                            [attr.data-automation-id]="'context-'+((link.title || link.model?.title) | translate)"
-                            mat-menu-item
-                            [disabled]="link.model?.disabled"
-                            (click)="onMenuItemClick($event, link)">
+                    <button
+                        *ngIf="link.model?.visible"
+                        [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"
+                        mat-menu-item
+                        [disabled]="link.model?.disabled"
+                        (click)="onMenuItemClick($event, link)"
+                    >
                         <mat-icon *ngIf="link.model?.icon">{{ link.model.icon }}</mat-icon>
-                        <span>{{ (link.title || link.model?.title) | translate }}</span>
+                        <span>{{ link.title || link.model?.title | translate }}</span>
                     </button>
                 </ng-container>
             </div>
@@ -50,9 +49,7 @@ import { CONTEXT_MENU_DATA } from './context-menu.tokens';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    animations: [
-        trigger('panelAnimation', contextMenuAnimation)
-    ]
+    animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {
     private keyManager: FocusKeyManager<MatMenuItem>;
@@ -84,7 +81,7 @@ export class ContextMenuListComponent implements AfterViewInit {
     }
 
     onMenuItemClick(event: Event, menuItem: any) {
-        if (menuItem && menuItem.model && menuItem.model.disabled) {
+        if (menuItem?.model?.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
             return;

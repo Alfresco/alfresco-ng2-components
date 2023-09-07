@@ -42,6 +42,6 @@ export class LoginDialogPanelComponent {
     }
 
     isValid() {
-        return this.login && this.login.form ? this.login.form.valid : false;
+        return this.login?.form ? this.login.form.valid : false;
     }
 }

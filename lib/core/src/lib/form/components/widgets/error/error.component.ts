@@ -29,11 +29,8 @@ import { WidgetComponent } from '../widget.component';
     styleUrls: ['./error.component.scss'],
     animations: [
         trigger('transitionMessages', [
-            state('enter', style({opacity: 1, transform: 'translateY(0%)'})),
-            transition('void => enter', [
-                style({opacity: 0, transform: 'translateY(-100%)'}),
-                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
-            ])
+            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
+            transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
         ])
     ],
     host: {
@@ -50,7 +47,6 @@ import { WidgetComponent } from '../widget.component';
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
-
     @Input()
     error: ErrorMessageModel;
 
@@ -70,7 +66,7 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
             this.required = changes.required.currentValue;
             this.subscriptAnimationState = 'enter';
         }
-        if (changes['error'] && changes['error'].currentValue) {
+        if (changes['error']?.currentValue) {
             if (changes.error.currentValue.isActive()) {
                 this.error = changes.error.currentValue;
                 this.translateParameters = this.error.getAttributesAsJsonObj();

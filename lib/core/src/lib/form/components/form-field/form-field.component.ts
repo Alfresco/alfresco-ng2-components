@@ -17,7 +17,8 @@
 
 import {
     Compiler,
-    Component, ComponentFactory,
+    Component,
+    ComponentFactory,
     ComponentFactoryResolver,
     ComponentRef,
     Input,
@@ -39,19 +40,20 @@ declare const adf: any;
 @Component({
     selector: 'adf-form-field',
     template: `
-        <div [id]="'field-'+field?.id+'-container'"
+        <div
+            [id]="'field-' + field?.id + '-container'"
             [style.visibility]="!field?.isVisible ? 'hidden' : 'visible'"
             [style.display]="!field?.isVisible ? 'none' : 'block'"
             [class.adf-focus]="focus"
             (focusin)="focusToggle()"
-            (focusout)="focusToggle()">
+            (focusout)="focusToggle()"
+        >
             <div #container></div>
         </div>
     `,
     encapsulation: ViewEncapsulation.None
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
-
     @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
 
@@ -67,11 +69,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     focus: boolean = false;
 
-    constructor(private formRenderingService: FormRenderingService,
-                private componentFactoryResolver: ComponentFactoryResolver,
-                private visibilityService: WidgetVisibilityService,
-                private compiler: Compiler) {
-    }
+    constructor(
+        private formRenderingService: FormRenderingService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private visibilityService: WidgetVisibilityService,
+        private compiler: Compiler
+    ) {}
 
     ngOnInit() {
         const w: any = window;
@@ -114,9 +117,9 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private getField(): FormFieldModel {
-        if (this.field && this.field.params) {
+        if (this.field?.params) {
             const wrappedField = this.field.params.field;
-            if (wrappedField && wrappedField.type) {
+            if (wrappedField?.type) {
                 return wrappedField as FormFieldModel;
             }
         }
@@ -124,7 +127,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private hasController(type: string): boolean {
-        return (adf && adf.components && adf.components[type]);
+        return adf?.components?.[type];
     }
 
     private getComponentFactorySync(type: string, template: string): ComponentFactory<any> {

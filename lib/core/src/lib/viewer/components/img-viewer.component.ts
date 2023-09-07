@@ -23,7 +23,11 @@ import {
     ViewEncapsulation,
     ElementRef,
     Output,
-    EventEmitter, AfterViewInit, ViewChild, HostListener, OnDestroy
+    EventEmitter,
+    AfterViewInit,
+    ViewChild,
+    HostListener,
+    OnDestroy
 } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { UrlService } from '../../common/services/url.service';
@@ -37,7 +41,6 @@ import Cropper from 'cropperjs';
     encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
-
     @Input()
     showToolbar = true;
 
@@ -64,7 +67,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Output()
     isSaving = new EventEmitter<boolean>();
 
-    @ViewChild('image', { static: false})
+    @ViewChild('image', { static: false })
     public imageElement: ElementRef;
 
     public scale: number = 1.0;
@@ -75,10 +78,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         return Math.round(this.scale * 100) + '%';
     }
 
-    constructor(
-        private appConfigService: AppConfigService,
-        private urlService: UrlService
-    ) {
+    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
         this.initializeScaling();
     }
 
@@ -143,14 +143,14 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     @HostListener('document:fullscreenchange')
     fullScreenChangeHandler() {
-        if(document.fullscreenElement) {
+        if (document.fullscreenElement) {
             this.reset();
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
-        if (blobFile && blobFile.currentValue) {
+        if (blobFile?.currentValue) {
             this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }
@@ -167,20 +167,20 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     zoomIn() {
-        this.cropper.zoom( 0.2);
-        this.scale = +((this.scale + 0.2).toFixed(1));
+        this.cropper.zoom(0.2);
+        this.scale = +(this.scale + 0.2).toFixed(1);
     }
 
     zoomOut() {
         if (this.scale > 0.2) {
-            this.cropper.zoom( -0.2 );
-            this.scale = +((this.scale - 0.2).toFixed(1));
+            this.cropper.zoom(-0.2);
+            this.scale = +(this.scale - 0.2).toFixed(1);
         }
     }
 
     rotateImage() {
         this.isEditing = true;
-        this.cropper.rotate( -90);
+        this.cropper.rotate(-90);
     }
 
     cropImage() {

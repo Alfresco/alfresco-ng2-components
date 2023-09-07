@@ -20,80 +20,62 @@ import { ResizableDirective } from './resizable.directive';
 import { Input, OnInit, Directive, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
 
 @Directive({
-  selector: '[adf-resize-handle]'
+    selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
-  /**
-   * Reference to ResizableDirective
-   */
-  @Input() resizableContainer: ResizableDirective;
+    /**
+     * Reference to ResizableDirective
+     */
+    @Input() resizableContainer: ResizableDirective;
 
-  private unlistenMouseDown: () => void;
+    private unlistenMouseDown?: () => void;
+    private unlistenMouseMove?: () => void;
+    private unlistenMouseUp?: () => void;
 
-  private unlistenMouseMove: () => void;
+    private destroy$ = new Subject<void>();
 
-  private unlistenMouseUp: () => void;
+    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
 
-  private destroy$ = new Subject<void>();
-
-  constructor(
-    private readonly renderer: Renderer2,
-    private readonly element: ElementRef,
-    private readonly zone: NgZone
-  ) { }
-
-  ngOnInit(): void {
-    this.zone.runOutsideAngular(() => {
-      this.unlistenMouseDown = this.renderer.listen(
-        this.element.nativeElement,
-        'mousedown',
-        (mouseDownEvent: MouseEvent) => {
-          this.onMousedown(mouseDownEvent);
-        }
-      );
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.unlistenMouseDown && this.unlistenMouseDown();
-    this.unlistenMouseMove && this.unlistenMouseMove();
-    this.unlistenMouseUp && this.unlistenMouseUp();
-    this.destroy$.next();
-  }
-
-  private onMousedown(event: MouseEvent): void {
-    if (event.cancelable) {
-      event.preventDefault();
+    ngOnInit(): void {
+        this.zone.runOutsideAngular(() => {
+            this.unlistenMouseDown = this.renderer.listen(this.element.nativeElement, 'mousedown', (mouseDownEvent: MouseEvent) => {
+                this.onMousedown(mouseDownEvent);
+            });
+        });
     }
 
-    if (!this.unlistenMouseMove) {
-      this.unlistenMouseMove = this.renderer.listen(
-        this.element.nativeElement,
-        'mousemove',
-        (mouseMoveEvent: MouseEvent) => {
-          this.onMousemove(mouseMoveEvent);
-        }
-      );
+    ngOnDestroy(): void {
+        this.unlistenMouseDown?.();
+        this.unlistenMouseMove?.();
+        this.unlistenMouseUp?.();
+        this.destroy$.next();
     }
 
-    this.unlistenMouseUp = this.renderer.listen(
-      'document',
-      'mouseup',
-      (mouseUpEvent: MouseEvent) => {
-        this.onMouseup(mouseUpEvent);
-      }
-    );
+    private onMousedown(event: MouseEvent): void {
+        if (event.cancelable) {
+            event.preventDefault();
+        }
 
-    this.resizableContainer.mousedown.next({ ...event, resize: true });
-  }
+        if (!this.unlistenMouseMove) {
+            this.unlistenMouseMove = this.renderer.listen(this.element.nativeElement, 'mousemove', (mouseMoveEvent: MouseEvent) => {
+                this.onMousemove(mouseMoveEvent);
+            });
+        }
 
-  private onMouseup(event: MouseEvent): void {
-    this.unlistenMouseMove && this.unlistenMouseMove();
-    this.unlistenMouseUp();
-    this.resizableContainer.mouseup.next(event);
-  }
+        this.unlistenMouseUp = this.renderer.listen('document', 'mouseup', (mouseUpEvent: MouseEvent) => {
+            this.onMouseup(mouseUpEvent);
+        });
 
-  private onMousemove(event: MouseEvent): void {
-    this.resizableContainer.mousemove.next(event);
-  }
+        this.resizableContainer.mousedown.next({ ...event, resize: true });
+    }
+
+    private onMouseup(event: MouseEvent): void {
+        this.unlistenMouseMove?.();
+        this.unlistenMouseUp();
+        this.resizableContainer.mouseup.next(event);
+    }
+
+    private onMousemove(event: MouseEvent): void {
+        this.resizableContainer.mousemove.next(event);
+    }
 }

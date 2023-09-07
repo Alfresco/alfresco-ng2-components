@@ -43,7 +43,6 @@ import { FormFieldModel } from './core';
     encapsulation: ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {
-
     /** Does the widget show a read-only value? (ie, can't be edited) */
     @Input()
     readOnly: boolean = false;
@@ -60,8 +59,7 @@ export class WidgetComponent implements AfterViewInit {
 
     touched: boolean = false;
 
-    constructor(public formService?: FormService) {
-    }
+    constructor(public formService?: FormService) {}
 
     hasField(): boolean {
         return !!this.field;
@@ -70,7 +68,7 @@ export class WidgetComponent implements AfterViewInit {
     // Note for developers:
     // returns <any> object to be able binding it to the <element required="required"> attribute
     isRequired(): any {
-        if (this.field && this.field.required) {
+        if (this.field?.required) {
             return true;
         }
         return null;
@@ -85,9 +83,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     hasValue(): boolean {
-        return this.field &&
-            this.field.value !== null &&
-            this.field.value !== undefined;
+        return this.field?.value !== null && this.field?.value !== undefined;
     }
 
     isInvalidFieldRequired() {

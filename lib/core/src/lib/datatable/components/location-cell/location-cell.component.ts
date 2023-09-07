@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnInit, Optional,
-    ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DataTableService } from '../../services/datatable.service';
 
@@ -48,14 +42,10 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
 
     /** @override */
     ngOnInit() {
-        if (this.column && this.column.key && this.row && this.data) {
-            const path: any = this.data.getValue(
-                this.row,
-                this.column,
-                this.resolverFn
-            );
+        if (this.column?.key && this.row && this.data) {
+            const path: any = this.data.getValue(this.row, this.column, this.resolverFn);
 
-            if (path && path.name && path.elements) {
+            if (path?.name && path.elements) {
                 this.value$.next(path.name.split('/').pop());
 
                 if (!this.tooltip) {

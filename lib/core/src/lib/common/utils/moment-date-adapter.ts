@@ -21,7 +21,6 @@ import moment, { isMoment, Moment } from 'moment';
 
 @Injectable()
 export class MomentDateAdapter extends DateAdapter<Moment> {
-
     private localeData: any = moment.localeData();
 
     overrideDisplayFormat: string;
@@ -50,7 +49,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
                 return this.localeData.monthsShort();
             case 'narrow':
                 return this.localeData.monthsShort().map((month) => month[0]);
-            default :
+            default:
                 return [];
         }
     }
@@ -72,7 +71,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
                 return this.localeData.weekdaysShort();
             case 'narrow':
                 return this.localeData.weekdaysShort();
-            default :
+            default:
                 return [];
         }
     }
@@ -134,7 +133,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         date = this.clone(date);
         displayFormat = this.overrideDisplayFormat ? this.overrideDisplayFormat : displayFormat;
 
-        if (date && date.format) {
+        if (date?.format) {
             return date.utc().local().format(displayFormat);
         } else {
             return '';

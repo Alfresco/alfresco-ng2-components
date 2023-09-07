@@ -59,7 +59,6 @@ export interface FormRepresentationModel {
     };
 }
 export class FormModel implements ProcessFormModel {
-
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
@@ -161,7 +160,6 @@ export class FormModel implements ProcessFormModel {
             validateFormEvent.errorsField = errorsField;
             this.formService.validateForm.next(validateFormEvent);
         }
-
     }
 
     /**
@@ -203,7 +201,7 @@ export class FormModel implements ProcessFormModel {
 
         if (json.fields) {
             fields = json.fields;
-        } else if (json.formDefinition && json.formDefinition.fields) {
+        } else if (json.formDefinition?.fields) {
             fields = json.formDefinition.fields;
         }
 
@@ -253,11 +251,7 @@ export class FormModel implements ProcessFormModel {
      */
     getFormVariable(identifier: string): FormVariableModel {
         if (identifier) {
-            return this.variables.find(
-                variable =>
-                    variable.name === identifier ||
-                    variable.id === identifier
-            );
+            return this.variables.find((variable) => variable.name === identifier || variable.id === identifier);
         }
         return undefined;
     }
@@ -271,7 +265,7 @@ export class FormModel implements ProcessFormModel {
     getDefaultFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
-        if (variable && variable.hasOwnProperty('value')) {
+        if (variable?.hasOwnProperty('value')) {
             return this.parseValue(variable.type, variable.value);
         }
 
@@ -288,11 +282,9 @@ export class FormModel implements ProcessFormModel {
     getProcessVariableValue(name: string): any {
         let value;
         if (this.processVariables?.length) {
-            const names = [`variables.${ name }`, name];
+            const names = [`variables.${name}`, name];
 
-            const processVariable = this.processVariables.find(
-                entry => names.includes(entry.name)
-            );
+            const processVariable = this.processVariables.find((entry) => names.includes(entry.name));
 
             if (processVariable) {
                 value = this.parseValue(processVariable.type, processVariable.value);
@@ -310,13 +302,9 @@ export class FormModel implements ProcessFormModel {
         if (type && value) {
             switch (type) {
                 case 'date':
-                    return value
-                        ? `${value}T00:00:00.000Z`
-                        : undefined;
+                    return value ? `${value}T00:00:00.000Z` : undefined;
                 case 'boolean':
-                    return typeof value === 'string'
-                        ? JSON.parse(value)
-                        : value;
+                    return typeof value === 'string' ? JSON.parse(value) : value;
                 default:
                     return value;
             }
@@ -356,7 +344,7 @@ export class FormModel implements ProcessFormModel {
                     field.field.columns.forEach((column) => {
                         formFieldModel.push(...column.fields);
                     });
-                }else{
+                } else {
                     formFieldModel.push(field);
                 }
             }
@@ -387,20 +375,14 @@ export class FormModel implements ProcessFormModel {
                 isSystem: true
             });
 
-            const customOutcomes = (this.json.outcomes || []).map(
-                (obj) => new FormOutcomeModel(this, obj)
-            );
+            const customOutcomes = (this.json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
 
-            this.outcomes = [saveOutcome].concat(
-                customOutcomes.length > 0
-                    ? customOutcomes
-                    : [completeOutcome, startProcessOutcome]
-            );
+            this.outcomes = [saveOutcome].concat(customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]);
         }
     }
 
     addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
-        this.fieldsCache.forEach(field => {
+        this.fieldsCache.forEach((field) => {
             if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isValidDropDown(field.id))) {
                 this.values[field.id] = valuesToSetIfNotPresent[field.id];
                 field.json.value = this.values[field.id];
@@ -423,11 +405,11 @@ export class FormModel implements ProcessFormModel {
     setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
         const linkedWidgetType = linkedUploadWidgetContentSelected?.options?.linkedWidgetType ?? 'uploadWidget';
 
-        const subscribedViewers = this.fieldsCache.filter(field =>
-            linkedUploadWidgetContentSelected.uploadWidgetId === field.params[linkedWidgetType]
+        const subscribedViewers = this.fieldsCache.filter(
+            (field) => linkedUploadWidgetContentSelected.uploadWidgetId === field.params[linkedWidgetType]
         );
 
-        subscribedViewers.forEach(viewer => {
+        subscribedViewers.forEach((viewer) => {
             this.values[viewer.id] = linkedUploadWidgetContentSelected.id;
             viewer.json.value = this.values[viewer.id];
             viewer.value = viewer.parseValue(viewer.json);

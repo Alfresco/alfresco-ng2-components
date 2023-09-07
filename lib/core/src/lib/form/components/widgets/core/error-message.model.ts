@@ -18,12 +18,11 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 export class ErrorMessageModel {
-
     message: string = '';
     attributes: Map<string, string> = null;
 
     constructor(obj?: any) {
-        this.message = obj && obj.message ? obj.message : '';
+        this.message = obj?.message || '';
         this.attributes = new Map();
     }
 

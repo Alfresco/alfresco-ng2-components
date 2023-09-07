@@ -27,15 +27,13 @@ import { map, catchError, retry } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TranslateLoaderService implements TranslateLoader {
-
     private prefix: string = 'i18n';
     private suffix: string = '.json';
     private providers: ComponentTranslationModel[] = [];
-    private queue: string [][] = [];
+    private queue: string[][] = [];
     private defaultLang: string = 'en';
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     setDefaultLang(value: string) {
         this.defaultLang = value || 'en';
@@ -51,7 +49,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     providerRegistered(name: string): boolean {
-        return this.providers.find((x) => x.name === name) ? true : false;
+        return !!this.providers.find((x) => x.name === name);
     }
 
     fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
@@ -86,9 +84,7 @@ export class TranslateLoaderService implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                observableBatch.push(
-                    this.fetchLanguageFile(lang, component)
-                );
+                observableBatch.push(this.fetchLanguageFile(lang, component));
             }
         });
 
@@ -102,7 +98,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     isComponentInQueue(lang: string, name: string) {
-        return (this.queue[lang] || []).find((x) => x === name) ? true : false;
+        return !!(this.queue[lang] || []).find((x) => x === name);
     }
 
     getFullTranslationJSON(lang: string): any {
@@ -120,7 +116,7 @@ export class TranslateLoaderService implements TranslateLoader {
                 return a.name.localeCompare(b.name);
             })
             .forEach((model) => {
-                if (model.json && model.json[lang]) {
+                if (model.json?.[lang]) {
                     result = ObjectUtils.merge(result, model.json[lang]);
                 }
             });
@@ -131,16 +127,17 @@ export class TranslateLoaderService implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         let hasFailures = false;
         const batch = [
-            ...this.getComponentToFetch(lang).map((observable) => observable.pipe(
-                catchError((error) => {
-                    hasFailures = true;
-                    return of(error);
-                })
-            ))
+            ...this.getComponentToFetch(lang).map((observable) =>
+                observable.pipe(
+                    catchError((error) => {
+                        hasFailures = true;
+                        return of(error);
+                    })
+                )
+            )
         ];
 
         return new Observable((observer) => {
-
             if (batch.length > 0) {
                 forkJoin(batch).subscribe(
                     () => {
@@ -156,7 +153,8 @@ export class TranslateLoaderService implements TranslateLoader {
                     },
                     () => {
                         observer.error('Failed to load some resources');
-                    });
+                    }
+                );
             } else {
                 const fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {

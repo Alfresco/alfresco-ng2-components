@@ -269,16 +269,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.keyManager.onKeydown(event);
     }
 
-    constructor(private elementRef: ElementRef,
-                differs: IterableDiffers,
-                private matIconRegistry: MatIconRegistry,
-                private sanitizer: DomSanitizer) {
+    constructor(private elementRef: ElementRef, differs: IterableDiffers, private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
 
-        this.click$ = new Observable<DataRowEvent>((observer) => this.clickObserver = observer)
-            .pipe(share());
+        this.click$ = new Observable<DataRowEvent>((observer) => (this.clickObserver = observer)).pipe(share());
     }
 
     ngOnInit(): void {
@@ -298,14 +294,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     ngAfterViewInit() {
-        this.keyManager = new FocusKeyManager(this.rowsList)
-            .withWrap()
-            .skipPredicate(item => item.disabled);
+        this.keyManager = new FocusKeyManager(this.rowsList).withWrap().skipPredicate((item) => item.disabled);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.initAndSubscribeClickStream();
-        if(this.selectedRowId) {
+        if (this.selectedRowId) {
             this.setRowAsContextSource();
         }
 
@@ -358,8 +352,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
         const allColumns = this.data.getColumns();
-        const shownColumns = allColumns.filter(column => !column.isHidden);
-        const hiddenColumns = allColumns.filter(column => column.isHidden);
+        const shownColumns = allColumns.filter((column) => !column.isHidden);
+        const hiddenColumns = allColumns.filter((column) => column.isHidden);
 
         moveItemInArray(shownColumns, event.previousIndex, event.currentIndex);
         const allColumnsWithNewOrder = [...shownColumns, ...hiddenColumns];
@@ -378,14 +372,14 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     isPropertyChanged(property: SimpleChange): boolean {
-        return !!(property && property.currentValue);
+        return !!property?.currentValue;
     }
 
-    convertToRowsData(rows: any []): ObjectDataRow[] {
+    convertToRowsData(rows: any[]): ObjectDataRow[] {
         return rows.map((row) => new ObjectDataRow(row, row.isSelected));
     }
 
-    convertToColumnsData(columns: any []): ObjectDataColumn[] {
+    convertToColumnsData(columns: any[]): ObjectDataColumn[] {
         return columns.map((column) => new ObjectDataColumn(column));
     }
 
@@ -398,16 +392,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     private initAndSubscribeClickStream() {
         this.unsubscribeClickStream();
-        const singleClickStream = this.click$
-            .pipe(
-                buffer(
-                    this.click$.pipe(
-                        debounceTime(250)
-                    )
-                ),
-                map((list) => list),
-                filter((x) => x.length === 1)
-            );
+        const singleClickStream = this.click$.pipe(
+            buffer(this.click$.pipe(debounceTime(250))),
+            map((list) => list),
+            filter((x) => x.length === 1)
+        );
 
         this.singleClickStreamSub = singleClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
             const event: DataRowEvent = dataRowEvents[0];
@@ -423,16 +412,11 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             }
         });
 
-        const multiClickStream = this.click$
-            .pipe(
-                buffer(
-                    this.click$.pipe(
-                        debounceTime(250)
-                    )
-                ),
-                map((list) => list),
-                filter((x) => x.length >= 2)
-            );
+        const multiClickStream = this.click$.pipe(
+            buffer(this.click$.pipe(debounceTime(250))),
+            map((list) => list),
+            filter((x) => x.length >= 2)
+        );
 
         this.multiClickStreamSub = multiClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
             const event: DataRowEvent = dataRowEvents[0];
@@ -489,10 +473,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     private getRuntimeColumns(): any[] {
-        return [
-            ...(this.columns || []),
-            ...this.getSchemaFromHtml()
-        ];
+        return [...(this.columns || []), ...this.getSchemaFromHtml()];
     }
 
     private setTableSchema() {
@@ -511,7 +492,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     public getSchemaFromHtml(): any {
         let schema = [];
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+        if (this.columnList?.columns?.length > 0) {
             schema = this.columnList.columns.map((c) => c as DataColumn);
         }
         return schema;
@@ -577,7 +558,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         if (this.data) {
             const rows = this.data.getRows();
             if (rows && rows.length > 0) {
-                rows.forEach((r) => r.isSelected = false);
+                rows.forEach((r) => (r.isSelected = false));
             }
             this.selection = [];
         }
@@ -722,7 +703,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isIconValue(row: DataRow, col: DataColumn): boolean {
         if (row && col) {
             const value = row.getValue(col.key);
-            return value && value.startsWith('material-icons://');
+            return value?.startsWith('material-icons://');
         }
         return false;
     }
@@ -809,13 +790,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     markRowAsContextMenuSource(selectedRow: DataRow): void {
         this.selectedRowId = selectedRow.id ? selectedRow.id : '';
-        this.data.getRows().forEach((row) => row.isContextMenuSource = false);
+        this.data.getRows().forEach((row) => (row.isContextMenuSource = false));
         selectedRow.isContextMenuSource = true;
     }
 
     private setRowAsContextSource(): void {
         const selectedRow = this.data.getRows().find((row) => this.selectedRowId === row.id);
-        if(selectedRow) {
+        if (selectedRow) {
             selectedRow.isContextMenuSource = true;
         }
     }
@@ -845,7 +826,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     findSelectionById(id: string): number {
-        return this.selection.findIndex(selection => selection?.id === id);
+        return this.selection.findIndex((selection) => selection?.id === id);
     }
 
     getCellTooltip(row: DataRow, col: DataColumn): string {
@@ -923,7 +904,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         if (this.display === 'gallery') {
             for (let i = 0; i < maxGalleryRows; i++) {
-               this.fakeRows.push('');
+                this.fakeRows.push('');
             }
         } else {
             this.fakeRows = [];
@@ -931,7 +912,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     getNameColumnValue() {
-        return this.data.getColumns().find( (el: any) => el.key.includes('name'));
+        return this.data.getColumns().find((el: any) => el.key.includes('name'));
     }
 
     getAutomationValue(row: DataRow): any {
@@ -944,35 +925,27 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
         }
 
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
+        return this.isColumnSorted(column, 'asc') ? 'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' : 'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
     }
 
     getSortLiveAnnouncement(column: DataColumn): string {
         if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' ;
+            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT';
         }
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
+        return this.isColumnSorted(column, 'asc')
+            ? 'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY'
+            : 'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
     }
 
     private registerDragHandleIcon(): void {
-        const iconUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            './assets/images/drag_indicator_24px.svg'
-        );
+        const iconUrl = this.sanitizer.bypassSecurityTrustResourceUrl('./assets/images/drag_indicator_24px.svg');
 
-        this.matIconRegistry.addSvgIconInNamespace(
-            'adf',
-            'drag_indicator',
-            iconUrl
-        );
+        this.matIconRegistry.addSvgIconInNamespace('adf', 'drag_indicator', iconUrl);
     }
 
     onResizing({ rectangle: { width } }: ResizeEvent, colIndex: number): void {
         const timeoutId = setTimeout(() => {
-            const allColumns = this.data.getColumns().filter(column => !column.isHidden);
+            const allColumns = this.data.getColumns().filter((column) => !column.isHidden);
             allColumns[colIndex].width = width;
             this.data.setColumns(allColumns);
 
@@ -1003,11 +976,9 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             headerContainerColumns.forEach((column: HTMLElement, index: number): void => {
                 if (allColumns[index]) {
                     if (index === 0) {
-                        allColumns[index].width =
-                            column.clientWidth - parseInt(window.getComputedStyle(column).paddingLeft, 10);
-                    } else if ( index === headerContainerColumns.length - 1) {
-                        allColumns[index].width =
-                            column.clientWidth - parseInt(window.getComputedStyle(column).paddingRight, 10);
+                        allColumns[index].width = column.clientWidth - parseInt(window.getComputedStyle(column).paddingLeft, 10);
+                    } else if (index === headerContainerColumns.length - 1) {
+                        allColumns[index].width = column.clientWidth - parseInt(window.getComputedStyle(column).paddingRight, 10);
                     } else {
                         allColumns[index].width = column.clientWidth;
                     }

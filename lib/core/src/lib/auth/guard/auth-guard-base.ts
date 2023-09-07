@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Router,
-    CanActivate,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    CanActivateChild,
-    UrlTree
-} from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -39,10 +32,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     private storageService = inject(StorageService);
 
     protected get withCredentials(): boolean {
-        return this.appConfigService.get<boolean>(
-            'auth.withCredentials',
-            false
-        );
+        return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
 
     abstract checkLogin(
@@ -54,7 +44,6 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
         if (this.authenticationService.isLoggedIn() && this.authenticationService.isOauth() && this.isLoginFragmentPresent()) {
             return this.redirectSSOSuccessURL();
         }
@@ -116,23 +105,11 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected getLoginRoute(): string {
-        return (
-            this.appConfigService &&
-            this.appConfigService.get<string>(
-                AppConfigValues.LOGIN_ROUTE,
-                'login'
-            )
-        );
+        return this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
     }
 
     protected getProvider(): string {
-        return (
-            this.appConfigService &&
-            this.appConfigService.get<string>(
-                AppConfigValues.PROVIDERS,
-                'ALL'
-            )
-        );
+        return this.appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
     }
 
     protected isOAuthWithoutSilentLogin(): boolean {
@@ -141,8 +118,7 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     }
 
     protected isSilentLogin(): boolean {
-        const oauth = this.appConfigService.oauth2;;
+        const oauth = this.appConfigService.oauth2;
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
-
 }

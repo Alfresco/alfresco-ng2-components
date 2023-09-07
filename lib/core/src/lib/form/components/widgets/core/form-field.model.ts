@@ -32,7 +32,6 @@ import { DataColumn } from '../../../../datatable/data/data-column.model';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
-
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
@@ -105,7 +104,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     get readOnly(): boolean {
-        if (this.form && this.form.readOnly) {
+        if (this.form?.readOnly) {
             return true;
         }
         return this._readOnly;
@@ -206,7 +205,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             if (FormFieldTypes.isReadOnlyType(this.type)) {
-                if (this.params && this.params.field) {
+                if (this.params?.field) {
                     this.setValueForReadonlyType(form);
                 }
             }
@@ -241,9 +240,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getDefaultDateFormat(jsonField: any): string {
         let originalType = jsonField.type;
-        if (FormFieldTypes.isReadOnlyType(jsonField.type) &&
-            jsonField.params &&
-            jsonField.params.field) {
+        if (FormFieldTypes.isReadOnlyType(jsonField.type) && jsonField.params && jsonField.params.field) {
             originalType = jsonField.params.field.type;
         }
         return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
@@ -301,7 +298,6 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
-
             if (json.options) {
                 if (json.hasEmptyValue) {
                     const emptyOption = json.options[0];
@@ -328,8 +324,9 @@ export class FormFieldModel extends FormWidgetModel {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
             // TODO: needs to be reported and fixed at Activiti side
-            const entry: FormFieldOption[] = this.options.filter((opt) =>
-                opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name)));
+            const entry: FormFieldOption[] = this.options.filter(
+                (opt) => opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name))
+            );
             if (entry.length > 0) {
                 value = entry[0].id;
             }
@@ -347,7 +344,7 @@ export class FormFieldModel extends FormWidgetModel {
                 } else {
                     dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
                 }
-                if (dateValue && dateValue.isValid()) {
+                if (dateValue?.isValid()) {
                     value = dateValue.utc().format(this.dateDisplayFormat);
                 }
             }
@@ -367,7 +364,6 @@ export class FormFieldModel extends FormWidgetModel {
 
         switch (this.type) {
             case FormFieldTypes.DROPDOWN:
-
                 if (!this.value) {
                     this.form.values[this.id] = null;
                     break;
@@ -422,7 +418,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 const dateValue = moment(this.value, this.dateDisplayFormat, true);
-                if (dateValue && dateValue.isValid()) {
+                if (dateValue?.isValid()) {
                     this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
@@ -435,7 +431,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 const dateTimeValue = moment.utc(this.value, this.dateDisplayFormat, true);
-                if (dateTimeValue && dateTimeValue.isValid()) {
+                if (dateTimeValue?.isValid()) {
                     /* cspell:disable-next-line */
                     this.form.values[this.id] = `${dateTimeValue.utc().format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
                 } else {
@@ -450,7 +446,7 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
             case FormFieldTypes.BOOLEAN:
-                this.form.values[this.id] = (this.value !== null && this.value !== undefined) ? this.value : false;
+                this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;
             case FormFieldTypes.PEOPLE:
                 this.form.values[this.id] = this.value ? this.value : null;
@@ -482,28 +478,18 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     hasOptions() {
-        return this.options && this.options.length > 0;
+        return this.options?.length > 0;
     }
 
     private isDateField(json: any) {
-        return (json.params &&
-            json.params.field &&
-            json.params.field.type === FormFieldTypes.DATE) ||
-            json.type === FormFieldTypes.DATE;
+        return json.params?.field?.type === FormFieldTypes.DATE || json.type === FormFieldTypes.DATE;
     }
 
     private isDateTimeField(json: any): boolean {
-        return (json.params &&
-            json.params.field &&
-            json.params.field.type === FormFieldTypes.DATETIME) ||
-            json.type === FormFieldTypes.DATETIME;
+        return json.params?.field?.type === FormFieldTypes.DATETIME || json.type === FormFieldTypes.DATETIME;
     }
 
     private isCheckboxField(json: any): boolean {
-        return (json.params &&
-            json.params.field &&
-            json.params.field.type === FormFieldTypes.BOOLEAN) ||
-            json.type === FormFieldTypes.BOOLEAN;
+        return json.params?.field?.type === FormFieldTypes.BOOLEAN || json.type === FormFieldTypes.BOOLEAN;
     }
-
 }

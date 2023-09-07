@@ -38,29 +38,23 @@ import { DataTableService } from '../../services/datatable.service';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {
-
     /** Editable JSON. */
     @Input()
     editable: boolean = false;
 
-    constructor(
-        private dialog: MatDialog,
-        @Optional() dataTableService: DataTableService
-    ) {
+    constructor(private dialog: MatDialog, @Optional() dataTableService: DataTableService) {
         super(dataTableService);
     }
 
     ngOnInit() {
-        if (this.column && this.column.key && this.row && this.data) {
+        if (this.column?.key && this.row && this.data) {
             this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
         }
     }
 
     view() {
         const rawValue: string | any = this.data.getValue(this.row, this.column, this.resolverFn);
-        const value = typeof rawValue === 'object'
-            ? JSON.stringify(rawValue || {}, null, 2)
-            : rawValue;
+        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
 
         const settings: EditJsonDialogSettings = {
             title: this.column.title,
@@ -68,16 +62,19 @@ export class JsonCellComponent extends DataTableCellComponent implements OnInit 
             value
         };
 
-        this.dialog.open(EditJsonDialogComponent, {
-            data: settings,
-            minWidth: '50%',
-            minHeight: '50%'
-        }).afterClosed().subscribe((/*result: string*/) => {
-            if (typeof rawValue === 'object') {
-                // todo: update cell value as object
-            } else {
-                // todo: update cell value as string
-            }
-        });
+        this.dialog
+            .open(EditJsonDialogComponent, {
+                data: settings,
+                minWidth: '50%',
+                minHeight: '50%'
+            })
+            .afterClosed()
+            .subscribe((/*result: string*/) => {
+                if (typeof rawValue === 'object') {
+                    // todo: update cell value as object
+                } else {
+                    // todo: update cell value as string
+                }
+            });
     }
 }

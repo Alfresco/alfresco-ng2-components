@@ -24,7 +24,6 @@ import { FileInfo, FileUtils } from '../common/utils/file-utils';
     selector: '[adf-upload]'
 })
 export class UploadDirective implements OnInit, OnDestroy {
-
     /** Enables/disables uploading. */
     @Input('adf-upload')
     enabled: boolean = true;
@@ -135,7 +134,6 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     onDrop(event: Event) {
         if (this.isDropMode()) {
-
             event.stopPropagation();
             event.preventDefault();
 
@@ -147,7 +145,6 @@ export class UploadDirective implements OnInit, OnDestroy {
                 this.getFilesDropped(dataTransfer).then((files) => {
                     this.onUploadFiles(files);
                 });
-
             }
         }
         return false;
@@ -181,10 +178,10 @@ export class UploadDirective implements OnInit, OnDestroy {
     }
 
     getDataTransfer(event: Event | any): DataTransfer {
-        if (event && event.dataTransfer) {
+        if (event?.dataTransfer) {
             return event.dataTransfer;
         }
-        if (event && event.originalEvent && event.originalEvent.dataTransfer) {
+        if (event?.originalEvent?.dataTransfer) {
             return event.originalEvent.dataTransfer;
         }
         return null;
@@ -207,34 +204,38 @@ export class UploadDirective implements OnInit, OnDestroy {
                             const item = items[i].webkitGetAsEntry();
                             if (item) {
                                 if (item.isFile) {
-                                    iterations.push(Promise.resolve({
-                                        entry: item,
-                                        file: items[i].getAsFile(),
-                                        relativeFolder: '/'
-                                    }));
+                                    iterations.push(
+                                        Promise.resolve({
+                                            entry: item,
+                                            file: items[i].getAsFile(),
+                                            relativeFolder: '/'
+                                        })
+                                    );
                                 } else if (item.isDirectory) {
-                                    iterations.push(new Promise((resolveFolder) => {
-                                        FileUtils.flatten(item).then((files) => resolveFolder(files));
-                                    }));
+                                    iterations.push(
+                                        new Promise((resolveFolder) => {
+                                            FileUtils.flatten(item).then((files) => resolveFolder(files));
+                                        })
+                                    );
                                 }
                             }
                         } else {
-                            iterations.push(Promise.resolve({
-                                entry: null,
-                                file: items[i].getAsFile(),
-                                relativeFolder: '/'
-                            }));
+                            iterations.push(
+                                Promise.resolve({
+                                    entry: null,
+                                    file: items[i].getAsFile(),
+                                    relativeFolder: '/'
+                                })
+                            );
                         }
                     }
                 } else {
                     // safari or FF
-                    const files = FileUtils
-                        .toFileArray(dataTransfer.files)
-                        .map((file) => ({
-                            entry: null,
-                            file,
-                            relativeFolder: '/'
-                        }));
+                    const files = FileUtils.toFileArray(dataTransfer.files).map((file) => ({
+                        entry: null,
+                        file,
+                        relativeFolder: '/'
+                    }));
 
                     iterations.push(Promise.resolve(files));
                 }
@@ -255,11 +256,13 @@ export class UploadDirective implements OnInit, OnDestroy {
         if (this.isClickMode()) {
             const input = event.currentTarget;
             const files = FileUtils.toFileArray(input.files);
-            this.onUploadFiles(files.map((file) => ({
-                entry: null,
-                file,
-                relativeFolder: '/'
-            })));
+            this.onUploadFiles(
+                files.map((file) => ({
+                    entry: null,
+                    file,
+                    relativeFolder: '/'
+                }))
+            );
             event.target.value = '';
         }
     }

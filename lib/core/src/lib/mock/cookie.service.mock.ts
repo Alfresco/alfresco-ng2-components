@@ -20,7 +20,6 @@ import { CookieService } from '../common/services/cookie.service';
 
 @Injectable()
 export class CookieServiceMock extends CookieService {
-
     /** @override */
     isEnabled(): boolean {
         return true;
@@ -28,18 +27,18 @@ export class CookieServiceMock extends CookieService {
 
     /** @override */
     getItem(key: string): string | null {
-        return this[key] && this[key].data || null;
+        return this[key]?.data || null;
     }
 
     /** @override */
     setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
-        this[key] = {data, expiration, path};
+        this[key] = { data, expiration, path };
     }
 
     /** @override */
     clear() {
         Object.keys(this).forEach((key) => {
-            if (this.hasOwnProperty(key) && typeof(this[key]) !== 'function') {
+            if (this.hasOwnProperty(key) && typeof this[key] !== 'function') {
                 this[key] = undefined;
             }
         });
