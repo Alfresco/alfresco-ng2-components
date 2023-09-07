@@ -446,9 +446,9 @@ describe('Content Services Viewer', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnTab('Properties');
         await viewerPage.checkTabIsActive('Properties');
-        await metadataViewPage.editIconClick();
+        await metadataViewPage.clickEditIconGeneral();
         await metadataViewPage.enterPropertyText('properties.cm:name', newName);
-        await metadataViewPage.clickSaveMetadata();
+        await metadataViewPage.clickSaveGeneralMetadata();
         await viewerPage.clickCloseButton();
     }
 });
