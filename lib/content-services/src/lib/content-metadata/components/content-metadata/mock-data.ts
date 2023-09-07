@@ -51,7 +51,7 @@ export const mockGroupProperties = [
             }
         ],
         editable: true,
-        expanded: true,
+        expanded: true
     },
     {
         title: 'CUSTOM',
@@ -73,6 +73,6 @@ export const mockGroupProperties = [
             }
         ],
         editable: true,
-        expanded: true,
+        expanded: true
     }
 ];
