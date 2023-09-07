@@ -32,6 +32,7 @@ import {
     CardViewBaseItemModel,
     CardViewItem,
     LogService,
+    NotificationService,
     TranslationService,
     UpdateNotification
 } from '@alfresco/adf-core';
@@ -47,7 +48,6 @@ import { CategoriesManagementMode } from '../../../category/categories-managemen
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { AllowableOperationsEnum, ContentService } from '../../../common';
 import { ButtonType } from './button-type.enum';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -136,6 +136,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     editableChange = new EventEmitter<boolean>();
 
+    /** Emitted when content's editableTags state is changed. **/
+    @Output()
+    editableTagsChange = new EventEmitter<boolean>();
+
+    /** Emitted when content's editableCategories state is changed. **/
+    @Output()
+    editableCategoriesChange = new EventEmitter<boolean>();
+
+    @Input()
+    editableCategories = false;
+
+    @Input()
+    editableTags = false;
+
+    
+
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -159,9 +175,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     classifiableChanged = this.classifiableChangedSubject.asObservable();
     generalInfoPanelState: boolean;
     tagsPanelState: boolean;
-    editableTags = false;
     categoriesPanelState: boolean;
-    editableCategories = false;
     hasAllowableOperations = false;
     editableGroup: CardViewGroup;
     buttonType = ButtonType;
@@ -178,7 +192,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
         private contentService: ContentService,
-        private snackBar: MatSnackBar
+        private  notificationService: NotificationService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -355,11 +369,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     showSnackbar(message: string): void {
-        this.snackBar.open(message, '', {
-            duration: 3000,
-            verticalPosition: 'bottom',
-            panelClass: ['adf-snackbar-message']
-        });
+        this.notificationService.showError(message)
     }
 
     toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
@@ -377,6 +387,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         switch (buttonType) {
             case ButtonType.GeneralInfo:
                 this.editable = !this.editable;
+                this.editableChange.emit(this.editable);
                 this.panel.open();
                 this.editableTags = false;
                 this.editableCategories = false;
@@ -384,19 +395,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
+                this.editableTagsChange.emit(this.editableTags);
                 this.tagsPanelState = this.editableTags;
                 this.tagNameControlVisible = true;
                 break;
 
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
+                this.editableCategoriesChange.emit(this.editableCategories);
                 this.categoriesPanelState = this.editableCategories;
                 this.categoryControlVisible = true;
                 break;
 
             case ButtonType.Group:
                 group.editable = !group.editable;
-                this.editableChange.emit(this.editable);
                 this.editableGroup = group.editable ? group : null;
                 if (group.editable) {
                     group.expanded = true;
