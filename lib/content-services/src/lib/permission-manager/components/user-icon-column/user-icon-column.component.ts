@@ -61,13 +61,15 @@ export class UserIconColumnComponent implements OnInit {
         if (this.context) {
             const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
             this.group = this.isGroup(group, authorityId);
-            this.displayText$.next(new User(person) || group || { displayName: authorityId });
+            const user = person ? new User(person) : undefined;
+            this.displayText$.next(user || group || { displayName: authorityId });
         }
 
         if (this.node) {
             const { person, group } = this.nodePermissionService.transformNodeToUserPerson(this.node.entry);
             this.group = this.isGroup(group, null);
-            this.displayText$.next(new User(person) || group);
+            const user = person ? new User(person) : undefined;
+            this.displayText$.next(user || group);
         }
     }
 
