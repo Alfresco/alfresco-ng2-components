@@ -398,7 +398,7 @@ describe('Permissions Component', () => {
             await contentServicesPage.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
         });
 
-        fit('[C279881] No Permission User', async () => {
+        it('[C279881] No Permission User', async () => {
             await loginPage.login(filePermissionUser.username, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
