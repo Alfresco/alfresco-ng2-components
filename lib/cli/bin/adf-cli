@@ -1,44 +1,45 @@
 #!/usr/bin/env node
 const minimist = require('minimist');
-const path = require('path');
-const fs = require('fs');
+const { resolve, join }  = require('node:path');
+const { readFileSync, existsSync } = require('node:fs');
+const { argv, exit, env, cwd } = require('node:process');
 
 function printHelp() {
-    const pkgData = fs.readFileSync(path.resolve(__dirname, '..', 'package.json'));
+    const pkgData = readFileSync(resolve(__dirname, '..', 'package.json')).toString();
     const { name, version } = JSON.parse(pkgData);
     console.log(`${name} v${version}`);
 }
 
-const args = minimist(process.argv.slice(2), {
+const args = minimist(argv.slice(2), {
     boolean: ['verbose']
 });
 
 if (args._.length === 0) {
     printHelp();
-    process.exit(1);
+    exit(1);
 }
 
 const scriptName = args._.shift();
-const scriptPath = process.env.DEVELOP
-    ? path.resolve(path.join(__dirname, '../dist/scripts', scriptName))
-    : path.resolve(path.join(__dirname, '../scripts', scriptName));
+const scriptPath = env.DEVELOP
+    ? resolve(join(__dirname, '../dist/scripts', scriptName))
+    : resolve(join(__dirname, '../scripts', scriptName));
 
-if (!fs.existsSync(`${scriptPath}.js`)) {
+if (!existsSync(`${scriptPath}.js`)) {
     console.error(`Error: command ${scriptName} not found.`);
-    process.exit(1);
+    exit(1);
 }
 
-const cwd = process.cwd();
+const workingDir = cwd();
 
 try {
     Promise.resolve()
-        .then(() => require(scriptPath).default(args, cwd))
-        .then(exitCode => process.exit(exitCode || 0))
+        .then(() => require(scriptPath).default(args, workingDir))
+        .then(exitCode => exit(exitCode || 0))
         .catch(err => {
             console.error(err && err.stack);
-            process.exit(99);
+            exit(99);
         });
 } catch (err) {
     console.error(err.stack);
-    process.exit(99);
+    exit(99);
 }

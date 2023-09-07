@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { exit } from 'node:process';
+
 /* eslint-disable */
 let log = null;
 
@@ -23,9 +25,9 @@ log = {
     info: console.log.bind(console),
     warn: console.warn.bind(console),
     error: console.error.bind(console),
-    fatal: x => {
-        console.error(x);
-        process.exit(100);
+    fatal: (err) => {
+        console.error(err);
+        exit(100);
     },
     createChild: () => log
 };

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import { argv, exit } from 'node:process';
+import { argv } from 'node:process';
 import program from 'commander';
 import * as path from 'path';
 import * as fs from 'fs';
