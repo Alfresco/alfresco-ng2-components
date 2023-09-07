@@ -214,8 +214,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     editableTags = false;
 
-    
-
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -510,7 +508,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
