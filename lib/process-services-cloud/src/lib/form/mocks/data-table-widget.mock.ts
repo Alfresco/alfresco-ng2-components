@@ -85,20 +85,21 @@ export const mockEuropeCountriesData = [
 ];
 
 export const mockJsonResponseEuropeCountriesData = {
-    data: [
-        {
-            id: 'PL',
-            name: 'Poland'
-        },
-        {
-            id: 'IT',
-            name: 'Italy'
-        },
-        {
-            id: 'UK',
-            name: 'United Kingdom'
-        }
-    ]
+    data: mockEuropeCountriesData
+};
+
+export const mockJsonNestedResponseEuropeCountriesData = {
+    response: {
+        empty: [],
+        'my-data': mockEuropeCountriesData,
+        data: [
+            {
+                id: 'HR',
+                name: 'Croatia'
+            }
+        ],
+        'no-array': {}
+    }
 };
 
 export const mockAmericaCountriesData = [
@@ -135,6 +136,10 @@ export const mockJsonFormVariable = [
 
 export const mockJsonResponseFormVariable = [
     new TaskVariableCloud({ name: 'json-form-variable', value: mockJsonResponseEuropeCountriesData, type: 'json', id: 'fake-id-1' })
+];
+
+export const mockJsonNestedResponseFormVariable = [
+    new TaskVariableCloud({ name: 'json-form-variable', value: mockJsonNestedResponseEuropeCountriesData, type: 'json', id: 'fake-id-1' })
 ];
 
 export const mockJsonProcessVariables = [

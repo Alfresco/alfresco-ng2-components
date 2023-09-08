@@ -90,7 +90,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     private initDataTable(): void {
-        if (this.rowsData) {
+        if (this.rowsData?.length) {
             this.dataSource = new WidgetDataTableAdapter(this.rowsData, this.columnsSchema);
 
             if (this.dataSource.isDataSourceValid()) {
@@ -99,16 +99,18 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
                 this.handleError('Data source has corrupted model or structure');
             }
         } else {
-            this.handleError('Data source not found');
+            this.handleError('Data source not found or it is not an array');
         }
     }
 
     private getRowsData(): void {
+        const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultResponseProperty;
         const fieldValue = this.field?.value;
-        const rowsData = fieldValue ? fieldValue : this.getDataFromVariable();
+        const rowsData = fieldValue || this.getDataFromVariable();
 
         if (rowsData) {
-            this.rowsData = rowsData[this.defaultResponseProperty] || rowsData as DataRow[];
+            const dataFromPath = this.getOptionsFromPath(rowsData, optionsPath);
+            this.rowsData = dataFromPath?.length ? dataFromPath : rowsData as DataRow[];
         }
     }
 
@@ -120,6 +122,23 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         const formVariableDropdownOptions = this.getVariableValueByName(formVariables, this.variableName);
 
         return processVariableDropdownOptions ?? formVariableDropdownOptions;
+    }
+
+    private getOptionsFromPath(data: any, path: string): DataRow[] {
+        const properties = path.split('.');
+        const currentProperty = properties.shift();
+
+        if (!data.hasOwnProperty(currentProperty)) {
+            return [];
+        }
+
+        const nestedData = data[currentProperty];
+
+        if (Array.isArray(nestedData)) {
+            return nestedData;
+        }
+
+        return this.getOptionsFromPath(nestedData, properties.join('.'));
     }
 
     private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
