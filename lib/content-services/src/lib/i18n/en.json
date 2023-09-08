@@ -148,6 +148,7 @@
       "NO_EXISTING_TAGS": "No Existing Tags",
       "TITLE": "Create Tags",
       "CREATE_TAG": "Create: {{tag}}",
+      "NAME": "Name",
       "INPUT_PLACEHOLDER": "Add a tag to these items",
       "ERRORS": {
         "EXISTING_TAG": "Tag already exists",
@@ -159,6 +160,7 @@
       },
       "TOOLTIPS": {
         "DELETE_TAG": "Delete tag",
+        "HIDE_INPUT": "Hide input"
       },
       "TAGS_LOADING": "Tags loading",
       "CREATE_TAGS_SUCCESS": "Tags created successfully"
@@ -175,9 +177,9 @@
     "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
     "NO_EXISTING_CATEGORIES": "No existing Categories",
     "GENERIC_CREATE": "Create: {{name}}",
+    "NAME": "Category name",
     "LOADING": "Loading",
-    "INPUT_PLACEHOLDER": "Add a categories to these items",
-    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "HIDE_INPUT": "Hide input",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
       "REQUIRED": "Category name is required",
