@@ -280,6 +280,7 @@ export class ViewerPage {
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
     }
 
     async clickPreviousPageButton(): Promise<void> {
