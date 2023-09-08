@@ -57,6 +57,7 @@ describe('Applications list', () => {
    });
 
     it('[C310373] Should all the app with running state be displayed on dashboard when alfresco-deployed-apps is not used in config file', async () => {
+        await browser.refresh();
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudPage.checkApsContainer();
 
@@ -66,7 +67,6 @@ describe('Applications list', () => {
     });
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {
-        await browser.refresh();
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudPage.checkApsContainer();
 
