@@ -21,13 +21,7 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import {
-    catchError,
-    distinctUntilChanged,
-    map,
-    switchMap,
-    tap
-} from 'rxjs/operators';
+import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { UserProcessModel } from '../../../common/models/user-process.model';
 import { PeopleProcessService } from '../../../common/services/people-process.service';
 
@@ -49,7 +43,6 @@ import { PeopleProcessService } from '../../../common/services/people-process.se
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
-
     @ViewChild('inputValue', { static: true })
     input: ElementRef;
 
@@ -71,8 +64,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((searchTerm) => {
             const value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
-            return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId)
-                .pipe(catchError(() => of([])));
+            return this.peopleProcessService.getWorkflowUsers(undefined, value, this.groupId).pipe(catchError(() => of([])));
         }),
         map((list: UserProcessModel[]) => {
             const value = this.searchTerm.value.email ? this.getDisplayName(this.searchTerm.value) : this.searchTerm.value;
@@ -94,7 +86,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 this.searchTerm.disable();
             }
             const params = this.field.params;
-            if (params && params.restrictWithGroup) {
+            if (params?.restrictWithGroup) {
                 const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
@@ -119,7 +111,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
                 if (selectedUser) {
-                    this.peopleSelected.emit(user && user.id || undefined);
+                    this.peopleSelected.emit(user?.id || undefined);
                 }
                 return selectedUser;
             });

@@ -21,7 +21,6 @@
 import { UserProcessModel } from '../../common/models/user-process.model';
 
 export class StartTaskModel {
-
     name: string;
     description: string;
     assignee: UserProcessModel;
@@ -30,11 +29,11 @@ export class StartTaskModel {
     category: string;
 
     constructor(obj?: any) {
-        this.name = obj && obj.name || null;
-        this.description = obj && obj.description || null;
-        this.assignee = obj && obj.assignee ? new UserProcessModel(obj.assignee) : null;
-        this.dueDate = obj && obj.dueDate || null;
-        this.formKey = obj && obj.formKey || null;
-        this.category = obj && obj.category || null;
+        this.name = obj?.name;
+        this.description = obj?.description;
+        this.assignee = obj?.assignee ? new UserProcessModel(obj.assignee) : null;
+        this.dueDate = obj?.dueDate;
+        this.formKey = obj?.formKey;
+        this.category = obj?.category;
     }
 }

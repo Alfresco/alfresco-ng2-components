@@ -31,7 +31,6 @@ import { share, takeUntil } from 'rxjs/operators';
     styleUrls: ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
-
     /** (**required**) The ID of the process instance to display tasks for. */
     @Input()
     processInstanceDetails: ProcessInstance;
@@ -67,23 +66,15 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     private completedTaskObserver: Observer<TaskDetailsModel>;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private activitiProcess: ProcessService,
-                private logService: LogService,
-                private dialog: MatDialog) {
-        this.task$ = new Observable<TaskDetailsModel>((observer) => this.taskObserver = observer)
-            .pipe(share());
-        this.completedTask$ = new Observable<TaskDetailsModel>((observer) => this.completedTaskObserver = observer)
-            .pipe(share());
+    constructor(private activitiProcess: ProcessService, private logService: LogService, private dialog: MatDialog) {
+        this.task$ = new Observable<TaskDetailsModel>((observer) => (this.taskObserver = observer)).pipe(share());
+        this.completedTask$ = new Observable<TaskDetailsModel>((observer) => (this.completedTaskObserver = observer)).pipe(share());
     }
 
     ngOnInit() {
-        this.task$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(task => this.activeTasks.push(task));
+        this.task$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.activeTasks.push(task));
 
-        this.completedTask$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(task => this.completedTasks.push(task));
+        this.completedTask$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.completedTasks.push(task));
     }
 
     ngOnDestroy() {
@@ -93,7 +84,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceDetails = changes['processInstanceDetails'];
-        if (processInstanceDetails && processInstanceDetails.currentValue) {
+        if (processInstanceDetails?.currentValue) {
             this.load(processInstanceDetails.currentValue.id);
         }
     }
@@ -107,7 +98,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         this.activeTasks = [];
         if (processInstanceId) {
             this.activitiProcess.getProcessTasks(processInstanceId, null).subscribe(
-                (res: TaskDetailsModel[]) => {
+                (res) => {
                     res.forEach((task) => {
                         this.taskObserver.next(task);
                     });
@@ -125,7 +116,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         this.completedTasks = [];
         if (processInstanceId) {
             this.activitiProcess.getProcessTasks(processInstanceId, 'completed').subscribe(
-                (res: TaskDetailsModel[]) => {
+                (res) => {
                     res.forEach((task) => {
                         this.completedTaskObserver.next(task);
                     });
@@ -140,14 +131,12 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     }
 
     hasStartFormDefined(): boolean {
-        return this.processInstanceDetails && this.processInstanceDetails.startFormDefined === true;
+        return this.processInstanceDetails?.startFormDefined === true;
     }
 
     getUserFullName(user: any): string {
         if (user) {
-            return (user.firstName && user.firstName !== 'null'
-                    ? user.firstName + ' ' : '') +
-                user.lastName;
+            return (user.firstName && user.firstName !== 'null' ? user.firstName + ' ' : '') + user.lastName;
         }
         return 'Nobody';
     }

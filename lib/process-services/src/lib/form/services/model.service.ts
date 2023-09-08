@@ -25,7 +25,6 @@ import { catchError, map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ModelService {
-
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -35,8 +34,7 @@ export class ModelService {
         return this._modelsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     /**
      * Create a Form.
@@ -52,9 +50,7 @@ export class ModelService {
             stencilSet: 0
         };
 
-        return from(
-            this.modelsApi.createModel(dataModel)
-        );
+        return from(this.modelsApi.createModel(dataModel));
     }
 
     /**
@@ -67,11 +63,10 @@ export class ModelService {
             modelType: 2
         };
 
-        return from(this.modelsApi.getModels(opts))
-            .pipe(
-                map(this.toJsonArray),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.modelsApi.getModels(opts)).pipe(
+            map(this.toJsonArray),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -81,10 +76,7 @@ export class ModelService {
      * @returns JSON data
      */
     toJsonArray(res: any) {
-        if (res) {
-            return res.data || [];
-        }
-        return [];
+        return res?.data || [];
     }
 
     /**
@@ -98,15 +90,11 @@ export class ModelService {
             modelType: 2
         };
 
-        return from(
-            this.modelsApi.getModels(opts)
-        )
-            .pipe(
-                map((forms: any) => forms.data.find((formData) => formData.name === name)),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.modelsApi.getModels(opts)).pipe(
+            map((forms) => forms.data.find((formData) => formData.name === name)),
+            catchError((err) => this.handleError(err))
+        );
     }
-
 
     /**
      * Gets the form definition with a given name.
@@ -121,11 +109,10 @@ export class ModelService {
             modelType: 2
         };
 
-        return from(this.modelsApi.getModels(opts))
-            .pipe(
-                map(this.getFormId),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.modelsApi.getModels(opts)).pipe(
+            map(this.getFormId),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -137,7 +124,7 @@ export class ModelService {
     getFormId(form: any): string {
         let result = null;
 
-        if (form && form.data && form.data.length > 0) {
+        if (form?.data?.length > 0) {
             result = form.data[0].id;
         }
 
@@ -152,11 +139,9 @@ export class ModelService {
     private handleError(error: any): Observable<any> {
         let errMsg = ModelService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : ModelService.GENERIC_ERROR_MESSAGE;
+            errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : ModelService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
         return throwError(errMsg);
     }
-
 }

@@ -41,7 +41,6 @@ import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
     encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
-
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
 
     content: DynamicTableModel;
@@ -51,11 +50,13 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(public formService: FormService,
-                public elementRef: ElementRef,
-                private visibilityService: WidgetVisibilityService,
-                private logService: LogService,
-                private cd: ChangeDetectorRef) {
+    constructor(
+        public formService: FormService,
+        public elementRef: ElementRef,
+        private visibilityService: WidgetVisibilityService,
+        private logService: LogService,
+        private cd: ChangeDetectorRef
+    ) {
         super(formService);
     }
 
@@ -69,21 +70,21 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     forceFocusOnAddButton() {
         if (this.content) {
             this.cd.detectChanges();
-            const buttonAddRow = this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            const buttonAddRow = this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row') as HTMLButtonElement;
             if (this.isDynamicTableReady(buttonAddRow)) {
                 buttonAddRow.focus();
             }
         }
     }
 
-    private isDynamicTableReady(buttonAddRow) {
+    private isDynamicTableReady(buttonAddRow: HTMLButtonElement) {
         return this.field && !this.editMode && buttonAddRow;
     }
 
     isValid() {
         let valid = true;
 
-        if (this.content && this.content.field) {
+        if (this.content?.field) {
             valid = this.content.field.isValid;
         }
 
@@ -107,7 +108,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     }
 
     hasSelection(): boolean {
-        return !!(this.content && this.content.selectedRow);
+        return !!this.content?.selectedRow;
     }
 
     moveSelectionUp(): boolean {
@@ -192,7 +193,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {
-        return {value: this.copyObject(row.value)} as DynamicTableRow;
+        return { value: this.copyObject(row.value) } as DynamicTableRow;
     }
 
     private copyObject(obj: any): any {

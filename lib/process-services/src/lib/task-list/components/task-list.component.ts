@@ -16,12 +16,20 @@
  */
 
 import {
-    DataRowEvent, DataTableAdapter, DataTableSchema, CustomEmptyContentTemplateDirective, CustomLoadingContentTemplateDirective,
-    AppConfigService, PaginatedComponent,
-    UserPreferencesService, UserPreferenceValues, PaginationModel, DataCellEvent, DEFAULT_PAGINATION } from '@alfresco/adf-core';
-import {
-    AfterContentInit, Component, ContentChild, EventEmitter,
-    Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+    DataRowEvent,
+    DataTableAdapter,
+    DataTableSchema,
+    CustomEmptyContentTemplateDirective,
+    CustomLoadingContentTemplateDirective,
+    AppConfigService,
+    PaginatedComponent,
+    UserPreferencesService,
+    UserPreferenceValues,
+    PaginationModel,
+    DataCellEvent,
+    DEFAULT_PAGINATION
+} from '@alfresco/adf-core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -39,7 +47,6 @@ export const PRESET_KEY = 'adf-task-list.presets';
     styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
@@ -183,9 +190,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskListService: TaskListService,
-                appConfigService: AppConfigService,
-                private userPreferences: UserPreferencesService) {
+    constructor(private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
         super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);
 
         this.pagination = new BehaviorSubject<PaginationModel>({
@@ -210,7 +215,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(pageSize => this.size = pageSize);
+            .subscribe((pageSize) => (this.size = pageSize));
     }
 
     ngOnDestroy() {
@@ -335,12 +340,12 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+        return skipCount && maxItems ? Math.floor(skipCount / maxItems) : 0;
     }
 
     private isSortChanged(changes: SimpleChanges): boolean {
         const actualSort = changes['sort'];
-        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
+        return actualSort?.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -349,7 +354,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         const landingTaskId = changes['landingTaskId'];
         const page = changes['page'];
         const size = changes['size'];
-        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
+        if (landingTaskId?.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
             changed = false;
         } else if (page && page.currentValue !== page.previousValue) {
             changed = true;
@@ -364,9 +369,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.isLoading = true;
 
         this.loadTasksByState()
-            .pipe(finalize(() => this.isLoading = false))
+            .pipe(finalize(() => (this.isLoading = false)))
             .subscribe(
-                tasks => {
+                (tasks) => {
                     this.rows = this.optimizeTaskDetails(tasks.data);
                     this.selectTask(this.landingTaskId);
                     this.success.emit(tasks);
@@ -377,9 +382,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
                         totalItems: tasks.total
                     });
                 },
-                error => {
+                (error) => {
                     this.error.emit(error);
-                });
+                }
+            );
     }
 
     private loadTasksByState(): Observable<TaskListModel> {

@@ -33,7 +33,6 @@ import { Location } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
-
     /** The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
      */
@@ -72,7 +71,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     currentFilter: ProcessInstanceFilterRepresentation;
 
-    filters: UserProcessInstanceFilterRepresentation [] = [];
+    filters: UserProcessInstanceFilterRepresentation[] = [];
     active = false;
     isProcessRoute: boolean;
     isProcessActive: boolean;
@@ -80,23 +79,24 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     private iconsMDL: IconModel;
 
-    constructor(private processFilterService: ProcessFilterService,
-                private appsProcessService: AppsProcessService,
-                private router: Router,
-                private location: Location) {
-    }
+    constructor(
+        private processFilterService: ProcessFilterService,
+        private appsProcessService: AppsProcessService,
+        private router: Router,
+        private location: Location
+    ) {}
 
     ngOnInit() {
         this.iconsMDL = new IconModel();
         this.router.events
-        .pipe(
-            filter((event) => event instanceof NavigationStart),
-            takeUntil(this.onDestroy$)
-        )
-        .subscribe((navigationStart: NavigationStart) => {
-            const activeRoute = navigationStart.url;
-            this.isProcessActive = activeRoute.includes('processes');
-        });
+            .pipe(
+                filter((event) => event instanceof NavigationStart),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((navigationStart: NavigationStart) => {
+                const activeRoute = navigationStart.url;
+                this.isProcessActive = activeRoute.includes('processes');
+            });
         const currentRoute = this.location.path();
         this.isProcessRoute = currentRoute.includes('processes');
     }
@@ -108,7 +108,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getFiltersByAppId(appId.currentValue);
-        } else if (appName && appName.currentValue) {
+        } else if (appName?.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
         } else if (filterParam && filterParam.currentValue !== filterParam.previousValue) {
             this.selectProcessFilter(filterParam.currentValue);
@@ -165,7 +165,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
             },
             (err) => {
                 this.error.emit(err);
-            });
+            }
+        );
     }
 
     /**
@@ -184,12 +185,12 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
      */
     selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
         if (filterParam) {
-            const newFilter = this.filters.find((processFilter, index) =>
-                filterParam.index === index ||
-                filterParam.id === processFilter.id ||
-                (filterParam.name &&
-                    (filterParam.name.toLocaleLowerCase() === processFilter.name.toLocaleLowerCase())
-                ));
+            const newFilter = this.filters.find(
+                (processFilter, index) =>
+                    filterParam.index === index ||
+                    filterParam.id === processFilter.id ||
+                    (filterParam.name && filterParam.name.toLocaleLowerCase() === processFilter.name.toLocaleLowerCase())
+            );
             this.currentFilter = newFilter;
 
             if (newFilter) {

@@ -146,7 +146,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         );
 
         this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
-            if (repoList && repoList[0]) {
+            if (repoList?.[0]) {
                 const alfrescoRepository = repoList[0];
                 this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
             }
@@ -159,7 +159,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['values'] && changes['values'].currentValue) {
+        if (changes['values']?.currentValue) {
             this.moveNodeFromCStoPS();
         }
 
@@ -281,7 +281,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     loadProcessDefinitionsBasedOnSelectedApp() {
-        if (this.selectedApplication && this.selectedApplication.id) {
+        if (this.selectedApplication?.id) {
             this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
         } else {
             this.isProcessDefinitionsLoading = false;
@@ -298,15 +298,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     hasApplications(): boolean {
-        return this.applications && this.applications.length > 0;
+        return this.applications?.length > 0;
     }
 
     hasProcessDefinitions(): boolean {
-        return this.processDefinitions && this.processDefinitions.length > 0;
+        return this.processDefinitions?.length > 0;
     }
 
     isProcessDefinitionSelected(): boolean {
-        return !!(this.selectedProcessDef && this.selectedProcessDef.id);
+        return !!this.selectedProcessDef?.id;
     }
 
     isProcessDefinitionsEmpty(): boolean {
@@ -332,7 +332,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             if (this.values.hasOwnProperty(key)) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue
-                    .filter((value: any) => value && value.isFile)
+                    .filter((value: any) => !!value?.isFile)
                     .map((content: Node) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => {
                     this.movedNodeToPS = { [key]: [...res] };
@@ -342,7 +342,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     startProcess(outcome?: string) {
-        if (this.selectedProcessDef && this.selectedProcessDef.id && this.nameController.value) {
+        if (this.selectedProcessDef?.id && this.nameController.value) {
             const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.nameController.value, outcome, formValues, this.variables).subscribe(
                 (res) => {
@@ -361,19 +361,19 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     hasStartForm(): boolean {
-        return this.selectedProcessDef && this.selectedProcessDef.hasStartForm;
+        return this.selectedProcessDef?.hasStartForm;
     }
 
     isStartFormMissingOrValid(): boolean {
         if (this.startForm) {
-            return this.startForm.form && this.startForm.form.isValid;
+            return this.startForm.form?.isValid;
         } else {
             return true;
         }
     }
 
     validateForm(): boolean {
-        return this.selectedProcessDef && this.selectedProcessDef.id && this.processNameInput.valid && this.isStartFormMissingOrValid();
+        return this.selectedProcessDef?.id && this.processNameInput.valid && this.isStartFormMissingOrValid();
     }
 
     onOutcomeClick(outcome: string) {
@@ -436,7 +436,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private isAppSelected(): boolean {
-        return !!(this.selectedApplication && this.selectedApplication.id);
+        return !!this.selectedApplication?.id;
     }
 
     private removeDefaultApps(apps: AppDefinitionRepresentationModel[]): AppDefinitionRepresentationModel[] {
@@ -466,13 +466,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private isAppIdChanged(changes: SimpleChanges) {
-        return changes['appId'] && changes['appId'].currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
+        return changes['appId']?.currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
     }
 
     private isProcessDefinitionChanged(changes: SimpleChanges) {
         return (
-            changes['processDefinitionName'] &&
-            changes['processDefinitionName'].currentValue &&
+            changes['processDefinitionName']?.currentValue &&
             changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue
         );
     }

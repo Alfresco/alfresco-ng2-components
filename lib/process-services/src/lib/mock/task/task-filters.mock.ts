@@ -18,14 +18,22 @@
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../../task-list/models/filter.model';
 
 export const fakeFiltersResponse: any = {
-    size: 2, total: 2, start: 0,
+    size: 2,
+    total: 2,
+    start: 0,
     data: [
         {
-            id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+            id: 1,
+            name: 'FakeInvolvedTasks',
+            recent: false,
+            icon: 'glyphicon-align-left',
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
         },
         {
-            id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
+            id: 2,
+            name: 'FakeMyTasks',
+            recent: false,
+            icon: 'glyphicon-align-left',
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
         }
     ]
@@ -53,10 +61,15 @@ export const fakeTaskFilters = [
 ];
 
 export const fakeAppFilter = {
-    size: 1, total: 1, start: 0,
+    size: 1,
+    total: 1,
+    start: 0,
     data: [
         {
-            id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+            id: 1,
+            name: 'FakeInvolvedTasks',
+            recent: false,
+            icon: 'glyphicon-align-left',
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
         }
     ]
@@ -111,9 +124,7 @@ export const dummyMyTasksFilter = {
     id: 81,
     index: 21,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyInvolvedTasksFilter = {
@@ -124,9 +135,7 @@ export const dummyInvolvedTasksFilter = {
     id: 82,
     index: 22,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyQueuedTasksFilter = {
@@ -137,9 +146,7 @@ export const dummyQueuedTasksFilter = {
     id: 83,
     index: 23,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyCompletedTasksFilter = {
@@ -150,9 +157,7 @@ export const dummyCompletedTasksFilter = {
     id: 84,
     index: 24,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyDuplicateMyTasksFilter = {
@@ -163,7 +168,5 @@ export const dummyDuplicateMyTasksFilter = {
     id: 85,
     index: 25,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };

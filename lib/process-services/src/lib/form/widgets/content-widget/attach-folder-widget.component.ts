@@ -18,10 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import {
-    WidgetComponent,
-    FormService
-} from '@alfresco/adf-core';
+import { WidgetComponent, FormService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, NodesApiService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 
@@ -43,20 +40,16 @@ import { Node } from '@alfresco/js-api';
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
-
     typeId = 'AttachFolderWidgetComponent';
     hasFolder: boolean = false;
     selectedFolderName: string = '';
 
-    constructor(private contentDialog: ContentNodeDialogService,
-                public formService: FormService,
-                private nodeService: NodesApiService) {
+    constructor(private contentDialog: ContentNodeDialogService, public formService: FormService, private nodeService: NodesApiService) {
         super();
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value) {
+        if (this.field?.value) {
             this.hasFolder = true;
             this.nodeService.getNode(this.field.value).subscribe((node: Node) => {
                 this.selectedFolderName = node.name;
@@ -65,27 +58,23 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
     }
 
     isDefinedSourceFolder(): boolean {
-        return !!this.field.params &&
-            !!this.field.params.folderSource &&
-            !!this.field.params.folderSource.selectedFolder;
+        return !!this.field.params?.folderSource?.selectedFolder;
     }
 
     openSelectDialogFromFileSource() {
         const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
-            this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe(
-                (selections: Node[]) => {
-                    this.selectedFolderName = selections[0].name;
-                    this.field.value = selections[0].id;
-                    this.hasFolder = true;
-                });
+            this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe((selections: Node[]) => {
+                this.selectedFolderName = selections[0].name;
+                this.field.value = selections[0].id;
+                this.hasFolder = true;
+            });
         } else {
-            this.contentDialog.openFolderBrowseDialogBySite().subscribe(
-                (selections: Node[]) => {
-                    this.selectedFolderName = selections[0].name;
-                    this.field.value = selections[0].id;
-                    this.hasFolder = true;
-                });
+            this.contentDialog.openFolderBrowseDialogBySite().subscribe((selections: Node[]) => {
+                this.selectedFolderName = selections[0].name;
+                this.field.value = selections[0].id;
+                this.hasFolder = true;
+            });
         }
     }
 
@@ -94,5 +83,4 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         this.selectedFolderName = '';
         this.hasFolder = false;
     }
-
 }

@@ -18,21 +18,9 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    AppConfigService,
-    AppConfigValues,
-    DownloadService,
-    FormService,
-    LogService,
-    ThumbnailService
-} from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, DownloadService, FormService, LogService, ThumbnailService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
-import {
-    AlfrescoEndpointRepresentation,
-    Node,
-    NodeChildAssociation,
-    RelatedContentRepresentation
-} from '@alfresco/js-api';
+import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, Subject, zip } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -58,22 +46,23 @@ import { ActivitiContentService } from '../../services/activiti-alfresco.service
     encapsulation: ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
-
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     private tempFilesList = [];
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService,
-                private logger: LogService,
-                public thumbnails: ThumbnailService,
-                public processContentService: ProcessContentService,
-                private activitiContentService: ActivitiContentService,
-                private contentService: ContentService,
-                private contentDialog: ContentNodeDialogService,
-                private appConfigService: AppConfigService,
-                private downloadService: DownloadService,
-                private attachDialogService: AttachFileWidgetDialogService) {
+    constructor(
+        public formService: FormService,
+        private logger: LogService,
+        public thumbnails: ThumbnailService,
+        public processContentService: ProcessContentService,
+        private activitiContentService: ActivitiContentService,
+        private contentService: ContentService,
+        private contentDialog: ContentNodeDialogService,
+        private appConfigService: AppConfigService,
+        private downloadService: DownloadService,
+        private attachDialogService: AttachFileWidgetDialogService
+    ) {
         super(formService, logger, thumbnails, processContentService);
     }
 
@@ -84,13 +73,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.repositoryList = repoList;
         });
 
-        this.formService.taskSaved
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(formSaved => {
-                if (formSaved.form.id === this.field.form.id) {
-                    this.tempFilesList = [];
-                }
-            });
+        this.formService.taskSaved.pipe(takeUntil(this.onDestroy$)).subscribe((formSaved) => {
+            if (formSaved.form.id === this.field.form.id) {
+                this.tempFilesList = [];
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -99,7 +86,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     isFileSourceConfigured(): boolean {
-        return !!this.field.params && !!this.field.params.fileSource;
+        return !!this.field.params?.fileSource;
     }
 
     isMultipleSourceUpload(): boolean {
@@ -107,22 +94,15 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     isAllFileSourceSelected(): boolean {
-        return this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'all-file-sources' &&
-            !this.field.params.link;
+        return this.field.params?.fileSource?.serviceId === 'all-file-sources' && !this.field.params.link;
     }
 
     isOnlyLocalSourceSelected(): boolean {
-        return this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'local-file';
+        return this.field.params?.fileSource?.serviceId === 'local-file';
     }
 
     isSimpleUploadButton(): boolean {
-        return this.isUploadButtonVisible() &&
-            !this.isFileSourceConfigured() ||
-            this.isOnlyLocalSourceSelected();
+        return (this.isUploadButtonVisible() && !this.isFileSourceConfigured()) || this.isOnlyLocalSourceSelected();
     }
 
     isUploadButtonVisible(): boolean {
@@ -133,11 +113,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         return !!this.field.params?.fileSource?.selectedFolder;
     }
 
-    isTemporaryFile(file): boolean {
+    isTemporaryFile(file: { name?: string }): boolean {
         return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
     }
 
-    getNodeFromTempFile(file): NodeChildAssociation {
+    getNodeFromTempFile(file: { name?: string }): NodeChildAssociation {
         return this.tempFilesList.find((elem) => elem.name === file.name);
     }
 
@@ -147,13 +127,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (repository && this.isExternalHost(repository)) {
             this.uploadFileFromExternalCS(repository, params?.fileSource?.selectedFolder?.pathId);
         } else {
-            this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
-                (selections: Node[]) => {
-                    this.tempFilesList.push(...selections);
-                    this.uploadFileFromCS(selections,
-                        this.field.params.fileSource.selectedFolder.accountId,
-                        this.field.params.fileSource.selectedFolder.siteId);
-                });
+            this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe((selections: Node[]) => {
+                this.tempFilesList.push(...selections);
+                this.uploadFileFromCS(
+                    selections,
+                    this.field.params.fileSource.selectedFolder.accountId,
+                    this.field.params.fileSource.selectedFolder.siteId
+                );
+            });
         }
     }
 
@@ -218,11 +199,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (this.isExternalHost(repository)) {
             this.uploadFileFromExternalCS(repository);
         } else {
-            this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe(
-                (selections: Node[]) => {
-                    this.tempFilesList.push(...selections);
-                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
-                });
+            this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
+                this.tempFilesList.push(...selections);
+                this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+            });
         }
     }
 
@@ -237,36 +217,33 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {
-        return this.repositoryList.find(repository => sourceIdentifier === `alfresco-${repository.id}-${repository.name}`);
+        return this.repositoryList.find((repository) => sourceIdentifier === `alfresco-${repository.id}-${repository.name}`);
     }
 
     private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
         const accountIdentifier = `alfresco-${repository.id}-${repository.name}`;
-        this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe(
-            (selections: any[]) => {
-                selections.forEach((node) => node.isExternal = true);
-                this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, accountIdentifier);
-            });
+        this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe((selections: any[]) => {
+            selections.forEach((node) => (node.isExternal = true));
+            this.tempFilesList.push(...selections);
+            this.uploadFileFromCS(selections, accountIdentifier);
+        });
     }
 
     private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
         const filesSaved = [];
 
-        fileNodeList.forEach(node => {
+        fileNodeList.forEach((node) => {
             node.isLink = this.field.params.link;
         });
 
-        from(fileNodeList).pipe(
-            mergeMap((node) =>
-                zip(
-                    of(node?.content?.mimeType),
-                    this.activitiContentService.applyAlfrescoNode(node, siteId, accountId),
-                    of(node.isExternal)
+        from(fileNodeList)
+            .pipe(
+                mergeMap((node) =>
+                    zip(of(node?.content?.mimeType), this.activitiContentService.applyAlfrescoNode(node, siteId, accountId), of(node.isExternal))
                 )
             )
-        )
-            .subscribe(([mimeType, res, isExternal]) => {
+            .subscribe(
+                ([mimeType, res, isExternal]) => {
                     res.mimeType = mimeType;
                     res.isExternal = isExternal;
                     filesSaved.push(res);
@@ -279,12 +256,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.field.value = [...previousFiles, ...filesSaved];
                     this.field.json.value = [...previousFiles, ...filesSaved];
                     this.hasFile = true;
-                });
+                }
+            );
     }
 
     private getDomainHost(urlToCheck: string): string {
-        const result = urlToCheck.match('^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\\.)?([^:\/?\n]+)');
+        const result = urlToCheck.match('^(?:https?://)?(?:[^@/\n]+@)?(?:www\\.)?([^:/?\n]+)');
         return result[1];
     }
-
 }

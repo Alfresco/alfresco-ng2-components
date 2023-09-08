@@ -17,7 +17,15 @@
 
 import { TestBed } from '@angular/core/testing';
 import { fakeAppPromise } from '../../mock';
-import { fakeFiltersResponse, fakeAppFilter, dummyMyTasksFilter, dummyInvolvedTasksFilter, dummyQueuedTasksFilter, dummyCompletedTasksFilter, dummyDuplicateMyTasksFilter } from '../../mock/task/task-filters.mock';
+import {
+    fakeFiltersResponse,
+    fakeAppFilter,
+    dummyMyTasksFilter,
+    dummyInvolvedTasksFilter,
+    dummyQueuedTasksFilter,
+    dummyCompletedTasksFilter,
+    dummyDuplicateMyTasksFilter
+} from '../../mock/task/task-filters.mock';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskFilterService } from './task-filter.service';
 import { CoreModule } from '@alfresco/adf-core';
@@ -28,15 +36,11 @@ import { of } from 'rxjs';
 declare let jasmine: any;
 
 describe('Activiti Task filter Service', () => {
-
     let service: TaskFilterService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [CoreModule.forRoot(), ProcessTestingModule]
         });
         service = TestBed.inject(TaskFilterService);
         jasmine.Ajax.install();
@@ -47,7 +51,6 @@ describe('Activiti Task filter Service', () => {
     });
 
     describe('Content tests', () => {
-
         it('should return the task list filters', (done) => {
             service.getTaskListFilters().subscribe((res) => {
                 expect(res).toBeDefined();
@@ -84,15 +87,14 @@ describe('Activiti Task filter Service', () => {
 
         it('should return the task filter by name', (done) => {
             service.getTaskFilterByName('FakeMyTasks').subscribe((res: FilterRepresentationModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual(2);
-                    expect(res.name).toEqual('FakeMyTasks');
-                    expect(res.filter.sort).toEqual('created-desc');
-                    expect(res.filter.state).toEqual('open');
-                    expect(res.filter.assignment).toEqual('fake-assignee');
-                    done();
-                }
-            );
+                expect(res).toBeDefined();
+                expect(res.id).toEqual(2);
+                expect(res.name).toEqual('FakeMyTasks');
+                expect(res.filter.sort).toEqual('created-desc');
+                expect(res.filter.state).toEqual('open');
+                expect(res.filter.assignment).toEqual('fake-assignee');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -102,7 +104,7 @@ describe('Activiti Task filter Service', () => {
         });
 
         it('should call the api with the appId', (done) => {
-            spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
+            spyOn(service, 'callApiTaskFilters').and.returnValue(fakeAppPromise);
 
             const appId = 1;
             service.getTaskListFilters(appId).subscribe(() => {
@@ -146,7 +148,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 111,
+                    name: 'My Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -154,7 +160,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 222,
+                    name: 'Involved Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -162,7 +172,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 333,
+                    name: 'Queued Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -170,7 +184,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 444,
+                    name: 'Completed Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
         });
@@ -201,7 +219,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 111,
+                    name: 'My Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -209,7 +231,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 222,
+                    name: 'Involved Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -217,7 +243,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 333,
+                    name: 'Queued Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
 
@@ -225,7 +255,11 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001,
+                    id: 444,
+                    name: 'Completed Tasks',
+                    icon: 'fake-icon',
+                    recent: false
                 })
             });
         });
@@ -248,11 +282,13 @@ describe('Activiti Task filter Service', () => {
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    id: '2233', name: 'FakeNameFilter', filter: { assignment: 'fake-assignment' }
+                    id: '2233',
+                    name: 'FakeNameFilter',
+                    filter: { assignment: 'fake-assignment' }
                 })
             });
         });
-   });
+    });
 
     describe('isFilterAlreadyExisting', () => {
         let dummyTaskFilters: FilterRepresentationModel[];
@@ -268,16 +304,14 @@ describe('Activiti Task filter Service', () => {
                     index: 0,
                     name: 'My Tasks',
                     recent: false,
-                    hasFilter: () => {
-                        return true;
-                    }
+                    hasFilter: () => true
                 }
             ];
 
             filterRepresentationData = {
-                name : '',
-                sort : 'created-desc',
-                state : 'running'
+                name: '',
+                sort: 'created-desc',
+                state: 'running'
             };
         });
 
@@ -295,7 +329,6 @@ describe('Activiti Task filter Service', () => {
     });
 
     describe('createDefaultFilters', () => {
-
         it('should return an array with unique task filters', (done) => {
             const appId = 101;
 
@@ -316,7 +349,13 @@ describe('Activiti Task filter Service', () => {
             spyOn(service, 'getQueuedTasksFilterInstance').and.returnValue(queuedTasksFilter);
             spyOn(service, 'getCompletedTasksFilterInstance').and.returnValue(completedTasksFilter);
 
-            spyOn(service, 'addFilter').and.returnValues(myTasksObservableObservable, involvedTasksObservable, queuedTasksObservable, completedTasksObservable, duplicateMyTasksObservableObservable);
+            spyOn(service, 'addFilter').and.returnValues(
+                myTasksObservableObservable,
+                involvedTasksObservable,
+                queuedTasksObservable,
+                completedTasksObservable,
+                duplicateMyTasksObservableObservable
+            );
 
             service.createDefaultFilters(appId).subscribe((result) => {
                 expect(result).toEqual([
@@ -328,6 +367,5 @@ describe('Activiti Task filter Service', () => {
                 done();
             });
         });
-
     });
 });

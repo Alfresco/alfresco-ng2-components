@@ -16,7 +16,14 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { mockError, fakeProcessFiltersResponse, dummyRunningFilter, dummyAllFilter, dummyCompletedFilter, dummyDuplicateRunningFilter } from '../../mock';
+import {
+    mockError,
+    fakeProcessFiltersResponse,
+    dummyRunningFilter,
+    dummyAllFilter,
+    dummyCompletedFilter,
+    dummyDuplicateRunningFilter
+} from '../../mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
@@ -30,22 +37,19 @@ describe('Process filter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         service = TestBed.inject(ProcessFilterService);
     });
 
     describe('filters', () => {
-
         let getFilters: jasmine.Spy;
         let createFilter: jasmine.Spy;
 
         beforeEach(() => {
-            getFilters = spyOn(service['userFiltersApi'], 'getUserProcessInstanceFilters')
-                .and
-                .returnValue(Promise.resolve(fakeProcessFiltersResponse));
+            getFilters = spyOn(service['userFiltersApi'], 'getUserProcessInstanceFilters').and.returnValue(
+                Promise.resolve(fakeProcessFiltersResponse)
+            );
 
             jasmine.Ajax.install();
         });
@@ -55,7 +59,6 @@ describe('Process filter', () => {
         });
 
         describe('get filters', () => {
-
             it('should call the API without an appId defined by default', () => {
                 service.getProcessFilters(null);
                 expect(getFilters).toHaveBeenCalled();
@@ -67,33 +70,29 @@ describe('Process filter', () => {
             });
 
             it('should return the task filter by id', (done) => {
-                service.getProcessFilterById(333).subscribe(
-                    (processFilter: FilterProcessRepresentationModel) => {
-                        expect(processFilter).toBeDefined();
-                        expect(processFilter.id).toEqual(333);
-                        expect(processFilter.name).toEqual('Running');
-                        expect(processFilter.filter.sort).toEqual('created-desc');
-                        expect(processFilter.filter.state).toEqual('running');
-                        done();
-                    }
-                );
+                service.getProcessFilterById(333).subscribe((processFilter: FilterProcessRepresentationModel) => {
+                    expect(processFilter).toBeDefined();
+                    expect(processFilter.id).toEqual(333);
+                    expect(processFilter.name).toEqual('Running');
+                    expect(processFilter.filter.sort).toEqual('created-desc');
+                    expect(processFilter.filter.state).toEqual('running');
+                    done();
+                });
             });
 
             it('should return the task filter by name', (done) => {
-                service.getProcessFilterByName('Running').subscribe(
-                    (res: FilterProcessRepresentationModel) => {
-                        expect(res).toBeDefined();
-                        expect(res.id).toEqual(333);
-                        expect(res.name).toEqual('Running');
-                        expect(res.filter.sort).toEqual('created-desc');
-                        expect(res.filter.state).toEqual('running');
-                        done();
-                    }
-                );
+                service.getProcessFilterByName('Running').subscribe((res: FilterProcessRepresentationModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual(333);
+                    expect(res.name).toEqual('Running');
+                    expect(res.filter.sort).toEqual('created-desc');
+                    expect(res.filter.state).toEqual('running');
+                    done();
+                });
             });
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
+                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].name).toEqual('Running');
@@ -109,7 +108,11 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 111,
+                        name: 'Running',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
 
@@ -117,7 +120,11 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 222,
+                        name: 'Completed',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
 
@@ -125,13 +132,17 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 333,
+                        name: 'All',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
             });
 
             it('should be able create filters and add sorting information to the response', (done) => {
-                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
+                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].name).toEqual('Running');
@@ -152,7 +163,11 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 111,
+                        name: 'Running',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
 
@@ -160,7 +175,11 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 222,
+                        name: 'Completed',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
 
@@ -168,7 +187,11 @@ describe('Process filter', () => {
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false
+                        appId: 1001,
+                        id: 333,
+                        name: 'All',
+                        icon: 'fake-icon',
+                        recent: false
                     })
                 });
             });
@@ -177,23 +200,20 @@ describe('Process filter', () => {
                 getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
                 service.getProcessFilters(null).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
                     }
                 );
             });
-
         });
 
         describe('add filter', () => {
-
             beforeEach(() => {
-                createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter')
-                    .and
-                    .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
+                createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter').and.callFake(
+                    (processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter)
+                );
             });
 
             const filter = fakeProcessFiltersResponse.data[0];
@@ -214,8 +234,7 @@ describe('Process filter', () => {
                 createFilter = createFilter.and.returnValue(Promise.reject(mockError));
 
                 service.addProcessFilter(filter).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -226,15 +245,13 @@ describe('Process filter', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 createFilter = createFilter.and.returnValue(Promise.reject(null));
                 service.addProcessFilter(filter).subscribe(
-                    () => {
-                    },
+                    () => {},
                     (res) => {
                         expect(res).toBe('Server error');
                         done();
                     }
                 );
             });
-
         });
 
         describe('isFilterAlreadyExisting', () => {
@@ -251,16 +268,14 @@ describe('Process filter', () => {
                         index: 0,
                         name: 'Running',
                         recent: false,
-                        hasFilter: () => {
-                            return true;
-                        }
+                        hasFilter: () => true
                     }
                 ];
 
                 filterRepresentationData = {
-                    name : '',
-                    sort : 'created-desc',
-                    state : 'running'
+                    name: '',
+                    sort: 'created-desc',
+                    state: 'running'
                 };
             });
 
@@ -278,7 +293,6 @@ describe('Process filter', () => {
         });
 
         describe('createDefaultFilters', () => {
-
             it('should return an array with unique process filters', (done) => {
                 const appId = 123;
 
@@ -296,7 +310,12 @@ describe('Process filter', () => {
                 spyOn<any>(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
                 spyOn<any>(service, 'getAllFilterInstance').and.returnValue(allFilter);
 
-                spyOn(service, 'addProcessFilter').and.returnValues(runningObservable, completedObservable, allObservable, duplicateRunningObservable);
+                spyOn(service, 'addProcessFilter').and.returnValues(
+                    runningObservable,
+                    completedObservable,
+                    allObservable,
+                    duplicateRunningObservable
+                );
 
                 service.createDefaultFilters(appId).subscribe((result) => {
                     expect(result).toEqual([
@@ -307,7 +326,6 @@ describe('Process filter', () => {
                     done();
                 });
             });
-
         });
     });
 });

@@ -24,7 +24,6 @@ import { ProcessContentService } from '../form/services/process-content.service'
     templateUrl: './create-process-attachment.component.html'
 })
 export class CreateProcessAttachmentComponent implements OnChanges {
-
     /** (required) The ID of the process instance to display. */
     @Input()
     processInstanceId: string;
@@ -41,11 +40,10 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private activitiContentService: ProcessContentService) {
-    }
+    constructor(private activitiContentService: ProcessContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['processInstanceId'] && changes['processInstanceId'].currentValue) {
+        if (changes['processInstanceId']?.currentValue) {
             this.processInstanceId = changes['processInstanceId'].currentValue;
         }
     }
@@ -64,7 +62,8 @@ export class CreateProcessAttachmentComponent implements OnChanges {
                 },
                 (err) => {
                     this.error.emit(err);
-                });
+                }
+            );
         }
     }
 }

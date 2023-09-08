@@ -41,16 +41,17 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
     encapsulation: ViewEncapsulation.None
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
-
     minTermLength: number = 1;
     value: string;
     oldValue: string;
     options: FormFieldOption[] = [];
 
-    constructor(public formService: FormService,
-                private taskFormService: TaskFormService,
-                private processDefinitionService: ProcessDefinitionService,
-                private logService: LogService) {
+    constructor(
+        public formService: FormService,
+        private taskFormService: TaskFormService,
+        private processDefinitionService: ProcessDefinitionService,
+        private logService: LogService
+    ) {
         super(formService);
     }
 
@@ -66,53 +67,45 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getValuesByTaskId() {
-        this.taskFormService
-            .getRestFieldValues(
-                this.field.form.taskId,
-                this.field.id
-            )
-            .subscribe(
-                (formFieldOption: FormFieldOption[]) => {
-                    const options = formFieldOption || [];
-                    this.field.options = options;
+        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe(
+            (formFieldOption) => {
+                const options = formFieldOption || [];
+                this.field.options = options;
 
-                    const fieldValue = this.field.value;
-                    if (fieldValue) {
-                        const toSelect = options.find((item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase());
-                        if (toSelect) {
-                            this.value = toSelect.name;
-                        }
+                const fieldValue = this.field.value;
+                if (fieldValue) {
+                    const toSelect = options.find(
+                        (item) => item.id === fieldValue || item.name.toLocaleLowerCase() === fieldValue.toLocaleLowerCase()
+                    );
+                    if (toSelect) {
+                        this.value = toSelect.name;
                     }
-                    this.onFieldChanged(this.field);
-                    this.field.updateForm();
-                },
-                (err) => this.handleError(err)
-            );
+                }
+                this.onFieldChanged(this.field);
+                this.field.updateForm();
+            },
+            (err) => this.handleError(err)
+        );
     }
 
     getValuesByProcessDefinitionId() {
-        this.processDefinitionService
-            .getRestFieldValuesByProcessId(
-                this.field.form.processDefinitionId,
-                this.field.id
-            )
-            .subscribe(
-                (formFieldOption: FormFieldOption[]) => {
-                    const options = formFieldOption || [];
-                    this.field.options = options;
+        this.processDefinitionService.getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id).subscribe(
+            (formFieldOption) => {
+                const options = formFieldOption || [];
+                this.field.options = options;
 
-                    const fieldValue = this.field.value;
-                    if (fieldValue) {
-                        const toSelect = options.find((item) => item.id === fieldValue);
-                        if (toSelect) {
-                            this.value = toSelect.name;
-                        }
+                const fieldValue = this.field.value;
+                if (fieldValue) {
+                    const toSelect = options.find((item) => item.id === fieldValue);
+                    if (toSelect) {
+                        this.value = toSelect.name;
                     }
-                    this.onFieldChanged(this.field);
-                    this.field.updateForm();
-                },
-                (err) => this.handleError(err)
-            );
+                }
+                this.onFieldChanged(this.field);
+                this.field.updateForm();
+            },
+            (err) => this.handleError(err)
+        );
     }
 
     getOptions(): FormFieldOption[] {
@@ -169,5 +162,4 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
     }
-
 }

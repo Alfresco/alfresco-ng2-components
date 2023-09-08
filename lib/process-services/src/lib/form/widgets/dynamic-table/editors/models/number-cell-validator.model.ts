@@ -23,14 +23,10 @@ import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 
 export class NumberCellValidator implements CellValidator {
-
-    private supportedTypes: string[] = [
-        'Number',
-        'Amount'
-    ];
+    private supportedTypes: string[] = ['Number', 'Amount'];
 
     isSupported(column: DynamicTableColumn): boolean {
-        return column && column.required && this.supportedTypes.indexOf(column.type) > -1;
+        return column?.required && this.supportedTypes.indexOf(column.type) > -1;
     }
 
     isNumber(value: any): boolean {
@@ -42,13 +38,9 @@ export class NumberCellValidator implements CellValidator {
     }
 
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
-
         if (this.isSupported(column)) {
             const value = row.value[column.id];
-            if (value === null ||
-                value === undefined ||
-                value === '' ||
-                this.isNumber(value)) {
+            if (value === null || value === undefined || value === '' || this.isNumber(value)) {
                 return true;
             }
 

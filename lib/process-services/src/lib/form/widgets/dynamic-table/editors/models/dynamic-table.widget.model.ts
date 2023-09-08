@@ -29,7 +29,6 @@ import { NumberCellValidator } from './number-cell-validator.model';
 import { RequiredCellValidator } from './required-cell-validator.model';
 
 export class DynamicTableModel extends FormWidgetModel {
-
     field: FormFieldModel;
     columns: DynamicTableColumn[] = [];
     visibleColumns: DynamicTableColumn[] = [];
@@ -49,7 +48,7 @@ export class DynamicTableModel extends FormWidgetModel {
             return;
         }
 
-        this.rows.forEach((row) => row.selected = false);
+        this.rows.forEach((row) => (row.selected = false));
 
         this._selectedRow = value;
 
@@ -70,19 +69,15 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map((obj) => ({selected: false, value: obj} as DynamicTableRow));
+                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj } as DynamicTableRow));
             }
         }
 
-        this._validators = [
-            new RequiredCellValidator(),
-            new DateCellValidator(),
-            new NumberCellValidator()
-        ];
+        this._validators = [new RequiredCellValidator(), new DateCellValidator(), new NumberCellValidator()];
     }
 
     private getColumns(field: FormFieldModel): DynamicTableColumn[] {
-        if (field && field.json) {
+        if (field?.json) {
             let definitions = field.json.columnDefinitions;
             if (!definitions && field.json.params && field.json.params.field) {
                 definitions = field.json.params.field.columnDefinitions;
@@ -105,7 +100,7 @@ export class DynamicTableModel extends FormWidgetModel {
     moveRow(row: DynamicTableRow, offset: number) {
         const oldIndex = this.rows.indexOf(row);
         if (oldIndex > -1) {
-            let newIndex = (oldIndex + offset);
+            let newIndex = oldIndex + offset;
 
             if (newIndex < 0) {
                 newIndex = 0;

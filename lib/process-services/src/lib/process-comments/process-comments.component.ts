@@ -29,7 +29,6 @@ import { share, takeUntil } from 'rxjs/operators';
     host: { class: 'adf-process-instance-comments' }
 })
 export class ProcessCommentsComponent implements OnChanges, OnDestroy {
-
     /** (**required**) The numeric ID of the process instance to display comments for. */
     @Input()
     processInstanceId: string;
@@ -42,7 +41,7 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    comments: CommentModel [] = [];
+    comments: CommentModel[] = [];
     comment$: Observable<CommentModel>;
     message: string;
     beingAdded: boolean = false;
@@ -51,10 +50,8 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private commentProcessService: CommentProcessService) {
-        this.comment$ = new Observable<CommentModel>(observer =>  this.commentObserver = observer).pipe(share());
-        this.comment$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(comment => this.comments.push(comment));
+        this.comment$ = new Observable<CommentModel>((observer) => (this.commentObserver = observer)).pipe(share());
+        this.comment$.pipe(takeUntil(this.onDestroy$)).subscribe((comment) => this.comments.push(comment));
     }
 
     ngOnDestroy() {
@@ -74,21 +71,19 @@ export class ProcessCommentsComponent implements OnChanges, OnDestroy {
     }
 
     add(): void {
-        if (this.message && this.message.trim() && !this.beingAdded) {
+        if (this.message?.trim() && !this.beingAdded) {
             this.beingAdded = true;
-            this.commentProcessService.add(this.processInstanceId, this.message)
-                .subscribe(
-                    (res: CommentModel) => {
-                        this.comments.unshift(res);
-                        this.message = '';
-                        this.beingAdded = false;
-
-                    },
-                    (err) => {
-                        this.error.emit(err);
-                        this.beingAdded = false;
-                    }
-                );
+            this.commentProcessService.add(this.processInstanceId, this.message).subscribe(
+                (res: CommentModel) => {
+                    this.comments.unshift(res);
+                    this.message = '';
+                    this.beingAdded = false;
+                },
+                (err) => {
+                    this.error.emit(err);
+                    this.beingAdded = false;
+                }
+            );
         }
     }
 

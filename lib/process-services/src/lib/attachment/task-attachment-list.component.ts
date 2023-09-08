@@ -37,7 +37,6 @@ import { ProcessContentService } from '../form/services/process-content.service'
     encapsulation: ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
-
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
@@ -71,14 +70,15 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     attachments: any[] = [];
     isLoading: boolean = false;
 
-    constructor(private activitiContentService: ProcessContentService,
-                private downloadService: DownloadService,
-                private thumbnailService: ThumbnailService,
-                private ngZone: NgZone) {
-    }
+    constructor(
+        private activitiContentService: ProcessContentService,
+        private downloadService: DownloadService,
+        private thumbnailService: ThumbnailService,
+        private ngZone: NgZone
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['taskId'] && changes['taskId'].currentValue) {
+        if (changes['taskId']?.currentValue) {
             this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
@@ -123,7 +123,8 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
                 },
                 (err) => {
                     this.error.emit(err);
-                });
+                }
+            );
         }
     }
 
@@ -147,10 +148,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
             name: 'download'
         };
 
-        event.value.actions = [
-            viewAction,
-            downloadAction
-        ];
+        event.value.actions = [viewAction, downloadAction];
 
         if (!this.disabled) {
             event.value.actions.splice(1, 0, removeAction);
@@ -223,7 +221,8 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
                 (err) => {
                     this.error.emit(err);
                     this.isLoading = false;
-                });
+                }
+            );
         }
     }
 }

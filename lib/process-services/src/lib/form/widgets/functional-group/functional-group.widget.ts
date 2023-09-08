@@ -42,7 +42,6 @@ import { PeopleProcessService } from '../../../common/services/people-process.se
     encapsulation: ViewEncapsulation.None
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
-
     minTermLength: number = 1;
     groupId: string;
     searchTerm = new UntypedFormControl();
@@ -50,30 +49,26 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         tap((search: GroupModel | string) => {
             const isValid = typeof search !== 'string';
             const empty = search === '';
-            this.updateOption(isValid ? search as GroupModel : null);
+            this.updateOption(isValid ? (search as GroupModel) : null);
             this.validateGroup(isValid, empty);
         }),
         filter((group: string | GroupModel) => typeof group === 'string' && group.length >= this.minTermLength),
         debounceTime(300),
-        switchMap((searchTerm: string) => this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId)
-            .pipe(catchError(() => of([]))))
+        switchMap((searchTerm: string) => this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId).pipe(catchError(() => of([]))))
     );
 
-    constructor(public peopleProcessService: PeopleProcessService,
-                public formService: FormService,
-                public elementRef: ElementRef) {
+    constructor(public peopleProcessService: PeopleProcessService, public formService: FormService, public elementRef: ElementRef) {
         super(formService);
     }
 
     ngOnInit() {
         if (this.field) {
-
             if (this.field.readOnly) {
                 this.searchTerm.disable();
             }
 
             const params = this.field.params;
-            if (params && params.restrictWithGroup) {
+            if (params?.restrictWithGroup) {
                 const restrictWithGroup = params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }

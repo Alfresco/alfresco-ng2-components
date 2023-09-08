@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
-    SimpleChanges,
-    OnInit,
-    OnDestroy,
-    OnChanges,
-    inject
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges, inject } from '@angular/core';
 import {
     WidgetVisibilityService,
     FormService,
@@ -48,7 +37,6 @@ import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
 import { TaskService } from './services/task.service';
 import { TaskFormService } from './services/task-form.service';
-import { TaskRepresentation } from '@alfresco/js-api';
 import { NodesApiService } from '@alfresco/adf-content-services';
 import { FormDefinitionModel } from './model/form-definition.model';
 
@@ -128,17 +116,13 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     ngOnInit() {
-        this.formService.formContentClicked
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(content => this.formContentClicked.emit(content));
+        this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => this.formContentClicked.emit(content));
 
-        this.formService.validateForm
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(validateFormEvent => {
-                if (validateFormEvent.errorsField.length > 0) {
-                    this.formError.next(validateFormEvent.errorsField);
-                }
-            });
+        this.formService.validateForm.pipe(takeUntil(this.onDestroy$)).subscribe((validateFormEvent) => {
+            if (validateFormEvent.errorsField.length > 0) {
+                this.formError.next(validateFormEvent.errorsField);
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -148,31 +132,31 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];
-        if (taskId && taskId.currentValue) {
+        if (taskId?.currentValue) {
             this.getFormByTaskId(taskId.currentValue);
             return;
         }
 
         const formId = changes['formId'];
-        if (formId && formId.currentValue) {
+        if (formId?.currentValue) {
             this.getFormDefinitionByFormId(formId.currentValue);
             return;
         }
 
         const formName = changes['formName'];
-        if (formName && formName.currentValue) {
+        if (formName?.currentValue) {
             this.getFormDefinitionByFormName(formName.currentValue);
             return;
         }
 
         const nodeId = changes['nodeId'];
-        if (nodeId && nodeId.currentValue) {
+        if (nodeId?.currentValue) {
             this.loadFormForEcmNode(nodeId.currentValue);
             return;
         }
 
         const data = changes['data'];
-        if (data && data.currentValue) {
+        if (data?.currentValue) {
             this.refreshFormData();
             return;
         }
@@ -204,7 +188,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     findProcessVariablesByTaskId(taskId: string): Observable<TaskProcessVariableModel[]> {
         return this.taskService.getTask(taskId).pipe(
-            switchMap((task: TaskRepresentation) => {
+            switchMap((task) => {
                 if (this.isAProcessTask(task)) {
                     return this.taskFormService.getTaskProcessVariable(taskId);
                 } else {
@@ -219,93 +203,83 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     }
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
-        return new Promise<FormModel>(resolve => {
+        return new Promise<FormModel>((resolve) => {
             this.findProcessVariablesByTaskId(taskId).subscribe((taskProcessVariables) => {
-                this.taskFormService
-                    .getTaskForm(taskId)
-                    .subscribe(
-                        (form) => {
-                            const parsedForm = this.parseForm(form);
-                            this.visibilityService.refreshVisibility(parsedForm, taskProcessVariables);
-                            parsedForm.validateForm();
-                            this.form = parsedForm;
-                            this.onFormLoaded(this.form);
-                            resolve(this.form);
-                        },
-                        (error) => {
-                            this.handleError(error);
-                            resolve(null);
-                        }
-                    );
+                this.taskFormService.getTaskForm(taskId).subscribe(
+                    (form) => {
+                        const parsedForm = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(parsedForm, taskProcessVariables);
+                        parsedForm.validateForm();
+                        this.form = parsedForm;
+                        this.onFormLoaded(this.form);
+                        resolve(this.form);
+                    },
+                    (error) => {
+                        this.handleError(error);
+                        resolve(null);
+                    }
+                );
             });
         });
     }
 
     getFormDefinitionByFormId(formId: number) {
-        this.editorService
-            .getFormDefinitionById(formId)
-            .subscribe(
-                (form) => {
-                    this.formName = form.name;
-                    this.form = this.parseForm(form);
-                    this.visibilityService.refreshVisibility(this.form);
-                    this.form.validateForm();
-                    this.onFormLoaded(this.form);
-                },
-                (error) => {
-                    this.handleError(error);
-                }
-            );
+        this.editorService.getFormDefinitionById(formId).subscribe(
+            (form) => {
+                this.formName = form.name;
+                this.form = this.parseForm(form);
+                this.visibilityService.refreshVisibility(this.form);
+                this.form.validateForm();
+                this.onFormLoaded(this.form);
+            },
+            (error) => {
+                this.handleError(error);
+            }
+        );
     }
 
     getFormDefinitionByFormName(formName: string) {
-        this.modelService
-            .getFormDefinitionByName(formName)
-            .subscribe(
-                (id) => {
-                    this.editorService.getFormDefinitionById(id).subscribe(
-                        (form) => {
-                            this.form = this.parseForm(form);
-                            this.visibilityService.refreshVisibility(this.form);
-                            this.form.validateForm();
-                            this.onFormLoaded(this.form);
-                        },
-                        (error) => {
-                            this.handleError(error);
-                        }
-                    );
-                },
-                (error) => {
-                    this.handleError(error);
-                }
-            );
+        this.modelService.getFormDefinitionByName(formName).subscribe(
+            (id) => {
+                this.editorService.getFormDefinitionById(id).subscribe(
+                    (form) => {
+                        this.form = this.parseForm(form);
+                        this.visibilityService.refreshVisibility(this.form);
+                        this.form.validateForm();
+                        this.onFormLoaded(this.form);
+                    },
+                    (error) => {
+                        this.handleError(error);
+                    }
+                );
+            },
+            (error) => {
+                this.handleError(error);
+            }
+        );
     }
 
     saveTaskForm() {
-        if (this.form && this.form.taskId) {
-            this.taskFormService
-                .saveTaskForm(this.form.taskId, this.form.values)
-                .subscribe(
-                    () => {
-                        this.onTaskSaved(this.form);
-                        this.storeFormAsMetadata();
-                    },
-                    (error) => this.onTaskSavedError(this.form, error)
-                );
+        if (this.form?.taskId) {
+            this.taskFormService.saveTaskForm(this.form.taskId, this.form.values).subscribe(
+                () => {
+                    this.onTaskSaved(this.form);
+                    this.storeFormAsMetadata();
+                },
+                (error) => this.onTaskSavedError(this.form, error)
+            );
         }
     }
 
     completeTaskForm(outcome?: string) {
-        if (this.form && this.form.taskId) {
-            this.taskFormService
-                .completeTaskForm(this.form.taskId, this.form.values, outcome)
-                .subscribe(
-                    () => {
-                        this.onTaskCompleted(this.form);
-                        this.storeFormAsMetadata();
-                    },
-                    (error) => this.onTaskCompletedError(this.form, error)
-                );
+        if (this.form?.taskId) {
+            this.taskFormService.completeTaskForm(this.form.taskId, this.form.values, outcome).subscribe(
+                () => {
+                    this.onTaskCompleted(this.form);
+                    this.storeFormAsMetadata();
+                },
+                (error) => this.onTaskCompletedError(this.form, error)
+            );
         }
     }
 
@@ -319,7 +293,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
             if (!formRepresentationJSON.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
-            if (this.fieldValidators && this.fieldValidators.length > 0) {
+            if (this.fieldValidators?.length > 0) {
                 form.fieldValidators = this.fieldValidators;
             }
             return form;
@@ -333,13 +307,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      * @param form Form definition model.
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        return [
-            new FormOutcomeModel(form, {id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
-        ];
+        return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
     }
 
     checkVisibility(field: FormFieldModel) {
-        if (field && field.form) {
+        if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
         }
     }
@@ -361,7 +333,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         );
     }
 
-
     /**
      * Creates a Form with a field for each metadata property.
      *
@@ -374,24 +345,40 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
                 (form) => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         (customType) => {
-                            const formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            from(
-                                this.editorService.saveForm(form.id, formDefinitionModel)
-                            ).subscribe((formData) => {
-                                observer.next(formData);
-                                observer.complete();
-                            }, (err) => this.handleError(err));
+                            const formDefinitionModel = new FormDefinitionModel(
+                                form.id,
+                                form.name,
+                                form.lastUpdatedByFullName,
+                                form.lastUpdated,
+                                customType.entry.properties
+                            );
+                            from(this.editorService.saveForm(form.id, formDefinitionModel)).subscribe(
+                                (formData) => {
+                                    observer.next(formData);
+                                    observer.complete();
+                                },
+                                (err) => this.handleError(err)
+                            );
                         },
-                        (err) => this.handleError(err));
+                        (err) => this.handleError(err)
+                    );
                 },
-                (err) => this.handleError(err));
+                (err) => this.handleError(err)
+            );
         });
     }
 
     protected storeFormAsMetadata() {
         if (this.saveMetadata) {
-            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe((type) => {
-                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
+            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(
+                (type) => {
+                    this.nodeService.createNodeMetadata(
+                        type.nodeType || type.entry.prefixedName,
+                        EcmModelService.MODEL_NAMESPACE,
+                        this.form.values,
+                        this.path,
+                        this.nameNode
+                    );
                 },
                 (error) => {
                     this.handleError(error);
@@ -450,10 +437,9 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     private loadFormForEcmNode(nodeId: string): void {
         this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
-                this.data = data.metadata;
-                this.loadFormFromActiviti(data.nodeType);
-            },
-            this.handleError);
+            this.data = data.metadata;
+            this.loadFormFromActiviti(data.nodeType);
+        }, this.handleError);
     }
 
     private loadFormFromFormId(formId: number) {

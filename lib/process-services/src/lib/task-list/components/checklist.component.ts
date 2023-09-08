@@ -26,7 +26,6 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {
-
     /** (required) The id of the parent task to which subtasks are
      * attached.
      */
@@ -60,15 +59,13 @@ export class ChecklistComponent implements OnChanges {
 
     taskName: string;
 
-    checklist: TaskDetailsModel [] = [];
+    checklist: TaskDetailsModel[] = [];
 
-    constructor(private activitiTaskList: TaskListService,
-                private dialog: MatDialog) {
-    }
+    constructor(private activitiTaskList: TaskListService, private dialog: MatDialog) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];
-        if (taskId && taskId.currentValue) {
+        if (taskId?.currentValue) {
             this.getTaskChecklist();
             return;
         }
@@ -78,7 +75,7 @@ export class ChecklistComponent implements OnChanges {
         this.checklist = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(
-                (taskDetailsModel: TaskDetailsModel[]) => {
+                (taskDetailsModel) => {
                     taskDetailsModel.forEach((task) => {
                         this.checklist.push(task);
                     });
@@ -103,7 +100,7 @@ export class ChecklistComponent implements OnChanges {
             assignee: { id: this.assignee }
         });
         this.activitiTaskList.addTask(newTask).subscribe(
-            (taskDetailsModel: TaskDetailsModel) => {
+            (taskDetailsModel) => {
                 this.checklist.push(taskDetailsModel);
                 this.checklistTaskCreated.emit(taskDetailsModel);
                 this.taskName = '';
@@ -123,7 +120,8 @@ export class ChecklistComponent implements OnChanges {
             },
             (error) => {
                 this.error.emit(error);
-            });
+            }
+        );
     }
 
     public cancel() {

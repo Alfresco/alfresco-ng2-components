@@ -30,16 +30,7 @@ import {
     DataCellEvent,
     DEFAULT_PAGINATION
 } from '@alfresco/adf-core';
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges
-} from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
@@ -55,7 +46,6 @@ const PRESET_KEY = 'adf-process-list.presets';
     templateUrl: './process-list.component.html'
 })
 export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
@@ -151,9 +141,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
 
-    constructor(private processService: ProcessService,
-                private userPreferences: UserPreferencesService,
-                appConfig: AppConfigService) {
+    constructor(private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
@@ -167,7 +155,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     ngAfterContentInit() {
         this.createDatatableSchema();
 
-        if (this.data && this.data.getColumns().length === 0) {
+        if (this.data?.getColumns().length === 0) {
             this.data.setColumns(this.columns);
         }
 
@@ -266,7 +254,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     }
 
     currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+        return skipCount && maxItems ? Math.floor(skipCount / maxItems) : 0;
     }
 
     private createRequestNode(): ProcessFilterParamRepresentationModel {
@@ -284,7 +272,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     private isSortChanged(changes: SimpleChanges): boolean {
         const actualSort = changes['sort'];
-        return actualSort && actualSort.currentValue && actualSort.currentValue !== actualSort.previousValue;
+        return actualSort?.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -298,17 +286,17 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         const page = changes['page'];
         const size = changes['size'];
 
-        if (appId && appId.currentValue) {
+        if (appId?.currentValue) {
             changed = true;
         } else if (processDefinitionId) {
             changed = true;
         } else if (processInstanceId) {
             changed = true;
-        } else if (state && state.currentValue) {
+        } else if (state?.currentValue) {
             changed = true;
-        } else if (sort && sort.currentValue) {
+        } else if (sort?.currentValue) {
             changed = true;
-        } else if (page && page.currentValue !== page.previousValue) {
+        } else if (page && page?.currentValue !== page.previousValue) {
             changed = true;
         } else if (size && size.currentValue !== size.previousValue) {
             changed = true;
@@ -318,10 +306,11 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
-        this.processService.getProcesses(requestNode)
-            .pipe(finalize(() => this.isLoading = false))
+        this.processService
+            .getProcesses(requestNode)
+            .pipe(finalize(() => (this.isLoading = false)))
             .subscribe(
-                response => {
+                (response) => {
                     this.rows = response.data;
                     this.selectFirst();
                     this.success.emit(response);
@@ -332,7 +321,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                         totalItems: response.total
                     });
                 },
-                error => {
+                (error) => {
                     this.error.emit(error);
                 }
             );

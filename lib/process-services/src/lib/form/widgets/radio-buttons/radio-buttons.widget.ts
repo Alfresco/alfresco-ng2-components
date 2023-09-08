@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, FormService, FormFieldOption, WidgetComponent } from '@alfresco/adf-core';
+import { LogService, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
@@ -40,16 +40,17 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
-
-    constructor(public formService: FormService,
-                private taskFormService: TaskFormService,
-                private processDefinitionService: ProcessDefinitionService,
-                private logService: LogService) {
+    constructor(
+        public formService: FormService,
+        private taskFormService: TaskFormService,
+        private processDefinitionService: ProcessDefinitionService,
+        private logService: LogService
+    ) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field && this.field.restUrl) {
+        if (this.field?.restUrl) {
             if (this.field.form.taskId) {
                 this.getOptionsByTaskId();
             } else {
@@ -59,33 +60,23 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     }
 
     getOptionsByTaskId() {
-        this.taskFormService
-            .getRestFieldValues(
-                this.field.form.taskId,
-                this.field.id
-            )
-            .subscribe(
-                (formFieldOption: FormFieldOption[]) => {
-                    this.field.options = formFieldOption || [];
-                    this.field.updateForm();
-                },
-                (err) => this.handleError(err)
-            );
+        this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe(
+            (formFieldOption) => {
+                this.field.options = formFieldOption || [];
+                this.field.updateForm();
+            },
+            (err) => this.handleError(err)
+        );
     }
 
     getOptionsByProcessDefinitionId() {
-        this.processDefinitionService
-            .getRestFieldValuesByProcessId(
-                this.field.form.processDefinitionId,
-                this.field.id
-            )
-            .subscribe(
-                (formFieldOption: FormFieldOption[]) => {
-                    this.field.options = formFieldOption || [];
-                    this.field.updateForm();
-                },
-                (err) => this.handleError(err)
-            );
+        this.processDefinitionService.getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id).subscribe(
+            (formFieldOption) => {
+                this.field.options = formFieldOption || [];
+                this.field.updateForm();
+            },
+            (err) => this.handleError(err)
+        );
     }
 
     onOptionClick(optionSelected: any) {
@@ -96,5 +87,4 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     handleError(error: any) {
         this.logService.error(error);
     }
-
 }

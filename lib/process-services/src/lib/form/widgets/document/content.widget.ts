@@ -62,7 +62,7 @@ export class ContentWidgetComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const contentId = changes['id'];
-        if (contentId && contentId.currentValue) {
+        if (contentId?.currentValue) {
             this.loadContent(contentId.currentValue);
         }
     }

@@ -56,7 +56,6 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
-
     @ViewChild('activitiComments')
     activitiComments: CommentsComponent;
 
@@ -149,7 +148,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a checklist task is deleted. */
     @Output()
-    taskDeleted: EventEmitter<string> = new EventEmitter<string>();
+    taskDeleted = new EventEmitter<string>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -163,7 +162,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a task is assigned. */
     @Output()
-    assignTask: EventEmitter<void> = new EventEmitter<void>();
+    assignTask = new EventEmitter<void>();
 
     /** Emitted when a task is claimed. */
     @Output()
@@ -187,27 +186,24 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     private peopleSearchObserver: Observer<UserProcessModel[]>;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskListService: TaskListService,
-                private peopleProcessService: PeopleProcessService,
-                private logService: LogService,
-                private cardViewUpdateService: CardViewUpdateService,
-                private dialog: MatDialog) {
-    }
+    constructor(
+        private taskListService: TaskListService,
+        private peopleProcessService: PeopleProcessService,
+        private logService: LogService,
+        private cardViewUpdateService: CardViewUpdateService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit() {
-        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer).pipe(share());
+        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
 
         if (this.taskId) {
             this.loadDetails(this.taskId);
         }
 
-        this.cardViewUpdateService.itemUpdated$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.updateTaskDetails.bind(this));
+        this.cardViewUpdateService.itemUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(this.updateTaskDetails.bind(this));
 
-        this.cardViewUpdateService.itemClicked$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.clickTaskDetails.bind(this));
+        this.cardViewUpdateService.itemClicked$.pipe(takeUntil(this.onDestroy$)).subscribe(this.clickTaskDetails.bind(this));
     }
 
     ngOnDestroy() {
@@ -221,7 +217,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
         if (taskId && !taskId.currentValue) {
             this.reset();
-        } else if (taskId && taskId.currentValue) {
+        } else if (taskId?.currentValue) {
             this.loadDetails(taskId.currentValue);
         }
     }
@@ -276,7 +272,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFormLoaded(form: FormModel): void {
-        this.taskFormName = (form && form.name ? form.name : null);
+        this.taskFormName = form?.name;
         this.formLoaded.emit(form);
     }
 
@@ -312,14 +308,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleProcessService.getWorkflowUsers(null, searchedWord)
-            .subscribe(
-                users => {
-                    users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
-                    this.peopleSearchObserver.next(users);
-                },
-                () => this.logService.error('Could not load users')
-            );
+        this.peopleProcessService.getWorkflowUsers(null, searchedWord).subscribe(
+            (users) => {
+                users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
+                this.peopleSearchObserver.next(users);
+            },
+            () => this.logService.error('Could not load users')
+        );
     }
 
     onCloseSearch() {
@@ -327,12 +322,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     assignTaskToUser(selectedUser: UserProcessModel) {
-        this.taskListService
-            .assignTask(this.taskDetails.id, selectedUser)
-            .subscribe(() => {
-                this.logService.info('Task Assigned to ' + selectedUser.email);
-                this.assignTask.emit();
-            });
+        this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(() => {
+            this.logService.info('Task Assigned to ' + selectedUser.email);
+            this.assignTask.emit();
+        });
         this.showAssignee = false;
     }
 
@@ -345,7 +338,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isReadOnlyComment(): boolean {
-        return (this.taskDetails && this.taskDetails.isCompleted()) && (this.taskPeople && this.taskPeople.length === 0);
+        return this.taskDetails?.isCompleted() && this.taskPeople?.length === 0;
     }
 
     private reset() {
@@ -355,10 +348,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.taskListService
             .updateTask(this.taskId, updateNotification.changed)
-            .pipe(catchError(() => {
-                this.cardViewUpdateService.updateElement(updateNotification.target);
-                return of(null);
-            }))
+            .pipe(
+                catchError(() => {
+                    this.cardViewUpdateService.updateElement(updateNotification.target);
+                    return of(null);
+                })
+            )
             .subscribe(() => this.loadDetails(this.taskId));
     }
 
@@ -375,38 +370,35 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.taskPeople = [];
 
         if (taskId) {
-            this.taskListService.getTaskDetails(taskId).subscribe(
-                (res: TaskDetailsModel) => {
-                    this.showAttachForm = false;
-                    this.taskDetails = res;
+            this.taskListService.getTaskDetails(taskId).subscribe((res) => {
+                this.showAttachForm = false;
+                this.taskDetails = res;
 
-                    if (this.taskDetails.name === 'null') {
-                        this.taskDetails.name = 'No name';
-                    }
+                if (this.taskDetails.name === 'null') {
+                    this.taskDetails.name = 'No name';
+                }
 
-                    const endDate: any = res.endDate;
-                    if (endDate && !isNaN(endDate.getTime())) {
-                        this.internalReadOnlyForm = true;
-                    } else {
-                        this.internalReadOnlyForm = this.readOnlyForm;
-                    }
+                const endDate: any = res.endDate;
+                if (endDate && !isNaN(endDate.getTime())) {
+                    this.internalReadOnlyForm = true;
+                } else {
+                    this.internalReadOnlyForm = this.readOnlyForm;
+                }
 
-                    if (this.taskDetails && this.taskDetails.involvedPeople) {
-                        this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new UserProcessModel(user));
-                        });
-                    }
-                });
+                if (this.taskDetails?.involvedPeople) {
+                    this.taskDetails.involvedPeople.forEach((user) => {
+                        this.taskPeople.push(new UserProcessModel(user));
+                    });
+                }
+            });
         }
     }
 
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        const requestNode = new TaskQueryRequestRepresentationModel(
-            {
-                processInstanceId,
-                processDefinitionId
-            }
-        );
+        const requestNode = new TaskQueryRequestRepresentationModel({
+            processInstanceId,
+            processDefinitionId
+        });
         this.taskListService.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
@@ -414,8 +406,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
                 } else {
                     this.reset();
                 }
-            }, (error) => {
+            },
+            (error) => {
                 this.error.emit(error);
-            });
+            }
+        );
     }
 }
