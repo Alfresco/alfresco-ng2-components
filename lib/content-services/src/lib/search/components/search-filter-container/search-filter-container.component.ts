@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    Output,
-    OnInit,
-    EventEmitter,
-    ViewEncapsulation,
-    ViewChild,
-    Inject,
-    OnDestroy,
-    ElementRef
-} from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation, ViewChild, Inject, OnDestroy, ElementRef } from '@angular/core';
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
@@ -44,7 +33,6 @@ import { FilterSearch } from '../../models/filter-search.interface';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit, OnDestroy {
-
     /** The column the filter will be applied on. */
     @Input()
     col: DataColumn;
@@ -69,14 +57,15 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
-                private translationService: TranslationService,
-                private focusTrapFactory: ConfigurableFocusTrapFactory) {
-    }
+    constructor(
+        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
+        private translationService: TranslationService,
+        private focusTrapFactory: ConfigurableFocusTrapFactory
+    ) {}
 
     ngOnInit() {
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
-        this.initialValue = this.value && this.value[this.col.key] ? this.value[this.col.key] : undefined;
+        this.initialValue = this.value?.[this.col.key] ? this.value[this.col.key] : undefined;
     }
 
     ngOnDestroy() {

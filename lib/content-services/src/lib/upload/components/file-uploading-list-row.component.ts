@@ -36,9 +36,11 @@ export class FileUploadingListRowComponent {
     }
 
     showCancelledStatus(): boolean {
-        return this.file.status === FileUploadStatus.Cancelled ||
+        return (
+            this.file.status === FileUploadStatus.Cancelled ||
             this.file.status === FileUploadStatus.Aborted ||
-            this.file.status === FileUploadStatus.Deleted;
+            this.file.status === FileUploadStatus.Deleted
+        );
     }
 
     get versionNumber(): string {
@@ -46,29 +48,19 @@ export class FileUploadingListRowComponent {
     }
 
     get mimeType(): string {
-        if (this.file && this.file.file && this.file.file.type) {
-            return this.file.file.type;
-        }
-
-        return 'default';
+        return this.file?.file?.type || 'default';
     }
 
     isUploadVersion(): boolean {
-        return (
-            !!this.file.data &&
-            this.file.options &&
-            this.file.options.newVersion &&
-            this.file.data.entry.properties &&
-            this.file.data.entry.properties['cm:versionLabel']
-        );
+        return !!this.file.data && this.file.options?.newVersion && this.file.data.entry.properties?.['cm:versionLabel'];
     }
 
     canCancelUpload(): boolean {
-        return this.file && this.file.status === FileUploadStatus.Pending;
+        return this.file?.status === FileUploadStatus.Pending;
     }
 
     isUploadError(): boolean {
-        return this.file && this.file.status === FileUploadStatus.Error;
+        return this.file?.status === FileUploadStatus.Error;
     }
 
     isUploading(): boolean {
@@ -76,10 +68,10 @@ export class FileUploadingListRowComponent {
     }
 
     isUploadComplete(): boolean {
-        return this.file.status === FileUploadStatus.Complete && !this.isUploadVersion();
+        return this.file?.status === FileUploadStatus.Complete && !this.isUploadVersion();
     }
 
     isUploadVersionComplete(): boolean {
-        return this.file && (this.file.status === FileUploadStatus.Complete && this.isUploadVersion());
+        return this.file?.status === FileUploadStatus.Complete && this.isUploadVersion();
     }
 }

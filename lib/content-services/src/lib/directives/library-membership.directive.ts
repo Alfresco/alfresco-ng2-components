@@ -16,17 +16,11 @@
  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import {
-    SiteEntry,
-    SiteMembershipRequestBodyCreate,
-    SiteMemberEntry,
-    SiteMembershipRequestEntry,
-    SitesApi
-} from '@alfresco/js-api';
+import { SiteEntry, SiteMembershipRequestBodyCreate, SiteMembershipRequestEntry, SitesApi } from '@alfresco/js-api';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryMembershipToggleEvent } from '../interfaces/library-membership-toggle-event.interface';
-import { LibraryMembershipErrorEvent} from '../interfaces/library-membership-error-event.interface';
+import { LibraryMembershipErrorEvent } from '../interfaces/library-membership-error-event.interface';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 import { SitesService } from '../common/services/sites.service';
 
@@ -39,7 +33,7 @@ export class LibraryMembershipDirective implements OnChanges {
 
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    _sitesApi: SitesApi;
+    private _sitesApi: SitesApi;
     get sitesApi(): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
         return this._sitesApi;
@@ -69,11 +63,10 @@ export class LibraryMembershipDirective implements OnChanges {
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
-    ) {
-    }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (!changes.selection.currentValue || !changes.selection.currentValue.entry) {
+        if (!changes.selection.currentValue?.entry) {
             this.targetSite = null;
 
             return;
@@ -115,7 +108,7 @@ export class LibraryMembershipDirective implements OnChanges {
                     this.targetSite.joinRequested = true;
                     this.isJoinRequested.next(true);
 
-                    if (createdMembership.entry && createdMembership.entry.site && createdMembership.entry.site.role) {
+                    if (createdMembership.entry?.site?.role) {
                         const info = {
                             shouldReload: true,
                             i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
@@ -154,8 +147,8 @@ export class LibraryMembershipDirective implements OnChanges {
 
         if (this.isAdmin) {
             this.joinLibrary().subscribe(
-                (createdMembership: SiteMemberEntry) => {
-                    if (createdMembership.entry && createdMembership.entry.role) {
+                (createdMembership) => {
+                    if (createdMembership.entry?.role) {
                         const info = {
                             shouldReload: true,
                             i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
@@ -223,7 +216,7 @@ export class LibraryMembershipDirective implements OnChanges {
         });
     }
 
-    private cancelJoinRequest() {
+    private cancelJoinRequest(): Observable<void> {
         return from(this.sitesApi.deleteSiteMembershipRequestForPerson('-me-', this.targetSite.id));
     }
 

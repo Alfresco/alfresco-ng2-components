@@ -89,7 +89,7 @@ export class ContentService {
             (currentPermission) => currentPermission.authorityId === userId
         );
         if (permissions.length) {
-            if (permission && permission.startsWith('!')) {
+            if (permission?.startsWith('!')) {
                 hasPermissions = !permissions.find((currentPermission) => currentPermission.name === permission.replace('!', ''));
             } else {
                 hasPermissions = !!permissions.find((currentPermission) => currentPermission.name === permission);
@@ -99,7 +99,7 @@ export class ContentService {
                 hasPermissions = true;
             } else if (permission === PermissionsEnum.NOT_CONSUMER) {
                 hasPermissions = false;
-            } else if (permission && permission.startsWith('!')) {
+            } else if (permission?.startsWith('!')) {
                 hasPermissions = true;
             }
         }
@@ -117,8 +117,8 @@ export class ContentService {
     hasAllowableOperations(node: Node, allowableOperation: AllowableOperationsEnum | string): boolean {
         let hasAllowableOperations = false;
 
-        if (node && node.allowableOperations) {
-            if (allowableOperation && allowableOperation.startsWith('!')) {
+        if (node?.allowableOperations) {
+            if (allowableOperation?.startsWith('!')) {
                 hasAllowableOperations = !node.allowableOperations.find(
                     (currentOperation) => currentOperation === allowableOperation.replace('!', '')
                 );
@@ -126,7 +126,7 @@ export class ContentService {
                 hasAllowableOperations = !!node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation);
             }
         } else {
-            if (allowableOperation && allowableOperation.startsWith('!')) {
+            if (allowableOperation?.startsWith('!')) {
                 hasAllowableOperations = true;
             }
         }

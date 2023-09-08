@@ -87,7 +87,7 @@ export class DocumentListService implements DocumentListLoader {
      */
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
         let rootNodeId = ROOT_ID;
-        if (opts && opts.rootFolderId) {
+        if (opts?.rootFolderId) {
             rootNodeId = opts.rootFolderId;
         }
 

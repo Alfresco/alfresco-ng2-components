@@ -22,7 +22,6 @@ import { NodeEntry } from '@alfresco/js-api';
     name: 'adfNodeNameTooltip'
 })
 export class NodeNameTooltipPipe implements PipeTransform {
-
     transform(node: NodeEntry): string {
         if (node) {
             return this.getNodeTooltip(node);
@@ -46,18 +45,17 @@ export class NodeNameTooltipPipe implements PipeTransform {
     }
 
     private getNodeTooltip(node: NodeEntry): string {
-        if (!node || !node.entry) {
+        if (!node?.entry) {
             return null;
         }
 
-        const { entry: { properties, name } } = node;
-        const lines = [ name ];
+        const {
+            entry: { properties, name }
+        } = node;
+        const lines = [name];
 
         if (properties) {
-            const {
-                'cm:title': title,
-                'cm:description': description
-            } = properties;
+            const { 'cm:title': title, 'cm:description': description } = properties;
 
             if (title && description) {
                 lines[0] = title;

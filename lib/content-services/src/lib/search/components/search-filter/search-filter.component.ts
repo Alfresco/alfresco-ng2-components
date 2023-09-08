@@ -30,7 +30,6 @@ import { SearchFacetFiltersService } from '../../services/search-facet-filters.s
     host: { class: 'adf-search-filter' }
 })
 export class SearchFilterComponent {
-
     /** Toggles whether to show or not the context facet filters. */
     @Input()
     showContextFacets: boolean = true;
@@ -41,16 +40,18 @@ export class SearchFilterComponent {
     };
     displayResetButton: boolean;
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
-                public facetFiltersService: SearchFacetFiltersService) {
-        if (queryBuilder.config && queryBuilder.config.facetQueries) {
+    constructor(
+        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
+        public facetFiltersService: SearchFacetFiltersService
+    ) {
+        if (queryBuilder.config?.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;
         }
-        if (queryBuilder.config && queryBuilder.config.facetFields) {
+        if (queryBuilder.config?.facetFields) {
             this.facetExpanded['field'] = queryBuilder.config.facetFields.expanded;
         }
-        if (queryBuilder.config && queryBuilder.config.facetIntervals) {
+        if (queryBuilder.config?.facetIntervals) {
             this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;

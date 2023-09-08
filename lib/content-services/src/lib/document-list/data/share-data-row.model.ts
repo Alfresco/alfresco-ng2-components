@@ -95,11 +95,11 @@ export class ShareDataRow implements DataRow {
     }
 
     isFile(nodeEntry: NodeEntry): boolean {
-        return nodeEntry.entry && nodeEntry.entry.isFile;
+        return nodeEntry.entry?.isFile;
     }
 
     isFolder(nodeEntry: NodeEntry): boolean {
-        return nodeEntry.entry && nodeEntry.entry.isFolder;
+        return nodeEntry.entry?.isFolder;
     }
 
     cacheValue(key: string, value: any): any {

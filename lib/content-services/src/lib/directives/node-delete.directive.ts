@@ -78,10 +78,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.process(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService,
-                private translation: TranslationService,
-                private elementRef: ElementRef) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService, private elementRef: ElementRef) {}
 
     ngOnChanges() {
         if (!this.selection || (this.selection && this.selection.length === 0)) {
@@ -98,23 +95,21 @@ export class NodeDeleteDirective implements OnChanges {
     }
 
     private process(selection: NodeEntry[] | DeletedNodeEntry[]) {
-        if (selection && selection.length) {
-
+        if (selection?.length) {
             const batch = this.getDeleteNodesBatch(selection);
 
-            forkJoin(...batch)
-                .subscribe((data: ProcessedNodeData[]) => {
-                    const processedItems: ProcessStatus = this.processStatus(data);
-                    const message = this.getMessage(processedItems);
+            forkJoin(...batch).subscribe((data: ProcessedNodeData[]) => {
+                const processedItems: ProcessStatus = this.processStatus(data);
+                const message = this.getMessage(processedItems);
 
-                    if (message) {
-                        this.delete.emit(message);
-                    }
-                });
+                if (message) {
+                    this.delete.emit(message);
+                }
+            });
         }
     }
 
-    private getDeleteNodesBatch(selection: any): Observable<ProcessedNodeData>[] {
+    private getDeleteNodesBatch(selection: NodeEntry[] | DeletedNodeEntry[]): Observable<ProcessedNodeData>[] {
         return selection.map((node) => this.deleteNode(node));
     }
 
@@ -135,10 +130,12 @@ export class NodeDeleteDirective implements OnChanges {
                 entry: node.entry,
                 status: 1
             })),
-            catchError(() => of({
-                entry: node.entry,
-                status: 0
-            }))
+            catchError(() =>
+                of({
+                    entry: node.entry,
+                    status: 0
+                })
+            )
         );
     }
 
@@ -147,10 +144,10 @@ export class NodeDeleteDirective implements OnChanges {
             success: [],
             failed: [],
             get someFailed() {
-                return !!(this.failed.length);
+                return !!this.failed.length;
             },
             get someSucceeded() {
-                return !!(this.success.length);
+                return !!this.success.length;
             },
             get oneFailed() {
                 return this.failed.length === 1;
@@ -166,18 +163,15 @@ export class NodeDeleteDirective implements OnChanges {
             }
         };
 
-        return data.reduce(
-            (acc, next) => {
-                if (next.status === 1) {
-                    acc.success.push(next);
-                } else {
-                    acc.failed.push(next);
-                }
+        return data.reduce((acc, next) => {
+            if (next.status === 1) {
+                acc.success.push(next);
+            } else {
+                acc.failed.push(next);
+            }
 
-                return acc;
-            },
-            deleteStatus
-        );
+            return acc;
+        }, deleteStatus);
     }
 
     private getMessage(status: ProcessStatus): string | null {
@@ -198,37 +192,25 @@ export class NodeDeleteDirective implements OnChanges {
         }
 
         if (status.someFailed && status.someSucceeded && !status.oneSucceeded) {
-            return this.translation.instant(
-                'CORE.DELETE_NODE.PARTIAL_PLURAL',
-                {
-                    success: status.success.length,
-                    failed: status.failed.length
-                }
-            );
+            return this.translation.instant('CORE.DELETE_NODE.PARTIAL_PLURAL', {
+                success: status.success.length,
+                failed: status.failed.length
+            });
         }
 
         if (status.someFailed && status.oneSucceeded) {
-            return this.translation.instant(
-                'CORE.DELETE_NODE.PARTIAL_SINGULAR',
-                {
-                    success: status.success.length,
-                    failed: status.failed.length
-                }
-            );
+            return this.translation.instant('CORE.DELETE_NODE.PARTIAL_SINGULAR', {
+                success: status.success.length,
+                failed: status.failed.length
+            });
         }
 
         if (status.oneFailed && !status.someSucceeded) {
-            return this.translation.instant(
-                'CORE.DELETE_NODE.ERROR_SINGULAR',
-                { name: status.failed[0].entry.name }
-            );
+            return this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: status.failed[0].entry.name });
         }
 
         if (status.oneSucceeded && !status.someFailed) {
-            return this.translation.instant(
-                'CORE.DELETE_NODE.SINGULAR',
-                { name: status.success[0].entry.name }
-            );
+            return this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: status.success[0].entry.name });
         }
 
         return null;

@@ -90,7 +90,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
@@ -374,7 +374,7 @@ export abstract class BaseQueryBuilderService {
      * @returns The primary sorting definition
      */
     getPrimarySorting(): SearchSortingDefinition {
-        if (this.sorting && this.sorting.length > 0) {
+        if (this.sorting?.length > 0) {
             return this.sorting[0];
         }
         return null;
@@ -386,10 +386,7 @@ export abstract class BaseQueryBuilderService {
      * @returns Pre-configured sorting options
      */
     getSortingOptions(): SearchSortingDefinition[] {
-        if (this.config && this.config.sorting) {
-            return this.config.sorting.options || [];
-        }
-        return [];
+        return this.config?.sorting?.options || [];
     }
 
     /**
@@ -398,7 +395,7 @@ export abstract class BaseQueryBuilderService {
      * @param query Target query
      * @returns Query group
      */
-    getQueryGroup(query) {
+    getQueryGroup(query: FacetQuery): string {
         return query.group || this.config.facetQueries.label || 'Facet Queries';
     }
 
@@ -408,10 +405,7 @@ export abstract class BaseQueryBuilderService {
      * @returns True if defined, false otherwise
      */
     get hasFacetQueries(): boolean {
-        if (this.config && this.config.facetQueries && this.config.facetQueries.queries && this.config.facetQueries.queries.length > 0) {
-            return true;
-        }
-        return false;
+        return this.config?.facetQueries?.queries?.length > 0;
     }
 
     /**
@@ -420,11 +414,11 @@ export abstract class BaseQueryBuilderService {
      * @returns True if defined, false otherwise
      */
     get hasFacetIntervals(): boolean {
-        return this.config && this.config.facetIntervals && this.config.facetIntervals.intervals && this.config.facetIntervals.intervals.length > 0;
+        return this.config?.facetIntervals?.intervals?.length > 0;
     }
 
     get hasFacetHighlight(): boolean {
-        return !!(this.config && this.config.highlight);
+        return !!this.config?.highlight;
     }
 
     protected get sort(): RequestSortDefinitionInner[] {
@@ -515,9 +509,9 @@ export abstract class BaseQueryBuilderService {
     }
 
     protected get facetFields(): RequestFacetFields {
-        const facetFields = this.config.facetFields && this.config.facetFields.fields;
+        const facetFields = this.config.facetFields?.fields;
 
-        if (facetFields && facetFields.length > 0) {
+        if (facetFields?.length > 0) {
             return {
                 facets: facetFields.map(
                     (facet) =>

@@ -16,10 +16,7 @@
  */
 
 import { EXTENDIBLE_COMPONENT, FileUtils, LogService } from '@alfresco/adf-core';
-import {
-    Component, EventEmitter, forwardRef, Input,
-    OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject
-} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { ContentService } from '../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
@@ -33,9 +30,7 @@ import { NodeAllowableOperationSubject } from '../../interfaces/node-allowable-o
     selector: 'adf-upload-button',
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
-    viewProviders: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }
-    ],
+    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }],
     encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
@@ -78,7 +73,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     ngOnChanges(changes: SimpleChanges) {
         const rootFolderId = changes['rootFolderId'];
-        if (rootFolderId && rootFolderId.currentValue) {
+        if (rootFolderId?.currentValue) {
             this.checkPermission();
         }
     }
@@ -88,7 +83,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     }
 
     onFilesAdded($event: any): void {
-        const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+        const files = FileUtils.toFileArray($event.currentTarget.files);
 
         if (this.hasAllowableOperations) {
             this.uploadFiles(files);
@@ -101,7 +96,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     onClickUploadButton(): void {
         if (this.file) {
-            const files: File[] = [this.file];
+            const files = [this.file];
 
             if (this.hasAllowableOperations) {
                 this.uploadFiles(files);
@@ -113,7 +108,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     onDirectoryAdded($event: any): void {
         if (this.hasAllowableOperations) {
-            const files: File[] = FileUtils.toFileArray($event.currentTarget.files);
+            const files = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
             this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
@@ -132,10 +127,10 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
             this.nodesApiService.getNode(this.rootFolderId, opts).subscribe(
                 (res) => this.permissionValue.next(this.nodeHasPermission(res, AllowableOperationsEnum.CREATE)),
                 (error: { error: Error }) => {
-                    if (error && error.error) {
+                    if (error?.error) {
                         this.error.emit({ error: error.error.message } as any);
                     } else {
-                        this.error.emit({ error: 'FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR'} as any);
+                        this.error.emit({ error: 'FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR' } as any);
                     }
                 }
             );

@@ -407,7 +407,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this._excludeSiteContent && this._excludeSiteContent.length && entry && entry.properties && entry.properties['st:componentId']) {
+        if (this._excludeSiteContent?.length && entry && entry.properties?.['st:componentId']) {
             const excludedItem = this._excludeSiteContent.find((id: string) => entry.properties['st:componentId'] === id);
             return !!excludedItem;
         }
@@ -489,7 +489,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId).subscribe((nodeIds) => {
-                if (nodeIds && nodeIds.length) {
+                if (nodeIds?.length) {
                     nodeIds
                         .filter((id) => id !== this.siteId)
                         .forEach((extraId) => {

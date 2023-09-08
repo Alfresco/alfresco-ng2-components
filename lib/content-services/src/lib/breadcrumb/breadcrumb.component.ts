@@ -129,7 +129,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     parseRoute(node: Node): PathElement[] {
-        if (node && node.path) {
+        if (node?.path) {
             const route = (node.path.elements || []).slice();
 
             route.push({

@@ -33,19 +33,19 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {
-
     @Input()
     field!: FacetField;
 
     displayValue$: Subject<string> = new Subject<string>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
-                private searchFacetFiltersService: SearchFacetFiltersService,
-                private translationService: TranslationService) {
-    }
+    constructor(
+        @Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
+        private searchFacetFiltersService: SearchFacetFiltersService,
+        private translationService: TranslationService
+    ) {}
 
     get canUpdateOnChange() {
-       return  this.field.settings?.allowUpdateOnChange ?? true;
+        return this.field.settings?.allowUpdateOnChange ?? true;
     }
 
     onToggleBucket(event: MatCheckboxChange, field: FacetField, bucket: FacetFieldBucket) {
@@ -83,14 +83,14 @@ export class SearchFacetFieldComponent implements FacetWidget {
     }
 
     canResetSelectedBuckets(field: FacetField): boolean {
-        if (field && field.buckets) {
+        if (field?.buckets) {
             return field.buckets.items.some((bucket) => bucket.checked);
         }
         return false;
     }
 
     resetSelectedBuckets(field: FacetField) {
-        if (field && field.buckets) {
+        if (field?.buckets) {
             for (const bucket of field.buckets.items) {
                 bucket.checked = false;
                 this.queryBuilder.removeUserFacetBucket(field.field, bucket);
@@ -110,7 +110,8 @@ export class SearchFacetFieldComponent implements FacetWidget {
         if (!this.field.buckets?.items) {
             this.displayValue$.next('');
         } else {
-            const displayValue = this.field.buckets?.items?.filter((item) => item.checked)
+            const displayValue = this.field.buckets?.items
+                ?.filter((item) => item.checked)
                 .map((item) => this.translationService.instant(item.display || item.label))
                 .join(', ');
             this.displayValue$.next(displayValue);

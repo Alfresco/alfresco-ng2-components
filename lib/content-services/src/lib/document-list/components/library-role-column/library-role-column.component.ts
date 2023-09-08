@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    Input,
-    ChangeDetectionStrategy,
-    ViewEncapsulation,
-    OnDestroy
-} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { SiteEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
@@ -32,8 +25,8 @@ import { NodesApiService } from '../../../common/services/nodes-api.service';
 @Component({
     selector: 'adf-library-role-column',
     template: `
-        <span class="adf-datatable-cell-value" title="{{ (displayText$ | async) | translate }}">
-            {{ (displayText$ | async) | translate }}
+        <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
+            {{ displayText$ | async | translate }}
         </span>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,24 +46,22 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                const row: ShareDataRow = this.context.row;
-                if (row) {
-                    const { entry } = row.node;
+        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
 
-                    if (entry === node) {
-                        row.node = { entry };
-                        this.updateValue();
-                    }
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
                 }
-            });
+            }
+        });
     }
 
     protected updateValue() {
         const node: SiteEntry = this.context.row.node;
-        if (node && node.entry) {
+        if (node?.entry) {
             const role: string = node.entry.role;
             switch (role) {
                 case Site.RoleEnum.SiteManager:

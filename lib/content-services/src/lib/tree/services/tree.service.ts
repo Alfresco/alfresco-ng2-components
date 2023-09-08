@@ -23,7 +23,7 @@ import { TreeNode } from '../models/tree-node.interface';
 import { TreeResponse } from '../models/tree-response.interface';
 
 @Injectable({ providedIn: 'root' })
-export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
+export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
     public readonly treeControl: FlatTreeControl<T>;
     public treeNodesSource = new BehaviorSubject<T[]>([]);
 
@@ -38,7 +38,10 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
 
     constructor() {
         super();
-        this.treeControl = new FlatTreeControl<T>(node => node.level, node => node.hasChildren);
+        this.treeControl = new FlatTreeControl<T>(
+            (node) => node.level,
+            (node) => node.hasChildren
+        );
         this.treeNodes = [];
     }
 
@@ -66,7 +69,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
      * @param nodeToCollapse Node to be collapsed
      */
     public collapseNode(nodeToCollapse: T): void {
-        if (nodeToCollapse != null && nodeToCollapse.hasChildren) {
+        if (nodeToCollapse?.hasChildren) {
             this.treeControl.collapse(nodeToCollapse);
             const children: T[] = this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId);
             children.forEach((child: T) => {
@@ -142,9 +145,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T>  {
         const index: number = this.treeNodes.indexOf(nodeToCollapse);
         this.treeNodes.splice(index, 1);
         if (nodeToCollapse.hasChildren) {
-            this.treeNodes
-                .filter((node: T) => nodeToCollapse.id === node.parentId)
-                .forEach((child: T) => this.collapseInnerNode(child));
+            this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId).forEach((child: T) => this.collapseInnerNode(child));
         }
     }
 }

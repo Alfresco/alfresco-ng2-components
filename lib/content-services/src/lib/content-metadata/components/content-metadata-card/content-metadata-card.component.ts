@@ -31,7 +31,6 @@ import { AllowableOperationsEnum } from '../../../common/models/allowable-operat
     host: { class: 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
-
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
@@ -101,12 +100,16 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     editAspectSupported = false;
 
-    constructor(private contentService: ContentService, private nodeAspectService: NodeAspectService, private versionCompatibilityService: VersionCompatibilityService) {
+    constructor(
+        private contentService: ContentService,
+        private nodeAspectService: NodeAspectService,
+        private versionCompatibilityService: VersionCompatibilityService
+    ) {
         this.editAspectSupported = this.versionCompatibilityService.isVersionSupported('7');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.displayAspect && changes.displayAspect.currentValue) {
+        if (changes.displayAspect?.currentValue) {
             this.expanded = true;
         }
     }

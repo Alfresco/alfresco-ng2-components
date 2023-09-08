@@ -130,7 +130,7 @@ export class NodeFavoriteDirective implements OnChanges {
         const node: Node | SharedLink = selected.entry;
 
         // ACS 6.x with 'isFavorite' include
-        if (node && node.hasOwnProperty('isFavorite')) {
+        if (node?.hasOwnProperty('isFavorite')) {
             return of(selected);
         }
 

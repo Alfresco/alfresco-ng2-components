@@ -111,7 +111,7 @@ export class FormModel implements ProcessFormModel {
             this.className = json.className || '';
             this.variables = json.variables || json.formDefinition?.variables || [];
             this.processVariables = json.processVariables || [];
-            this.enableFixedSpace = enableFixedSpace ? true : false;
+            this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));

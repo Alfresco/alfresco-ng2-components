@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./search-filter-chips.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterChipsComponent {
+export class SearchFilterChipsComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();
 
     /** Toggles whether to show or not the context facet filters. */
@@ -40,12 +40,14 @@ export class SearchFilterChipsComponent {
     constructor(
         @Inject(SEARCH_QUERY_SERVICE_TOKEN)
         public queryBuilder: SearchQueryBuilderService,
-        public facetFiltersService: SearchFacetFiltersService) {}
+        public facetFiltersService: SearchFacetFiltersService
+    ) {}
 
     ngOnInit() {
-        this.queryBuilder.executed.asObservable()
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(() => this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-'));
+        this.queryBuilder.executed
+            .asObservable()
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => (this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-')));
     }
 
     ngOnDestroy() {
