@@ -1,3 +1,5 @@
+@import '../../styles/flex';
+
 .adf-error-content {
     color: var(--adf-theme-foreground-text-color-054);
     display: flex;
@@ -30,5 +32,28 @@
         width: 50%;
         min-width: 250px;
         margin-bottom: 60px;
+        line-height: 30px;
+    }
+}
+
+@include layout-bp(lt-md) {
+    .adf-error-content {
+        &-code {
+            margin-top: 100px;
+            font-size: 50px;
+            margin-bottom: 25px;
+        }
+
+        &-shadow {
+            width: 100px;
+        }
+
+        &-title {
+            font-size: var(--theme-headline-font-size);
+        }
+
+        &-description {
+            font-size: var(--theme-subheading-2-font-size);
+        }
     }
 }

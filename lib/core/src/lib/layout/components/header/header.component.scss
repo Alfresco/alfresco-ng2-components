@@ -1,3 +1,5 @@
+@import '../../../styles/_flex.scss';
+
 adf-layout-header .mat-toolbar-single-row {
     color: var(--theme-header-text-color) !important;
     background-color: var(--theme-primary-color);
@@ -50,7 +52,7 @@ adf-layout-header .mat-toolbar-single-row {
         padding: 0;
     }
 
-    @media screen and (max-width: 599px) {
+    @include layout-bp(sm) {
         .adf-app-logo,
         .adf-app-title {
             display: none;
