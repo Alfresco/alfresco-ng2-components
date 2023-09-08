@@ -1,3 +1,5 @@
+@import '../styles/flex';
+
 .adf {
     &-userinfo-container {
         display: flex;
@@ -11,8 +13,7 @@
 
     &-userinfo-name {
         padding: 0 5px;
-
-        @media screen and (max-width: 959px) {
+        @include layout-bp(lt-md) {
             display: none;
         }
     }
@@ -94,7 +95,7 @@
         display: flex;
         justify-content: space-between;
 
-        @media screen and (max-width: 599px) {
+        @include layout-bp(lt-sm) {
             padding: 10px;
         }
     }
