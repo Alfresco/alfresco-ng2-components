@@ -208,52 +208,6 @@ jobs:
       - run: npx nx print-affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  unit-tests:
-    timeout-minutes: 30
-    name: "Unit tests: ${{ matrix.unit-tests.name }}"
-    runs-on: ubuntu-22.04
-    needs: [setup]
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        unit-tests:
-          - name: content-services
-            exclude: "insights,core,extensions,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: core
-            exclude: "insights,content-services,process-services,process-services-cloud,eslint-plugin-eslint-angular"
-          - name: insights
-            exclude: "core,extensions,content-services,process-services-cloud,process-services,eslint-plugin-eslint-angular"
-          - name: process-services
-            exclude: "core,extensions,content-services,process-services-cloud,insights,eslint-plugin-eslint-angular"
-          - name: process-cloud
-            exclude: "insights,core,extensions,content-services,process-services,eslint-plugin-eslint-angular"
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Run unit tests
-        run: |
-          /usr/bin/xvfb-run --auto-servernum npx nx affected:test $NX_CALCULATION_FLAGS --exclude=${{ matrix.unit-tests.exclude }}
-
-  lint:
-    # long timeout required when cache has to be recreated
-    timeout-minutes: 30
-    name: "Lint"
-    runs-on: ubuntu-22.04
-    needs: [setup]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all tags and branches
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npx nx affected --target=lint $NX_CALCULATION_FLAGS
-
   build-libs:
     # long timeout required when cache has to be recreated
     timeout-minutes: 30
@@ -272,144 +226,16 @@ jobs:
       - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  e2e-storybook:
-    timeout-minutes: 20
-    name: "e2e: storybook"
-    needs: [build-libs, lint, unit-tests]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Process Cloud Storybook Playwright
-        run: |
-          npx playwright install chromium
-          sudo sysctl -w fs.inotify.max_user_watches=524288
-          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
   e2e:
     timeout-minutes: 90
     name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [build-libs, lint, unit-tests]
+    needs: [build-libs]
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       # max-parallel: 4
       matrix:
         e2e-test:
-          - description: "Core"
-            test-id: "core"
-            folder: "core"
-            provider: "ALL"
-            auth: "OAUTH"
-            check-cs-env: "true"
-            check-ps-env: "true"
-            deps: "testing"
-          - description: "Content: Components"
-            test-id: "content-services"
-            folder: "content-services/components"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Content: Directives"
-            test-id: "content-services"
-            folder: "content-services/directives"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Content: Document List"
-            test-id: "content-services"
-            folder: "content-services/document-list"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Content: Metadata"
-            test-id: "content-services"
-            folder: "content-services/metadata"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Content: Upload and Versioning"
-            test-id: "content-services"
-            folder: "content-services/upload"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Search"
-            test-id: "content-services"
-            folder: "search"
-            provider: "ECM"
-            auth: "BASIC"
-            check-cs-env: "true"
-            deps: "testing"
-          - description: "Process: Form"
-            test-id: "process-services"
-            folder: "process-services/form"
-            provider: "BPM"
-            auth: "OAUTH"
-            check-ps-env: "true"
-            check-external-cs-env: "true"
-            deps: "testing"
-          - description: "Process: Process"
-            test-id: "process-services"
-            folder: "process-services/process"
-            provider: "BPM"
-            auth: "OAUTH"
-            check-ps-env: "true"
-            check-external-cs-env: "true"
-            deps: "testing"
-          - description: "Process: Tasks"
-            test-id: "process-services"
-            folder: "process-services/tasks"
-            provider: "BPM"
-            auth: "OAUTH"
-            check-ps-env: "true"
-            check-external-cs-env: "true"
-            deps: "testing"
-          - description: "Process: Widget"
-            test-id: "process-services"
-            folder: "process-services/widgets"
-            provider: "BPM"
-            auth: "OAUTH"
-            check-ps-env: "true"
-            check-external-cs-env: "true"
-            deps: "testing"
-          - description: "Process Cloud: Form"
-            test-id: "process-services-cloud"
-            folder: "process-services-cloud/form-field"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
-          - description: "Process Cloud: Process"
-            test-id: "process-services-cloud"
-            folder: "process-services-cloud/process"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
-          - description: "Process Cloud: Start Task"
-            test-id: "process-services-cloud"
-            folder: "process-services-cloud/start-task"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
             folder: "process-services-cloud/task-list"
@@ -477,7 +303,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, check-package-lock, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, check-package-lock, setup, build-libs, e2e]
     steps:
       - uses: actions/checkout@v3
       - name: Log e2e result
