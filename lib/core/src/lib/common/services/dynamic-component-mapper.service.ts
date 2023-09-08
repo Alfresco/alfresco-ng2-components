@@ -19,7 +19,10 @@ import { Type } from '@angular/core';
 
 const getType = (type: any): any => () => type;
 
-export interface DynamicComponentModel { type: string }
+export interface DynamicComponentModel {
+ type: string;
+}
+
 export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<any>;
 export class DynamicComponentResolver {
     static fromType(type: Type<any>): DynamicComponentResolveFunction {
