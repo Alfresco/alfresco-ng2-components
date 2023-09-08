@@ -32,8 +32,11 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
-    fakeProcessInstance, fakeNoNameProcessDefinitions,
+    fakeProcessDefinitions,
+    fakeStartForm,
+    fakeStartFormNotValid,
+    fakeProcessInstance,
+    fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition,
     fakeSingleProcessDefinitionWithoutForm,
     fakeFormModelJson
@@ -49,7 +52,6 @@ import { ProcessDefinitionCloud, TaskVariableCloud } from '@alfresco/adf-process
 import { first } from 'rxjs/operators';
 
 describe('StartProcessCloudComponent', () => {
-
     let component: StartProcessCloudComponent;
     let fixture: ComponentFixture<StartProcessCloudComponent>;
     let processService: StartProcessCloudService;
@@ -62,13 +64,14 @@ describe('StartProcessCloudComponent', () => {
     const firstChange = new SimpleChange(undefined, 'myApp', true);
 
     const selectOptionByName = async (name: string) => {
-
         const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
         selectElement.click();
         fixture.detectChanges();
         await fixture.whenStable();
         const options: any = fixture.debugElement.queryAll(By.css('.mat-autocomplete-panel .mat-option'));
-        const currentOption: DebugElement = options.find((option: DebugElement) => option.nativeElement.querySelector('.mat-option-text').innerHTML.trim() === name);
+        const currentOption: DebugElement = options.find(
+            (option: DebugElement) => option.nativeElement.querySelector('.mat-option-text').innerHTML.trim() === name
+        );
 
         if (currentOption) {
             currentOption.nativeElement.click();
@@ -117,7 +120,6 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('start a process without start form', () => {
-
         beforeEach(() => {
             component.name = 'My formless new process';
             component.appName = 'myApp';
@@ -210,7 +212,6 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('start a process with start form', () => {
-
         beforeEach(() => {
             component.name = 'My new process with form';
             component.appName = 'startformwithoutupload';
@@ -218,28 +219,32 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             const change = new SimpleChange(null, 'startformwithoutupload', true);
             component.ngOnChanges({ appName: change });
-            component.values = [{
-                id: '1',
-                type: 'string',
-                name: 'firstName',
-                value: 'FakeName',
-                get hasValue() {
-                    return this['value'];
+            component.values = [
+                {
+                    id: '1',
+                    type: 'string',
+                    name: 'firstName',
+                    value: 'FakeName',
+                    get hasValue() {
+                        return this['value'];
+                    },
+                    set hasValue(value) {
+                        this['value'] = value;
+                    }
                 },
-                set hasValue(value) {
-                    this['value'] = value;
+                {
+                    id: '1',
+                    type: 'string',
+                    name: 'lastName',
+                    value: 'FakeLastName',
+                    get hasValue() {
+                        return this['value'];
+                    },
+                    set hasValue(value) {
+                        this['value'] = value;
+                    }
                 }
-            }, {
-                id: '1', type: 'string',
-                name: 'lastName',
-                value: 'FakeLastName',
-                get hasValue() {
-                    return this['value'];
-                },
-                set hasValue(value) {
-                    this['value'] = value;
-                }
-            }];
+            ];
             fixture.detectChanges();
         });
 
@@ -350,7 +355,6 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('process definitions list', () => {
-
         beforeEach(() => {
             component.name = 'My new process';
             component.appName = 'myApp';
@@ -472,7 +476,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.processPayloadCloud.name).toBeNull();
+            expect(component.processPayloadCloud.name).toBeUndefined();
         });
 
         it('should select the right process when the processKey begins with the name', async () => {
@@ -492,7 +496,6 @@ describe('StartProcessCloudComponent', () => {
         });
 
         describe('dropdown', () => {
-
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async () => {
                 fixture.detectChanges();
                 getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
@@ -539,7 +542,6 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('input changes', () => {
-
         const change = new SimpleChange('myApp', 'myApp1', false);
 
         beforeEach(() => {
@@ -624,7 +626,6 @@ describe('StartProcessCloudComponent', () => {
     });
 
     describe('start process', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'NewProcess 1';
@@ -667,7 +668,6 @@ describe('StartProcessCloudComponent', () => {
                 expect(data).not.toBeNull();
                 expect(data).toEqual(fakeProcessInstance);
             });
-
         });
 
         it('should call service with the correct parameters when variables and formCloud are both undefined', async () => {
@@ -876,16 +876,18 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should set the process name on when a process definition name is present', (done) => {
-            const definitions: ProcessDefinitionCloud[] = [{
-                appName: 'app',
-                appVersion: 1,
-                category: '',
-                description: '',
-                id: 'id',
-                key: 'key',
-                name: 'fake-name',
-                version: 1
-            }];
+            const definitions: ProcessDefinitionCloud[] = [
+                {
+                    appName: 'app',
+                    appVersion: 1,
+                    category: '',
+                    description: '',
+                    id: 'id',
+                    key: 'key',
+                    name: 'fake-name',
+                    version: 1
+                }
+            ];
 
             component.processInstanceName.valueChanges.subscribe((value) => {
                 expect(value).toBe(fakeTransformedName);
@@ -969,7 +971,6 @@ describe('StartProcessCloudComponent', () => {
 
             expect(card).toBeTruthy();
         });
-
     });
 
     describe('start button', () => {
@@ -1032,6 +1033,5 @@ describe('StartProcessCloudComponent', () => {
             });
             component.cancelStartProcess();
         });
-
     });
 });
