@@ -33,8 +33,9 @@ const SHOW_FORMAT = 'DD/MM/YYYY';
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.scss'],
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit, OnDestroy {
@@ -54,26 +55,23 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private dateAdapter: DateAdapter<Moment>,
-        private userPreferencesService: UserPreferencesService) {
-    }
+    constructor(private dateAdapter: DateAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
 
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe((locale) => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = SHOW_FORMAT;
 
         if (this.field) {
-            if (this.field.value && this.field.value.startDate) {
+            if (this.field.value?.startDate) {
                 this.startDatePicker = moment(this.field.value.startDate, FORMAT_DATE_ACTIVITI);
             }
 
-            if (this.field.value && this.field.value.endDate) {
+            if (this.field.value?.endDate) {
                 this.endDatePicker = moment(this.field.value.endDate, FORMAT_DATE_ACTIVITI);
             }
         }
@@ -99,7 +97,7 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
         if (this.dateRange.valid) {
             const dateStart = this.convertToMomentDateWithTime(this.dateRange.controls.startDate.value);
             const endStart = this.convertToMomentDateWithTime(this.dateRange.controls.endDate.value);
-            this.dateRangeChanged.emit({startDate: dateStart, endDate: endStart});
+            this.dateRangeChanged.emit({ startDate: dateStart, endDate: endStart });
         }
     }
 
@@ -111,14 +109,14 @@ export class DateRangeWidgetComponent implements OnInit, OnDestroy {
         const startDate = moment(formControl.get('startDate').value);
         const endDate = moment(formControl.get('endDate').value);
         const isAfterCheck = startDate.isAfter(endDate);
-        return isAfterCheck ? {greaterThan: true} : null;
+        return isAfterCheck ? { greaterThan: true } : null;
     }
 
-    isStartDateGreaterThanEndDate() {
-        return this.dateRange && this.dateRange.errors && this.dateRange.errors.greaterThan;
+    isStartDateGreaterThanEndDate(): boolean {
+        return !!this.dateRange?.errors?.greaterThan;
     }
 
-    isStartDateEmpty() {
-        return this.dateRange && this.dateRange.controls.startDate && !this.dateRange.controls.startDate.valid;
+    isStartDateEmpty(): boolean {
+        return this.dateRange?.controls.startDate && !this.dateRange.controls.startDate.valid;
     }
 }

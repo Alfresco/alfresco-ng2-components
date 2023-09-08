@@ -22,10 +22,10 @@ export class LineChart extends Chart {
 
     constructor(obj?: any) {
         super(obj);
-        this.labels = obj && obj.columnNames.slice(1, obj.columnNames.length);
+        this.labels = obj?.columnNames.slice(1, obj.columnNames.length);
 
         obj.rows.forEach((value: any) => {
-            this.datasets.push({data: value.slice(1, value.length), label: value[0]});
+            this.datasets.push({ data: value.slice(1, value.length), label: value[0] });
         });
     }
 }

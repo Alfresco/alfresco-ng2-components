@@ -22,10 +22,10 @@ export class ParameterValueModel {
     value: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
-        this.value = obj && obj.value || null;
-        this.version = obj && obj.version || null;
+        this.id = obj?.id;
+        this.name = obj?.name;
+        this.value = obj?.value;
+        this.version = obj?.version;
     }
 
     get label() {

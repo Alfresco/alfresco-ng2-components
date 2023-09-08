@@ -21,10 +21,10 @@ export class TableChart extends Chart {
     constructor(obj?: any) {
         super(obj);
 
-        this.labels = obj && obj.columnNames;
+        this.labels = obj?.columnNames;
 
-        if (obj.rows) {
-            this.datasets = obj && obj.rows;
+        if (obj?.rows) {
+            this.datasets = obj.rows;
         }
     }
 }

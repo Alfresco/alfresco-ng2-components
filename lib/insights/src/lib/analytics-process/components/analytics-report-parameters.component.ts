@@ -103,35 +103,28 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private hideParameters: boolean = true;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private analyticsService: AnalyticsService,
-                private formBuilder: UntypedFormBuilder,
-                private logService: LogService,
-                private downloadService: DownloadService,
-                private dialog: MatDialog) {
-    }
+    constructor(
+        private analyticsService: AnalyticsService,
+        private formBuilder: UntypedFormBuilder,
+        private logService: LogService,
+        private downloadService: DownloadService,
+        private dialog: MatDialog
+    ) {}
 
     ngOnInit() {
-        this.onDropdownChanged
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((field: any) => {
-                const paramDependOn = this.reportParameters.definition.parameters.find(
-                    (param) => param.dependsOn === field.id
-                );
-                if (paramDependOn) {
-                    this.retrieveParameterOptions(
-                        this.reportParameters.definition.parameters, this.appId, this.reportId, field.value
-                    );
-                }
-            });
+        this.onDropdownChanged.pipe(takeUntil(this.onDestroy$)).subscribe((field: any) => {
+            const paramDependOn = this.reportParameters.definition.parameters.find((param) => param.dependsOn === field.id);
+            if (paramDependOn) {
+                this.retrieveParameterOptions(this.reportParameters.definition.parameters, this.appId, this.reportId, field.value);
+            }
+        });
 
-        this.successReportParams
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(report => {
-                if (report.hasParameters()) {
-                    this.retrieveParameterOptions(report.definition.parameters, this.appId);
-                    this.generateFormGroupFromParameter(report.definition.parameters);
-                }
-            });
+        this.successReportParams.pipe(takeUntil(this.onDestroy$)).subscribe((report) => {
+            if (report.hasParameters()) {
+                this.retrieveParameterOptions(report.definition.parameters, this.appId);
+                this.generateFormGroupFromParameter(report.definition.parameters);
+            }
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -141,7 +134,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
 
         const reportId = changes['reportId'];
-        if (reportId && reportId.currentValue) {
+        if (reportId?.currentValue) {
             this.reportId = reportId.currentValue;
             this.getReportParams(reportId.currentValue);
         }
@@ -249,17 +242,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     editTitle() {
-        this.analyticsService
-            .updateReport(`${this.reportParameters.id}`, this.reportParameters.name)
-            .subscribe(
-                () => {
-                    this.editDisable();
-                    this.edit.emit(this.reportParameters.name);
-                },
-                err => {
-                    this.error.emit(err);
-                }
-            );
+        this.analyticsService.updateReport(`${this.reportParameters.id}`, this.reportParameters.name).subscribe(
+            () => {
+                this.editDisable();
+                this.edit.emit(this.reportParameters.name);
+            },
+            (err) => {
+                this.error.emit(err);
+            }
+        );
     }
 
     showDialog(event: string) {
@@ -293,11 +284,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     doExport(paramQuery: ReportQuery) {
-        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
-            (data: any) => {
-                const blob: Blob = new Blob([data], { type: 'text/csv' });
-                this.downloadService.downloadBlob(blob, paramQuery.reportName + '.csv');
-            });
+        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe((data: any) => {
+            const blob: Blob = new Blob([data], { type: 'text/csv' });
+            this.downloadService.downloadBlob(blob, paramQuery.reportName + '.csv');
+        });
     }
 
     doSave(paramQuery: ReportQuery) {
@@ -307,9 +297,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     deleteReport(reportId: string) {
-        this.analyticsService.deleteReport(reportId).subscribe(() => {
-            this.deleteReportSuccess.emit(reportId);
-        }, (error) => this.logService.error(error));
+        this.analyticsService.deleteReport(reportId).subscribe(
+            () => {
+                this.deleteReportSuccess.emit(reportId);
+            },
+            (error) => this.logService.error(error)
+        );
     }
 
     ngAfterContentChecked() {
@@ -370,39 +363,60 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                     formBuilderGroup.dateRange = new UntypedFormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
-                    formBuilderGroup.processDefGroup = new UntypedFormGroup({
-                        processDefinitionId: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.processDefGroup = new UntypedFormGroup(
+                        {
+                            processDefinitionId: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'duration':
-                    formBuilderGroup.durationGroup = new UntypedFormGroup({
-                        duration: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.durationGroup = new UntypedFormGroup(
+                        {
+                            duration: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'dateInterval':
-                    formBuilderGroup.dateIntervalGroup = new UntypedFormGroup({
-                        dateRangeInterval: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.dateIntervalGroup = new UntypedFormGroup(
+                        {
+                            dateRangeInterval: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'boolean':
-                    formBuilderGroup.typeFilteringGroup = new UntypedFormGroup({
-                        typeFiltering: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.typeFilteringGroup = new UntypedFormGroup(
+                        {
+                            typeFiltering: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'task':
-                    formBuilderGroup.taskGroup = new UntypedFormGroup({
-                        taskName: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.taskGroup = new UntypedFormGroup(
+                        {
+                            taskName: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'integer':
-                    formBuilderGroup.processInstanceGroup = new UntypedFormGroup({
-                        slowProcessInstanceInteger: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.processInstanceGroup = new UntypedFormGroup(
+                        {
+                            slowProcessInstanceInteger: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 case 'status':
-                    formBuilderGroup.statusGroup = new UntypedFormGroup({
-                        status: new UntypedFormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    formBuilderGroup.statusGroup = new UntypedFormGroup(
+                        {
+                            status: new UntypedFormControl(null, Validators.required, null)
+                        },
+                        Validators.required
+                    );
                     break;
                 default:
                     return;

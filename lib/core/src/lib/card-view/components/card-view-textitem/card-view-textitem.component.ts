@@ -140,8 +140,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
         if (property.multivalued && typeof value === 'string') {
-            const listOfValues = value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
-            return listOfValues;
+            return value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
         }
         return value;
     }
@@ -223,7 +222,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     get hasErrors(): boolean {
-        return !!this.errors?.length ?? false;
+        return !!this.errors?.length;
     }
 
     get isChipViewEnabled(): boolean {

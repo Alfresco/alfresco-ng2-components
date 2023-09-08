@@ -335,7 +335,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     ) {
         const bucketsToDelete = [];
 
-        alreadyExistingBuckets.map((bucket) => {
+        alreadyExistingBuckets.forEach((bucket) => {
             const responseBucket = (responseField?.buckets || []).find((respBucket) => respBucket.label === bucket.label);
 
             if (!responseBucket) {
