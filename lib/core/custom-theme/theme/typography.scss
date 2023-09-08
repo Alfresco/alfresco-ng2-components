@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@import "../variables/font-family.scss";
+@import '../variables/font-family';
 
 @function get-mat-typography($base-font-size, $font-family) {
     $custom-typography: mat.define-typography-config(
@@ -76,18 +76,4 @@
         'theme-adf-task-footer-font-size': 1.28rem,
         'theme-adf-task-title-font-size': 1.28rem
     );
-}
-
-@mixin base-font-size($font-size) {
-    html,
-    body {
-        font-size: $font-size !important;
-    }
-}
-
-@mixin base-font-family($font-family) {
-    html,
-    body {
-        font-family: $font-family !important;
-    }
 }

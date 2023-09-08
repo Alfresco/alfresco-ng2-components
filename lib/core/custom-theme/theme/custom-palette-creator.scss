@@ -1,7 +1,6 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:color';
-@use '../../colors';
 
 @function multiply($fore, $back) {
     $red: color.red($back) * color.red($fore) / 255;

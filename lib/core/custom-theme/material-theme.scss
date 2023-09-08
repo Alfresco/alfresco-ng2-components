@@ -22,3 +22,17 @@ $custom-theme: mat-light-theme(
 @if $text-color {
     $custom-theme: get-custom-text-color($text-color, $custom-theme);
 }
+
+@if $base-font-size {
+    body,
+    html {
+        font-size: $base-font-size;
+    }
+}
+
+@if $font-family {
+    body,
+    html {
+        font-family: $font-family;
+    }
+}

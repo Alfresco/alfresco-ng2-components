@@ -1,0 +1,26 @@
+/*
+    This file can be replaced by file with your default palettes.
+
+    In order to generate material theme, we need to provide three palettes, 'primary', 'accent' and 'warnign'.
+    If user would like to dynamically create only one palette, e.g. 'primary', in that case we need to provide
+    remaining palettes.
+
+    e.g.
+
+    @use '@angular/material' as mat;
+
+    $default-primary: mat.$indigo-palette;
+    $default-accent: $my-custom-palette;
+    $default-warn: (
+        50: #35041e,
+        100: #dd68a8,
+        contrast: (
+            ...
+        ),
+*/
+
+@use '@angular/material' as mat;
+
+$default-primary: mat.$indigo-palette;
+$default-accent: mat.$pink-palette;
+$default-warn: mat.$red-palette;
