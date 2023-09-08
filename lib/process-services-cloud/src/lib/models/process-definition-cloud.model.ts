@@ -30,15 +30,15 @@ export class ProcessDefinitionCloud {
     variableDefinitions?: ProcessVariableDefinition[];
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.name = obj && obj.name || null;
-        this.appName = obj && obj.appName || null;
-        this.key = obj && obj.key || null;
-        this.formKey = obj && obj.formKey || null;
-        this.version = obj && obj.version || 0;
-        this.appVersion = obj && obj.appVersion || 0;
-        this.category = obj && obj?.category || '';
-        this.description = obj && obj?.description || '';
+        this.id = obj?.id;
+        this.name = obj?.name;
+        this.appName = obj?.appName;
+        this.key = obj?.key;
+        this.formKey = obj?.formKey;
+        this.version = obj?.version || 0;
+        this.appVersion = obj?.appVersion || 0;
+        this.category = obj?.category || '';
+        this.description = obj?.description || '';
         this.variableDefinitions = obj?.variableDefinitions ?? [];
     }
 }

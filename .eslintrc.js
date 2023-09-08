@@ -85,7 +85,8 @@ module.exports = {
                 '@typescript-eslint/member-ordering': 'off',
                 'prefer-arrow/prefer-arrow-functions': 'off',
 
-                'brace-style': ['error', '1tbs'],
+                'brace-style': 'off',
+                '@typescript-eslint/brace-style': 'error',
                 'comma-dangle': 'error',
                 'default-case': 'error',
                 'import/order': 'off',

@@ -29,11 +29,11 @@
       "@alfresco/adf-core/auth": ["lib/core/auth/src/index.ts"],
       "@alfresco/adf-core/breadcrumbs": ["lib/core/breadcrumbs/src/index.ts"],
       "@alfresco/adf-core/shell": ["lib/core/shell/src/index.ts"],
-      "@alfresco/adf-extensions": ["lib/extensions"],
-      "@alfresco/adf-insights": ["lib/insights"],
-      "@alfresco/adf-process-services": ["lib/process-services"],
-      "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud"],
-      "@alfresco/adf-testing": ["lib/testing"],
+      "@alfresco/adf-extensions": ["lib/extensions/src/public-api.ts"],
+      "@alfresco/adf-insights": ["lib/insights/src/public-api.ts"],
+      "@alfresco/adf-process-services": ["lib/process-services/src/public-api.ts"],
+      "@alfresco/adf-process-services-cloud": ["lib/process-services-cloud/src/public-api.ts"],
+      "@alfresco/adf-testing": ["lib/testing/src/public-api.ts"],
       "@alfresco/js-api": ["node_modules/@alfresco/js-api"]
     }
   },

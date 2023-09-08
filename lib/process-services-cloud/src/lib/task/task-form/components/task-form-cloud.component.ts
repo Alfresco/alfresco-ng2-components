@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent } from '@alfresco/adf-core';
@@ -35,7 +32,6 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
-
     /** App id to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -106,7 +102,6 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
-
     /** Emitted when a task is loaded`.
      */
     @Output()
@@ -120,9 +115,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     loading: boolean = false;
     onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private taskCloudService: TaskCloudService,
-        private formRenderingService: FormRenderingService) {
+    constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
@@ -136,13 +129,13 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
-        if (appName && (appName.currentValue !== appName.previousValue) && this.taskId) {
+        if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
             this.loadTask();
             return;
         }
 
         const taskId = changes['taskId'];
-        if (taskId && taskId.currentValue && this.appName) {
+        if (taskId?.currentValue && this.appName) {
             this.loadTask();
             return;
         }
@@ -151,20 +144,17 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     private loadTask() {
         this.loading = true;
         this.taskCloudService
-            .getTaskById(this.appName, this.taskId).pipe(takeUntil(this.onDestroy$))
-            .subscribe(details => {
+            .getTaskById(this.appName, this.taskId)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((details) => {
                 this.taskDetails = details;
                 this.loading = false;
                 this.onTaskLoaded.emit(this.taskDetails);
             });
 
-        this.taskCloudService
-            .getCandidateUsers(this.appName, this.taskId)
-            .subscribe(users => this.candidateUsers = users || []);
+        this.taskCloudService.getCandidateUsers(this.appName, this.taskId).subscribe((users) => (this.candidateUsers = users || []));
 
-        this.taskCloudService
-            .getCandidateGroups(this.appName, this.taskId)
-            .subscribe(groups => this.candidateGroups = groups || []);
+        this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
     hasForm(): boolean {

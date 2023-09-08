@@ -26,13 +26,13 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
     providedIn: 'root'
 })
 export class ProcessFilterCloudService {
-
     private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
 
     constructor(
         @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
-        private identityUserService: IdentityUserService) {
+        private identityUserService: IdentityUserService
+    ) {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
@@ -42,7 +42,7 @@ export class ProcessFilterCloudService {
 
         if (obj.hasOwnProperty('appVersion') && obj['appVersion']) {
             if (typeof obj['appVersion'] === 'string') {
-                model.appVersion = obj['appVersion'].split(',').map(str => parseInt(str, 10));
+                model.appVersion = obj['appVersion'].split(',').map((str) => parseInt(str, 10));
             }
         }
 
@@ -62,11 +62,9 @@ export class ProcessFilterCloudService {
         const result = {
             appName: appName || value['appName'],
             id: id || value['id'],
-            ...(
-                value['environmentId'] && {
-                    environmentId: value['environmentId']
-                }
-            )
+            ...(value['environmentId'] && {
+                environmentId: value['environmentId']
+            })
         };
 
         for (const prop of filterProperties) {
@@ -84,7 +82,6 @@ export class ProcessFilterCloudService {
                 if (value['lastModifiedTo']) {
                     result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
                 }
-
             } else if (value.hasOwnProperty(prop)) {
                 result[prop] = value[prop];
             }
@@ -101,21 +98,24 @@ export class ProcessFilterCloudService {
      */
     private createDefaultFilters(appName: string) {
         const key: string = this.prepareKey(appName);
-        this.preferenceService.getPreferences(appName, key).pipe(
-            switchMap((response: any) => {
-                const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];
-                if (!this.hasPreferences(preferences)) {
-                    return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
-                } else if (!this.hasProcessFilters(preferences, key)) {
-                    return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
-                } else {
-                    return of(this.findFiltersByKeyInPreferences(preferences, key));
-                }
-            }),
-            catchError((err) => this.handleProcessError(err))
-        ).subscribe((filters) => {
-            this.addFiltersToStream(filters);
-        });
+        this.preferenceService
+            .getPreferences(appName, key)
+            .pipe(
+                switchMap((response: any) => {
+                    const preferences = response?.list?.entries ? response.list.entries : [];
+                    if (!this.hasPreferences(preferences)) {
+                        return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
+                    } else if (!this.hasProcessFilters(preferences, key)) {
+                        return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
+                    } else {
+                        return of(this.findFiltersByKeyInPreferences(preferences, key));
+                    }
+                }),
+                catchError((err) => this.handleProcessError(err))
+            )
+            .subscribe((filters) => {
+                this.addFiltersToStream(filters);
+            });
     }
 
     /**
@@ -140,13 +140,13 @@ export class ProcessFilterCloudService {
         const key: string = this.prepareKey(appName);
         return this.getProcessFiltersByKey(appName, key).pipe(
             switchMap((filters: ProcessFilterCloudModel[]) => {
-                if (filters && filters.length === 0) {
+                if (filters?.length === 0) {
                     return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
                 } else {
                     return of(filters);
                 }
             }),
-            map((filters: ProcessFilterCloudModel[]) => filters.filter((filter: ProcessFilterCloudModel) => filter.id === id)[0]),
+            map((filters) => filters.filter((filter) => filter.id === id)[0]),
             catchError((err) => this.handleProcessError(err))
         );
     }
@@ -154,7 +154,7 @@ export class ProcessFilterCloudService {
     /**
      * Adds a new process instance filter
      *
-     * @param filter The new filter to add
+     * @param newFilter The new filter to add
      * @returns Observable of process instance filters with newly added filter
      */
     addFilter(newFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
@@ -162,11 +162,11 @@ export class ProcessFilterCloudService {
         const key: string = this.prepareKey(appName);
 
         return this.getProcessFiltersByKey(appName, key).pipe(
-            switchMap((filters: ProcessFilterCloudModel[]) => {
-                if (filters && filters.length === 0) {
+            switchMap((filters) => {
+                if (filters?.length === 0) {
                     return this.createProcessFilters(appName, key, [newFilter]);
                 } else {
-                    const index = filters.findIndex(filter => filter.name === name);
+                    const index = filters.findIndex((filter) => filter.name === name);
                     if (index >= 0) {
                         filters.splice(index, 1);
                     }
@@ -186,22 +186,22 @@ export class ProcessFilterCloudService {
     /**
      *  Update process instance filter
      *
-     * @param filter The new filter to update
+     * @param updatedFilter The new filter to update
      * @returns Observable of process instance filters with updated filter
      */
     updateFilter(updatedFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getProcessFiltersByKey(updatedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
-                if (filters && filters.length === 0) {
+            switchMap((filters) => {
+                if (filters?.length === 0) {
                     return this.createProcessFilters(updatedFilter.appName, key, [updatedFilter]);
                 } else {
-                    const itemIndex = filters.findIndex((filter: ProcessFilterCloudModel) => filter.id === updatedFilter.id);
+                    const itemIndex = filters.findIndex((filter) => filter.id === updatedFilter.id);
                     filters[itemIndex] = updatedFilter;
                     return this.updateProcessFilters(updatedFilter.appName, key, filters);
                 }
             }),
-            map((updatedFilters: ProcessFilterCloudModel[]) => {
+            map((updatedFilters) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
             }),
@@ -212,16 +212,16 @@ export class ProcessFilterCloudService {
     /**
      *  Delete process instance filter
      *
-     * @param filter The new filter to delete
+     * @param deletedFilter The new filter to delete
      * @returns Observable of process instance filters without deleted filter
      */
     deleteFilter(deletedFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
 
         return this.getProcessFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap(filters => {
+            switchMap((filters) => {
                 if (filters && filters.length > 0) {
-                    filters = filters.filter(filter => filter.id !== deletedFilter.id);
+                    filters = filters.filter((filter) => filter.id !== deletedFilter.id);
                     return this.updateProcessFilters(deletedFilter.appName, key, filters);
                 } else {
                     return of([]);
@@ -256,7 +256,8 @@ export class ProcessFilterCloudService {
      * @returns Observable of process filters details
      */
     resetProcessFilterToDefaults(appName: string, filter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
-        const defaultFilter = this.defaultProcessFilters(appName).find(defaultFilterDefinition => defaultFilterDefinition.name === filter.name) || filter;
+        const defaultFilter =
+            this.defaultProcessFilters(appName).find((defaultFilterDefinition) => defaultFilterDefinition.name === filter.name) || filter;
         defaultFilter.id = filter.id;
         return this.updateFilter(defaultFilter);
     }
@@ -276,12 +277,11 @@ export class ProcessFilterCloudService {
      *
      * @param preferences User preferences of the target app
      * @param key Key of the process instance filters
-     * @param filters Details of create filter
      * @returns Boolean value if the preference has process instance filters
      */
     private hasProcessFilters(preferences: any, key: string): boolean {
         const filters = preferences.find((filter: any) => filter.entry.key === key);
-        return (filters && filters.entry) ? JSON.parse(filters.entry.value).length > 0 : false;
+        return filters?.entry ? JSON.parse(filters.entry.value).length > 0 : false;
     }
 
     /**
@@ -339,7 +339,7 @@ export class ProcessFilterCloudService {
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ProcessFilterCloudModel[] {
         const result = preferences.find((filter: any) => filter.entry.key === key);
-        return result && result.entry ? JSON.parse(result.entry.value) : [];
+        return result?.entry ? JSON.parse(result.entry.value) : [];
     }
 
     private addFiltersToStream(filters: ProcessFilterCloudModel[]) {

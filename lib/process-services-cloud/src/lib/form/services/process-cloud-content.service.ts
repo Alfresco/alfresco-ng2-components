@@ -18,11 +18,7 @@
 import { Injectable } from '@angular/core';
 import { throwError, Observable, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import {
-    AlfrescoApiService,
-    LogService,
-    DownloadService
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, DownloadService } from '@alfresco/adf-core';
 import { ContentService, NodesApiService } from '@alfresco/adf-content-services';
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
@@ -30,7 +26,6 @@ import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
     providedIn: 'root'
 })
 export class ProcessCloudContentService {
-
     private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
@@ -49,22 +44,15 @@ export class ProcessCloudContentService {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private downloadService: DownloadService
-    ) {
-    }
+    ) {}
 
-    createTemporaryRawRelatedContent(
-        file: File,
-        nodeId: string
-    ): Observable<Node> {
-
-        return from(
-            this.uploadApi.uploadFile(file, '', nodeId, null, {overwrite: true})
-        ).pipe(
+    createTemporaryRawRelatedContent(file: File, nodeId: string): Observable<Node> {
+        return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(
             map((res: any) => ({
                 ...res.entry,
                 nodeId: res.entry.id
             })),
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -77,7 +65,6 @@ export class ProcessCloudContentService {
     }
 
     async downloadFile(nodeId: string) {
-
         const ticket = await this.getAuthTicket();
         const url = this.contentService.getContentUrl(nodeId, true, ticket);
 
@@ -86,12 +73,7 @@ export class ProcessCloudContentService {
 
     async getAuthTicket(): Promise<string> {
         const ticket = await this.authenticationApi.getTicket();
-
-        if (ticket && ticket.entry) {
-            return ticket.entry.id || '';
-        }
-
-        return '';
+        return ticket?.entry?.id || '';
     }
 
     private handleError(error: any) {

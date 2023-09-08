@@ -42,35 +42,40 @@ import { TranslateService } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
-
     typeId = 'RadioButtonsCloudWidgetComponent';
     restApiError: ErrorMessageModel;
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService,
-                private formCloudService: FormCloudService,
-                private logService: LogService,
-                private translateService: TranslateService) {
+    constructor(
+        public formService: FormService,
+        private formCloudService: FormCloudService,
+        private logService: LogService,
+        private translateService: TranslateService
+    ) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field && this.field.restUrl) {
+        if (this.field?.restUrl) {
             this.getValuesFromRestApi();
         }
     }
 
     getValuesFromRestApi() {
-        this.formCloudService.getRestWidgetData(this.field.form.id, this.field.id)
+        this.formCloudService
+            .getRestWidgetData(this.field.form.id, this.field.id)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((result: FormFieldOption[]) => {
-                this.field.options = result;
-                this.field.updateForm();
-            }, (err) => {
-                this.resetRestApiOptions();
-                this.handleError(err);
-            });
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result;
+                    this.field.updateForm();
+                },
+                (err) => {
+                    this.resetRestApiOptions();
+                    this.handleError(err);
+                }
+            );
     }
 
     onOptionClick(optionSelected: any) {
@@ -79,7 +84,9 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     handleError(error: any) {
-        this.restApiError = new ErrorMessageModel({ message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() }) });
+        this.restApiError = new ErrorMessageModel({
+            message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() })
+        });
         this.logService.error(error);
     }
 
