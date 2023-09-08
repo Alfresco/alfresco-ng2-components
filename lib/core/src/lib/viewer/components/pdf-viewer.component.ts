@@ -124,7 +124,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
-        this.randomPdfId = this.generateUuid();
+        this.randomPdfId = window.crypto.randomUUID();
         this.pdfjsWorkerDestroy$
             .pipe(
                 catchError(() => null),
@@ -299,7 +299,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             const pageWidthScale = ((widthContainer - padding) / currentPage.width) * currentPage.scale;
             const pageHeightScale = ((heightContainer - padding) / currentPage.width) * currentPage.scale;
 
-            let scale;
+            let scale: number;
             switch (this.currentScaleMode) {
                 case 'init':
                     scale = this.getUserScaling();
@@ -534,7 +534,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Pages Loaded Event
      *
-     * @param event
      */
     onPagesLoaded() {
         this.isPanelDisabled = false;
@@ -543,7 +542,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Keyboard Event Listener
      *
-     * @param KeyboardEvent event
+     * @param event KeyboardEvent
      */
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -555,13 +554,5 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             // left arrow
             this.previousPage();
         }
-    }
-
-    private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-            const r = (Math.random() * 16) | 0;
-            const v = c === 'x' ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-        });
     }
 }
