@@ -16,43 +16,41 @@
  */
 
 var FormDefinitionFieldModel = function (details) {
-
-    this.fieldType;
-    this.id;
-    this.name;
-    this.value;
-    this.type;
-    this.required;
-    this.readOnly;
-    this.overrideId;
-    this.colspan;
-    this.placeholder;
-    this.minLength;
-    this.maxLength;
-    this.minValue;
-    this.maxValue;
-    this.regexPattern;
-    this.optionType;
-    this.hasEmptyValue;
-    this.options;
-    this.restUrl;
-    this.restResponsePath;
-    this.restIdProperty;
-    this.setRestLabelProperty;
-    this.tab;
-    this.className;
-    this.dateDisplayFormat;
+    this.fieldType = undefined;
+    this.id = undefined;
+    this.name = undefined;
+    this.value = undefined;
+    this.type = undefined;
+    this.required = undefined;
+    this.readOnly = undefined;
+    this.overrideId = undefined;
+    this.colspan = undefined;
+    this.placeholder = undefined;
+    this.minLength = undefined;
+    this.maxLength = undefined;
+    this.minValue = undefined;
+    this.maxValue = undefined;
+    this.regexPattern = undefined;
+    this.optionType = undefined;
+    this.hasEmptyValue = undefined;
+    this.options = undefined;
+    this.restUrl = undefined;
+    this.restResponsePath = undefined;
+    this.restIdProperty = undefined;
+    this.setRestLabelProperty = undefined;
+    this.tab = undefined;
+    this.className = undefined;
+    this.dateDisplayFormat = undefined;
     this.layout = {};
-    this.sizeX;
-    this.sizeY;
-    this.row;
-    this.col;
-    this.columnDefinitions;
-    this.visibilityCondition;
-    this.numberOfColumns;
+    this.sizeX = undefined;
+    this.sizeY = undefined;
+    this.row = undefined;
+    this.col = undefined;
+    this.columnDefinitions = undefined;
+    this.visibilityCondition = undefined;
+    this.numberOfColumns = undefined;
     this.fields = {};
 
     Object.assign(this, details);
 };
 module.exports = FormDefinitionFieldModel;
-

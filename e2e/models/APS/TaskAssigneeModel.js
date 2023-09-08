@@ -16,11 +16,10 @@
  */
 
 var TaskAssigneeModel = function (details) {
-
-    this.id;
-    this.firstName;
-    this.lastName;
-    this.email;
+    this.id = undefined;
+    this.firstName = undefined;
+    this.lastName = undefined;
+    this.email = undefined;
 
     this.getFirstName = function () {
         return this.firstName;
@@ -38,12 +37,11 @@ var TaskAssigneeModel = function (details) {
         return this.email;
     };
 
-    this.getEntireName = function() {
-        return this.firstName + " " + this.getLastName();
+    this.getEntireName = function () {
+        return this.firstName + ' ' + this.getLastName();
     };
 
     Object.assign(this, details);
-
 };
 
 module.exports = TaskAssigneeModel;

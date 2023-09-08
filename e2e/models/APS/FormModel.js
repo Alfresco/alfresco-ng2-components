@@ -16,14 +16,13 @@
  */
 
 var FormModel = function (details) {
-
-    this.id;
-    this.name;
-    this.description;
-    this.modelId;
-    this.appDefinitionId;
-    this.appDeploymentId;
-    this.tenantId;
+    this.id = undefined;
+    this.name = undefined;
+    this.description = undefined;
+    this.modelId = undefined;
+    this.appDefinitionId = undefined;
+    this.appDeploymentId = undefined;
+    this.tenantId = undefined;
 
     this.getName = function () {
         return this.name;

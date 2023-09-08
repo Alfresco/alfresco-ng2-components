@@ -18,19 +18,18 @@
 var TaskAssigneeModel = require('./TaskAssigneeModel');
 
 var TaskModel = function (details) {
-
-    this.id;
-    this.name;
-    this.description;
-    this.category;
-    this.created;
-    this.dueDate;
-    this.priority;
-    this.parentTaskName;
-    this.parentTaskId;
-    this.formKey;
-    this.duration;
-    this.endDate;
+    this.id = undefined;
+    this.name = undefined;
+    this.description = undefined;
+    this.category = undefined;
+    this.created = undefined;
+    this.dueDate = undefined;
+    this.priority = undefined;
+    this.parentTaskName = undefined;
+    this.parentTaskId = undefined;
+    this.formKey = undefined;
+    this.duration = undefined;
+    this.endDate = undefined;
     this.assignee = {};
 
     this.getName = function () {
