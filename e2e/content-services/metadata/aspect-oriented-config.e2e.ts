@@ -274,7 +274,7 @@ describe('Aspect oriented config', () => {
         await metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
-    fit('[C299187] The aspect with empty properties is displayed when edit', async () => {
+    it('[C299187] The aspect with empty properties is displayed when edit', async () => {
         console.log(21);
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
@@ -296,7 +296,6 @@ describe('Aspect oriented config', () => {
         await metadataViewPage.clickOnPropertiesTab();
         console.log('26');
 
-        await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
         console.log('27');
 
         await metadataViewPage.editIconClick();

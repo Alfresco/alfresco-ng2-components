@@ -21,8 +21,7 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage,
-    Logger
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -101,10 +100,15 @@ describe('CardView Component - properties', () => {
 
     it('[C260179] Should not be possible edit the basic property when readOnly is true', async () => {
         await viewerPage.viewFile(pngFileModel.name);
+        console.log(41);
         await viewerPage.clickInfoButton();
+        console.log(42);
         await viewerPage.checkInfoSideBarIsDisplayed();
+        console.log(43);
         await metadataViewPage.clickOnPropertiesTab();
+        console.log(44);
         await metadataViewPage.isEditGeneralIconDisplayed();
+        console.log(45);
 
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
     });
