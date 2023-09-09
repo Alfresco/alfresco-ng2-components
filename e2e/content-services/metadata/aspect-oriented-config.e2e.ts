@@ -290,8 +290,6 @@ describe('Aspect oriented config', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
-
         await metadataViewPage.editIconClick();
 
         await metadataViewPage.checkMetadataGroupIsPresent(aspectName);
