@@ -126,7 +126,6 @@ module.exports = {
     },
 
     timeouts: {
-        medium: 5000,
         visible_timeout: 10000,
         no_visible_timeout: 10000,
         index_search: 20000
