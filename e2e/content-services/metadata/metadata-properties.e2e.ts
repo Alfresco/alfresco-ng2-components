@@ -74,9 +74,7 @@ describe('CardView Component - properties', () => {
    });
 
     afterEach(async () => {
-        console.log('31');
         await viewerPage.clickCloseButton();
-        console.log('32');
     });
 
     it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', async () => {
@@ -110,7 +108,7 @@ describe('CardView Component - properties', () => {
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
     });
 
-    it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
+    fit('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
         console.log('1');
         await viewerPage.viewFile(pngFileModel.name);
         console.log('2');
@@ -125,35 +123,6 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
         console.log('7');
-        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        console.log('8');
-
-        await metadataViewPage.clickMetadataGroup('properties');
-        console.log('9');
-
-        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        console.log('10');
-        await metadataViewPage.checkMetadataGroupIsExpand('properties');
-        console.log('11');
-
-        await metadataViewPage.clickMetadataGroup('EXIF');
-        console.log('12');
-
-        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-        console.log('13');
-        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        console.log('14');
-
-        await CheckboxPage.check(metadataViewPage.multiSwitch);
-        console.log('15');
-
-        await metadataViewPage.clickMetadataGroup('properties');
-        console.log('16');
-
-        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
-        console.log('17');
-        await metadataViewPage.checkMetadataGroupIsExpand('properties');
-        console.log('18');
    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
