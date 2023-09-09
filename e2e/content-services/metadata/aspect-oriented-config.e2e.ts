@@ -289,10 +289,13 @@ describe('Aspect oriented config', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
 
         await metadataViewPage.editIconClick();
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
 
         await metadataViewPage.checkMetadataGroupIsPresent(aspectName);
     });

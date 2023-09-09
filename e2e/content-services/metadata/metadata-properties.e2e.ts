@@ -113,9 +113,12 @@ describe('CardView Component - properties', () => {
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
         await metadataViewPage.clickMetadataGroup('properties');
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
         await metadataViewPage.clickMetadataGroup('properties');
