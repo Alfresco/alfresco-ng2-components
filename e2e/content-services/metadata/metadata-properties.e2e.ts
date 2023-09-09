@@ -123,6 +123,8 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
         console.log('7');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        console.log('8');
    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
