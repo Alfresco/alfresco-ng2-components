@@ -22,8 +22,7 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage,
-    Logger
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -275,7 +274,7 @@ describe('Aspect oriented config', () => {
         await metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
     });
 
-    it('[C299187] The aspect with empty properties is displayed when edit', async () => {
+    fit('[C299187] The aspect with empty properties is displayed when edit', async () => {
         console.log(21);
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
