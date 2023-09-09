@@ -22,7 +22,8 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    Logger
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -275,6 +276,7 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
+        Logger.info('21');
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
@@ -284,19 +286,24 @@ describe('Aspect oriented config', () => {
             '}');
 
         await navigationBarPage.navigateToContentServices();
+        Logger.info('22');
 
         await viewerPage.viewFile(pngFileModel.name);
+        Logger.info('23');
         await viewerPage.clickInfoButton();
+        Logger.info('24');
         await viewerPage.checkInfoSideBarIsDisplayed();
+        Logger.info('25');
         await metadataViewPage.clickOnPropertiesTab();
-        await browser.sleep(browser.params.testConfig.timeouts.medium);
+        Logger.info('26');
 
         await metadataViewPage.checkMetadataGroupIsNotPresent(aspectName);
-        await browser.sleep(browser.params.testConfig.timeouts.medium);
+        Logger.info('27');
 
         await metadataViewPage.editIconClick();
-        await browser.sleep(browser.params.testConfig.timeouts.medium);
+        Logger.info('28');
 
         await metadataViewPage.checkMetadataGroupIsPresent(aspectName);
+        Logger.info('29');
     });
 });

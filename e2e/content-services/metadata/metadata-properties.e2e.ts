@@ -21,7 +21,8 @@ import { createApiService,
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    Logger
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -109,34 +110,49 @@ describe('CardView Component - properties', () => {
     });
 
     it('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
+        Logger.info('1');
         await viewerPage.viewFile(pngFileModel.name);
+        Logger.info('2');
         await viewerPage.clickInfoButton();
+        Logger.info('3');
         await viewerPage.checkInfoSideBarIsDisplayed();
+        Logger.info('4');
         await metadataViewPage.clickOnPropertiesTab();
-        await browser.sleep(browser.params.testConfig.timeouts.index_search);
+        Logger.info('5');
         await metadataViewPage.clickMetadataGroup('properties');
-        await browser.sleep(browser.params.testConfig.timeouts.index_search);
+        Logger.info('6');
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        await browser.sleep(browser.params.testConfig.timeouts.index_search);
+        Logger.info('7');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        Logger.info('8');
 
         await metadataViewPage.clickMetadataGroup('properties');
+        Logger.info('9');
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        Logger.info('10');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
+        Logger.info('11');
 
         await metadataViewPage.clickMetadataGroup('EXIF');
+        Logger.info('12');
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        Logger.info('13');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        Logger.info('14');
 
         await CheckboxPage.check(metadataViewPage.multiSwitch);
+        Logger.info('15');
 
         await metadataViewPage.clickMetadataGroup('properties');
+        Logger.info('16');
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        Logger.info('17');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
+        Logger.info('18');
    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
