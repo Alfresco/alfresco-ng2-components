@@ -275,7 +275,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
-        console.log(21);
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
@@ -285,23 +284,14 @@ describe('Aspect oriented config', () => {
             '}');
 
         await navigationBarPage.navigateToContentServices();
-        console.log(22);
 
         await viewerPage.viewFile(pngFileModel.name);
-        console.log(23);
         await viewerPage.clickInfoButton();
-        console.log('24');
         await viewerPage.checkInfoSideBarIsDisplayed();
-        console.log('25');
         await metadataViewPage.clickOnPropertiesTab();
-        console.log('26');
-
-        console.log('27');
 
         await metadataViewPage.editIconClick();
-        console.log('28');
 
         await metadataViewPage.checkMetadataGroupIsPresent(aspectName);
-        console.log('29');
     });
 });

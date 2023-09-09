@@ -180,13 +180,19 @@ export class MetadataViewPage {
     }
 
     async checkMetadataGroupIsNotPresent(groupName: string): Promise<void> {
+        console.log('51');
         const group = await this.getMetadataGroupLocator(groupName);
+        console.log('52');
         await BrowserVisibility.waitUntilElementIsNotVisible(group);
+        console.log('53');
     }
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
+        console.log('54');
         const group = await this.getExpandedMetadataGroupLocator(groupName);
+        console.log('55');
         await expect(await BrowserActions.getAttribute(group, 'class')).toContain('mat-expanded');
+        console.log('56');
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {

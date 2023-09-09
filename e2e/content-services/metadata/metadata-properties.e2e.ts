@@ -74,7 +74,9 @@ describe('CardView Component - properties', () => {
    });
 
     afterEach(async () => {
+        console.log('31');
         await viewerPage.clickCloseButton();
+        console.log('32');
     });
 
     it('[C246516] Should show/hide the empty metadata when the property displayEmpty is true/false', async () => {
@@ -100,15 +102,10 @@ describe('CardView Component - properties', () => {
 
     it('[C260179] Should not be possible edit the basic property when readOnly is true', async () => {
         await viewerPage.viewFile(pngFileModel.name);
-        console.log(41);
         await viewerPage.clickInfoButton();
-        console.log(42);
         await viewerPage.checkInfoSideBarIsDisplayed();
-        console.log(43);
         await metadataViewPage.clickOnPropertiesTab();
-        console.log(44);
         await metadataViewPage.isEditGeneralIconDisplayed();
-        console.log(45);
 
         await CheckboxPage.check(metadataViewPage.readonlySwitch);
     });
