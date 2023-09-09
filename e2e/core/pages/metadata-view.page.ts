@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { $, by, element, Key, protractor, ElementFinder } from 'protractor';
+import { $, by, element, Key, protractor, ElementFinder, browser } from 'protractor';
 import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
@@ -186,11 +186,13 @@ export class MetadataViewPage {
 
     async checkMetadataGroupIsExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
         await expect(await BrowserActions.getAttribute(group, 'class')).toContain('mat-expanded');
     }
 
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
+        await browser.sleep(browser.params.testConfig.timeouts.medium);
         await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain('mat-expanded');
     }
 
