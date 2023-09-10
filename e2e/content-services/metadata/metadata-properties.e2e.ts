@@ -125,6 +125,15 @@ describe('CardView Component - properties', () => {
         console.log('7');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
         console.log('8');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
+        await metadataViewPage.clickMetadataGroup('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        await CheckboxPage.check(metadataViewPage.multiSwitch);
+        await metadataViewPage.clickMetadataGroup('properties');
+        await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
