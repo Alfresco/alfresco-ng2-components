@@ -109,32 +109,23 @@ describe('CardView Component - properties', () => {
     });
 
     fit('[C268965] Should multi property allow expand multi accordion at the same time when set', async () => {
-        console.log('1');
         await viewerPage.viewFile(pngFileModel.name);
-        console.log('2');
         await viewerPage.clickInfoButton();
-        console.log('3');
         await viewerPage.checkInfoSideBarIsDisplayed();
-        console.log('4');
         await metadataViewPage.clickOnPropertiesTab();
-        console.log('5');
-        await metadataViewPage.clickMetadataGroup('properties');
-        console.log('6');
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        console.log('7');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
-        console.log('8');
-        await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
-        await metadataViewPage.checkMetadataGroupIsExpand('properties');
+
         await metadataViewPage.clickMetadataGroup('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+
         await CheckboxPage.check(metadataViewPage.multiSwitch);
         await metadataViewPage.clickMetadataGroup('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
-   });
+    });
 
     it('[C280559] Should show/hide the default metadata properties when displayDefaultProperties is true/false', async () => {
         await viewerPage.viewFile(pngFileModel.name);
