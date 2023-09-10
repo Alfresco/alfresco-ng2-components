@@ -123,7 +123,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
         console.log('7');
-        await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
+        await metadataViewPage.checkMetadataGroupIsExpand('properties');
         console.log('8');
    });
 
