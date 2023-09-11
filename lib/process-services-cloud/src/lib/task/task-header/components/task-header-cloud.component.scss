@@ -1,3 +1,5 @@
+@import '../../../../../../core/src/lib/styles/flex';
+
 .adf {
     &-controls {
         display: flex;
@@ -26,7 +28,7 @@
     }
 }
 
-@media screen and (max-width: 959px) {
+@include layout-bp(lt-md) {
     adf-card-view .adf-property-value {
         text-overflow: ellipsis;
         overflow: hidden;

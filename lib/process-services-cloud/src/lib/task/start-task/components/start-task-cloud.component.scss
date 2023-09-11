@@ -1,3 +1,5 @@
+@import '../../../../../../core/src/lib/styles/flex';
+
 .adf-cloud-start-task-heading {
     border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
     margin-bottom: 10px;
@@ -83,7 +85,7 @@ adf-cloud-start-task {
                 }
             }
 
-            @media screen and (max-width: 960px) {
+            @include layout-bp(lt-md) {
                 flex-direction: column;
 
                 mat-form-field,
