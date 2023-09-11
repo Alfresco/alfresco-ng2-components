@@ -29,7 +29,7 @@ adf-cloud-app-list {
             flex: 1 1 100%;
             max-width: 33.3333%;
 
-            @include layout-bp(lt-md){
+            @include layout-bp(lt-md) {
                 max-width: 50%;
             }
 
