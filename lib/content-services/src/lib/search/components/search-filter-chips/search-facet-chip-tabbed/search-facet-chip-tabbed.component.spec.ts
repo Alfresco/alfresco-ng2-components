@@ -24,7 +24,7 @@ import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed.compo
 import { FacetField } from '../../../models/facet-field.interface';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-fdescribe('SearchFacetChipTabbedComponent', () => {
+describe('SearchFacetChipTabbedComponent', () => {
     let component: SearchFacetChipTabbedComponent;
     let fixture: ComponentFixture<SearchFacetChipTabbedComponent>;
 
@@ -69,28 +69,11 @@ fdescribe('SearchFacetChipTabbedComponent', () => {
         fixture.detectChanges();
     }
 
-    function emitChildEvent(eventName:string, event) {
+    function emitChildEvent(eventName: string, event: any) {
         const debugElem = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         debugElem.triggerEventHandler(eventName, event);
         fixture.detectChanges();
     }
-
-    // function triggerComponentChanges() {
-    //     component.ngOnChanges({
-    //         tabbedFacet: new SimpleChange(null, component.tabbedFacet, false)
-    //     });
-    //     fixture.detectChanges();
-    // }
-
-    // function addBucketItem(field: string, displayValue: string) {
-    //     component.tabbedFacet.facets[field].buckets.items.push({
-    //         count: 1,
-    //         label: displayValue,
-    //         display: displayValue,
-    //         filterQuery: ''
-    //     });
-    //     triggerComponentChanges();
-    // }
 
     it('should display correct label for tabbed facet', () => {
         const label = fixture.debugElement.query(By.css('.adf-search-filter-placeholder')).nativeElement.innerText;
@@ -157,82 +140,31 @@ fdescribe('SearchFacetChipTabbedComponent', () => {
         expect(icon).toEqual('keyboard_arrow_up');
     });
 
-    it('should create empty selected options for each tab initially', () => {
-        // expect(component.selectedOptions['field']).toEqual([]);
-        // expect(component.selectedOptions['field2']).toEqual([]);
-    });
-
-    it('should update autocomplete options when buckets change', () => {
-        // addBucketItem('field', 'test');
-        // addBucketItem('field2', 'test2');
-        // expect(component.autocompleteOptions['field'].length).toBe(1);
-        // expect(component.autocompleteOptions['field'][0]).toEqual({value: 'test'});
-        // expect(component.autocompleteOptions['field2'].length).toBe(1);
-        // expect(component.autocompleteOptions['field2'][0]).toEqual({value: 'test2'});
-    });
-
-    // it('should add buckets when items are selected', () => {
-    //     spyOn(queryBuilder, 'addUserFacetBucket');
-    //     addBucketItem('field', 'test');
-    //     addBucketItem('field2', 'test2');
-    //     component.onOptionsChange([{ value: 'test' }], 'field');
-    //     expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith('field',component.tabbedFacet.facets['field'].buckets.items[0]);
-    // });
-
-    // it('should remove buckets when items are unselected', () => {
-    //     spyOn(queryBuilder, 'removeUserFacetBucket');
-    //     addBucketItem('field', 'test');
-    //     addBucketItem('field2', 'test2');
-    //     component.onOptionsChange([], 'field');
-    //     expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith('field',component.tabbedFacet.facets['field'].buckets.items[0]);
-    // });
-
     it('should update display value when new displayValue$ emitted', () => {
         const displayValue = 'field_LABEL: test, test2';
         openFacet();
         emitChildEvent('displayValue$', displayValue);
-        // addBucketItem('field', selectedOption1);
-        // addBucketItem('field', selectedOption2);
-        // component.onOptionsChange([{ value: selectedOption1 }, { value: selectedOption2 }],'field');
         fixture.detectChanges();
         expect(getDisplayValue()).toBe(displayValue);
     });
 
-    // it('should update display value when elements from both tabs are selected', () => {
-    //     const selectedOption1 = 'test';
-    //     const selectedOption2 = 'test2';
-    //     addBucketItem('field', selectedOption1);
-    //     addBucketItem('field2', selectedOption2);
-    //     component.onOptionsChange([{ value: selectedOption1 }], 'field');
-    //     component.onOptionsChange([{ value: selectedOption2 }], 'field2');
-    //     fixture.detectChanges();
-    //     expect(getDisplayValue()).toBe(`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1} ${component.tabbedFacet.facets['field2'].label}_LABEL: ${selectedOption2}`);
-    // });
-
     it('should update search query and display value when apply btn is clicked', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onApply').and.callThrough();
-        // spyOn(searchFacetService, 'updateSelectedBuckets').and.callThrough();
         openFacet();
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
-        // expect(queryBuilder.update).toHaveBeenCalled();
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
         expect(component.onApply).toHaveBeenCalled();
-        // expect(component.updateDisplayValue).toHaveBeenCalled();
-        // expect(searchFacetService.updateSelectedBuckets).toHaveBeenCalled();
     });
 
     it('should update search query and display value when cancel btn is clicked', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
-        // spyOn(component.reset$, 'next')
         spyOn(component, 'onRemove').and.callThrough();
         openFacet();
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
         applyButton.triggerEventHandler('click', {});
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
-        expect(component.onRemove).toHaveBeenCalled()
-        // expect(component.resetSubject$)
-        // expect(component.updateDisplayValue).toHaveBeenCalled();
+        expect(component.onRemove).toHaveBeenCalled();
     });
 });

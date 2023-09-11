@@ -144,13 +144,13 @@ describe('SearchFacetTabbedContentComponent', () => {
         component.onOptionsChange([{ value: selectedOption1 }, { value: selectedOption2 }],'field');
         fixture.detectChanges();
 
-        expect(component.displayValue$.emit).toHaveBeenCalledWith(`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1}, ${selectedOption2} `)
+        expect(component.displayValue$.emit).toHaveBeenCalledWith(`${component.tabbedFacet.facets['field'].label}_LABEL: ${selectedOption1}, ${selectedOption2} `);
     });
 
     it('should update display value when elements from both tabs are selected', () => {
         const selectedOption1 = 'test';
         const selectedOption2 = 'test2';
-        let displayValueEmitterSpy = spyOn(component.displayValue$, 'emit');
+        const displayValueEmitterSpy = spyOn(component.displayValue$, 'emit');
         addBucketItem('field', selectedOption1);
         addBucketItem('field2', selectedOption2);
         component.onOptionsChange([{value: selectedOption1}], 'field');
@@ -177,7 +177,7 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     it('should update search query and display value on reset', () => {
         spyOn(component, 'updateDisplayValue').and.callThrough();
-        component.reset()
+        component.reset();
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(component.updateDisplayValue).toHaveBeenCalled();
     });

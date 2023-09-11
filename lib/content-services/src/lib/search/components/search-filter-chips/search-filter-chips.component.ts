@@ -43,8 +43,6 @@ export class SearchFilterChipsComponent {
         public facetFiltersService: SearchFacetFiltersService) {}
 
     ngOnInit() {
-        console.log('adf-search')
-        console.log(this.showContextFacets)
         this.queryBuilder.executed.asObservable()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(() => this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-'));
