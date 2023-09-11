@@ -89,7 +89,6 @@ describe('SearchFacetTabbedContentComponent', () => {
     }
 
     it('should display 2 tabs with specific labels', () => {
-        // openFacet();
         const tabLabels = getTabs();
         expect(tabLabels.length).toBe(2);
         expect(tabLabels[0].innerText).toBe(component.tabbedFacet.facets['field'].label);
