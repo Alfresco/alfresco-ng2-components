@@ -16,15 +16,15 @@
  */
 
 import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { TabbedFacetField } from '@alfresco/adf-content-services';
 import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search-query-service.token';
 import { FacetWidget } from '../../../models/facet-widget.interface';
 import { TranslationService } from '@alfresco/adf-core';
-import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
 import { takeUntil } from 'rxjs/operators';
+import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
+import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',

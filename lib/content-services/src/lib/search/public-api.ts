@@ -69,5 +69,6 @@ export * from './components/reset-search.directive';
 export * from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
 export * from './components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
 export * from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
+export * from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 
 export * from './search.module';
