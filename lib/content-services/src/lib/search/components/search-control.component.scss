@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import '../../../../../core/src/lib/styles/flex';
 
 $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
 $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
@@ -23,7 +24,7 @@ $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
         background-color: var(--adf-theme-background-card-color);
         border-radius: 2px;
 
-        @media screen and (max-width: 959px) {
+        @include layout-bp(lt-md) {
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
