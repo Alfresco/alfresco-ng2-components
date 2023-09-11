@@ -60,15 +60,6 @@ describe('SearchFacetChipTabbedComponent', () => {
         return fixture.debugElement.query(By.css('.adf-search-filter-ellipsis.adf-filter-value')).nativeElement.innerText.trim();
     }
 
-    function getTabs(): HTMLDivElement[] {
-        return fixture.debugElement.queryAll(By.css('.mat-tab-label-content')).map((element) => element.nativeElement);
-    }
-
-    function changeTab(tabIndex: number) {
-        getTabs()[tabIndex].click();
-        fixture.detectChanges();
-    }
-
     function emitChildEvent(eventName: string, event: any) {
         const debugElem = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         debugElem.triggerEventHandler(eventName, event);
@@ -105,22 +96,10 @@ describe('SearchFacetChipTabbedComponent', () => {
         expect(title).toBe(component.tabbedFacet.label);
     });
 
-    it('should display 2 tabs with specific labels', () => {
+    it('should display adf-search-facet-tabbed-content component', () => {
         openFacet();
-        const tabLabels = getTabs();
-        expect(tabLabels.length).toBe(2);
-        expect(tabLabels[0].innerText).toBe(component.tabbedFacet.facets['field'].label);
-        expect(tabLabels[1].innerText).toBe(component.tabbedFacet.facets['field2'].label);
-    });
-
-    it('should display creator tab as active initially and allow navigation', () => {
-        openFacet();
-        let activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
-        expect(activeTabLabel).toBe(component.tabbedFacet.facets['field'].label);
-
-        changeTab(1);
-        activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
-        expect(activeTabLabel).toBe(component.tabbedFacet.facets['field2'].label);
+        let activeTabLabel = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
+        expect(activeTabLabel).toBeTruthy();
     });
 
     it('should display arrow down icon and not disable the chip when items are loaded', () => {
@@ -148,7 +127,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         expect(getDisplayValue()).toBe(displayValue);
     });
 
-    it('should update search query and display value when apply btn is clicked', () => {
+    it('should call onApply and close modal when apply btn is clicked', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onApply').and.callThrough();
         openFacet();
@@ -158,7 +137,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         expect(component.onApply).toHaveBeenCalled();
     });
 
-    it('should update search query and display value when cancel btn is clicked', () => {
+    it('should call onRemove and close modal when cancel btn is clicked', () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onRemove').and.callThrough();
         openFacet();
