@@ -1,3 +1,5 @@
+@import '../../../../../core/src/lib/styles/flex';
+
 adf-cloud-app-list {
     width: 100%;
 
@@ -27,11 +29,11 @@ adf-cloud-app-list {
             flex: 1 1 100%;
             max-width: 33.3333%;
 
-            @media screen and (max-width: 960px) {
+            @include layout-bp(lt-md){
                 max-width: 50%;
             }
 
-            @media screen and (max-width: 600px) {
+            @include layout-bp(lt-sm) {
                 max-width: 100%;
             }
         }
