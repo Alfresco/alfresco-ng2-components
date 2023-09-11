@@ -15,32 +15,45 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TabbedFacetField } from '@alfresco/adf-content-services';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search-query-service.token';
 import { FacetWidget } from '../../../models/facet-widget.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',
     templateUrl: './search-facet-tabbed-content.component.html',
+    encapsulation: ViewEncapsulation.None
 })
-export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, FacetWidget {
+export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnChanges, FacetWidget {
     @Input()
     tabbedFacet: TabbedFacetField;
 
-    private resetSubject$ = new Subject<void>();
+    @Input()
+    onReset$: Observable<void>;
 
-    displayValue$ = new Subject<string>();
+    @Input()
+    onApply$: Observable<void>;
+
+    @Output()
+    isPopulated = new EventEmitter<boolean>();
+
+    @Output()
+    displayValue$ = new EventEmitter<string>();
+
+    private resetSubject$ = new Subject<void>();
+    private onDestroy$ = new Subject<void>();
+
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';
     autocompleteOptions = {};
     selectedOptions = {};
-    isPopulated = false;
 
     constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService,
                 private translationService: TranslationService,
@@ -54,11 +67,19 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
                 writable: true
             });
         });
+
+        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+        this.onApply$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.submitValues());
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.tabbedFacet) {
-            this.isPopulated = this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0);
+            this.isPopulated.emit(this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0));
             this.tabbedFacet.fields.forEach((field) => {
                 const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ value: item.display }));
                 Object.defineProperty(this.autocompleteOptions, field, {
@@ -69,17 +90,9 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
         }
     }
 
-    onRemove() {
-        this.reset();
-    }
-
-    onApply() {
-        this.submitValues();
-    }
-
     onOptionsChange(selectedOptions: AutocompleteOption[], field: string) {
         this.selectedOptions[field] = selectedOptions.map((selectedOption) => selectedOption.value);
-        this.isPopulated = this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0);
+        this.isPopulated.emit(this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0));
         this.updateDisplayValue();
         this.updateUserFacetBuckets();
         this.queryBuilder.update();
@@ -93,7 +106,7 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
                 displayValue += `${this.translationService.instant(this.tabbedFacet.facets[field].label + '_LABEL')}: ${stackedOptions} `;
             }
         });
-        this.displayValue$.next(displayValue);
+        this.displayValue$.emit(displayValue);
     }
 
     reset() {

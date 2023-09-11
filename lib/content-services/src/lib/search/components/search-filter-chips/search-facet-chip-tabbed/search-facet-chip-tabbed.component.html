@@ -1,19 +1,19 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-tabbed-' + tabbedFacet.label"
           disableRipple
           class="adf-search-filter-chip-tabbed"
-          [class.adf-search-toggle-chip]="(displayValue$ | async) || menuTrigger.menuOpen"
+          [class.adf-search-toggle-chip]="displayValue || menuTrigger.menuOpen"
           [disabled]="!isPopulated"
           tabIndex="0"
           [matMenuTriggerFor]="menu"
           (onMenuOpen)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"
           (keydown.escape)="onEscKeydown()"
-          [attr.title]="displayValue$ | async"
+          [attr.title]="displayValue"
           #menuTrigger="matMenuTrigger">
 
     <span class="adf-search-filter-placeholder">{{ tabbedFacet.label | translate }}:</span>
 
-    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="displayValue$ | async as displayValue; else showAny">
+    <span class="adf-search-filter-ellipsis adf-filter-value" *ngIf="displayValue; else showAny">
         &nbsp; {{ displayValue | translate }}
     </span>
     <ng-template #showAny><span class="adf-search-filter-ellipsis adf-filter-value">&nbsp;{{ 'SEARCH.FILTER.ANY' | translate }}</span></ng-template>
@@ -33,7 +33,9 @@
                 {{ tabbedFacet.label | translate }}
             </ng-container>
             <ng-container ngProjectAs="filter-content">
-                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet"></adf-search-facet-tabbed-content>
+                <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="isPopulated = $event"
+                                                 [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event">
+                </adf-search-facet-tabbed-content>
             </ng-container>
             <ng-container ngProjectAs="filter-actions">
                 <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">

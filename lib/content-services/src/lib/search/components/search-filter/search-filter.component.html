@@ -25,7 +25,7 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
-        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label">
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label" [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ facetFiltersService.tabbedFacet.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
