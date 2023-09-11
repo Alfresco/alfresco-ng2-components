@@ -1,3 +1,5 @@
+@import '../../../../../core/src/lib/styles/flex';
+
 /* stylelint-disable no-descending-specificity */
 .adf-new-task-heading {
     padding-top: 12px;
@@ -28,11 +30,11 @@
         }
 
         .input-row {
-            @media screen and (max-width: 960px){
+            @include layout-bp(lt-md) {
                 flex-direction: column;
             }
 
-            @media screen and (min-width: 960px) {
+            @include layout-bp(lt-md) {
                 mat-form-field {
                     margin-right: 20px;
                 }
@@ -44,7 +46,7 @@
             box-sizing: border-box;
             max-width: 48%;
 
-            @media screen and (max-width: 600px){
+            @include layout-bp(lt-sm) {
                 max-width: 100%;
             }
         }

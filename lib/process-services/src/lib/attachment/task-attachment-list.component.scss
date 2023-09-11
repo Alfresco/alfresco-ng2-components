@@ -1,3 +1,5 @@
+@import '../../../../core/src/lib/styles/flex';
+
 adf-datatable .adf-data-cell {
     cursor: pointer !important;
 }
@@ -25,7 +27,7 @@ adf-datatable .adf-data-cell {
     word-break: break-all;
     white-space: pre-line;
 
-    @media screen and (max-width: 599px) {
+    @include layout-bp(lt-sm) {
         font-size: 40px;
     }
 }
@@ -48,7 +50,7 @@ adf-datatable .adf-data-cell {
     object-fit: contain;
     margin-top: 17px;
 
-    @media screen and (max-width: 599px) {
+    @include layout-bp(lt-sm) {
         width: 250px;
     }
 }

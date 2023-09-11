@@ -1,3 +1,5 @@
+@import '../../../../core/src/lib/styles/flex';
+
 /* stylelint-disable scss/no-global-function-names */
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
     position: relative;
@@ -66,12 +68,12 @@ $tile-themes: (
             flex: 1 1 33.3333%;
             max-width: 33.3333%;
 
-            @media screen and (max-width: 960px) {
+            @include layout-bp(lt-md) {
                 flex: 1 1 50%;
                 max-width: 50%;
             }
 
-            @media screen and (max-width: 600px) {
+            @include layout-bp(lt-sm) {
                 flex: 1 1 100%;
                 max-width: 100%;
             }
