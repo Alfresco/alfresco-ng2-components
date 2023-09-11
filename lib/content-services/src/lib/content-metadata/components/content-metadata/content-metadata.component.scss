@@ -35,7 +35,7 @@
             align-items: center;
             border-radius: 16px;
             width: fit-content;
-            background: var(--adf-metadata-buttons-background-color);
+            background: var(--theme-metadata-buttons-background-color);
             margin-top: 12px;
             padding: 6px 12px;
             justify-content: center;
@@ -105,7 +105,7 @@
 }
 
 .adf-info-drawer-layout-content .adf-content-metadata-card .adf-metadata-properties .mat-expansion-panel {
-    border: 1px solid var(--adf-metadata-property-panel-border-color);
+    border: 1px solid var(--theme-metadata-property-panel-border-color);
     border-radius: 12px;
     margin-bottom: 12px;
 }
