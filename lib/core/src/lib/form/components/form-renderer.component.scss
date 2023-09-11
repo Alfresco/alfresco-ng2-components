@@ -23,7 +23,7 @@
 
 .adf-container-widget {
     .adf-grid-list-column-view {
-        @include layout-bp(lt-sm) {
+        @include layout-bp(lt-md) {
             display: flow;
         }
 

@@ -52,7 +52,7 @@ adf-layout-header .mat-toolbar-single-row {
         padding: 0;
     }
 
-    @include layout-bp(sm) {
+    @include layout-bp(lt-sm) {
         .adf-app-logo,
         .adf-app-title {
             display: none;
