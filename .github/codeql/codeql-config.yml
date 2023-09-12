@@ -1,0 +1,6 @@
+name: "CodeQL config"
+
+paths-ignore:
+  - 'e2e/resources/**/*.*'
+  - 'docs/**/*.*'
+
