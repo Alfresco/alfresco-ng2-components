@@ -29,7 +29,7 @@
             "polyfills": "demo-shell/src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": [
-                "lib"
+                "lib", "lib/core/src/lib"
               ]
             },
             "assets": [
@@ -250,7 +250,12 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",
-            "project": "lib/core/ng-package.json"
+            "project": "lib/core/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "dependsOn": ["^build", "license"],
           "configurations": {
@@ -307,7 +312,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -328,7 +338,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -393,7 +408,12 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/content-services/tsconfig.lib.json",
-            "project": "lib/content-services/ng-package.json"
+            "project": "lib/content-services/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -435,7 +455,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -456,7 +481,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -501,7 +531,12 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services/tsconfig.lib.json",
-            "project": "lib/process-services/ng-package.json"
+            "project": "lib/process-services/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -567,7 +602,12 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
-            "project": "lib/process-services-cloud/ng-package.json"
+            "project": "lib/process-services-cloud/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -609,7 +649,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -630,7 +675,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
@@ -686,7 +736,12 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/insights/tsconfig.lib.json",
-            "project": "lib/insights/ng-package.json"
+            "project": "lib/insights/ng-package.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -816,7 +871,12 @@
                 "entryName": "shared",
                 "entryPath": "/lib/testing/src/lib/shared/index.ts"
               }
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -897,7 +957,12 @@
             "outputPath": "dist/libs/eslint-plugin-eslint-angular",
             "main": "lib/eslint-angular/index.ts",
             "generatePackageJson" : true,
-            "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
+            "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -956,7 +1021,12 @@
           "options": {
             "commands": [
               "cd lib/cli && npm i && npm run dist"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -1032,6 +1102,11 @@
             "browserTarget": "stories:storybook",
             "configDir": "lib/stories/.storybook",
             "compodoc": false,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            },
             "styles": [
               "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
@@ -1059,7 +1134,12 @@
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           },
           "configurations": {
             "ci": {
