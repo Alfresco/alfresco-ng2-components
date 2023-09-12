@@ -1,4 +1,4 @@
-@import '../../../../core/src/lib/styles/flex';
+@import 'styles/flex';
 
 /* stylelint-disable scss/no-global-function-names */
 @mixin adf-line-clamp($line-height: 1.25, $lines: 3) {

@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import '../../../../../core/src/lib/styles/flex';
+@import 'styles/flex';
 
 $mat-menu-overlay-min-width: 112px !default;   // 56 * 2
 $mat-menu-overlay-max-width: 280px !default;   // 56 * 5
