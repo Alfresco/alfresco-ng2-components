@@ -8,13 +8,15 @@
     &-radio-button-container-horizontal {
         margin-bottom: 15px;
         display: flex;
-        flex-direction: row;
+        flex-flow: row wrap;
         align-items: flex-start;
+        justify-content: flex-start;
 
         .adf-label {
             width: auto;
             height: auto;
             white-space: normal;
+            margin-right: 25%;
         }
     }
 
@@ -27,7 +29,7 @@
 
     &-radio-group-horizontal {
         margin-top: 0;
-        margin-left: 25%;
+        margin-left: 0;
         display: table-column-group;
     }
 
