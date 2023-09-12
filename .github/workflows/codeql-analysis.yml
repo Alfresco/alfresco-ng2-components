@@ -15,6 +15,10 @@ on:
   schedule:
     - cron: '0 5 * * 0'
 
+paths-ignore:
+  - 'e2e/resources/**/*.*'
+  - 'docs/**/*.*'
+
 jobs:
   analyze:
     name: Analyze
