@@ -153,7 +153,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     preventIncorrectCharacters(e: KeyboardEvent): boolean {
         const regex = /[^\d/.-]/;
-        return e.key.length == 1 ? !regex.test(e.key) : true;
+        return e.key.length === 1 ? !regex.test(e.key) : true;
     }
 
     private openConfirmationDialog() {
