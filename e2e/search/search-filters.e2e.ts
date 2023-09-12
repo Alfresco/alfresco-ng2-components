@@ -163,7 +163,7 @@ describe('Search Filters', () => {
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
         const userOption = `${acsUser.firstName} ${acsUser.lastName}`;
-        const searchCheckListPage = await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+        const searchCheckListPage = await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(userOption);
         await searchCheckListPage.checkChipIsDisplayed(userOption);
         await searchCheckListPage.removeFilterOption(userOption);
         await searchCheckListPage.checkChipIsNotDisplayed(userOption);
@@ -172,7 +172,7 @@ describe('Search Filters', () => {
     it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
         await BrowserActions.getUrl(`${browser.baseUrl}/search;q=*`);
 
-        const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
+        const searchCheckListPage = searchFiltersPage.fileTypeCheckListFiltersPage();
 
         await searchCheckListPage.checkShowLessButtonIsNotDisplayed();
         await searchCheckListPage.checkShowMoreButtonIsDisplayed();
@@ -189,7 +189,7 @@ describe('Search Filters', () => {
         await searchFiltersPage.clickFileSizeFilterHeader();
         await searchFiltersPage.checkFileSizeFilterIsCollapsed();
 
-        await searchFiltersPage.creatorCheckListFiltersPage().clickCheckListOption('Administrator');
+        await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue('Administrator');
 
         await searchFiltersPage.checkFileTypeFilterIsCollapsed();
         await searchFiltersPage.checkFileSizeFilterIsCollapsed();
@@ -269,7 +269,7 @@ describe('Search Filters', () => {
             await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
-            await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
+            await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListAutocompleteOptionIsDisplayed('Administrator');
         });
 
         it('[C291981] Should group search facets under the default label, by default', async () => {

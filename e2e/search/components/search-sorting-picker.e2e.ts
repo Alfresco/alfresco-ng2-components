@@ -171,7 +171,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277280] Should be able to sort the search results by "Name" ASC', async () => {
         await searchFilters.checkSearchFiltersIsDisplayed();
-        await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+        await searchFilters.creatorCheckListFiltersPage().enterFilterInputValue(`${acsUser.firstName} ${acsUser.lastName}`);
         await searchResults.sortByName('ASC');
 
         await expect(await searchResults.checkListIsOrderedByNameAsc()).toBe(true);
@@ -179,7 +179,7 @@ describe('Search Sorting Picker', () => {
 
     it('[C277281] Should be able to sort the search results by "Name" DESC', async () => {
         await searchFilters.checkSearchFiltersIsDisplayed();
-        await searchFilters.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+        await searchFilters.creatorCheckListFiltersPage().enterFilterInputValue(`${acsUser.firstName} ${acsUser.lastName}`);
         await searchResults.sortByName('DESC');
         await expect(await searchResults.checkListIsOrderedByNameDesc()).toBe(true);
     });

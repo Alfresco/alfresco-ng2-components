@@ -86,7 +86,7 @@ describe('Search Component - Multi-Select Facet', () => {
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
-            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+            await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(userOption);
         });
 
         afterAll(async () => {
@@ -112,7 +112,7 @@ describe('Search Component - Multi-Select Facet', () => {
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
-            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
+            await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(userOption);
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchResultsPage.dataTable.waitTillContentLoaded();
 
@@ -177,8 +177,8 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
-            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
-            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
+            await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
+            await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
             await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -229,7 +229,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
-            await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+            await searchFiltersPage.creatorCheckListFiltersPage().enterFilterInputValue(`${acsUser.firstName} ${acsUser.lastName}`);
             await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);

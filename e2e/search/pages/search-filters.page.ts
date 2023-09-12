@@ -24,7 +24,7 @@ export class SearchFiltersPage {
 
     searchFilters = $('adf-search-filter');
     fileTypeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]');
-    creatorFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]');
+    creatorFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FILTER.PEOPLE"]');
     fileSizeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]');
     nameFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Name"]');
     checkListFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]');

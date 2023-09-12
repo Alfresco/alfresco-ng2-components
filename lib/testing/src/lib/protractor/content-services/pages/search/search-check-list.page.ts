@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, browser } from 'protractor';
+import { element, by, ElementFinder, browser, protractor, By } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
@@ -54,6 +54,17 @@ export class SearchCheckListPage {
         await this.checkSearchFilterInputIsDisplayed();
         await this.searchInFilter(option);
         await this.clickCheckListOption(option);
+
+        return this;
+    }
+
+    async enterFilterInputValue(option: string): Promise<SearchCheckListPage> {
+        await this.checkSearchFilterInputIsDisplayed();
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        const inputElement = this.filter.$$(this.inputBy).first();
+        await BrowserVisibility.waitUntilElementIsClickable(inputElement);
+        await BrowserActions.clearSendKeys(inputElement, option);
+        await inputElement.sendKeys(protractor.Key.ENTER);
 
         return this;
     }
@@ -113,6 +124,12 @@ export class SearchCheckListPage {
     async checkCheckListOptionIsDisplayed(option: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         const result = this.filter.$(`mat-checkbox[data-automation-id*='-${option}']`);
+        await BrowserVisibility.waitUntilElementIsVisible(result);
+    }
+
+    async checkCheckListAutocompleteOptionIsDisplayed(option: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+        const result = element(By.css(`mat-option[data-automation-id='option-${option}']`));
         await BrowserVisibility.waitUntilElementIsVisible(result);
     }
 
