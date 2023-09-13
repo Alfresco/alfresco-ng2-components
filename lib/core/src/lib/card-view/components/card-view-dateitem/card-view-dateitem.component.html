@@ -1,10 +1,12 @@
 <label class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+     [ngClass]="{'adf-property-label-not-editable' : !isEditable() && editable}"
      *ngIf="showProperty() || isEditable()"
      [attr.for]="'card-view-dateitem-' + property.key">
     {{ property.label | translate }}
 </label>
-<div class="adf-property-value adf-property-value-padding-top">
+<div class="adf-property-value adf-property-value-padding-top"
+    [ngClass]="{'adf-property-dateitem-edit-mode' : editable, 'adf-property-label-not-editable' : !isEditable() && editable}">
     <span *ngIf="!isEditable() && !property.multivalued"
           [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span *ngIf="showProperty()"
@@ -98,3 +100,4 @@
         </mat-form-field>
     </div>
 </div>
+<mat-divider *ngIf="showProperty() && !editable"></mat-divider>

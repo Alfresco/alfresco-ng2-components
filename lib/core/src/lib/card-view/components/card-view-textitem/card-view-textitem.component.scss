@@ -1,4 +1,9 @@
 .adf {
+
+    &-property-field .mat-form-field-underline {
+        display: none;
+    }
+    
     &-textitem-edit-icon.mat-icon {
         font-size: var(--theme-subheading-2-font-size);
         width: 16px;
