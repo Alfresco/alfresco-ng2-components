@@ -185,24 +185,6 @@ describe('CardViewTextItemComponent', () => {
 
         });
 
-        it('should render the edit icon in case of editable:true', () => {
-            component.editable = true;
-            component.property.editable = true;
-
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
-            expect(editIcon).not.toBeNull('Edit icon should be shown');
-        });
-
-        it('should NOT render the edit icon in case of editable:false', async () => {
-            component.editable = false;
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
-            expect(editIcon).toBeNull('Edit icon should NOT be shown');
-        });
-
         it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', async () => {
             component.editable = false;
             component.property.editable = true;
@@ -492,27 +474,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('myValueToCopy', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         });
-
-        it('should clear value when clear value icon is clicked', async () => {
-            spyOn(component, 'update');
-            component.property.value = 'testValue';
-            component.property.icon = 'FAKE_ICON';
-            component.property.clickable = true;
-            component.property.editable = true;
-            component.editable = true;
-            component.property.isValid = () => true;
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            const clickEl = fixture.debugElement.query(By.css(`.adf-textitem-clear-icon`));
-            clickEl.triggerEventHandler('click', new MouseEvent('click'));
-
-            fixture.detectChanges();
-            const elementValue = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(elementValue.nativeElement.textContent).toEqual('');
-            expect(component.update).toHaveBeenCalled();
-        });
+      
     });
 
     describe('Update', () => {

@@ -2,16 +2,26 @@
     &-metadata-properties {
         mat-expansion-panel-header {
             height: 56px;
+            padding: 0 12px;
 
             .adf-metadata-properties-title {
-                font-weight: normal;
-                font-size: 15px;
+                font-weight: 700;
+                font-size: 14px;
                 padding-left: 12px;
             }
         }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
+            border: 1px solid var(--adf-metadata-property-panel-border-color);
+            border-radius: 12px;
+            margin: 24px;
+        }
+
+        .mat-expansion-panel-body {
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
         }
 
         .adf-mat-divider {
@@ -47,7 +57,7 @@
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            padding: 24px;
+            padding: 22px 0 5px;
         }
 
         &-tags {
@@ -56,7 +66,7 @@
                 justify-content: space-between;
                 align-items: center;
                 font-size: 15px;
-                height: 68px;
+                height: 56px;
             }
 
             adf-tags-creator {
@@ -91,7 +101,7 @@
             justify-content: space-between;
             align-items: center;
             font-size: 15px;
-            height: 64px;
+            height: 56px;
 
             button {
                 margin-right: -14px;
