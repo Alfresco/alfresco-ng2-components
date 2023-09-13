@@ -282,9 +282,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
      * Before clicking on that button they are not saved.
      */
-    saveChanges(buttonType: ButtonType, event: MouseEvent) {
+    saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
-        this.toggleEditMode(buttonType);
+        this.toggleEditMode(buttonType, group);
         this._saving = true;
         this.tagNameControlVisible = false;
         this.categoryControlVisible = false;
@@ -347,9 +347,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.categoryControlVisible = false;
     }
 
-    cancelChanges(buttonType: ButtonType, event: MouseEvent) {
+    cancelChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
-        this.toggleEditMode(buttonType);
+        this.toggleEditMode(buttonType, group);
         this.revertChanges();
         this.loadProperties(this.node);
     }
