@@ -250,12 +250,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/core/tsconfig.lib.json",
-            "project": "lib/core/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
-            }
+            "project": "lib/core/ng-package.json"
           },
           "dependsOn": ["^build", "license"],
           "configurations": {
@@ -408,12 +403,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/content-services/tsconfig.lib.json",
-            "project": "lib/content-services/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
-            }
+            "project": "lib/content-services/ng-package.json"
           },
           "configurations": {
             "production": {
@@ -531,12 +521,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services/tsconfig.lib.json",
-            "project": "lib/process-services/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
-            }
+            "project": "lib/process-services/ng-package.json"
           },
           "configurations": {
             "production": {
@@ -602,12 +587,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/process-services-cloud/tsconfig.lib.json",
-            "project": "lib/process-services-cloud/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
-            }
+            "project": "lib/process-services-cloud/ng-package.json"
           },
           "configurations": {
             "production": {
@@ -736,12 +716,7 @@
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "lib/insights/tsconfig.lib.json",
-            "project": "lib/insights/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
-            }
+            "project": "lib/insights/ng-package.json"
           },
           "configurations": {
             "production": {
