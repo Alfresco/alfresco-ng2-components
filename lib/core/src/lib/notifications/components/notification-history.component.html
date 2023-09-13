@@ -21,12 +21,12 @@
              (click)="$event.stopPropagation()">
             <div mat-subheader role="menuitem">
                 <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
-                <button (click)="markAsRead()"
+                <button *ngIf="notifications.length"
                         id="adf-notification-history-mark-as-read"
-                        mat-button
-                        color="accent"
-                        *ngIf="notifications.length">
-                    {{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}
+                        mat-icon-button
+                        title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
+                        (click)="markAsRead()">
+                    <mat-icon>done_all</mat-icon>
                 </button>
             </div>
 
