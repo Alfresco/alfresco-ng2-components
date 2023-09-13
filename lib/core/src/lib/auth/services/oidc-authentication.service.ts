@@ -118,12 +118,22 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         });
     }
 
-    getEcmUsername(): string {
+    getUsername(){
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
+    /**
+     * @deprecated
+     */
+    getEcmUsername(): string {
+        return this.getUsername();
+    }
+
+    /**
+     * @deprecated
+     */
     getBpmUsername(): string {
-        return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
+        return this.getUsername();
     }
 
     ssoImplicitLogin() {

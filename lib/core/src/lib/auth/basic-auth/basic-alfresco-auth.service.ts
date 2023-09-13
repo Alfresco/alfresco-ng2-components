@@ -307,6 +307,16 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         return this.contentAuth.getUsername();
     }
 
+    getUsername(): string {
+        if (this.isBPMProvider()) {
+            return this.processAuth.getUsername();
+        } else if (this.isECMProvider()) {
+            return this.contentAuth.getUsername();
+        } else {
+            return this.contentAuth.getUsername();
+        }
+    }
+
     /**
      * Does kerberos enabled?
      *

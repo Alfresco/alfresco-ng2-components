@@ -36,7 +36,6 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         private injector: Injector,
         private redirectAuthService: RedirectAuthService
     ) {
-
         this.redirectAuthService.onLogin.subscribe(
             (value) => this.onLogin.next(value)
         );
@@ -156,17 +155,34 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
+    /**
+     * @returns the username of the authenticated user
+     */
+    getUsername(): string {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getUsername();
+        } else {
+            return this.basicAlfrescoAuthService.getUsername();
+        }
+    }
+
+    /**
+     * @deprecated
+     */
     getEcmUsername(): string {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.getEcmUsername();
+            return this.oidcAuthenticationService.getUsername();
         } else {
             return this.basicAlfrescoAuthService.getEcmUsername();
         }
     }
 
+    /**
+     * @deprecated
+     */
     getBpmUsername(): string {
         if (this.isOauth()) {
-            return this.oidcAuthenticationService.getBpmUsername();
+            return this.oidcAuthenticationService.getUsername();
         } else {
             return this.basicAlfrescoAuthService.getBpmUsername();
         }

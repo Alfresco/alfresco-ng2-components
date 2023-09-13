@@ -23,6 +23,7 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from './oidc-authentication.service';
 
 declare let jasmine: any;
 
@@ -31,6 +32,7 @@ describe('AuthenticationService', () => {
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
+    let oidcAuthenticationService: OidcAuthenticationService;
 
     setupTestBed({
         imports: [
@@ -44,6 +46,7 @@ describe('AuthenticationService', () => {
         localStorage.clear();
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
+        oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
 
         cookie = TestBed.inject(CookieService);
         cookie.clear();
@@ -489,5 +492,23 @@ describe('AuthenticationService', () => {
         it('[ALL] should return isALLProvider true', () => {
             expect(authService.isALLProvider()).toBe(true);
         });
+    });
+
+    describe('getUsername', () => {
+        it('should get the username of the authenticated user if isOAuth is true', () => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            spyOn(oidcAuthenticationService, 'getUsername').and.returnValue('mike.portnoy');
+            const username = authService.getUsername();
+            expect(username).toEqual('mike.portnoy');
+        });
+
+        it('should get the username of the authenticated user if isOAuth is false', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(oidcAuthenticationService, 'getUsername').and.returnValue('mike.portnoy');
+            spyOn(basicAlfrescoAuthService, 'getUsername').and.returnValue('john.petrucci');
+            const username = authService.getUsername();
+            expect(username).toEqual('john.petrucci');
+        });
+
     });
 });
