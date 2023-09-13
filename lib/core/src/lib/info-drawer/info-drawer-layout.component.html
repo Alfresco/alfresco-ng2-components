@@ -1,4 +1,7 @@
 <div *ngIf="showHeader" class="adf-info-drawer-layout-header">
+    <div class="adf-info-drawer-layout-header-icon">
+        <ng-content select="[info-drawer-node-icon]"></ng-content>
+    </div>
     <div class="adf-info-drawer-layout-header-title">
         <ng-content select="[info-drawer-title]"></ng-content>
     </div>

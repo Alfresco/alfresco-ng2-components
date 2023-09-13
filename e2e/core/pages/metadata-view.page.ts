@@ -148,11 +148,6 @@ export class MetadataViewPage {
         return BrowserActions.getInputValue(textField);
     }
 
-    async getPropertyIconTooltip(propertyName: string): Promise<string> {
-        const editPropertyIcon = $('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon');
-        return BrowserActions.getAttribute(editPropertyIcon, 'title');
-    }
-
     async clickMetadataGroup(groupName: string): Promise<void> {
         const group = await this.getMetadataGroupLocator(groupName);
         await BrowserActions.click(group);

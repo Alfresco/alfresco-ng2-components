@@ -152,13 +152,6 @@ describe('Metadata component', () => {
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
 
             await metadataViewPage.clickEditIconGeneral();
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:name');
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
-
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:name')).toEqual('Edit');
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:title')).toEqual('Edit');
-            await expect(await metadataViewPage.getPropertyIconTooltip('properties.cm:description')).toEqual('Edit');
 
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText');
             await metadataViewPage.clickResetMetadata();

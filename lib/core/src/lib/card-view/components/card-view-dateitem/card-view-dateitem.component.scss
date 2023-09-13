@@ -11,6 +11,23 @@
         float: right;
     }
 
+    &-property-label{
+        color: var(--theme-metadata-property-panel-text-color);
+        display: flex;
+        padding: 6px 0;
+        line-height: 20px;
+    }
+
+    &-property-dateitem-edit-mode{
+        background-color: var(--theme-metadata-buttons-background-color);
+        border-radius: 6px;
+        padding-left: 12px;
+
+        .mat-select-value{
+            color: var(--theme-metadata-property-panel-text-color);
+        }
+    }
+    
     &-dateitem-chip-list-container.adf-property-field {
         margin-bottom: -7px !important;
         border-bottom: 0;

@@ -87,18 +87,19 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     template: `
-    <adf-info-drawer [selectedIndex]="tabIndex" title="Fake Title Custom">
-        <adf-info-drawer-tab label="Tab1">
-        </adf-info-drawer-tab>
-        <adf-info-drawer-tab label="Tab2">
-        </adf-info-drawer-tab>
-        <adf-info-drawer-tab label="Tab3" icon="tab-icon">
-        </adf-info-drawer-tab>
-    </adf-info-drawer>
-       `
+        <adf-info-drawer [selectedIndex]="tabIndex" nodeIcon="nodeIcon" title="Fake Title Custom">
+            <adf-info-drawer-tab label="Tab1">
+            </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab2">
+            </adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab3" icon="tab-icon">
+            </adf-info-drawer-tab>
+        </adf-info-drawer>
+    `
 })
 class CustomInfoDrawerComponent extends InfoDrawerComponent {
     tabIndex: number;
+    nodeIcon: string;
 }
 
 describe('Custom InfoDrawer', () => {
@@ -157,16 +158,26 @@ describe('Custom InfoDrawer', () => {
         expect(tab[0].nativeElement.innerText).not.toBe('TAB3');
         expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });
+
+    it('should render a icon with title', () => {
+        component.nodeIcon = "/assets/images/ft_ic_miscellaneous.svg";
+        fixture.detectChanges();
+        const icon =  fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+        const srcAttribute = icon[0].nativeElement.getAttribute('src');
+        expect(icon.length).toBe(1);
+        expect(srcAttribute).toContain('/assets/images/ft_ic_miscellaneous.svg');
+    });
 });
 
 @Component({
     template: `
-    <adf-info-drawer [showHeader]="showHeader" title="Fake Visibility Info Drawer Title">
+    <adf-info-drawer [showHeader]="showHeader" nodeIcon="nodeIcon" title="Fake Visibility Info Drawer Title">
     </adf-info-drawer>
-       `
+        `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;
+    nodeIcon: string;
 }
 
 describe('Header visibility InfoDrawer', () => {
@@ -189,18 +200,24 @@ describe('Header visibility InfoDrawer', () => {
     });
 
     it('should show info drawer header by default', () => {
+        component.nodeIcon = "/assets/images/ft_ic_miscellaneous.svg";
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const icon = fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
+        const srcAttribute = icon[0].nativeElement.getAttribute('src');
         expect(title.length).toBe(1);
+        expect(icon.length).toBe(1);
+        expect(srcAttribute).toContain('/assets/images/ft_ic_miscellaneous.svg');
         expect(title[0].nativeElement.innerText).toBe('Fake Visibility Info Drawer Title');
         expect(component.showHeader).toEqual(true);
     });
 
-    it('should not show info drawer header when showHeader is false', () => {
-        fixture.detectChanges();
+    it('should not show info drawer header with icon when showHeader is false', () => {
         component.showHeader = false;
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        const icon = fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
         expect(title.length).toBe(0);
+        expect(icon.length).toBe(0);
     });
 });
