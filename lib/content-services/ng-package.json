@@ -20,6 +20,9 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-content-services"
+    "flatModuleFile": "adf-content-services",
+    "styleIncludePaths": [
+      "../../dist/libs/core/lib"
+    ]
   }
 }

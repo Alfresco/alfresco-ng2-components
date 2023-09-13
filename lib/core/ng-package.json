@@ -35,7 +35,10 @@
   ],
   "lib": {
     "entryFile": "./src/public-api.ts",
-    "flatModuleFile": "adf-core"
+    "flatModuleFile": "adf-core",
+    "styleIncludePaths": [
+      "../core/src/lib"
+    ]
   },
   "allowedNonPeerDependencies": [
     "cropperjs",
