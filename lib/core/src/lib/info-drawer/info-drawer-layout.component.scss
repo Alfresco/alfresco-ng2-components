@@ -14,14 +14,14 @@ $adf-info-drawer-icon-size-half: 24px !default;
 
         overflow: auto;
         width: 100%;
-        background-color:var(--theme-card-background-color);
+        background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
         & .mat-tab-label {
+            height: 32px;
             font-weight: bold;
             text-align: left;
             color: var(--theme-accent-color);
-            text-transform: uppercase;
             opacity: 1;
 
             &-active {
@@ -30,13 +30,12 @@ $adf-info-drawer-icon-size-half: 24px !default;
         }
 
         &-header {
-            padding: 13px 0 0 23px;
+            padding: 8px 0 0 24px;
             display: flex;
             align-items: center;
+            height: 56px;
             margin-bottom: 40px;
-
             &-buttons {
-                padding-right: 18px;
 
                 mat-icon {
                     cursor: pointer;
@@ -44,16 +43,16 @@ $adf-info-drawer-icon-size-half: 24px !default;
             }
 
             &-title {
-                width: 197px;
-                height: 32px;
+                display: flex;
                 font-size: $adf-info-drawer-layout-title-font-size;
-                line-height: 1.6;
-                letter-spacing: -0.5px;
+                line-height: 28px;
+                letter-spacing: 0.15px;
                 text-align: left;
+                align-items: start;
                 color: var(--adf-theme-foreground-text-color-054);
 
                 & > div {
-                    overflow: hidden;
+                    width: 220px;
                     text-overflow: ellipsis;
                     color: var(--theme-metadata-property-panel-title-color);
                 }
