@@ -63,10 +63,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       // prevent adding any content type, to properly handle formData with boundary browser generated value,
       // as adding any Content-Type its going to break the upload functionality
 
-      if (headers.get('Content-Type') === 'multipart/form-data') {
-          return headers.delete('Content-Type');
-      }
-
       if (!headers.get('Content-Type')) {
           return headers.set('Content-Type', 'application/json;charset=UTF-8');
       }
