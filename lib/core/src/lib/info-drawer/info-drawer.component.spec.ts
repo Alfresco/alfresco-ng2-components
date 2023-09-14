@@ -87,7 +87,7 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     template: `
-        <adf-info-drawer [selectedIndex]="tabIndex" nodeIcon="nodeIcon" title="Fake Title Custom">
+        <adf-info-drawer [selectedIndex]="tabIndex" [nodeIcon]="nodeIcon" title="Fake Title Custom">
             <adf-info-drawer-tab label="Tab1">
             </adf-info-drawer-tab>
             <adf-info-drawer-tab label="Tab2">
@@ -140,7 +140,7 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('TAB1');
+        expect(tab[0].nativeElement.innerText).toContain('Tab1');
     });
 
     it('should select the tab 2 (index 1)', () => {
@@ -148,14 +148,14 @@ describe('Custom InfoDrawer', () => {
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('TAB2');
+        expect(tab[0].nativeElement.innerText).toContain('Tab2');
     });
 
     it('should render a tab with icon', () => {
         component.tabIndex = 2;
         fixture.detectChanges();
         const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
-        expect(tab[0].nativeElement.innerText).not.toBe('TAB3');
+        expect(tab[0].nativeElement.innerText).not.toBe('Tab3');
         expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });
 
@@ -171,7 +171,7 @@ describe('Custom InfoDrawer', () => {
 
 @Component({
     template: `
-    <adf-info-drawer [showHeader]="showHeader" nodeIcon="nodeIcon" title="Fake Visibility Info Drawer Title">
+    <adf-info-drawer [showHeader]="showHeader" [nodeIcon]="nodeIcon" title="Fake Visibility Info Drawer Title">
     </adf-info-drawer>
         `
 })
