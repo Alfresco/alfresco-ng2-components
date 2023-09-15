@@ -16,3 +16,4 @@
  */
 
 export * from './alfresco-api.service';
+export { AlfrescoApiFactory } from './alfresco-api.interface';
