@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiConfig, AlfrescoApi } from '@alfresco/js-api';
+
 export interface AlfrescoApiInterface {
     load(): Promise<void> ;
+}
+
+export interface AlfrescoApiFactory {
+    createAlfrescoApi(config: AlfrescoApiConfig): AlfrescoApi;
 }

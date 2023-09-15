@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { ReplaySubject } from 'rxjs';
 import { OauthConfigModel } from '../auth/models/oauth-config.model';
 import { StorageService } from '../common/services/storage.service';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
+import { AlfrescoApiFactory } from './alfresco-api.interface';
+
+export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +46,12 @@ export class AlfrescoApiService {
         return this.alfrescoApi;
     }
 
-    constructor(protected appConfig: AppConfigService, protected storageService: StorageService) {}
+    constructor(
+        protected appConfig: AppConfigService,
+        protected storageService: StorageService,
+        @Optional()
+        @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
+    ) {}
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
@@ -114,6 +122,9 @@ export class AlfrescoApiService {
     }
 
     createInstance(config: AlfrescoApiConfig): AlfrescoApi {
+        if (this.alfrescoApiFactory) {
+            return this.alfrescoApiFactory.createAlfrescoApi(config);
+        }
         return new AlfrescoApi(config);
     }
 
