@@ -240,7 +240,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
             takeUntil(abort$)
         ).toPromise();
 
-        (promise as any).abort = function () {
+        (promise as any).abort = function() {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
@@ -251,7 +251,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private static getBody(options: RequestOptions): any {
-        const contentType = options.contentType;
+        const contentType = options.contentType ? options.contentType : AdfHttpClient.jsonPreferredMime(options.contentTypes);
         const isFormData = contentType === 'multipart/form-data';
         const isFormUrlEncoded = contentType === 'application/x-www-form-urlencoded';
         const body = options.bodyParam;
@@ -268,10 +268,13 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private getHeaders(options: RequestOptions): HttpHeaders {
+        const contentType = AdfHttpClient.jsonPreferredMime(options.contentTypes);
+        const accept = AdfHttpClient.jsonPreferredMime(options.accepts);
+
         const optionsHeaders = {
             ...options.headerParams,
-            ...(options.accept && {Accept: options.accept}),
-            ...((options.contentType) && {'Content-Type': options.contentType})
+            ...(accept && {Accept: accept}),
+            ...((contentType) && {'Content-Type': contentType})
         };
 
         if (!this.disableCsrf) {
@@ -280,6 +283,42 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
         return new HttpHeaders(optionsHeaders);
     }
+
+    /**
+     * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
+     *
+     * @param contentTypes
+     * @returns  The chosen content type, preferring JSON.
+     */
+    private static jsonPreferredMime(contentTypes: readonly string[]): string {
+        if (!contentTypes || !contentTypes.length) {
+            return 'application/json';
+        }
+
+        for (let i = 0; i < contentTypes.length; i++) {
+            if (AdfHttpClient.isJsonMime(contentTypes[i])) {
+                return contentTypes[i];
+            }
+        }
+        return contentTypes[0];
+    }
+
+    /**
+     * Checks whether the given content type represents JSON.<br>
+     * JSON content type examples:<br>
+     * <ul>
+     * <li>application/json</li>
+     * <li>application/json; charset=UTF8</li>
+     * <li>APPLICATION/JSON</li>
+     * </ul>
+     *
+     * @param contentType The MIME content type to check.
+     * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
+     */
+    private static isJsonMime(contentType: string): boolean {
+        return Boolean(contentType !== null && contentType.match(/^application\/json(;.*)?$/i));
+    }
+
 
     private setCsrfToken(optionsHeaders: any) {
         const token = this.createCSRFToken();

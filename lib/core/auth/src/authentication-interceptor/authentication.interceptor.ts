@@ -45,7 +45,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
           return this.authService.addTokenToHeader(req.url, req.headers).pipe(
               mergeMap((headersWithBearer) => {
-                  const headerWithContentType = this.appendJsonContentType(headersWithBearer);
+                  const headerWithContentType = req.url.includes('alfresco/api') ? this.appendJsonContentType(headersWithBearer): headersWithBearer;
                   const kcReq = req.clone({ headers: headerWithContentType});
                   return next.handle(kcReq)
                   .pipe(

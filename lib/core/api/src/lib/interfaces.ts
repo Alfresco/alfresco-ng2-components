@@ -41,12 +41,15 @@ export interface Authentication {
 
 export interface RequestOptions {
     httpMethod?: string;
+    pathParams?: any;
     queryParams?: any;
     headerParams?: any;
     formParams?: any;
     bodyParam?: any;
     returnType?: any;
     responseType?: string;
-    accept?: string;
-    contentType?: string;
+    accepts?: string[];
+    contentTypes?: string[];
+    readonly accept?: string;
+    readonly contentType?: string;
 }
