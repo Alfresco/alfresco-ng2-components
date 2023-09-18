@@ -18,7 +18,7 @@
  */
 
 import program from 'commander';
-import fetch from 'node-fetch';
+import https from 'https';
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
@@ -542,29 +542,30 @@ function findFailingApps(deployedApps: any[]) {
 }
 
 async function getFileFromRemote(url: string, name: string) {
-    return fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+    return new Promise<void>((resolve, reject) => {
+        https.get(url, (response) => {
+            if (response.statusCode !== 200) {
+                reject(new Error(`HTTP error! Status: ${response.statusCode}`));
+                return;
             }
-            return response;
-        })
-        .then((response) => new Promise<void>((resolve, reject) => {
-                const outputFile = fs.createWriteStream(`${name}.zip`);
-                response.body.pipe(outputFile);
-                outputFile.on('finish', () => {
-                    logger.info(`The file is finished downloading.`);
-                    resolve();
-                });
-                outputFile.on('error', (error) => {
-                    logger.error(`Not possible to download the project form remote`);
-                    reject(error);
-                });
-            }))
-        .catch((error) => {
+
+            const outputFile = fs.createWriteStream(`${name}.zip`);
+            response.pipe(outputFile);
+
+            outputFile.on('finish', () => {
+                logger.info(`The file is finished downloading.`);
+                resolve();
+            });
+
+            outputFile.on('error', (error) => {
+                logger.error(`Not possible to download the project from remote`);
+                reject(error);
+            });
+        }).on('error', (error) => {
             logger.error(`Failed to fetch file from remote: ${error.message}`);
-            throw error;
+            reject(error);
         });
+    });
 }
 
 async function deleteLocalFile(name: string) {
