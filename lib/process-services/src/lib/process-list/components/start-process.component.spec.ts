@@ -23,14 +23,7 @@ import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
-import {
-    newProcess,
-    taskFormMock,
-    testProcessDef,
-    testMultipleProcessDefs,
-    testProcessDefWithForm,
-    testProcessDefinitions
-} from '../../mock';
+import { newProcess, taskFormMock, testProcessDef, testMultipleProcessDefs, testProcessDefWithForm, testProcessDefinitions } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
@@ -41,7 +34,6 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiContentService } from '../../form/services/activiti-alfresco.service';
 
 describe('StartProcessComponent', () => {
-
     let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
     let component: StartProcessInstanceComponent;
@@ -56,10 +48,7 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
     });
 
@@ -68,7 +57,7 @@ describe('StartProcessComponent', () => {
         selectElement.click();
         fixture.detectChanges();
         const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        const currentOption = options.find( (option: DebugElement) => option.nativeElement.innerHTML.trim() === name );
+        const currentOption = options.find((option: DebugElement) => option.nativeElement.innerHTML.trim() === name);
 
         if (currentOption) {
             currentOption.nativeElement.click();
@@ -93,7 +82,7 @@ describe('StartProcessComponent', () => {
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
         getStartFormDefinitionSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
         applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ id: '1', name: 'fake-repo-name'}]));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ id: '1', name: 'fake-repo-name' }]));
     });
 
     afterEach(() => {
@@ -102,9 +91,7 @@ describe('StartProcessComponent', () => {
     });
 
     describe('first step', () => {
-
         describe('without start form', () => {
-
             beforeEach(() => {
                 fixture.detectChanges();
                 component.name = 'My new process';
@@ -165,7 +152,6 @@ describe('StartProcessComponent', () => {
         });
 
         describe('with start form', () => {
-
             beforeEach(() => {
                 fixture.detectChanges();
                 getDefinitionsSpy.and.returnValue(of(testProcessDefWithForm));
@@ -199,7 +185,7 @@ describe('StartProcessComponent', () => {
                 await fixture.whenStable();
 
                 const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container');
-                inputLabelsNodes.forEach(labelNode => {
+                inputLabelsNodes.forEach((labelNode) => {
                     expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('always');
                 });
             });
@@ -245,7 +231,6 @@ describe('StartProcessComponent', () => {
         });
 
         describe('CS content connection', () => {
-
             it('Should get the alfrescoRepositoryName from the config json', async () => {
                 appConfig.config = Object.assign(appConfig.config, {
                     alfrescoRepositoryName: 'alfresco-123'
@@ -307,7 +292,6 @@ describe('StartProcessComponent', () => {
     });
 
     describe('process definitions list', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'My new process';
@@ -374,11 +358,10 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(component.selectedProcessDef.name).toBeNull();
+            expect(component.selectedProcessDef.name).not.toBeDefined();
         });
 
         describe('dropdown', () => {
-
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async () => {
                 fixture.detectChanges();
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDef]));
@@ -427,7 +410,6 @@ describe('StartProcessComponent', () => {
     });
 
     describe('input changes', () => {
-
         beforeEach(async () => {
             component.appId = 123;
             fixture.detectChanges();
@@ -449,7 +431,6 @@ describe('StartProcessComponent', () => {
     });
 
     describe('start process', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'My new process';
@@ -574,10 +555,9 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
             expect(startSpy).not.toHaveBeenCalled();
         });
-   });
+    });
 
     describe('Select applications', () => {
-
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'My new process';
@@ -623,7 +603,7 @@ describe('StartProcessComponent', () => {
             expect(component.processDefinitions[0].name).toEqual('My Process 1');
             expect(component.processDefinitions[1].name).toEqual('My Process 2');
 
-            getDefinitionsSpy.and.returnValue(of([ { id: 'my:process 3', name: 'My Process 3', hasStartForm: true } ]));
+            getDefinitionsSpy.and.returnValue(of([{ id: 'my:process 3', name: 'My Process 3', hasStartForm: true }]));
             fixture.detectChanges();
 
             const newApplication = { value: deployedApps[1] } as MatSelectChange;
@@ -811,9 +791,9 @@ describe('StartProcessComponent', () => {
             changeAppId(123);
             fixture.detectChanges();
 
-            const application1 =  deployedApps[0];
-            const application2 =  deployedApps[1];
-            const application3 =  deployedApps[2];
+            const application1 = deployedApps[0];
+            const application2 = deployedApps[1];
+            const application3 = deployedApps[2];
 
             expect(component.applications.length).toBe(6);
 
@@ -857,10 +837,9 @@ describe('StartProcessComponent', () => {
             expect(component.selectedProcessDef.name).toEqual(processDefWithNoStartForm.name);
             expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithNoStartForm.hasStartForm);
         });
-   });
+    });
 
     describe('Empty Template', () => {
-
         it('[333510] Should be able to show empty template when no applications deployed', async () => {
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of([]));
 
@@ -939,7 +918,6 @@ describe('StartProcessComponent', () => {
     });
 
     describe('Error event', () => {
-
         const processDefError = { message: 'Failed to load Process definitions' };
         const applicationsError = { message: 'Failed to load applications' };
         const startProcessError = { message: 'Failed to start process' };

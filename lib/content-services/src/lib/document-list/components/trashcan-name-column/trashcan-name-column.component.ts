@@ -15,71 +15,62 @@
  * limitations under the License.
  */
 
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewEncapsulation,
-  OnInit,
-  Input
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
-  selector: 'adf-trashcan-name-column',
-  template: `
-    <ng-container *ngIf="!isLibrary">
-      <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
-    </ng-container>
-    <ng-container *ngIf="isLibrary">
-      <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
-    </ng-container>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
+    selector: 'adf-trashcan-name-column',
+    template: `
+        <ng-container *ngIf="!isLibrary">
+            <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
+        </ng-container>
+        <ng-container *ngIf="isLibrary">
+            <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
+        </ng-container>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
 })
 export class TrashcanNameColumnComponent implements OnInit {
-  @Input()
-  context: any;
+    @Input()
+    context: any;
 
-  isLibrary = false;
-  displayText: string;
-  displayTooltip: string;
-  node: NodeEntry;
+    isLibrary = false;
+    displayText: string;
+    displayTooltip: string;
+    node: NodeEntry;
 
-  ngOnInit() {
-    this.node = this.context.row.node;
-    const rows: Array<ShareDataRow> = this.context.data.rows || [];
+    ngOnInit() {
+        this.node = this.context.row.node;
+        const rows: Array<ShareDataRow> = this.context.data.rows || [];
 
-    if (this.node && this.node.entry) {
-      this.isLibrary = this.node.entry.nodeType === 'st:site';
+        if (this.node?.entry) {
+            this.isLibrary = this.node.entry.nodeType === 'st:site';
 
-      if (this.isLibrary) {
-        const { properties } = this.node.entry;
+            if (this.isLibrary) {
+                const { properties } = this.node.entry;
 
-        this.displayText = this.makeLibraryTitle(this.node.entry, rows);
-        this.displayTooltip =
-          properties['cm:description'] || properties['cm:title'];
-      } else {
-        this.displayText = this.node.entry.name || this.node.entry.id;
-      }
-    }
-  }
-
-  makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
-    const entries = rows.map((r: ShareDataRow) => r.node.entry);
-    const { id } = library;
-    const title = library.properties['cm:title'];
-
-    let isDuplicate = false;
-
-    if (entries) {
-      isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
+                this.displayText = this.makeLibraryTitle(this.node.entry, rows);
+                this.displayTooltip = properties['cm:description'] || properties['cm:title'];
+            } else {
+                this.displayText = this.node.entry.name || this.node.entry.id;
+            }
+        }
     }
 
-    return isDuplicate
-      ? `${library.properties['cm:title']} (${library.name})`
-      : `${library.properties['cm:title']}`;
-  }
+    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
+        const entries = rows.map((r: ShareDataRow) => r.node.entry);
+        const { id } = library;
+        const title = library.properties['cm:title'];
+
+        let isDuplicate = false;
+
+        if (entries) {
+            isDuplicate = entries.some((entry: any) => entry.id !== id && entry.properties['cm:title'] === title);
+        }
+
+        return isDuplicate ? `${library.properties['cm:title']} (${library.name})` : `${library.properties['cm:title']}`;
+    }
 }

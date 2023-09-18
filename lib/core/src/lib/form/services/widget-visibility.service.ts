@@ -18,13 +18,7 @@
 import { LogService } from '../../common/services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import {
-    FormFieldModel,
-    FormModel,
-    TabModel,
-    ContainerModel,
-    FormOutcomeModel
-} from '../components/widgets/core';
+import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 
@@ -32,27 +26,27 @@ import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibili
     providedIn: 'root'
 })
 export class WidgetVisibilityService {
-
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
 
-    constructor(private logService: LogService) {
-    }
+    constructor(private logService: LogService) {}
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;
+
         if (processVarList) {
             this.processVarList = processVarList;
         }
-        if (form && form.tabs && form.tabs.length > 0) {
-            form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
-        }
-
-        if (form && form.outcomes && form.outcomes.length > 0) {
-            form.outcomes.map((outcomeModel) => this.refreshOutcomeVisibility(outcomeModel));
-        }
 
         if (form) {
+            if (form.tabs?.length > 0) {
+                form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
+            }
+
+            if (form.outcomes?.length > 0) {
+                form.outcomes.map((outcomeModel) => this.refreshOutcomeVisibility(outcomeModel));
+            }
+
             form.getFormFields().map((field) => this.refreshEntityVisibility(field));
         }
     }
@@ -79,14 +73,14 @@ export class WidgetVisibilityService {
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
 
-        accumulator.push({value: actualResult, operator: visibilityObj.nextConditionOperator});
+        accumulator.push({ value: actualResult, operator: visibilityObj.nextConditionOperator });
 
         if (this.isValidCondition(visibilityObj.nextCondition)) {
             result = this.isFieldVisible(form, visibilityObj.nextCondition, accumulator);
         } else if (accumulator[0] !== undefined) {
-            result = Function('"use strict";return (' +
-                accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') +
-                ')')();
+            result = Function(
+                '"use strict";return (' + accumulator.map((expression) => this.transformToLiteralExpression(expression)).join('') + ')'
+            )();
         } else {
             result = actualResult;
         }
@@ -102,7 +96,7 @@ export class WidgetVisibilityService {
         switch (currentOperator) {
             case 'and':
                 return '&&';
-            case 'or' :
+            case 'or':
                 return '||';
             case 'and-not':
                 return '&& !';
@@ -158,25 +152,25 @@ export class WidgetVisibilityService {
     }
 
     public isFormFieldValid(formField: FormFieldModel): boolean {
-        return formField && formField.isValid;
+        return formField?.isValid;
     }
 
     public getFieldValue(valueList: any, fieldId: string): any {
-        let labelFilterByName;
-        let valueFound;
+        let labelFilterByName: string;
+        let valueFound: any;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
             labelFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[labelFilterByName]) {
                 if (Array.isArray(valueList[labelFilterByName])) {
-                    valueFound = valueList[labelFilterByName].map(({name}) => name);
+                    valueFound = valueList[labelFilterByName].map(({ name }) => name);
                 } else {
                     valueFound = valueList[labelFilterByName].name;
                 }
             }
-        } else if (valueList[fieldId] && valueList[fieldId].id) {
+        } else if (valueList[fieldId]?.id) {
             valueFound = valueList[fieldId].id;
         } else if (valueList[fieldId] && Array.isArray(valueList[fieldId])) {
-            valueFound = valueList[fieldId].map(({id}) => id);
+            valueFound = valueList[fieldId].map(({ id }) => id);
         } else {
             valueFound = valueList[fieldId];
         }
@@ -198,7 +192,7 @@ export class WidgetVisibilityService {
             fieldValue = this.getObjectValue(formField, fieldId);
 
             if (!fieldValue) {
-                if (formField.value && formField.value.id) {
+                if (formField.value?.id) {
                     fieldValue = formField.value.id;
                 } else if (!this.isInvalidValue(formField.value)) {
                     fieldValue = formField.value;
@@ -223,7 +217,7 @@ export class WidgetVisibilityService {
     }
 
     private getCurrentFieldFromTabById(container: ContainerModel, fieldId: string): FormFieldModel {
-        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map(key => container.field.fields[key]);
+        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map((key) => container.field.fields[key]);
         let currentField: FormFieldModel;
 
         for (const tabField of tabFields) {
@@ -237,14 +231,14 @@ export class WidgetVisibilityService {
 
     private getFormTabContainers(form: FormModel): ContainerModel[] {
         if (!!form) {
-            return form.fields.filter(field => field.type === 'container' && field.tab) as ContainerModel[];
+            return form.fields.filter((field) => field.type === 'container' && field.tab) as ContainerModel[];
         }
         return [];
     }
 
     private getObjectValue(field: FormFieldModel, fieldId: string): string {
         let value = '';
-        if (field.value && field.value.name) {
+        if (field.value?.name) {
             value = field.value.name;
         } else if (field.options) {
             const option = field.options.find((opt) => opt.id === field.value);
@@ -267,23 +261,19 @@ export class WidgetVisibilityService {
 
     private isSearchedField(field: FormFieldModel, fieldId: string): boolean {
         const fieldToFind = fieldId?.indexOf('_LABEL') > 0 ? fieldId.replace('_LABEL', '') : fieldId;
-        return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
+        return field.id && fieldToFind ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 
     public getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]): string {
         const processVariableValue = this.getProcessVariableValue(name, processVarList);
         const variableDefaultValue = form.getDefaultFormVariableValue(name);
 
-        return (processVariableValue === undefined) ? variableDefaultValue : processVariableValue;
+        return processVariableValue === undefined ? variableDefaultValue : processVariableValue;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]): string {
         if (processVarList) {
-            const processVariable = processVarList.find(
-                variable =>
-                    variable.id === name ||
-                    variable.id === `variables.${name}`
-            );
+            const processVariable = processVarList.find((variable) => variable.id === name || variable.id === `variables.${name}`);
 
             if (processVariable) {
                 return processVariable.value;
@@ -329,6 +319,6 @@ export class WidgetVisibilityService {
     }
 
     private isValidCondition(condition: WidgetVisibilityModel): boolean {
-        return !!(condition && condition.operator);
+        return !!condition?.operator;
     }
 }

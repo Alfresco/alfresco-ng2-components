@@ -25,17 +25,17 @@ export class ReportParametersModel {
     description?: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
+        this.id = obj?.id;
+        this.name = obj?.name;
         this.description = obj.description;
 
-        if (obj && obj.definition) {
+        if (obj?.definition) {
             this.definition = new ReportDefinitionModel(JSON.parse(obj.definition));
         }
-        this.created = obj && obj.created || null;
+        this.created = obj?.created;
     }
 
     hasParameters() {
-        return (this.definition && this.definition.parameters && this.definition.parameters.length > 0) ? true : false;
+        return this.definition?.parameters?.length > 0;
     }
 }

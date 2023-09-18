@@ -42,9 +42,10 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
                 queryParams['sort'] = sortingParams;
             }
             return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
-                map((response: any) => {
-                    const entries = response.list && response.list.entries;
+                map((response) => {
+                    const entries = response.list?.entries;
                     if (entries) {
+                        // TODO: this is a hack of the model and should be revisited
                         response.list.entries = entries.map((entryData: any) => entryData.entry);
                     }
                     return response;
@@ -59,9 +60,7 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) &&
-                !this.isExcludedField(property) &&
-                this.isPropertyValueValid(requestNode, property)) {
+            if (requestNode.hasOwnProperty(property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = requestNode[property];
             }
         }
@@ -72,7 +71,7 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
         return property === 'appName' || property === 'sorting';
     }
 
-    protected isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid(requestNode: TaskQueryCloudRequestModel, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 

@@ -38,7 +38,6 @@ import { Observable } from 'rxjs';
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
-
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
@@ -62,8 +61,8 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     constructor(
         private searchFilterService: SearchFilterService,
         @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: BaseQueryBuilderService,
-        private componentFactoryResolver: ComponentFactoryResolver) {
-    }
+        private componentFactoryResolver: ComponentFactoryResolver
+    ) {}
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];
@@ -85,9 +84,9 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     }
 
     private setupWidget(ref: ComponentRef<any>) {
-        if (ref && ref.instance) {
+        if (ref?.instance) {
             ref.instance.id = this.id;
-            ref.instance.settings = {...this.settings};
+            ref.instance.settings = { ...this.settings };
             ref.instance.context = this.queryBuilder;
             if (this.value) {
                 ref.instance.isActive = true;
@@ -128,7 +127,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     }
 
     resetInnerWidget() {
-        if (this.componentRef && this.componentRef.instance) {
+        if (this.componentRef?.instance) {
             this.componentRef.instance.reset();
         }
     }

@@ -27,12 +27,12 @@ export class ReportParameterDetailsModel {
     dependsOn: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
-        this.nameKey = obj && obj.nameKey || null;
-        this.type = obj && obj.type || null;
-        this.value = obj && obj.value || null;
-        this.options = obj && obj.options || null;
-        this.dependsOn = obj && obj.dependsOn || null;
+        this.id = obj?.id;
+        this.name = obj?.name;
+        this.nameKey = obj?.nameKey;
+        this.type = obj?.type;
+        this.value = obj?.value;
+        this.options = obj?.options;
+        this.dependsOn = obj?.dependsOn;
     }
 }

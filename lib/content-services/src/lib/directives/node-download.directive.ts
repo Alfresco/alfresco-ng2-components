@@ -29,7 +29,6 @@ import { ContentApi, NodeEntry, VersionEntry } from '@alfresco/js-api';
     selector: '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
-
     _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
@@ -49,11 +48,7 @@ export class NodeDownloadDirective {
         this.downloadNodes(this.nodes);
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private downloadService: DownloadService,
-        private dialog: MatDialog) {
-    }
+    constructor(private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) {}
 
     /**
      * Downloads multiple selected nodes.
@@ -62,7 +57,6 @@ export class NodeDownloadDirective {
      * @param selection Multiple selected nodes to download
      */
     downloadNodes(selection: NodeEntry | Array<NodeEntry>) {
-
         if (!this.isSelectionValid(selection)) {
             return;
         }
@@ -84,7 +78,7 @@ export class NodeDownloadDirective {
      * @param node Node to download
      */
     downloadNode(node: NodeEntry) {
-        if (node && node.entry) {
+        if (node?.entry) {
             const entry = node.entry;
 
             if (entry.isFile) {
@@ -107,12 +101,12 @@ export class NodeDownloadDirective {
     }
 
     private downloadFile(node: NodeEntry) {
-        if (node && node.entry) {
+        if (node?.entry) {
             // nodeId for Shared node
             const id = (node.entry as any).nodeId || node.entry.id;
 
-            let url;
-            let fileName;
+            let url: string;
+            let fileName: string;
             if (this.version) {
                 url = this.contentApi.getVersionContentUrl(id, this.version.entry.id, true);
                 fileName = this.version.entry.name;
@@ -128,7 +122,7 @@ export class NodeDownloadDirective {
     private downloadZip(selection: Array<NodeEntry>) {
         if (selection && selection.length > 0) {
             // nodeId for Shared node
-            const nodeIds = selection.map((node: any) => (node.entry.nodeId || node.entry.id));
+            const nodeIds = selection.map((node: any) => node.entry.nodeId || node.entry.id);
 
             this.dialog.open(DownloadZipDialogComponent, {
                 width: '600px',

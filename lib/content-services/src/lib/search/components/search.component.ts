@@ -28,7 +28,8 @@ import {
     TemplateRef,
     ViewChild,
     ViewEncapsulation,
-    OnDestroy
+    OnDestroy,
+    SimpleChanges
 } from '@angular/core';
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -45,7 +46,6 @@ import { SearchComponentInterface } from '@alfresco/adf-core';
     host: { class: 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
-
     @ViewChild('panel', { static: true })
     panel: ElementRef;
 
@@ -74,8 +74,8 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('class')
     set classList(classList: string) {
-        if (classList && classList.length) {
-            classList.split(' ').forEach((className) => this._classList[className.trim()] = true);
+        if (classList?.length) {
+            classList.split(' ').forEach((className) => (this._classList[className.trim()] = true));
             this._elementRef.nativeElement.className = '';
         }
     }
@@ -104,31 +104,23 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     _classList: { [key: string]: boolean } = {};
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private searchService: SearchService,
-                private _elementRef: ElementRef) {
-        this.keyPressedStream
-            .pipe(
-                debounceTime(200),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(searchedWord => {
-                this.loadSearchResults(searchedWord);
-            });
+    constructor(private searchService: SearchService, private _elementRef: ElementRef) {
+        this.keyPressedStream.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe((searchedWord) => {
+            this.loadSearchResults(searchedWord);
+        });
 
-        searchService.dataLoaded
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-                nodePaging => this.onSearchDataLoaded(nodePaging),
-                error => this.onSearchDataError(error)
-            );
+        searchService.dataLoaded.pipe(takeUntil(this.onDestroy$)).subscribe(
+            (nodePaging) => this.onSearchDataLoaded(nodePaging),
+            (error) => this.onSearchDataError(error)
+        );
     }
 
     ngAfterContentInit() {
         this.setVisibility();
     }
 
-    ngOnChanges(changes) {
-        if (changes.searchTerm && changes.searchTerm.currentValue) {
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.searchTerm?.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
     }
@@ -174,8 +166,8 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         }
     }
 
-    onSearchDataError(error) {
-        if (error && error.status !== 400) {
+    onSearchDataError(error: { status: number }) {
+        if (error?.status !== 400) {
             this.results = null;
             this.error.emit(error);
         }

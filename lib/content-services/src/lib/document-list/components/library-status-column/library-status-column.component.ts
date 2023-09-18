@@ -25,8 +25,8 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-library-status-column',
     template: `
-        <span class="adf-datatable-cell-value" title="{{ (displayText$ | async) | translate }}">
-            {{ (displayText$ | async) | translate }}
+        <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
+            {{ displayText$ | async | translate }}
         </span>
     `,
     host: { class: 'adf-library-status-column adf-datatable-content-cell' }
@@ -44,24 +44,22 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                const row: ShareDataRow = this.context.row;
-                if (row) {
-                    const { entry } = row.node;
+        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
 
-                    if (entry === node) {
-                        row.node = { entry };
-                        this.updateValue();
-                    }
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
                 }
-            });
+            }
+        });
     }
 
     protected updateValue() {
         const node: SiteEntry = this.context.row.node;
-        if (node && node.entry) {
+        if (node?.entry) {
             const visibility: string = node.entry.visibility;
 
             switch (visibility) {

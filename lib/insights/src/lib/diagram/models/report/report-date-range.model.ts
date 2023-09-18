@@ -21,9 +21,8 @@ export class ReportDateRange {
     rangeId: string;
 
     constructor(obj?: any) {
-        this.startDate = obj && obj.startDate || null;
-        this.endDate = obj && obj.endDate || null;
-        this.rangeId = obj && obj.rangeId || null;
+        this.startDate = obj?.startDate;
+        this.endDate = obj?.endDate;
+        this.rangeId = obj?.rangeId;
     }
-
 }

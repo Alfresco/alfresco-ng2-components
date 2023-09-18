@@ -54,12 +54,11 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
     selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
-    host: {class: 'adf-viewer'},
+    host: { class: 'adf-viewer' },
     encapsulation: ViewEncapsulation.None,
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
-
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
 
@@ -220,24 +219,23 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
 
-    constructor(private el: ElementRef,
-                public dialog: MatDialog,
-                private viewUtilsService: ViewUtilService,
-                private appConfigService: AppConfigService
-               ) {
-    }
+    constructor(
+        private el: ElementRef,
+        public dialog: MatDialog,
+        private viewUtilsService: ViewUtilService,
+        private appConfigService: AppConfigService
+    ) {}
 
-    ngOnChanges(changes: SimpleChanges){
+    ngOnChanges(changes: SimpleChanges) {
         const { blobFile, urlFile } = changes;
 
-        if(blobFile?.currentValue){
+        if (blobFile?.currentValue) {
             this.mimeType = blobFile.currentValue.type;
         }
 
-        if(urlFile?.currentValue){
+        if (urlFile?.currentValue) {
             this.fileName = this.fileName ? this.fileName : this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
         }
-
     }
 
     ngOnInit(): void {
@@ -246,27 +244,33 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private closeOverlayManager() {
-        this.dialog.afterOpened.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.closeViewer = false);
+        this.dialog.afterOpened
+            .pipe(
+                skipWhile(() => !this.overlayMode),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => (this.closeViewer = false));
 
-        this.dialog.afterAllClosed.pipe(
-            skipWhile(() => !this.overlayMode),
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => this.closeViewer = true);
+        this.dialog.afterAllClosed
+            .pipe(
+                skipWhile(() => !this.overlayMode),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => (this.closeViewer = true));
 
-        this.keyDown$.pipe(
-            skipWhile(() => !this.overlayMode),
-            filter((e: KeyboardEvent) => e.keyCode === 27),
-            takeUntil(this.onDestroy$)
-        ).subscribe((event: KeyboardEvent) => {
-            event.preventDefault();
+        this.keyDown$
+            .pipe(
+                skipWhile(() => !this.overlayMode),
+                filter((e: KeyboardEvent) => e.keyCode === 27),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe((event: KeyboardEvent) => {
+                event.preventDefault();
 
-            if (this.closeViewer) {
-                this.onClose();
-            }
-        });
+                if (this.closeViewer) {
+                    this.onClose();
+                }
+            });
     }
 
     onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
@@ -295,7 +299,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     @HostListener('document:keyup', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (event && event.defaultPrevented) {
+        if (event?.defaultPrevented) {
             return;
         }
 
@@ -392,20 +396,24 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private showDownloadPrompt() {
         if (!this.isDialogVisible) {
             this.isDialogVisible = true;
-            this.dialog.open(DownloadPromptDialogComponent, { disableClose: true }).afterClosed().pipe(first()).subscribe((result: DownloadPromptActions) => {
-                this.isDialogVisible = false;
-                if (result === DownloadPromptActions.DOWNLOAD) {
-                    this.downloadFile.emit();
-                    this.onClose();
-                } else if (result === DownloadPromptActions.WAIT) {
-                    if (this.enableDownloadPromptReminder) {
-                        this.clearDownloadPromptTimeouts();
-                        this.downloadPromptReminderTimer = window.setTimeout(() => {
-                            this.showOrClearDownloadPrompt();
-                        }, this.downloadPromptReminderDelay * 1000);
+            this.dialog
+                .open(DownloadPromptDialogComponent, { disableClose: true })
+                .afterClosed()
+                .pipe(first())
+                .subscribe((result: DownloadPromptActions) => {
+                    this.isDialogVisible = false;
+                    if (result === DownloadPromptActions.DOWNLOAD) {
+                        this.downloadFile.emit();
+                        this.onClose();
+                    } else if (result === DownloadPromptActions.WAIT) {
+                        if (this.enableDownloadPromptReminder) {
+                            this.clearDownloadPromptTimeouts();
+                            this.downloadPromptReminderTimer = window.setTimeout(() => {
+                                this.showOrClearDownloadPrompt();
+                            }, this.downloadPromptReminderDelay * 1000);
+                        }
                     }
-                }
-            });
+                });
         }
     }
 }

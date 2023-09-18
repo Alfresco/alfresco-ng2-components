@@ -18,7 +18,6 @@
 import { LightUserRepresentation, ProcessInstanceRepresentation, RestVariable } from '@alfresco/js-api';
 
 export class ProcessInstance implements ProcessInstanceRepresentation {
-
     businessKey?: string;
     ended?: Date;
     graphicalNotationDefined?: boolean;
@@ -38,23 +37,22 @@ export class ProcessInstance implements ProcessInstanceRepresentation {
     variables?: RestVariable[];
 
     constructor(data?: any) {
-        this.businessKey = data && data.businessKey !== undefined ? data.businessKey : null;
-        this.ended = data && data.ended !== undefined ? data.ended : null;
-        this.graphicalNotationDefined = data && data.graphicalNotationDefined !== undefined ? data.graphicalNotationDefined : null;
-        this.id = data && data.id !== undefined ? data.id : null;
-        this.name = data && data.name !== undefined ? data.name : null;
-        this.processDefinitionCategory = data && data.processDefinitionCategory !== undefined ? data.processDefinitionCategory : null;
-        this.processDefinitionDeploymentId = data && data.processDefinitionDeploymentId !== undefined ? data.processDefinitionDeploymentId : null;
-        this.processDefinitionDescription = data && data.processDefinitionDescription !== undefined ? data.processDefinitionDescription : null;
-        this.processDefinitionId = data && data.processDefinitionId !== undefined ? data.processDefinitionId : null;
-        this.processDefinitionKey = data && data.processDefinitionKey !== undefined ? data.processDefinitionKey : null;
-        this.processDefinitionName = data && data.processDefinitionName !== undefined ? data.processDefinitionName : null;
-        this.processDefinitionVersion = data && data.processDefinitionVersion !== undefined ? data.processDefinitionVersion : null;
-        this.startFormDefined = data && data.startFormDefined !== undefined ? data.startFormDefined : null;
-        this.started = data && data.started !== undefined ? data.started : null;
-        this.startedBy = data && data.startedBy !== undefined ? data.startedBy : null;
-        this.tenantId = data && data.tenantId !== undefined ? data.tenantId : null;
-        this.variables = data && data.variables !== undefined ? data.variables : null;
+        this.businessKey = data?.businessKey;
+        this.ended = data?.ended;
+        this.graphicalNotationDefined = data?.graphicalNotationDefined;
+        this.id = data?.id;
+        this.name = data?.name;
+        this.processDefinitionCategory = data?.processDefinitionCategory;
+        this.processDefinitionDeploymentId = data?.processDefinitionDeploymentId;
+        this.processDefinitionDescription = data?.processDefinitionDescription;
+        this.processDefinitionId = data?.processDefinitionId;
+        this.processDefinitionKey = data?.processDefinitionKey;
+        this.processDefinitionName = data?.processDefinitionName;
+        this.processDefinitionVersion = data?.processDefinitionVersion;
+        this.startFormDefined = data?.startFormDefined;
+        this.started = data?.started;
+        this.startedBy = data?.startedBy;
+        this.tenantId = data?.tenantId;
+        this.variables = data?.variables;
     }
-
 }

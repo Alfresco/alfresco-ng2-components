@@ -29,15 +29,14 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
-        this.reportName = obj && obj.reportName || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.status = obj && obj.status || null;
-        this.taskName = obj && obj.taskName || null;
-        this.dateRangeInterval = obj && obj.dateRangeInterval || null;
-        this.typeFiltering = obj && (typeof obj.typeFiltering !== 'undefined') ? obj.typeFiltering : true;
-        this.slowProcessInstanceInteger = obj && obj.slowProcessInstanceInteger || 0;
-        this.duration = obj && obj.duration || 0;
+        this.reportName = obj?.reportName;
+        this.processDefinitionId = obj?.processDefinitionId;
+        this.status = obj?.status;
+        this.taskName = obj?.taskName;
+        this.dateRangeInterval = obj?.dateRangeInterval;
+        this.typeFiltering = obj && typeof obj.typeFiltering !== 'undefined' ? obj.typeFiltering : true;
+        this.slowProcessInstanceInteger = obj?.slowProcessInstanceInteger || 0;
+        this.duration = obj?.duration || 0;
         this.dateRange = new ReportDateRange(obj);
     }
-
 }

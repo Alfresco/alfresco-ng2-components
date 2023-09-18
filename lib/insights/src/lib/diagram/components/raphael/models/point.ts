@@ -20,7 +20,7 @@ export class Point {
     y: number;
 
     constructor(obj?: any) {
-        this.x = obj && obj.x || 0;
-        this.y = obj && obj.y || 0;
+        this.x = obj?.x || 0;
+        this.y = obj?.y || 0;
     }
 }

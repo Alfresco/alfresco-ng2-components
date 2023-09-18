@@ -46,7 +46,7 @@ export class DownloadZipDialogComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        if (this.data && this.data.nodeIds && this.data.nodeIds.length > 0) {
+        if (this.data?.nodeIds?.length > 0) {
             if (!this.cancelled) {
                 this.downloadZip(this.data.nodeIds);
             } else {
@@ -64,7 +64,7 @@ export class DownloadZipDialogComponent implements OnInit {
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
             this.downloadZipService.createDownload({ nodeIds }).subscribe((data: DownloadEntry) => {
-                if (data && data.entry && data.entry.id) {
+                if (data?.entry?.id) {
                     const url = this.contentService.getContentUrl(data.entry.id, true);
 
                     this.nodeService.getNode(data.entry.id).subscribe((downloadNode) => {

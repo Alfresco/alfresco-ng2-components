@@ -27,7 +27,6 @@ import { Node } from '@alfresco/js-api';
     encapsulation: ViewEncapsulation.None
 })
 export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
-
     node: Node;
     loading = true;
 
@@ -36,21 +35,21 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
 
     /** Toggles whether the edit button should be shown */
     @Input()
-    editable;
+    editable: boolean;
 
     /** Toggles whether to display empty values in the card view */
     @Input()
-    displayEmpty;
+    displayEmpty: boolean;
 
     /** Toggles between expanded (ie, full information) and collapsed
      * (ie, reduced information) in the display
      */
     @Input()
-    expanded;
+    expanded: boolean;
 
     /** The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time */
     @Input()
-    multi;
+    multi: boolean;
 
     /** Name or configuration of the metadata preset, which defines aspects and their properties */
     @Input()
@@ -58,27 +57,27 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
 
     /** Toggles whether the metadata properties should be shown */
     @Input()
-    displayDefaultProperties;
+    displayDefaultProperties: boolean;
 
     /** (optional) shows the given aspect in the expanded  card */
     @Input()
     displayAspect: string = null;
 
-    /** Toggles whether or not to enable copy to clipboard action. */
+    /** Toggles the clipboard action. */
     @Input()
-    copyToClipboardAction;
+    copyToClipboardAction: boolean;
 
-    /** Toggles whether or not to enable chips for multivalued properties. */
+    /** Toggles chips for multivalued properties. */
     @Input()
-    useChipsForMultiValueProperty;
+    useChipsForMultiValueProperty: boolean;
 
     @Output()
-    nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
+    nodeContentLoaded = new EventEmitter<Node>();
 
-    constructor(private nodesApiService: NodesApiService) { }
+    constructor(private nodesApiService: NodesApiService) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes && changes['nodeId'] && changes['nodeId'].currentValue && !changes['nodeId'].isFirstChange()) {
+        if (changes?.['nodeId'] && changes['nodeId'].currentValue && !changes['nodeId'].isFirstChange()) {
             this.getNode(changes['nodeId'].currentValue);
         }
     }
@@ -91,7 +90,7 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
 
     private getNode(nodeId: string) {
         this.loading = true;
-        this.nodesApiService.getNode(nodeId).subscribe(retrievedNode => {
+        this.nodesApiService.getNode(nodeId).subscribe((retrievedNode) => {
             this.node = retrievedNode;
             this.loading = false;
             this.nodeContentLoaded.emit(retrievedNode);

@@ -15,14 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnInit,
-    ViewEncapsulation,
-    OnDestroy, Optional
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, Optional } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -35,23 +28,22 @@ import { DataTableService } from '../../services/datatable.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span *ngIf="copyContent; else defaultCell"
-                  adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
-                  [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
-                  [attr.aria-label]="value$ | async"
-                  [title]="tooltip"
-                  class="adf-datatable-cell-value"
-            >{{ value$ | async }}</span>
-        </ng-container>
-        <ng-template #defaultCell>
             <span
+                *ngIf="copyContent; else defaultCell"
+                adf-clipboard="CLIPBOARD.CLICK_TO_COPY"
+                [clipboard-notification]="'CLIPBOARD.SUCCESS_COPY'"
+                [attr.aria-label]="value$ | async"
                 [title]="tooltip"
                 class="adf-datatable-cell-value"
-            >{{ value$ | async }}</span>
+                >{{ value$ | async }}</span
+            >
+        </ng-container>
+        <ng-template #defaultCell>
+            <span [title]="tooltip" class="adf-datatable-cell-value">{{ value$ | async }}</span>
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: {class: 'adf-datatable-content-cell'}
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class DataTableCellComponent implements OnInit, OnDestroy {
     /** Data table adapter instance. */
@@ -82,31 +74,30 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(@Optional() protected dataTableService: DataTableService) {
-    }
+    constructor(@Optional() protected dataTableService: DataTableService) {}
 
     ngOnInit() {
         this.updateValue();
-        if(this.dataTableService) {
-            this.dataTableService.rowUpdate
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(data => {
-                    if (data && data.id) {
-                        if (this.row.id === data.id) {
-                            if (this.row.obj && data.obj) {
-                                this.row.obj = data.obj;
-                                this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', data.obj);
+        if (this.dataTableService) {
+            this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
+                if (data?.id) {
+                    if (this.row.id === data.id) {
+                        if (this.row.obj && data.obj) {
+                            this.row.obj = data.obj;
+                            this.row['cache'][this.column.key] = this.column.key
+                                .split('.')
+                                .reduce((source, key) => (source ? source[key] : ''), data.obj);
 
-                                this.updateValue();
-                            }
+                            this.updateValue();
                         }
                     }
-                });
+                }
+            });
         }
     }
 
     protected updateValue() {
-        if (this.column && this.column.key && this.row && this.data) {
+        if (this.column?.key && this.row && this.data) {
             const value = this.data.getValue(this.row, this.column, this.resolverFn);
 
             this.value$.next(value);

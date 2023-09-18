@@ -18,33 +18,24 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import {
-    AuditApi,
-    AuditAppPaging,
-    AuditAppEntry,
-    AuditApp,
-    AuditBodyUpdate,
-    AuditEntryPaging,
-    AuditEntryEntry
-} from '@alfresco/js-api';
+import { AuditApi, AuditAppPaging, AuditAppEntry, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuditService {
-
     private _auditApi: AuditApi;
     get auditApi(): AuditApi {
         this._auditApi = this._auditApi ?? new AuditApi(this.apiService.getInstance());
         return this._auditApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
     /**
      * Gets a list of audit applications.
+     *
      * @param opts Options.
      * @returns a list of the audit applications.
      */
@@ -53,14 +44,12 @@ export class AuditService {
             skipCount: 0
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditApps(queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.listAuditApps(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
     }
 
     /**
      * Get audit application info.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Options.
      * @returns status of an audit application.
@@ -70,14 +59,12 @@ export class AuditService {
             auditApplicationId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.getAuditApp(queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.getAuditApp(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
     }
 
     /**
      * Update audit application info.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditAppBodyUpdate The audit application to update.
      * @param opts Options.
@@ -86,14 +73,14 @@ export class AuditService {
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | any> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions)).pipe(
+            catchError((err: any) => this.handleError(err))
+        );
     }
 
     /**
      * List audit entries for an audit application.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param opts Options.
      * @returns a list of audit entries.
@@ -104,14 +91,14 @@ export class AuditService {
             maxItems: 100
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditEntriesForAuditApp(auditApplicationId, queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.listAuditEntriesForAuditApp(auditApplicationId, queryOptions)).pipe(
+            catchError((err: any) => this.handleError(err))
+        );
     }
 
     /**
      * Get audit entry.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @param opts Options.
@@ -120,14 +107,14 @@ export class AuditService {
     getAuditEntry(auditApplicationId: string, auditEntryId: string, opts?: any): Observable<AuditEntryEntry> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.getAuditEntry(auditApplicationId, auditEntryId, queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.getAuditEntry(auditApplicationId, auditEntryId, queryOptions)).pipe(
+            catchError((err: any) => this.handleError(err))
+        );
     }
 
     /**
      * List audit entries for a node.
+     *
      * @param nodeId The identifier of a node.
      * @param opts Options.
      * @returns
@@ -137,36 +124,29 @@ export class AuditService {
             nodeId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditEntriesForNode(queryOptions))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.listAuditEntriesForNode(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
     }
 
     /**
      * Permanently delete audit entries for an audit application.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids.
      * @returns
      */
     deleteAuditEntries(auditApplicationId: string, where: string): Observable<any> {
-        return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where)).pipe(catchError((err: any) => this.handleError(err)));
     }
 
     /**
      * Permanently delete an audit entry.
+     *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
      * @returns
      */
     deleteAuditEntry(auditApplicationId: string, auditEntryId: string): Observable<any> {
-        return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId))
-            .pipe(
-                catchError((err: any) => this.handleError(err))
-            );
+        return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId)).pipe(catchError((err: any) => this.handleError(err)));
     }
 
     private handleError(error: any): any {

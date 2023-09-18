@@ -42,14 +42,11 @@ const DEFAULT_DATETIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
     selector: 'adf-search-datetime-range',
     templateUrl: './search-datetime-range.component.html',
     styleUrls: ['./search-datetime-range.component.scss'],
-    providers: [
-        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
-    ],
+    providers: [{ provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
-
     from: UntypedFormControl;
     to: UntypedFormControl;
 
@@ -69,23 +66,28 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DatetimeAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
-    }
+    constructor(private dateAdapter: DatetimeAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
 
     getFromValidationMessage(): string {
-        return this.from.hasError('invalidOnChange') || this.hasParseError(this.from) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME' :
-            this.from.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME' :
-            this.from.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
-            '';
+        return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
+            ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME'
+            : this.from.hasError('matDatepickerMax')
+            ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
+            : this.from.hasError('required')
+            ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
+            : '';
     }
 
     getToValidationMessage(): string {
-        return this.to.hasError('invalidOnChange') || this.hasParseError(this.to) ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME' :
-            this.to.hasError('matDatepickerMin') ? 'SEARCH.FILTER.VALIDATION.NO-DAYS' :
-            this.to.hasError('matDatepickerMax') ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME' :
-            this.to.hasError('required') ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' :
-            '';
+        return this.to.hasError('invalidOnChange') || this.hasParseError(this.to)
+            ? 'SEARCH.FILTER.VALIDATION.INVALID-DATETIME'
+            : this.to.hasError('matDatepickerMin')
+            ? 'SEARCH.FILTER.VALIDATION.NO-DAYS'
+            : this.to.hasError('matDatepickerMax')
+            ? 'SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATETIME'
+            : this.to.hasError('required')
+            ? 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE'
+            : '';
     }
 
     ngOnInit() {
@@ -94,13 +96,11 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.setLocale(locale));
+            .subscribe((locale) => this.setLocale(locale));
 
-        const validators = Validators.compose([
-            Validators.required
-        ]);
+        const validators = Validators.compose([Validators.required]);
 
-        if (this.settings && this.settings.maxDatetime) {
+        if (this.settings?.maxDatetime) {
             this.maxDatetime = moment(this.settings.maxDatetime);
         }
 
@@ -161,7 +161,12 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         if (this.form.invalid || this.form.pristine) {
             this.displayValue$.next('');
         } else {
-            this.displayValue$.next(`${this.dateAdapter.format(this.form.value.from, this.datetimePickerFormat)} - ${this.dateAdapter.format(this.form.value.to, this.datetimePickerFormat)}`);
+            this.displayValue$.next(
+                `${this.dateAdapter.format(this.form.value.from, this.datetimePickerFormat)} - ${this.dateAdapter.format(
+                    this.form.value.to,
+                    this.datetimePickerFormat
+                )}`
+            );
         }
     }
 
@@ -207,10 +212,9 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     onChangedHandler(event: any, formControl: UntypedFormControl) {
-
         const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datetimePickerFormat);
-        if (formatDate && formatDate.isValid()) {
+        if (formatDate?.isValid()) {
             formControl.setValue(formatDate);
         } else if (formatDate) {
             formControl.setErrors({
@@ -235,6 +239,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     }
 
     setFromMaxDatetime() {
-        this.fromMaxDatetime = (!this.to.value || this.maxDatetime && (moment(this.maxDatetime).isBefore(this.to.value))) ? this.maxDatetime : moment(this.to.value);
+        this.fromMaxDatetime =
+            !this.to.value || (this.maxDatetime && moment(this.maxDatetime).isBefore(this.to.value)) ? this.maxDatetime : moment(this.to.value);
     }
 }

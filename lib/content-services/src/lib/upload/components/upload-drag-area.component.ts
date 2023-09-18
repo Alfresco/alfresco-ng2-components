@@ -22,15 +22,14 @@ import { UploadBase } from './base-upload/upload-base';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 import { ContentService } from '../../common/services/content.service';
 import { FileModel } from '../../common/models/file.model';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.scss'],
     host: { class: 'adf-upload-drag-area' },
-    viewProviders: [
-        {provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
-    ],
+    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }],
     encapsulation: ViewEncapsulation.None
 })
 export class UploadDragAreaComponent extends UploadBase implements NodeAllowableOperationSubject {
@@ -70,9 +69,12 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
         const messageTranslate = this.translationService.instant('FILE_UPLOAD.MESSAGES.PROGRESS');
         const actionTranslate = this.translationService.instant('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate, actionTranslate).onAction().subscribe(() => {
-            this.uploadService.cancelUpload(...latestFilesAdded);
-        });
+        this.notificationService
+            .openSnackMessageAction(messageTranslate, actionTranslate)
+            .onAction()
+            .subscribe(() => {
+                this.uploadService.cancelUpload(...latestFilesAdded);
+            });
     }
 
     /** Returns true or false considering the component options and node permissions */
@@ -88,27 +90,29 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        const isAllowed: boolean = this.isTargetNodeFolder(event) ?
-            this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE)
-            : this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.UPDATE);
+
+        const node: Node = event.detail.data.obj.entry;
+        const files: FileInfo[] = event.detail?.files || [];
+
+        const isAllowed: boolean = this.isTargetNodeFolder(node)
+            ? this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.CREATE)
+            : this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATE);
+
         if (isAllowed) {
-            if (!this.isTargetNodeFolder(event) && event.detail.files.length === 1) {
+            if (!this.isTargetNodeFolder(node) && files.length === 1) {
                 this.updateFileVersion.emit(event);
             } else {
-                const fileInfo: FileInfo[] = event.detail.files;
-                if (this.isTargetNodeFolder(event)) {
-                    const destinationFolderName = event.detail.data.obj.entry.name;
-                    fileInfo.map((file) => file.relativeFolder = destinationFolderName ? destinationFolderName.concat(file.relativeFolder) : file.relativeFolder);
+                if (this.isTargetNodeFolder(node)) {
+                    files.forEach((file) => (file.relativeFolder = node.name ? node.name.concat(file.relativeFolder) : file.relativeFolder));
                 }
-                if (fileInfo && fileInfo.length > 0) {
-                    this.uploadFilesInfo(fileInfo);
+                if (files?.length > 0) {
+                    this.uploadFilesInfo(files);
                 }
             }
         }
     }
 
-    private isTargetNodeFolder(event: CustomEvent): boolean {
-        return event.detail.data.obj && event.detail.data.obj.entry.isFolder;
+    private isTargetNodeFolder(node: Node): boolean {
+        return !!node?.isFolder;
     }
-
 }

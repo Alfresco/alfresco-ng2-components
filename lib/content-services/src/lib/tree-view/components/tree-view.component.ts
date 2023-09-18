@@ -27,9 +27,7 @@ import { NodeEntry } from '@alfresco/js-api';
     templateUrl: './tree-view.component.html',
     styleUrls: ['./tree-view.component.scss']
 })
-
 export class TreeViewComponent implements OnChanges {
-
     /** Identifier of the node to display. */
     @Input()
     nodeId: string;
@@ -51,8 +49,7 @@ export class TreeViewComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['nodeId'] && changes['nodeId'].currentValue &&
-            changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
+        if (changes['nodeId']?.currentValue && changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
             this.loadTreeNode();
         } else {
             this.dataSource.data = [];
@@ -70,12 +67,11 @@ export class TreeViewComponent implements OnChanges {
     hasChild = (_: number, nodeData: TreeBaseNode) => nodeData.expandable;
 
     private loadTreeNode() {
-        this.treeViewService.getTreeNodes(this.nodeId)
-            .subscribe(
-                (treeNode: TreeBaseNode[]) => {
-                    this.dataSource.data = treeNode;
-                },
-                (error) => this.error.emit(error)
-            );
+        this.treeViewService.getTreeNodes(this.nodeId).subscribe(
+            (treeNode: TreeBaseNode[]) => {
+                this.dataSource.data = treeNode;
+            },
+            (error) => this.error.emit(error)
+        );
     }
 }

@@ -23,11 +23,10 @@ import { UrlService } from '../../common/services/url.service';
     selector: 'adf-media-player',
     templateUrl: './media-player.component.html',
     styleUrls: ['./media-player.component.scss'],
-    host: {class: 'adf-media-player'},
+    host: { class: 'adf-media-player' },
     encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
-
     @Input()
     urlFile: string;
 
@@ -47,13 +46,12 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private urlService: UrlService) {
-    }
+    constructor(private urlService: UrlService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
 
-        if (blobFile && blobFile.currentValue) {
+        if (blobFile?.currentValue) {
             this.urlFile = this.urlService.createTrustedUrl(this.blobFile);
             return;
         }

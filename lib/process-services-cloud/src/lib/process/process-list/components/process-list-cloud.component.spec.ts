@@ -26,7 +26,8 @@ import {
     DataRowEvent,
     DataTableModule,
     getDataColumnMock,
-    ObjectDataRow, User
+    ObjectDataRow,
+    User
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -45,14 +46,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 
 @Component({
-    template: `
-    <adf-cloud-process-list #processListCloud>
+    template: ` <adf-cloud-process-list #processListCloud>
         <data-columns>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
             <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
             <data-column key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                    <div>{{ getFullName(entry.row.obj.startedBy) }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
@@ -78,10 +78,7 @@ describe('ProcessListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -136,7 +133,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should display empty content when process list is empty', () => {
-        const emptyList = {list: {entries: []}};
+        const emptyList = { list: { entries: [] } };
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
@@ -308,11 +305,13 @@ describe('ProcessListCloudComponent', () => {
 
     it('should NOT request process variable if columns for process variables are not displayed', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        spyOn(preferencesService, 'getPreferences').and.returnValue(of({
-            list: {
-                entries: []
-            }
-        }));
+        spyOn(preferencesService, 'getPreferences').and.returnValue(
+            of({
+                list: {
+                    entries: []
+                }
+            })
+        );
 
         component.ngAfterContentInit();
         component.reload();
@@ -324,16 +323,20 @@ describe('ProcessListCloudComponent', () => {
         component.presetColumn = schemaWithVariable;
 
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        spyOn(preferencesService, 'getPreferences').and.returnValue(of({
-            list: {
-                entries: [{
-                    entry: {
-                        key: ProcessListCloudPreferences.columnsVisibility,
-                        value: '{"variableColumnId":"id", "2":true}'
-                    }
-                }]
-            }
-        }));
+        spyOn(preferencesService, 'getPreferences').and.returnValue(
+            of({
+                list: {
+                    entries: [
+                        {
+                            entry: {
+                                key: ProcessListCloudPreferences.columnsVisibility,
+                                value: '{"variableColumnId":"id", "2":true}'
+                            }
+                        }
+                    ]
+                }
+            })
+        );
 
         component.ngAfterContentInit();
         component.reload();
@@ -462,7 +465,6 @@ describe('ProcessListCloudComponent', () => {
     });
 
     describe('component changes', () => {
-
         beforeEach(() => {
             component.rows = fakeProcessCloudList.list.entries;
             fixture.detectChanges();
@@ -509,13 +511,15 @@ describe('ProcessListCloudComponent', () => {
 
         it('should reload process list when sorting on a column changes', () => {
             const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.onSortingChanged(new CustomEvent('sorting-changed', {
-                detail: {
-                    key: 'fakeName',
-                    direction: 'asc'
-                },
-                bubbles: true
-            }));
+            component.onSortingChanged(
+                new CustomEvent('sorting-changed', {
+                    detail: {
+                        key: 'fakeName',
+                        direction: 'asc'
+                    },
+                    bubbles: true
+                })
+            );
             fixture.detectChanges();
             expect(component.sorting).toEqual([
                 new ProcessListCloudSortingModel({
@@ -537,8 +541,7 @@ describe('ProcessListCloudComponent', () => {
 
             const size = component.size;
             const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3))
-            .subscribe((updatedPagination) => {
+            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
                 fixture.detectChanges();
                 expect(component.size).toBe(size);
                 expect(component.skipCount).toBe(skipCount);
@@ -552,7 +555,7 @@ describe('ProcessListCloudComponent', () => {
                 skipCount: 200
             };
             component.updatePagination(pagination);
-            fixture.whenStable().then( () => {
+            fixture.whenStable().then(() => {
                 component.resetPagination();
             });
         });
@@ -568,8 +571,7 @@ describe('ProcessListCloudComponent', () => {
                 maxItems: 250,
                 skipCount: 200
             };
-            component.pagination.pipe(skip(1))
-            .subscribe((updatedPagination) => {
+            component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
                 fixture.detectChanges();
                 expect(component.size).toBe(pagination.maxItems);
                 expect(component.skipCount).toBe(pagination.skipCount);
@@ -581,8 +583,6 @@ describe('ProcessListCloudComponent', () => {
             component.updatePagination(pagination);
         });
     });
-
-
 });
 
 describe('ProcessListCloudComponent: Injecting custom columns for task list - CustomTaskListComponent', () => {
@@ -591,10 +591,7 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
             declarations: [CustomTaskListComponent]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
@@ -616,37 +613,29 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 });
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
-    let preferencesService: PreferenceCloudServiceInterface;
     @Component({
         template: `
-                 <adf-cloud-process-list #processListCloud>
-                     <adf-custom-empty-content-template>
-                         <p id="custom-id">TEST</p>
-                     </adf-custom-empty-content-template>
-                 </adf-cloud-process-list>
-            `
+            <adf-cloud-process-list #processListCloud>
+                <adf-custom-empty-content-template>
+                    <p id="custom-id">TEST</p>
+                </adf-custom-empty-content-template>
+            </adf-cloud-process-list>
+        `
     })
-
     class EmptyTemplateComponent {
         @ViewChild(ProcessListCloudComponent)
         processListCloud: ProcessListCloudComponent;
     }
 
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
-    preferencesService = jasmine.createSpyObj('preferencesService', {
+    const preferencesService = jasmine.createSpyObj('preferencesService', {
         getPreferences: of({}),
         updatePreference: of({})
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                HttpClientModule,
-                NoopAnimationsModule,
-                DataTableModule,
-                MatProgressSpinnerModule
-            ],
+            imports: [TranslateModule.forRoot(), HttpClientModule, NoopAnimationsModule, DataTableModule, MatProgressSpinnerModule],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
             declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
         });
@@ -665,6 +654,5 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
         expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
         expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
-
     });
 });

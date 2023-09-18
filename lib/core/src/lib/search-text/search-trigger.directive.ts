@@ -18,17 +18,7 @@
 /* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    forwardRef,
-    Inject,
-    Input,
-    NgZone,
-    OnDestroy,
-    Optional
-} from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
@@ -71,14 +61,16 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
 
-    onChange: (value: any) => void = () => { };
+    onChange: (value: any) => void = () => {};
 
-    onTouched = () => { };
+    onTouched = () => {};
 
-    constructor(private element: ElementRef,
-                private ngZone: NgZone,
-                private changeDetectorRef: ChangeDetectorRef,
-                @Optional() @Inject(DOCUMENT) private document: any) { }
+    constructor(
+        private element: ElementRef,
+        private ngZone: NgZone,
+        private changeDetectorRef: ChangeDetectorRef,
+        @Optional() @Inject(DOCUMENT) private document: any
+    ) {}
 
     ngOnDestroy() {
         this.onDestroy$.next(true);
@@ -87,7 +79,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         if (this.escapeEventStream) {
             this.escapeEventStream = null;
         }
-        if ( this.closingActionsSubscription ) {
+        if (this.closingActionsSubscription) {
             this.closingActionsSubscription.unsubscribe();
         }
     }
@@ -112,10 +104,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     get panelClosingActions(): Observable<any> {
-        return merge(
-            this.escapeEventStream,
-            this.outsideClickStream
-        );
+        return merge(this.escapeEventStream, this.outsideClickStream);
     }
 
     private get outsideClickStream(): Observable<any> {
@@ -123,10 +112,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             return of(null);
         }
 
-        return merge(
-            fromEvent(this.document, 'click'),
-            fromEvent(this.document, 'touchend')
-        ).pipe(
+        return merge(fromEvent(this.document, 'click'), fromEvent(this.document, 'touchend')).pipe(
             filter((event: MouseEvent | TouchEvent) => {
                 const clickTarget = event.target as HTMLElement;
                 return this._panelOpen && clickTarget !== this.element.nativeElement;
@@ -157,11 +143,10 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             this.escapeEventStream.next();
             event.preventDefault();
         }
-
     }
 
     handleInput(event: KeyboardEvent): void {
-        if (document.activeElement === event.target ) {
+        if (document.activeElement === event.target) {
             const inputValue: string = (event.target as HTMLInputElement).value;
             this.onChange(inputValue);
             if (inputValue && this.searchPanel) {
@@ -176,17 +161,15 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
     private isPanelOptionClicked(event: MouseEvent) {
         let isPanelOption: boolean = false;
-        if ( event && this.searchPanel ) {
+        if (event && this.searchPanel) {
             const clickTarget = event.target as HTMLElement;
-            isPanelOption = !this.isNoResultOption() &&
-                            !!this.searchPanel.panel &&
-                            !!this.searchPanel.panel.nativeElement.contains(clickTarget);
+            isPanelOption = !this.isNoResultOption() && !!this.searchPanel.panel && !!this.searchPanel.panel.nativeElement.contains(clickTarget);
         }
         return isPanelOption;
     }
 
     private isNoResultOption(): boolean {
-        return this.searchPanel && this.searchPanel.results.list ? this.searchPanel.results.list.entries.length === 0 : true;
+        return this.searchPanel?.results?.list ? this.searchPanel.results.list.entries.length === 0 : true;
     }
 
     private subscribeToClosingActions(): Subscription {
@@ -205,8 +188,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     }
 
     private setTriggerValue(value: any): void {
-        const toDisplay = this.searchPanel && this.searchPanel.displayWith ?
-            this.searchPanel.displayWith(value) : value;
+        const toDisplay = this.searchPanel?.displayWith ? this.searchPanel.displayWith(value) : value;
         const inputValue = toDisplay != null ? toDisplay : '';
         this.element.nativeElement.value = inputValue;
     }

@@ -80,7 +80,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     ngOnChanges(changes: SimpleChanges) {
         const processDefinitionId = changes['processDefinitionId'];
-        if (processDefinitionId && processDefinitionId.currentValue) {
+        if (processDefinitionId?.currentValue) {
             this.processDefinitionId = processDefinitionId.currentValue;
             this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
@@ -88,13 +88,13 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         }
 
         const data = changes['data'];
-        if (data && data.currentValue) {
+        if (data?.currentValue) {
             this.parseRefreshVisibilityValidateForm(this.form.json);
             return;
         }
 
         const processId = changes['processId'];
-        if (processId && processId.currentValue) {
+        if (processId?.currentValue) {
             this.visibilityService.cleanProcessVariable();
             this.loadStartForm(processId.currentValue);
             return;
@@ -102,33 +102,28 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     loadStartForm(processId: string) {
-        this.processService.getProcess(processId)
-            .subscribe((instance: any) => {
-                this.processService
-                    .getStartFormInstance(processId)
-                    .subscribe(
-                        (form) => {
-                            this.formName = form.name;
-                            if (instance.variables) {
-                                form.processVariables = instance.variables;
-                            }
-                            this.parseRefreshVisibilityValidateForm(form);
-                        },
-                        (error) => this.handleError(error)
-                    );
-            });
-    }
-
-    getStartFormDefinition(processId: string) {
-        this.processService
-            .getStartFormDefinition(processId)
-            .subscribe(
+        this.processService.getProcess(processId).subscribe((instance: any) => {
+            this.processService.getStartFormInstance(processId).subscribe(
                 (form) => {
-                    this.formName = form.processDefinitionName;
+                    this.formName = form.name;
+                    if (instance.variables) {
+                        form.processVariables = instance.variables;
+                    }
                     this.parseRefreshVisibilityValidateForm(form);
                 },
                 (error) => this.handleError(error)
             );
+        });
+    }
+
+    getStartFormDefinition(processId: string) {
+        this.processService.getStartFormDefinition(processId).subscribe(
+            (form) => {
+                this.formName = form.processDefinitionName;
+                this.parseRefreshVisibilityValidateForm(form);
+            },
+            (error) => this.handleError(error)
+        );
     }
 
     parseRefreshVisibilityValidateForm(form) {
@@ -141,10 +136,9 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     /** @override */
     isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
-        if (outcome && outcome.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION ||
-            outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
+        if (outcome?.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
             return false;
-        } else if (outcome && outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+        } else if (outcome?.name === FormOutcomeModel.START_PROCESS_ACTION) {
             return true;
         }
         return super.isOutcomeButtonVisible(outcome, isFormReadOnly);

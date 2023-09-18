@@ -51,7 +51,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
 
     private getQuery(searchTerm: string) {
         let query: string;
-        if (this.queryProvider && this.queryProvider.query) {
+        if (this.queryProvider?.query) {
             query = this.queryProvider.query.replace(new RegExp(/\${([^}]+)}/g), searchTerm);
         } else {
             query = `(email:*${searchTerm}* OR firstName:*${searchTerm}* OR lastName:*${searchTerm}* OR displayName:*${searchTerm}* OR authorityName:*${searchTerm}* OR authorityDisplayName:*${searchTerm}*) AND ANAME:(\"0/APP.DEFAULT\")`;

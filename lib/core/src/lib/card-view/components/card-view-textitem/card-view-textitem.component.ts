@@ -42,7 +42,6 @@ const templateTypes = {
     encapsulation: ViewEncapsulation.None
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
-
     @Input()
     editable: boolean = false;
 
@@ -69,21 +68,19 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private clipboardService: ClipboardService,
-                private translateService: TranslationService,
-                private cd: ChangeDetectorRef) {
+    constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
         super();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.property && changes.property.firstChange) {
+        if (changes.property?.firstChange) {
             this.textInput.valueChanges
                 .pipe(
-                    filter(textInputValue => textInputValue !== this.editedValue && textInputValue !== null),
+                    filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
                     takeUntil(this.onDestroy$)
                 )
-                .subscribe(textInputValue => {
+                .subscribe((textInputValue) => {
                     this.editedValue = textInputValue;
                     this.update();
                 });
@@ -143,8 +140,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
         if (property.multivalued && typeof value === 'string') {
-            const listOfValues = value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
-            return listOfValues;
+            return value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
         }
         return value;
     }
@@ -196,7 +192,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     undoText(event: KeyboardEvent) {
         if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ' && this.textInput.value) {
-                this.textInput.setValue('');
+            this.textInput.setValue('');
         }
     }
 
@@ -226,7 +222,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     get hasErrors(): boolean {
-        return (!!this.errors?.length) ?? false;
+        return !!this.errors?.length;
     }
 
     get isChipViewEnabled(): boolean {

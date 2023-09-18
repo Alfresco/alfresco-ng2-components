@@ -20,7 +20,6 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges, Directive } from
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class WidgetComponent implements OnChanges {
-
     /** field. */
     @Input()
     field: any;
@@ -31,7 +30,7 @@ export class WidgetComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const field = changes['field'];
-        if (field && field.currentValue) {
+        if (field?.currentValue) {
             this.fieldChanged.emit(field.currentValue.value);
             return;
         }
@@ -42,13 +41,10 @@ export class WidgetComponent implements OnChanges {
     }
 
     hasValue(): boolean {
-        return this.field &&
-            this.field.value !== null &&
-            this.field.value !== undefined;
+        return this.field?.value !== null && this.field.value !== undefined;
     }
 
     changeValue(field: any) {
         this.fieldChanged.emit(field);
     }
-
 }

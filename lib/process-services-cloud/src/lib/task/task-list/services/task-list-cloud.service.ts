@@ -42,10 +42,11 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
                 queryParams['sort'] = sortingParams;
             }
             return this.get<TaskCloudNodePaging>(queryUrl, queryParams).pipe(
-                map((response: any) => {
-                    const entries = response.list && response.list.entries;
+                map((response) => {
+                    const entries = response.list?.entries;
                     if (entries) {
-                        response.list.entries = entries.map((entryData: any) => entryData.entry);
+                        // TODO: this looks like a hack of the TaskCloudNodePaging collection
+                        response.list.entries = entries.map((entryData) => entryData.entry) as any;
                     }
                     return response;
                 })

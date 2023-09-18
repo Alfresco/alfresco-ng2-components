@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/bla",
+    "declaration": true,
     "declarationMap": true
   }
 }

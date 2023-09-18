@@ -16,8 +16,19 @@
  */
 
 import { AuthenticationService, ThumbnailService, SearchTextInputComponent } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnDestroy, Output,
-         QueryList, ViewEncapsulation, ViewChild, ViewChildren, TemplateRef, ContentChild } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output,
+    QueryList,
+    ViewEncapsulation,
+    ViewChild,
+    ViewChildren,
+    TemplateRef,
+    ContentChild
+} from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
@@ -32,7 +43,6 @@ import { EmptySearchResultComponent } from './empty-search-result.component';
     host: { class: 'adf-search-control' }
 })
 export class SearchControlComponent implements OnDestroy {
-
     /** Toggles highlighting of the search term in the results. */
     @Input()
     highlight: boolean = false;
@@ -90,15 +100,12 @@ export class SearchControlComponent implements OnDestroy {
     emptySearchTemplate: EmptySearchResultComponent;
 
     focusSubject = new Subject<FocusEvent>();
-    noSearchResultTemplate: TemplateRef <any> = null;
+    noSearchResultTemplate: TemplateRef<any> = null;
     searchTerm: string = '';
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        public authService: AuthenticationService,
-        private thumbnailService: ThumbnailService
-    ) {}
+    constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
 
     isNoSearchTemplatePresent(): boolean {
         return !!this.emptySearchTemplate;
@@ -126,7 +133,7 @@ export class SearchControlComponent implements OnDestroy {
     getMimeType(node: NodeEntry): string {
         let mimeType: string;
 
-        if (node.entry.content && node.entry.content.mimeType) {
+        if (node.entry.content?.mimeType) {
             mimeType = node.entry.content.mimeType;
         }
         if (node.entry.isFolder) {
@@ -154,7 +161,7 @@ export class SearchControlComponent implements OnDestroy {
     }
 
     onSelectFirstResult() {
-        if ( this.listResultElement && this.listResultElement.length > 0) {
+        if (this.listResultElement && this.listResultElement.length > 0) {
             const firstElement = this.listResultElement.first as MatListItem;
             // eslint-disable-next-line no-underscore-dangle
             firstElement._getHostElement().focus();
@@ -184,7 +191,7 @@ export class SearchControlComponent implements OnDestroy {
     }
 
     private isListElement(event: any): boolean {
-        return event.relatedTarget && event.relatedTarget.children[0] && event.relatedTarget.children[0].className === 'mat-list-item-content';
+        return event.relatedTarget?.children[0] && event.relatedTarget.children[0].className === 'mat-list-item-content';
     }
 
     private getNextElementSibling(node: Element): Element {

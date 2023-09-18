@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable brace-style */
 import { test as base } from '@playwright/test';
 import { BaseStories } from '../../page-object';
 import { ComponentTitles } from '../../models/component-titles.model';
@@ -29,9 +28,15 @@ interface Pages {
 }
 
 export const test = base.extend<Pages>({
-    processServicesCloud: async ({ page }, use) => { await use(new BaseStories(page, ComponentTitles.processServicesCloud)); },
-    peopleComponent: async ({ page }, use) => { await use(new PeopleComponent(page)); },
-    groupComponent: async ({ page }, use) => { await use(new GroupComponent(page)); }
+    processServicesCloud: async ({ page }, use) => {
+        await use(new BaseStories(page, ComponentTitles.processServicesCloud));
+    },
+    peopleComponent: async ({ page }, use) => {
+        await use(new PeopleComponent(page));
+    },
+    groupComponent: async ({ page }, use) => {
+        await use(new GroupComponent(page));
+    }
 });
 
 export { expect } from '@playwright/test';

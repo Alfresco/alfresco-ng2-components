@@ -44,7 +44,6 @@ import { VersionManagerUploadData } from '@alfresco/adf-content-services';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {
-
     hasFile: boolean;
     displayText: string;
     multipleOption: string = '';
@@ -58,14 +57,13 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         private thumbnailService: ThumbnailService,
         protected processCloudContentService: ProcessCloudContentService,
         protected notificationService: NotificationService,
-        protected logService: LogService) {
+        protected logService: LogService
+    ) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
+        if (this.field?.value?.length > 0) {
             this.hasFile = true;
             this.fixIncompatibilityFromPreviousAndNewForm([]);
         }
@@ -80,8 +78,8 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     replaceOldFileVersionWithNew(versionManagerData: VersionManagerUploadData) {
-        const currentUploadedFileIndex = this.uploadedFiles.findIndex(file => file.name === versionManagerData.currentVersion.name);
-        this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion.value.entry};
+        const currentUploadedFileIndex = this.uploadedFiles.findIndex((file) => file.name === versionManagerData.currentVersion.name);
+        this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion.value.entry };
         this.field.value = [...this.uploadedFiles];
         this.field.form.values[this.field.id] = [...this.uploadedFiles];
     }
@@ -116,12 +114,12 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
 
     private isUploaded(file: File): boolean {
         const current: Node[] = this.field.value || [];
-        return current.some(entry => entry.name === file.name);
+        return current.some((entry) => entry.name === file.name);
     }
 
     protected fixIncompatibilityFromPreviousAndNewForm(filesSaved: Node[]) {
-        const value: Node[] = [...this.field.value || []];
-        value.push(...filesSaved || []);
+        const value: Node[] = [...(this.field.value || [])];
+        value.push(...(filesSaved || []));
 
         this.field.value = value;
         this.field.form.values[this.field.id] = value;
@@ -138,9 +136,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     getMultipleFileParam() {
-        if (this.field &&
-            this.field.params &&
-            this.field.params.multiple) {
+        if (this.field?.params?.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }
@@ -151,7 +147,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private removeElementFromList(file: any) {
-        const filteredValues = this.uploadedFiles.filter(value => value.id !== file.id);
+        const filteredValues = this.uploadedFiles.filter((value) => value.id !== file.id);
         this.resetFormValues(filteredValues);
     }
 

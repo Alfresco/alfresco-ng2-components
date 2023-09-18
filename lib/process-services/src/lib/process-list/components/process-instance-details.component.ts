@@ -31,7 +31,6 @@ import { ProcessInstanceTasksComponent } from './process-instance-tasks.componen
     styleUrls: ['./process-instance-details.component.css']
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
-
     /** (required) The numeric ID of the process instance to display. */
     @Input()
     processInstanceId: string;
@@ -71,12 +70,10 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     /**
      * Constructor
      *
-     * @param translate Translation service
      * @param activitiProcess   Process service
+     * @param logService
      */
-    constructor(private activitiProcess: ProcessService,
-                private logService: LogService) {
-    }
+    constructor(private activitiProcess: ProcessService, private logService: LogService) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];
@@ -84,7 +81,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
             this.reset();
             return;
         }
-        if (processInstanceId && processInstanceId.currentValue) {
+        if (processInstanceId?.currentValue) {
             this.load(processInstanceId.currentValue);
             return;
         }
@@ -99,11 +96,9 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     load(processId: string) {
         if (processId) {
-            this.activitiProcess.getProcess(processId).subscribe(
-                (res: ProcessInstance) => {
-                    this.processInstanceDetails = res;
-                }
-            );
+            this.activitiProcess.getProcess(processId).subscribe((res) => {
+                this.processInstanceDetails = res;
+            });
         }
     }
 
@@ -115,9 +110,11 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
             (data) => {
                 this.processCancelled.emit(data);
-            }, (err) => {
+            },
+            (err) => {
                 this.error.emit(err);
-            });
+            }
+        );
     }
 
     // bubbles (taskClick) event
@@ -128,7 +125,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     getProcessNameOrDescription(dateFormat: string): string {
         let name = '';
         if (this.processInstanceDetails) {
-            name = this.processInstanceDetails.name ||
+            name =
+                this.processInstanceDetails.name ||
                 this.processInstanceDetails.processDefinitionName + ' - ' + this.getFormatDate(this.processInstanceDetails.started, dateFormat);
         }
         return name;
@@ -144,7 +142,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     onShowProcessDiagram() {
-        this.showProcessDiagram.emit({value: this.processInstanceId});
+        this.showProcessDiagram.emit({ value: this.processInstanceId });
     }
-
 }

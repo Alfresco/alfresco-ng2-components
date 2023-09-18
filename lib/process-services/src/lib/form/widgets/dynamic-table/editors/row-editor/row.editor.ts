@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicRowValidationSummary } from '../models/dynamic-row-validation-summary.model';
@@ -29,7 +29,6 @@ import { DynamicTableModel } from '../models/dynamic-table.widget.model';
     styleUrls: ['./row.editor.css']
 })
 export class RowEditorComponent {
-
     @Input()
     table: DynamicTableModel;
 
@@ -71,11 +70,10 @@ export class RowEditorComponent {
     }
 
     private isValid(): boolean {
-        return this.validationSummary && this.validationSummary.isValid;
+        return this.validationSummary?.isValid;
     }
 
     private validate() {
         this.validationSummary = this.table.validateRow(this.row);
     }
-
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation, InjectionToken, Inject, Optional } from '@angular/core';
 import { FormService } from '../../../services/form.service';
@@ -45,7 +45,6 @@ export const ADF_AMOUNT_SETTINGS = new InjectionToken<AmountWidgetSettings>('adf
     encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
-
     static DEFAULT_CURRENCY: string = '$';
     private showPlaceholder = true;
 
@@ -71,9 +70,8 @@ export class AmountWidgetComponent extends WidgetComponent implements OnInit {
             }
 
             if (this.field.readOnly) {
-                this.showPlaceholder = this.settings && this.settings.showReadonlyPlaceholder;
+                this.showPlaceholder = this.settings?.showReadonlyPlaceholder;
             }
         }
     }
-
 }

@@ -39,15 +39,19 @@ export const fakeProcessFilters = [
 ];
 
 export const fakeProcessFiltersResponse = {
-    size: 1, total: 1, start: 0,
-    data: [new FilterProcessRepresentationModel({
-        name: 'Running',
-        appId: '22',
-        id: 333,
-        recent: true,
-        icon: 'glyphicon-random',
-        filter: { sort: 'created-desc', name: '', state: 'running' }
-    })]
+    size: 1,
+    total: 1,
+    start: 0,
+    data: [
+        new FilterProcessRepresentationModel({
+            name: 'Running',
+            appId: '22',
+            id: 333,
+            recent: true,
+            icon: 'glyphicon-random',
+            filter: { sort: 'created-desc', name: '', state: 'running' }
+        })
+    ]
 };
 
 export const dummyRunningFilter = {
@@ -58,9 +62,7 @@ export const dummyRunningFilter = {
     id: 18,
     index: 10,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyCompletedFilter = {
@@ -71,9 +73,7 @@ export const dummyCompletedFilter = {
     id: 19,
     index: 11,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyAllFilter = {
@@ -84,9 +84,7 @@ export const dummyAllFilter = {
     id: 20,
     index: 12,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };
 
 export const dummyDuplicateRunningFilter = {
@@ -97,7 +95,5 @@ export const dummyDuplicateRunningFilter = {
     id: 21,
     index: 13,
     recent: false,
-    hasFilter: () => {
-        return true;
-    }
+    hasFilter: () => true
 };

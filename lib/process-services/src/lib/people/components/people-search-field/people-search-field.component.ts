@@ -32,9 +32,7 @@ import { UserProcessModel } from '../../../common/models/user-process.model';
     host: { class: 'adf-people-search-field' },
     encapsulation: ViewEncapsulation.None
 })
-
 export class PeopleSearchFieldComponent {
-
     @Input()
     performSearch: PerformSearchCallback;
 
@@ -49,19 +47,17 @@ export class PeopleSearchFieldComponent {
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
 
-    constructor(public peopleProcessService: PeopleProcessService,
-                private translationService: TranslationService) {
-        this.users$ = this.searchUser.valueChanges
-            .pipe(
-                debounceTime(200),
-                switchMap((searchWord: string) => {
-                    if (searchWord && searchWord.trim()) {
-                        return this.performSearch(searchWord);
-                    } else {
-                        return of([]);
-                    }
-                })
-            );
+    constructor(public peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
+        this.users$ = this.searchUser.valueChanges.pipe(
+            debounceTime(200),
+            switchMap((searchWord: string) => {
+                if (searchWord?.trim()) {
+                    return this.performSearch(searchWord);
+                } else {
+                    return of([]);
+                }
+            })
+        );
 
         this.defaultPlaceholder = this.translationService.instant(this.defaultPlaceholder);
     }
@@ -83,8 +79,8 @@ export class PeopleSearchFieldComponent {
     }
 
     getInitialUserName(firstName: string, lastName: string): string {
-        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
-        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
+        firstName = firstName !== null && firstName !== '' ? firstName[0] : '';
+        lastName = lastName !== null && lastName !== '' ? lastName[0] : '';
         return this.getDisplayUser(firstName, lastName, '');
     }
 }

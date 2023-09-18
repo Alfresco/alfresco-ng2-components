@@ -221,7 +221,7 @@ export class NodesApiService {
     private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
         const metadata = {};
 
-        if (nodeEntry && nodeEntry.entry.properties) {
+        if (nodeEntry?.entry.properties) {
             for (const key in nodeEntry.entry.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {

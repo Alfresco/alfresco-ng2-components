@@ -24,17 +24,13 @@ import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
 
 export class DateCellValidator implements CellValidator {
-
-    private supportedTypes: string[] = [
-        'Date'
-    ];
+    private supportedTypes: string[] = ['Date'];
 
     isSupported(column: DynamicTableColumn): boolean {
-        return column && column.editable && this.supportedTypes.indexOf(column.type) > -1;
+        return column?.editable && this.supportedTypes.indexOf(column.type) > -1;
     }
 
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
-
         if (this.isSupported(column)) {
             const value = row.value[column.id];
 

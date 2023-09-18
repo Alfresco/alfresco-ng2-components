@@ -135,7 +135,7 @@ export class SitesService {
      */
     getSiteNameFromNodePath(node: Node): string {
         let siteName = '';
-        if (node.path && node.path.elements) {
+        if (node.path?.elements) {
             const foundNode = node.path.elements.find((pathNode) => pathNode.nodeType === 'st:site' && pathNode.name !== 'Sites');
             siteName = foundNode ? foundNode.name : '';
         }

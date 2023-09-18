@@ -34,7 +34,7 @@ export abstract class CardViewBaseItemModel {
 
     constructor(cardViewItemProperties: CardViewItemProperties) {
         this.label = cardViewItemProperties.label || '';
-        this.value = cardViewItemProperties.value && cardViewItemProperties.value.displayName || cardViewItemProperties.value;
+        this.value = cardViewItemProperties.value?.displayName || cardViewItemProperties.value;
         this.key = cardViewItemProperties.key;
         this.default = cardViewItemProperties.default;
         this.editable = !!cardViewItemProperties.editable;
@@ -63,9 +63,7 @@ export abstract class CardViewBaseItemModel {
             return true;
         }
 
-        return this.validators
-            .map((validator) => validator.isValid(newValue))
-            .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
+        return this.validators.map((validator) => validator.isValid(newValue)).reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
     getValidationErrors(value): CardViewItemValidator[] {

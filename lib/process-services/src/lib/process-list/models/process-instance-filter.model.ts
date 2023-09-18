@@ -24,11 +24,11 @@ export class ProcessFilterRequestRepresentation {
     size: number;
 
     constructor(obj?: any) {
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.appDefinitionId = obj && obj.appDefinitionId || null;
-        this.state = obj && obj.state || null;
-        this.sort = obj && obj.sort || null;
-        this.page = obj && obj.page || 0;
-        this.size = obj && obj.size || 25;
+        this.processDefinitionId = obj?.processDefinitionId;
+        this.appDefinitionId = obj?.appDefinitionId;
+        this.state = obj?.state;
+        this.sort = obj?.sort;
+        this.page = obj?.page || 0;
+        this.size = obj?.size || 25;
     }
 }

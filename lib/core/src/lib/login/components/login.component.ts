@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component, EventEmitter,
-    Input, OnInit, Output, TemplateRef, ViewEncapsulation, OnDestroy
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AuthenticationService } from '../../auth/services/authentication.service';
@@ -28,10 +25,7 @@ import { UserPreferencesService } from '../../common/services/user-preferences.s
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
 import { LoginSuccessEvent } from '../models/login-success.event';
-import {
-    AppConfigService,
-    AppConfigValues
-} from '../../app-config/app-config.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -136,8 +130,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.initFormError();
@@ -149,12 +142,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         } else {
-
             if (this.authService.isOauth()) {
                 const oauth = this.appConfig.oauth2;
-                if (oauth && oauth.silentLogin) {
+                if (oauth?.silentLogin) {
                     this.redirectToImplicitLogin();
-                } else if (oauth && oauth.implicitFlow) {
+                } else if (oauth?.implicitFlow) {
                     this.implicitFlow = true;
                 }
             }
@@ -171,9 +163,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.form = this._fb.group(this.fieldsValidation);
         }
 
-        this.form.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(data => this.onValueChanged(data));
+        this.form.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((data) => this.onValueChanged(data));
     }
 
     ngOnDestroy() {
@@ -193,7 +183,6 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Method called on submit form
      *
      * @param values
-     * @param event
      */
     onSubmit(values: any): void {
         this.disableError();
@@ -227,14 +216,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (field) {
                 this.formError[field] = '';
                 const hasError =
-                    (this.form.controls[field].errors && data[field] !== '') ||
-                    (this.form.controls[field].dirty &&
-                        !this.form.controls[field].valid);
+                    (this.form.controls[field].errors && data[field] !== '') || (this.form.controls[field].dirty && !this.form.controls[field].valid);
                 if (hasError) {
                     for (const key in this.form.controls[field].errors) {
                         if (key) {
                             const message = this._message[field][key];
-                            if (message && message.value) {
+                            if (message?.value) {
                                 const translated = this.translateService.instant(message.value, message.params);
                                 this.formError[field] += translated;
                             }
@@ -246,55 +233,40 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     performLogin(values: { username: string; password: string }) {
-        this.authService
-            .login(values.username, values.password, this.rememberMe)
-            .subscribe(
-                (token: any) => {
-                    const redirectUrl = this.authService.getRedirect();
+        this.authService.login(values.username, values.password, this.rememberMe).subscribe(
+            (token) => {
+                const redirectUrl = this.authService.getRedirect();
 
-                    this.actualLoginStep = LoginSteps.Welcome;
-                    this.userPreferences.setStoragePrefix(values.username);
-                    values.password = null;
-                    this.success.emit(
-                        new LoginSuccessEvent(token, values.username, null)
-                    );
+                this.actualLoginStep = LoginSteps.Welcome;
+                this.userPreferences.setStoragePrefix(values.username);
+                values.password = null;
+                this.success.emit(new LoginSuccessEvent(token, values.username, null));
 
-                    if (redirectUrl) {
-                        this.authService.setRedirect(null);
-                        this.router.navigateByUrl(redirectUrl);
-                    } else if (this.successRoute) {
-                        this.router.navigate([this.successRoute]);
-                    }
-                },
-                (err: any) => {
-                    this.actualLoginStep = LoginSteps.Landing;
-                    this.displayErrorMessage(err);
-                    this.isError = true;
-                    this.error.emit(new LoginErrorEvent(err));
+                if (redirectUrl) {
+                    this.authService.setRedirect(null);
+                    this.router.navigateByUrl(redirectUrl);
+                } else if (this.successRoute) {
+                    this.router.navigate([this.successRoute]);
                 }
-            );
+            },
+            (err: any) => {
+                this.actualLoginStep = LoginSteps.Landing;
+                this.displayErrorMessage(err);
+                this.isError = true;
+                this.error.emit(new LoginErrorEvent(err));
+            }
+        );
     }
 
     /**
      * Check and display the right error message in the UI
      */
     private displayErrorMessage(err: any): void {
-        if (
-            err.error &&
-            err.error.crossDomain &&
-            err.error.message.indexOf('Access-Control-Allow-Origin') !== -1
-        ) {
+        if (err.error?.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
             this.errorMsg = err.error.message;
-        } else if (
-            err.status === 403 &&
-            err.message.indexOf('Invalid CSRF-token') !== -1
-        ) {
+        } else if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
-        } else if (
-            err.status === 403 &&
-            err.message.indexOf('The system is currently in read-only mode') !==
-            -1
-        ) {
+        } else if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
         } else {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
@@ -317,13 +289,9 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param field
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
+     * @param params
      */
-    addCustomValidationError(
-        field: string,
-        ruleId: string,
-        msg: string,
-        params?: any
-    ) {
+    addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
         if (field !== '__proto__' && field !== 'constructor' && field !== 'prototype') {
             this._message[field][ruleId] = {
                 value: msg,
@@ -385,7 +353,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                         minLength: this.minLength
                     }
                 }
-
             },
             password: {
                 required: {

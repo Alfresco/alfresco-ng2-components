@@ -17,12 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import {
-    UserPreferencesService,
-    UserPreferenceValues,
-    MomentDateAdapter,
-    MOMENT_DATE_FORMATS
-} from '@alfresco/adf-core';
+import { UserPreferencesService, UserPreferenceValues, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -37,12 +32,12 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'adf-date-editor',
     templateUrl: './date.editor.html',
     providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+    ],
     styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit, OnDestroy {
-
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
     value: any;
@@ -61,15 +56,13 @@ export class DateEditorComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
-    }
+    constructor(private dateAdapter: DateAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
 
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe((locale) => this.dateAdapter.setLocale(locale));
 
         const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
@@ -83,7 +76,7 @@ export class DateEditorComponent implements OnInit, OnDestroy {
     }
 
     onDateChanged(newDateValue: MatDatepickerInputEvent<any> | HTMLInputElement) {
-        if (newDateValue && newDateValue.value) {
+        if (newDateValue?.value) {
             /* validates the user inputs */
             const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
 
@@ -98,5 +91,4 @@ export class DateEditorComponent implements OnInit, OnDestroy {
             this.row.value[this.column.id] = '';
         }
     }
-
 }

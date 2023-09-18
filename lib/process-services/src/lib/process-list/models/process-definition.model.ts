@@ -28,15 +28,15 @@ export class ProcessDefinitionRepresentation {
     hasStartForm: boolean;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.name = obj && obj.name || null;
-        this.description = obj && obj.description || null;
-        this.key = obj && obj.key || null;
-        this.category = obj && obj.category || null;
-        this.version = obj && obj.version || 0;
-        this.deploymentId = obj && obj.deploymentId || null;
-        this.tenantId = obj && obj.tenantId || null;
-        this.metaDataValues = obj && obj.metaDataValues || [];
-        this.hasStartForm = obj && obj.hasStartForm === true;
+        this.id = obj?.id;
+        this.name = obj?.name;
+        this.description = obj?.description;
+        this.key = obj?.key;
+        this.category = obj?.category;
+        this.version = obj?.version || 0;
+        this.deploymentId = obj?.deploymentId;
+        this.tenantId = obj?.tenantId;
+        this.metaDataValues = obj?.metaDataValues || [];
+        this.hasStartForm = obj?.hasStartForm === true;
     }
 }

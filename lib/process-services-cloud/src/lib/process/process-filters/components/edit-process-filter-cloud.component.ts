@@ -23,7 +23,13 @@ import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/
 import { Subject, Observable, Subscription } from 'rxjs';
 import moment, { Moment } from 'moment';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperty } from '../models/process-filter-cloud.model';
+import {
+    ProcessFilterCloudModel,
+    ProcessFilterProperties,
+    ProcessFilterAction,
+    ProcessFilterOptions,
+    ProcessSortFilterProperty
+} from '../models/process-filter-cloud.model';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -152,10 +158,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         { value: 'ASC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.ASCENDING' },
         { value: 'DESC', label: 'ADF_CLOUD_PROCESS_FILTERS.DIRECTION.DESCENDING' }
     ];
-    actionDisabledForDefault = [
-        PROCESS_FILTER_ACTION_SAVE,
-        PROCESS_FILTER_ACTION_DELETE
-    ];
+    actionDisabledForDefault = [PROCESS_FILTER_ACTION_SAVE, PROCESS_FILTER_ACTION_DELETE];
     applicationNames: any[] = [];
     allProcessDefinitionNamesOption: DropdownOption = {
         label: 'ADF_CLOUD_PROCESS_FILTERS.STATUS.ALL',
@@ -181,14 +184,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService,
-        private processCloudService: ProcessCloudService) {
-    }
+        private processCloudService: ProcessCloudService
+    ) {}
 
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe((locale) => this.dateAdapter.setLocale(locale));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -216,7 +219,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 return { [property.key]: property.value };
             }
         });
-        return properties.reduce(((result, current) => Object.assign(result, current)), {});
+        return properties.reduce((result, current) => Object.assign(result, current), {});
     }
 
     private getAttributesControlConfig(property: ProcessFilterProperties) {
@@ -233,12 +236,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.isLoading = true;
         this.processFilterCloudService
             .getFilterById(this.appName, this.id)
-            .pipe(finalize(() => this.isLoading = false))
-            .subscribe(response => {
+            .pipe(finalize(() => (this.isLoading = false)))
+            .subscribe((response) => {
                 this.filterHasBeenChanged = false;
-                this.processFilter = new ProcessFilterCloudModel(
-                    Object.assign({}, response || {}, this.processFilter || {})
-                );
+                this.processFilter = new ProcessFilterCloudModel(Object.assign({}, response || {}, this.processFilter || {}));
             });
     }
 
@@ -288,7 +289,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (this.filterProperties.includes('initiator')) {
             this.initiatorOptions = !!this.processFilter.initiator
-                ? this.processFilter.initiator.split(',').map(username => Object.assign({}, { username }))
+                ? this.processFilter.initiator.split(',').map((username) => Object.assign({}, { username }))
                 : [];
         }
 
@@ -296,14 +297,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         let filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty.key));
 
         if (!this.filterProperties.includes('sort')) {
-            filteredProperties = filteredProperties.filter(property => property.key !== 'order');
+            filteredProperties = filteredProperties.filter((property) => property.key !== 'order');
         }
 
         if (this.filterProperties.includes('lastModified')) {
-            filteredProperties = [
-                ...filteredProperties,
-                ...this.createLastModifiedProperty(this.processFilter)
-            ];
+            filteredProperties = [...filteredProperties, ...this.createLastModifiedProperty(this.processFilter)];
         }
 
         return filteredProperties;
@@ -329,7 +327,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.appVersionOptions = [];
 
         this.processCloudService.getApplicationVersions(this.appName).subscribe((appVersions) => {
-            appVersions.forEach(appVersion => {
+            appVersions.forEach((appVersion) => {
                 this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
             });
         });
@@ -383,22 +381,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
-        this.editProcessFilterForm.get(property.attributes?.from).setValue(
-            dateRange.startDate ? dateRange.startDate : null
-        );
-        this.editProcessFilterForm.get(property.attributes?.to).setValue(
-            dateRange.endDate ? dateRange.endDate : null
-        );
+        this.editProcessFilterForm.get(property.attributes?.from).setValue(dateRange.startDate ? dateRange.startDate : null);
+        this.editProcessFilterForm.get(property.attributes?.to).setValue(dateRange.endDate ? dateRange.endDate : null);
         this.editProcessFilterForm.get(property.attributes.dateType).setValue(DateCloudFilterType.RANGE);
     }
 
     onChangedUser(users: IdentityUserModel[], processProperty: ProcessFilterProperties) {
-        this.getPropertyController(processProperty).setValue(users.map(user => user.username).join(','));
+        this.getPropertyController(processProperty).setValue(users.map((user) => user.username).join(','));
     }
 
     hasError(property: ProcessFilterProperties): boolean {
         const controller = this.getPropertyController(property);
-        return controller.errors && controller.errors.invalid;
+        return !!controller.errors?.invalid;
     }
 
     compareFilters(editedQuery: ProcessFilterCloudModel, currentQuery: ProcessFilterCloudModel): boolean {
@@ -408,15 +402,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     getRunningApplications() {
         this.applicationNames = [];
 
-        this.appsProcessCloudService
-            .getDeployedApplicationsByStatus('RUNNING', this.role)
-            .subscribe((applications) => {
-                if (applications && applications.length > 0) {
-                    applications.map((application) => {
-                        this.applicationNames.push({ label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList), value: application.name });
+        this.appsProcessCloudService.getDeployedApplicationsByStatus('RUNNING', this.role).subscribe((applications) => {
+            if (applications && applications.length > 0) {
+                applications.map((application) => {
+                    this.applicationNames.push({
+                        label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
+                        value: application.name
                     });
-                }
-            });
+                });
+            }
+        });
     }
 
     getProcessDefinitions() {
@@ -448,13 +443,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     save(saveAction: ProcessFilterAction) {
-        this.processFilterCloudService
-            .updateFilter(this.processFilter)
-            .subscribe(() => {
-                saveAction.filter = this.processFilter;
-                this.filterHasBeenChanged = false;
-                this.action.emit(saveAction);
-            });
+        this.processFilterCloudService.updateFilter(this.processFilter).subscribe(() => {
+            saveAction.filter = this.processFilter;
+            this.filterHasBeenChanged = false;
+            this.action.emit(saveAction);
+        });
     }
 
     /**
@@ -469,8 +462,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     this.action.emit(deleteAction);
                     return filters.length === 0;
                 }),
-                switchMap(() => this.restoreDefaultProcessFilters()))
-            .subscribe(() => { });
+                switchMap(() => this.restoreDefaultProcessFilters())
+            )
+            .subscribe(() => {});
     }
 
     /**
@@ -495,25 +489,26 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     key: 'custom-' + filterKey
                 };
                 const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.processFilter, newFilter);
-                this.processFilterCloudService
-                    .addFilter(resultFilter)
-                    .subscribe(() => {
-                        saveAsAction.filter = resultFilter;
-                        this.filterHasBeenChanged = false;
-                        this.action.emit(saveAsAction);
-                    });
+                this.processFilterCloudService.addFilter(resultFilter).subscribe(() => {
+                    saveAsAction.filter = resultFilter;
+                    this.filterHasBeenChanged = false;
+                    this.action.emit(saveAsAction);
+                });
             }
         });
     }
 
     reset(resetAction: ProcessFilterAction) {
-        this.processFilterCloudService.resetProcessFilterToDefaults(this.appName, this.processFilter).pipe(
-            tap((filters: ProcessFilterCloudModel[]) => {
-                resetAction.filter = filters.find(defaultFilter => defaultFilter.name === this.processFilter.name) || this.processFilter;
-                this.action.emit(resetAction);
-            }),
-            switchMap(() => this.restoreDefaultProcessFilters()))
-            .subscribe(() => { });
+        this.processFilterCloudService
+            .resetProcessFilterToDefaults(this.appName, this.processFilter)
+            .pipe(
+                tap((filters) => {
+                    resetAction.filter = filters.find((defaultFilter) => defaultFilter.name === this.processFilter.name) || this.processFilter;
+                    this.action.emit(resetAction);
+                }),
+                switchMap(() => this.restoreDefaultProcessFilters())
+            )
+            .subscribe(() => {});
     }
 
     /**
@@ -549,16 +544,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     isDisabledAction(action: ProcessFilterAction): boolean {
-        return (
-            this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
-            this.actionDisabledForDefault.includes(action.actionType)
-        ) ? true : this.hasFilterChanged(action);
+        return this.processFilterCloudService.isDefaultFilter(this.processFilter.name) && this.actionDisabledForDefault.includes(action.actionType)
+            ? true
+            : this.hasFilterChanged(action);
     }
 
     hasFilterChanged(action: ProcessFilterAction): boolean {
-        return action.actionType === PROCESS_FILTER_ACTION_SAVE ||
-            action.actionType === PROCESS_FILTER_ACTION_SAVE_AS ?
-            !this.filterHasBeenChanged : false;
+        return action.actionType === PROCESS_FILTER_ACTION_SAVE || action.actionType === PROCESS_FILTER_ACTION_SAVE_AS
+            ? !this.filterHasBeenChanged
+            : false;
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
@@ -707,12 +701,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private isFilterChanged(oldValue: ProcessFilterCloudModel, newValue: ProcessFilterCloudModel): boolean {
-        const oldJson = JSON.stringify(
-            this.processFilterCloudService.writeQueryParams(oldValue || {}, this.filterProperties)
-        );
-        const newJson = JSON.stringify(
-            this.processFilterCloudService.writeQueryParams(newValue || {}, this.filterProperties)
-        );
+        const oldJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(oldValue || {}, this.filterProperties));
+        const newJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(newValue || {}, this.filterProperties));
 
         return oldJson !== newJson;
     }
@@ -722,9 +712,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (filterModel.appVersion) {
             appVersionMultiple.push(
-                Array.isArray(filterModel.appVersion)
-                    ? filterModel.appVersion.map(entry => entry.toString())
-                    : `${filterModel.appVersion}`
+                Array.isArray(filterModel.appVersion) ? filterModel.appVersion.map((entry) => entry.toString()) : `${filterModel.appVersion}`
             );
         }
 

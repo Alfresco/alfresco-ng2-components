@@ -27,7 +27,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
     encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {
-
     @Input()
     urlFile: any;
 
@@ -36,18 +35,16 @@ export class TxtViewerComponent implements OnChanges {
 
     content: string | ArrayBuffer;
 
-    constructor(private http: HttpClient, private appConfigService: AppConfigService) {
-    }
+    constructor(private http: HttpClient, private appConfigService: AppConfigService) {}
 
     ngOnChanges(changes: SimpleChanges): Promise<void> {
-
         const blobFile = changes['blobFile'];
-        if (blobFile && blobFile.currentValue) {
+        if (blobFile?.currentValue) {
             return this.readBlob(blobFile.currentValue);
         }
 
         const urlFile = changes['urlFile'];
-        if (urlFile && urlFile.currentValue) {
+        if (urlFile?.currentValue) {
             return this.getUrlContent(urlFile.currentValue);
         }
 
@@ -62,12 +59,15 @@ export class TxtViewerComponent implements OnChanges {
         const withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
 
         return new Promise((resolve, reject) => {
-            this.http.get(url, { responseType: 'text', withCredentials: withCredentialsMode }).subscribe((res) => {
-                this.content = res;
-                resolve();
-            }, (event) => {
-                reject(event);
-            });
+            this.http.get(url, { responseType: 'text', withCredentials: withCredentialsMode }).subscribe(
+                (res) => {
+                    this.content = res;
+                    resolve();
+                },
+                (event) => {
+                    reject(event);
+                }
+            );
         });
     }
 

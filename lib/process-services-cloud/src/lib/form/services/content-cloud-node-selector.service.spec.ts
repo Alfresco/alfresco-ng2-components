@@ -52,22 +52,20 @@ describe('ContentCloudNodeSelectorService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, MatDialogModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-            ]
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ContentCloudNodeSelectorService);
         notificationService = TestBed.inject(NotificationService);
         dialog = TestBed.inject(MatDialog);
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
-        openDialogSpy = spyOn(dialog, 'open').and.returnValue(<any> {
+        openDialogSpy = spyOn(dialog, 'open').and.returnValue({
             afterOpened: () => of({}),
             afterClosed: () => of({}),
             componentInstance: {
                 error: new Subject<any>()
             }
-        });
+        } as any);
         getNodeSpy = spyOn(service.nodesApi, 'getNode');
     });
 

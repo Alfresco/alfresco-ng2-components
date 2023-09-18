@@ -41,7 +41,6 @@ import { mergeMap, map } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {
-
     hasFile: boolean;
     displayText: string;
     multipleOption: string = '';
@@ -50,17 +49,17 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService,
-                private logService: LogService,
-                private thumbnailService: ThumbnailService,
-                public processContentService: ProcessContentService) {
+    constructor(
+        public formService: FormService,
+        private logService: LogService,
+        private thumbnailService: ThumbnailService,
+        public processContentService: ProcessContentService
+    ) {
         super(formService);
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
+        if (this.field?.value?.length > 0) {
             this.hasFile = true;
         }
         this.getMultipleFileParam();
@@ -96,20 +95,17 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.processContentService.createTemporaryRawRelatedContent(file)
-            .pipe(
-                map((response: any) => {
-                    this.logService.info(response);
-                    response.contentBlob = file;
-                    return response;
-                })
-            );
+        return this.processContentService.createTemporaryRawRelatedContent(file).pipe(
+            map((response: any) => {
+                this.logService.info(response);
+                response.contentBlob = file;
+                return response;
+            })
+        );
     }
 
     getMultipleFileParam() {
-        if (this.field &&
-            this.field.params &&
-            this.field.params.multiple) {
+        if (this.field?.params?.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }

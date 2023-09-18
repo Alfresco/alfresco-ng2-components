@@ -34,9 +34,7 @@ const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
     host: { class: 'adf-people-selector' },
     encapsulation: ViewEncapsulation.None
 })
-
 export class PeopleSelectorComponent {
-
     @Input()
     peopleId: UserProcessModel;
 
@@ -51,21 +49,14 @@ export class PeopleSelectorComponent {
     selectedUser: UserProcessModel;
     defaultPlaceholder: string;
 
-    constructor(
-        private peopleProcessService: PeopleProcessService,
-        private logService: LogService,
-        private translationService: TranslationService) {
-
+    constructor(private peopleProcessService: PeopleProcessService, private logService: LogService, private translationService: TranslationService) {
         this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
     }
 
     searchUser(searchWord: string): Observable<any | UserProcessModel[]> {
-        return this.peopleProcessService.getWorkflowUsers(undefined, searchWord)
-            .pipe(
-                catchError(this.onSearchUserError.bind(this))
-            );
+        return this.peopleProcessService.getWorkflowUsers(undefined, searchWord).pipe(catchError(this.onSearchUserError.bind(this)));
     }
 
     userSelected(user: UserProcessModel): void {
@@ -83,7 +74,7 @@ export class PeopleSelectorComponent {
 
     private updateUserSelection(user: UserProcessModel): void {
         this.selectedUser = user;
-        this.peopleIdChange.emit(user && user.id || undefined);
+        this.peopleIdChange.emit(user?.id);
         this.searchFieldComponent.reset();
     }
 

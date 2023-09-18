@@ -24,7 +24,6 @@ import { ProcessContentService } from '../form/services/process-content.service'
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
-
     /** (required) The numeric ID of the task to display. */
     @Input()
     taskId: string;
@@ -39,13 +38,12 @@ export class AttachmentComponent implements OnChanges {
      * from within the component.
      */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
-    constructor(private activitiContentService: ProcessContentService) {
-    }
+    constructor(private activitiContentService: ProcessContentService) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['taskId'] && changes['taskId'].currentValue) {
+        if (changes['taskId']?.currentValue) {
             this.taskId = changes['taskId'].currentValue;
         }
     }

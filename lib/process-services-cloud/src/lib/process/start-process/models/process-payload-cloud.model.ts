@@ -23,9 +23,9 @@ export class ProcessPayloadCloud {
     payloadType: string = 'StartProcessPayload';
 
     constructor(obj?: any) {
-        this.processDefinitionKey = obj && obj.processDefinitionKey ? obj.processDefinitionKey : null;
-        this.name = obj && obj.name ? obj.name : null;
-        this.businessKey = obj && obj.businessKey ? obj.businessKey : null;
-        this.variables = obj && obj.variables ? obj.variables : {};
+        this.processDefinitionKey = obj?.processDefinitionKey;
+        this.name = obj?.name;
+        this.businessKey = obj?.businessKey;
+        this.variables = obj?.variables || {};
     }
 }

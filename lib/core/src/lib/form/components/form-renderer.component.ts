@@ -35,7 +35,6 @@ import { FormService } from '../services/form.service';
     encapsulation: ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnChanges, OnDestroy {
-
     /** Toggle debug options. */
     @Input()
     showDebugButton: boolean = false;
@@ -47,8 +46,7 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     fields: FormFieldModel[];
 
-    constructor(public formService: FormService, private formRulesManager: FormRulesManager<T>) {
-    }
+    constructor(public formService: FormService, private formRulesManager: FormRulesManager<T>) {}
 
     ngOnChanges(): void {
         this.formRulesManager.initialize(this.formDefinition);
@@ -67,15 +65,15 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
     }
 
     onExpanderClicked(content: ContainerModel) {
-        if (content && content.isCollapsible()) {
+        if (content?.isCollapsible()) {
             content.isExpanded = !content.isExpanded;
         }
     }
 
     getNumberOfColumns(content: ContainerModel): number {
-        return (content.json?.numberOfColumns || 1) > (content.columns?.length || 1) ?
-            (content.json?.numberOfColumns || 1) :
-            (content.columns?.length || 1);
+        return (content.json?.numberOfColumns || 1) > (content.columns?.length || 1)
+            ? content.json?.numberOfColumns || 1
+            : content.columns?.length || 1;
     }
 
     /**
@@ -106,7 +104,8 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
         let maxFieldSize = 0;
         if (content?.columns?.length > 0) {
             maxFieldSize = content?.columns?.reduce((prevColumn, currentColumn) =>
-                currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn)?.fields?.length;
+                currentColumn.fields.length > prevColumn?.fields?.length ? currentColumn : prevColumn
+            )?.fields?.length;
         }
         return maxFieldSize;
     }
@@ -120,5 +119,4 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
         const colspan = container ? container.field.colspan : 1;
         return (100 / container.field.numberOfColumns) * colspan + '';
     }
-
 }

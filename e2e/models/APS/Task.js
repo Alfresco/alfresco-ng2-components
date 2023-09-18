@@ -23,9 +23,8 @@
  */
 
 var Task = function (details) {
-
-    this.processInstanceId;
-    this.sort;
+    this.processInstanceId = undefined;
+    this.sort = undefined;
 
     Object.assign(this, details);
 };

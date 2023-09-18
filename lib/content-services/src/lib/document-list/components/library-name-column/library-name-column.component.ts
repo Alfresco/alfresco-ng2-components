@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    ChangeDetectionStrategy,
-    ViewEncapsulation,
-    OnInit,
-    Input,
-    ElementRef,
-    OnDestroy
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import { NodeEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -36,13 +28,17 @@ import { takeUntil } from 'rxjs/operators';
     template: `
         <span
             role="link"
-            [attr.aria-label]="'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL' | translate:{
-                name:  displayText$ | async
-            }"
+            [attr.aria-label]="
+                'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL'
+                    | translate
+                        : {
+                              name: displayText$ | async
+                          }
+            "
             class="adf-datatable-cell-value"
             title="{{ displayTooltip$ | async }}"
-            (click)="onClick()">
-
+            (click)="onClick()"
+        >
             {{ displayText$ | async }}
         </span>
     `,
@@ -62,36 +58,29 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private element: ElementRef,
-        private nodesApiService: NodesApiService
-    ) {}
+    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                const row: ShareDataRow = this.context.row;
-                if (row) {
-                    const { entry } = row.node;
+        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
 
-                    if (entry === node) {
-                        row.node = { entry };
-                        this.updateValue();
-                    }
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
                 }
-            });
+            }
+        });
     }
 
     protected updateValue() {
         this.node = this.context.row.node;
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
-        if (this.node && this.node.entry) {
-            this.displayText$.next(
-                this.makeLibraryTitle(this.node.entry as any, rows)
-            );
+        if (this.node?.entry) {
+            this.displayText$.next(this.makeLibraryTitle(this.node.entry as any, rows));
             this.displayTooltip$.next(this.makeLibraryTooltip(this.node.entry));
         }
     }

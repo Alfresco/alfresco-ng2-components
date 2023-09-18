@@ -28,12 +28,12 @@ export class HeatMapChart extends Chart {
 
     constructor(obj?: any) {
         super(obj);
-        this.avgTimePercentages = obj && obj.avgTimePercentages || null;
-        this.avgTimeValues = obj && obj.avgTimeValues || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.totalCountValues = obj && obj.totalCountValues || null;
-        this.totalCountsPercentages = obj && obj.totalCountsPercentages || null;
-        this.totalTimePercentages = obj && obj.totalTimePercentages || null;
-        this.totalTimeValues = obj && obj.totalTimeValues || null;
+        this.avgTimePercentages = obj?.avgTimePercentages;
+        this.avgTimeValues = obj?.avgTimeValues;
+        this.processDefinitionId = obj?.processDefinitionId;
+        this.totalCountValues = obj?.totalCountValues;
+        this.totalCountsPercentages = obj?.totalCountsPercentages;
+        this.totalTimePercentages = obj?.totalTimePercentages;
+        this.totalTimeValues = obj?.totalTimeValues;
     }
 }

@@ -34,7 +34,7 @@ export class DiagramColorService {
     }
 
     getFillColour(key: string) {
-        if (this.totalColors && this.totalColors.hasOwnProperty(key)) {
+        if (this.totalColors?.hasOwnProperty(key)) {
             const colorPercentage = this.totalColors[key];
             return this.convertColorToHsb(colorPercentage);
         } else {
@@ -61,7 +61,7 @@ export class DiagramColorService {
     }
 
     convertColorToHsb(colorPercentage: number): string {
-        const hue = (120.0 - (colorPercentage * 1.2)) / 360.0;
+        const hue = (120.0 - colorPercentage * 1.2) / 360.0;
         return 'hsb(' + hue + ', 1, 1)';
     }
 }

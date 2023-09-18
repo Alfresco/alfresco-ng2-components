@@ -81,7 +81,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes && changes.direction) {
+        if (changes?.direction) {
             this.contentAnimationState = this.toggledContentAnimation;
         }
     }
@@ -104,9 +104,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private get toggledSidenavAnimation(): any {
-        return this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED
-            ? this.SIDENAV_STATES.COMPACT
-            : this.SIDENAV_STATES.EXPANDED;
+        return this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED ? this.SIDENAV_STATES.COMPACT : this.SIDENAV_STATES.EXPANDED;
     }
 
     private get toggledContentAnimation(): any {
@@ -130,7 +128,6 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
             if (this.position === 'end' && this.direction === 'rtl') {
                 return { value: 'compact', params: { 'margin-left': this.sidenavMax } };
             }
-
         } else {
             if (this.position === 'start' && this.direction === 'ltr') {
                 return { value: 'expanded', params: { 'margin-left': this.sidenavMin } };

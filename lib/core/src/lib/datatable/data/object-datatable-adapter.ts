@@ -25,7 +25,6 @@ import { Subject } from 'rxjs';
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
-
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
@@ -36,12 +35,12 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     static generateSchema(data: any[]) {
         const schema = [];
 
-        if (data && data.length) {
-            const rowToExaminate = data[0];
+        if (data?.length) {
+            const rowToExamine = data[0];
 
-            if (typeof rowToExaminate === 'object') {
-                for (const key in rowToExaminate) {
-                    if (rowToExaminate.hasOwnProperty(key)) {
+            if (typeof rowToExamine === 'object') {
+                for (const key in rowToExamine) {
+                    if (rowToExamine.hasOwnProperty(key)) {
                         schema.push({
                             type: 'text',
                             key,
@@ -51,7 +50,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                     }
                 }
             }
-
         }
         return schema;
     }
@@ -99,7 +97,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn, resolver?: (_row: DataRow, _col: DataColumn) => any ): any {
+    getValue(row: DataRow, col: DataColumn, resolver?: (_row: DataRow, _col: DataColumn) => any): any {
         if (!row) {
             throw new Error('Row not found');
         }
@@ -111,14 +109,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             return resolver(row, col);
         }
 
-        const value = row.getValue(col.key);
-
-        if (col.type === 'icon') {
-            const icon = row.getValue(col.key);
-            return icon;
-        }
-
-        return value;
+        return row.getValue(col.key);
     }
 
     getSorting(): DataSorting {
@@ -128,7 +119,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     setSorting(sorting: DataSorting): void {
         this._sorting = sorting;
 
-        if (sorting && sorting.key) {
+        if (sorting?.key) {
             this._rows.sort((a: DataRow, b: DataRow) => {
                 let left = a.getValue(sorting.key);
                 let right = b.getValue(sorting.key);
@@ -137,20 +128,18 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                     return sorting.direction === 'asc' ? left - right : right - left;
                 } else {
                     if (left) {
-                        left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
+                        left = left instanceof Date ? left.valueOf().toString() : left.toString();
                     } else {
                         left = '';
                     }
 
                     if (right) {
-                        right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
+                        right = right instanceof Date ? right.valueOf().toString() : right.toString();
                     } else {
                         right = '';
                     }
 
-                    return sorting.direction === 'asc'
-                        ? left.localeCompare(right)
-                        : right.localeCompare(left);
+                    return sorting.direction === 'asc' ? left.localeCompare(right) : right.localeCompare(left);
                 }
             });
         }

@@ -17,10 +17,19 @@
 
 import { OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, OnDestroy, OnInit, Directive } from '@angular/core';
 import {
-    AppConfigService, UserPreferencesService,
-    DataTableSchema, UserPreferenceValues,
-    PaginatedComponent, PaginationModel,
-    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent, DataRow, DataColumn, ObjectDataTableAdapter
+    AppConfigService,
+    UserPreferencesService,
+    DataTableSchema,
+    UserPreferenceValues,
+    PaginatedComponent,
+    PaginationModel,
+    DataRowEvent,
+    CustomEmptyContentTemplateDirective,
+    DataCellEvent,
+    DataRowActionEvent,
+    DataRow,
+    DataColumn,
+    ObjectDataTableAdapter
 } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
@@ -33,8 +42,11 @@ import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableSchema<T> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
-
+export abstract class BaseTaskListCloudComponent<T = unknown>
+    extends DataTableSchema<T>
+    implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit
+// eslint-disable-next-line @typescript-eslint/brace-style
+{
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -131,11 +143,13 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
-    constructor(appConfigService: AppConfigService,
+    constructor(
+        appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
         private userPreferences: UserPreferencesService,
         presetKey: string,
-        private cloudPreferenceService: PreferenceCloudServiceInterface) {
+        private cloudPreferenceService: PreferenceCloudServiceInterface
+    ) {
         super(appConfigService, presetKey, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
@@ -152,7 +166,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(pageSize => this.size = pageSize);
+            .subscribe((pageSize) => (this.size = pageSize));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -172,40 +186,48 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
 
     private retrieveTasksPreferences(): void {
         this.isLoadingPreferences$.next(true);
-        this.cloudPreferenceService.getPreferences(this.appName).pipe(
-            take(1),
-            map((preferences => {
-                const preferencesList = preferences?.list?.entries ?? [];
-                const columnsOrder = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnOrder);
-                const columnsVisibility = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsVisibility);
-                const columnsWidths = preferencesList.find(preference => preference.entry.key === TasksListCloudPreferences.columnsWidths);
+        this.cloudPreferenceService
+            .getPreferences(this.appName)
+            .pipe(
+                take(1),
+                map((preferences) => {
+                    const preferencesList = preferences?.list?.entries ?? [];
+                    const columnsOrder = preferencesList.find((preference) => preference.entry.key === TasksListCloudPreferences.columnOrder);
+                    const columnsVisibility = preferencesList.find(
+                        (preference) => preference.entry.key === TasksListCloudPreferences.columnsVisibility
+                    );
+                    const columnsWidths = preferencesList.find((preference) => preference.entry.key === TasksListCloudPreferences.columnsWidths);
 
-                return {
-                    columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                    columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
-                    columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
-                };
-            }))
-        ).subscribe(({ columnsOrder, columnsVisibility, columnsWidths }) => {
-            if (columnsOrder) {
-                this.columnsOrder = columnsOrder;
-            }
+                    return {
+                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
+                        columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
+                    };
+                })
+            )
+            .subscribe(
+                ({ columnsOrder, columnsVisibility, columnsWidths }) => {
+                    if (columnsOrder) {
+                        this.columnsOrder = columnsOrder;
+                    }
 
-            if (columnsVisibility) {
-                this.columnsVisibility = columnsVisibility;
-            }
+                    if (columnsVisibility) {
+                        this.columnsVisibility = columnsVisibility;
+                    }
 
-            if (columnsWidths) {
-                this.columnsWidths = columnsWidths;
-            }
+                    if (columnsWidths) {
+                        this.columnsWidths = columnsWidths;
+                    }
 
-            this.createDatatableSchema();
-            this.createColumns();
-            this.isLoadingPreferences$.next(false);
-        }, (error) => {
-            this.error.emit(error);
-            this.isLoadingPreferences$.next(false);
-        });
+                    this.createDatatableSchema();
+                    this.createColumns();
+                    this.isLoadingPreferences$.next(false);
+                },
+                (error) => {
+                    this.error.emit(error);
+                    this.isLoadingPreferences$.next(false);
+                }
+            );
     }
 
     ngAfterContentInit(): void {
@@ -283,15 +305,11 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
     }
 
     onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
-        this.columnsOrder = columnsWithNewOrder.map(column => column.id);
+        this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
         this.createColumns();
 
         if (this.appName) {
-            this.cloudPreferenceService.updatePreference(
-                this.appName,
-                TasksListCloudPreferences.columnOrder,
-                this.columnsOrder
-            );
+            this.cloudPreferenceService.updatePreference(this.appName, TasksListCloudPreferences.columnOrder, this.columnsOrder);
         }
     }
 
@@ -308,11 +326,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
         this.createDatatableSchema();
 
         if (this.appName) {
-            this.cloudPreferenceService.updatePreference(
-                this.appName,
-                TasksListCloudPreferences.columnsVisibility,
-                this.columnsVisibility
-            );
+            this.cloudPreferenceService.updatePreference(this.appName, TasksListCloudPreferences.columnsVisibility, this.columnsVisibility);
         }
     }
 
@@ -324,44 +338,39 @@ export abstract class BaseTaskListCloudComponent<T = unknown> extends DataTableS
             return widthsColumnsMap;
         }, {});
 
-        this.columnsWidths = {...this.columnsWidths, ...newColumnsWidths};
+        this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
 
         this.createColumns();
 
         if (this.appName) {
-            this.cloudPreferenceService.updatePreference(
-                this.appName,
-                TasksListCloudPreferences.columnsWidths,
-                this.columnsWidths
-            );
+            this.cloudPreferenceService.updatePreference(this.appName, TasksListCloudPreferences.columnsWidths, this.columnsWidths);
         }
     }
 
     setSorting(sortDetail) {
-        const sorting = sortDetail ? {
-            orderBy: sortDetail.key,
-            direction: sortDetail.direction.toUpperCase()
-        } : { ... this.defaultSorting };
+        const sorting = sortDetail
+            ? {
+                  orderBy: sortDetail.key,
+                  direction: sortDetail.direction.toUpperCase()
+              }
+            : { ...this.defaultSorting };
         this.sorting = [new TaskListCloudSortingModel(sorting)];
     }
 
     formatSorting(sorting: TaskListCloudSortingModel[]) {
-        this.formattedSorting = this.isValidSorting(sorting) ? [
-            sorting[0].orderBy,
-            sorting[0].direction.toLocaleLowerCase()
-        ] : null;
+        this.formattedSorting = this.isValidSorting(sorting) ? [sorting[0].orderBy, sorting[0].direction.toLocaleLowerCase()] : null;
     }
 
     isValidSorting(sorting: TaskListCloudSortingModel[]) {
-        return sorting && sorting.length && sorting[0].orderBy && sorting[0].direction;
+        return sorting?.length && sorting[0].orderBy && sorting[0].direction;
     }
 
     replacePriorityValues(row: DataRow, column: DataColumn) {
         return column.key.split('.').reduce((source, key) => {
-            if (key === 'priority' && source && typeof (source[key]) === 'number') {
-                return source[key] = this.taskCloudService.getPriorityLabel(source[key]);
+            if (key === 'priority' && source && typeof source[key] === 'number') {
+                return (source[key] = this.taskCloudService.getPriorityLabel(source[key]));
             }
-            return source && typeof (source) === 'object' ? source[key] : undefined;
+            return source && typeof source === 'object' ? source[key] : undefined;
         }, row.obj);
     }
 

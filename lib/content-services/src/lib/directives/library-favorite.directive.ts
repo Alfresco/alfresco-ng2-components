@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FavoriteBodyCreate, FavoritesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
@@ -59,7 +59,7 @@ export class LibraryFavoriteDirective implements OnChanges {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
         if (!changes.library.currentValue) {
             this.targetLibrary = null;
             return;
@@ -70,7 +70,7 @@ export class LibraryFavoriteDirective implements OnChanges {
     }
 
     isFavorite(): boolean {
-        return this.targetLibrary && this.targetLibrary.isFavorite;
+        return this.targetLibrary?.isFavorite;
     }
 
     private async markFavoriteLibrary(library: LibraryEntity) {

@@ -63,7 +63,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+        if (changes['currentFolderId']?.currentValue) {
             this.resetFilterHeader();
             this.configureSearchParent(changes['currentFolderId'].currentValue);
         }

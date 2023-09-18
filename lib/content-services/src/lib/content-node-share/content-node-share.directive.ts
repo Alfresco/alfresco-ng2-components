@@ -29,12 +29,11 @@ import { takeUntil } from 'rxjs/operators';
     exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges, OnDestroy {
-
     isFile: boolean = false;
     isShared: boolean = false;
 
     /** Node to share. */
-        // eslint-disable-next-line @angular-eslint/no-input-rename
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('adf-share')
     node: NodeEntry;
 
@@ -50,11 +49,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
         return this._nodesApi;
     }
 
-    constructor(
-        private dialog: MatDialog,
-        private zone: NgZone,
-        private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
 
     ngOnDestroy() {
         this.onDestroy$.next(true);
@@ -62,7 +57,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     }
 
     shareNode(nodeEntry: NodeEntry) {
-        if (nodeEntry && nodeEntry.entry && nodeEntry.entry.isFile) {
+        if (nodeEntry?.entry?.isFile) {
             // shared and favorite
             const nodeId = nodeEntry.entry['nodeId'] || nodeEntry.entry['guid'];
 
@@ -96,14 +91,12 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        this.zone.onStable
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                if (this.node && this.node.entry) {
-                    this.isFile = this.node.entry.isFile;
-                    this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
-                }
-            });
+        this.zone.onStable.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            if (this.node?.entry) {
+                this.isFile = this.node.entry.isFile;
+                this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;
+            }
+        });
     }
 
     @HostListener('click')

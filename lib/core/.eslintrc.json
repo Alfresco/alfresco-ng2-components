@@ -63,10 +63,6 @@
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-require-imports": "off",
         "@typescript-eslint/no-var-requires": "error",
-        "brace-style": [
-          "error",
-          "1tbs"
-        ],
         "comma-dangle": "error",
         "default-case": "error",
         "import/order": "off",

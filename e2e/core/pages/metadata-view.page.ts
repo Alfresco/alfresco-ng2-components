@@ -19,7 +19,6 @@ import { $, by, element, Key, protractor, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility, DropdownPage, TestElement, Logger } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
-
     title = $(`div[info-drawer-title]`);
     expandedAspect = $(`mat-expansion-panel-header[aria-expanded='true']`);
     aspectTitle = `mat-panel-title`;
@@ -48,8 +47,10 @@ export class MetadataViewPage {
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
 
-    private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> => $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"]`);
-    private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> => $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
+    private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
+        $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"]`);
+    private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
+        $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
@@ -132,7 +133,9 @@ export class MetadataViewPage {
     }
 
     async clickOnPropertiesTab(): Promise<void> {
-        const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
+        const propertiesTab = element(
+            by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`)
+        );
         await BrowserActions.click(propertiesTab);
     }
 
@@ -208,7 +211,9 @@ export class MetadataViewPage {
     }
 
     async getMetadataGroupTitle(groupName: string): Promise<string> {
-        const group = $('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title');
+        const group = $(
+            'mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'
+        );
         return BrowserActions.getText(group);
     }
 
@@ -225,7 +230,7 @@ export class MetadataViewPage {
                 return false;
             }
             await type.waitVisible();
-            const isPresent = type.isPresent();
+            const isPresent = await type.isPresent();
             if (isPresent) {
                 return true;
             }
@@ -269,7 +274,7 @@ export class MetadataViewPage {
         } catch (error) {
             Logger.log(`re trying content type options attempt :: ${attempt}`);
             await BrowserActions.closeMenuAndDialogs();
-            return  this.changeContentType(option, attempt + 1, maxAttempt);
+            return this.changeContentType(option, attempt + 1, maxAttempt);
         }
     }
 

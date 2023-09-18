@@ -19,8 +19,20 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {
-    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input,
-    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
+    AfterContentInit,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { ContentService } from '../../common/services/content.service';
 
@@ -75,15 +87,17 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     selector: 'adf-document-list',
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
-    providers:[{
-        provide: ADF_DOCUMENT_PARENT_COMPONENT,
-        useExisting: DocumentListComponent
-    }, DataTableService],
+    providers: [
+        {
+            provide: ADF_DOCUMENT_PARENT_COMPONENT,
+            useExisting: DocumentListComponent
+        },
+        DataTableService
+    ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
 export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
-
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -94,10 +108,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         totalItems: 0
     });
 
-    DEFAULT_SORTING: DataSorting[] = [
-        new DataSorting('name', 'asc'),
-        new DataSorting('isFolder', 'desc')
-    ];
+    DEFAULT_SORTING: DataSorting[] = [new DataSorting('name', 'asc'), new DataSorting('isFolder', 'desc')];
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -362,34 +373,33 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this._nodesApi;
     }
 
-    constructor(private documentListService: DocumentListService,
-                private elementRef: ElementRef,
-                private appConfig: AppConfigService,
-                private userPreferencesService: UserPreferencesService,
-                private contentService: ContentService,
-                private thumbnailService: ThumbnailService,
-                private alfrescoApiService: AlfrescoApiService,
-                private nodeService: NodesApiService,
-                private dataTableService: DataTableService,
-                private lockService: LockService,
-                private dialog: MatDialog) {
-
-        this.nodeService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((node) => {
-                this.dataTableService.rowUpdate.next({id: node.id, obj: {entry: node}});
-            });
+    constructor(
+        private documentListService: DocumentListService,
+        private elementRef: ElementRef,
+        private appConfig: AppConfigService,
+        private userPreferencesService: UserPreferencesService,
+        private contentService: ContentService,
+        private thumbnailService: ThumbnailService,
+        private alfrescoApiService: AlfrescoApiService,
+        private nodeService: NodesApiService,
+        private dataTableService: DataTableService,
+        private lockService: LockService,
+        private dialog: MatDialog
+    ) {
+        this.nodeService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+            this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
+        });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(pagSize => {
+            .subscribe((pagSize) => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });
     }
 
     getContextActions(node: NodeEntry) {
-        if (node && node.entry) {
+        if (node?.entry) {
             const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
                 return actions.map((currentAction: ContentActionModel) => ({
@@ -403,7 +413,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private get hasCustomLayout(): boolean {
-        return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
+        return this.columnList?.columns?.length > 0;
     }
 
     private getDefaultSorting(): DataSorting {
@@ -433,8 +443,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(),
-            this.sortingMode, this.allowDropFiles);
+        this.data = new ShareDataTableAdapter(
+            this.thumbnailService,
+            this.contentService,
+            null,
+            this.getDefaultSorting(),
+            this.sortingMode,
+            this.allowDropFiles
+        );
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -446,9 +462,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.contextActionHandler
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(val => this.contextActionCallback(val));
+        this.contextActionHandler.pipe(takeUntil(this.onDestroy$)).subscribe((val) => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
         if (this.filterValue && Object.keys(this.filterValue).length > 0) {
@@ -458,9 +472,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngAfterContentInit() {
         if (this.columnList) {
-            this.columnList.columns.changes
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(() => this.setTableSchema());
+            this.columnList.columns.changes.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setTableSchema());
         }
         this.setTableSchema();
     }
@@ -517,7 +529,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (this.data) {
-            if (changes.node && changes.node.currentValue) {
+            if (changes.node?.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
                 this.data.loadPage(changes.node.currentValue, merge, null);
                 this.preserveExistingSelection();
@@ -555,7 +567,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getNodeActions(node: NodeEntry | any): ContentActionModel[] {
-        if (node && node.entry) {
+        if (node?.entry) {
             let target = null;
 
             if (node.entry.isFile) {
@@ -575,9 +587,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
                 const actionsByTarget = this.actions
                     .filter((entry) => {
-                        const isVisible = (typeof entry.visible === 'function')
-                            ? entry.visible(node)
-                            : entry.visible;
+                        const isVisible = typeof entry.visible === 'function' ? entry.visible(node) : entry.visible;
 
                         return isVisible && entry.target.toLowerCase() === target;
                     })
@@ -613,10 +623,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             return action.disabled(node);
         }
 
-        if ((action.permission &&
-            action.disableWithNoPermission &&
-            !this.contentService.hasAllowableOperations(node.entry, action.permission)) ||
-            this.lockService.isLocked(node.entry)) {
+        if (
+            (action.permission && action.disableWithNoPermission && !this.contentService.hasAllowableOperations(node.entry, action.permission)) ||
+            this.lockService.isLocked(node.entry)
+        ) {
             return true;
         } else {
             return action.disabled;
@@ -654,8 +664,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private isLinkFolder(node: Node) {
-        return node.nodeType === 'app:folderlink' && node.properties &&
-            node.properties['cm:destination'];
+        return node.nodeType === 'app:folderlink' && node.properties && node.properties['cm:destination'];
     }
 
     private updateCustomSourceData(nodeId: string): void {
@@ -669,13 +678,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * @param action Action to be executed against the context.
      */
     executeContentAction(node: NodeEntry, action: ContentActionModel) {
-        if (node && node.entry && action) {
-            const handlerSub = (typeof action.handler === 'function') ? action.handler(node, this, action.permission) : of(true);
+        if (node?.entry && action) {
+            const handlerSub = typeof action.handler === 'function' ? action.handler(node, this, action.permission) : of(true);
 
             if (typeof action.execute === 'function' && handlerSub) {
-                handlerSub
-                    .pipe(takeUntil(this.onDestroy$))
-                    .subscribe(() => action.execute(node));
+                handlerSub.pipe(takeUntil(this.onDestroy$)).subscribe(() => action.execute(node));
             }
         }
     }
@@ -710,16 +717,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.updateCustomSourceData(this.currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
-            .subscribe((documentNode: DocumentLoaderNode) => {
+        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy).subscribe(
+            (documentNode: DocumentLoaderNode) => {
                 if (documentNode.currentNode) {
                     this.folderNode = documentNode.currentNode.entry;
                     this.$folderNode.next(documentNode.currentNode.entry);
                 }
                 this.onPageLoaded(documentNode.children);
-            }, (err) => {
+            },
+            (err) => {
                 this.handleError(err);
-            });
+            }
+        );
     }
 
     resetSelection() {
@@ -751,10 +760,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private buildOrderByArray(currentKey: string, currentDirection: string): string[] {
-        return [
-            `${this.additionalSorting.key} ${this.additionalSorting.direction}`,
-            `${currentKey} ${currentDirection}`
-        ];
+        return [`${this.additionalSorting.key} ${this.additionalSorting.direction}`, `${currentKey} ${currentDirection}`];
     }
 
     /**
@@ -801,7 +807,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.executeActionClick(nodeEntry);
             }
         }
-
     }
 
     onNodeDblClick(nodeEntry: NodeEntry) {
@@ -825,7 +830,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     executeActionClick(nodeEntry: NodeEntry) {
-        if (nodeEntry && nodeEntry.entry) {
+        if (nodeEntry?.entry) {
             if (nodeEntry.entry.isFile) {
                 this.onPreviewFile(nodeEntry);
             }
@@ -839,10 +844,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     include: this.includeFields
                 };
 
-                this.nodesApi.getNode(nodeEntry.entry['guid'], options)
-                    .then((node: NodeEntry) => {
-                        this.navigateTo(node.entry);
-                    });
+                this.nodesApi.getNode(nodeEntry.entry['guid'], options).then((node: NodeEntry) => {
+                    this.navigateTo(node.entry);
+                });
             }
         }
     }
@@ -911,7 +915,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     canNavigateFolder(node: Node): boolean {
         let canNavigateFolder: boolean = false;
 
-        if (node && node.isFolder) {
+        if (node?.isFolder) {
             canNavigateFolder = true;
         }
 
@@ -960,8 +964,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 if (JSON.parse(err.message).error.statusCode === 403) {
                     this.noPermission = true;
                 }
-            } catch (error) {
-            }
+            } catch (error) {}
         }
         this.setLoadingState(false);
         this.error.emit(err);
@@ -976,7 +979,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     getSelectionBasedOnSelectionMode(): DataRow[] {
-        return this.hasPreselectedRows() ? (this.isSingleSelectionMode() ? [this.preselectedRows[0]] : this.data.getSelectedRows()) : this.data.getSelectedRows();
+        return this.hasPreselectedRows()
+            ? this.isSingleSelectionMode()
+                ? [this.preselectedRows[0]]
+                : this.data.getSelectedRows()
+            : this.data.getSelectedRows();
     }
 
     onPreselectNodes() {

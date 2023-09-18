@@ -19,8 +19,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { LogService, InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
 import { MatSelectChange } from '@angular/material/select';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {TranslateService} from '@ngx-translate/core';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { TranslateService } from '@ngx-translate/core';
 import { SitesService } from '../common/services/sites.service';
 
 /* eslint-disable no-shadow */
@@ -39,7 +39,6 @@ export enum Relations {
     host: { class: 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
-
     /** Hide the "My Files" option. */
     @Input()
     hideMyFiles: boolean = false;
@@ -81,12 +80,13 @@ export class DropdownSitesComponent implements OnInit {
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
 
-    constructor(private authService: AuthenticationService,
-                private sitesService: SitesService,
-                private logService: LogService,
-                private liveAnnouncer: LiveAnnouncer,
-                private translateService: TranslateService) {
-    }
+    constructor(
+        private authService: AuthenticationService,
+        private sitesService: SitesService,
+        private logService: LogService,
+        private liveAnnouncer: LiveAnnouncer,
+        private translateService: TranslateService
+    ) {}
 
     ngOnInit() {
         if (!this.siteList) {
@@ -102,10 +102,12 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     selectedSite(event: MatSelectChange) {
-        this.liveAnnouncer.announce(this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
-            placeholder: this.translateService.instant(this.placeholder),
-            selectedOption: this.translateService.instant(event.value.entry.title)
-        }));
+        this.liveAnnouncer.announce(
+            this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
+                placeholder: this.translateService.instant(this.placeholder),
+                selectedOption: this.translateService.instant(event.value.entry.title)
+            })
+        );
         this.change.emit(event.value);
     }
 
@@ -121,8 +123,8 @@ export class DropdownSitesComponent implements OnInit {
             extendedOptions.relations = [this.relations];
         }
 
-        this.sitesService.getSites(extendedOptions).subscribe((sitePaging: SitePaging) => {
-
+        this.sitesService.getSites(extendedOptions).subscribe(
+            (sitePaging: SitePaging) => {
                 if (!this.siteList) {
                     this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
@@ -137,7 +139,6 @@ export class DropdownSitesComponent implements OnInit {
                             this.value = this.MY_FILES_VALUE;
                         }
                     }
-
                 } else {
                     const siteList: SitePaging = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
@@ -155,7 +156,8 @@ export class DropdownSitesComponent implements OnInit {
             },
             (error) => {
                 this.logService.error(error);
-            });
+            }
+        );
     }
 
     showLoading(): boolean {
@@ -167,7 +169,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private siteListHasMoreItems(): boolean {
-        return this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems;
+        return this.siteList?.list.pagination?.hasMoreItems;
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
@@ -177,7 +179,9 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     private isCurrentUserMember(site: SiteEntry, loggedUserName: string): boolean {
-        return site.entry.visibility === 'PUBLIC' ||
-            !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase());
+        return (
+            site.entry.visibility === 'PUBLIC' ||
+            !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase())
+        );
     }
 }

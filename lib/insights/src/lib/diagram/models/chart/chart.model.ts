@@ -29,28 +29,28 @@ export class Chart {
     options?: any;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.title = obj.title;
-        this.titleKey = obj.titleKey;
-        this.labels = obj.labels || [];
-        this.data = obj.data || [];
-        this.datasets = obj.datasets || [];
-        this.detailsTable = obj.detailsTable;
-        this.showDetails = !!obj.showDetails;
-        this.options = obj.options;
+        this.id = obj?.id;
+        this.title = obj?.title;
+        this.titleKey = obj?.titleKey;
+        this.labels = obj?.labels || [];
+        this.data = obj?.data || [];
+        this.datasets = obj?.datasets || [];
+        this.detailsTable = obj?.detailsTable;
+        this.showDetails = !!obj?.showDetails;
+        this.options = obj?.options;
 
-        if (obj && obj.type) {
+        if (obj?.type) {
             this.type = this.convertType(obj.type);
             this.icon = this.getIconType(this.type);
         }
     }
 
     hasData(): boolean {
-        return this.data && this.data.length > 0;
+        return this.data?.length > 0;
     }
 
     hasDatasets(): boolean {
-        return this.datasets && this.datasets.length > 0;
+        return this.datasets?.length > 0;
     }
 
     hasDetailsTable(): boolean {

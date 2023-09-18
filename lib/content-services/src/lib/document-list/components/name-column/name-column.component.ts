@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnInit,
-    ChangeDetectionStrategy,
-    ViewEncapsulation,
-    ElementRef,
-    OnDestroy
-} from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, OnDestroy } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -35,13 +27,17 @@ import { takeUntil } from 'rxjs/operators';
     template: `
         <span
             role="link"
-            [attr.aria-label]="'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL' | translate:{
-                name:  displayText$ | async
-            }"
+            [attr.aria-label]="
+                'NAME_COLUMN_LINK.ACCESSIBILITY.ARIA_LABEL'
+                    | translate
+                        : {
+                              name: displayText$ | async
+                          }
+            "
             class="adf-datatable-cell-value"
             title="{{ node | adfNodeNameTooltip }}"
-            (click)="onClick()">
-
+            (click)="onClick()"
+        >
             {{ displayText$ | async }}
         </span>
     `,
@@ -66,25 +62,23 @@ export class NameColumnComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(node => {
-                const row: ShareDataRow = this.context.row;
-                if (row) {
-                    const { entry } = row.node;
+        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
 
-                    if (entry === node) {
-                        row.node = { entry };
-                        this.updateValue();
-                    }
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
                 }
-            });
+            }
+        });
     }
 
     protected updateValue() {
         this.node = this.context.row.node;
 
-        if (this.node && this.node.entry) {
+        if (this.node?.entry) {
             const displayText = this.context.row.getValue(this.key);
             this.displayText$.next(displayText || this.node.entry.id);
         }

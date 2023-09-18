@@ -40,8 +40,9 @@ export class ProcessListCloudService extends BaseCloudService {
 
             return callback(queryUrl, queryParams).pipe(
                 map((response: any) => {
-                    const entries = response.list && response.list.entries;
+                    const entries = response.list?.entries;
                     if (entries) {
+                        // TODO: this is a hack of the model and needs to be revisited
                         response.list.entries = entries.map((entryData) => entryData.entry);
                     }
                     return response;
@@ -98,7 +99,7 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParams['variableKeys'].split(',');
     }
 
-    protected isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid(requestNode: ProcessQueryCloudRequestModel, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
@@ -106,9 +107,7 @@ export class ProcessListCloudService extends BaseCloudService {
         const queryParam = {};
 
         for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) &&
-                !this.isExcludedField(property) &&
-                this.isPropertyValueValid(requestNode, property)) {
+            if (requestNode.hasOwnProperty(property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = this.getQueryParamValueFromRequestNode(requestNode, property as keyof ProcessQueryCloudRequestModel);
             }
         }
@@ -120,12 +119,9 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private getQueryParamValueFromRequestNode(
-        requestNode: ProcessQueryCloudRequestModel,
-        property: keyof ProcessQueryCloudRequestModel
-    ) {
+    private getQueryParamValueFromRequestNode(requestNode: ProcessQueryCloudRequestModel, property: keyof ProcessQueryCloudRequestModel) {
         if (property === 'variableKeys' && requestNode[property]?.length > 0) {
-            return `${requestNode[property].map(variableId => variableId).join(',')}`;
+            return `${requestNode[property].map((variableId) => variableId).join(',')}`;
         }
 
         return requestNode[property];

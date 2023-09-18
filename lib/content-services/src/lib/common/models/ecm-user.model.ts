@@ -43,27 +43,27 @@ export class EcmUserModel {
     capabilities?: Capabilities;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.firstName = obj && obj.firstName;
-        this.lastName = obj && obj.lastName;
-        this.description = obj && obj.description || null;
-        this.avatarId = obj && obj.avatarId || null;
-        this.email = obj && obj.email || null;
-        this.skypeId = obj && obj.skypeId;
-        this.googleId = obj && obj.googleId;
-        this.instantMessageId = obj && obj.instantMessageId;
-        this.jobTitle = obj && obj.jobTitle || null;
-        this.location = obj && obj.location || null;
-        this.company = obj && obj.company;
-        this.mobile = obj && obj.mobile;
-        this.telephone = obj && obj.telephone;
-        this.statusUpdatedAt = obj && obj.statusUpdatedAt;
-        this.userStatus = obj && obj.userStatus;
-        this.enabled = obj && obj.enabled;
-        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
-        this.aspectNames = obj && obj.aspectNames;
-        this.properties = obj && obj.properties;
-        this.capabilities = obj && obj.capabilities;
+        this.id = obj?.id || null;
+        this.firstName = obj?.firstName;
+        this.lastName = obj?.lastName;
+        this.description = obj?.description || null;
+        this.avatarId = obj?.avatarId || null;
+        this.email = obj?.email || null;
+        this.skypeId = obj?.skypeId;
+        this.googleId = obj?.googleId;
+        this.instantMessageId = obj?.instantMessageId;
+        this.jobTitle = obj?.jobTitle || null;
+        this.location = obj?.location || null;
+        this.company = obj?.company;
+        this.mobile = obj?.mobile;
+        this.telephone = obj?.telephone;
+        this.statusUpdatedAt = obj?.statusUpdatedAt;
+        this.userStatus = obj?.userStatus;
+        this.enabled = obj?.enabled;
+        this.emailNotificationsEnabled = obj?.emailNotificationsEnabled;
+        this.aspectNames = obj?.aspectNames;
+        this.properties = obj?.properties;
+        this.capabilities = obj?.capabilities;
     }
 
     isAdmin(): boolean {

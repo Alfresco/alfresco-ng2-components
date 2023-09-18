@@ -17,14 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { LogService, FormService } from '@alfresco/adf-core';
+import { LogService, FormService, FormFieldModel } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumnOption } from '../models/dynamic-table-column-option.model';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { ProcessDefinitionService } from '../../../../services/process-definition.service';
-import { TaskFormService } from  '../../../../services/task-form.service';
+import { TaskFormService } from '../../../../services/task-form.service';
 
 @Component({
     selector: 'adf-dropdown-editor',
@@ -32,7 +32,6 @@ import { TaskFormService } from  '../../../../services/task-form.service';
     styleUrls: ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {
-
     value: any = null;
     options: DynamicTableColumnOption[] = [];
 
@@ -45,17 +44,18 @@ export class DropdownEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(public formService: FormService,
-                private taskFormService: TaskFormService,
-                private processDefinitionService: ProcessDefinitionService,
-                private logService: LogService) {
-    }
+    constructor(
+        public formService: FormService,
+        private taskFormService: TaskFormService,
+        private processDefinitionService: ProcessDefinitionService,
+        private logService: LogService
+    ) {}
 
     ngOnInit() {
         const field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
-                if (this.table.form && this.table.form.taskId) {
+                if (this.table.form?.taskId) {
                     this.getValuesByTaskId(field);
                 } else {
                     this.getValuesByProcessDefinitionId(field);
@@ -67,38 +67,26 @@ export class DropdownEditorComponent implements OnInit {
         }
     }
 
-    getValuesByTaskId(field) {
-        this.taskFormService
-            .getRestFieldValuesColumn(
-                field.form.taskId,
-                field.id,
-                this.column.id
-            )
-            .subscribe(
-                (dynamicTableColumnOption: DynamicTableColumnOption[]) => {
-                    this.column.options = dynamicTableColumnOption || [];
-                    this.options = this.column.options;
-                    this.value = this.table.getCellValue(this.row, this.column);
-                },
-                (err) => this.handleError(err)
-            );
+    getValuesByTaskId(field: FormFieldModel) {
+        this.taskFormService.getRestFieldValuesColumn(field.form.taskId, field.id, this.column.id).subscribe(
+            (dynamicTableColumnOption) => {
+                this.column.options = dynamicTableColumnOption || [];
+                this.options = this.column.options;
+                this.value = this.table.getCellValue(this.row, this.column);
+            },
+            (err) => this.handleError(err)
+        );
     }
 
-    getValuesByProcessDefinitionId(field) {
-        this.processDefinitionService
-            .getRestFieldValuesColumnByProcessId(
-                field.form.processDefinitionId,
-                field.id,
-                this.column.id
-            )
-            .subscribe(
-                (dynamicTableColumnOption: DynamicTableColumnOption[]) => {
-                    this.column.options = dynamicTableColumnOption || [];
-                    this.options = this.column.options;
-                    this.value = this.table.getCellValue(this.row, this.column);
-                },
-                (err) => this.handleError(err)
-            );
+    getValuesByProcessDefinitionId(field: FormFieldModel) {
+        this.processDefinitionService.getRestFieldValuesColumnByProcessId(field.form.processDefinitionId, field.id, this.column.id).subscribe(
+            (dynamicTableColumnOption) => {
+                this.column.options = dynamicTableColumnOption || [];
+                this.options = this.column.options;
+                this.value = this.table.getCellValue(this.row, this.column);
+            },
+            (err) => this.handleError(err)
+        );
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {

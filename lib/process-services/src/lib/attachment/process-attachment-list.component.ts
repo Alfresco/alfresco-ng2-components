@@ -37,7 +37,6 @@ import { ProcessContentService } from '../form/services/process-content.service'
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
-
     @ContentChild(EmptyListComponent)
     emptyTemplate: EmptyListComponent;
 
@@ -74,14 +73,15 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     attachments: any[] = [];
     isLoading: boolean = false;
 
-    constructor(private activitiContentService: ProcessContentService,
-                private downloadService: DownloadService,
-                private thumbnailService: ThumbnailService,
-                private ngZone: NgZone) {
-    }
+    constructor(
+        private activitiContentService: ProcessContentService,
+        private downloadService: DownloadService,
+        private thumbnailService: ThumbnailService,
+        private ngZone: NgZone
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['processInstanceId'] && changes['processInstanceId'].currentValue) {
+        if (changes['processInstanceId']?.currentValue) {
             this.loadAttachmentsByProcessInstanceId(changes['processInstanceId'].currentValue);
         }
     }
@@ -119,7 +119,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     }
 
     isEmpty(): boolean {
-        return this.attachments && this.attachments.length === 0;
+        return this.attachments?.length === 0;
     }
 
     onShowRowActionsMenu(event: any) {
@@ -138,10 +138,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
             name: 'download'
         };
 
-        event.value.actions = [
-            viewAction,
-            downloadAction
-        ];
+        event.value.actions = [viewAction, downloadAction];
 
         if (!this.disabled) {
             event.value.actions.splice(1, 0, removeAction);
@@ -212,7 +209,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
                 (err) => {
                     this.error.emit(err);
                     this.isLoading = false;
-                });
+                }
+            );
         }
     }
 
@@ -224,7 +222,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
                 },
                 (err) => {
                     this.error.emit(err);
-                });
+                }
+            );
         }
     }
 }
