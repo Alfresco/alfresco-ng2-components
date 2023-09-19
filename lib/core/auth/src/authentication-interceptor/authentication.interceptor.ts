@@ -19,7 +19,6 @@ import {
     HttpContextToken,
     HttpHandler,
     HttpHeaderResponse,
-    HttpHeaders,
     HttpInterceptor,
     HttpProgressEvent,
     HttpRequest,
@@ -45,8 +44,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       if (req.context.get(SHOULD_ADD_AUTH_TOKEN)) {
           return this.authService.addTokenToHeader(req.url, req.headers).pipe(
               mergeMap((headersWithBearer) => {
-                  const headerWithContentType = req.url.includes('alfresco/api') ? this.appendJsonContentType(headersWithBearer): headersWithBearer;
-                  const kcReq = req.clone({ headers: headerWithContentType});
+                  const kcReq = req.clone({ headers: headersWithBearer});
                   return next.handle(kcReq)
                   .pipe(
                       catchError((error) => observableThrowError(error))
@@ -56,22 +54,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       }
 
       return next.handle(req).pipe(catchError((error) => observableThrowError(error)));
-    }
-
-    private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
-
-      // prevent adding any content type, to properly handle formData with boundary browser generated value,
-      // as adding any Content-Type its going to break the upload functionality
-
-      if (headers.get('Content-Type') === 'multipart/form-data') {
-          return headers.delete('Content-Type');
-      }
-
-      if (!headers.get('Content-Type')) {
-          return headers.set('Content-Type', 'application/json;charset=UTF-8');
-      }
-
-      return headers;
     }
 
 }

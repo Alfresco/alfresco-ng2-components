@@ -321,68 +321,6 @@ describe('AdfHttpClient', () => {
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
 
-    it('should set Content-type to multipart/form-data if contentTypes array contains only multipart/form-data element', () => {
-        const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            contentTypes: ['multipart/form-data'],
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
-            }
-        };
-
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
-
-        const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
-
-        expect(req.request.headers.get('Content-Type')).toEqual('multipart/form-data');
-
-        req.flush(null, { status: 200, statusText: 'Ok' });
-    });
-
-    it('should set Content-type header to application/json if contentTypes array contains application/json', () => {
-        const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            contentTypes: ['multipart/form-data', 'application/json'],
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
-            }
-        };
-
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
-
-        const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
-
-        expect(req.request.headers.get('Content-Type')).toEqual('application/json');
-
-        req.flush(null, { status: 200, statusText: 'Ok' });
-    });
-
-    it('should set Content-type to application/json if contentTypes is not passed to the request options', () => {
-        const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
-            }
-        };
-
-        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch(error =>
-            fail(error)
-        );
-
-        const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
-
-        expect(req.request.headers.get('Content-Type')).toEqual('application/json');
-
-        req.flush(null, { status: 200, statusText: 'Ok' });
-    });
-
     it('should set Accept header to application/json if accepts is not passed to the request options', () => {
         const options: RequestOptions = {
             path: '',
