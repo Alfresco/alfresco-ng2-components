@@ -28,11 +28,13 @@
                 <div *ngIf="editable"
                     class="adf-metadata-action-buttons">
                     <button mat-icon-button 
+                            [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                             (click)="cancelChanges(buttonType.GeneralInfo, $event, group)"
                             data-automation-id="reset-metadata">
                         <mat-icon>clear</mat-icon>
                     </button>
                     <button mat-icon-button
+                            [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                             (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
                             color="primary"
                             data-automation-id="save-general-info-metadata"
@@ -80,11 +82,13 @@
                     </div>
                     <div *ngIf="editableTags" class="adf-metadata-action-buttons">
                         <button mat-icon-button
+                                [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                 (click)="cancelChanges(buttonType.Tags, $event, group)"
                                 data-automation-id="reset-tags-metadata">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
+                                [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                                 (click)="saveChanges(buttonType.Tags, $event, group)"
                                 color="primary"
                                 data-automation-id="save-tags-metadata"
@@ -140,11 +144,13 @@
                     </div>
                     <div *ngIf="editableCategories" class="adf-metadata-action-buttons">
                         <button mat-icon-button
+                                [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                 (click)="cancelChanges(buttonType.Categories, $event, group)"
                                 data-automation-id="reset-metadata">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
+                                [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                                 (click)="saveChanges(buttonType.Categories, $event, group)"
                                 color="primary"
                                 data-automation-id="save-categories-metadata"
@@ -205,11 +211,13 @@
                             </button>
                             <div class="adf-metadata-action-buttons" *ngIf="group.editable">
                                 <button mat-icon-button
+                                        [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                         (click)="cancelChanges(buttonType.Group, $event, group)"
                                         data-automation-id="reset-metadata">
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button
+                                        [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                                         (click)="saveChanges(buttonType.Group, $event, group)"
                                         color="primary"
                                         data-automation-id="save-metadata"
