@@ -390,7 +390,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.pdfViewer.update();
         }
-        // this.setDocumentOverflow();
+        this.setDocumentOverflow();
     }
 
     /**
