@@ -16,7 +16,7 @@
         "additionalEntryPoints": [
           {
             "entryName": "shared",
-            "entryPath": "/lib/testing/src/lib/shared/index.ts"
+            "entryPath": "/src/lib/shared/index.ts"
           }
         ],
         "compiler": "tsc",
