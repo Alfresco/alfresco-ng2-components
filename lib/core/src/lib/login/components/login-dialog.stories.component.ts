@@ -16,7 +16,7 @@
  */
 
 import { Component, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subject } from 'rxjs';
 import { LoginDialogComponent } from './login-dialog.component';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';

@@ -448,7 +448,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onUploadNewVersion(ev) {
         const contentEntry = ev.detail.data.node.entry;
-        const showComments = true;
+        const showComments = this.showVersionComments;
         const allowDownload = this.allowVersionDownload;
         const newFileVersion = ev.detail.files[0].file;
 

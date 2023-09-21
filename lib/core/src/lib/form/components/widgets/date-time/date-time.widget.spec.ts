@@ -21,7 +21,7 @@ import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
 import { DateFieldValidator, DateTimeFieldValidator } from '../core';

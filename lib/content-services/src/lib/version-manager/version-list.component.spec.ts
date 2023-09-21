@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { of } from 'rxjs';
 import { Node, VersionPaging, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';

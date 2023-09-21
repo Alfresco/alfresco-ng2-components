@@ -18,7 +18,7 @@
 import { CoreTestingModule, UserInfoMode } from '@alfresco/adf-core';
 import { fakeEcmUser, fakeEcmUserNoImage } from '@alfresco/adf-content-services';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { BpmUserModel } from '../common/models/bpm-user.model';

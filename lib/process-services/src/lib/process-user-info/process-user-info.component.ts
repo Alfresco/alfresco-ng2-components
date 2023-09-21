@@ -18,7 +18,7 @@
 import { UserInfoMode } from '@alfresco/adf-core';
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatLegacyMenuTrigger as MatMenuTrigger, LegacyMenuPositionX as MenuPositionX, LegacyMenuPositionY as MenuPositionY } from '@angular/material/legacy-menu';
 import { Subject } from 'rxjs';
 import { PeopleProcessService } from '../common/services/people-process.service';
 import { BpmUserModel } from '../common/models/bpm-user.model';

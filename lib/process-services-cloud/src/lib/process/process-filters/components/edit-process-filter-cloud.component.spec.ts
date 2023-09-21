@@ -20,7 +20,7 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';

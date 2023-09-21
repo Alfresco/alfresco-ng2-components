@@ -1,0 +1,18 @@
+{
+  "migrations": [
+    {
+      "version": "15.0.0-0",
+      "description": "Updates the Angular Material to v15",
+      "factory": "./ng-update/index_bundled#updateToV15",
+      "package": "@angular/material",
+      "name": "migration-v15"
+    },
+    {
+      "version": "15.0.0-0",
+      "description": "Updates the Angular CDK to v15",
+      "factory": "./ng-update/index#updateToV15",
+      "package": "@angular/cdk",
+      "name": "migration-v15"
+    }
+  ]
+}

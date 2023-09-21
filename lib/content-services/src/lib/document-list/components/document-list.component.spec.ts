@@ -59,7 +59,7 @@ import { ShareDataRow } from '../data/share-data-row.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { matIconRegistryMock } from '../../testing/mat-icon-registry-mock';
 import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
 

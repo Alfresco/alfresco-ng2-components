@@ -23,7 +23,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { MatSelect } from '@angular/material/select';
+import { MatLegacySelect as MatSelect } from '@angular/material/legacy-select';
 
 @Component({
     selector: 'adf-test-filter',

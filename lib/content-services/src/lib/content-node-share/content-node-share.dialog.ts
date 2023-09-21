@@ -28,10 +28,7 @@ import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { format, add, endOfDay, isBefore } from 'date-fns';
 
-interface SharedDialogFormProps {
-    sharedUrl: FormControl<string>;
-    time: FormControl<Date>;
-}
+type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
 @Component({
     selector: 'adf-share-dialog',
@@ -41,7 +38,7 @@ interface SharedDialogFormProps {
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
-    private minDateValidator = (control: FormControl<Date>): any =>
+    private minDateValidator = (control: AbstractControl): any =>
         isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
     minDate = add(new Date(), { days: 1 });
@@ -51,14 +48,19 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isFileShared = false;
     isDisabled = false;
     isLinkWithExpiryDate = false;
-    form = new FormGroup<SharedDialogFormProps>({
+    form: FormGroup = new FormGroup({
         sharedUrl: new FormControl(''),
-        time: new FormControl({ value: null, disabled: true }, [Validators.required, this.minDateValidator])
+        time: new FormControl({ value: '', disabled: true }, [Validators.required, this.minDateValidator])
     });
+    type: DatePickerType = 'date';
+    maxDebounceTime = 500;
     isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
+
+    @ViewChild('datePickerInput', { static: true })
+    datePickerInput;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -97,7 +99,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    get time(): FormControl<Date> {
+    get time(): AbstractControl {
         return this.form.controls['time'];
     }
 
@@ -175,7 +177,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.isDisabled = true;
 
         this.sharedLinksApiService.createSharedLinks(nodeId, sharedLinkWithExpirySettings).subscribe(
-            (sharedLink) => {
+            (sharedLink: SharedLinkEntry) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
                     if (this.data.node.entry.properties) {
@@ -265,7 +267,11 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private updateNode(date: Date) {
         let expiryDate: Date | string;
         if (date) {
-            expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+            if (this.type === 'date') {
+                expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+            } else {
+                expiryDate = format(new Date(date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
+            }
         } else {
             expiryDate = null;
         }

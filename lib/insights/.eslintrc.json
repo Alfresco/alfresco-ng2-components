@@ -4,10 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
+      "extends": ["plugin:@nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
       "rules": {
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
         "@angular-eslint/no-output-native": "off",
@@ -16,24 +13,15 @@
           "error",
           {
             "type": "element",
-            "prefix": [
-              "adf",
-              "app"
-            ],
+            "prefix": ["adf", "app"],
             "style": "kebab-case"
           }
         ],
         "@angular-eslint/directive-selector": [
           "error",
           {
-            "type": [
-              "element",
-              "attribute"
-            ],
-            "prefix": [
-              "adf",
-              "app"
-            ],
+            "type": ["element", "attribute"],
+            "prefix": ["adf", "app"],
             "style": "kebab-case"
           }
         ],
@@ -75,7 +63,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"

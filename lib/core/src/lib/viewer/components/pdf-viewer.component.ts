@@ -31,7 +31,7 @@ import {
     EventEmitter,
     SimpleChanges
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { LogService } from '../../common/services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';

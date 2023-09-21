@@ -18,7 +18,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { InfiniteSelectScrollDirective } from './infinite-select-scroll.directive';
-import {  MatSelect, MatSelectModule } from '@angular/material/select';
+import {  MatLegacySelect as MatSelect, MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({

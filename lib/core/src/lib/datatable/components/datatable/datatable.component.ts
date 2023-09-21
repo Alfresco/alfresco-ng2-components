@@ -40,8 +40,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';

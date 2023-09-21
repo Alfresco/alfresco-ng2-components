@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { DialogAspectListService } from '@alfresco/adf-content-services';
 import { TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Subject } from 'rxjs';
 
 describe('DialogAspectListService', () => {

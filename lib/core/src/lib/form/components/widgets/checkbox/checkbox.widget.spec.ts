@@ -23,9 +23,9 @@ import { CheckboxWidgetComponent } from './checkbox.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { CoreTestingModule } from '../../../../testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { By } from '@angular/platform-browser';
 
 describe('CheckboxWidgetComponent', () => {

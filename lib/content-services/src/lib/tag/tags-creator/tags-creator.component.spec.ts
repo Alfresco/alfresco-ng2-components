@@ -21,16 +21,16 @@ import { NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatError, MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatLegacyError as MatError, MatLegacyFormField as MatFormField, MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ContentDirectiveModule, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule, MatLegacySelectionList as MatSelectionList, MatLegacySelectionListChange as MatSelectionListChange } from '@angular/material/legacy-list';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;

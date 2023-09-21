@@ -35,8 +35,8 @@ import {
     Component, ComponentFactoryResolver, Injector, SimpleChange
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
-import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacyDialogHarness as MatDialogHarness } from '@angular/material/legacy-dialog/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';

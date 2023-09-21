@@ -18,8 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SnackbarContentComponent } from '@alfresco/adf-core';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
+import { MAT_LEGACY_SNACK_BAR_DATA as MAT_SNACK_BAR_DATA, MatLegacySnackBarModule as MatSnackBarModule, MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 

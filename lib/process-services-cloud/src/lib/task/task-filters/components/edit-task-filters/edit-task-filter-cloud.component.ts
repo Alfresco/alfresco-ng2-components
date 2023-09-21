@@ -15,14 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { UntypedFormBuilder } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { takeUntil, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import moment, { Moment } from 'moment';
+
 import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
+import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
+import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
+import { TaskCloudService } from '../../../services/task-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
-import { set } from 'date-fns';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -31,10 +38,16 @@ import { set } from 'date-fns';
     encapsulation: ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
-    private taskFilterCloudService = inject(TaskFilterCloudService);
-
-    constructor() {
-        super();
+    constructor(
+        formBuilder: UntypedFormBuilder,
+        dialog: MatDialog,
+        translateService: TranslationService,
+        private taskFilterCloudService: TaskFilterCloudService,
+        dateAdapter: DateAdapter<Moment>,
+        userPreferencesService: UserPreferencesService,
+        appsProcessCloudService: AppsProcessCloudService,
+        taskCloudService: TaskCloudService) {
+        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService, dialog, translateService);
     }
 
     assignNewFilter(model: TaskFilterCloudModel) {
@@ -75,15 +88,13 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue = set(
-                new Date(formValues.lastModifiedTo),
-                {
-                    hours: 23,
-                    minutes: 59,
-                    seconds: 59
-                }
-            );
-            formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString();
+            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
+            lastModifiedToFilterValue.set({
+                hour: 23,
+                minute: 59,
+                second: 59
+            });
+            formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString(true);
         }
     }
 

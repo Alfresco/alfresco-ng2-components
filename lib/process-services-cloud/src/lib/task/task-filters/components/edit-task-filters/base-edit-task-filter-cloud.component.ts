@@ -26,10 +26,10 @@ import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
 import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { Environment } from '../../../../common/interface/environment.interface';
 import { isValid } from 'date-fns';
 
