@@ -268,13 +268,13 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private getHeaders(options: RequestOptions): HttpHeaders {
-        const accept = AdfHttpClient.jsonPreferredMime(options.accepts);
         const contentType = AdfHttpClient.jsonPreferredMime(options.contentTypes);
+        const accept = AdfHttpClient.jsonPreferredMime(options.accepts);
 
         const optionsHeaders = {
             ...options.headerParams,
             ...(accept && {Accept: accept}),
-            ...(contentType !== 'multipart/form-data' && { 'Content-Type': contentType })
+            ...((contentType) && {'Content-Type': contentType})
         };
 
         if (!this.disableCsrf) {
@@ -291,7 +291,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @returns  The chosen content type, preferring JSON.
      */
     private static jsonPreferredMime(contentTypes: readonly string[]): string {
-        if (!contentTypes?.length) {
+        if (!contentTypes || !contentTypes.length) {
             return 'application/json';
         }
 

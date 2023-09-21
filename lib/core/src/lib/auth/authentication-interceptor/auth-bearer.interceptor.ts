@@ -19,7 +19,7 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
   HttpHandler, HttpInterceptor, HttpRequest,
-  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent
+  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
 } from '@angular/common/http';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
@@ -57,13 +57,30 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     return this.authenticationService.addTokenToHeader(requestUrl, req.headers)
       .pipe(
         mergeMap((headersWithBearer) => {
-          const kcReq = req.clone({ headers: headersWithBearer});
+          const headerWithContentType = this.appendJsonContentType(headersWithBearer);
+          const kcReq = req.clone({ headers: headerWithContentType});
           return next.handle(kcReq)
             .pipe(
               catchError((error) => observableThrowError(error))
            );
       })
       );
+  }
+
+  private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
+
+    // prevent adding any content type, to properly handle formData with boundary browser generated value,
+    // as adding any Content-Type its going to break the upload functionality
+
+    if (headers.get('Content-Type') === 'multipart/form-data') {
+        return headers.delete('Content-Type');
+    }
+
+    if (!headers.get('Content-Type')) {
+        return headers.set('Content-Type', 'application/json;charset=UTF-8');
+    }
+
+    return headers;
   }
 
     protected get bearerExcludedUrls(): readonly string[] {
