@@ -268,8 +268,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private getHeaders(options: RequestOptions): HttpHeaders {
-        const contentType = AdfHttpClient.jsonPreferredMime(options.contentTypes);
-        const accept = AdfHttpClient.jsonPreferredMime(options.accepts);
+        const contentType = options.contentType || AdfHttpClient.jsonPreferredMime(options.contentTypes);
+        const accept = options.accept || AdfHttpClient.jsonPreferredMime(options.accepts);
 
         const optionsHeaders = {
             ...options.headerParams,
@@ -291,7 +291,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @returns  The chosen content type, preferring JSON.
      */
     private static jsonPreferredMime(contentTypes: readonly string[]): string {
-        if (!contentTypes || !contentTypes.length) {
+        if (!contentTypes?.length) {
             return 'application/json';
         }
 
@@ -316,7 +316,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */
     private static isJsonMime(contentType: string): boolean {
-        return Boolean(contentType !== null && contentType.match(/^application\/json(;.*)?$/i));
+        return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
 
