@@ -449,11 +449,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     hasTags(): boolean {
-       return !(this.tags?.length > 0) && !this.editableTags;
+        return (this.tags?.length === 0) && !this.editableTags;
     }
 
     hasCategories(): boolean {
-        return !(this.categories?.length > 0) && !this.editableCategories;
+        return (this.categories?.length === 0) && !this.editableCategories;
     }
 
     get hasToggleEdit(): boolean {
@@ -487,8 +487,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) {
-            // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
