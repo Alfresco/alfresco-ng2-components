@@ -449,19 +449,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return !(this.categories.length > 0) && !this.editableCategories;
     }
 
-    get canToggleEdit(): boolean {
+    get hasToggleEdit(): boolean {
         return !this.editable && !this.readOnly && this.hasAllowableOperations;
     }
 
-    get canTagsToggleEdit(): boolean {
+    get hasTagsToggleEdit(): boolean {
         return !this.editableTags && !this.readOnly && this.hasAllowableOperations;
     }
 
-    get canCategoriesToggleEdit(): boolean {
+    get hasCategoriesToggleEdit(): boolean {
         return !this.editableCategories && !this.readOnly && this.hasAllowableOperations;
     }
 
-    canGroupToggleEdit(group: CardViewGroup): boolean {
+    hasGroupToggleEdit(group: CardViewGroup): boolean {
         return !group.editable && !this.readOnly && this.hasAllowableOperations;
     }
 
