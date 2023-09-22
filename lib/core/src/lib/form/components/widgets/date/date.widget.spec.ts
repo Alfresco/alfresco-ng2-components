@@ -16,13 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
+import { format, isSameDay, parse } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;
@@ -62,8 +62,9 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = moment(minValue, widget.field.dateDisplayFormat);
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
+        const expected = parse(minValue, widget.field.dateDisplayFormat, new Date());
+        const widgetDate = parse(widget.minDate, widget.field.dateDisplayFormat, new Date());
+        expect(isSameDay(widgetDate, expected)).toBeTruthy();
     });
 
     it('should date field be present', () => {
@@ -85,8 +86,9 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = moment(maxValue, widget.field.dateDisplayFormat);
-        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+        const expected = parse(maxValue, widget.field.dateDisplayFormat, new Date());
+        const widgetDate = parse(widget.maxDate, widget.field.dateDisplayFormat, new Date());
+        expect(isSameDay(widgetDate, expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {

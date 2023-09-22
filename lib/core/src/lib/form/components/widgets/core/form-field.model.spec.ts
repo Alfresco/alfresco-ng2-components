@@ -19,8 +19,15 @@ import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
+import { DateFormatTranslationService } from '../../../public-api';
 
 describe('FormFieldModel', () => {
+
+    let dateFormatTranslationService: DateFormatTranslationService;
+
+    beforeEach(() => {
+        dateFormatTranslationService = new DateFormatTranslationService();
+    });
 
     it('should store the form reference', () => {
         const form = new FormModel();
@@ -273,9 +280,9 @@ describe('FormFieldModel', () => {
             dateDisplayFormat: 'DD-MM-YYYY'
         });
 
-        const currentDate = moment(new Date());
-        const expectedDate = moment(currentDate).format('DD-MM-YYYY');
-        const expectedDateFormat = `${currentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
+        const currentDate = new Date();
+        const expectedDate = dateFormatTranslationService.format(currentDate, 'DD-MM-YYYY');
+        const expectedDateFormat = `${dateFormatTranslationService.format(currentDate, 'YYYY-MM-DD')}T00:00:00.000Z`;
 
         expect(field.value).toBe(expectedDate);
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);

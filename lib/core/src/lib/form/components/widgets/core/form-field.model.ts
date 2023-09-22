@@ -29,15 +29,20 @@ import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
+import { isValid } from 'date-fns';
+import { DateFormatTranslationService } from '../../../services/date-format-translation.service';
 
 // Maps to FormFieldRepresentation
+
+export const dateFormatTranslationService = new DateFormatTranslationService();
+
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
     private _required: boolean = false;
 
-    readonly defaultDateFormat: string = 'D-M-YYYY';
+    readonly defaultDateFormat: string = 'd-M-yyyy';
     readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
 
     // model members
@@ -239,6 +244,15 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getDefaultDateFormat(jsonField: any): string {
+        if(jsonField.fields) {
+            Object.keys(jsonField.fields).forEach((el) => {
+                if(jsonField.fields[el]) {
+                    jsonField.fields[el].forEach((element) => {
+                        element.dateDisplayFormat = element.dateDisplayFormat? dateFormatTranslationService.convertMomentToDateFnsFormat(element.dateDisplayFormat): element.dateDisplayFormat;
+                    });
+                }
+            });
+        }
         let originalType = jsonField.type;
         if (FormFieldTypes.isReadOnlyType(jsonField.type) && jsonField.params && jsonField.params.field) {
             originalType = jsonField.params.field.type;
@@ -335,16 +349,30 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti displaying/editing dates in d-M-YYYY format
          but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
-        if (this.isDateField(json) || this.isDateTimeField(json)) {
+         if (this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
                 if (isNumberValue(value)) {
                     dateValue = moment(value);
                 } else {
-                    dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = moment.utc(value, 'YYYY-MM-DD hh:mm A');
                 }
                 if (dateValue?.isValid()) {
                     value = dateValue.utc().format(this.dateDisplayFormat);
+                }
+            }
+        }
+
+        if (this.isDateField(json)) {
+            if (value) {
+                let dateValue;
+                if (isNumberValue(value)) {
+                    dateValue = new Date(value);
+                } else {
+                    dateValue = dateFormatTranslationService.parse(value.split('T')[0], 'YYYY-M-D');
+                }
+                if (isValid(dateValue)) {
+                    value = dateFormatTranslationService.format(dateValue, this.dateDisplayFormat);
                 }
             }
         }
@@ -417,12 +445,13 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                    this.value = dateFormatTranslationService.format(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateValue = moment(this.value, this.dateDisplayFormat, true);
-                if (dateValue?.isValid()) {
-                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                const dateValue = dateFormatTranslationService.parse(this.value, this.dateDisplayFormat);
+
+                if (isValid(dateValue)) {
+                    this.form.values[this.id] = `${dateFormatTranslationService.format(dateValue, 'YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;

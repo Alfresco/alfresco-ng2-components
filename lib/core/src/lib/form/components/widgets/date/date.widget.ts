@@ -32,8 +32,9 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: DateAdapter, useClass: DateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+    ],
     templateUrl: './date.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -62,8 +63,10 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
+                private userPreferencesService: UserPreferencesService,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
+                protected dateFormatTranslationService: DateFormatTranslationService) {
         super(formService);
     }
 
@@ -71,10 +74,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
 
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
+        this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
 
         if (this.field) {
             if (this.field.minValue) {
