@@ -562,12 +562,12 @@ describe('ContentMetadataComponent', () => {
         });
     });
 
-    describe('canToggleEdit', () => {
+    describe('hasToggleEdit', () => {
         it('should return true when editable is false, readOnly is false, and hasAllowableOperations is true', () => {
             component.editable = false;
             component.readOnly = false;
             component.hasAllowableOperations = true;
-            const result = component.canToggleEdit;
+            const result = component.hasToggleEdit;
             expect(result).toBe(true);
           });
 
@@ -575,22 +575,22 @@ describe('ContentMetadataComponent', () => {
             component.editable = true;
             component.readOnly = false;
             component.hasAllowableOperations = true;
-            const result = component.canToggleEdit;
+            const result = component.hasToggleEdit;
             expect(result).toBe(false);
         });
     });
 
-    describe('canTagsToggleEdit', () => {
-        it('should have canTagsToggleEdit property as expected', () => {
+    describe('hasTagsToggleEdit', () => {
+        it('should have hasTagsToggleEdit property as expected', () => {
             component.editableTags = false;
             component.readOnly = false;
             component.hasAllowableOperations = true;
             fixture.detectChanges();
-            expect(component.canTagsToggleEdit).toBe(true);
+            expect(component.hasTagsToggleEdit).toBe(true);
         });
     });
 
-    describe('canGroupToggleEdit', () => {
+    describe('hasGroupToggleEdit', () => {
         it('should return true when group is not editable, not read-only, and has allowable operations', () => {
             component.readOnly = false;
             component.hasAllowableOperations = true;
@@ -600,17 +600,17 @@ describe('ContentMetadataComponent', () => {
                 expanded: true,
                 editable: false
             };
-            const result = component.canGroupToggleEdit(group);
+            const result = component.hasGroupToggleEdit(group);
             expect(result).toBe(true);
         });
     });
 
-    describe('canCategoriesToggleEdit', () => {
-        it('should have canCategoriesToggleEdit property as expected', () => {
+    describe('hasCategoriesToggleEdit', () => {
+        it('should have hasCategoriesToggleEdit property as expected', () => {
             component.editableCategories = false;
             component.readOnly = false;
             component.hasAllowableOperations = true;
-            expect(component.canCategoriesToggleEdit).toBe(true);
+            expect(component.hasCategoriesToggleEdit).toBe(true);
         });
     });
 

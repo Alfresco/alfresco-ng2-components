@@ -16,7 +16,7 @@
                         {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                     </mat-panel-title>
                 </div>
-                <button *ngIf="canToggleEdit"
+                <button *ngIf="hasToggleEdit"
                         mat-icon-button
                         (click)="toggleEdit($event, group, buttonType.GeneralInfo)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -70,7 +70,7 @@
                         </mat-panel-title>
                     </div>
                     <div class="adf-tags-buttons">
-                        <button *ngIf="canTagsToggleEdit"
+                        <button *ngIf="hasTagsToggleEdit"
                                 mat-icon-button
                                 (click)="toggleEdit($event, group, buttonType.Tags)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -132,7 +132,7 @@
                         </mat-panel-title>
                     </div>
                     <div class="adf-metadata-categories-title">
-                        <button *ngIf="canCategoriesToggleEdit"
+                        <button *ngIf="hasCategoriesToggleEdit"
                                 mat-icon-button
                                 (click)="toggleEdit($event, group, buttonType.Categories)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -200,7 +200,7 @@
                                     {{ group.title | translate }}
                                 </mat-panel-title>
                             </div>
-                            <button *ngIf="canGroupToggleEdit(group)"
+                            <button *ngIf="hasGroupToggleEdit(group)"
                                     mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
