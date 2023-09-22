@@ -192,7 +192,7 @@ export class HostSettingsComponent implements OnInit {
 
         this.alfrescoApiService.reset();
         this.authenticationService.reset();
-        this.alfrescoApiService.getInstance().invalidateSession();
+        this.authenticationService.logout();
         this.success.emit(true);
     }
 
