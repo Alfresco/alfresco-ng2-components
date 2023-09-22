@@ -18,21 +18,25 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DateFnsAdapter, 
+    MAT_DATE_FNS_FORMATS 
+} from '@angular/material-date-fns-adapter';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
+import { isValid } from 'date-fns';
+import { DateFormatTranslationService } from '../../../services/date-format-translation.service';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: DateAdapter, useClass: DateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+    ],
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.scss'],
     host: {
@@ -52,14 +56,16 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     DATE_FORMAT = 'DD-MM-YYYY';
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: string;
+    maxDate: string;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
+                private userPreferencesService: UserPreferencesService,
+                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
+                protected dateFormatTranslationService: DateFormatTranslationService) {
         super(formService);
     }
 
@@ -67,19 +73,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
 
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
+        this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
 
         if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.DATE_FORMAT);
-            }
-
-            if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
-            }
+            this.minDate = isValid(this.field.minValue) ? this.dateFormatTranslationService.format(new Date(this.field.minValue), this.DATE_FORMAT) : this.field.minValue;
+            this.maxDate = isValid(this.field.maxValue) ? this.dateFormatTranslationService.format(new Date(this.field.maxValue), this.DATE_FORMAT) : this.field.maxValue;
         }
     }
 
@@ -89,9 +89,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     }
 
     onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = date.format(this.field.dateDisplayFormat);
+        const date = new Date(newDateValue);
+        if (isValid(date)) {
+            this.field.value = this.dateFormatTranslationService.format(date, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

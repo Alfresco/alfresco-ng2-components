@@ -18,11 +18,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
-import moment from 'moment';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 import { By } from '@angular/platform-browser';
+import { addDays, format, subDays } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
 
@@ -52,8 +52,8 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = moment(minValue, DATE_FORMAT_CLOUD);
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
+        const expected = format(new Date(minValue), DATE_FORMAT_CLOUD);
+        expect(widget.minDate).toEqual(expected);
     });
 
     it('should date field be present', () => {
@@ -75,8 +75,8 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = moment(maxValue, DATE_FORMAT_CLOUD);
-        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+        const expected = format(new Date(maxValue), DATE_FORMAT_CLOUD);
+        expect(widget.maxDate).toEqual(expected);
     });
 
     it('should eval visibility on date changed', () => {
@@ -91,8 +91,8 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
-        const todayDate = moment().format(DATE_FORMAT_CLOUD);
-        widget.onDateChanged({ value: todayDate });
+        const todayDate = new Date();
+        widget.onDateChanged({ value: format(todayDate, DATE_FORMAT_CLOUD) });
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -293,8 +293,8 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const todayDate = moment().format(DATE_FORMAT_CLOUD);
-            const expected = moment(todayDate).subtract(widget.field.minDateRangeValue, 'days');
+            const todayDate = new Date();
+            const expected = format(subDays(todayDate, widget.field.minDateRangeValue), DATE_FORMAT_CLOUD);
             expect(widget.minDate).toEqual(expected);
         });
 
@@ -343,8 +343,8 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const todayDate = moment().format(DATE_FORMAT_CLOUD);
-            const expected = moment(todayDate).add(widget.field.maxDateRangeValue, 'days');
+            const todayDate = new Date();
+            const expected = format(addDays(todayDate, widget.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
             expect(widget.maxDate).toEqual(expected);
         });
 
@@ -392,7 +392,6 @@ describe('DateWidgetComponent', () => {
 
         describe('check date validation by dynamic date ranges', () => {
             it('should minValue be equal to today date minus minDateRangeValue', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: null,
@@ -404,7 +403,8 @@ describe('DateWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const expectedMinValueString = '2022-07-21';
+                const currentDate = new Date();
+                const expectedMinValueString = format(subDays(currentDate, 1), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.minValue).toEqual(expectedMinValueString);
                 expect(widget.maxDate).toBeUndefined();
@@ -412,7 +412,6 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue be equal to today date plus maxDateRangeValue', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: 8,
@@ -424,7 +423,8 @@ describe('DateWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const expectedMaxValueString = '2022-07-30';
+                const currentDate = new Date();
+                const expectedMaxValueString = format(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.maxValue).toEqual(expectedMaxValueString);
                 expect(widget.minDate).toBeUndefined();
@@ -432,7 +432,6 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue and minValue be null if maxDateRangeValue and minDateRangeValue are null', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: null,
@@ -451,7 +450,6 @@ describe('DateWidgetComponent', () => {
             });
 
             it('should maxValue and minValue not be null if maxDateRangeVale and minDateRangeValue are not null', async () => {
-                spyOn(widget, 'getTodaysFormattedDate').and.returnValue('2022-07-22');
                 widget.field = new FormFieldModel(null, {
                     dynamicDateRangeSelection: true,
                     maxDateRangeValue: 8,
@@ -463,8 +461,9 @@ describe('DateWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const expectedMaxValueString = '2022-07-30';
-                const expectedMinValueString = '2022-07-12';
+                const currentDate = new Date();
+                const expectedMaxValueString = format(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
+                const expectedMinValueString = format(subDays(currentDate, 10), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.maxValue).toEqual(expectedMaxValueString);
                 expect(widget.field.minValue).toEqual(expectedMinValueString);
