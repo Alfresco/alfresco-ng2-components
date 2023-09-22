@@ -1,5 +1,5 @@
 <div class="adf-tags-creation">
-    <div class="adf-tag-name-field" *ngIf="(!tagNameControlVisible && tags.length) || tagNameControlVisible">
+    <div *ngIf="isNameTagsVisible" class="adf-tag-name-field">
         <mat-form-field class="adf-tag-search-field" appearance="fill">
             <input #tagNameInput
                     matInput 
@@ -14,7 +14,7 @@
     </div>
     <p
        class="adf-no-tags-message"
-       *ngIf="!tags.length">
+       *ngIf="!isEmpty">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div

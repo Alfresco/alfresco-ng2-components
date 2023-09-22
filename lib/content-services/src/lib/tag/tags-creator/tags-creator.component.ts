@@ -219,6 +219,14 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         return this._tagNameControl;
     }
 
+    get isNameTagsVisible(): boolean {
+        return (!this.tagNameControlVisible && this.tags.length > 0) || this.tagNameControlVisible;
+    }
+
+    get isEmpty(): boolean {
+        return this.tags?.length > 0;
+    }
+
     get existingTags(): TagEntry[] {
         return this._existingTags;
     }
