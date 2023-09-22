@@ -49,7 +49,7 @@ import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { AllowableOperationsEnum, ContentService } from '../../../common';
+import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-content-services';
 import { ButtonType } from './button-type.enum';
 
 const DEFAULT_SEPARATOR = ', ';
