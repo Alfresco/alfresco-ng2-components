@@ -104,6 +104,10 @@ describe('ContentMetadataComponent', () => {
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
 
     const findShowingTagInputButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('.adf-tags-buttons')).nativeElement;
+    const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
+    const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
+    const getCategoriesToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-categories-edit"]'));
+    const getGroupToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
 
     /**
      * Get metadata categories
@@ -459,7 +463,7 @@ describe('ContentMetadataComponent', () => {
         it('should toggle Tags editing mode', () => {
             component.editableTags = false;
             component.toggleEdit(mockEvent, mockGroup, ButtonType.Tags);
-            expect(component.tagsPanelState).toBe(component.editableTags);
+            expect(component.isTagPanelVisible).toBe(component.editableTags);
             expect(component.tagNameControlVisible).toBe(true);
             expect(component.editableCategories).toBe(false);
             expect(component.editableGroup.editable).toBe(false);
@@ -468,7 +472,7 @@ describe('ContentMetadataComponent', () => {
         it('should toggle Categories editing mode', () => {
             component.editableCategories = false;
             component.toggleEdit(mockEvent, mockGroup, ButtonType.Categories);
-            expect(component.categoriesPanelState).toBe(component.editableCategories);
+            expect(component.isCategoriesPanelVisible).toBe(component.editableCategories);
             expect(component.categoryControlVisible).toBe(true);
             expect(component.editableTags).toBe(false);
             expect(component.editableGroup.editable).toBe(false);
@@ -485,10 +489,10 @@ describe('ContentMetadataComponent', () => {
 
         it('should show Snackbar when Editing Panel is Active', () => {
             spyOn(component, 'isEditingPanel').and.returnValue(true);
-            spyOn(component, 'showSnackbar');
+            spyOn(component, 'showSnackbarError');
             component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
             expect(component.isEditingPanel).toHaveBeenCalled();
-            expect(component.showSnackbar).toHaveBeenCalledWith('METADATA.BASIC.SNACKBAR_MESSAGE');
+            expect(component.showSnackbarError).toHaveBeenCalledWith('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
         });
     });
 
@@ -521,6 +525,92 @@ describe('ContentMetadataComponent', () => {
             component.editableGroup = null;
             component.toggleEditMode(ButtonType.Group, group);
             expect(group.editable).toBe(true);
+        });
+    });
+;
+    describe('Permission', () => {
+        it('should hide the general info edit button if node does not have `update` permissions', () => {
+            component.readOnly = false;
+            component.node.allowableOperations = null;
+            fixture.detectChanges();
+
+            expect(getToggleEditButton()).toBeNull();
+        });
+
+        it('should hide the tags edit button if node does not have `update` permissions', () => {
+            component.readOnly = false;
+            component.node.allowableOperations = null;
+            fixture.detectChanges();
+
+            expect(getTagsToggleEditButton()).toBeNull();
+        });
+
+        it('should hide the categories edit button if node does not have `update` permissions', () => {
+            component.readOnly = false;
+            component.node.allowableOperations = null;
+            fixture.detectChanges();
+
+            expect(getCategoriesToggleEditButton()).toBeNull();
+        });
+
+        it('should hide the groups edit button if node does not have `update` permissions', () => {
+            component.readOnly = false;
+            component.node.allowableOperations = null;
+            fixture.detectChanges();
+
+            expect(getGroupToggleEditButton()).toBeNull();
+        });
+    });
+
+    describe('canToggleEdit', () => {
+        it('should return true when editable is false, readOnly is false, and hasAllowableOperations is true', () => {
+            component.editable = false;
+            component.readOnly = false;
+            component.hasAllowableOperations = true;
+            const result = component.canToggleEdit;
+            expect(result).toBe(true);
+          });
+
+        it('should return false when editable is true', () => {
+            component.editable = true;
+            component.readOnly = false;
+            component.hasAllowableOperations = true;
+            const result = component.canToggleEdit;
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('canTagsToggleEdit', () => {
+        it('should have canTagsToggleEdit property as expected', () => {
+            component.editableTags = false;
+            component.readOnly = false;
+            component.hasAllowableOperations = true;
+            fixture.detectChanges();
+            expect(component.canTagsToggleEdit).toBe(true);
+        });
+    });
+
+    describe('canGroupToggleEdit', () => {
+        it('should return true when group is not editable, not read-only, and has allowable operations', () => {
+            component.readOnly = false;
+            component.hasAllowableOperations = true;
+            const group: CardViewGroup = {
+                title: 'Group Title',
+                properties: [],
+                expanded: true,
+                editable: false
+            };
+            const result = component.canGroupToggleEdit(group);
+            expect(result).toBe(true);
+        });
+    });
+
+    describe('canCategoriesToggleEdit', () => {
+        it('should have canCategoriesToggleEdit property as expected', () => {
+            component.editableCategories = false;
+            component.readOnly = false;
+            component.hasAllowableOperations = true;
+            expect(component.canCategoriesToggleEdit).toBe(true);
         });
     });
 

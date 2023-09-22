@@ -220,16 +220,37 @@ describe('CategoriesManagementComponent', () => {
                 component.categoryNameControlVisible = true;
                 fixture.detectChanges();
             });
-            it('should not hide category name control when categoryNameControlVisible is false', () => {
-                component.categoryNameControlVisible = false;
-                fixture.detectChanges();
-                const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
-                expect(categoryControl.hidden).toBeFalse();
-            });
 
             it('should be visible when categoryNameControlVisible is true', () => {
                 const categoryControl = fixture.debugElement.query(By.css('.adf-category-name-field'));
                 expect(categoryControl).toBeTruthy();
+            });
+
+            it('should return true when categoryNameControlVisible is true', () => {
+                component.categoryNameControlVisible = true;
+                const result = component.isNameCategoryVisible;
+                expect(result).toBeTrue();
+            });
+
+            it('should return false when categoryNameControlVisible is false and categories length is 0', () => {
+                component.categoryNameControlVisible = false;
+                component.categories = [];
+                const result = component.isNameCategoryVisible;
+                expect(result).toBeFalse();
+            });
+        });
+
+        describe('isEmpty', () => {
+            it('should return true when categories is not empty', () => {
+                component.categories = [category3, category4];
+                const result = component.isEmpty;
+                expect(result).toBeTrue();
+            });
+
+            it('should return false when categories is empty', () => {
+                component.categories = [];
+                const result = component.isEmpty;
+                expect(result).toBeFalse();
             });
         });
 
@@ -449,11 +470,8 @@ describe('CategoriesManagementComponent', () => {
             expect(categoriesChangeSpy).toHaveBeenCalledOnceWith(component.categories);
         }));
 
-        it('should clear and not hide input after category is created', fakeAsync(() => {
+        it('should clear input after category is created', fakeAsync(() => {
             createCategory('test');
-            const categoryControl: HTMLDivElement = fixture.debugElement.query(By.css('.adf-category-name-field')).nativeElement;
-
-            expect(categoryControl.hidden).toBeFalse();
             expect(getExistingCategoriesList()).toEqual([]);
             expect(component.categoryNameControl.value).toBe('');
             expect(component.categoryNameControl.untouched).toBeTrue();

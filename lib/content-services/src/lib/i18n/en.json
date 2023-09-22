@@ -495,7 +495,7 @@
       "HEADER_TITLE": "General info",
       "NO_TAGS_ADDED": "There are currently no tags added",
       "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
-      "SNACKBAR_MESSAGE": "Save or discard changes to continue"
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG" :{
