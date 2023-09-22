@@ -220,7 +220,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     get isNameTagsVisible(): boolean {
-        return (!this.tagNameControlVisible && this.tags.length > 0) || this.tagNameControlVisible;
+        return (!this.tagNameControlVisible && this.tags?.length > 0) || this.tagNameControlVisible;
     }
 
     get isEmpty(): boolean {
