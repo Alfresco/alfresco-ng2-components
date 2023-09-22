@@ -185,7 +185,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         return this._categoryNameControl;
     }
 
-    get isEmpty(): boolean {
+    get isCategoryEmpty(): boolean {
         return this.categories?.length > 0;
     }
 
