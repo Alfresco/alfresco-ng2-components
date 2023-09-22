@@ -9,7 +9,7 @@
                     adf-auto-focus
                     placeholder="{{'TAG.TAGS_CREATOR.INPUT_PLACEHOLDER' | translate}}" 
             />
-            <mat-error [hidden]="!tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
+            <mat-error *ngIf="tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
         </mat-form-field >
     </div>
     <p
