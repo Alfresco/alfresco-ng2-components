@@ -442,11 +442,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     hasTags(): boolean {
-       return !(this.tags.length > 0) && !this.editableTags;
+       return !(this.tags?.length > 0) && !this.editableTags;
     }
 
     hasCategories(): boolean {
-        return !(this.categories.length > 0) && !this.editableCategories;
+        return !(this.categories?.length > 0) && !this.editableCategories;
     }
 
     get hasToggleEdit(): boolean {
