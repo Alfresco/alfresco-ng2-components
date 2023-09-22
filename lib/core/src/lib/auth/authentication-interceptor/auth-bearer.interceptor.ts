@@ -57,7 +57,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     return this.authenticationService.addTokenToHeader(requestUrl, req.headers)
       .pipe(
         mergeMap((headersWithBearer) => {
-          const headerWithContentType = this.appendJsonContentType(headersWithBearer);
+          const headerWithContentType = this.appendJsonContentType(headersWithBearer, req.body);
           const kcReq = req.clone({ headers: headerWithContentType});
           return next.handle(kcReq)
             .pipe(
@@ -67,7 +67,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
       );
   }
 
-  private appendJsonContentType(headers: HttpHeaders): HttpHeaders {
+  private appendJsonContentType(headers: HttpHeaders, reqBody: any): HttpHeaders {
 
     // prevent adding any content type, to properly handle formData with boundary browser generated value,
     // as adding any Content-Type its going to break the upload functionality
@@ -76,7 +76,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
         return headers.delete('Content-Type');
     }
 
-    if (!headers.get('Content-Type')) {
+    if (!headers.get('Content-Type') && !(reqBody instanceof FormData)) {
         return headers.set('Content-Type', 'application/json;charset=UTF-8');
     }
 
