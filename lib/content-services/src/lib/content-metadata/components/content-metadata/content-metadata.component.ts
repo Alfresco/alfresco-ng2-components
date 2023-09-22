@@ -208,18 +208,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     editableCategoriesChange = new EventEmitter<boolean>();
 
-    /** Emitted when content's group state is changed. **/
-    @Output()
-    groupChange = new EventEmitter<CardViewGroup>();
-
     @Input()
     editableCategories = false;
 
     @Input()
     editableTags = false;
-
-    @Input()
-    group: CardViewGroup;
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
@@ -248,6 +241,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     hasAllowableOperations = false;
     editableGroup: CardViewGroup;
     buttonType = ButtonType;
+    group: CardViewGroup;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -468,7 +462,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 break;
             case ButtonType.Group:
                 group.editable = !group.editable;
-                this.groupChange.emit(group);
                 this.editableGroup = group.editable ? group : null;
                 if (group.editable) {
                     group.expanded = true;
