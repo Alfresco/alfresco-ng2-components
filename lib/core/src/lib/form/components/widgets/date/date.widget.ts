@@ -24,9 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DateFnsAdapter, 
-    MAT_DATE_FNS_FORMATS 
-} from '@angular/material-date-fns-adapter';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 import { isValid } from 'date-fns';
 import { DateFormatTranslationService } from '../../../services/date-format-translation.service';
@@ -89,7 +87,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     }
 
     onDateChanged(newDateValue) {
-        const date = new Date(newDateValue);
+        const date = this.dateFormatTranslationService.parse(newDateValue, this.field.dateDisplayFormat, new Date());
         if (isValid(date)) {
             this.field.value = this.dateFormatTranslationService.format(date, this.field.dateDisplayFormat);
         } else {

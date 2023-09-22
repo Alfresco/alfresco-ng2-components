@@ -102,7 +102,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     onDateChanged(newDateValue) {
-        const date = new Date(newDateValue);
+        const date = this.dateFormatTranslationService.parse(newDateValue, this.field.dateDisplayFormat, new Date());
         if (isValid(date)) {
             this.field.value = this.dateFormatTranslationService.format(date, this.field.dateDisplayFormat);
         } else {
