@@ -5,18 +5,18 @@
                              [expanded]="canExpandProperties()"
                              [attr.data-automation-id]="'adf-metadata-group-properties'"
                              hideToggle
-                             (opened)="handleGeneralInfoPanelState()"
-                             (closed)="handleGeneralInfoPanelState()">
+                             (opened)="toggleGeneralInfoPanel()"
+                             (closed)="toggleGeneralInfoPanel()">
             <mat-expansion-panel-header>
                 <div class="adf-metadata-properties-panel-content">
                     <mat-icon>
-                        {{ generalInfoPanelState ? 'expand_more' : 'chevron_right'}}
+                        {{ isGeneralInfoPanelVisible ? 'expand_more' : 'chevron_right'}}
                     </mat-icon>
                     <mat-panel-title class="adf-metadata-properties-title">
                         {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
                     </mat-panel-title>
                 </div>
-                <button *ngIf="!editable && !readOnly && hasAllowableOperations"
+                <button *ngIf="canToggleEdit"
                         mat-icon-button
                         (click)="toggleEdit($event, group, buttonType.GeneralInfo)"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -56,21 +56,21 @@
         </mat-expansion-panel>
         <ng-container *ngIf="displayTags">
             <mat-expansion-panel 
-                            (opened)="handleTagsPanelState(true)"
-                            (closed)="handleTagsPanelState(false)"
+                            (opened)="toggleTagsPanel(true)"
+                            (closed)="toggleTagsPanel(false)"
                             hideToggle
-                            [expanded]="tagsPanelState">
+                            [expanded]="isTagPanelVisible">
                 <mat-expansion-panel-header>
                     <div class="adf-metadata-properties-panel-content">
                         <mat-icon>
-                            {{ tagsPanelState ? 'expand_more' : 'chevron_right'}}
+                            {{ isTagPanelVisible ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
                         <mat-panel-title class="adf-metadata-properties-title">
                             {{ 'METADATA.BASIC.TAGS' | translate }}
                         </mat-panel-title>
                     </div>
                     <div class="adf-tags-buttons">
-                        <button *ngIf="!editableTags && !readOnly && hasAllowableOperations"
+                        <button *ngIf="canTagsToggleEdit"
                                 mat-icon-button
                                 (click)="toggleEdit($event, group, buttonType.Tags)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -103,7 +103,7 @@
                     class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
-                <div *ngIf="!tags.length && !editableTags" class="adf-metadata-no-item-added">
+                <div *ngIf="hasTags()" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableTags" class="adf-metadata-properties-tags">
@@ -122,22 +122,22 @@
                             (opened)="handleCategoriesPanelState(true)"
                             (closed)="handleCategoriesPanelState(false)"
                             hideToggle
-                            [expanded]="categoriesPanelState">
+                            [expanded]="isCategoriesPanelVisible">
                 <mat-expansion-panel-header>
                     <div class="adf-metadata-properties-panel-content">
                         <mat-icon>
-                            {{ categoriesPanelState ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                            {{ isCategoriesPanelVisible ? 'expand_more' : 'chevron_right'}}</mat-icon>
                         <mat-panel-title class="adf-metadata-properties-title">
                             {{ 'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE' | translate }}
                         </mat-panel-title>
                     </div>
                     <div class="adf-metadata-categories-title">
-                        <button *ngIf="!editableCategories && !readOnly && hasAllowableOperations"
+                        <button *ngIf="canCategoriesToggleEdit"
                                 mat-icon-button
                                 (click)="toggleEdit($event, group, buttonType.Categories)"
                                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                 [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
-                                data-automation-id="meta-data-card-toggle-categories-edit"
+                                data-automation-id="meta-data-categories-edit"
                                 class="adf-edit-icon-buttons">
                             <mat-icon>mode_edit</mat-icon>
                         </button>
@@ -163,7 +163,7 @@
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
-                <div *ngIf="!categories.length && !editableCategories" class="adf-metadata-no-item-added">
+                <div *ngIf="hasCategories()" class="adf-metadata-no-item-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
@@ -200,7 +200,7 @@
                                     {{ group.title | translate }}
                                 </mat-panel-title>
                             </div>
-                            <button *ngIf="!group.editable && !readOnly && hasAllowableOperations"
+                            <button *ngIf="canGroupToggleEdit(group)"
                                     mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"

@@ -1,5 +1,5 @@
 <div class="adf-categories-management">
-    <div *ngIf="((!categoryNameControlVisible && categories.length)) || categoryNameControlVisible"
+    <div *ngIf="isNameCategoryVisible"
          class="adf-category-name-field">
         <mat-form-field  appearance="fill">
             <input #categoryNameInput
@@ -10,7 +10,7 @@
                placeholder="{{'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate }}"
                adf-auto-focus 
                />
-            <mat-error [hidden]="!categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
+            <mat-error *ngIf="categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
         </mat-form-field>
     </div>
     <div class="adf-categories-list" [class.adf-categories-list-fixed]="!categoryNameControlVisible">
@@ -30,7 +30,7 @@
             </button>
         </span>
     </div>
-    <p *ngIf="!categories.length" class="adf-no-categories-message">
+    <p *ngIf="!isEmpty" class="adf-no-categories-message">
         {{ noCategoriesMsg | translate }}
     </p>
 </div>

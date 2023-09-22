@@ -177,8 +177,16 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.cancelExistingCategoriesLoading$.complete();
     }
 
+    get isNameCategoryVisible(): boolean {
+        return (!this.categoryNameControlVisible && this.categories.length > 0) || this.categoryNameControlVisible;
+    }
+
     get categoryNameControl(): FormControl<string> {
         return this._categoryNameControl;
+    }
+
+    get isEmpty(): boolean {
+        return this.categories?.length > 0;
     }
 
     get existingCategories(): Category[] {

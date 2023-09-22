@@ -147,18 +147,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     editableCategoriesChange = new EventEmitter<boolean>();
 
-    /** Emitted when content's group state is changed. **/
-    @Output()
-    groupChange = new EventEmitter<CardViewGroup>();
-
     @Input()
     editableCategories = false;
 
     @Input()
     editableTags = false;
-
-    @Input()
-    group: CardViewGroup;
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
@@ -181,12 +174,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
-    generalInfoPanelState: boolean;
-    tagsPanelState: boolean;
-    categoriesPanelState: boolean;
+    isGeneralInfoPanelVisible: boolean;
+    isTagPanelVisible: boolean;
+    isCategoriesPanelVisible: boolean;
     hasAllowableOperations = false;
     editableGroup: CardViewGroup;
     buttonType = ButtonType;
+    group: CardViewGroup;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -369,21 +363,20 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
-    showSnackbar(message: string): void {
+    showSnackbarError(message: string): void {
         this.notificationService.showError(message);
     }
 
     toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
+        event.stopPropagation();
         if (this.isEditingPanel()) {
-            this.showSnackbar('METADATA.BASIC.SNACKBAR_MESSAGE');
+            this.showSnackbarError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
             return;
         }
 
         if (this.editableGroup && this.editableGroup !== group) {
             this.editableGroup.editable = false;
         }
-
-        event.stopPropagation();
 
         switch (buttonType) {
             case ButtonType.GeneralInfo:
@@ -397,20 +390,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.editableTagsChange.emit(this.editableTags);
-                this.tagsPanelState = this.editableTags;
+                this.isTagPanelVisible = this.editableTags;
                 this.tagNameControlVisible = true;
                 break;
 
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.editableCategoriesChange.emit(this.editableCategories);
-                this.categoriesPanelState = this.editableCategories;
+                this.isCategoriesPanelVisible = this.editableCategories;
                 this.categoryControlVisible = true;
                 break;
 
             case ButtonType.Group:
                 group.editable = !group.editable;
-                this.groupChange.emit(group);
                 this.editableGroup = group.editable ? group : null;
                 if (group.editable) {
                     group.expanded = true;
@@ -434,18 +426,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    handleGeneralInfoPanelState() {
-        this.generalInfoPanelState = !this.generalInfoPanelState;
+    toggleGeneralInfoPanel() {
+        this.isGeneralInfoPanelVisible = !this.isGeneralInfoPanelVisible;
         this.cdr.detectChanges();
     }
 
-    handleTagsPanelState(tagPanelState: boolean) {
-        this.tagsPanelState = tagPanelState;
+    toggleTagsPanel(tagPanelState: boolean) {
+        this.isTagPanelVisible = tagPanelState;
         this.cdr.detectChanges();
     }
 
-    handleCategoriesPanelState(categoriesPanelState: boolean) {
-        this.categoriesPanelState = categoriesPanelState;
+    handleCategoriesPanelState(isCategoriesPanelVisible: boolean) {
+        this.isCategoriesPanelVisible = isCategoriesPanelVisible;
         this.cdr.detectChanges();
     }
 
