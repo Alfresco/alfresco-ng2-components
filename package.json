@@ -93,7 +93,7 @@
     "ngx-monaco-editor-v2": "15.0.1",
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",
-    "rxjs": "6.6.6",
+    "rxjs": "7.8.1",
     "subscriptions-transport-ws": "^0.11.0",
     "tslib": "^2.6.2",
     "zone.js": "~0.11.4"
@@ -110,6 +110,7 @@
     "@editorjs/code": "2.8.0",
     "@editorjs/inline-code": "1.4.0",
     "@editorjs/marker": "1.2.2",
+    "@nx/angular": "16.8.1",
     "@nx/eslint-plugin": "16.8.1",
     "@nx/node": "16.8.1",
     "@nx/storybook": "16.8.1",
@@ -152,6 +153,7 @@
     "husky": "^7.0.4",
     "jasmine-ajax": "4.0.0",
     "jasmine-core": "4.6.0",
+    "jasmine-marbles": "^0.9.2",
     "jasmine-reporters": "^2.5.2",
     "jasmine-spec-reporter": "7.0.0",
     "js-yaml": "^4.0.0",
@@ -187,8 +189,7 @@
     "typescript": "4.9.5",
     "webdriver-manager": "12.1.9",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.2",
-    "@nx/angular": "16.8.1"
+    "webpack-cli": "5.1.4"
   },
   "license": "Apache-2.0",
   "bundlesize": [

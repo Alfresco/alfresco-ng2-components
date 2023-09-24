@@ -34,7 +34,7 @@ export class AuthenticationService extends BaseAuthenticationService {
         super();
         this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
             this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.onLogin.next();
+                this.onLogin.next({});
             });
         });
     }
