@@ -40,7 +40,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
             if (typeof rowToExamine === 'object') {
                 for (const key in rowToExamine) {
-                    if (rowToExamine.hasOwnProperty(key)) {
+                    if (Object.prototype.hasOwnProperty.call(rowToExamine, key)) {
                         schema.push({
                             type: 'text',
                             key,

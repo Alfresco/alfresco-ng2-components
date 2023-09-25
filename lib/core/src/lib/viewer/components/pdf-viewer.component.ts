@@ -172,13 +172,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         const urlFile = changes['urlFile'];
         if (urlFile?.currentValue) {
-            const pdfOptions = {
+            const pdfOptions: any = {
                 ...this.pdfjsDefaultOptions,
                 url: urlFile.currentValue,
                 withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
             };
             if (this.cacheType) {
-                // @ts-ignore
                 pdfOptions.httpHeaders = {
                     'Cache-Control': this.cacheType
                 };

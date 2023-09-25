@@ -51,26 +51,24 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
     mousemove = new Subject<IResizeMouseEvent>();
 
-    private pointerDown: Observable<IResizeMouseEvent>;
-
-    private pointerMove: Observable<IResizeMouseEvent>;
-
-    private pointerUp: Observable<IResizeMouseEvent>;
+    private readonly pointerDown: Observable<IResizeMouseEvent>;
+    private readonly pointerMove: Observable<IResizeMouseEvent>;
+    private readonly pointerUp: Observable<IResizeMouseEvent>;
 
     private startingRect: BoundingRectangle;
 
     private currentRect: BoundingRectangle;
 
-    private unlistenMouseDown?: () => void;
-    private unlistenMouseMove?: () => void;
-    private unlistenMouseUp?: () => void;
+    private unsubscribeMouseDown?: () => void;
+    private unsubscribeMouseMove?: () => void;
+    private unsubscribeMouseUp?: () => void;
 
     private destroy$ = new Subject<void>();
 
     constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {
         this.pointerDown = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
-                this.unlistenMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
+                this.unsubscribeMouseDown = renderer.listen('document', 'mousedown', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
@@ -78,7 +76,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
         this.pointerMove = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
-                this.unlistenMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
+                this.unsubscribeMouseMove = renderer.listen('document', 'mousemove', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
@@ -86,7 +84,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
 
         this.pointerUp = new Observable((observer: Observer<IResizeMouseEvent>) => {
             zone.runOutsideAngular(() => {
-                this.unlistenMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
+                this.unsubscribeMouseUp = renderer.listen('document', 'mouseup', (event: MouseEvent) => {
                     observer.next(event);
                 });
             });
@@ -101,7 +99,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
         const mouseDrag: Observable<IResizeMouseEvent | ICoordinateX> = mousedown$
             .pipe(
                 mergeMap(({ clientX = 0 }) =>
-                    merge(mousemove$.pipe(take(1)).pipe(map((coords) => [, coords])), mousemove$.pipe(pairwise()))
+                    merge(mousemove$.pipe(take(1)).pipe(map((coords) => [undefined, coords])), mousemove$.pipe(pairwise()))
                         .pipe(
                             map(([previousCoords = {}, newCoords = {}]) => [
                                 { clientX: previousCoords.clientX - clientX },
@@ -170,9 +168,9 @@ export class ResizableDirective implements OnInit, OnDestroy {
         this.mousedown.complete();
         this.mousemove.complete();
         this.mouseup.complete();
-        this.unlistenMouseDown?.();
-        this.unlistenMouseMove?.();
-        this.unlistenMouseUp?.();
+        this.unsubscribeMouseDown?.();
+        this.unsubscribeMouseMove?.();
+        this.unsubscribeMouseUp?.();
         this.destroy$.next();
     }
 

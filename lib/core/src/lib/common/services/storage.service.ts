@@ -21,7 +21,6 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class StorageService {
-
     private memoryStore: { [key: string]: any } = {};
     private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';
@@ -48,7 +47,7 @@ export class StorageService {
         if (this.useLocalStorage) {
             return localStorage.getItem(this.prefix + key);
         } else {
-            return this.memoryStore.hasOwnProperty(this.prefix + key) ? this.memoryStore[this.prefix + key] : null;
+            return Object.prototype.hasOwnProperty.call(this.memoryStore, this.prefix + key) ? this.memoryStore[this.prefix + key] : null;
         }
     }
 
@@ -96,9 +95,9 @@ export class StorageService {
      */
     hasItem(key: string): boolean {
         if (this.useLocalStorage) {
-            return localStorage.getItem(this.prefix + key) ? true : false;
+            return !!localStorage.getItem(this.prefix + key);
         } else {
-            return this.memoryStore.hasOwnProperty(key);
+            return Object.prototype.hasOwnProperty.call(this.memoryStore, key);
         }
     }
 

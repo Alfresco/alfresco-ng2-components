@@ -30,7 +30,7 @@ import {
     numberMinMaxForm,
     textWidgetVisibility,
     numberWidgetVisibilityForm,
-    radioWidgetVisibiltyForm,
+    radioWidgetVisibilityForm,
     customWidgetForm,
     formDateVisibility,
     customWidgetFormWithVisibility,
@@ -86,7 +86,6 @@ const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormR
 };
 
 describe('Form Renderer Component', () => {
-
     let formRendererComponent: FormRendererComponent<any>;
     let fixture: ComponentFixture<FormRendererComponent<any>>;
     let formService: FormService;
@@ -95,11 +94,7 @@ describe('Form Renderer Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
@@ -287,7 +282,6 @@ describe('Form Renderer Component', () => {
     });
 
     describe('Number widget', () => {
-
         it('[C315169] - Should be able to complete a task with a form with number widgets', async () => {
             formRendererComponent.formDefinition = formService.parseForm(formNumberWidgetVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
@@ -364,8 +358,8 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             numberContainerElement = fixture.nativeElement.querySelector('#field-Number2-container');
             expectElementToBeHidden(numberContainerElement);
-            const errorWidetText: HTMLDivElement = fixture.nativeElement.querySelector('#field-Number1-container error-widget .adf-error-text');
-            expect(errorWidetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
+            const errorWidgetText: HTMLDivElement = fixture.nativeElement.querySelector('#field-Number1-container error-widget .adf-error-text');
+            expect(errorWidgetText.textContent).toBe(`FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`);
             expect(formRendererComponent.formDefinition.isValid).toBe(false, 'Form should not be valid without mandatory field');
         });
 
@@ -397,12 +391,16 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div.adf-grid-list');
             expectElementToBeVisible(formSizedElement);
-            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div .adf-grid-list-item');
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll(
+                '#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container div .adf-grid-list-item'
+            );
             sectionGridElement.forEach((element) => {
                 expect(element.style['grid-area']).toBe('auto / auto / span 1 / span 1', 'Elemens is wrong sized for this section');
             });
 
-            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container div.adf-grid-list .adf-grid-list-item');
+            const fullWidthElement = fixture.nativeElement.querySelector(
+                '#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container div.adf-grid-list .adf-grid-list-item'
+            );
             expect(fullWidthElement.style['grid-area']).toBe('auto / auto / span 1 / span 2');
         });
 
@@ -410,13 +408,19 @@ describe('Form Renderer Component', () => {
             formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, false);
             fixture.detectChanges();
             await fixture.whenStable();
-            const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view');
+            const formSizedElement = fixture.nativeElement.querySelector(
+                '#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view'
+            );
             expectElementToBeVisible(formSizedElement);
-            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-single-column');
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll(
+                '#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-single-column'
+            );
             sectionGridElement.forEach((element) => {
                 expect(element.style['width']).toBe('50%', 'Elemens is wrong sized for this section');
             });
-            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list-column-view .adf-grid-list-single-column');
+            const fullWidthElement = fixture.nativeElement.querySelector(
+                '#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list-column-view .adf-grid-list-single-column'
+            );
             expect(fullWidthElement.style['width']).toBe('100%');
         });
 
@@ -587,11 +591,9 @@ describe('Form Renderer Component', () => {
             expectInputElementValueIs(testTwoInput, 'aaa');
             expectElementToBeHidden(numberFieldContainer);
         });
-
     });
 
     describe('Text widget', () => {
-
         it('[C309669] - Should be able to set visibility conditions for Text widget', async () => {
             formRendererComponent.formDefinition = formService.parseForm(textWidgetVisibility.formRepresentation.formDefinition);
             fixture.detectChanges();
@@ -630,13 +632,11 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(elementFourContainer);
             expectElementToBeHidden(elementThreeContainer);
         });
-
     });
 
     describe('Radio widget', () => {
-
         it('[C310352] - Should be able to set visibility conditions for Radio Button widget', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(radioWidgetVisibiltyForm.formRepresentation.formDefinition);
+            formRendererComponent.formDefinition = formService.parseForm(radioWidgetVisibilityForm.formRepresentation.formDefinition);
             fixture.detectChanges();
             await fixture.whenStable();
             const textInputElement = fixture.nativeElement.querySelector('#Text0cee7g');
@@ -651,11 +651,9 @@ describe('Form Renderer Component', () => {
             radioButtonContainer = fixture.nativeElement.querySelector('#field-Radiobuttons03rkbo-container');
             expectElementToBeVisible(radioButtonContainer);
         });
-
     });
 
     describe('Custom Widget', () => {
-
         it('Should be able to correctly display a custom process cloud widget', async () => {
             formRenderingService.register({ bananaforevah: () => TextWidgetComponent }, true);
             formRendererComponent.formDefinition = formService.parseForm(customWidgetForm.formRepresentation.formDefinition);
@@ -681,7 +679,6 @@ describe('Form Renderer Component', () => {
             customWidgetElementContainer = fixture.nativeElement.querySelector('#field-bananaforevah0k8gui-container');
             expectElementToBeVisible(customWidgetElementContainer);
         });
-
     });
 
     describe('Form rules', () => {

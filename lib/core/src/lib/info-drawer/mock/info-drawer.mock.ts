@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @cspell/spellchecker */
+
 export const mockTabText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam urna odio, sagittis vel nulla vel, condimentum egestas dolor.
 Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris eu hendrerit lectus. Aliquam et ex imperdiet, sodales tellus finibus, malesuada eros.
 Vestibulum aliquet eros sed diam euismod tincidunt.

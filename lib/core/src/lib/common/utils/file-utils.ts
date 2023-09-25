@@ -41,7 +41,7 @@ export class FileUtils {
                                         files.push({
                                             entry,
                                             file,
-                                            relativeFolder: entry.fullPath.replace(/\/[^\/]*$/, '')
+                                            relativeFolder: entry.fullPath.replace(/\/[^/]*$/, '')
                                         });
                                         resolveFile();
                                     });

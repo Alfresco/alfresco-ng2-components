@@ -38,13 +38,11 @@ import { FormModel } from './form.model';
 declare let moment: any;
 
 describe('FormFieldValidator', () => {
-
     describe('RequiredFieldValidator', () => {
-
         let validator: RequiredFieldValidator;
 
         beforeEach(() => {
-           validator = new RequiredFieldValidator();
+            validator = new RequiredFieldValidator();
         });
 
         it('should require [required] setting', () => {
@@ -71,9 +69,7 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
                 value: '<empty>',
-                options: [
-                    {id: 'empty', name: 'Choose option...'}
-                ],
+                options: [{ id: 'empty', name: 'Choose option...' }],
                 hasEmptyValue: true,
                 required: true
             });
@@ -241,10 +237,9 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBeFalsy();
         });
-   });
+    });
 
     describe('NumberFieldValidator', () => {
-
         let validator: NumberFieldValidator;
 
         beforeEach(() => {
@@ -305,10 +300,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MinLengthFieldValidator', () => {
-
         let validator: MinLengthFieldValidator;
 
         beforeEach(() => {
@@ -357,10 +351,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MaxLengthFieldValidator', () => {
-
         let validator: MaxLengthFieldValidator;
 
         beforeEach(() => {
@@ -412,7 +405,6 @@ describe('FormFieldValidator', () => {
     });
 
     describe('MinValueFieldValidator', () => {
-
         let validator: MinValueFieldValidator;
 
         beforeEach(() => {
@@ -480,10 +472,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MaxValueFieldValidator', () => {
-
         let validator: MaxValueFieldValidator;
 
         beforeEach(() => {
@@ -551,10 +542,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('RegExFieldValidator', () => {
-
         let validator: RegExFieldValidator;
 
         beforeEach(() => {
@@ -610,10 +600,9 @@ describe('FormFieldValidator', () => {
 
             expect(validator.validate(field)).toBeFalsy();
         });
-   });
+    });
 
     describe('FixedValueFieldValidator', () => {
-
         let validator: FixedValueFieldValidator;
 
         beforeEach(() => {
@@ -647,7 +636,10 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: '1',
-                options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
+                options: [
+                    { id: '1', name: 'Leanne Graham' },
+                    { id: '2', name: 'Ervin Howell' }
+                ]
             });
 
             expect(validator.validate(field)).toBeTruthy();
@@ -657,15 +649,17 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TYPEAHEAD,
                 value: 'Lean',
-                options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
+                options: [
+                    { id: '1', name: 'Leanne Graham' },
+                    { id: '2', name: 'Ervin Howell' }
+                ]
             });
 
             expect(validator.validate(field)).toBeFalsy();
         });
-   });
+    });
 
     describe('MaxDateTimeFieldValidator', () => {
-
         let validator: MaxDateTimeFieldValidator;
 
         beforeEach(() => {
@@ -788,10 +782,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MinDateTimeFieldValidator', () => {
-
         let validator: MinDateTimeFieldValidator;
 
         beforeEach(() => {
@@ -914,10 +907,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MaxDateFieldValidator', () => {
-
         let validator: MaxDateFieldValidator;
 
         beforeEach(() => {
@@ -1007,10 +999,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('MinDateFieldValidator', () => {
-
         let validator: MinDateFieldValidator;
 
         beforeEach(() => {
@@ -1100,10 +1091,9 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
-   });
+    });
 
     describe('DateTimeFieldValidator', () => {
-
         let validator: DateTimeFieldValidator;
 
         beforeEach(() => {
@@ -1114,7 +1104,7 @@ describe('FormFieldValidator', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: '2021-06-09 14:10',
-                dateDisplayFormay: 'YYYY-MM-DD HH:mm'
+                dateDisplayFormat: 'YYYY-MM-DD HH:mm'
             });
 
             expect(validator.validate(field)).toBeTruthy();

@@ -84,7 +84,7 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
         const maxColumnFieldsSize = this.getMaxColumnFieldSize(content);
         for (let rowIndex = 0; rowIndex < maxColumnFieldsSize; rowIndex++) {
             content?.columns.flatMap((currentColumn) => {
-                if (!!currentColumn?.fields[rowIndex]) {
+                if (currentColumn?.fields[rowIndex]) {
                     serialisedFormFields.push(currentColumn?.fields[rowIndex]);
                 } else {
                     const firstRowElementColSpan = currentColumn?.fields[0]?.colspan;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const formDefVisibilitiFieldDependsOnNextOne: any = {
+export const formDefVisibilityFieldDependsOnNextOne: any = {
     id: 19,
     processDefinitionId: 'visibility:1:148',
     processDefinitionName: 'visibility',

@@ -46,10 +46,7 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
@@ -145,9 +142,9 @@ describe('CardViewArrayItemComponent', () => {
                 clickable: true
             });
             fixture.detectChanges();
-            const editicon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
-            expect(editicon).toBeDefined();
-            expect(editicon.innerText).toBe('edit');
+            const editIcon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
+            expect(editIcon).toBeDefined();
+            expect(editIcon.innerText).toBe('edit');
         });
 
         it('should not render defined icon if clickable set to false', () => {
@@ -156,18 +153,18 @@ describe('CardViewArrayItemComponent', () => {
                 clickable: false
             });
             fixture.detectChanges();
-            const editicon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
-            expect(editicon).toBeNull();
+            const editIcon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
+            expect(editIcon).toBeNull();
         });
 
         it('should render all values if noOfItemsToDisplay is not defined', () => {
             fixture.detectChanges();
 
-            const chiplistContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
+            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
             const chip = fixture.nativeElement.querySelectorAll('mat-chip');
 
-            expect(chiplistContainer).not.toBeNull();
+            expect(chipListContainer).not.toBeNull();
             expect(moreElement).toBeNull();
             expect(chip.length).toBe(4);
         });
@@ -179,10 +176,10 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chiplistContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
+            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const chip = fixture.debugElement.queryAll(By.css('mat-chip'));
 
-            expect(chiplistContainer).not.toBeNull();
+            expect(chipListContainer).not.toBeNull();
             expect(chip.length).toBe(3);
             expect(chip[2].nativeElement.innerText).toBe('2 CORE.CARDVIEW.MORE');
         });

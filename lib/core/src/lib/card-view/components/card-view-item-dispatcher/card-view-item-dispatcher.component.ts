@@ -116,9 +116,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
-    private proxy(methodName, ...args) {
+    private proxy(methodName: string, ...args: any[]) {
         if (this.componentReference.instance[methodName]) {
-            this.componentReference.instance[methodName].apply(this.componentReference.instance, args);
+            this.componentReference.instance[methodName].apply(this.componentReference.instance, ...args);
         }
     }
 }
