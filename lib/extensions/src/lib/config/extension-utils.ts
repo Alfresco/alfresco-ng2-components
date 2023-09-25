@@ -135,7 +135,7 @@ export const mergeArrays = (left: any[], right: any[]): any[] => {
 
     (left || []).forEach((entry) => {
         const element = entry;
-        if (element && element.hasOwnProperty('id')) {
+        if (element && Object.prototype.hasOwnProperty.call(element, 'id')) {
             map[element.id] = element;
         } else {
             result.push(element);
@@ -144,7 +144,7 @@ export const mergeArrays = (left: any[], right: any[]): any[] => {
 
     (right || []).forEach((entry) => {
         const element = entry;
-        if (element && element.hasOwnProperty('id') && map[element.id]) {
+        if (element && Object.prototype.hasOwnProperty.call(element, 'id') && map[element.id]) {
             const merged = mergeObjects(map[element.id], element);
             map[element.id] = merged;
         } else {

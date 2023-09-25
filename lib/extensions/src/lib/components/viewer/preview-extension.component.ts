@@ -87,7 +87,7 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private updateInstance() {
-        if (this.componentRef && this.componentRef.instance) {
+        if (this.componentRef?.instance) {
             const instance = this.componentRef.instance;
 
             instance.url = this.url;

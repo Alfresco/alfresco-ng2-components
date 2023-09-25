@@ -68,8 +68,8 @@ describe('ExtensionService', () => {
                 }
             });
 
-            const requestedFeatue = service.getFeature('searchedArrayFeature');
-            expect(requestedFeatue).toEqual(searchedArrayFeature);
+            const requestedFeature = service.getFeature('searchedArrayFeature');
+            expect(requestedFeature).toEqual(searchedArrayFeature);
         });
 
         it('should return object if seached feature is an object', async () => {
@@ -81,16 +81,16 @@ describe('ExtensionService', () => {
                 }
             });
 
-            const requestedFeatue = service.getFeature<{ test: string }>('searchedObjectFeature');
-            expect(requestedFeatue).toEqual(searchedObjectFeature);
+            const requestedFeature = service.getFeature<{ test: string }>('searchedObjectFeature');
+            expect(requestedFeature).toEqual(searchedObjectFeature);
         });
 
         it('should return default value if feature is not found', async () => {
             const defaultValue = {};
             service.setup(blankConfig);
 
-            const requestedFeatue = service.getFeature<{ test: string }>('searchedFeature', defaultValue);
-            expect(requestedFeatue).toEqual(defaultValue);
+            const requestedFeature = service.getFeature<{ test: string }>('searchedFeature', defaultValue);
+            expect(requestedFeature).toEqual(defaultValue);
         });
     });
 

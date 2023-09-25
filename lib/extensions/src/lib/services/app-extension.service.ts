@@ -79,7 +79,7 @@ export class AppExtensionService {
             return true;
           }
 
-          if (extension.rules && extension.rules.disabled) {
+          if (extension.rules?.disabled) {
             return this.extensionService.evaluateRule(extension.rules.disabled);
           }
         }
