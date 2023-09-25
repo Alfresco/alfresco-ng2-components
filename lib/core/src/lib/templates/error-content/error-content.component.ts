@@ -24,6 +24,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslationService } from '../../translation/translation.service';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+
 @Component({
     selector: 'adf-error-content',
     templateUrl: './error-content.component.html',
@@ -41,9 +45,12 @@ export class ErrorContentComponent implements OnInit {
     errorCode: string = ErrorContentComponent.UNKNOWN_ERROR;
 
     errorCodeTranslated: string;
+    isSmallScreen$: Observable<boolean>;
 
     constructor(private route: ActivatedRoute,
-                private translateService: TranslationService) {
+                private translateService: TranslationService,
+                private breakpointObserver: BreakpointObserver
+                ) {
     }
 
     ngOnInit() {
@@ -54,6 +61,8 @@ export class ErrorContentComponent implements OnInit {
                 this.errorCodeTranslated =  errorHasTranslation ? code : ErrorContentComponent.UNKNOWN_ERROR;
             });
         }
+
+        this.isSmallScreen$ = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
     }
 
     checkErrorExists(errorCode: string ) {
