@@ -150,7 +150,7 @@ export abstract class BaseQueryBuilderService {
                 default: configuration.default || false,
                 selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
             }));
-        } else if (!!configurations) {
+        } else if (configurations) {
             return [
                 {
                     index: 0,

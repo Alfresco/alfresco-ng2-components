@@ -610,7 +610,7 @@ describe('ContentMetadataComponent', () => {
         let classesApi: ClassesApi;
         let expectedNode: Node;
 
-        const versionableResponse: PropertyGroup = {
+        const verResponse: PropertyGroup = {
             name: 'cm:versionable',
             title: 'Versionable',
             properties: {
@@ -705,7 +705,7 @@ describe('ContentMetadataComponent', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
@@ -713,9 +713,9 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom(fixture, 'Versionable');
 
-            expect(versionableProp).toBeTruthy();
+            expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
@@ -725,7 +725,7 @@ describe('ContentMetadataComponent', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
@@ -733,9 +733,9 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
+            const verProps = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-metadata-group-Versionable"]'));
 
-            expect(versionableProps.length).toEqual(2);
+            expect(verProps.length).toEqual(2);
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
@@ -745,7 +745,7 @@ describe('ContentMetadataComponent', () => {
                 exclude: 'cm:versionable'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
@@ -753,9 +753,9 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom(fixture, 'Versionable');
 
-            expect(versionableProp).toBeNull();
+            expect(verProp).toBeNull();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
@@ -766,7 +766,7 @@ describe('ContentMetadataComponent', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
@@ -774,9 +774,9 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProp = queryDom(fixture, 'Versionable');
+            const verProp = queryDom(fixture, 'Versionable');
 
-            expect(versionableProp).toBeTruthy();
+            expect(verProp).toBeTruthy();
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_versionable');
         });
 
@@ -786,7 +786,7 @@ describe('ContentMetadataComponent', () => {
                 exclude: ['cm:versionable', 'cm:auditable']
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
             fixture.detectChanges();
@@ -794,8 +794,8 @@ describe('ContentMetadataComponent', () => {
             await component.groupedProperties$.toPromise();
             fixture.detectChanges();
 
-            const versionableProp = queryDom(fixture, 'Versionable');
-            expect(versionableProp).toBeNull();
+            const verProp = queryDom(fixture, 'Versionable');
+            expect(verProp).toBeNull();
 
             const auditableProp = queryDom(fixture, 'Auditable');
             expect(auditableProp).toBeNull();
@@ -825,17 +825,17 @@ describe('ContentMetadataComponent', () => {
 
             exifProp.nativeElement.click();
 
-            const pixelXDimentionElement = fixture.debugElement.query(
+            const pixelXDimensionElement = fixture.debugElement.query(
                 By.css('[data-automation-id="card-textitem-label-properties.exif:pixelXDimension"]')
             );
-            expect(pixelXDimentionElement).toBeTruthy();
-            expect(pixelXDimentionElement.nativeElement.textContent.trim()).toEqual('Image Width');
+            expect(pixelXDimensionElement).toBeTruthy();
+            expect(pixelXDimensionElement.nativeElement.textContent.trim()).toEqual('Image Width');
 
-            const pixelYDimentionElement = fixture.debugElement.query(
+            const pixelYDimensionElement = fixture.debugElement.query(
                 By.css('[data-automation-id="card-textitem-label-properties.exif:pixelYDimension"]')
             );
-            expect(pixelYDimentionElement).toBeTruthy();
-            expect(pixelYDimentionElement.nativeElement.textContent.trim()).toEqual('Image Height');
+            expect(pixelYDimensionElement).toBeTruthy();
+            expect(pixelYDimensionElement.nativeElement.textContent.trim()).toEqual('Image Height');
         });
 
         it('should show Exif twice when includeAll is set to true', async () => {

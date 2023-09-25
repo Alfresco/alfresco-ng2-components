@@ -306,7 +306,7 @@ describe('UploadDragAreaComponent', () => {
         });
 
         it('should upload a file to a specific target folder when dropped onto one', () => {
-            const fakePippoItem = {
+            const fakePngItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
                 isFile: true,
@@ -321,7 +321,7 @@ describe('UploadDragAreaComponent', () => {
             const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
-                    files: [fakePippoItem]
+                    files: [fakePngItem]
                 }
             });
 

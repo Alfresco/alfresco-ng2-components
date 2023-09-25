@@ -56,7 +56,7 @@ export class AddPermissionDialogComponent {
 
         this.selectedMembers.forEach((member) => {
             const existingMember = this.existingMembers.find(({authorityId}) => authorityId === member.id);
-            if (!!existingMember) {
+            if (existingMember) {
                 member.role = existingMember.name;
                 member.accessStatus = existingMember.accessStatus;
                 member.readonly = true; // make role non editable
@@ -66,7 +66,7 @@ export class AddPermissionDialogComponent {
     }
 
     canCloseDialog() {
-        if (!!this.selectedMembers.length) {
+        if (this.selectedMembers.length) {
             this.disableSearch();
         } else {
             this.dialogRef.close();

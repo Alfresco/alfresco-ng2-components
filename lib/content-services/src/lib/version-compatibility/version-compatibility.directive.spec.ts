@@ -52,7 +52,7 @@ describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let versionCompatibilityService: VersionCompatibilityService;
 
-    const acsResponceMock = new VersionInfo({
+    const acsResponseMock = new VersionInfo({
         display: '7.0.1',
         major: '7',
         minor: '0',
@@ -70,7 +70,7 @@ describe('VersionCompatibilityDirective', () => {
         });
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
-        spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponceMock);
+        spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponseMock);
     });
 
     it('should display component when the version is supported', () => {

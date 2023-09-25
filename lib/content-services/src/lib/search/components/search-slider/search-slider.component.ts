@@ -49,15 +49,15 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
 
     ngOnInit() {
         if (this.settings) {
-            if (this.settings.hasOwnProperty('min')) {
+            if (Object.prototype.hasOwnProperty.call(this.settings, 'min')) {
                 this.min = this.settings['min'];
             }
 
-            if (this.settings.hasOwnProperty('max')) {
+            if (Object.prototype.hasOwnProperty.call(this.settings, 'max')) {
                 this.max = this.settings['max'];
             }
 
-            if (this.settings.hasOwnProperty('step')) {
+            if (Object.prototype.hasOwnProperty.call(this.settings, 'step')) {
                 this.step = this.settings['step'];
             }
 

@@ -118,7 +118,7 @@ export class NodeDeleteDirective implements OnChanges {
 
         let promise: Promise<any>;
 
-        if (node.entry.hasOwnProperty('archivedAt') && node.entry['archivedAt']) {
+        if (Object.prototype.hasOwnProperty.call(node.entry, 'archivedAt') && node.entry['archivedAt']) {
             promise = this.trashcanApi.deleteDeletedNode(id);
         } else {
             promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });

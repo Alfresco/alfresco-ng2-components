@@ -39,11 +39,11 @@ export class ContentActionModel {
             this.permission = obj.permission;
             this.disableWithNoPermission = obj.disableWithNoPermission;
 
-            if (obj.hasOwnProperty('disabled')) {
+            if (Object.prototype.hasOwnProperty.call(obj, 'disabled')) {
                 this.disabled = obj.disabled;
             }
 
-            if (obj.hasOwnProperty('visible')) {
+            if (Object.prototype.hasOwnProperty.call(obj, 'visible')) {
                 this.visible = obj.visible;
             }
         }
