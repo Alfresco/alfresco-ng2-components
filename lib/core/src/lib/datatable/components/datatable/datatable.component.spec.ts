@@ -736,17 +736,17 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc');
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
         // // check first click on the header
-        hedaderColumns[0].click();
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc'));
 
         // check second click on the header
         sorting.direction = 'desc';
-        hedaderColumns[0].click();
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
