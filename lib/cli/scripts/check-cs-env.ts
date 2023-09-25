@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
+import { AlfrescoApi /*, NodesApi, UploadApi*/ } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-import { Buffer } from 'node:buffer';
+// import { Buffer } from 'node:buffer';
 const program = require('commander');
 import { logger } from './logger';
 const MAX_RETRY = 3;
