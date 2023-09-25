@@ -84,7 +84,7 @@ describe('TaskDetailsComponent', () => {
         logService = TestBed.inject(LogService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 
-        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(<any>{ email: 'fake-email' }));
+        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));
 
         taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));

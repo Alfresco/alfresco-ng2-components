@@ -212,7 +212,7 @@ describe('Process filter', () => {
         describe('add filter', () => {
             beforeEach(() => {
                 createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter').and.callFake(
-                    (processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter)
+                    (processFilter) => Promise.resolve(processFilter)
                 );
             });
 

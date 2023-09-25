@@ -454,7 +454,7 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form by task id', (done) => {
-        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
+        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
         spyOn(taskFormService, 'getTaskForm').and.callFake((currentTaskId) => new Observable((observer) => {
             observer.next({taskId: currentTaskId});
             observer.complete();
@@ -475,25 +475,25 @@ describe('FormComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
+        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(taskFormService, 'getTaskForm').and.callFake(() => throwError(error));
 
-        formComponent.getFormByTaskId('123').then((_) => {
+        formComponent.getFormByTaskId('123').then(() => {
             expect(formComponent.handleError).toHaveBeenCalledWith(error);
             done();
         });
     });
 
     it('should apply readonly state when getting form by task id', (done) => {
-        spyOn(taskService, 'getTask').and.returnValue(of(<TaskRepresentation>{}));
+        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
         spyOn(taskFormService, 'getTaskForm').and.callFake((taskId) => new Observable((observer) => {
             observer.next({taskId});
             observer.complete();
         }));
 
         formComponent.readOnly = true;
-        formComponent.getFormByTaskId('123').then((_) => {
+        formComponent.getFormByTaskId('123').then(() => {
             expect(formComponent.form).toBeDefined();
             expect(formComponent.form.readOnly).toBe(true);
             done();

@@ -1195,7 +1195,7 @@ export const preselectedSingleNode = {
     ]
 };
 
-export const preselectedMultipleeNode = {
+export const preselectedMultipleNodes = {
     'fake-multiple-upload': [
       {
         id: 1027,

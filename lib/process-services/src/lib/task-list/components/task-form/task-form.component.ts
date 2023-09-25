@@ -214,7 +214,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
     }
 
     isStandaloneTask(): boolean {
-        return !!!this.taskDetails?.processDefinitionId;
+        return !this.taskDetails?.processDefinitionId;
     }
 
     isTaskLoaded(): boolean {

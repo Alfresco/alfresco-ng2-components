@@ -329,7 +329,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
-            if (this.values.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(this.values, 'key')) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue
                     .filter((value: any) => !!value?.isFile)

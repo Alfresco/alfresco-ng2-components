@@ -83,7 +83,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
         peopleProcessService = TestBed.inject(PeopleProcessService);
-        getBpmLoggedUserSpy = spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(<any>fakeUser));
+        getBpmLoggedUserSpy = spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of(fakeUser as any));
     });
 
     afterEach(async () => {
@@ -106,11 +106,11 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(false);
             expect(inputFieldTwo['disabled']).toEqual(false);
             expect(inputFieldThree['disabled']).toEqual(false);
@@ -144,9 +144,9 @@ describe('TaskFormComponent', () => {
             component.taskId = '123';
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(completeButton['disabled']).toEqual(false);
             completeButton.click();
             expect(completeTaskFormSpy).toHaveBeenCalled();
@@ -192,11 +192,11 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(true);
             expect(inputFieldTwo['disabled']).toEqual(true);
             expect(inputFieldThree['disabled']).toEqual(true);
@@ -271,11 +271,11 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(completedTaskDetailsMock));
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(true);
             expect(inputFieldTwo['disabled']).toEqual(true);
             expect(inputFieldThree['disabled']).toEqual(true);
@@ -352,9 +352,9 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(completeButtonElement['disabled']).toEqual(false);
             completeButtonElement.click();
             expect(errorSpy).toHaveBeenCalled();
@@ -592,10 +592,10 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
 
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(completeButton['disabled']).toEqual(false);
             expect(component.isProcessInitiator()).toEqual(true);
 
@@ -616,10 +616,10 @@ describe('TaskFormComponent', () => {
             expect(component.isProcessInitiator()).toEqual(true);
             expect(component.isCandidateMember()).toEqual(true);
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
 
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(completeButton['disabled']).toEqual(true);
         });
 
@@ -638,10 +638,10 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
 
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(component.canInitiatorComplete()).toEqual(false);
             expect(component.isProcessInitiator()).toEqual(false);
             expect(completeButton['disabled']).toEqual(false);
@@ -824,10 +824,10 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-complete"]');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(saveButton.disabled).toEqual(false);
             expect(completeButton.disabled).toEqual(true);
         });
@@ -845,10 +845,10 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(involvedGroupTaskForm));
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-complete"]');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(saveButton.disabled).toEqual(false);
             expect(completeButton.disabled).toEqual(true);
             saveButton.click();
@@ -869,11 +869,11 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
             expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
             expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
@@ -889,11 +889,11 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
             expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
             expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
@@ -908,12 +908,12 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
 
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(true);
             expect(inputFieldTwo['disabled']).toEqual(true);
             expect(inputFieldThree['disabled']).toEqual(true);
@@ -929,12 +929,12 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const activitFormSelector = element.querySelector('adf-form');
+            const formSelector = element.querySelector('adf-form');
             const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
 
-            expect(activitFormSelector).toBeDefined();
+            expect(formSelector).toBeDefined();
             expect(inputFieldOne['disabled']).toEqual(false, 'Task Form field is disabled');
             expect(inputFieldTwo['disabled']).toEqual(false, 'Task Form field is disabled');
             expect(inputFieldThree['disabled']).toEqual(false, 'Task Form field is disabled');

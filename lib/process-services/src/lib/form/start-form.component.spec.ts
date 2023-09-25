@@ -22,7 +22,7 @@ import {
     startFormDateWidgetMock, startFormDropdownDefinitionMock,
     startFormTextDefinitionMock, startMockForm, startMockFormWithTab,
     startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock,
-    taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleeNode
+    taskFormSingleUploadMock, taskFormMultipleUploadMock, preselectedSingleNode, preselectedMultipleNodes
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { WidgetVisibilityService, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
@@ -106,12 +106,12 @@ describe('StartFormComponent', () => {
 
     it('should be able to inject multiple files as value into the form with an upload multiple widget', () => {
         getStartFormSpy.and.returnValue(of(taskFormMultipleUploadMock));
-        component.data = preselectedMultipleeNode;
+        component.data = preselectedMultipleNodes;
         component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId1, true) });
 
         expect(component.form.getFieldById('fake-multiple-upload').value).toBeDefined();
         expect(component.form.getFieldById('fake-multiple-upload').value.length).toBe(2);
-        expect(component.form.getFieldById('fake-multiple-upload').value).toBe(preselectedMultipleeNode['fake-multiple-upload']);
+        expect(component.form.getFieldById('fake-multiple-upload').value).toBe(preselectedMultipleNodes['fake-multiple-upload']);
     });
 
     it('should show outcome buttons by default', () => {
