@@ -115,7 +115,7 @@ class BlobTestComponent {
     }
 
 }
-// eslint-disable-next-line
+
 describe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;
@@ -439,7 +439,7 @@ describe('Test PdfViewer component', () => {
             let componentUrlTestComponent: UrlTestComponent;
             let elementUrlTestComponent: HTMLElement;
 
-            beforeEach( (done) => {
+            beforeEach((done) => {
                 const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
@@ -512,7 +512,7 @@ describe('Test PdfViewer component', () => {
             });
 
         });
-
+        // eslint-disable-next-line
         xdescribe('greater than the maximum allowed value', () => {
 
             let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
@@ -546,7 +546,7 @@ describe('Test PdfViewer component', () => {
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue).toBe('10.0');
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(10);
                     done();
                 });
             });
@@ -701,7 +701,7 @@ describe('Test PdfViewer component', () => {
         let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
 
         describe('Open password dialog', () => {
-            beforeEach(async () => {
+            beforeEach( async () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
@@ -771,9 +771,7 @@ describe('Test PdfViewer component', () => {
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
                 spyOn(dialog, 'open').and.callFake(() => ({
-                    afterClosed: () => {
-                        return of('');
-                    }
+                    afterClosed: () => of('')
                 } as any));
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
