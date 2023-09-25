@@ -231,10 +231,10 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 // for backwards compatibility to handle cases in code where we try read response.error.response.body;
 
                 const error = {
-                    response: {...err, body: err.error}
+                    ...err, body: err.error
                 };
 
-                const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error.response);
+                const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
                 return throwError(alfrescoApiError);
             }),
             takeUntil(abort$)
