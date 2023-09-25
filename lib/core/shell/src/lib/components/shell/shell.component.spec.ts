@@ -52,8 +52,8 @@ describe('AppLayoutComponent', () => {
       hideSidenavConditions: [],
       minimizeSidenavConditions: [],
       preferencesService: {
-        get: (_key: string) => 'true',
-        set: (_key: string, _value: any) => {}
+        get: () => 'true',
+        set: () => {}
       }
     };
 

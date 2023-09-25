@@ -84,8 +84,8 @@ describe('CardViewArrayItemComponent', () => {
         });
 
         it('should NOT call service on chip list container click', () => {
-            const chiplistContainer: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-list-container"]');
-            chiplistContainer.dispatchEvent(new Event('click'));
+            const chipListContainer: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-list-container"]');
+            chipListContainer.dispatchEvent(new Event('click'));
 
             expect(serviceSpy).not.toHaveBeenCalled();
         });
@@ -107,11 +107,11 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chiplistContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
+            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
             const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
 
-            expect(chiplistContainer).not.toBeNull();
+            expect(chipListContainer).not.toBeNull();
             expect(chip1.innerText).toEqual('Zlatan');
             expect(chip2.innerText).toEqual('Lionel Messi');
         });
@@ -123,13 +123,13 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chiplistContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
+            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
             const chip1Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] mat-icon');
             const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
             const chip2Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] mat-icon');
 
-            expect(chiplistContainer).not.toBeNull();
+            expect(chipListContainer).not.toBeNull();
             expect(chip1.innerText).toEqual('Zlatan');
             expect(chip1Icon.innerText).toEqual('person');
             expect(chip2.innerText).toEqual('Lionel Messi');
