@@ -71,6 +71,8 @@ async function checkEnv() {
     }
 }
 
+// TODO: https://alfresco.atlassian.net/browse/ACS-5873
+/*
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
@@ -107,6 +109,7 @@ async function checkDiskSpaceFullEnv() {
         }
     }
 }
+*/
 
 function sleep(delay: number) {
     const start = new Date().getTime();
