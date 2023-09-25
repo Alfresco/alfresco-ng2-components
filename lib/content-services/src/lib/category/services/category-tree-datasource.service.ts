@@ -64,17 +64,15 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
                     .join(pathSeparator);
 
                 return this.categoryService.getCategory(category.entry.id).pipe(
-                    map((res) => {
-                        return {
-                            id: category.entry.id,
-                            nodeName: path ? `${path}/${category.entry.name}` : category.entry.name,
-                            parentId: category.entry.parentId,
-                            level: 0,
-                            nodeType: TreeNodeType.RegularNode,
-                            hasChildren: res.entry.hasChildren,
-                            isLoading: false
-                        };
-                    })
+                    map((res) => ({
+                        id: category.entry.id,
+                        nodeName: path ? `${path}/${category.entry.name}` : category.entry.name,
+                        parentId: category.entry.parentId,
+                        level: 0,
+                        nodeType: TreeNodeType.RegularNode,
+                        hasChildren: res.entry.hasChildren,
+                        isLoading: false
+                    }))
                 );
             }),
                 toArray(),
