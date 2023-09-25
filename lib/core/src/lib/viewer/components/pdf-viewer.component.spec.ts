@@ -512,6 +512,7 @@ describe('Test PdfViewer component', () => {
             });
 
         });
+        // TODO: https://alfresco.atlassian.net/browse/ACS-6061
         // eslint-disable-next-line
         xdescribe('greater than the maximum allowed value', () => {
 
