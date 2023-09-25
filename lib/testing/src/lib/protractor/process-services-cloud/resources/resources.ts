@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* eslint-disable @cspell/spellchecker */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export const ACTIVITI_CLOUD_APPS = {

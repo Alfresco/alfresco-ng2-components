@@ -139,7 +139,8 @@
     "webscript",
     "Whitespaces",
     "xdescribe",
-    "xsrf"
+    "xsrf",
+    "Undeployed"
   ],
   "dictionaries": [
     "html",
