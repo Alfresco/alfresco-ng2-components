@@ -35,7 +35,6 @@
     },
     "lint": {
       "dependsOn": [
-            "spellcheck",
             "stylelint"
       ]
     }
@@ -44,7 +43,7 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "spellcheck", "stylelint"],
+        "cacheableOperations": ["build", "lint", "test", "stylelint"],
         "cacheDirectory": "nxcache",
         "runtimeCacheInputs": ["node -v"]
       }

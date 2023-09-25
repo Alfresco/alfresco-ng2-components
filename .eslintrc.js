@@ -1,4 +1,3 @@
-path = require('path');
 module.exports = {
     root: true,
     ignorePatterns: [
@@ -11,20 +10,36 @@ module.exports = {
         '**/scripts',
         '**/docs'
     ],
+    plugins: ['@nrwl/nx'],
     overrides: [
         {
             files: ['*.ts'],
             parserOptions: {
-                project: [path.join(__dirname, 'tsconfig.json'), path.join(__dirname, 'e2e/tsconfig.e2e.json')],
+                project: ['tsconfig.json', 'e2e/tsconfig.e2e.json'],
                 createDefaultProgram: true
             },
             extends: [
+                'plugin:@nrwl/nx/typescript',
+                'plugin:@nrwl/nx/angular',
+                'plugin:@cspell/recommended',
                 'plugin:@angular-eslint/ng-cli-compat',
                 'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
                 'plugin:@angular-eslint/template/process-inline-templates'
             ],
-            plugins: ['eslint-plugin-unicorn', 'eslint-plugin-rxjs', 'ban', 'license-header'],
+            plugins: [
+                'eslint-plugin-unicorn',
+                'eslint-plugin-rxjs',
+                'prettier',
+                'ban',
+                'license-header',
+                '@cspell',
+                'eslint-plugin-import',
+                '@angular-eslint/eslint-plugin',
+                '@typescript-eslint'
+            ],
             rules: {
+                // Uncomment this to enable prettier checks as part of the ESLint
+                // 'prettier/prettier': 'error',
                 'ban/ban': [
                     'error',
                     { name: 'eval', message: 'Calls to eval is not allowed.' },
