@@ -21,7 +21,7 @@ import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, 
 import { ENTER } from '@angular/cdk/keycodes';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
-export const HOST_REGEX = '^(http|https):\/\/.*[^/]$';
+export const HOST_REGEX = '^(http|https)://.*[^/]$';
 
 @Component({
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }],

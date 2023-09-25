@@ -92,7 +92,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     isCompletedTask(): boolean {
-        return this.taskDetails && this.taskDetails.endDate !== undefined && this.taskDetails.endDate !== null;
+        return this.taskDetails?.endDate != null;
     }
 
 }

@@ -51,7 +51,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(([params, searchConfig]) => {
                 this.updateSearchSetting(searchConfig);
-                this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.searchedWord = Object.prototype.hasOwnProperty.call(params, this.queryParamName) ? params[this.queryParamName] : null;
                 const query = this.formatSearchQuery(this.searchedWord, searchConfig['app:fields']);
                 if (query) {
                     this.queryBuilder.userQuery = query;
@@ -87,7 +87,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                this.searchedWord = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.searchedWord = Object.prototype.hasOwnProperty.call(params, this.queryParamName) ? params[this.queryParamName] : null;
                 if (this.searchedWord) {
                     this.queryBuilder.update();
                 } else {

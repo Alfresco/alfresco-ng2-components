@@ -93,7 +93,7 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     }
 
     isCompletedProcess(): boolean {
-        return this.processInstance && this.processInstance.ended !== undefined && this.processInstance.ended !== null;
+        return this.processInstance?.ended != null;
     }
 
 }

@@ -190,7 +190,7 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     }
 
     isFormValid() {
-        return this.taskListForm && this.taskListForm.dirty && this.taskListForm.valid;
+        return this.taskListForm?.dirty && this.taskListForm.valid;
     }
 
     private getControl<T extends AbstractControl>(key: string): T {

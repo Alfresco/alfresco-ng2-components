@@ -124,7 +124,7 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
     }
 
     isFormValid() {
-        return this.processListForm && this.processListForm.dirty && this.processListForm.valid;
+        return this.processListForm?.dirty && this.processListForm.valid;
     }
 
     resetProcessForm() {

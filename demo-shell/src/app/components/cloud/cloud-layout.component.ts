@@ -41,7 +41,7 @@ export class CloudLayoutComponent implements OnInit {
             this.appName = params.appName;
         });
 
-        if (this.route.snapshot && this.route.snapshot.firstChild) {
+        if (this.route.snapshot?.firstChild) {
             root = this.route.snapshot.firstChild.url[0].path;
         }
 

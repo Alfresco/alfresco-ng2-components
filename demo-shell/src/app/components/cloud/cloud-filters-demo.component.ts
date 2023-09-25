@@ -53,7 +53,7 @@ export class CloudFiltersDemoComponent implements OnInit {
         this.currentProcessFilter$ = this.cloudLayoutService.processFilter$;
 
         let root = '';
-        if (this.route.snapshot && this.route.snapshot.firstChild) {
+        if (this.route.snapshot?.firstChild) {
             root = this.route.snapshot.firstChild.url[0].path;
             if (root === 'tasks') {
                 this.expandTaskFilter = true;
