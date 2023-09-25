@@ -104,7 +104,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = true;
             setTimeout(() => {
-                this.tagNameInputElement.nativeElement.scrollIntoView();
+                this.tagNameInputElement?.nativeElement?.scrollIntoView();
             });
         } else {
             this._existingTagsPanelVisible = false;
