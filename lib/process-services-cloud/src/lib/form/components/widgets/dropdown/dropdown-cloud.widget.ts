@@ -132,7 +132,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         const properties = path.split('.');
         const currentProperty = properties.shift();
 
-        if (!data.hasOwnProperty(currentProperty)) {
+        if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
             this.handleError(`${currentProperty} not found in ${JSON.stringify(data)}`);
             this.variableOptionsFailed = true;
             return [];

@@ -19,7 +19,7 @@
 
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
-import { ComponentSelectionMode } from '../../../types';
+import { ComponentSelectionMode } from '../../../types';
 
 export class ProcessFilterCloudModel {
     id: string;

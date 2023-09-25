@@ -81,7 +81,7 @@ export class NotificationCloudService extends BaseCloudService {
                 if (graphQLErrors) {
                     for (const err of graphQLErrors) {
                         switch (err.extensions.code) {
-                            case 'UNAUTHENTICATED':
+                            case 'UNAUTHENTICATED': {
                                 const oldHeaders = operation.getContext().headers;
                                 operation.setContext({
                                     headers: {
@@ -92,7 +92,9 @@ export class NotificationCloudService extends BaseCloudService {
                                 });
                                 forward(operation);
                                 break;
+                            }
                             default:
+                                break;
                         }
                     }
                 }

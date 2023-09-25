@@ -40,17 +40,17 @@ export class ProcessFilterCloudService {
     readQueryParams(obj: any): ProcessFilterCloudModel {
         const model = Object.assign({}, obj) as ProcessFilterCloudModel;
 
-        if (obj.hasOwnProperty('appVersion') && obj['appVersion']) {
+        if (Object.prototype.hasOwnProperty.call(obj, 'appVersion') && obj['appVersion']) {
             if (typeof obj['appVersion'] === 'string') {
                 model.appVersion = obj['appVersion'].split(',').map((str) => parseInt(str, 10));
             }
         }
 
-        if (obj.hasOwnProperty('lastModifiedFrom')) {
+        if (Object.prototype.hasOwnProperty.call(obj, 'lastModifiedFrom')) {
             model.lastModifiedFrom = new Date(parseInt(obj['lastModifiedFrom'], 10));
         }
 
-        if (obj.hasOwnProperty('lastModifiedTo')) {
+        if (Object.prototype.hasOwnProperty.call(obj, 'lastModifiedTo')) {
             model.lastModifiedTo = new Date(parseInt(obj['lastModifiedTo'], 10));
         }
 
@@ -82,7 +82,7 @@ export class ProcessFilterCloudService {
                 if (value['lastModifiedTo']) {
                     result['lastModifiedTo'] = value['lastModifiedTo'].valueOf();
                 }
-            } else if (value.hasOwnProperty(prop)) {
+            } else if (Object.prototype.hasOwnProperty.call(value, prop)) {
                 result[prop] = value[prop];
             }
         }

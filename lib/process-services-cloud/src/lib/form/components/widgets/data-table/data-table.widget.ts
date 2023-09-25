@@ -128,7 +128,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         const properties = path.split('.');
         const currentProperty = properties.shift();
 
-        if (!data.hasOwnProperty(currentProperty)) {
+        if (!Object.prototype.hasOwnProperty.call(data, currentProperty)) {
             return [];
         }
 

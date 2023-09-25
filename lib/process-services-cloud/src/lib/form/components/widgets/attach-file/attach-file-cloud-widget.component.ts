@@ -94,7 +94,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             this.contentModelFormFileHandler(files[0]);
         }
         this.field.params.displayableCMProperties = this.field.params.displayableCMProperties ?? [];
-        this.displayedColumns.splice(2, 0, ...this.field.params.displayableCMProperties?.map(property => property?.name));
+        this.displayedColumns.splice(2, 0, ...(this.field.params.displayableCMProperties?.map(property => property?.name) || []));
     }
 
     isPathStaticType(): boolean {

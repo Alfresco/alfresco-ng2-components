@@ -318,7 +318,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     hasAssignee(): boolean {
-        return !!this.taskDetails.assignee ? true : false;
+        return this.taskDetails.assignee ? true : false;
     }
 
     isTaskValid(): boolean {
