@@ -71,7 +71,6 @@ async function checkEnv() {
     }
 }
 
-// @ts-ignore
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 

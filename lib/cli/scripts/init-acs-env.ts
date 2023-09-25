@@ -56,24 +56,29 @@ async function initializeDefaultFiles() {
     for (let j = 0; j < ACS_DEFAULT.files.length; j++) {
         const fileInfo = ACS_DEFAULT.files[j];
         switch (fileInfo.action) {
-            case 'UPLOAD':
+            case 'UPLOAD': {
                 await uploadFile(fileInfo.name, parentFolderId);
                 break;
-            case 'LOCK':
+            }
+            case 'LOCK': {
                 const fileToLock = await uploadFile(fileInfo.name, parentFolderId);
                 await lockFile(fileToLock.entry.id);
                 break;
-            case 'SHARE':
+            }
+            case 'SHARE': {
                 const fileToShare = await uploadFile(fileInfo.name, parentFolderId);
                 await shareFile(fileToShare.entry.id);
                 break;
-            case 'FAVORITE':
+            }
+            case 'FAVORITE': {
                 const fileToFav = await uploadFile(fileInfo.name, parentFolderId);
                 await favoriteFile(fileToFav.entry.id);
                 break;
-            default:
+            }
+            default: {
                 logger.error('No action found for file ', fileInfo.name, parentFolderId);
                 break;
+            }
         }
     }
 }
