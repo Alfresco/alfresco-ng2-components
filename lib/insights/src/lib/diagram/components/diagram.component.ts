@@ -117,7 +117,7 @@ export class DiagramComponent implements OnChanges {
 
     setMetricValueToDiagramElement(diagram: DiagramModel, metrics: any, metricType: string) {
         for (const key in metrics) {
-            if (metrics.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(metrics, key)) {
                 const foundElement: DiagramElementModel = diagram.elements.find(
                     (element: DiagramElementModel) => element.id === key);
                 if (foundElement) {

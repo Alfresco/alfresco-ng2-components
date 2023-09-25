@@ -175,7 +175,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     onValueChanged(values: any) {
         this.formValueChanged.emit(values);
-        if (this.reportForm && this.reportForm.valid) {
+        if (this.reportForm?.valid) {
             this.submit(values);
         }
     }
@@ -306,7 +306,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     ngAfterContentChecked() {
-        if (this.reportForm && this.reportForm.valid) {
+        if (this.reportForm?.valid) {
             this.reportForm.markAsDirty();
         }
     }
@@ -320,7 +320,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     isFormValid() {
-        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
+        return this.reportForm?.dirty && this.reportForm.valid;
     }
 
     get taskGroup(): UntypedFormGroup {
