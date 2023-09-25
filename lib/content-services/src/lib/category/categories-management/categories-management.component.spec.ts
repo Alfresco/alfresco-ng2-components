@@ -240,16 +240,16 @@ describe('CategoriesManagementComponent', () => {
             });
         });
 
-        describe('isEmpty', () => {
+        describe('isCategoryEmpty', () => {
             it('should return true when categories is not empty', () => {
                 component.categories = [category3, category4];
-                const result = component.isEmpty;
+                const result = component.isCategoryEmpty;
                 expect(result).toBeTrue();
             });
 
             it('should return false when categories is empty', () => {
                 component.categories = [];
-                const result = component.isEmpty;
+                const result = component.isCategoryEmpty;
                 expect(result).toBeFalse();
             });
         });
