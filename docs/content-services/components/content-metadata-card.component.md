@@ -56,12 +56,6 @@ Displays and edits metadata related to a node.
 | editable | `boolean` |  | (optional) This flag toggles editable of content. |
 | customPanels | [`ContentMetadataCustomPanel`](../interfaces/content-metadata-custom-panel.interface.md)`[]` | | (optional) List of custom metadata panels to be displayed as [`Dynamic components`](../../extensions/components/dynamic.component.md). |
 
-### Events
-
-| Name           | Type                                                                  | Description                                       |
-|----------------|-----------------------------------------------------------------------|---------------------------------------------------|
-| editableChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's editable state is changed. |
-
 ## Details
 
 The component shows metadata related to a given node. It uses the
@@ -444,3 +438,4 @@ When the list of values is too long, the options selection panel will be enhance
 ## Custom metadata panels
 
 If there is a need to display some custom node properties that require additional UI or data to be fetched you can define custom metadata panels for the metadata component. After creating custom component to be displayed it has to be registered in [Extension Service](../../extensions/services/extension.service.md). Both `panelTitle` and `component` properties have to be defined.
+![Chips for multi value properties](../../docassets/images/adf-search-select.png)
