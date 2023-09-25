@@ -122,6 +122,6 @@ After saving the html file, open the ADF app in a browser and dive into the `Per
 
 In the following screenshot you can see how the result should look:
 
-![content_metadata_preset](../docassets/images/content_metadata_preset.png)
+![UI_Property_Panel](../docassets/images/UI_property_panel.png)
 
 To check it out, double click on the `documentLibrary` folder and select (with one click) the `Presentations` folder. You should see the `This is my preset` group disappear from the metadata panel, because the node doesn't have the `st:siteContainer` aspect.
