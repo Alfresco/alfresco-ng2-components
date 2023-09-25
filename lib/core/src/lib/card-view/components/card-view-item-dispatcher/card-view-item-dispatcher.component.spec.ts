@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
-import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
+import { CardViewItemDispatcherComponent, DynamicLifeCycleMethods } from './card-view-item-dispatcher.component';
 
 @Component({
     selector: 'whatever-you-want-to-have',
@@ -142,23 +142,12 @@ describe('CardViewItemDispatcherComponent', () => {
 
         let shinyCustomElementItemComponent;
 
-        const lifeCycleMethods = [
-            'ngOnChanges',
-            'ngOnInit',
-            'ngDoCheck',
-            'ngAfterContentInit',
-            'ngAfterContentChecked',
-            'ngAfterViewInit',
-            'ngAfterViewChecked',
-            'ngOnDestroy'
-        ];
-
         beforeEach(() => {
             shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
         });
 
         it('should call through the life-cycle methods', () => {
-            lifeCycleMethods.forEach((lifeCycleMethod) => {
+            DynamicLifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = () => {};
                 spyOn(shinyCustomElementItemComponent, lifeCycleMethod);
                 const param = {};
@@ -171,7 +160,7 @@ describe('CardViewItemDispatcherComponent', () => {
 
         it('should NOT call through the life-cycle methods if the method does not exist (no error should be thrown)', () => {
             const param = {};
-            lifeCycleMethods.forEach((lifeCycleMethod) => {
+            DynamicLifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = undefined;
 
                 const execution = () => {
