@@ -28,16 +28,6 @@ import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
-export const DynamicLifeCycleMethods = [
-    'ngOnInit',
-    'ngDoCheck',
-    'ngAfterContentInit',
-    'ngAfterContentChecked',
-    'ngAfterViewInit',
-    'ngAfterViewChecked',
-    'ngOnDestroy'
-];
-
 @Component({
     selector: 'adf-card-view-item-dispatcher',
     template: '<ng-template adf-card-view-content-proxy></ng-template>'
@@ -80,7 +70,17 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     public ngDoCheck;
 
     constructor(private cardItemTypeService: CardItemTypeService) {
-        DynamicLifeCycleMethods.forEach((method) => {
+        const dynamicLifeCycleMethods = [
+            'ngOnInit',
+            'ngDoCheck',
+            'ngAfterContentInit',
+            'ngAfterContentChecked',
+            'ngAfterViewInit',
+            'ngAfterViewChecked',
+            'ngOnDestroy'
+        ];
+
+        dynamicLifeCycleMethods.forEach((method) => {
             this[method] = this.proxy.bind(this, method);
         });
     }
@@ -116,9 +116,10 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
-    private proxy(methodName: string, ...args) {
-        if (Object.prototype.hasOwnProperty.call(this.componentReference.instance, methodName)) {
-            this.componentReference.instance[methodName]?.(...args);
+    private proxy(methodName, ...args) {
+        if (this.componentReference.instance[methodName]) {
+            // eslint-disable-next-line prefer-spread
+            this.componentReference.instance[methodName].apply(this.componentReference.instance, args);
         }
     }
 }
