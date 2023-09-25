@@ -441,7 +441,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('toggleEdit', () => {
         let mockEvent: MouseEvent;
-        let mockGroup: CardViewGroup = {
+        const mockGroup: CardViewGroup = {
             editable: false,
             expanded: false,
             title: '',
