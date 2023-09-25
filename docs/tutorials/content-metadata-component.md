@@ -98,9 +98,27 @@ Now that the `my-preset` configuration is defined, let's use it in a view of the
 </adf-content-metadata-card>
 ```
 
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
+| editable | `boolean` |  | (optional) This flag toggles editable of content. |
+| editableTags | `boolean` |  | (optional) This flag toggles editable of tags content. |
+| editableCategories | `boolean` |  | (optional) This flag toggles editable of categories content. |
+
+### Events
+
+| Name | Type | Description |
+|----------------|-----------------------------------------------------------------------|---------------------------------------------------|
+| editableChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's editable state is changed. |
+| editableTagsChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's editableTags state is changed. |
+| editableCategoriesChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's editableCategories state is changed. |
+| groupChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when content's group state is changed. |
+
 ### Viewing the result
 
-After saving the html file, open the ADF app in a browser and dive into the `Personal Files > Sites > swsdp` folder of the Alfresco's repository. Once there, select the `documentLibrary` folder (one click only) and click on the view details icon (the `i` on the top right). Scrolling down the metadata tab on the right, click on the `More information` item at the bottom. Once clicked, you will see two different groups: `Properties` (already there by default) and `This is my preset`. Click on `This is my preset` to show the properties related.
+After saving the html file, open the ADF app in a browser and dive into the `Personal Files > Sites > swsdp` folder of the Alfresco's repository. Once there, select the `documentLibrary` folder (one click only) and click on the view details icon (the `menu_open icon` on the top right). Scrolling down the metadata tab on the right. You will see different panels: `Properties` (already there by default), `Tags`, `Categories` and `grouped properties`.
 
 In the following screenshot you can see how the result should look:
 
