@@ -19,8 +19,8 @@ import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
-import { MatLegacyError as MatError } from '@angular/material/legacy-form-field';
-import { MatLegacyListOption as MatListOption, MatLegacySelectionList as MatSelectionList } from '@angular/material/legacy-list';
+import { MatError } from '@angular/material/form-field';
+import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';

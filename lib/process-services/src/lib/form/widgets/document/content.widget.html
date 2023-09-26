@@ -1,4 +1,4 @@
-<mat-card class="adf-content-container" *ngIf="content">
+<mat-card appearance="outlined" class="adf-content-container" *ngIf="content">
     <mat-card-content *ngIf="showDocumentContent">
         <div *ngIf="content.isThumbnailSupported()" >
             <img id="thumbnailPreview" class="adf-img-upload-widget" [src]="content.thumbnailUrl" alt="{{content.name}}">

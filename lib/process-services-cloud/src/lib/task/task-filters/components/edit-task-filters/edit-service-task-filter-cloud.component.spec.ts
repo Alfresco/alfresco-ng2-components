@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';

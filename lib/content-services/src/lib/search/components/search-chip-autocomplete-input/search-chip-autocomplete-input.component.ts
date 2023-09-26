@@ -30,8 +30,8 @@ import {
 } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
-import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, startWith, takeUntil, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';

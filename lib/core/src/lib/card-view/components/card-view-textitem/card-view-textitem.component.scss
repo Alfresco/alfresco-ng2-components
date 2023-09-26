@@ -6,7 +6,7 @@
         color: var(--adf-theme-foreground-text-color-025);
     }
 
-    &-textitem-action.mat-icon-button {
+    &-textitem-action.mat-mdc-icon-button {
         width: 20px;
         height: 20px;
         line-height: 20px;
@@ -34,7 +34,7 @@
     &-textitem-chip-list-container {
         margin-bottom: 25px !important;
         margin-top: 6px;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-label {
             margin-top: 6px;
         }
@@ -98,47 +98,47 @@
     &-textitem-default-value {
         color: var(--adf-theme-foreground-text-color-054);
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-textitem-editable .mat-form-field-wrapper {
         margin: 0;
         padding-bottom: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-textitem-editable .mat-form-field-underline {
         display: none;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-textitem-editable .mat-form-field-infix {
         padding: 0;
         border-top: none;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-textitem-editable .mat-form-field-label-wrapper {
         padding-top: 2em;
         position: static;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     &-textitem-editable .mat-form-field-label {
         top: 4px;
     }
 
-    &-textitem-editable .mat-input-element {
+    &-textitem-editable .mat-mdc-input-element {
         font-family: inherit;
         position: relative;
         padding-top: 6px;
     }
 
-    &-textitem-editable .mat-input-element:focus {
+    &-textitem-editable .mat-mdc-input-element:focus {
         padding: 5px;
         left: -6px;
         top: 0;
     }
 
-    &-textitem-editable input.mat-input-element {
+    &-textitem-editable input.mat-mdc-input-element {
         margin-bottom: 2px;
     }
 
-    &-textitem-editable input.mat-input-element:focus {
+    &-textitem-editable input.mat-mdc-input-element:focus {
         margin-bottom: -8px;
     }
 
@@ -171,7 +171,8 @@
     }
 }
 
-.mat-form-field:not(.adf-textitem-chip-list-input) {
+.mat-mdc-form-field:not(.adf-textitem-chip-list-input) {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-suffix {
         .adf-textitem-edit-icon {
             display: block;

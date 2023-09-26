@@ -8,9 +8,13 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies;
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+/* TODO(mdc-migration): Remove all-legacy-component-typographies once all legacy components are migrated*/
+@include mat.all-component-typographies;
+@include mat.all-component-typographies;
+/* TODO(mdc-migration): Remove legacy-core once all legacy components are migrated*/
+@include mat.core();
+@include mat.core();
 
 $primary: mat.define-palette($alfresco-ecm-cyan);
 $accent: mat.define-palette($alfresco-accent-orange);
@@ -25,5 +29,8 @@ $theme: mat.define-light-theme(
     )
 );
 
-@include mat.all-legacy-component-themes($theme);
+/* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated*/
+@include mat.all-component-themes($theme);
+
+@include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);

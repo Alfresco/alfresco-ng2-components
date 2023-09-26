@@ -42,7 +42,7 @@ import { ProcessListCloudPreferences } from '../models/process-cloud-preferences
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 
 @Component({

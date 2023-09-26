@@ -4,7 +4,7 @@
     border-bottom: 1px solid var(--adf-theme-foreground-divider-color);
     margin-bottom: 10px;
 
-    .mat-card-title {
+    .mat-mdc-card-title {
         font-weight: bold;
         font-size: var(--theme-adf-task-title-font-size);
     }
@@ -53,7 +53,7 @@
 adf-cloud-start-task {
     .adf {
         &-cloud-start-task-footer {
-            .mat-button {
+            .mat-mdc-button {
                 text-transform: uppercase !important;
             }
         }

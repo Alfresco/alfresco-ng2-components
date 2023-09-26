@@ -2,7 +2,7 @@
 
 .adf {
     &-sidebar-action-menu {
-        & .mat-raised-button {
+        & .mat-mdc-raised-button {
             width: 100%;
             display: block;
             box-shadow: none !important;
@@ -40,7 +40,7 @@
         text-align: left;
         letter-spacing: -0.4px;
 
-        .mat-menu-item {
+        .mat-mdc-menu-item {
             font-size: var(--theme-body-1-font-size);
             color: var(--adf-theme-foreground-text-color-087);
             text-align: left;
@@ -48,7 +48,7 @@
             letter-spacing: -0.4px;
         }
 
-        .mat-menu-item:hover {
+        .mat-mdc-menu-item:hover {
             color: var(--theme-primary-color);
             opacity: inherit;
         }

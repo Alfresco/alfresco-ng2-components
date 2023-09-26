@@ -42,7 +42,7 @@
                        class="adf-userinfo-tab adf-hide-tab">
             <mat-tab label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode === userInfoMode.CONTENT">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"
@@ -77,7 +77,7 @@
                 </mat-card>
             </mat-tab>
             <mat-tab id="identity-panel" role="dialog" *ngIf="mode === userInfoMode.CONTENT_SSO">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"

@@ -51,7 +51,8 @@ describe('DateTimePipe', () => {
         expect(transformedDate instanceof Date).toBe(true);
         expect(isValid(transformedDate)).toBe(true);
 
-        expect(transformedDate).toEqual(value);
+        const comparedValue = addMinutes(value, value.getTimezoneOffset());
+        expect(transformedDate).toEqual(comparedValue);
     });
 
     it('should transform number input to date format', () => {

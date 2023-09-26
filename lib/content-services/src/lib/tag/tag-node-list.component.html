@@ -1,14 +1,14 @@
 <div class="adf-tag-node-list" [class.adf-flex-column]="limitTagsDisplayed && (!calculationsDone || columnFlexDirection)" #nodeListContainer>
-    <mat-chip-list [class.adf-full-width]="limitTagsDisplayed && !calculationsDone" role="listbox" [attr.aria-label]="'METADATA.BASIC.TAGS' | translate">
-        <mat-chip class="adf-tag-chips"
+    <mat-chip-listbox [class.adf-full-width]="limitTagsDisplayed && !calculationsDone">
+        <mat-chip-option class="adf-tag-chips"
                   *ngFor="let currentEntry of tagsEntries; let idx = index"
                   (removed)="removeTag(currentEntry.entry.id)">
             <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>
             <mat-icon *ngIf="showDelete" id="tag_chips_delete_{{currentEntry.entry.tag}}"
                       class="adf-tag-chips-delete-icon" matChipRemove>cancel
             </mat-icon>
-        </mat-chip>
-    </mat-chip-list>
+        </mat-chip-option>
+    </mat-chip-listbox>
     <button mat-button
         [hidden]="!limitTagsDisplayed"
         [style.left.px]="viewMoreButtonLeftOffset"

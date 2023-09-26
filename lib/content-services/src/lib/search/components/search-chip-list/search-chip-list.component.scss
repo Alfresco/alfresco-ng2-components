@@ -1,7 +1,7 @@
-.mat-chip:focus {
+.mat-mdc-chip:focus {
     color: var(--theme-accent-color-default-contrast);
     background-color: var(--theme-accent-color);
-
+    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
     .mat-chip-remove {
         color: var(--theme-accent-color-default-contrast);
         opacity: 1;

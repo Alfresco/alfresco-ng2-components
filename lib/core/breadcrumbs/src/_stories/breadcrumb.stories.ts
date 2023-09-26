@@ -16,8 +16,8 @@
  */
 
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';

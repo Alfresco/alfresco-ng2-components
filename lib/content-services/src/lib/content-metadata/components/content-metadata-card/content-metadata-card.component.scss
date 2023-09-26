@@ -1,13 +1,13 @@
 .adf-content-metadata-card {
-    .mat-card {
+    .mat-mdc-card {
         padding: 0;
 
-        .mat-card-content {
+        .mat-mdc-card-content {
             margin-bottom: 0;
         }
     }
 
-    &-footer.mat-card-footer {
+    &-footer.mat-mdc-card-footer {
         margin: 0;
         padding: 8px 12px;
         border-top: 1px solid var(--adf-theme-foreground-text-color-007);

@@ -1,5 +1,5 @@
 .adf-add-permission-dialog {
-    .mat-dialog-title {
+    .mat-mdc-dialog-title {
         margin-left: 24px;
         margin-right: 24px;
         font-size: var(--theme-title-font-size);
@@ -11,12 +11,12 @@
         color: var(--adf-theme-foreground-text-color-087);
     }
 
-    .mat-dialog-container {
+    .mat-mdc-dialog-container {
         padding-left: 0;
         padding-right: 0;
     }
 
-    .mat-dialog-content {
+    .mat-mdc-dialog-content {
         margin: 0;
         overflow: hidden;
         flex-grow: 1;
@@ -31,7 +31,7 @@
         }
     }
 
-    .mat-dialog-actions {
+    .mat-mdc-dialog-actions {
         padding: 0 24px;
         background-color: var(--theme-background-color);
         display: flex;
@@ -57,7 +57,7 @@
     .adf {
         &-search-user-button {
             width: 100%;
-
+            /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
             .mat-button-wrapper {
                 display: flex;
                 align-items: center;

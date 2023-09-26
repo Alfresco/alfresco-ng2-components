@@ -21,7 +21,7 @@ import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AuthGuardService ECM', () => {

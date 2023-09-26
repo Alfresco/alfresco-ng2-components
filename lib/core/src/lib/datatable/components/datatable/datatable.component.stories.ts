@@ -21,7 +21,7 @@ import { DataTableComponent } from './datatable.component';
 import { DataTableModule } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export default {
     component: DataTableComponent,

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoreTestingModule, DownloadPromptDialogComponent, DownloadPromptActions } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 const mockDialog = {

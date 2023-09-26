@@ -39,7 +39,7 @@
                        class="adf-userinfo-tab" [class.adf-hide-tab]="!ecmUser">
             <mat-tab label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode===userInfoMode.ALL">
-                <mat-card class="adf-userinfo-card" *ngIf="ecmUser">
+                <mat-card appearance="outlined" class="adf-userinfo-card" *ngIf="ecmUser">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"
@@ -73,7 +73,7 @@
             </mat-tab>
             <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" role="dialog"
                      *ngIf="mode===userInfoMode.PROCESS || mode===userInfoMode.ALL">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                         <img *ngIf="bpmUser.pictureId; else initialTemplate"

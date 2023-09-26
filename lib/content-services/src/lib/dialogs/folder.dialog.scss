@@ -7,15 +7,16 @@
 }
 
 .adf-lock-file-name {
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
     .mat-checkbox-layout {
         width: 100%;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
     .mat-checkbox-label {
         text-overflow: ellipsis;
         overflow: hidden;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
     .mat-checkbox-inner-container {
         margin: auto 8px auto 0;
     }
@@ -34,11 +35,11 @@
 }
 
 @media screen and (max-width: 380px) {
-    .mat-form-field {
+    .mat-mdc-form-field {
         font-size: 6px;
     }
 
-    .mat-dialog-title {
+    .mat-mdc-dialog-title {
         margin: 0;
     }
 

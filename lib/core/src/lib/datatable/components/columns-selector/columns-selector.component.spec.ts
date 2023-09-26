@@ -19,7 +19,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { ColumnsSelectorComponent } from './columns-selector.component';
 import { DataColumn } from '../../data/data-column.model';
 import { Observable, Subject } from 'rxjs';
-import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';

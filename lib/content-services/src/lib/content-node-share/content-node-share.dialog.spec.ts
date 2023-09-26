@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';

@@ -1,21 +1,45 @@
-adf-search-date-range-advanced {
-    .adf-search-date-range-container {
-        margin-top: 20px;
-        padding: 10px;
+.adf-search-date-range-advanced {
+    .mat-mdc-radio-group {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+    }
 
-        &-row {
-            display: flex;
-            flex-direction: row;
-            padding-bottom: 15px;
-            align-items: center;
+    .mat-mdc-radio-button {
+        margin: 5px;
+    }
 
-            .adf-search-date-range-input-field {
-                width: 75px;
-            }
+    .adf-search-date-range-horizontal-container {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 15px;
 
-            .adf-search-date-range-form-field {
-                padding-left: 10px;
-                flex: 1;
+        .adf-search-date-range-input-field {
+            width: 75px;
+        }
+
+        .adf-search-date-range-form-field {
+            padding-left: 10px;
+            flex: 1;
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+            .mat-form-field-wrapper {
+                padding-bottom: 0;
+                margin-bottom: 1.25em;
+                border: 1px solid var(--adf-theme-mat-grey-color-a400);
+                border-radius: 5px;
+                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+                .mat-form-field-infix {
+                    border: 0;
+                }
+                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+                .mat-form-field-underline {
+                    display: none;
+                }
+                /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+                .mat-form-field-subscript-wrapper {
+                    margin-top: 2em;
+                }
             }
         }
     }

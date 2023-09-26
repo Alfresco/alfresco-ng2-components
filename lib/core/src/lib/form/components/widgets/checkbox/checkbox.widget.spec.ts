@@ -23,9 +23,9 @@ import { CheckboxWidgetComponent } from './checkbox.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from '../../../../translation/translate-loader.service';
-import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
 
 describe('CheckboxWidgetComponent', () => {
@@ -96,8 +96,9 @@ describe('CheckboxWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-            expect(checkbox.getAttribute('aria-checked')).toBe('true');
+            const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox .mdc-checkbox--selected');
+            expect(checkbox).not.toBeNull();
+            expect(checkbox).toBeDefined();
         });
 
         it('should not be checked if false is passed', async () => {

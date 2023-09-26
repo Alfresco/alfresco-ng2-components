@@ -18,7 +18,7 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { of, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../../services/cloud-token.service';

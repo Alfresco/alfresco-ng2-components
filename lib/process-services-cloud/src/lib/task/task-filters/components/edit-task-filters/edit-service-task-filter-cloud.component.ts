@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Moment } from 'moment';

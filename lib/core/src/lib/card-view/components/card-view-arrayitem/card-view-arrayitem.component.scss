@@ -21,7 +21,7 @@
     }
 
     &-array-item-more-chip-container {
-        &.mat-card {
+        &.mat-mdc-card {
             box-shadow: none;
             max-height: 300px;
             overflow-y: auto;
@@ -29,6 +29,7 @@
     }
 
     &-property-value {
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         .mat-chip-list {
             padding-top: 6px;
         }
@@ -45,7 +46,7 @@
         border-color: var(--adf-card-view-array-item-border-color);
         border-radius: var(--adf-card-view-array-item-border-radius);
 
-        .mat-chip:hover {
+        .mat-mdc-chip:hover {
             cursor: pointer;
         }
     }

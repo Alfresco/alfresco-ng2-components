@@ -20,7 +20,7 @@ import { SearchPropertiesComponent } from './search-properties.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
-import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
+import { MatOption } from '@angular/material/core';
 import { SearchChipAutocompleteInputComponent, SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { FileSizeUnit } from './file-size-unit.enum';
 import { FileSizeOperator } from './file-size-operator.enum';

@@ -78,7 +78,7 @@ import { LockService } from '../services/lock.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;

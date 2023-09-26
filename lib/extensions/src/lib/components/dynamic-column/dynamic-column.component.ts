@@ -41,12 +41,12 @@ import { ExtensionService } from '../../services/extension.service';
   host: { class: 'adf-dynamic-column' },
   styles: [
     `
-      .adf-dynamic-column {
-        display: flex;
-        align-items: center;
-        width: inherit;
-      }
-    `
+                  .adf-dynamic-column {
+                    display: flex;
+                    align-items: center;
+                    width: inherit;
+                  }
+                `
   ]
 })
 export class DynamicColumnComponent implements OnInit, OnChanges, OnDestroy {

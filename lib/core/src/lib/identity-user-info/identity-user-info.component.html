@@ -21,7 +21,7 @@
         <mat-tab-group id="tab-group-env" (click)="stopClosing($event)" selectedIndex="0" role="menuitem"
                        class="adf-userinfo-tab adf-hide-tab">
             <mat-tab id="identity-panel" role="dialog">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                         <div class="mat-title" id="identity-username">{{identityUser | fullName}}</div>

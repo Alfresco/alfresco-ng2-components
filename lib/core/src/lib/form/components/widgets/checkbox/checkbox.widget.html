@@ -1,5 +1,6 @@
 <div [ngClass]="field.className"
      [class.adf-invalid]="!field.isValid && isTouched()">
+     {{field.value}}
     <mat-checkbox
         [id]="field.id"
         color="primary"

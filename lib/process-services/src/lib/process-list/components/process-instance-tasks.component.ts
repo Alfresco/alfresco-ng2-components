@@ -18,7 +18,7 @@
 import { LogService } from '@alfresco/adf-core';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Observer, Subject } from 'rxjs';
 import { TaskDetailsEvent, TaskDetailsModel } from '../../task-list';
 import { ProcessInstance } from '../models/process-instance.model';

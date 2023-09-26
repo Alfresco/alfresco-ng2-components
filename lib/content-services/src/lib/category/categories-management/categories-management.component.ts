@@ -18,7 +18,7 @@
 import { Category } from '@alfresco/js-api';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatLegacySelectionListChange as MatSelectionListChange } from '@angular/material/legacy-list';
+import { MatSelectionListChange } from '@angular/material/list';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, first, map, takeUntil, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';

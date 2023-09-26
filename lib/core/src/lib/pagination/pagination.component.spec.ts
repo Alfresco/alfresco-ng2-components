@@ -23,7 +23,6 @@ import { BehaviorSubject } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
-import { setupTestBed } from '@alfresco/adf-core';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -43,15 +42,15 @@ describe('PaginationComponent', () => {
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ],
-        schemas: [ NO_ERRORS_SCHEMA ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ],
+            schemas: [ NO_ERRORS_SCHEMA ]
+        });
+
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

@@ -19,7 +19,7 @@
     }
 
     &-aspect-list-dialog {
-        .mat-dialog-actions {
+        .mat-mdc-dialog-actions {
             justify-content: space-between;
         }
     }
@@ -28,7 +28,7 @@
         padding-top: 3px;
 
         .adf-aspect-property-table {
-            .mat-cell {
+            .mat-mdc-cell {
                 font-size: smaller;
             }
 

@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { LogService, InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { TranslateService } from '@ngx-translate/core';
 import { SitesService } from '../common/services/sites.service';

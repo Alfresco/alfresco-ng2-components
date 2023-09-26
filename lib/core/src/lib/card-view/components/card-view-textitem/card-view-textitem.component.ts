@@ -18,7 +18,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
-import { MatLegacyChipInputEvent as MatChipInputEvent } from '@angular/material/legacy-chips';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';

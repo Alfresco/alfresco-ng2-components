@@ -21,7 +21,7 @@
             background: inherit !important;
         }
 
-        .mat-form-field {
+        .mat-mdc-form-field {
             width: 100%;
         }
 
@@ -47,6 +47,8 @@
     }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
+/* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-autocomplete-panel .mat-fab {
     background: var(--theme-primary-color);
     width: 40px;
@@ -54,7 +56,7 @@
     font-weight: bolder;
     font-size: var(--theme-adf-picture-1-font-size);
     box-shadow: none !important;
-
+    /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
     .mat-button-wrapper {
         display: inline !important;
     }

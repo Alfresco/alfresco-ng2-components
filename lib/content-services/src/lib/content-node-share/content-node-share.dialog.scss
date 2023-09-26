@@ -111,12 +111,12 @@
     .adf-sharable-link {
         margin-left: 8px;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-infix {
         border-top: unset;
     }
 
-    .mat-dialog-actions {
+    .mat-mdc-dialog-actions {
         justify-content: flex-end;
         padding: 0;
         margin: 8px 0 0;
@@ -127,19 +127,19 @@
             margin-right: 12px;
         }
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-flex {
         align-items: center;
     }
 
-    .mat-dialog-container {
+    .mat-mdc-dialog-container {
         padding: 0;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-appearance-legacy .mat-form-field-underline {
         display: none;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     .mat-form-field-appearance-legacy .mat-form-field-wrapper {
         padding-bottom: 8px;
         margin-right: 8px;
@@ -147,15 +147,15 @@
     }
 
     @media screen and (max-width: 380px) {
-        .mat-dialog-container {
+        .mat-mdc-dialog-container {
             padding: 0 15px;
         }
 
-        .mat-dialog-actions {
+        .mat-mdc-dialog-actions {
             margin-bottom: 0;
             padding: 2px 0;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-suffix {
             padding-left: 8px;
         }

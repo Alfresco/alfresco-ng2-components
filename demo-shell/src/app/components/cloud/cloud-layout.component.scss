@@ -2,6 +2,7 @@
     overflow: auto;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
 .app-cloud-layout-tab-body .mat-tab-body-wrapper {
     height: 100%;
 }

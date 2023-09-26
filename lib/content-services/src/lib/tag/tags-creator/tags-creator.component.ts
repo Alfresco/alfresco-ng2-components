@@ -33,7 +33,7 @@ import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } 
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { TagsCreatorMode } from './tags-creator-mode';
-import { MatLegacySelectionListChange as MatSelectionListChange } from '@angular/material/legacy-list';
+import { MatSelectionListChange } from '@angular/material/list';
 import { TagService } from '../services/tag.service';
 
 interface TagNameControlErrors {

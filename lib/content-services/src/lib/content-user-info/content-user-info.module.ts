@@ -20,10 +20,10 @@ import { CommonModule } from '@angular/common';
 import { ContentUserInfoComponent } from './content-user-info.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '@alfresco/adf-core';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
-import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
     declarations: [ContentUserInfoComponent],

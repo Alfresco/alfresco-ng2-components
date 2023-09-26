@@ -19,7 +19,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarConfig as MatSnackBarConfig, MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';

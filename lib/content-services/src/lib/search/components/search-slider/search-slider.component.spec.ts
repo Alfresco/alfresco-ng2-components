@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatLegacySliderChange as MatSliderChange } from '@angular/material/legacy-slider';
+import { MatSliderChange } from '@angular/material/slider';
 import { SearchSliderComponent } from './search-slider.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';

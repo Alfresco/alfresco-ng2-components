@@ -2,7 +2,7 @@
 
 .adf-search-filter-chip,
 .adf-search-filter-chip-tabbed {
-    &.mat-chip {
+    &.mat-mdc-chip {
         border: 2px solid transparent;
         transition: border 500ms ease-in-out;
         max-width: 320px;
@@ -14,11 +14,11 @@
             color: unset;
         }
 
-        &.mat-standard-chip::after {
+        &.mat-mdc-standard-chip::after {
             background: var(--adf-theme-background-unselected-chip-color);
             color: unset;
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         &.mat-chip-list-wrapper {
             margin: 4px 6px;
         }
@@ -28,7 +28,7 @@
         background: var(--adf-theme-background-card-color);
         border: 2px solid var(--theme-primary-color);
 
-        &.mat-chip::after {
+        &.mat-mdc-chip::after {
             background: unset;
         }
     }
@@ -55,7 +55,7 @@
         padding-left: 5px;
     }
 
-    &-menu + * .cdk-overlay-pane .mat-menu-panel {
+    &-menu + * .cdk-overlay-pane .mat-mdc-menu-panel {
         min-width: 320px;
         border-radius: 12px;
 

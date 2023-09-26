@@ -15,11 +15,11 @@
         .adf-property-field {
             width: 100%;
             margin-bottom: -25px;
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-infix {
                 border-top-width: 0;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
             .mat-form-field-label {
                 margin-top: 6px;
             }

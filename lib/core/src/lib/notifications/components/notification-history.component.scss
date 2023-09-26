@@ -1,5 +1,5 @@
 .adf {
-    &-notification-history-menu_button.mat-button {
+    &-notification-history-menu_button.mat-mdc-button {
         margin-right: 0;
         border-radius: 90%;
         padding: 0;
@@ -7,7 +7,7 @@
         height: 40px;
     }
 
-    &-notification-history-list .mat-subheader {
+    &-notification-history-list .mat-mdc-subheader {
         justify-content: space-between;
     }
 
@@ -61,11 +61,11 @@
     }
 }
 
-.mat-menu-panel.adf-notification-history-menu {
+.mat-mdc-menu-panel.adf-notification-history-menu {
     min-width: 320px;
     max-height: 500px;
 
-    .mat-menu-content {
+    .mat-mdc-menu-content {
         padding: 0;
     }
 }

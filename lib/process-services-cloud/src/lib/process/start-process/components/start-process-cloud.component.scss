@@ -1,9 +1,10 @@
 .adf {
     &-start-process {
+        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-label {
             color: var(--adf-theme-mat-grey-color-a200-dark);
         }
-
+        /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
         mat-card-actions,
         &-cloud-actions {
             display: flex;
@@ -35,7 +36,7 @@
     }
 
     &-form-container {
-        .mat-card {
+        .mat-mdc-card {
             box-shadow: none !important;
             padding: 0 !important;
         }
