@@ -90,7 +90,7 @@ export class RenditionService {
     private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
         const rendition = await this.renditionsApi.getRendition(nodeId, renditionId);
 
-        if (this.maxRetries < retries) {
+        if (this.maxRetries >= retries) {
             const status = rendition.entry.status.toString();
 
             if (status === 'CREATED') {
