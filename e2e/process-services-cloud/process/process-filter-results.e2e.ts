@@ -35,7 +35,8 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessListPage } from '../../process-services/pages/process-list.page';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
-import * as moment from 'moment';
+import { addDays, format, subDays } from 'date-fns';
+
 
 describe('Process filters cloud', () => {
 
@@ -66,9 +67,9 @@ describe('Process filters cloud', () => {
     const queryService = new QueryService(apiService);
     const tasksService = new TasksService(apiService);
 
-    const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
+    const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
-    const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
+    const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
     const processListCloudConfiguration = new ProcessListCloudConfiguration();
     const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
     const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
