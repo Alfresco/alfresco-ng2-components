@@ -31,18 +31,6 @@
         line-height: var(--adf-identity-user-info-line-height);
     }
 
-    &-userinfo-profile-image {
-        background: var(--adf-identity-user-info-background);
-        text-align: center;
-        border-radius: 90%;
-        width: var(--adf-identity-user-info-width);
-        height: var(--adf-identity-user-info-height);
-        margin-right: 0;
-        cursor: pointer;
-        vertical-align: middle;
-        margin-left: 0;
-    }
-
     &-userinfo-profile-container {
         display: inline-block;
     }
@@ -84,51 +72,19 @@
     }
 
     &-userinfo-supporting-text {
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
         overflow: hidden;
         padding: 32px;
         column-count: 2;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
 
         @media screen and (max-width: 599px) {
             padding: 10px;
         }
     }
 
-    &-userinfo-title {
-        font-size: var(--theme-title-font-size);
-    }
-
-    &-userinfo__detail-profile {
-        align-items: flex-start;
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
-        display: block;
-        padding: 0;
-        margin: 0;
-    }
-
     &-userinfo__detail-title {
         text-overflow: ellipsis;
-        font-size: var(--theme-subheading-2-font-size);
-        font-weight: 400;
-        letter-spacing: 0.04em;
-        line-height: 20px;
-        align-items: flex-start;
-    }
-
-    &-userinfo__secondary-info {
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
-        align-items: flex-end;
     }
 
     &-userinfo-profile-picture {
@@ -141,36 +97,14 @@
         margin-right: 8px;
     }
 
-    &-userinfo-profile-initials {
-        text-transform: uppercase;
-        background-size: cover;
-        background-color: var(--adf-identity-user-info-background);
-        border-radius: 50%;
-        height: 80px;
-        width: 80px;
-        margin-left: 0;
-        margin-right: 8px;
-        font-size: 35px;
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 78px;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-around;
-    }
-
     &-userinfo-button-profile {
         display: inline-block;
         border: 0;
         vertical-align: middle;
     }
 
-    &-userinfo-detail {
-        text-align: left;
-    }
-
     &-hide-tab .mat-tab-label-active {
-        display: none !important;
+        display: none;
     }
 }
 

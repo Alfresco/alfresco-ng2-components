@@ -24,18 +24,14 @@
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                        <div class="adf-userinfo-title" id="identity-username">{{identityUser | fullName}}</div>
+                        <div class="mat-title" id="identity-username">{{identityUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
-                        <div class="adf-userinfo-supporting-text">
-                            <div class="adf-userinfo-detail">
-                                <span id="identity-full-name"
-                                      class="adf-userinfo__detail-title">{{identityUser | fullName}}</span>
-                                <span class="adf-userinfo__detail-profile"
-                                      id="identity-email"> {{identityUser.email}} </span>
-                                <a class="adf-userinfo__detail-profile" href="#/profile">
-                                      {{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
-                            </div>
+                        <div class="adf-userinfo-supporting-text mat-body-1">
+                            <span id="identity-full-name"
+                                  class="adf-userinfo__detail-title mat-subheading-2">{{identityUser | fullName}}</span>
+                            <span id="identity-email"> {{identityUser.email}} </span>
+                            <a href="#/profile"> {{ 'USER_PROFILE.LABELS.MY_PROFILE' | translate }}</a>
                         </div>
                     </mat-card-content>
                 </mat-card>
