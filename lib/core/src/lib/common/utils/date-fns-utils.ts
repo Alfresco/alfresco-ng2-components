@@ -84,7 +84,6 @@ export class DateFnsUtils {
      * A mapping of Moment.js format tokens to date-fns format tokens.
      */
     static momentToDateFnsMap = {
-        M: 'M',
         D: 'd',
         Y: 'y',
         A: 'a'
@@ -94,7 +93,6 @@ export class DateFnsUtils {
      * A mapping of date-fns format tokens to Moment.js format tokens.
      */
     static dateFnsToMomentMap = {
-        M: 'M',
         d: 'D',
         y: 'Y',
         a: 'A'
@@ -107,10 +105,13 @@ export class DateFnsUtils {
      * @returns The equivalent date-fns format string.
      */
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
-        for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
-            dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+        if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
+            for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
+                dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+            }
+            return dateDisplayFormat;
         }
-        return dateDisplayFormat;
+        return '';
     }
 
     /**
@@ -120,10 +121,13 @@ export class DateFnsUtils {
      * @returns The equivalent Moment.js format string.
      */
     static convertDateFnsToMomentFormat(dateDisplayFormat: string): string {
-        for (const [search, replace] of Object.entries(this.dateFnsToMomentMap)) {
-            dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+        if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
+            for (const [search, replace] of Object.entries(this.dateFnsToMomentMap)) {
+                dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+            }
+            return dateDisplayFormat;
         }
-        return dateDisplayFormat;
+        return '';
     }
 
     /**
