@@ -34,8 +34,7 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessListModel } from '../models/process-list.model';
 import { map, catchError } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-
-declare let moment: any;
+import { format } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -214,7 +213,7 @@ export class ProcessService {
             .pipe(
                 map(this.extractData),
                 map((tasks) => tasks.map((task: any) => {
-                    task.created = moment(task.created, 'YYYY-MM-DD').format();
+                    task.created = format(new Date(task.created), 'yyyy-MM-dd');
                     return task;
                 })),
                 catchError((err) => this.handleProcessError(err))
@@ -358,11 +357,11 @@ export class ProcessService {
         return name;
     }
 
-    private getFormatDate(value: Date, format: string) {
+    private getFormatDate(value: Date, dateFormat: string) {
         const datePipe = new DatePipe('en-US');
 
         try {
-            return datePipe.transform(value, format);
+            return datePipe.transform(value, dateFormat);
         } catch (err) {
             return '';
         }
