@@ -98,6 +98,7 @@ export class DataColumnComponent implements OnInit {
     @Input()
     sortingKey: string;
 
+    /** Sets position of column. **/
     @Input()
     order?: number;
 

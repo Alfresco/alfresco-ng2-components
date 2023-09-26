@@ -60,6 +60,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
 | type | `string` | "text" | Value type for the column. Possible settings are 'text', 'image', 'date', 'fileSize', 'location', and 'json'. |
+| order | `number` |  | Sets position of column. |
 
 ## Details
 
