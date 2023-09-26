@@ -25,8 +25,8 @@ import {
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './../config/task-list-cloud.config';
-import * as moment from 'moment';
 import { taskFilterConfiguration } from './../config/task-filter.config';
+import { addDays, format, subDays } from 'date-fns';
 
 describe('Edit task filters and task list properties', () => {
 
@@ -54,9 +54,9 @@ describe('Edit task filters and task list properties', () => {
         let otherOwnerTask; let testUser; let groupInfo; let simpleTask;
     const priority = 1;
 
-    const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
+    const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
-    const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
+    const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');
