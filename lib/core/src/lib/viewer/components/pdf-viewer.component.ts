@@ -99,6 +99,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
     randomPdfId: string;
+    documentOverflow = false;
 
     get currentScaleText(): string {
         return this.pdfViewer?.currentScaleValue ? Math.round(this.pdfViewer.currentScaleValue * 100) + '%' : '';
@@ -369,6 +370,13 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return scale;
     }
 
+    setDocumentOverflow() {
+        const documentContainerSize = this.getDocumentContainer();
+        const page = this.pdfViewer._pages[this.pdfViewer._currentPageNumber - 1];
+
+        this.documentOverflow = page.width > documentContainerSize.clientWidth;
+    }
+
     /**
      * Update all the pages with the newScale scale
      *
@@ -382,6 +390,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
             this.pdfViewer.update();
         }
+        this.setDocumentOverflow();
     }
 
     /**

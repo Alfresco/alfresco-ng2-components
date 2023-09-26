@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<div class="adf-pdf-viewer__toolbar" *ngIf="showToolbar">
+<div class="adf-pdf-viewer__toolbar" *ngIf="showToolbar" [ngStyle]="documentOverflow && {bottom: '25px'}">
     <adf-toolbar>
 
         <ng-container *ngIf="allowThumbnails">

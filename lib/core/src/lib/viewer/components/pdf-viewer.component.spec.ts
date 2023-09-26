@@ -115,8 +115,8 @@ class BlobTestComponent {
     }
 
 }
-// eslint-disable-next-line
-xdescribe('Test PdfViewer component', () => {
+
+describe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
@@ -154,7 +154,6 @@ xdescribe('Test PdfViewer component', () => {
 
         component.showToolbar = true;
         component.inputPage('1');
-        component.pdfViewer.currentScale = 1;
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -279,10 +278,10 @@ xdescribe('Test PdfViewer component', () => {
 
                 tick(250);
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomInButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore < currentZoom).toBe(true);
             }), 55000);
 
@@ -293,10 +292,10 @@ xdescribe('Test PdfViewer component', () => {
 
                 tick(250);
 
-                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
+                const zoomBefore = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 zoomOutButton.click();
                 expect(componentUrlTestComponent.pdfViewerComponent.currentScaleMode).toBe('auto');
-                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale;
+                const currentZoom = componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue;
                 expect(zoomBefore > currentZoom).toBe(true);
             }), 55000);
 
@@ -414,6 +413,17 @@ xdescribe('Test PdfViewer component', () => {
                     done();
                 });
             });
+
+            it('should check if document has overflow', (done) => {
+                spyOn(componentUrlTestComponent.pdfViewerComponent, 'setScaleUpdatePages');
+                componentUrlTestComponent.pdfViewerComponent.scalePage('auto');
+
+                fixtureUrlTestComponent.detectChanges();
+                fixtureUrlTestComponent.whenStable().then(() => {
+                    expect(componentUrlTestComponent.pdfViewerComponent.setScaleUpdatePages).toHaveBeenCalled();
+                    done();
+                });
+            });
         });
     });
 
@@ -496,14 +506,15 @@ xdescribe('Test PdfViewer component', () => {
                 fixtureUrlTestComponent.detectChanges();
 
                 fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.25);
+                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScaleValue).toBe('0.25');
                     done();
                 });
             });
 
         });
-
-        describe('greater than the maximum allowed value', () => {
+        // TODO: https://alfresco.atlassian.net/browse/ACS-6061
+        // eslint-disable-next-line
+        xdescribe('greater than the maximum allowed value', () => {
 
             let fixtureUrlTestComponent: ComponentFixture<UrlTestComponent>;
             let componentUrlTestComponent: UrlTestComponent;
@@ -538,9 +549,7 @@ xdescribe('Test PdfViewer component', () => {
                 fixtureUrlTestComponent.whenStable().then(() => {
                     expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(10);
                     done();
-
                 });
-
             });
         });
     });
@@ -623,21 +632,17 @@ xdescribe('Test PdfViewer component', () => {
     describe('View with blob file', () => {
 
         let fixtureBlobTestComponent: ComponentFixture<BlobTestComponent>;
-        let componentBlobTestComponent: BlobTestComponent;
         let elementBlobTestComponent: HTMLElement;
 
         beforeEach((done) => {
             fixtureBlobTestComponent = TestBed.createComponent(BlobTestComponent);
-            componentBlobTestComponent = fixtureBlobTestComponent.componentInstance;
             elementBlobTestComponent = fixtureBlobTestComponent.nativeElement;
 
             fixtureBlobTestComponent.detectChanges();
 
-            componentBlobTestComponent.pdfViewerComponent.rendered
-                .pipe(take(1))
-                .subscribe(() => {
-                    done();
-                });
+            fixtureBlobTestComponent.whenStable().then(() => {
+                done();
+            });
         });
 
         afterEach(() => {
@@ -679,7 +684,7 @@ xdescribe('Test PdfViewer component', () => {
         }, 55000);
 
         it('should Toolbar be hide if showToolbar is false', (done) => {
-            componentBlobTestComponent.pdfViewerComponent.showToolbar = false;
+            fixtureBlobTestComponent.componentInstance.pdfViewerComponent.showToolbar = false;
 
             fixtureBlobTestComponent.detectChanges();
 
@@ -697,7 +702,7 @@ xdescribe('Test PdfViewer component', () => {
         let componentUrlTestPasswordComponent: UrlTestPasswordComponent;
 
         describe('Open password dialog', () => {
-            beforeEach((done) => {
+            beforeEach( async () => {
                 fixtureUrlTestPasswordComponent = TestBed.createComponent(UrlTestPasswordComponent);
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
@@ -718,10 +723,7 @@ xdescribe('Test PdfViewer component', () => {
                 });
 
                 fixtureUrlTestPasswordComponent.detectChanges();
-
-                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
-                    done();
-                });
+                await fixtureUrlTestPasswordComponent.whenStable();
             });
 
             afterEach(() => {
@@ -729,16 +731,18 @@ xdescribe('Test PdfViewer component', () => {
             });
 
             it('should try to access protected pdf', (done) => {
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
 
-                    expect(dialog.open).toHaveBeenCalledTimes(2);
+                    expect(dialog.open).toHaveBeenCalledTimes(1);
                     done();
                 });
             });
 
             it('should raise dialog asking for password', (done) => {
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -750,10 +754,11 @@ xdescribe('Test PdfViewer component', () => {
             });
 
             it('it should raise dialog with incorrect password', (done) => {
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.INCORRECT_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(dialog.open['calls'].all()[1].args[1].data).toEqual({
+                    expect(dialog.open['calls'].all()[0].args[1].data).toEqual({
                         reason: pdfjsLib.PasswordResponses.INCORRECT_PASSWORD
                     });
                     done();
@@ -767,17 +772,14 @@ xdescribe('Test PdfViewer component', () => {
                 componentUrlTestPasswordComponent = fixtureUrlTestPasswordComponent.componentInstance;
 
                 spyOn(dialog, 'open').and.callFake(() => ({
-                    afterClosed: () => {
-                        done();
-                        return of('');
-                    }
+                    afterClosed: () => of('')
                 } as any));
 
                 spyOn(componentUrlTestPasswordComponent.pdfViewerComponent.close, 'emit');
 
                 fixtureUrlTestPasswordComponent.detectChanges();
 
-                componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
+                fixtureUrlTestPasswordComponent.whenStable().then(() => {
                     done();
                 });
             });
@@ -787,6 +789,7 @@ xdescribe('Test PdfViewer component', () => {
             });
 
             it('should try to access protected pdf', (done) => {
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
