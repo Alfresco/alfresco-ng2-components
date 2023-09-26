@@ -265,7 +265,7 @@ export class FormModel implements ProcessFormModel {
     getDefaultFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
 
-        if (variable?.hasOwnProperty('value')) {
+        if (variable && Object.prototype.hasOwnProperty.call(variable, 'value')) {
             return this.parseValue(variable.type, variable.value);
         }
 
@@ -420,7 +420,7 @@ export class FormModel implements ProcessFormModel {
         const visibilityRule: WidgetVisibilityModel = new WidgetVisibilityModel();
 
         const field = this.getFieldById(fieldId);
-        if (!!field) {
+        if (field) {
             visibilityRule.operator = visibility ? 'empty' : '!empty';
             visibilityRule.leftType = WidgetTypeEnum.field;
             field.visibilityCondition = visibilityRule;
@@ -430,28 +430,28 @@ export class FormModel implements ProcessFormModel {
 
     changeFieldDisabled(fieldId: string, disabled: boolean): void {
         const field = this.getFieldById(fieldId);
-        if (!!field) {
+        if (field) {
             field.readOnly = this.readOnly || disabled;
         }
     }
 
     changeFieldRequired(fieldId: string, required: boolean): void {
         const field = this.getFieldById(fieldId);
-        if (!!field) {
+        if (field) {
             field.required = required;
         }
     }
 
     changeFieldValue(fieldId: string, value: any): void {
         const field = this.getFieldById(fieldId);
-        if (!!field) {
+        if (field) {
             field.value = value;
         }
     }
 
     changeVariableValue(variableId: string, value: any): void {
         const variable = this.getFormVariable(variableId);
-        if (!!variable) {
+        if (variable) {
             variable.value = value;
         }
     }

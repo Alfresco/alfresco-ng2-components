@@ -44,8 +44,7 @@ export class FormUtil {
     }
 
     async getFormByName(name: string): Promise<FormRepresentation> {
-        // @ts-ignore
-        const forms: any = await this.editorApi.getForms();
+        const forms: any = await this.editorApi.getForms(undefined);
 
         return forms.data.find((currentForm) => currentForm.name === name);
     }

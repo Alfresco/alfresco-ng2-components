@@ -151,18 +151,22 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any)  {
         const eventPromise = Object.assign(promise, {
             on() {
+                // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.on.apply(eventEmitter, arguments);
                 return this;
             },
             once() {
+                // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.once.apply(eventEmitter, arguments);
                 return this;
             },
             emit() {
+                // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.emit.apply(eventEmitter, arguments);
                 return this;
             },
             off() {
+                // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.off.apply(eventEmitter, arguments);
                 return this;
             }

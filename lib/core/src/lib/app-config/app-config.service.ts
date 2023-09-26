@@ -185,7 +185,7 @@ export class AppConfigService {
      * @returns Notification when loading is complete
      */
     load(): Promise<any> {
-        return new Promise(async (resolve) => {
+        return new Promise((resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
             if (this.status === Status.INIT) {
@@ -218,7 +218,7 @@ export class AppConfigService {
      * @returns Discovery configuration
      */
      loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             this.http
                 .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
                 .subscribe({

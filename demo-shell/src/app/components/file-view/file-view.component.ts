@@ -84,7 +84,7 @@ export class FileViewComponent implements OnInit {
             if (id) {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
-                        if (node && node.isFile) {
+                        if (node?.isFile) {
                             this.isCommentEnabled = this.contentServices.hasPermissions(node, PermissionsEnum.NOT_CONSUMER) ||
                                 this.contentServices.hasAllowableOperations(node, AllowableOperationsEnum.UPDATE);
                             this.nodeId = id;

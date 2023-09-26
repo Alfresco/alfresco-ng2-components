@@ -231,7 +231,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     showFile(event) {
         const entry = event.value.entry;
-        if (entry && entry.isFile) {
+        if (entry?.isFile) {
             this.preview.showResource(entry.id);
         }
     }
@@ -296,7 +296,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.nodeResult && changes.nodeResult.currentValue) {
+        if (changes.nodeResult?.currentValue) {
             this.nodeResult = changes.nodeResult.currentValue;
             this.pagination = this.nodeResult.list.pagination;
         }
@@ -468,7 +468,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (selection && selection.length === 1) {
             const entry = selection[0].entry;
 
-            if (entry && entry.isFolder) {
+            if (entry?.isFolder) {
                 return this.contentService.hasAllowableOperations(entry, 'update');
             }
         }
@@ -570,7 +570,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     searchResultsHighlight(search: SearchEntry): string {
-        if (search && search.highlight) {
+        if (search?.highlight) {
             return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
         }
         return '';
@@ -588,7 +588,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         const objectFromMap = {};
         activeFilters.forEach((filter: FilterSearch) => {
             let paramValue = null;
-            if (filter.value && filter.value.from && filter.value.to) {
+            if (filter.value?.from && filter.value.to) {
                 paramValue = `${filter.value.from}||${filter.value.to}`;
             } else {
                 paramValue = filter.value;

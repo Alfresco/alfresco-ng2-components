@@ -27,10 +27,7 @@ describe('AboutGithubLinkComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(AboutGithubLinkComponent);
         component = fixture.componentInstance;
@@ -62,7 +59,7 @@ describe('AboutGithubLinkComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         const githubUrl = fixture.nativeElement.querySelector('[data-automation-id="adf-github-url"]');
-        expect(githubUrl.innerText).toEqual(aboutGithubDetails.defualrUrl);
+        expect(githubUrl.innerText).toEqual(aboutGithubDetails.defaultUrl);
     });
 
     it('should display the github link', async () => {

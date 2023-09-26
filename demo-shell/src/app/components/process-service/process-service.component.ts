@@ -180,7 +180,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             .subscribe(
                 (validateDynamicTableRowEvent: ValidateDynamicTableRowEvent) => {
                     const row: DynamicTableRow = validateDynamicTableRowEvent.row;
-                    if (row && row.value && row.value.name === 'admin') {
+                    if (row?.value && row.value.name === 'admin') {
                         validateDynamicTableRowEvent.summary.isValid = false;
                         validateDynamicTableRowEvent.summary.message = 'Sorry, wrong value. You cannot use "admin".';
                         validateDynamicTableRowEvent.preventDefault();

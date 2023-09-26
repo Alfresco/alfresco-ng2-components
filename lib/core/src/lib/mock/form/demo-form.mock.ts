@@ -16,7 +16,6 @@
  */
 
 export class DemoForm {
-
     easyForm: any = {
         formRepresentation: {
             id: 1001,
@@ -1859,10 +1858,10 @@ export class DemoForm {
                                                 id: 'my1r7YmMOs',
                                                 type: 'paragraph',
                                                 data: {
-                                                    text: `<font color="#000000">Is simply a redonly</font><mark class="cdx-marker">
+                                                    text: `<font color="#000000">Is simply a readonly</font><mark class="cdx-marker">
                                                     <font color="#000000">dummy </font><b>text</b></mark><b></b><font color="#000000">
                                                     of the </font><i>printing and typesetting</i><font color="#000000"> industry.\n
-                                                    </font><b><i>Lorem</i></b><font color="#000000"> Ipsum has been the industry\'s standard du</font><b>
+                                                    </font><b><i>Lorem</i></b><font color="#000000"> Ipsum has been the industry's standard du</font><b>
                                                     <i>mmy text ever since the 1500s,\n                    when an unknown printer took a galley of type
                                                     and scrambled it to make a type specime</i></b><font color="#000000">n book. </font><font color="#ff1300">
                                                     It has survived not only five centuries</font><font color="#000000">,\n
@@ -1880,10 +1879,7 @@ export class DemoForm {
                                                 type: 'list',
                                                 data: {
                                                     style: 'unordered',
-                                                    items: [
-                                                        'Unordered list example',
-                                                        'Unordered list example'
-                                                    ]
+                                                    items: ['Unordered list example', 'Unordered list example']
                                                 }
                                             },
                                             {
@@ -1954,5 +1950,4 @@ export class DemoForm {
     getFormCloudDefinition(): any {
         return this.cloudFormDefinition;
     }
-
 }

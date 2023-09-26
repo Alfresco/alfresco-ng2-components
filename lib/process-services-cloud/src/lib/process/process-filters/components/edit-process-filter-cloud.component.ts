@@ -213,7 +213,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
         const properties = processFilterProperties.map((property) => {
-            if (!!property.attributes) {
+            if (property.attributes) {
                 return this.getAttributesControlConfig(property);
             } else {
                 return { [property.key]: property.value };
@@ -288,7 +288,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
 
         if (this.filterProperties.includes('initiator')) {
-            this.initiatorOptions = !!this.processFilter.initiator
+            this.initiatorOptions = this.processFilter.initiator
                 ? this.processFilter.initiator.split(',').map((username) => Object.assign({}, { username }))
                 : [];
         }

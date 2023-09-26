@@ -24,7 +24,6 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class RenderingQueueServices {
-
     renderingStates = {
         INITIAL: 0,
         RUNNING: 1,
@@ -149,22 +148,27 @@ export class RenderingQueueServices {
     renderView(view: any) {
         const state = view.renderingState;
         switch (state) {
-            case this.renderingStates.FINISHED:
+            case this.renderingStates.FINISHED: {
                 return false;
-            case this.renderingStates.PAUSED:
+            }
+            case this.renderingStates.PAUSED: {
                 this.highestPriorityPage = view.renderingId;
                 view.resume();
                 break;
-            case this.renderingStates.RUNNING:
+            }
+            case this.renderingStates.RUNNING: {
                 this.highestPriorityPage = view.renderingId;
                 break;
-            case this.renderingStates.INITIAL:
+            }
+            case this.renderingStates.INITIAL: {
                 this.highestPriorityPage = view.renderingId;
-                const continueRendering = function() {
+                // eslint-disable-next-line space-before-function-paren
+                const continueRendering = function () {
                     this.renderHighestPriority();
                 }.bind(this);
                 view.draw().then(continueRendering, continueRendering);
                 break;
+            }
             default:
                 break;
         }

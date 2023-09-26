@@ -147,6 +147,7 @@ describe('ProcessAuditDirective', () => {
         const auditJson = {
             processInstanceId: 42516, processInstanceName: 'Fake Process - August 3rd 2017',
             processDefinitionName: 'Claim Approval Process', processDefinitionVersion: 1, processInstanceStartTime: 'Thu Aug 03 15:32:47 UTC 2017', processInstanceEndTime: null,
+            // eslint-disable-next-line @cspell/spellchecker
             processInstanceDurationInMillis: null,
             processInstanceInitiator: 'MyName MyLastname',
             entries: [{
@@ -156,6 +157,7 @@ describe('ProcessAuditDirective', () => {
                     fieldId: 'username', value: 'dsassd'
                 },
                 { fieldName: 'Claim Amount', fieldId: 'claimamount', value: '22' }], taskName: null, taskAssignee: null, activityId: null,
+                // eslint-disable-next-line @cspell/spellchecker
                 activityName: null, activityType: null, startTime: null, endTime: null, durationInMillis: null
             }
             ], decisionInfo: { calculatedValues: [], appliedRules: [] }

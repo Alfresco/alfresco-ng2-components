@@ -140,9 +140,9 @@ describe('CategoriesManagementComponent', () => {
             });
 
             it('should unassign/remove specific category after clicking at remove icon and emit categories change', () => {
-                const removeBtns = getRemoveCategoryButtons();
+                const removeButtons = getRemoveCategoryButtons();
                 const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit');
-                removeBtns[0].click();
+                removeButtons[0].click();
 
                 fixture.detectChanges();
 
@@ -156,9 +156,9 @@ describe('CategoriesManagementComponent', () => {
             it('should disable unassigning/removing categories when disableRemoval is set', () => {
                 component.disableRemoval = true;
                 fixture.detectChanges();
-                const removeBtns = getRemoveCategoryButtons();
-                const allBtnsDisabled = removeBtns.every((removeBtn) => removeBtn.disabled);
-                expect(allBtnsDisabled).toBeTrue();
+                const removeButtons = getRemoveCategoryButtons();
+                const allButtonsDisabled = removeButtons.every((removeBtn) => removeBtn.disabled);
+                expect(allButtonsDisabled).toBeTrue();
             });
         });
 
@@ -269,8 +269,8 @@ describe('CategoriesManagementComponent', () => {
         });
 
         it('should have correct remove category title', () => {
-            const removeBtns = getRemoveCategoryButtons();
-            const isTitleCorrect = removeBtns.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY');
+            const removeButtons = getRemoveCategoryButtons();
+            const isTitleCorrect = removeButtons.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY');
             expect(isTitleCorrect).toBeTrue();
         });
 
@@ -329,8 +329,8 @@ describe('CategoriesManagementComponent', () => {
             fixture.detectChanges();
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
-            const removeCategoryBtns = getRemoveCategoryButtons();
-            removeCategoryBtns[2].click();
+            const removeCategoryButtons = getRemoveCategoryButtons();
+            removeCategoryButtons[2].click();
             fixture.detectChanges();
 
             expect(component.categories.length).toBe(2);
@@ -345,8 +345,8 @@ describe('CategoriesManagementComponent', () => {
             typeCategory('test');
             expect(component.existingCategories.length).toBe(2);
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
-            const removeCategoryBtns = getRemoveCategoryButtons();
-            removeCategoryBtns[0].click();
+            const removeCategoryButtons = getRemoveCategoryButtons();
+            removeCategoryButtons[0].click();
             fixture.detectChanges();
 
             expect(component.categories.length).toBe(1);
@@ -375,8 +375,8 @@ describe('CategoriesManagementComponent', () => {
         });
 
         it('should have correct remove category title', () => {
-            const removeBtns = getRemoveCategoryButtons();
-            const isTitleCorrect = removeBtns.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY');
+            const removeButtons = getRemoveCategoryButtons();
+            const isTitleCorrect = removeButtons.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY');
             expect(isTitleCorrect).toBeTrue();
         });
 
@@ -434,8 +434,8 @@ describe('CategoriesManagementComponent', () => {
             createCategory('test');
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit');
-            const removeCategoryBtns = getRemoveCategoryButtons();
-            removeCategoryBtns[2].click();
+            const removeCategoryButtons = getRemoveCategoryButtons();
+            removeCategoryButtons[2].click();
             fixture.detectChanges();
 
             expect(component.categories.length).toBe(2);

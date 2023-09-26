@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi, NodesApi, UploadApi } from '@alfresco/js-api';
+import { AlfrescoApi /*, NodesApi, UploadApi*/ } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
-import { Buffer } from 'node:buffer';
+// import { Buffer } from 'node:buffer';
 const program = require('commander');
 import { logger } from './logger';
 const MAX_RETRY = 3;
@@ -71,7 +71,8 @@ async function checkEnv() {
     }
 }
 
-// @ts-ignore
+// TODO: https://alfresco.atlassian.net/browse/ACS-5873
+/*
 async function checkDiskSpaceFullEnv() {
     logger.info(`Start Check disk full space`);
 
@@ -108,6 +109,7 @@ async function checkDiskSpaceFullEnv() {
         }
     }
 }
+*/
 
 function sleep(delay: number) {
     const start = new Date().getTime();

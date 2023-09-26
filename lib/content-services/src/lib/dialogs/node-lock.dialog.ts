@@ -59,7 +59,7 @@ export class NodeLockDialogComponent implements OnInit {
             isLocked: node.isLocked || false,
             allowOwner: node.properties['cm:lockType'] === 'WRITE_LOCK',
             isTimeLock: !!node.properties['cm:expiryDate'],
-            time: !!node.properties['cm:expiryDate'] ? moment(node.properties['cm:expiryDate']) : moment()
+            time: node.properties['cm:expiryDate'] ? moment(node.properties['cm:expiryDate']) : moment()
         });
     }
 

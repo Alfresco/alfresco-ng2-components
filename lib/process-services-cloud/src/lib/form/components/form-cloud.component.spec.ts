@@ -578,7 +578,7 @@ describe('FormCloudComponent', () => {
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(formCloudService, 'getTaskForm').and.callFake(() => throwError(error));
 
-        formComponent.getFormByTaskId('test-app', '123').then((_) => {
+        formComponent.getFormByTaskId('test-app', '123').then(() => {
             expect(formComponent.handleError).toHaveBeenCalledWith(error);
             done();
         });
@@ -1049,7 +1049,7 @@ describe('FormCloudComponent', () => {
             pfx_property_five: 'orange',
             pfx_property_none: 'no_form_field'
         }, 'Complete', 123).subscribe({
-            next: _ => done.fail('expected an error, not data'),
+            next: () => done.fail('expected an error, not data'),
             error: error => {
                 expect(error).toBe(errorMessage);
                 expect(formComponent.disableSaveButton).toBeFalse();

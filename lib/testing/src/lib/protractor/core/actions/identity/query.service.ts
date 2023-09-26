@@ -101,7 +101,7 @@ export class QueryService {
                 const postBody = {};
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-                return data.list && data.list.entries.length && data.list.entries.find(task => task.entry.name === taskName && task.entry.status === status);
+                return data.list?.entries.length && data.list.entries.find(task => task.entry.name === taskName && task.entry.status === status);
             } catch (error) {
                 Logger.error('get process-instances tasks by status - Service error');
             }

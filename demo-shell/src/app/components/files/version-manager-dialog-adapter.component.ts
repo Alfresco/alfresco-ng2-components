@@ -41,9 +41,9 @@ export class VersionManagerDialogAdapterComponent {
         private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>
     ) {
         this.contentEntry = data.contentEntry;
-        this.newFileVersion = data.hasOwnProperty('newFileVersion') ? data.newFileVersion : this.newFileVersion;
-        this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
-        this.allowDownload = data.hasOwnProperty('allowDownload') ? data.allowDownload : this.allowDownload;
+        this.newFileVersion = Object.prototype.hasOwnProperty.call(data, 'newFileVersion') ? data.newFileVersion : this.newFileVersion;
+        this.showComments = Object.prototype.hasOwnProperty.call(data, 'showComments') ? data.showComments : this.showComments;
+        this.allowDownload = Object.prototype.hasOwnProperty.call(data, 'allowDownload') ? data.allowDownload : this.allowDownload;
     }
 
     uploadError(event: FileUploadErrorEvent) {

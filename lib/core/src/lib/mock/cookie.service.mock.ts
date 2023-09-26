@@ -38,7 +38,7 @@ export class CookieServiceMock extends CookieService {
     /** @override */
     clear() {
         Object.keys(this).forEach((key) => {
-            if (this.hasOwnProperty(key) && typeof this[key] !== 'function') {
+            if (Object.prototype.hasOwnProperty.call(this, key) && typeof this[key] !== 'function') {
                 this[key] = undefined;
             }
         });

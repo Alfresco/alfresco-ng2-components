@@ -97,10 +97,10 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    resource_access: { fakeapp: { roles: ['role1'] } }
+                    resource_access: { fakeApp: { roles: ['role1'] } }
                 });
 
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1']);
+            const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1']);
             expect(result).toBeTruthy();
         });
 
@@ -109,10 +109,10 @@ describe('JwtHelperService', () => {
 
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    resource_access: { fakeapp: { roles: ['role1'] } }
+                    resource_access: { fakeApp: { roles: ['role1'] } }
                 });
 
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+            const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
             expect(result).toBeTruthy();
         });
 
@@ -120,9 +120,9 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    resource_access: { fakeapp: { roles: ['role3'] } }
+                    resource_access: { fakeApp: { roles: ['role3'] } }
                 });
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+            const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
             expect(result).toBeFalsy();
         });
 
@@ -130,9 +130,9 @@ describe('JwtHelperService', () => {
             spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue(
                 {
-                    resource_access: { anotherfakeapp: { roles: ['role1'] } }
+                    resource_access: { anotherFakeApp: { roles: ['role1'] } }
                 });
-            const result = jwtHelperService.hasRealmRolesForClientRole('fakeapp', ['role1', 'role2']);
+            const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
             expect(result).toBeFalsy();
         });
    });

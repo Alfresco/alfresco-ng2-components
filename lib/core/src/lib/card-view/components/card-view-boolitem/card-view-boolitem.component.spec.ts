@@ -41,7 +41,7 @@ describe('CardViewBoolItemComponent', () => {
         component.property = new CardViewBoolItemModel({
             label: 'Boolean label',
             value: true,
-            key: 'boolkey',
+            key: 'boolKey',
             default: false,
             editable: false
         });
@@ -207,7 +207,7 @@ describe('CardViewBoolItemComponent', () => {
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
                     expect(updateNotification.target).toEqual(property);
-                    expect(updateNotification.changed).toEqual({ boolkey: true });
+                    expect(updateNotification.changed).toEqual({ boolKey: true });
                     disposableUpdate.unsubscribe();
                     done();
                 }

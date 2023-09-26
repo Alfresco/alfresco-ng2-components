@@ -86,7 +86,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
     protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) &&
+            if (Object.prototype.hasOwnProperty.call(requestNode, property) &&
                 !this.isExcludedField(property) &&
                 this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = requestNode[property];

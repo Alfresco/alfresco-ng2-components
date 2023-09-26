@@ -377,7 +377,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     getProcessDefinitionValue(process: ProcessDefinitionCloud): string {
-        return !!process.name ? process.name : process.key;
+        return process.name ? process.name : process.key;
     }
 
     get processInstanceName(): UntypedFormControl {

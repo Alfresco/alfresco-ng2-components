@@ -33,7 +33,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
-    constructor(private formService: FormService) { }
+    constructor(private formService: FormService) {}
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();
@@ -50,12 +50,13 @@ export abstract class FormRulesManager<T> {
         if (!this.formModel.readOnly) {
             const rules = this.getRules();
 
-            if (!!rules) {
+            if (rules) {
                 this.formService.formRulesEvent
                     .pipe(
-                        filter(event => !!event?.form?.id && event.form.id === formModel?.id),
+                        filter((event) => !!event?.form?.id && event.form.id === formModel?.id),
                         takeUntil(this.onDestroy$)
-                    ).subscribe(event => {
+                    )
+                    .subscribe((event) => {
                         this.handleRuleEvent(event, rules);
                     });
 
@@ -76,7 +77,6 @@ export abstract class FormRulesManager<T> {
 }
 
 export class ByPassFormRuleManager<T> extends FormRulesManager<T> {
-
     protected getRules(): T {
         return null;
     }

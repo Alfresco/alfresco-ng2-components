@@ -24,12 +24,7 @@ interface TestSortableByCategoryItem extends SortableByCategoryItem {
 describe('SortByCategoryMapperService', () => {
     let mapper: SortByCategoryMapperService<TestSortableByCategoryItem>;
 
-    const DEFAULT_CATEGORIES = [
-        '',
-        'DefaultCategory1',
-        'DefaultCategory2',
-        'DefaultCategory3'
-    ];
+    const DEFAULT_CATEGORIES = ['', 'DefaultCategory1', 'DefaultCategory2', 'DefaultCategory3'];
 
     beforeEach(() => {
         mapper = new SortByCategoryMapperService();
@@ -57,25 +52,29 @@ describe('SortByCategoryMapperService', () => {
     });
 
     it('should set all items under default category', () => {
-        const defaulValues: TestSortableByCategoryItem[] = [{
-            name: 'name-a',
-            id: 'id',
-            category: DEFAULT_CATEGORIES[1]
-        }, {
-            name: 'name-b',
-            id: 'id2',
-            category: DEFAULT_CATEGORIES[2]
-        }, {
-            name: 'name-c',
-            id: 'id3',
-            category: DEFAULT_CATEGORIES[0]
-        }];
+        const defaultValues: TestSortableByCategoryItem[] = [
+            {
+                name: 'name-a',
+                id: 'id',
+                category: DEFAULT_CATEGORIES[1]
+            },
+            {
+                name: 'name-b',
+                id: 'id2',
+                category: DEFAULT_CATEGORIES[2]
+            },
+            {
+                name: 'name-c',
+                id: 'id3',
+                category: DEFAULT_CATEGORIES[0]
+            }
+        ];
 
-        const result = mapper.mapItems(defaulValues, DEFAULT_CATEGORIES);
+        const result = mapper.mapItems(defaultValues, DEFAULT_CATEGORIES);
 
         expect(result.length).toBe(1);
         expect(result[0].category).toBe('');
-        expect(result[0].items.length).toBe(defaulValues.length);
+        expect(result[0].items.length).toBe(defaultValues.length);
     });
 
     it('should work if no items are present', () => {
@@ -85,7 +84,7 @@ describe('SortByCategoryMapperService', () => {
     });
 
     it('should work if the default categories are empty', () => {
-        const result = mapper.mapItems([{id: 'id', name: 'name', category: ''}], []);
+        const result = mapper.mapItems([{ id: 'id', name: 'name', category: '' }], []);
 
         expect(result.length).toBe(1);
         expect(result[0].category).toBe('');

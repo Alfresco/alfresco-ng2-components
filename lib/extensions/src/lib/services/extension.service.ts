@@ -123,7 +123,7 @@ export class ExtensionService {
      */
     getFeature<T = any[]>(key: string | string[], defaultValue: any = []): T {
         const properties: string[] = Array.isArray(key) ? key : key.split('.');
-        return properties.reduce((prev, curr) => prev && prev[curr], this.features) || defaultValue;
+        return properties.reduce((prev, curr) => prev?.[curr], this.features) || defaultValue;
     }
 
     getElements<T extends ExtensionElement>(key: string, fallback: Array<T> = []): Array<T> {

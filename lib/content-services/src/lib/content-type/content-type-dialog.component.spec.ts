@@ -147,9 +147,9 @@ describe('Content Type Dialog Component', () => {
     });
 
     it('should show the property with the aspect prefix not the inherited ones', async () => {
-        const showPropertyAccordon: HTMLButtonElement = fixture.nativeElement.querySelector('.adf-content-type-accordion .mat-expansion-panel-header');
-        expect(showPropertyAccordon).toBeDefined();
-        showPropertyAccordon.click();
+        const showPropertyAccordion: HTMLButtonElement = fixture.nativeElement.querySelector('.adf-content-type-accordion .mat-expansion-panel-header');
+        expect(showPropertyAccordion).toBeDefined();
+        showPropertyAccordion.click();
         fixture.detectChanges();
         await fixture.whenStable();
         const propertyShowed: NodeList = fixture.nativeElement.querySelectorAll('.adf-content-type-table .mat-row');

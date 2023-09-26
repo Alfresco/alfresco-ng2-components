@@ -34,19 +34,13 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
 
-@Component({selector: 'adf-custom-column-template-component', template: `
-    <ng-template #tmplRef></ng-template>
-`})
+@Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
 @Component({
     selector: 'adf-custom-column-header-component',
-    template: `
-        <ng-template #tmplRef>
-            CUSTOM HEADER
-        </ng-template>
-    `
+    template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
 })
 class CustomColumnHeaderComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
@@ -73,13 +67,12 @@ class FakeDataRow implements DataRow {
 export const resolverFn = (row: DataRow, col: DataColumn) => {
     const value = row.getValue(col.key);
     if (col.key === 'name') {
-        return  `${row.getValue('firstName')} - ${row.getValue('lastName')}`;
+        return `${row.getValue('firstName')} - ${row.getValue('lastName')}`;
     }
     return value;
 };
 
 describe('DataTable', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
@@ -141,16 +134,12 @@ describe('DataTable', () => {
 
         tick(tickTime);
 
-
         expect(doubleClickCount).toBe(1);
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             declarations: [CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -163,10 +152,7 @@ describe('DataTable', () => {
     });
 
     it('should preserve the historical selection order', () => {
-        dataTable.data = new ObjectDataTableAdapter(
-            [{ id: 0 }, { id: 1 }, { id: 2 }],
-            [new ObjectDataColumn({ key: 'id' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
 
         const rows = dataTable.data.getRows();
 
@@ -181,7 +167,6 @@ describe('DataTable', () => {
     });
 
     it('should update schema if columns change', fakeAsync(() => {
-
         dataTable.columnList = new DataColumnListComponent();
         dataTable.columnList.columns = new QueryList<DataColumnComponent>();
         dataTable.data = new ObjectDataTableAdapter([], []);
@@ -198,13 +183,7 @@ describe('DataTable', () => {
     }));
 
     it('should use the cardview style if cardview is true', () => {
-        const newData = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.display = 'gallery';
         dataTable.ngOnChanges({
@@ -218,13 +197,7 @@ describe('DataTable', () => {
     });
 
     it('should use the cardview style if cardview is false', () => {
-        const newData = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)
@@ -237,18 +210,10 @@ describe('DataTable', () => {
     });
 
     describe('Header modes', () => {
-
-        const newData = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const newData = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const emptyData = new ObjectDataTableAdapter();
 
         it('should show the header if showHeader is `Data` and there is data', () => {
-
             dataTable.showHeader = ShowHeaderMode.Data;
             dataTable.loading = false;
             dataTable.ngOnChanges({
@@ -261,7 +226,6 @@ describe('DataTable', () => {
         });
 
         it('should hide the header if showHeader is `Data` and there is no data', () => {
-
             dataTable.showHeader = ShowHeaderMode.Data;
             dataTable.loading = false;
             dataTable.ngOnChanges({
@@ -274,7 +238,6 @@ describe('DataTable', () => {
         });
 
         it('should always show the header if showHeader is `Always`', () => {
-
             dataTable.showHeader = ShowHeaderMode.Always;
             dataTable.loading = false;
 
@@ -292,7 +255,6 @@ describe('DataTable', () => {
         });
 
         it('should never show the header if showHeader is `Never`', () => {
-
             dataTable.showHeader = ShowHeaderMode.Never;
             dataTable.loading = false;
             dataTable.ngOnChanges({
@@ -313,14 +275,12 @@ describe('DataTable', () => {
         });
 
         it('should never show the header if noPermission is true', () => {
-
             dataTable.loading = false;
             dataTable.noPermission = true;
             testNotShownHeader(emptyData);
         });
 
         it('should never show the header if loading is true', () => {
-
             dataTable.loading = true;
             testNotShownHeader(emptyData);
         });
@@ -328,13 +288,7 @@ describe('DataTable', () => {
 
     it('should emit "sorting-changed" DOM event', (done) => {
         const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc', sortingKey: 'displayName' });
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [column]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [column]);
         dataTable.data.setSorting(new DataSorting('name', 'desc'));
 
         fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
@@ -346,27 +300,15 @@ describe('DataTable', () => {
 
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
-        hedaderColumns[0].click();
+        headerColumns[0].click();
         fixture.detectChanges();
     });
 
     it('should change the rows on changing of the data', () => {
-        const newData = new ObjectDataTableAdapter(
-            [
-                { name: 'TEST' },
-                { name: 'FAKE' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const newData = new ObjectDataTableAdapter([{ name: 'TEST' }, { name: 'FAKE' }], [new ObjectDataColumn({ key: 'name' })]);
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)
@@ -378,16 +320,8 @@ describe('DataTable', () => {
     });
 
     it('should set rows to the data when rows defined', () => {
-        const dataRows =
-            [
-                { name: 'test1' },
-                { name: 'test2' },
-                { name: 'test3' },
-                { name: 'test4' }
-            ];
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -403,13 +337,10 @@ describe('DataTable', () => {
         const event = new KeyboardEvent('keydown', {
             code: 'Enter',
             key: 'Enter'
-        } as KeyboardEventInit );
-        const dataRows =
-            [ { name: 'test1'}, { name: 'test2' } ];
+        } as KeyboardEventInit);
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }];
 
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -429,13 +360,7 @@ describe('DataTable', () => {
 
     it('should set custom sort order', () => {
         const dataSortObj = new DataSorting('dummyName', 'asc');
-        const dataRows =
-            [
-                { name: 'test1' },
-                { name: 'test2' },
-                { name: 'test3' },
-                { name: 'test4' }
-            ];
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
         dataTable.sorting = ['dummyName', 'asc'];
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -448,13 +373,7 @@ describe('DataTable', () => {
     it('should reset selection on mode change', () => {
         spyOn(dataTable, 'resetSelection').and.callThrough();
 
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
         rows[1].isSelected = true;
@@ -470,14 +389,8 @@ describe('DataTable', () => {
     });
 
     it('should select the row where isSelected is true', () => {
-        dataTable.rows = [
-            { name: 'TEST1' },
-            { name: 'FAKE2' },
-            { name: 'TEST2', isSelected: true },
-            { name: 'FAKE2' }];
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.rows = [{ name: 'TEST1' }, { name: 'FAKE2' }, { name: 'TEST2', isSelected: true }, { name: 'FAKE2' }];
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
         fixture.detectChanges();
         const rows = dataTable.data.getRows();
         expect(rows[0].isSelected).toBeFalsy();
@@ -487,15 +400,8 @@ describe('DataTable', () => {
     });
 
     it('should not select any row when isSelected is not defined', () => {
-        const dataRows =
-            [
-                { name: 'TEST1' },
-                { name: 'FAKE2' },
-                { name: 'TEST2' }
-            ];
-        dataTable.data = new ObjectDataTableAdapter(dataRows,
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const dataRows = [{ name: 'TEST1' }, { name: 'FAKE2' }, { name: 'TEST2' }];
+        dataTable.data = new ObjectDataTableAdapter(dataRows, [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -509,46 +415,34 @@ describe('DataTable', () => {
     });
 
     it('should select only one row with [single] selection mode', (done) => {
-        const rows = testIfRowIsSelected([
-            { name: '1', isSelected: true },
-            { name: '2' }
-        ], done);
+        const rows = testIfRowIsSelected([{ name: '1', isSelected: true }, { name: '2' }], done);
         dataTable.onRowClick(rows[1], new MouseEvent('click'));
     });
 
     it('should select only one row with [single] selection mode and key modifier', (done) => {
-        const rows = testIfRowIsSelected([
-            { name: '1', isSelected: true },
-            { name: '2' }
-        ], done);
-        dataTable.onRowClick(rows[1], new MouseEvent('click', {
-            metaKey: true
-        }));
+        const rows = testIfRowIsSelected([{ name: '1', isSelected: true }, { name: '2' }], done);
+        dataTable.onRowClick(
+            rows[1],
+            new MouseEvent('click', {
+                metaKey: true
+            })
+        );
     });
 
     it('should select only one row with [single] selection mode pressing enter key', () => {
-        const rows = testIfRowIsSelected([
-            { name: '1' },
-            { name: '2' }
-        ]);
-        dataTable.onEnterKeyPressed(rows[0], null);
+        const rows = testIfRowIsSelected([{ name: '1' }, { name: '2' }]);
+        dataTable.onEnterKeyPressed(rows[0], new KeyboardEvent('enter'));
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
 
-        dataTable.onEnterKeyPressed(rows[1], null);
+        dataTable.onEnterKeyPressed(rows[1], new KeyboardEvent('enter'));
         expect(rows[0].isSelected).toBeFalsy();
         expect(rows[1].isSelected).toBeTruthy();
     });
 
     it('should select multiple rows with [multiple] selection mode pressing enter key', () => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
 
         const event = new KeyboardEvent('enter', {
@@ -565,13 +459,7 @@ describe('DataTable', () => {
 
     it('should unselect the row with [single] selection mode', (done) => {
         dataTable.selectionMode = 'single';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                {name: '1'},
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
         dataTable.ngOnChanges({});
         fixture.detectChanges();
@@ -590,10 +478,7 @@ describe('DataTable', () => {
 
     it('should unselect the row with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter(
-            [{ name: '1', isSelected: true }],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1', isSelected: true }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
@@ -613,9 +498,7 @@ describe('DataTable', () => {
 
     it('should unselect the row searching it by row id, when row id is defined', () => {
         const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
         const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
         fakeDataRows[0].id = 'fakeRowId';
@@ -633,9 +516,7 @@ describe('DataTable', () => {
 
     it('should unselect the row by searching for the exact same reference of it (indexOf), when row id is not defined ', () => {
         const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
         const fakeDataRows = [new FakeDataRow(), new FakeDataRow()];
         dataTable.data.setRows(fakeDataRows);
@@ -652,13 +533,7 @@ describe('DataTable', () => {
 
     it('should select multiple rows with [multiple] selection mode and modifier key', (done) => {
         dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1', isSelected: true },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1', isSelected: true }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
@@ -678,12 +553,7 @@ describe('DataTable', () => {
 
     it('should put actions menu to the right by default', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' },
-                { name: '3' },
-                { name: '4' }
-            ],
+            [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }],
             [new ObjectDataColumn({ key: 'name' })]
         );
 
@@ -696,12 +566,7 @@ describe('DataTable', () => {
 
     it('should put actions menu to the left', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' },
-                { name: '3' },
-                { name: '4' }
-            ],
+            [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }],
             [new ObjectDataColumn({ key: 'name' })]
         );
 
@@ -757,13 +622,13 @@ describe('DataTable', () => {
 
     it('should emit double click if there are two single click in 250ms', fakeAsync(() => {
         testDoubleClickCount();
-   }));
+    }));
 
     it('should emit double click if there are more than two single click in 250ms', fakeAsync(() => {
         testDoubleClickCount(740, 2);
-   }));
+    }));
 
-    it('should emit single click if there are two single click in more than 250ms',  fakeAsync(() => {
+    it('should emit single click if there are two single click in more than 250ms', fakeAsync(() => {
         const row = {} as DataRow;
         let clickCount = 0;
 
@@ -779,8 +644,7 @@ describe('DataTable', () => {
 
         setTimeout(() => {
             dataTable.onRowClick(row, new MouseEvent('click'));
-        }
-            , 260);
+        }, 260);
 
         tick(510);
 
@@ -834,50 +698,37 @@ describe('DataTable', () => {
     it('should not sort upon clicking non-sortable column header', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [
-                new ObjectDataColumn({ key: 'name', sortable: false }),
-                new ObjectDataColumn({ key: 'other', sortable: true })
-            ]
+            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: true })]
         );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
-        hedaderColumns[0].click();
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).not.toHaveBeenCalled();
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.data = new ObjectDataTableAdapter(
-            [{ name: '1' }],
-            [
-                new ObjectDataColumn({ key: 'column_1', sortable: true })
-            ]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
         const adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'desc'));
 
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
-        hedaderColumns[0].click();
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.data = new ObjectDataTableAdapter(
-            [{ name: '1' }],
-            [
-                new ObjectDataColumn({ key: 'column_1', sortable: true })
-            ]
-        );
+        dataTable.data = new ObjectDataTableAdapter([{ name: '1' }], [new ObjectDataColumn({ key: 'column_1', sortable: true })]);
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
@@ -885,37 +736,34 @@ describe('DataTable', () => {
         const sorting = new DataSorting('column_1', 'asc');
         spyOn(adapter, 'setSorting').and.callThrough();
         spyOn(adapter, 'getSorting').and.returnValue(sorting);
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
         // // check first click on the header
-        hedaderColumns[0].click();
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'desc'));
 
         // check second click on the header
         sorting.direction = 'desc';
-        hedaderColumns[0].click();
+        headerColumns[0].click();
         fixture.detectChanges();
 
         expect(adapter.setSorting).toHaveBeenCalledWith(new DataSorting('column_1', 'asc'));
-   });
+    });
 
     it('should indicate column that has sorting applied', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [
-                new ObjectDataColumn({ key: 'name', sortable: true }),
-                new ObjectDataColumn({ key: 'other', sortable: true })
-            ]
+            [new ObjectDataColumn({ key: 'name', sortable: true }), new ObjectDataColumn({ key: 'other', sortable: true })]
         );
         fixture.detectChanges();
         dataTable.ngAfterViewInit();
 
         const [col1, col2] = dataTable.getSortableColumns();
-        const hedaderColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
+        const headerColumns = fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-cell-header-content');
 
-        hedaderColumns[1].click();
+        headerColumns[1].click();
         fixture.detectChanges();
 
         expect(dataTable.isColumnSortActive(col1)).toBe(false);
@@ -925,10 +773,7 @@ describe('DataTable', () => {
     it('should return false for columns that have no sorting', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [
-                new ObjectDataColumn({ key: 'name', sortable: false }),
-                new ObjectDataColumn({ key: 'other', sortable: false })
-            ]
+            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
         );
 
         const [col1, col2] = dataTable.getSortableColumns();
@@ -977,10 +822,7 @@ describe('DataTable', () => {
     it('should have indeterminate state for "select all" when at least 1 row is selected or not all rows', () => {
         dataTable.data = new ObjectDataTableAdapter(
             [{ name: '1' }, { name: '2' }],
-            [
-                new ObjectDataColumn({ key: 'name', sortable: false }),
-                new ObjectDataColumn({ key: 'other', sortable: false })
-            ]
+            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
         );
         const rows = dataTable.data.getRows();
 
@@ -1186,12 +1028,7 @@ describe('DataTable', () => {
 
     it('should enable sticky header if the stickyHeader is set to true and header is visible', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' },
-                { name: '3' },
-                { name: '4' }
-            ],
+            [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }],
             [new ObjectDataColumn({ key: 'name', title: 'Name' })]
         );
 
@@ -1204,12 +1041,7 @@ describe('DataTable', () => {
 
     it('should disable sticky header if component is loading', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' },
-                { name: '3' },
-                { name: '4' }
-            ],
+            [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }],
             [new ObjectDataColumn({ key: 'name', title: 'Name' })]
         );
 
@@ -1222,12 +1054,7 @@ describe('DataTable', () => {
 
     it('should disable sticky header if user has no permissions', () => {
         dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' },
-                { name: '3' },
-                { name: '4' }
-            ],
+            [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }],
             [new ObjectDataColumn({ key: 'name', title: 'Name' })]
         );
 
@@ -1239,10 +1066,7 @@ describe('DataTable', () => {
     });
 
     it('should disable sticky header if user has no content', () => {
-        dataTable.data = new ObjectDataTableAdapter(
-            [],
-            [new ObjectDataColumn({ key: 'name', title: 'Name' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', title: 'Name' })]);
 
         dataTable.stickyHeader = true;
         dataTable.loading = false;
@@ -1252,9 +1076,11 @@ describe('DataTable', () => {
     });
 
     it('should be able to define values using the resolver function', () => {
-        dataTable.data = new ObjectDataTableAdapter([
-            { id: 1, firstName: 'foo', lastName: 'bar' },
-            { id: 2, firstName: 'bar', lastName: 'baz' }],
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { id: 1, firstName: 'foo', lastName: 'bar' },
+                { id: 2, firstName: 'bar', lastName: 'baz' }
+            ],
             [new ObjectDataColumn({ key: 'id' }), new ObjectDataColumn({ key: 'name' })]
         );
         spyOn(dataTable, 'resolverFn').and.callFake(resolverFn);
@@ -1276,12 +1102,9 @@ describe('DataTable', () => {
     it('should update data columns when columns input changes', () => {
         const existingDataColumnsSchema = [new ObjectDataColumn({ key: 'id' })];
         const existingData = [{ id: 'fake-data' }];
-        dataTable.data = new ObjectDataTableAdapter(
-            existingData,
-            existingDataColumnsSchema
-        );
+        dataTable.data = new ObjectDataTableAdapter(existingData, existingDataColumnsSchema);
 
-        const newDataColumnsSchema = { key: 'new-column'};
+        const newDataColumnsSchema = { key: 'new-column' };
         const columnsChange = new SimpleChange(null, [newDataColumnsSchema], false);
         dataTable.ngOnChanges({ columns: columnsChange });
         const expectedNewDataColumns = [new ObjectDataColumn(newDataColumnsSchema)];
@@ -1290,14 +1113,12 @@ describe('DataTable', () => {
 
     it('should render the custom column header', () => {
         const customHeader = TestBed.createComponent(CustomColumnHeaderComponent).componentInstance.templateRef;
-        dataTable.data = new ObjectDataTableAdapter([
+        dataTable.data = new ObjectDataTableAdapter(
+            [
                 { id: 1, name: 'foo' },
                 { id: 2, name: 'bar' }
             ],
-            [
-                new ObjectDataColumn({ key: 'id', title: 'ID' }),
-                new ObjectDataColumn({ key: 'name', title: 'Name', header: customHeader })
-            ]
+            [new ObjectDataColumn({ key: 'id', title: 'ID' }), new ObjectDataColumn({ key: 'name', title: 'Name', header: customHeader })]
         );
         fixture.detectChanges();
 
@@ -1309,25 +1130,28 @@ describe('DataTable', () => {
     });
 
     it('should set isContextMenuSource to true for row whose id matches selectedRowId', () => {
-        const rows = [{
-            id: '1234',
-            isContextMenuSource: false
-        }, {
-            id: '2345',
-            isContextMenuSource: false
-        }, {
-            id: '3456',
-            isContextMenuSource: false
-        }] as DataRow[];
+        const rows = [
+            {
+                id: '1234',
+                isContextMenuSource: false
+            },
+            {
+                id: '2345',
+                isContextMenuSource: false
+            },
+            {
+                id: '3456',
+                isContextMenuSource: false
+            }
+        ] as DataRow[];
         const row = {
             id: '2345',
             isContextMenuSource: false
         } as DataRow;
-        dataTable.data = new ObjectDataTableAdapter(
-            rows,
-            [new ObjectDataColumn({ key: 'id' }),
-            new ObjectDataColumn({ key: 'isContextMenuSource' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter(rows, [
+            new ObjectDataColumn({ key: 'id' }),
+            new ObjectDataColumn({ key: 'isContextMenuSource' })
+        ]);
 
         dataTable.markRowAsContextMenuSource(row);
         fixture.detectChanges();
@@ -1339,10 +1163,7 @@ describe('DataTable', () => {
     it('should select the row, regardless of where the user clicks in the row.', async () => {
         dataTable.selectionMode = 'single';
         const dataRows = [{ id: 0 }, { id: 1 }];
-        dataTable.data = new ObjectDataTableAdapter(
-            dataRows,
-            [new ObjectDataColumn({ key: 'id' })]
-        );
+        dataTable.data = new ObjectDataTableAdapter(dataRows, [new ObjectDataColumn({ key: 'id' })]);
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
         });
@@ -1377,7 +1198,6 @@ describe('DataTable', () => {
 });
 
 describe('Accesibility', () => {
-
     let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
     let element: any;
@@ -1385,10 +1205,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1403,17 +1220,8 @@ describe('Accesibility', () => {
     });
 
     it('should have accessibility tags', () => {
-
-        const dataRows =
-            [
-                { name: 'test1' },
-                { name: 'test2' },
-                { name: 'test3' },
-                { name: 'test4' }
-            ];
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
+        const dataRows = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }];
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1466,7 +1274,7 @@ describe('Accesibility', () => {
 
     describe('Focus row', () => {
         let event: KeyboardEvent;
-        let dataRows: {name: string}[];
+        let dataRows: { name: string }[];
 
         beforeEach(() => {
             event = new KeyboardEvent('keyup', {
@@ -1474,10 +1282,8 @@ describe('Accesibility', () => {
                 key: 'ArrowUp',
                 keyCode: 38
             } as KeyboardEventInit);
-            dataRows = [{name: 'test1'}, {name: 'test2'}];
-            dataTable.data = new ObjectDataTableAdapter([],
-                [new ObjectDataColumn({key: 'name'})]
-            );
+            dataRows = [{ name: 'test1' }, { name: 'test2' }];
+            dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
         });
 
         it('should focus next row on ArrowDown event', () => {
@@ -1497,10 +1303,10 @@ describe('Accesibility', () => {
             const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
             const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            rowCellElement?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
-            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-1');
         });
 
         it('should focus previous row on ArrowUp event', () => {
@@ -1514,10 +1320,10 @@ describe('Accesibility', () => {
             const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[1];
             const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
 
-            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            rowCellElement?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
-            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
+            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-0');
         });
 
         it('should select header row when `showHeader` is `Always`', () => {
@@ -1531,12 +1337,12 @@ describe('Accesibility', () => {
             dataTable.ngAfterViewInit();
 
             const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
-            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            const rowCellElement = rowElement?.querySelector('.adf-datatable-cell');
 
-            rowCellElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            rowCellElement?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
-            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-header');
+            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-header');
         });
 
         it('should not select header row when `showHeader` is `Never`', () => {
@@ -1550,22 +1356,20 @@ describe('Accesibility', () => {
             dataTable.ngAfterViewInit();
 
             const rowElement = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"]');
-            const rowCellElement = rowElement.querySelector('.adf-datatable-cell');
+            const rowCellElement = rowElement?.querySelector('.adf-datatable-cell');
 
-            rowCellElement.dispatchEvent(new MouseEvent('click'));
+            rowCellElement?.dispatchEvent(new MouseEvent('click'));
             fixture.debugElement.nativeElement.dispatchEvent(event);
 
-            expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-1');
+            expect(document.activeElement?.getAttribute('data-automation-id')).toBe('datatable-row-1');
         });
     });
 
     it('should remove cell focus when [focus] is set to false', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [ { name: 'name1' } ];
+        const dataRows = [{ name: 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: false })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1575,16 +1379,14 @@ describe('Accesibility', () => {
         dataTable.ngAfterViewInit();
 
         const cell = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell.getAttribute('tabindex')).toBe(null);
+        expect(cell?.getAttribute('tabindex')).toBe(null);
     });
 
     it('should allow element focus when [focus] is set to true', () => {
         dataTable.showHeader = ShowHeaderMode.Never;
-        const dataRows = [ { name: 'name1' } ];
+        const dataRows = [{ name: 'name1' }];
 
-        dataTable.data = new ObjectDataTableAdapter([],
-            [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]
-        );
+        dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name', template: columnCustomTemplate, focus: true })]);
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1594,7 +1396,7 @@ describe('Accesibility', () => {
         dataTable.ngAfterViewInit();
 
         const cell = document.querySelector('.adf-datatable-row[data-automation-id="datatable-row-0"] .adf-cell-value');
-        expect(cell.getAttribute('tabindex')).toBe('0');
+        expect(cell?.getAttribute('tabindex')).toBe('0');
     });
 });
 
@@ -1606,10 +1408,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1625,29 +1424,30 @@ describe('Drag&Drop column header', () => {
             new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
         ];
 
-        dataTable.data = new ObjectDataTableAdapter(
-            [...data],
-            [...dataTableSchema]
-        );
+        dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
     });
 
     it('should show/hide drag indicator icon', () => {
         fixture.detectChanges();
 
-        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
-        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        const headerColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_name"]');
+        headerColumn.dispatchEvent(new MouseEvent('mouseenter'));
         fixture.detectChanges();
 
         let dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
-        let dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]');
+        let dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
+            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]'
+        );
         expect(dragIcon).toBeTruthy();
         expect(dragIconPlaceholder).toBeTruthy();
 
-        hedaderColumn.dispatchEvent(new MouseEvent('mouseleave'));
+        headerColumn.dispatchEvent(new MouseEvent('mouseleave'));
         fixture.detectChanges();
 
         dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-name"]');
-        dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]');
+        dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
+            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-name"]'
+        );
         expect(dragIcon).toBeFalsy();
         expect(dragIconPlaceholder).toBeFalsy();
     });
@@ -1655,12 +1455,14 @@ describe('Drag&Drop column header', () => {
     it('should not show drag indicator icon, when drag and drop is disabled', () => {
         fixture.detectChanges();
 
-        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
-        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        const headerColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
+        headerColumn.dispatchEvent(new MouseEvent('mouseenter'));
         fixture.detectChanges();
 
         const dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
-        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-id"]');
+        const dragIconPlaceholder = fixture.debugElement.nativeElement.querySelector(
+            '[data-automation-id="adf-datatable-cell-header-drag-icon-placeholder-id"]'
+        );
 
         expect(dragIcon).toBeFalsy();
         expect(dragIconPlaceholder).toBeFalsy();
@@ -1717,10 +1519,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1734,14 +1533,11 @@ describe('Show/hide columns', () => {
 
         dataTableSchema = [
             new ObjectDataColumn({ key: 'id', title: 'ID' }),
-            new ObjectDataColumn({ key: 'name', title: 'Name'}),
+            new ObjectDataColumn({ key: 'name', title: 'Name' }),
             new ObjectDataColumn({ key: 'status', title: 'status', isHidden: true })
         ];
 
-        dataTable.data = new ObjectDataTableAdapter(
-            [...data],
-            [...dataTableSchema]
-        );
+        dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
 
         fixture.detectChanges();
     });
@@ -1776,11 +1572,14 @@ describe('Show/hide columns', () => {
 
     describe('markRowAsContextMenuSource', () => {
         it('should set isContextMenuSource to false for all rows returned by getRows function', () => {
-            const rows = [{
-                isContextMenuSource: true
-            }, {
-                isContextMenuSource: true
-            }] as DataRow[];
+            const rows = [
+                {
+                    isContextMenuSource: true
+                },
+                {
+                    isContextMenuSource: true
+                }
+            ] as DataRow[];
             spyOn(dataTable.data, 'getRows').and.returnValue(rows);
             dataTable.markRowAsContextMenuSource({} as DataRow);
             rows.forEach((row) => expect(row.isContextMenuSource).toBeFalse());
@@ -1802,7 +1601,6 @@ describe('Column Resizing', () => {
     let data: { id: number; name: string }[] = [];
     let dataTableSchema: DataColumn[] = [];
 
-
     const testClassesAfterResizing = (headerColumnsSelector = '.adf-datatable-cell-header', excludedClass = 'adf-datatable__cursor--pointer') => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
@@ -1819,10 +1617,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule],
             declarations: [CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
@@ -1838,10 +1633,7 @@ describe('Column Resizing', () => {
             new ObjectDataColumn({ key: 'name', title: 'Name', draggable: true })
         ];
 
-        dataTable.data = new ObjectDataTableAdapter(
-            [...data],
-            [...dataTableSchema]
-        );
+        dataTable.data = new ObjectDataTableAdapter([...data], [...dataTableSchema]);
 
         dataTable.isResizingEnabled = false;
         fixture.detectChanges();
@@ -1884,8 +1676,8 @@ describe('Column Resizing', () => {
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
 
-        const hedaderColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
-        hedaderColumn.dispatchEvent(new MouseEvent('mouseenter'));
+        const headerColumn = fixture.debugElement.nativeElement.querySelector('[data-automation-id="auto_id_id"]');
+        headerColumn.dispatchEvent(new MouseEvent('mouseenter'));
         fixture.detectChanges();
         let dragIcon = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-datatable-cell-header-drag-icon-id"]');
 
@@ -2027,7 +1819,7 @@ describe('Column Resizing', () => {
     });
 
     it('should emit on columns width change when resizing ends', () => {
-        spyOn(dataTable.columnsWidthChanged,'emit');
+        spyOn(dataTable.columnsWidthChanged, 'emit');
 
         dataTable.isResizingEnabled = true;
         fixture.detectChanges();
@@ -2047,5 +1839,4 @@ describe('Column Resizing', () => {
         expect(dataTable.isResizing).toBeFalse();
         expect(dataTable.columnsWidthChanged.emit).toHaveBeenCalled();
     });
-
 });

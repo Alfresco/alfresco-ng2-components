@@ -26,13 +26,13 @@ export class BrowserVisibility {
     static DEFAULT_TIMEOUT = BrowserVisibility.getVisibleTimeout() ? browser.params.testConfig.timeouts.visible_timeout : 10000;
 
     static getVisibleTimeout() {
-        if (browser && browser.params && browser.params.testConfig && browser.params.testConfig.timeouts) {
+        if (browser?.params?.testConfig?.timeouts) {
             return browser.params.testConfig.timeouts.visible_timeout;
         }
     }
 
     static getNoVisibleTimeout() {
-        if (browser && browser.params && browser.params.testConfig && browser.params.testConfig.timeouts) {
+        if (browser?.params?.testConfig?.timeouts) {
             return browser.params.testConfig.timeouts.no_visible_timeout;
         }
     }
@@ -91,7 +91,7 @@ export class BrowserVisibility {
     static async waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element has value ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
-        return browser.wait(BrowserVisibility.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
+        return browser.wait(BrowserVisibility.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn't have a value ${elementValue} ${elementToCheck.locator()}`);
     }
 
     /*
@@ -100,7 +100,7 @@ export class BrowserVisibility {
     static async waitUntilElementHasText(elementToCheck: ElementFinder, text, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element has value ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
-        return browser.wait(protractor.ExpectedConditions.textToBePresentInElement(elementToCheck, text), waitTimeout, `Element doesn\'t have the text ${text}  ${elementToCheck.locator()}`);
+        return browser.wait(protractor.ExpectedConditions.textToBePresentInElement(elementToCheck, text), waitTimeout, `Element doesn't have the text ${text}  ${elementToCheck.locator()}`);
     }
 
     static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.NOT_VISIBLE_DEFAULT_TIMEOUT): Promise<any> {

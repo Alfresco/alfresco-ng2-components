@@ -272,11 +272,10 @@ export class FormFieldModel extends FormWidgetModel {
 
         if (json.fields) {
             for (const currentField in json.fields) {
-                if (json.fields.hasOwnProperty(currentField)) {
+                if (Object.prototype.hasOwnProperty.call(json.fields, currentField)) {
                     const col = new ContainerColumnModel();
 
-                    const fields: FormFieldModel[] = (json.fields[currentField] || []).map((field) => new FormFieldModel(form, field));
-                    col.fields = fields;
+                    col.fields = (json.fields[currentField] || []).map((field) => new FormFieldModel(form, field));
                     col.rowspan = json.fields[currentField].length;
 
                     col.fields.forEach((colFields: any) => {
@@ -291,7 +290,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     parseValue(json: any): any {
-        let value = json.hasOwnProperty('value') && json.value !== undefined ? json.value : null;
+        let value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -363,7 +362,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         switch (this.type) {
-            case FormFieldTypes.DROPDOWN:
+            case FormFieldTypes.DROPDOWN: {
                 if (!this.value) {
                     this.form.values[this.id] = null;
                     break;
@@ -390,13 +389,15 @@ export class FormFieldModel extends FormWidgetModel {
                     }
                 }
                 break;
-            case FormFieldTypes.RADIO_BUTTONS:
+            }
+            case FormFieldTypes.RADIO_BUTTONS: {
                 const radioButton: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                 if (radioButton.length > 0) {
                     this.form.values[this.id] = radioButton[0];
                 }
                 break;
-            case FormFieldTypes.UPLOAD:
+            }
+            case FormFieldTypes.UPLOAD: {
                 this.form.hasUpload = true;
                 if (this.value && this.value.length > 0) {
                     this.form.values[this.id] = Array.isArray(this.value) ? this.value.map((elem) => elem.id).join(',') : [this.value];
@@ -404,7 +405,8 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = null;
                 }
                 break;
-            case FormFieldTypes.TYPEAHEAD:
+            }
+            case FormFieldTypes.TYPEAHEAD: {
                 const typeAheadEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
                 if (typeAheadEntry.length > 0) {
                     this.form.values[this.id] = typeAheadEntry[0];
@@ -412,7 +414,8 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = null;
                 }
                 break;
-            case FormFieldTypes.DATE:
+            }
+            case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
                     this.value = moment(new Date()).format(this.dateDisplayFormat);
                 }
@@ -425,7 +428,8 @@ export class FormFieldModel extends FormWidgetModel {
                     this._value = this.value;
                 }
                 break;
-            case FormFieldTypes.DATETIME:
+            }
+            case FormFieldTypes.DATETIME: {
                 if (typeof this.value === 'string' && this.value === 'now') {
                     this.value = moment(new Date()).utc().format(this.dateDisplayFormat);
                 }
@@ -439,21 +443,27 @@ export class FormFieldModel extends FormWidgetModel {
                     this._value = this.value;
                 }
                 break;
-            case FormFieldTypes.NUMBER:
+            }
+            case FormFieldTypes.NUMBER: {
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
-            case FormFieldTypes.AMOUNT:
+            }
+            case FormFieldTypes.AMOUNT: {
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
-            case FormFieldTypes.BOOLEAN:
+            }
+            case FormFieldTypes.BOOLEAN: {
                 this.form.values[this.id] = this.value !== null && this.value !== undefined ? this.value : false;
                 break;
-            case FormFieldTypes.PEOPLE:
+            }
+            case FormFieldTypes.PEOPLE: {
                 this.form.values[this.id] = this.value ? this.value : null;
                 break;
-            case FormFieldTypes.FUNCTIONAL_GROUP:
+            }
+            case FormFieldTypes.FUNCTIONAL_GROUP: {
                 this.form.values[this.id] = this.value ? this.value : null;
                 break;
+            }
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
                     this.form.values[this.id] = this.value;

@@ -42,7 +42,7 @@ describe('ProcessInstanceListComponent', () => {
     let getProcessInstancesSpy: jasmine.Spy;
     let appConfig: AppConfigService;
 
-    const resolverfn = (row: DataRow, col: DataColumn) => {
+    const resolverFn = (row: DataRow, col: DataColumn) => {
         const value = row.getValue(col.key);
         if (col.key === 'variables') {
             return (value || []).map((processVar) => `${processVar.name} - ${processVar.value}`).toString();
@@ -293,7 +293,7 @@ describe('ProcessInstanceListComponent', () => {
             }
         };
         component.presetColumn = 'fakeProcessCustomSchema';
-        component.resolverFn = resolverfn;
+        component.resolverFn = resolverFn;
         component.reload();
 
         fixture.detectChanges();
@@ -458,7 +458,7 @@ describe('ProcessInstanceListComponent', () => {
 
 @Component({
     template: `
-    <adf-process-instance-list #processlistComponentInstance>
+    <adf-process-instance-list #processListComponentInstance>
         <data-columns>
             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
             <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="adf-hidden"></data-column>
@@ -554,7 +554,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
     [appId]="appId"
     [showContextMenu]="true"
     (showRowContextMenu)="onShowRowContextMenu($event)"
-    #processlistComponentInstance>
+    #processListComponentInstance>
         <data-columns>
             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
             <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="adf-hidden"></data-column>

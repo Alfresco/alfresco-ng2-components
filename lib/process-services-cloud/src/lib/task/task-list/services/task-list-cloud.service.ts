@@ -61,7 +61,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         const queryParam: any = {};
         for (const propertyKey in requestNode) {
             if (
-                requestNode.hasOwnProperty(propertyKey) &&
+                Object.prototype.hasOwnProperty.call(requestNode, propertyKey) &&
                 !this.isExcludedField(propertyKey) &&
                 this.isPropertyValueValid(requestNode, propertyKey)
             ) {

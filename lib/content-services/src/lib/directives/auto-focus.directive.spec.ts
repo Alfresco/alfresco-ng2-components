@@ -24,10 +24,10 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
     template: `<div tabindex="0" adf-auto-focus> Test</div>`
 })
-class AutoFoucsTestComponent {}
+class AutoFocusTestComponent {}
 
 describe('AutoFocusDirective', () => {
-    let fixture: ComponentFixture<AutoFoucsTestComponent>;
+    let fixture: ComponentFixture<AutoFocusTestComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -36,10 +36,10 @@ describe('AutoFocusDirective', () => {
             ],
             declarations: [
                 AutoFocusDirective,
-                AutoFoucsTestComponent
+                AutoFocusTestComponent
             ]
         });
-        fixture = TestBed.createComponent(AutoFoucsTestComponent);
+        fixture = TestBed.createComponent(AutoFocusTestComponent);
     });
 
     it('should focus the element after content is initialized', fakeAsync(() => {

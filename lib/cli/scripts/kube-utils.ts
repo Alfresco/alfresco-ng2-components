@@ -63,6 +63,7 @@ export const deletePod = (args: KubeArgs) => {
 export const getNamespaces = (): string[] => {
     logger.info('Perform get namespaces name...');
     const result =  exec('kubectl', [`get`, `namespaces`, `-l`, `type=application`, `-o`, `name`], {});
+    // eslint-disable-next-line no-useless-escape
     const namespaces = result.replace(/namespace[\/]+/g, '').split(/\r?\n/);
     logger.info(`namespaces found: ${namespaces}`);
     return namespaces;

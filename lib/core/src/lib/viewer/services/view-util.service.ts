@@ -22,7 +22,6 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
     providedIn: 'root'
 })
 export class ViewUtilService {
-
     // Extensions that are supported by the Viewer without conversion
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
@@ -50,11 +49,10 @@ export class ViewUtilService {
      * Provides a list of file extensions supported by external plugins.
      */
     get externalExtensions(): string[] {
-        return this.viewerExtensions.map(ext => ext.fileExtension);
+        return this.viewerExtensions.map((ext) => ext.fileExtension);
     }
 
-    constructor(private extensionService: AppExtensionService) {
-    }
+    constructor(private extensionService: AppExtensionService) {}
 
     /**
      * get File name from url
@@ -64,9 +62,7 @@ export class ViewUtilService {
     getFilenameFromUrl(url: string): string {
         const anchor = url.indexOf('#');
         const query = url.indexOf('?');
-        const end = Math.min(
-            anchor > 0 ? anchor : url.length,
-            query > 0 ? query : url.length);
+        const end = Math.min(anchor > 0 ? anchor : url.length, query > 0 ? query : url.length);
         return url.substring(url.lastIndexOf('/', end) + 1, end);
     }
 
@@ -80,13 +76,13 @@ export class ViewUtilService {
      */
     getFileExtension(fileName: string): string {
         if (fileName) {
-            const match = fileName.match(/\.([^\./\?\#]+)($|\?|\#)/);
+            const match = fileName.match(/\.([^./?#]+)($|\?|#)/);
             return match ? match[1] : null;
         }
         return null;
     }
 
-     getViewerType(extension: string, mimeType: string): string {
+    getViewerType(extension: string, mimeType: string): string {
         let viewerType = this.getViewerTypeByExtension(extension);
 
         if (viewerType === 'unknown') {
@@ -143,7 +139,7 @@ export class ViewUtilService {
     }
 
     private isExternalViewer(): boolean {
-        return !!this.viewerExtensions.find(ext => ext.fileExtension === '*');
+        return !!this.viewerExtensions.find((ext) => ext.fileExtension === '*');
     }
 
     isCustomViewerExtension(extension: string): boolean {
@@ -156,5 +152,4 @@ export class ViewUtilService {
 
         return false;
     }
-
 }

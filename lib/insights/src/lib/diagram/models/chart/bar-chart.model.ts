@@ -40,8 +40,8 @@ export class BarChart extends Chart {
 
     constructor(obj?: any) {
         super(obj);
-        this.xAxisType = obj && obj.xAxisType || null;
-        this.yAxisType = obj && obj.yAxisType || null;
+        this.xAxisType = obj?.xAxisType || null;
+        this.yAxisType = obj?.yAxisType || null;
         this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
         this.options.scales.yAxes[0].ticks.callback = this.yAxisTickFormatFunction(this.yAxisType);
         if (obj.values) {

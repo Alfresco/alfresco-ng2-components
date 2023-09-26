@@ -40,7 +40,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
     this.authService = this.injector.get(AuthenticationService);
 
-    if (!this.authService || !this.authService.getBearerExcludedUrls()) {
+    if (!this.authService?.getBearerExcludedUrls()) {
       return next.handle(req);
     }
 

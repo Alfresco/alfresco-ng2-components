@@ -110,7 +110,7 @@ describe('ContentMetaDataService', () => {
         }
     };
 
-    const versionableResponse: PropertyGroup = {
+    const verResponse: PropertyGroup = {
         name: 'cm:versionable',
         title: 'Versionable',
         properties: {
@@ -232,7 +232,7 @@ describe('ContentMetaDataService', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
 
@@ -249,7 +249,7 @@ describe('ContentMetaDataService', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
 
@@ -267,7 +267,7 @@ describe('ContentMetaDataService', () => {
                 exclude: 'cm:versionable'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
             expect(groupedProperties.length).toEqual(0);
@@ -283,7 +283,7 @@ describe('ContentMetaDataService', () => {
                 'cm:versionable': '*'
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
             expect(groupedProperties.length).toEqual(1);
@@ -299,7 +299,7 @@ describe('ContentMetaDataService', () => {
                 exclude: ['cm:versionable', 'cm:auditable']
             });
 
-            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(versionableResponse));
+            spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
 
             const groupedProperties = await service.getGroupedProperties(fakeContentNode).toPromise();
             expect(groupedProperties.length).toEqual(0);

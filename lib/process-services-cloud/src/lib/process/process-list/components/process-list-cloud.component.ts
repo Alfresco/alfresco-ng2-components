@@ -365,7 +365,7 @@ export class ProcessListCloudComponent
     }
 
     private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
-        return changes.hasOwnProperty(property);
+        return Object.prototype.hasOwnProperty.call(changes, property);
     }
 
     isListEmpty(): boolean {

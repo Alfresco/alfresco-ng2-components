@@ -117,8 +117,8 @@ async function main() {
 async function initializeDefaultApps() {
     for (let x = 0; x < ACTIVITI_APPS.apps.length; x++) {
         const appInfo = ACTIVITI_APPS.apps[x];
-        const isDefaultAppDepl = await isDefaultAppDeployed(appInfo.name);
-        if (isDefaultAppDepl !== undefined && !isDefaultAppDepl) {
+        const isDeployed = await isDefaultAppDeployed(appInfo.name);
+        if (isDeployed !== undefined && !isDeployed) {
             const appDefinition = await importPublishApp(`${appInfo.name}`);
             await deployApp(appDefinition.appDefinition.id);
         } else {
@@ -248,7 +248,7 @@ async function isDefaultAppDeployed(appName: string) {
     try {
         const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
         const availableApps = await runtimeAppDefinitionsApi.getAppDefinitions();
-        const defaultApp = availableApps.data && availableApps.data.filter(app => app.name && app.name.includes(appName));
+        const defaultApp = availableApps.data?.filter(app => app.name?.includes(appName));
         return defaultApp && defaultApp.length > 0;
     } catch (error) {
         logger.error(`Aps app failed to import/Publish!`);
@@ -262,8 +262,8 @@ async function importPublishApp(appName: string) {
     const fileContent = createReadStream(pathFile);
 
     try {
-        const appdefinitionsApi = new AppDefinitionsApi(alfrescoJsApi);
-        const result = await appdefinitionsApi.importAndPublishApp(fileContent, {renewIdmEntries: true});
+        const appDefinitionsApi = new AppDefinitionsApi(alfrescoJsApi);
+        const result = await appDefinitionsApi.importAndPublishApp(fileContent, {renewIdmEntries: true});
         logger.info(`Aps app imported and published!`);
         return result;
     } catch (error) {
@@ -398,7 +398,7 @@ async function authorizeUserToContentRepo(user: any) {
             ['application/json'],
             ['application/json']
         );
-        logger.info(`Found ${content.data && content.data.length} contents`);
+        logger.info(`Found ${content.data?.length} contents`);
         if (content.data) {
             for (let i = 0; i < content.data.length; i++) {
                 if (content.data[i].authenticationType === 'basic') {

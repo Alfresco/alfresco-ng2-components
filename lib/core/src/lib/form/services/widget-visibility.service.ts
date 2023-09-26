@@ -68,7 +68,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    public isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result: boolean = false): boolean {
+    public isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel, accumulator: any[] = [], result?: boolean): boolean {
         const leftValue = this.getLeftValue(form, visibilityObj);
         const rightValue = this.getRightValue(form, visibilityObj);
         const actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
@@ -88,7 +88,7 @@ export class WidgetVisibilityService {
     }
 
     private transformToLiteralExpression(currentExpression: any): string {
-        const currentTransformedValue = !!currentExpression.value ? 'true' : 'false';
+        const currentTransformedValue = currentExpression.value ? 'true' : 'false';
         return currentTransformedValue.concat(this.transformToLiteralOperator(currentExpression.operator));
     }
 
@@ -206,9 +206,9 @@ export class WidgetVisibilityService {
         const containers = this.getFormTabContainers(form);
         let isVisible: boolean = true;
         containers.map((container: ContainerModel) => {
-            if (!!this.getCurrentFieldFromTabById(container, currentFormField.id)) {
+            if (this.getCurrentFieldFromTabById(container, currentFormField.id)) {
                 const currentTab = form.tabs.find((tab: TabModel) => tab.id === container.tab);
-                if (!!currentTab) {
+                if (currentTab) {
                     isVisible = currentTab.isVisible;
                 }
             }
@@ -230,7 +230,7 @@ export class WidgetVisibilityService {
     }
 
     private getFormTabContainers(form: FormModel): ContainerModel[] {
-        if (!!form) {
+        if (form) {
             return form.fields.filter((field) => field.type === 'container' && field.tab) as ContainerModel[];
         }
         return [];

@@ -434,7 +434,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
         const properties = taskFilterProperties.map((property) => {
-            if (!!property.attributes) {
+            if (property.attributes) {
                 return this.getAttributesControlConfig(property);
             } else {
                 return { [property.key]: property.value };

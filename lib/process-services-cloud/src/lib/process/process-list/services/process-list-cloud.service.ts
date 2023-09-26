@@ -107,7 +107,7 @@ export class ProcessListCloudService extends BaseCloudService {
         const queryParam = {};
 
         for (const property in requestNode) {
-            if (requestNode.hasOwnProperty(property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
+            if (Object.prototype.hasOwnProperty.call(requestNode, property) && !this.isExcludedField(property) && this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = this.getQueryParamValueFromRequestNode(requestNode, property as keyof ProcessQueryCloudRequestModel);
             }
         }

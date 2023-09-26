@@ -34,7 +34,7 @@ export class DiagramColorService {
     }
 
     getFillColour(key: string) {
-        if (this.totalColors?.hasOwnProperty(key)) {
+        if (this.totalColors && Object.prototype.hasOwnProperty.call(this.totalColors, key)) {
             const colorPercentage = this.totalColors[key];
             return this.convertColorToHsb(colorPercentage);
         } else {

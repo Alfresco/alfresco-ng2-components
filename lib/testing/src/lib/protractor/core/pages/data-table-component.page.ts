@@ -402,14 +402,14 @@ export class DataTableComponentPage {
 
     /** @deprecated use Playwright instead **/
     async isColumnDisplayed(columnTitle: string): Promise<boolean> {
-        const isColumnDisplated = (await this.allColumns).some(
+        const isColumnDisplayed = (await this.allColumns).some(
             async column => {
                 const columnText = await column.getText();
                 return columnText === columnTitle;
             }
         );
 
-        return isColumnDisplated;
+        return isColumnDisplayed;
     }
 
     /** @deprecated use Playwright instead **/

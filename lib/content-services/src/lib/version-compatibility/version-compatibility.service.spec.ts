@@ -28,7 +28,7 @@ describe('VersionCompatibilityService', () => {
     let discoveryApiService: DiscoveryApiService;
     const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
-    const acsResponceMock = {
+    const acsResponseMock = {
         version: {
             display: '7.0.1',
             major: '7',
@@ -54,7 +54,7 @@ describe('VersionCompatibilityService', () => {
         });
         discoveryApiService = TestBed.inject(DiscoveryApiService);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
-        mockProductInfo.next(acsResponceMock as RepositoryInfo);
+        mockProductInfo.next(acsResponseMock as RepositoryInfo);
         versionCompatibilityService = new VersionCompatibilityService(discoveryApiService);
     });
 

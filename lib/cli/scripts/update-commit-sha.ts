@@ -38,6 +38,7 @@ function getSha(args: CommitArgs): string {
 function replacePerform(args: CommitArgs, sha: string) {
     logger.info(`Replace commit ${sha} in package...`);
 
+    // eslint-disable-next-line no-useless-escape
     const sedRule = `s/\"commit\": \".*\"/\"commit\": \"${sha}\"/g`;
 
     if (args.skipGnu) {

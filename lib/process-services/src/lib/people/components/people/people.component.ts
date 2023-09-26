@@ -79,7 +79,7 @@ export class PeopleComponent {
     }
 
     involveUser(user: UserProcessModel) {
-        if (user && user.id) {
+        if (user?.id) {
             this.peopleProcessService
                 .involveUserWithTask(this.taskId, user.id.toString())
                 .subscribe(
@@ -116,7 +116,7 @@ export class PeopleComponent {
     }
 
     onClickAction(event: UserEventModel) {
-        if (event && event.value && event.type === 'remove') {
+        if (event?.value && event.type === 'remove') {
             this.removeInvolvedUser(event.value);
         }
     }

@@ -62,7 +62,7 @@ export class RuleService {
      * @returns RuleEvaluator or null if not found
      */
     getEvaluator(key: string): RuleEvaluator {
-        if (key && key.startsWith('!')) {
+        if (key?.startsWith('!')) {
             const fn = this.evaluators[key.substring(1)];
             return (context: RuleContext, ...args: RuleParameter[]): boolean => !fn(context, ...args);
         }

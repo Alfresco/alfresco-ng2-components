@@ -185,7 +185,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     private loadFilter(model: ProcessFilterCloudModel) {
-        if (model && model.appName && model.id) {
+        if (model?.appName && model.id) {
             this.editedFilter = model;
         }
     }

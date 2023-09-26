@@ -20,6 +20,7 @@ import { UntypedFormControl } from '@angular/forms';
 const I18N_ERRORS_PATH = 'CORE.FOLDER_DIALOG.FOLDER_NAME.ERRORS';
 
 export const forbidSpecialCharacters = ({ value }: UntypedFormControl) => {
+    // eslint-disable-next-line no-useless-escape
     const specialCharacters: RegExp = /([\*\"\<\>\\\/\?\:\|])/;
     const isValid: boolean = !specialCharacters.test(value);
 

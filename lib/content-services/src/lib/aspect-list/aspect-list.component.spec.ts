@@ -129,9 +129,9 @@ describe('AspectListComponent', () => {
         });
 
         it('should show the loading spinner when result is loading', () => {
-            const delayReusult = of(null).pipe(delay(0));
-            spyOn(nodeService, 'getNode').and.returnValue(delayReusult);
-            spyOn(aspectListService, 'getAspects').and.returnValue(delayReusult);
+            const delayResult = of(null).pipe(delay(0));
+            spyOn(nodeService, 'getNode').and.returnValue(delayResult);
+            spyOn(aspectListService, 'getAspects').and.returnValue(delayResult);
             fixture.detectChanges();
             const spinner = fixture.nativeElement.querySelector('#adf-aspect-spinner');
             expect(spinner).toBeDefined();
