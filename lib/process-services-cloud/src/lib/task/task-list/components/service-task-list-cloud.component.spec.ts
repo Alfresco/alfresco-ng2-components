@@ -32,7 +32,7 @@ import { ServiceTaskListCloudService } from '../services/service-task-list-cloud
     template: `
     <adf-cloud-service-task-list #taskListCloud>
         <data-columns>
-            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="2"></data-column>
             <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
         </data-columns>
     </adf-cloud-service-task-list>`
@@ -387,8 +387,8 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
     it('should fetch custom schemaColumn from html', () => {
         fixtureCustom.detectChanges();
         expect(componentCustom.taskList.columnList).toBeDefined();
-        expect(componentCustom.taskList.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-        expect(componentCustom.taskList.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+        expect(componentCustom.taskList.columns[0].key).toEqual('startedDate');
+        expect(componentCustom.taskList.columns[1].key).toEqual('activityName');
         expect(componentCustom.taskList.columns.length).toEqual(2);
     });
 

@@ -48,7 +48,7 @@ import { PreferenceCloudServiceInterface } from '../../../services/preference-cl
     template: `
     <adf-cloud-task-list #taskListCloud>
         <data-columns>
-            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
             <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
             <data-column id="startedBy" key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
@@ -533,8 +533,9 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
     it('should fetch custom schemaColumn from html', () => {
         copyFixture.detectChanges();
         expect(componentCustom.taskList.columnList).toBeDefined();
-        expect(componentCustom.taskList.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-        expect(componentCustom.taskList.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+        expect(componentCustom.taskList.columns[0].key).toEqual('created');
+        expect(componentCustom.taskList.columns[1].key).toEqual('startedBy');
+        expect(componentCustom.taskList.columns[2].key).toEqual('name');
         expect(componentCustom.taskList.columns.length).toEqual(3);
     });
 

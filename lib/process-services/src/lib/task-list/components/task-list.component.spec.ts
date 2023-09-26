@@ -664,7 +664,7 @@ describe('TaskListComponent', () => {
     template: `
     <adf-tasklist #taskList>
         <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
@@ -705,8 +705,9 @@ describe('CustomTaskListComponent', () => {
     it('should fetch custom schemaColumn from html', () => {
         fixture.detectChanges();
         expect(component.taskList.columnList).toBeDefined();
-        expect(component.taskList.columns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
-        expect(component.taskList.columns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+        expect(component.taskList.columns[0].key).toEqual('created');
+        expect(component.taskList.columns[1].key).toEqual('startedBy');
+        expect(component.taskList.columns[2].key).toEqual('name');
         expect(component.taskList.columns.length).toEqual(3);
     });
 });
