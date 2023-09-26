@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import {ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN} from 'date-fns/locale';
+import { format, parse } from 'date-fns';
+import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 export class DateFnsUtils {
     static getLocaleFromString(locale: string): Locale {
         let dateFnsLocale: Locale;
-        switch(locale) {
+        switch (locale) {
             case 'ar':
                 dateFnsLocale = ar;
                 break;
@@ -77,5 +78,73 @@ export class DateFnsUtils {
                 break;
         }
         return dateFnsLocale;
+    }
+
+    /**
+     * A mapping of Moment.js format tokens to date-fns format tokens.
+     */
+    static momentToDateFnsMap = {
+        M: 'M',
+        D: 'd',
+        Y: 'y',
+        A: 'a'
+    };
+
+    /**
+     * A mapping of date-fns format tokens to Moment.js format tokens.
+     */
+    static dateFnsToMomentMap = {
+        M: 'M',
+        d: 'D',
+        y: 'Y',
+        a: 'A'
+    };
+
+    /**
+     * Converts a Moment.js date format string to the equivalent date-fns format string.
+     *
+     * @param dateDisplayFormat - The Moment.js date format string to convert.
+     * @returns The equivalent date-fns format string.
+     */
+    static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
+        for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
+            dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+        }
+        return dateDisplayFormat;
+    }
+
+    /**
+     * Converts a date-fns date format string to the equivalent Moment.js format string.
+     *
+     * @param dateDisplayFormat - The date-fns date format string to convert.
+     * @returns The equivalent Moment.js format string.
+     */
+    static convertDateFnsToMomentFormat(dateDisplayFormat: string): string {
+        for (const [search, replace] of Object.entries(this.dateFnsToMomentMap)) {
+            dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
+        }
+        return dateDisplayFormat;
+    }
+
+    /**
+     * Formats a date using the specified date format.
+     *
+     * @param date - The date to format, can be a number or a Date object.
+     * @param dateFormat - The date format string to use for formatting.
+     * @returns The formatted date as a string.
+     */
+    static formatDate(date: number | Date, dateFormat: string): string {
+        return format(date, this.convertMomentToDateFnsFormat(dateFormat));
+    }
+
+    /**
+     * Parses a date string using the specified date format.
+     *
+     * @param value - The date string to parse.
+     * @param dateFormat - The date format string to use for parsing.
+     * @returns The parsed Date object.
+     */
+    static parseDate(value: string, dateFormat: string): Date {
+        return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
     }
 }
