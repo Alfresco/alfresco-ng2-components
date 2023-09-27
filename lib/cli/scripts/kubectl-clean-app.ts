@@ -199,7 +199,7 @@ async function getApplicationsByName(args: ConfigArgs, apiService: AlfrescoApi, 
         return apps ? apps.list.entries : [];
     } catch (error) {
         logger.error(`Not possible to get the applications with name ${name} ` + JSON.stringify(error));
-        process.exit(1);
+        exit(1);
     }
 }
 

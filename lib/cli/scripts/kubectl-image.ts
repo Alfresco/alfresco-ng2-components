@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv } from 'node:process';
 import { exec } from './exec';
 import program from 'commander';
 import { logger } from './logger';
@@ -29,16 +30,14 @@ const installPerform = () => {
     exec('curl', [`LO`, `${k8sRelease}`], {});
 };
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export default function(args: kube.KubeArgs) {
-    main(args);
-}
 
 const main = (args: kube.KubeArgs) => {
     program
         .version('0.1.0')
-        .description('his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
-            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}')
+        .description(
+            'This command allows you to update a specific service on the rancher env with a specific tag \n\n' +
+                'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}'
+        )
         .option('--tag [type]', 'tag')
         .option('--installCheck [type]', 'install kube ctl')
         .option('--username [type]', 'username')
@@ -47,9 +46,9 @@ const main = (args: kube.KubeArgs) => {
         .option('--dockerRepo [type]', 'docker Repo')
         .option('--label [type]', 'pod label')
         .option('--namespaces [type]', 'list of namespaces')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
@@ -64,7 +63,7 @@ const main = (args: kube.KubeArgs) => {
         kube.setContext(args.clusterEnv, args.username);
         kube.useContext(args.clusterEnv);
 
-        let namespaces: string [];
+        let namespaces: string[];
         if (args.namespaces === null || args.namespaces === 'default') {
             logger.info(`No namespaces provided. Fetch all of them`);
             namespaces = kube.getNamespaces();
@@ -84,3 +83,5 @@ const main = (args: kube.KubeArgs) => {
         });
     }
 };
+
+export default main;

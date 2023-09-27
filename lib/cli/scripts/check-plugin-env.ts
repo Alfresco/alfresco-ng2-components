@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { argv } from 'node:process';
 import { PluginTarget } from './plugins/plugin-model';
 import { CheckEnv } from './plugins/check-env';
 import program = require('commander');
@@ -22,7 +23,7 @@ import { ProcessServiceCheckPlugin } from './plugins/process-service-check-plugi
 import { ProcessAutomationCheckPlugin } from './plugins/process-automation-check-plugin';
 import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
-let pluginEnv;
+let pluginEnv: CheckEnv;
 
 export default async function main(_args: string[]) {
     program
@@ -34,7 +35,7 @@ export default async function main(_args: string[]) {
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
         .option('--ui, --uiName [type]', 'uiName', 'Deployed app UI type on activiti-cloud')
-        .parse(process.argv);
+        .parse(argv);
 
     pluginEnv = new CheckEnv(program.host, program.username, program.password, program.clientId);
     await pluginEnv.checkEnv();

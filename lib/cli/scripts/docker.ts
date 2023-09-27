@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv, exit } from 'node:process';
 import { exec } from './exec';
 import program from 'commander';
 import { logger } from './logger';
@@ -42,6 +43,7 @@ export interface PublishArgs {
     dockerTags?: string;
     pathProject: string;
     fileName: string;
+    sourceTag?: string;
 }
 
 function loginPerform(args: PublishArgs) {
@@ -97,15 +99,13 @@ function cleanImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-export default function(args: PublishArgs) {
-    main(args);
-}
-
-function main(args) {
+export default function main(args: PublishArgs) {
     program
         .version('0.1.0')
-        .description('Move in the folder where you have your Dockerfile and run the command:\n\n' +
-            'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"')
+        .description(
+            'Move in the folder where you have your Dockerfile and run the command:\n\n' +
+                'adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}"'
+        )
         .option('--loginRepo [type]', 'URL registry')
         .option('--loginPassword [type]', ' password')
         .option('--loginUsername [type]', ' username')
@@ -119,26 +119,26 @@ function main(args) {
         .option('--target [type]', 'target: publish or link', TARGETS.publish)
         .requiredOption('--dockerRepo [type]', 'docker repo')
         .requiredOption('--dockerTags [type]', ' tags')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
 
     if (!Object.values(TARGETS).includes(program.opts().target)) {
         logger.error(`error: invalid --target value. It can be ${Object.values(TARGETS)}`);
-        process.exit(1);
+        exit(1);
     }
 
     if (program.opts().target === TARGETS.publish && args.buildArgs === undefined) {
         logger.error(`error: required option --buildArgs [type] in case the target is ${TARGETS.publish}`);
-        process.exit(1);
+        exit(1);
     }
 
     if (program.opts().target === TARGETS.link && args.sourceTag === undefined) {
         logger.error(`error: required option --sourceTag [type] in case the target is ${TARGETS.link}`);
-        process.exit(1);
+        exit(1);
     }
 
     if (args.pathProject === undefined) {
@@ -153,7 +153,7 @@ function main(args) {
         loginPerform(args);
     }
 
-    let mainTag;
+    let mainTag: string;
     if (args.dockerTags !== '') {
         args.dockerTags.split(',').forEach((tag, index) => {
             if (tag) {

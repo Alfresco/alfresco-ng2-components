@@ -17,13 +17,9 @@
  * limitations under the License.
  */
 
+import { argv } from 'node:process';
 import program from 'commander';
 import * as kube from './kube-utils';
-
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export default function(args: kube.KubeArgs) {
-    main(args);
-}
 
 const main = (args: kube.KubeArgs) => {
     program
@@ -34,9 +30,9 @@ const main = (args: kube.KubeArgs) => {
         .option('--clusterEnv [type]', 'cluster Env')
         .option('--clusterUrl [type]', 'cluster Url')
         .option('--label [type]', 'label cluster')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
@@ -49,3 +45,5 @@ const main = (args: kube.KubeArgs) => {
         kube.deletePod(args);
     }
 };
+
+export default main;

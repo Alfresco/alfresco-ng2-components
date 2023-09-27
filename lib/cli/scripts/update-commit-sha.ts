@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv } from 'node:process';
 import { exec } from './exec';
 import program from 'commander';
 import { logger } from './logger';
@@ -48,24 +49,21 @@ function replacePerform(args: CommitArgs, sha: string) {
     }
 }
 
-export default function(args: CommitArgs) {
-    main(args);
-}
-
-function main(args) {
-
+export default function main(args: CommitArgs) {
     program
         .version('0.1.0')
-        .description('This command allows you to update the commit sha as part of the package.json.\n' +
-            'Your package.json must to have an existing property called "commit.\n\n' +
-            'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
-            'adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu')
+        .description(
+            'This command allows you to update the commit sha as part of the package.json.\n' +
+                'Your package.json must to have an existing property called "commit.\n\n' +
+                'adf-cli update-commit-sha --pointer "HEAD~1" --pathProject "$(pwd)"\n\n' +
+                'adf-cli update-commit-sha --pathProject "$(pwd)" --skipGnu'
+        )
         .option('--pointer [type]', 'pointer')
         .option('--pathPackage [type]', 'pathPackage')
         .option('--skipGnu [type]', 'skipGnu')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }

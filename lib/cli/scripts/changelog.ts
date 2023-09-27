@@ -19,6 +19,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { argv, exit } from 'node:process';
 import * as shell from 'shelljs';
 import * as path from 'path';
 import program from 'commander';
@@ -78,13 +79,12 @@ function getRemote(workingDir: string): string {
 function getCommits(options: DiffOptions): Array<Commit> {
     let authorFilter = (options.exclude || '')
         .split(',')
-        .map(str => str.trim().replace(/\\/g, ''))
+        .map((str) => str.trim().replace(/\\/g, ''))
         .join('|');
 
     if (!authorFilter) {
         authorFilter = `bot|Alfresco Build User`;
     }
-
 
     const args = [
         `git`,
@@ -114,7 +114,10 @@ function getCommits(options: DiffOptions): Array<Commit> {
         log = log.substring(0, log.length - 1);
     }
 
-    return log.split('\\n').map(str => JSON.parse(str) as Commit).filter(commit => commitAuthorAllowed(commit, authorFilter));
+    return log
+        .split('\\n')
+        .map((str: string) => JSON.parse(str) as Commit)
+        .filter((commit: Commit) => commitAuthorAllowed(commit, authorFilter));
 }
 
 function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
@@ -134,9 +137,9 @@ export default function main(_args: string[], workingDir: string) {
         .option('--skip <number>', 'Skip number commits before starting to show the commit output')
         .option('-f, --format <format>', 'Output format (md, html)', 'md')
         .option('-e --exclude <string>', 'Exclude authors from the output, comma-delimited list')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
@@ -162,40 +165,45 @@ export default function main(_args: string[], workingDir: string) {
     const packagePath = path.resolve(dir, 'package.json');
     if (!fs.existsSync(packagePath)) {
         console.error('The package.json file was not found');
-        process.exit(1);
+        exit(1);
     }
 
     const templatePath = path.resolve(__dirname, `../templates/changelog-${format}.ejs`);
     if (!fs.existsSync(templatePath)) {
         console.error(`Cannot find the report template: ${templatePath}`);
-        process.exit(1);
+        exit(1);
     }
 
     return new Promise((resolve, reject) => {
         const packageJson = JSON.parse(fs.readFileSync(packagePath).toString());
 
-        ejs.renderFile(templatePath, {
-            remote,
-            repo_url,
-            commits,
-            projVersion: packageJson.version,
-            projName: packageJson.name
-        }, {}, (err: any, text: string) => {
-            if (err) {
-                console.error(err);
-                reject(1);
-            } else {
-                if (output) {
-                    const outputDir = path.resolve(output);
-                    const outputFile = path.join(outputDir, `changelog-${packageJson.version}.${format}`);
-                    console.log('Writing changelog to', outputFile);
-
-                    fs.writeFileSync(outputFile, text);
+        ejs.renderFile(
+            templatePath,
+            {
+                remote,
+                repo_url,
+                commits,
+                projVersion: packageJson.version,
+                projName: packageJson.name
+            },
+            {},
+            (err: any, text: string) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
                 } else {
-                    console.log(text);
+                    if (output) {
+                        const outputDir = path.resolve(output);
+                        const outputFile = path.join(outputDir, `changelog-${packageJson.version}.${format}`);
+                        console.log('Writing changelog to', outputFile);
+
+                        fs.writeFileSync(outputFile, text);
+                    } else {
+                        console.log(text);
+                    }
+                    resolve(0);
                 }
-                resolve(0);
             }
-        });
+        );
     });
 }

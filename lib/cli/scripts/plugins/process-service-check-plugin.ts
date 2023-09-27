@@ -17,6 +17,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { exit } from 'node:process';
 import { PluginInterface } from './plugin-model';
 import { logger } from '../logger';
 import { ProcessServiceHealth } from './process-services-health';
@@ -50,13 +51,13 @@ export class ProcessServiceCheckPlugin {
                     }
                 ];
                 console.table(pluginStatus);
-                process.exit(1);
+                exit(1);
             }
         } catch (e) {
             this.logConfigurationError(e);
             pluginStatus = [{ PluginName: this.plugInInfo.name, Status: 'Inactive', BE: 'DOWN', FE: 'Disabled' }];
             console.table(pluginStatus);
-            process.exit(1);
+            exit(1);
         }
     }
 

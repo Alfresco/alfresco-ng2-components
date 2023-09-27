@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv, exit } from 'node:process';
 import { exec } from './exec';
 import { logger } from './logger';
 import program from 'commander';
@@ -38,25 +39,20 @@ function zipArtifact(output: string) {
     logger.info(response);
 }
 
-export default function() {
-    main();
-}
-
-function main() {
-
+export default function main() {
     program
         .version('0.1.0')
         .requiredOption('-a, --artifact [type]', ' path to the s3 artifact (tar.bz2) to download and extract')
         .requiredOption('-o, --output [type]', 'directory to extract the archive to')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
 
     if (!program.artifact || program.artifact === '' || !program.output || program.output === '') {
-        process.exit(1);
+        exit(1);
     } else if (program.artifact !== '' || program.output !== '') {
         zipArtifact(program.artifact);
         awsCp(program.output);

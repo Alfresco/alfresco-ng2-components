@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv } from 'node:process';
 import * as path from 'path';
 import fs = require('fs');
 import { exec } from './exec';
@@ -31,16 +32,7 @@ export interface PublishArgs {
     dryrun?: boolean;
 }
 
-const projects = [
-    'cli',
-    'core',
-    'insights',
-    'testing',
-    'content-services',
-    'process-services',
-    'process-services-cloud',
-    'extensions'
-];
+const projects = ['cli', 'core', 'insights', 'testing', 'content-services', 'process-services', 'process-services-cloud', 'extensions'];
 
 async function npmPublish(args: PublishArgs, project: string) {
     if (args.dryrun) {
@@ -75,7 +67,6 @@ async function npmPublish(args: PublishArgs, project: string) {
         await sleep(30000);
     } else {
         logger.info(`@alfresco/adf-${project}@${version} already exist`);
-
     }
 }
 
@@ -94,8 +85,7 @@ function npmCheckExist(project: string, version: string) {
 function changeRegistry(args: PublishArgs, project: string) {
     logger.info(`Change registry... to ${args.npmRegistry} `);
     const folder = `${args.pathProject}/dist/libs/${project}`;
-    const content =
-        `strict-ssl=true
+    const content = `strict-ssl=true
 always-auth=true
 @alfresco:registry=https://${args.npmRegistry}
 //${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
@@ -118,23 +108,20 @@ function removeNpmConfig(args: PublishArgs, project: string) {
     }
 }
 
-export default async function(args: PublishArgs) {
-    await main(args);
-}
-
-async function main(args) {
-
+export default async function main(args: PublishArgs) {
     program
         .version('0.1.0')
-        .description('Move in the folder where you have your Dockerfile and run the command \n\n adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)')
+        .description(
+            'Move in the folder where you have your Dockerfile and run the command \n\n adf-cli docker-publish --dockerRepo "${docker_repository}"  --dockerTags "${TAGS}" --pathProject "$(pwd)'
+        )
         .option('--tag [type]', 'tag')
         .option('--npmRegistry [type]', 'npm Registry')
         .option('--tokenRegistry [type]', 'token Registry')
         .option('--pathProject [type]', 'pathProject')
         .option('--dryrun [type]', 'dryrun')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
@@ -147,5 +134,5 @@ async function main(args) {
 
 async function sleep(ms: number) {
     logger.info(`Waiting for ${ms} milliseconds...`);
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }

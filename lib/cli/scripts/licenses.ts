@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import { argv, exit } from 'node:process';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as checker from 'license-checker';
@@ -73,7 +74,7 @@ function getPackageFile(packagePath: string): PackageInfo {
         return JSON.parse(fs.readFileSync(packagePath).toString());
     } catch {
         console.error('Error parsing package.json file');
-        process.exit(1);
+        exit(1);
     }
 }
 
@@ -83,9 +84,9 @@ export default function main(_args: string[], workingDir: string) {
         .usage('licenses [options]')
         .option('-p, --package <path>', 'Path to package file (default: package.json in working directory)')
         .option('-d, --outDir <dir>', 'Ouput directory (default: working directory)')
-        .parse(process.argv);
+        .parse(argv);
 
-    if (process.argv.includes('-h') || process.argv.includes('--help')) {
+    if (argv.includes('-h') || argv.includes('--help')) {
         program.outputHelp();
         return;
     }
@@ -98,74 +99,83 @@ export default function main(_args: string[], workingDir: string) {
 
     if (!fs.existsSync(packagePath)) {
         console.error('The package.json file was not found');
-        process.exit(1);
+        exit(1);
     }
 
     const templatePath = path.resolve(__dirname, '../templates/licensePage.ejs');
     if (!fs.existsSync(templatePath)) {
         console.error(`Cannot find the report template: ${templatePath}`);
-        process.exit(1);
+        exit(1);
     }
 
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
 
-        checker.init({
-            start: workingDir,
-            production: true,
-            failOn: 'GPL'
-        }, function(err: any, packages: any[]) {
-            if (err) {
-                console.error(err);
-                reject(err);
-            } else {
-                // eslint-disable-next-line guard-for-in
-                for (const packageName in packages) {
-                    const pack = packages[packageName];
-                    pack['licenseExp'] = pack['licenses'].toString()
-                        .replace(/\*/, '')
-                        .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
-                            const lowerMatch = match.toLowerCase();
+        checker.init(
+            {
+                start: workingDir,
+                production: true,
+                failOn: 'GPL'
+            },
+            (err: any, packages: any[]) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    // eslint-disable-next-line guard-for-in
+                    for (const packageName in packages) {
+                        const pack = packages[packageName];
+                        pack['licenseExp'] = pack['licenses']
+                            .toString()
+                            .replace(/\*/g, '')
+                            .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
+                                const lowerMatch = match.toLowerCase();
 
-                            if ((lowerMatch !== 'and') && (lowerMatch !== 'or') && (lowerMatch !== 'with')) {
-                                return licenseWithMDLinks(match);
-                            } else {
-                                return match;
+                                if (lowerMatch !== 'and' && lowerMatch !== 'or' && lowerMatch !== 'with') {
+                                    return licenseWithMDLinks(match);
+                                } else {
+                                    return match;
+                                }
+                            });
+
+                        if (!pack['repository']) {
+                            const lastAtSignPos = packageName.lastIndexOf('@');
+                            const mainName = packageName.substring(0, lastAtSignPos);
+
+                            if (missingRepositories[mainName]) {
+                                pack['repository'] = missingRepositories[mainName];
                             }
-                        });
-
-                    if (!pack['repository']) {
-                        const lastAtSignPos = packageName.lastIndexOf('@');
-                        const mainName = packageName.substring(0, lastAtSignPos);
-
-                        if (missingRepositories[mainName]) {
-                            pack['repository'] = missingRepositories[mainName];
                         }
                     }
+
+                    const packageJson: PackageInfo = getPackageFile(packagePath);
+
+                    ejs.renderFile(
+                        templatePath,
+                        {
+                            packages,
+                            projVersion: packageJson.version,
+                            projName: packageJson.name
+                        },
+                        {},
+                        (ejsError: any, mdText: string) => {
+                            if (ejsError) {
+                                console.error(ejsError);
+                                reject(ejsError);
+                            } else {
+                                const outputPath = path.resolve(program.outDir || workingDir);
+                                const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
+
+                                fs.writeFileSync(outputFile, mdText);
+                                // eslint-disable-next-line no-console
+                                console.log(`Report saved as ${outputFile}`);
+                                resolve(0);
+                            }
+                        }
+                    );
                 }
-
-                const packageJson: PackageInfo = getPackageFile(packagePath);
-
-                ejs.renderFile(templatePath, {
-                    packages,
-                    projVersion: packageJson.version,
-                    projName: packageJson.name
-                }, {}, (ejsError: any, mdText: string) => {
-                    if (ejsError) {
-                        console.error(ejsError);
-                        reject(ejsError);
-                    } else {
-                        const outputPath = path.resolve(program.outDir || workingDir);
-                        const outputFile = path.join(outputPath, `license-info-${packageJson.version}.md`);
-
-                        fs.writeFileSync(outputFile, mdText);
-                        // eslint-disable-next-line no-console
-                        console.log(`Report saved as ${outputFile}`);
-                        resolve(0);
-                    }
-                });
             }
-        });
+        );
     });
 }
