@@ -128,7 +128,7 @@ export default function main(_args: string[], workingDir: string) {
                         const pack = packages[packageName];
                         pack['licenseExp'] = pack['licenses']
                             .toString()
-                            .replace(/\*/, '')
+                            .replace(/\*/g, '')
                             .replace(/[a-zA-Z0-9\-.]+/g, (match: string) => {
                                 const lowerMatch = match.toLowerCase();
 
