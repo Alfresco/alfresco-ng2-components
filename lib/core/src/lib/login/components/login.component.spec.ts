@@ -305,19 +305,24 @@ describe('LoginComponent', () => {
     });
 
     it('should render Login form with all the keys to be translated', () => {
-        expect(element.querySelector('[for="username"]')).toBeDefined();
-        expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
+        expect(element.querySelector('#username')).toBeDefined();
+        expect(element.querySelector('#username')).not.toBeNull();
+        expect(element.querySelector('#username').placeholder).toEqual('LOGIN.LABEL.USERNAME');
 
         expect(element.querySelector('#adf-login-remember')).toBeDefined();
+        expect(element.querySelector('#adf-login-remember')).not.toBeNull();
         expect(element.querySelector('#adf-login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
 
-        expect(element.querySelector('[for="password"]')).toBeDefined();
-        expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD *');
+        expect(element.querySelector('#password')).toBeDefined();
+        expect(element.querySelector('#password')).not.toBeNull();
+        expect(element.querySelector('#password').placeholder).toEqual('LOGIN.LABEL.PASSWORD');
 
         expect(element.querySelector('#adf-login-action-left')).toBeDefined();
+        expect(element.querySelector('#adf-login-action-left')).not.toBeNull();
         expect(element.querySelector('#adf-login-action-left').innerText).toEqual('LOGIN.ACTION.HELP');
 
         expect(element.querySelector('#adf-login-action-right')).toBeDefined();
+        expect(element.querySelector('#adf-login-action-right')).not.toBeNull();
         expect(element.querySelector('#adf-login-action-right').innerText).toEqual('LOGIN.ACTION.REGISTER');
     });
 

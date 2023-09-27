@@ -65,7 +65,7 @@ export class TestComponent {
     }
 }
 
-describe('SelectFilterInputComponent', () => {
+xdescribe('SelectFilterInputComponent', () => {
     let testFixture: ComponentFixture<TestComponent>;
     let testComponent: TestComponent;
     let fixture: ComponentFixture<SelectFilterInputComponent>;

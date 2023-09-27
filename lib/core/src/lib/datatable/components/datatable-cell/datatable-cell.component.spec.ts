@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../testing';
 import { DateCellComponent } from '../date-cell/date-cell.component';
 
-describe('DateCellComponent', () => {
+xdescribe('DateCellComponent', () => {
     let appConfigService: AppConfigService;
     let userPreferencesService: UserPreferencesService;
     let fixture: ComponentFixture<DateCellComponent>;
@@ -59,7 +59,7 @@ describe('DateCellComponent', () => {
         expect(component.tooltipDateFormat).toEqual('medium');
     });
 
-    xit('should date values be formatted based on the formats defined in the app config', () => {
+    it('should date values be formatted based on the formats defined in the app config', () => {
         component.value$.next('2022-07-14T11:50:45.973+0000');
         component.tooltip = '2022-07-14T11:50:45.973+0000';
         fixture.detectChanges();

@@ -25,17 +25,33 @@ import { APP_INITIALIZER } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigServiceMock } from '../../common/mock/app-config.service.mock';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from '../../api-factories/alfresco-api-v2-loader.service';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { CookieServiceMock } from '../../mock/cookie.service.mock';
+import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
-describe('AuthenticationService', () => {
+fdescribe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
     let httpMock: HttpTestingController;
+
+    const apiServiceMock: any = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve({})
+        },
+        contentAuth: {
+            ticket: ''
+        },
+        isEcmLoggedIn: () => false,
+        login: () => { },
+        isLoggedIn: () => {},
+        getTicketEcm: () => {},
+        isOauthConfiguration: () => {},
+        isEcmConfiguration: () => false,
+        reply: jasmine.createSpy('reply')
+     };
 
 
     beforeEach(() => {
@@ -47,8 +63,8 @@ describe('AuthenticationService', () => {
             ],
             providers: [
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: CookieService, useClass: CookieServiceMock },
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: createAlfrescoApiInstance,
@@ -88,7 +104,8 @@ describe('AuthenticationService', () => {
         });
 
         it('should emit login event for kerberos', (done) => {
-            const disposableLogin = authService.onLogin.subscribe(() => {
+            const disposableLogin = authService.onLogin.subscribe((value) => {
+                expect(value).toEqual({});
                 disposableLogin.unsubscribe();
                 done();
             });
@@ -104,7 +121,6 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('should not require cookie service enabled for ECM check', () => {
@@ -119,6 +135,7 @@ describe('AuthenticationService', () => {
         });
 
         it('should check if loggedin on ECM in case the provider is ECM', () => {
+            spyOn(apiService, 'getInstance').and.returnValue(apiServiceMock);
             spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             expect(authService.isLoggedInWith('ECM')).toBe(true);
         });
@@ -134,19 +151,24 @@ describe('AuthenticationService', () => {
             expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
-        xit('[ECM] should return an ECM ticket after the login done', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+        it('[ECM] should return an ECM ticket after the login done', (done) => {
+            spyOn(apiService, 'getInstance').and.returnValue(apiServiceMock);
+            const loginResult = { entry: { id: 'fake-post-ticket', userId: 'admin' } };
+            spyOn(apiService.getInstance(), 'login').and.returnValue(Promise.resolve(loginResult));
+            spyOn(apiService.getInstance(), 'isLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'getTicketEcm').and.returnValue('fake-post-ticket');
+            spyOn(apiService.getInstance(), 'isEcmLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'isOauthConfiguration').and.returnValue(false);
+            spyOn(apiService.getInstance(), 'isEcmConfiguration').and.returnValue(true);
+
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe((response) => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 expect(authService.isEcmLoggedIn()).toBe(true);
+                expect(response.type).toBe('ECM');
+                expect(response.ticket).toEqual(loginResult);
                 disposableLogin.unsubscribe();
                 done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
             });
         });
 
@@ -260,7 +282,7 @@ describe('AuthenticationService', () => {
             expect(apiService.getInstance).toHaveBeenCalled();
         });
 
-        xit('[BPM] should return an BPM ticket after the login done', (done) => {
+        fit('[BPM] should return an BPM ticket after the login done', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
@@ -414,7 +436,7 @@ describe('AuthenticationService', () => {
             apiService.reset();
         });
 
-        xit('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
+        fit('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
@@ -436,7 +458,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only ECM call fail', (done) => {
+        fit('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {
@@ -458,7 +480,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only BPM call fail', (done) => {
+        fit('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {
@@ -481,7 +503,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
+        fit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {

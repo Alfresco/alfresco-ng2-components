@@ -99,6 +99,7 @@ describe('CheckboxWidgetComponent', () => {
             const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox .mdc-checkbox--selected');
             expect(checkbox).not.toBeNull();
             expect(checkbox).toBeDefined();
+            expect(checkbox.checked).toBe(true);
         });
 
         it('should not be checked if false is passed', async () => {
@@ -108,7 +109,7 @@ describe('CheckboxWidgetComponent', () => {
             await fixture.whenStable();
 
             const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-            expect(checkbox.getAttribute('aria-checked')).toBe('false');
+            expect(checkbox.checked).toBe(false);
         });
 
         describe('when tooltip is set', () => {
@@ -127,7 +128,7 @@ describe('CheckboxWidgetComponent', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
+                const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component')).nativeElement;
                 expect(tooltipElement).toBeTruthy();
                 expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
               });
@@ -142,7 +143,7 @@ describe('CheckboxWidgetComponent', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
+                const tooltipElement = fixture.debugElement.query(By.css('mat-tooltip-component'));
                 expect(tooltipElement).toBeFalsy();
             });
         });

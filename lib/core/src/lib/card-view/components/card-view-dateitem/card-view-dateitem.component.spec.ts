@@ -341,7 +341,7 @@ describe('CardViewDateItemComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip-option`));
         expect(valueChips).not.toBeNull();
         expect(valueChips.length).toBe(3);
         expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017');
@@ -360,7 +360,7 @@ describe('CardViewDateItemComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip-option`));
         expect(valueChips).not.toBeNull();
         expect(valueChips.length).toBe(3);
         expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017, 0:01');
