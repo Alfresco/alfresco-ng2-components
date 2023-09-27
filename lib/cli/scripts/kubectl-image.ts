@@ -30,10 +30,6 @@ const installPerform = () => {
     exec('curl', [`LO`, `${k8sRelease}`], {});
 };
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export default function (args: kube.KubeArgs) {
-    main(args);
-}
 
 const main = (args: kube.KubeArgs) => {
     program
@@ -87,3 +83,5 @@ const main = (args: kube.KubeArgs) => {
         });
     }
 };
+
+export default main;
