@@ -21,12 +21,12 @@ import { of } from 'rxjs';
 import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { RenditionService } from '../common/services/rendition.service';
-
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { format, endOfDay } from 'date-fns';
+import { By } from '@angular/platform-browser';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -44,6 +44,17 @@ describe('ShareDialogComponent', () => {
     const shareToggleId = '[data-automation-id="adf-share-toggle"]';
 
     const getShareToggleLinkedClasses = (): DOMTokenList => fixture.nativeElement.querySelector(shareToggleId).classList;
+
+    const fillInDatepickerInput = (value: string) => {
+        const input = fixture.debugElement.query(By.css('.adf-share-link__input')).nativeElement;
+        input.value = value;
+        input.dispatchEvent(new Event('input'));
+        input.dispatchEvent(new Event('blur'));
+        fixture.detectChanges();
+    };
+
+    const clickExpireToggleButton = () => fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+        .dispatchEvent(new MouseEvent('click'));
 
     const clickShareToggleButton = () => fixture.nativeElement.querySelector(`${shareToggleId} label`)
     .dispatchEvent(new MouseEvent('click'));
@@ -250,17 +261,10 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
-
         component.form.controls['time'].setValue(new Date());
-
         fixture.detectChanges();
-
-        fixture.nativeElement
-            .querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
-            .dispatchEvent(new MouseEvent('click'));
-
+        clickExpireToggleButton();
         fixture.detectChanges();
-
         await fixture.whenStable();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
@@ -304,10 +308,10 @@ describe('ShareDialogComponent', () => {
             spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType as any);
 
             fixture.detectChanges();
-            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
-                .dispatchEvent(new MouseEvent('click'));
+            clickExpireToggleButton();
 
             fixture.componentInstance.time.setValue(date);
+            component.onTimeChanged();
             fixture.detectChanges();
             tick(500);
 
@@ -326,11 +330,11 @@ describe('ShareDialogComponent', () => {
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
 
             fixture.detectChanges();
-            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
-                .dispatchEvent(new MouseEvent('click'));
+            clickExpireToggleButton();
 
             fixture.componentInstance.type = 'datetime';
             fixture.componentInstance.time.setValue(date);
+            component.onTimeChanged();
             fixture.detectChanges();
             tick(100);
 
@@ -342,5 +346,44 @@ describe('ShareDialogComponent', () => {
                 expiresAt: expiryDate
             });
         }));
+
+        it('should not update node when provided date is less than minDate', () => {
+            fixture.detectChanges();
+            clickExpireToggleButton();
+            fillInDatepickerInput('01.01.2010');
+
+            expect(component.form.invalid).toBeTrue();
+            expect(sharedLinksApiService.deleteSharedLink).not.toHaveBeenCalled();
+            expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
+        });
+
+        it('should not accept alphabets in the datepicker input', () => {
+            fixture.detectChanges();
+            clickExpireToggleButton();
+            fillInDatepickerInput('test');
+
+            expect(component.form.invalid).toBeTrue();
+            expect(component.form.controls['time'].value).toBeNull();
+        });
+
+        it('should show an error if provided date is invalid', () => {
+            fixture.detectChanges();
+            clickExpireToggleButton();
+            fillInDatepickerInput('32');
+            const error = fixture.debugElement.query(By.css('[data-automation-id="adf-share-link-input-warning"]'));
+
+            expect(error).toBeTruthy();
+            expect(component.time.hasError('invalidDate')).toBeTrue();
+        });
+
+        it('should not show an error when provided date is valid', () => {
+            fixture.detectChanges();
+            clickExpireToggleButton();
+            fillInDatepickerInput('12.12.2525');
+            const error = fixture.debugElement.query(By.css('[data-automation-id="adf-share-link-input-warning"]'));
+
+            expect(error).toBeNull();
+            expect(component.time.hasError('invalidDate')).toBeFalse();
+        });
     });
 });

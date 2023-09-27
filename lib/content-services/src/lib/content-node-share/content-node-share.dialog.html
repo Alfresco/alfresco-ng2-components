@@ -51,7 +51,12 @@
                             [attr.aria-label]="'SHARE.EXPIRATION-LABEL' | translate"
                             [min]="minDate"
                             formControlName="time"
-                            [matDatepicker]="datePicker" />
+                            (keydown)="preventIncorrectCharacters($event)"
+                            (blur)="onTimeChanged()"
+                            (keydown.enter)="datePickerInput.blur()"
+                            [matDatepicker]="datePicker"/>
+                        <mat-error *ngIf="time.errors?.['invalidDate'] && (time.dirty || time.touched)"
+                                   data-automation-id="adf-share-link-input-warning">{{ 'SHARE.INVALID_DATE_ERROR' | translate }}</mat-error>
                     </mat-form-field>
                 </div>
                 <p class="adf-share-link__info adf-share-link__para">{{ 'SHARE.SHARE-LINK' | translate }}</p>
