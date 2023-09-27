@@ -33,7 +33,7 @@ import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.pag
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { infoDrawerConfiguration } from './../config/task.config';
 import CONSTANTS = require('../../util/constants');
-import { format } from 'date-fns';
+import * as moment from 'moment';
 
 describe('Info Drawer', () => {
 
@@ -64,7 +64,7 @@ describe('Info Drawer', () => {
         priority: '0',
         category: 'No category',
         parentName: 'No parent',
-        dateFormat: 'PP'
+        dateFormat: 'll'
     };
 
     let processUserModelFullName: string;
@@ -161,7 +161,7 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDueDate();
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(format(new Date('Aug 1, 2017'), taskDetails.dateFormat));
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(moment('Aug 1, 2017').format(taskDetails.dateFormat));
 
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -342,10 +342,10 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getDescription()).toEqual(description);
         await expect(await taskPage.taskDetails().getStatus()).toEqual(status);
         await expect(await taskPage.taskDetails().getPriority()).toEqual(priority);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(dueDate !== 'No date' ? format(new Date(dueDate), dateFormat) : 'No date');
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(dueDate !== 'No date' ? moment(dueDate).format(dateFormat) : 'No date');
         await expect(await taskPage.taskDetails().getCategory()).toEqual(category);
         await expect(await taskPage.taskDetails().getParentName()).toEqual(parentName);
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(format(new Date().getTime(), dateFormat));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(Date.now()).format(dateFormat));
         await taskPage.taskDetails().waitFormNameEqual(formName);
     }
 });
