@@ -38,10 +38,10 @@ describe('CategoriesManagementComponent', () => {
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
     const category3 = new Category({ id: 'test3', name: 'testCat3' });
     const category4 = new Category({ id: 'test4', name: 'testCat4' });
-    const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' }});
-    const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' }});
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [ { entry: category1 }, { entry: category2 }]}};
-    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [ { entry: resultCat1 }, { entry: resultCat2 }]}};
+    const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' } });
+    const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' } });
+    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
+    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [{ entry: resultCat1 }, { entry: resultCat2 }] } };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -267,7 +267,7 @@ describe('CategoriesManagementComponent', () => {
              * @returns debug element
              */
             function getSpinner(): DebugElement {
-                return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
+                return fixture.debugElement.query(By.css(`.mat-mdc-progress-spinner`));
             }
 
             it('should be displayed with correct diameter when existing categories are loading', fakeAsync(() => {
@@ -290,7 +290,7 @@ describe('CategoriesManagementComponent', () => {
         });
 
         it('should display correct message when there are no existing categories', fakeAsync(() => {
-            spyOn(categoryService, 'getSubcategories').and.returnValue(of({list: { pagination: {}, entries: []}}));
+            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ list: { pagination: {}, entries: [] } }));
             typeCategory('test');
 
             const noExistingCategoriesMsg = fixture.debugElement.query(By.css('mat-selection-list p'))?.nativeElement.textContent.trim();
@@ -338,6 +338,8 @@ describe('CategoriesManagementComponent', () => {
 
         it('should display validation error when searching for empty category', fakeAsync(() => {
             typeCategory('   ');
+            component.categoryNameControl.markAsTouched();
+            fixture.detectChanges();
 
             expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.EMPTY_CATEGORY');
         }));
@@ -354,8 +356,9 @@ describe('CategoriesManagementComponent', () => {
 
         it('should not display create category label', fakeAsync(() => {
             typeCategory('test');
+            const createCategoryLabel = fixture.debugElement.query(By.css('.adf-existing-categories-panel .adf-create-category-label'));
 
-            expect(getCreateCategoryLabel()).toBeUndefined();
+            expect(createCategoryLabel).toBeNull();
         }));
 
         it('should not disable existing categories', fakeAsync(() => {
@@ -369,7 +372,7 @@ describe('CategoriesManagementComponent', () => {
             typeCategory('test');
             const options = getExistingCategoriesList();
             // eslint-disable-next-line no-underscore-dangle
-            options[0]._handleClick();
+            options[0]._hostElement.click();
 
             expect(component.categories.length).toBe(3);
             expect(component.categories[2].name).toBe('testCat');
@@ -383,7 +386,7 @@ describe('CategoriesManagementComponent', () => {
             typeCategory('test');
             const options = getExistingCategoriesList();
             // eslint-disable-next-line no-underscore-dangle
-            options[0]._handleClick();
+            options[0]._hostElement.click();
             fixture.detectChanges();
 
             const categoriesChangeSpy = spyOn(component.categoriesChange, 'emit').and.callThrough();
