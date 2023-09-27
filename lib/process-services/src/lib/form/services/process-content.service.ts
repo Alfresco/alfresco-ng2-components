@@ -17,10 +17,9 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { ActivitiContentApi, RelatedContentRepresentation, ResultListDataRepresentationRelatedProcessTask } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ResultListDataRepresentationRelatedProcessTask } from '@alfresco/js-api/typings/src/api/activiti-rest-api/model/resultListDataRepresentationRelatedProcessTask';
 
 @Injectable({
     providedIn: 'root'
