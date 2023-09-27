@@ -52,12 +52,12 @@ const missingRepositories = {
 function licenseWithMDLinks(licenseExp: string): string {
     let licenseUrl = '';
 
-    if (licenseList[licenseExp] && licenseList[licenseExp]['url']) {
+    if (licenseList[licenseExp]?.['url']) {
         licenseUrl = licenseList[licenseExp]['url'];
     } else {
         const substituteLicString = nonStandardLicenses[licenseExp.toLowerCase()];
 
-        if (licenseList[substituteLicString] && licenseList[substituteLicString]['url']) {
+        if (licenseList[substituteLicString]?.['url']) {
             licenseUrl = licenseList[substituteLicString]['url'];
         }
     }
