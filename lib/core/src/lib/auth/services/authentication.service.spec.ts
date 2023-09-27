@@ -45,11 +45,15 @@ fdescribe('AuthenticationService', () => {
             ticket: ''
         },
         isEcmLoggedIn: () => false,
+        isBpmLoggedIn: () => false,
         login: () => { },
         isLoggedIn: () => {},
         getTicketEcm: () => {},
+        getTicketBpm: () => {},
         isOauthConfiguration: () => {},
         isEcmConfiguration: () => false,
+        isBpmConfiguration: () => false,
+        isEcmBpmConfiguration: () => false,
         reply: jasmine.createSpy('reply')
      };
 
@@ -282,18 +286,22 @@ fdescribe('AuthenticationService', () => {
             expect(apiService.getInstance).toHaveBeenCalled();
         });
 
-        fit('[BPM] should return an BPM ticket after the login done', (done) => {
+        it('[BPM] should return an BPM ticket after the login done', (done) => {
+            spyOn(apiService, 'getInstance').and.returnValue(apiServiceMock);
+            const loginResult = { entry: { id: 'fake-post-ticket', userId: 'admin' } };
+            spyOn(apiService.getInstance(), 'login').and.returnValue(Promise.resolve(loginResult));
+            spyOn(apiService.getInstance(), 'isLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'getTicketBpm').and.returnValue('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+            spyOn(apiService.getInstance(), 'isBpmLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'isOauthConfiguration').and.returnValue(false);
+            spyOn(apiService.getInstance(), 'isBpmConfiguration').and.returnValue(true);
+
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
                 done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json'
             });
         });
 
