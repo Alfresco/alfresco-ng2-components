@@ -39,7 +39,7 @@ const main = (args: kube.KubeArgs) => {
     program
         .version('0.1.0')
         .description(
-            'his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
+            'This command allows you to update a specific service on the rancher env with a specific tag \n\n' +
                 'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}'
         )
         .option('--tag [type]', 'tag')
