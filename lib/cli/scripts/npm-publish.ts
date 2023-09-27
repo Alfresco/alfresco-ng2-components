@@ -108,11 +108,7 @@ function removeNpmConfig(args: PublishArgs, project: string) {
     }
 }
 
-export default async function (args: PublishArgs) {
-    await main(args);
-}
-
-async function main(args) {
+export default async function main(args: PublishArgs) {
     program
         .version('0.1.0')
         .description(

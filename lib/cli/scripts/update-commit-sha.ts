@@ -49,11 +49,7 @@ function replacePerform(args: CommitArgs, sha: string) {
     }
 }
 
-export default function (args: CommitArgs) {
-    main(args);
-}
-
-function main(args) {
+export default function main(args: CommitArgs) {
     program
         .version('0.1.0')
         .description(

@@ -44,6 +44,7 @@
     "docx",
     "dropdownrestprocess",
     "Droppable",
+    "dryrun",
     "ECMBPM",
     "ECMHOST",
     "Examinate",
@@ -125,6 +126,7 @@
     "typeahed",
     "uncheck",
     "Unclaim",
+    "Undeployed",
     "unfavorite",
     "unlisten",
     "unshare",
@@ -139,8 +141,7 @@
     "webscript",
     "Whitespaces",
     "xdescribe",
-    "xsrf",
-    "Undeployed"
+    "xsrf"
   ],
   "dictionaries": [
     "html",
