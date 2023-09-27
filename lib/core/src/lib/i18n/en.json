@@ -569,8 +569,5 @@
   "ADF_DROPDOWN": {
     "LOADING": "Loading...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} combobox {{selectedOption}}"
-  },
-  "INFO_DRAWER": {
-    "ICON": "Node Icon"
   }
 }
