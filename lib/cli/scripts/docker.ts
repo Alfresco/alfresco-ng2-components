@@ -43,6 +43,7 @@ export interface PublishArgs {
     dockerTags?: string;
     pathProject: string;
     fileName: string;
+    sourceTag?: string;
 }
 
 function loginPerform(args: PublishArgs) {
@@ -98,11 +99,7 @@ function cleanImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-export default function (args: PublishArgs) {
-    main(args);
-}
-
-function main(args) {
+export default function main(args: PublishArgs) {
     program
         .version('0.1.0')
         .description(
