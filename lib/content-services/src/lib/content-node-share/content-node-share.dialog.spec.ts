@@ -330,8 +330,7 @@ describe('ShareDialogComponent', () => {
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
 
             fixture.detectChanges();
-            fixture.nativeElement.querySelector('mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
-                .dispatchEvent(new MouseEvent('click'));
+            clickExpireToggleButton();
 
             fixture.componentInstance.type = 'datetime';
             fixture.componentInstance.time.setValue(date);
@@ -377,7 +376,7 @@ describe('ShareDialogComponent', () => {
             expect(component.time.hasError('invalidDate')).toBeTrue();
         });
 
-        it('should show an error when provided date is valid', () => {
+        it('should not show an error when provided date is valid', () => {
             fixture.detectChanges();
             clickExpireToggleButton();
             fillInDatepickerInput('12.12.2525');
