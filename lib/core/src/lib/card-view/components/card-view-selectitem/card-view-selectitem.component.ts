@@ -109,4 +109,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     private get optionsLimit(): number {
         return this.appConfig.get<number>('content-metadata.selectFilterLimit', CardViewSelectItemComponent.HIDE_FILTER_LIMIT);
     }
+
+    get nonEditableField(): boolean {
+        return this.editable && !this.property.editable;
+    }
 }

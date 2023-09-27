@@ -5,13 +5,13 @@
             [floatLabel]="'always'"
             appearance="standard">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
-                [ngClass]="{'adf-property-label-not-editable' : !isEditable && editable}">
+                [ngClass]="{'adf-property-label-not-editable' : nonEditableField}">
                 {{ property.label | translate }}
             </mat-label>
                 <input matInput
                     *ngIf="!property.multiline"
                     class="adf-property-value"
-                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : !isEditable && editable}"
+                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : nonEditableField}"
                     title="{{property.label | translate }}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -29,7 +29,7 @@
                     [cdkAutosizeMaxRows]="1"
                     [cdkAutosizeMaxRows]="5"
                     class="adf-property-value"
-                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : !isEditable && editable}"
+                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : nonEditableField}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
                     [formControl]="textInput"
@@ -43,7 +43,7 @@
     <div *ngSwitchCase="'chipsTemplate'"
          class="adf-property-field adf-textitem-chip-list-container">
         <mat-label *ngIf="showLabelForChips" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
-            [ngClass]="{'adf-property-label-not-editable' : !isEditable && editable}">
+            [ngClass]="{'adf-property-label-not-editable' : nonEditableField}">
             {{ property.label | translate }}
         </mat-label>
         <mat-chip-list #chipList
@@ -63,7 +63,7 @@
             [floatLabel]="'never'">
             <input matInput
                 class="adf-property-value"
-                [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : !isEditable && editable}"
+                [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : nonEditableField}"
                 title="{{property.label | translate }}"
                 [placeholder]="editedValue ? '' : property.default | translate"
                 [attr.aria-label]="property.label | translate"
@@ -72,7 +72,7 @@
                 (matChipInputTokenEnd)="addValueToList($event)"
                 [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key">
         </mat-form-field>
-        <mat-divider *ngIf="showProperty && !editable"></mat-divider>
+        <mat-divider *ngIf="showDivider"></mat-divider>
     </div>
 
     <div *ngSwitchCase="'clickableTemplate'"
@@ -84,14 +84,14 @@
         <mat-form-field class="adf-property-field adf-card-textitem-field" appearance="standard"
             [floatLabel]="'never'">
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
-                [ngClass]="{'adf-property-label-not-editable' : !isEditable && editable}">
+                [ngClass]="{'adf-property-label-not-editable' : nonEditableField}">
                 {{ property.label | translate }}
             </mat-label>
             <input matInput
                 [type]=property.inputType
                 class="adf-property-value"
                 title="{{property.label | translate }}"
-                [ngClass]="{ 'adf-textitem-clickable-value': !isEditable,'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : !isEditable && editable }"
+                [ngClass]="{'adf-textitem-clickable-value': !isEditable,'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : nonEditableField}"
                 [placeholder]="property.default"
                 [attr.aria-label]="property.label | translate"
                 [(ngModel)]="editedValue"
