@@ -62,6 +62,12 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     -   _taskId:_ `string`  - ID of the target task
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Metadata for the content
+-   **getProcessesAndTasksOnContent**(sourceId: `string`, source: `string`, size?: `number`, page?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)<[`ResultListDataRepresentationRelatedProcessTask`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABRelatedContentRepresentation%C2%BB.md)><br/>
+    Lists processes and tasks on workflow started with provided document
+    -   _sourceId:_ `string` - id of the document that workflow or task has been started with
+    -   _source:_ `string` - source of the document that workflow or task has been started with
+    -   _size:_ `number` - size of the entries to get
+    -   _page:_ `number` - page number
 -   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Reports an error message.
     -   _error:_ `any`  - Data object with optional `message` and `status` fields for the error
@@ -376,6 +382,21 @@ this.contentService.getTaskRelatedContent(taskId).subscribe(
 ```
 
 The response format is the same as for the `getProcessRelatedContent` method, see its docs.
+
+#### getProcessesAndTasksOnContent(sourceId: string, source: string, size?: number, page?: number): Observable`<ResultListDataRepresentationRelatedProcessTask>`
+
+Lists processes and tasks on workflow started with provided document.
+
+```ts
+const sourceId = 'sourceId';
+const source = 'source';
+this.contentService.getProcessesAndTasksOnContent(sourceId, source).subscribe(
+   res  => {
+     console.log('Response: ', res);
+   }, error => {
+     console.log('Error: ', error);
+   });
+```
 
 ## Details
 
