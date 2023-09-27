@@ -21,11 +21,6 @@ import { argv } from 'node:process';
 import program from 'commander';
 import * as kube from './kube-utils';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export default function (args: kube.KubeArgs) {
-    main(args);
-}
-
 const main = (args: kube.KubeArgs) => {
     program
         .version('0.1.0')
@@ -50,3 +45,5 @@ const main = (args: kube.KubeArgs) => {
         kube.deletePod(args);
     }
 };
+
+export default main;

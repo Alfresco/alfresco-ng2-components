@@ -39,11 +39,7 @@ function zipArtifact(output: string) {
     logger.info(response);
 }
 
-export default function () {
-    main();
-}
-
-function main() {
+export default function main() {
     program
         .version('0.1.0')
         .requiredOption('-a, --artifact [type]', ' path to the s3 artifact (tar.bz2) to download and extract')

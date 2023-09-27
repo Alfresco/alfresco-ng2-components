@@ -35,11 +35,8 @@ function awsCp(output: string) {
     logger.info(response);
 }
 
-export default function () {
-    main();
-}
 
-function main() {
+export default function main() {
     program
         .version('0.1.0')
         .option('-a, --artifact [type]', '  path to the artifact to archieve (tar.bz2) and upload (like ./dist)')

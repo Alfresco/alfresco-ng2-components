@@ -23,7 +23,7 @@ const MAX_RETRY = 10;
 const TIMEOUT = 60000;
 let counter = 0;
 
-export default async function main(_args: string[]) {
+export default async function main() {
     program
         .version('0.1.0')
         .description('Check Process service is up ')

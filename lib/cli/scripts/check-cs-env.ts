@@ -25,7 +25,7 @@ const TIMEOUT = 20000;
 let counter = 0;
 let alfrescoJsApi: AlfrescoApi;
 
-export default async function main(_args: string[]) {
+export default async function main() {
     program
         .version('0.1.0')
         .description('Check Content service is up ')
