@@ -565,7 +565,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.syncPagination();
             this.onDataReady(this.node);
         } else {
-            this.loadFolder(true);
+            this.loadFolder();
         }
     }
 
@@ -713,8 +713,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    loadFolder(hideLoadingSpinner = false) {
-        if (!hideLoadingSpinner) {
+    loadFolder() {
+        if (!this._pagination.merge) {
             this.setLoadingState(true);
         }
 
