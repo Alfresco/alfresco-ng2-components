@@ -29,28 +29,28 @@ export class TasksListPage {
     }
 
     getRowsDisplayedWithSameName(taskName: string): Promise<string> {
-        return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
+        return this.dataTable.getRowsWithSameColumnValues('Task Name', taskName);
     }
 
     async checkContentIsDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsDisplayed('Name', taskName);
+        await this.dataTable.checkContentIsDisplayed('Task Name', taskName);
     }
 
     async checkContentIsNotDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsNotDisplayed('Name', taskName);
+        await this.dataTable.checkContentIsNotDisplayed('Task Name', taskName);
     }
 
     async checkRowIsSelected(taskName: string): Promise<void> {
-        await this.dataTable.checkRowIsSelected('Name', taskName);
+        await this.dataTable.checkRowIsSelected('Task Name', taskName);
     }
 
     async selectRow(taskName: string): Promise<void> {
-        await this.dataTable.selectRow('Name', taskName);
+        await this.dataTable.selectRow('Task Name', taskName);
         await browser.sleep(1000);
     }
 
     getAllRowsNameColumn(): Promise<string[]> {
-        return this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues('Task Name');
     }
 
     async checkTaskListIsLoaded(): Promise<void> {
