@@ -22,8 +22,8 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/process-list.page';
 import { ProcessDetailsPage } from '../pages/process-details.page';
+import * as moment from 'moment';
 import { AppDefinitionRepresentation, ProcessInstanceRepresentation, ProcessInstancesApi } from '@alfresco/js-api';
-import { format } from 'date-fns';
 
 describe('Process Instance Details', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -45,7 +45,7 @@ describe('Process Instance Details', () => {
     let process: ProcessInstanceRepresentation;
     let user: UserModel;
 
-    const PROCESS_DATE_FORMAT = 'PP';
+    const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -76,6 +76,6 @@ describe('Process Instance Details', () => {
 
     it('[C307031] Should display the created date in the default format', async () => {
         await processDetailsPage.checkProcessHeaderDetailsAreVisible();
-        await expect(await processDetailsPage.getCreated()).toEqual(format(process.started, PROCESS_DATE_FORMAT));
+        await expect(await processDetailsPage.getCreated()).toEqual(moment(process.started).format(PROCESS_DATE_FORMAT));
     });
 });

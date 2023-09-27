@@ -29,7 +29,7 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { format } from 'date-fns';
+import * as moment from 'moment';
 
 const isValueInvalid = (value: any): boolean => value === null || value === undefined;
 
@@ -70,8 +70,8 @@ describe('Task Header cloud component', () => {
     let unclaimedTask: any;
     const priority = 0;
     const description = 'descriptionTask';
-    const formatDate = 'MMM d, yyyy';
-    const dateTimeFormat = 'MMM d, y, H:mm';
+    const formatDate = 'MMM D, YYYY';
+    const dateTimeFormat = 'MMM D, Y, H:mm';
 
     const createCompletedTask = async function() {
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
@@ -91,7 +91,7 @@ describe('Task Header cloud component', () => {
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
-        basicCreatedDate = format(new Date(basicCreatedTask.entry.createdDate), formatDate);
+        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
         return createdTaskId;
     };
 
@@ -109,12 +109,12 @@ describe('Task Header cloud component', () => {
 
         completedTask = await createCompletedTask();
 
-        completedCreatedDate = format(new Date(completedTask.entry.createdDate), formatDate);
-        dueDate = format(new Date(completedTask.entry.dueDate), dateTimeFormat);
-        completedEndDate = format(new Date(completedTask.entry.endDate), formatDate);
+        completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
+        dueDate = moment(completedTask.entry.dueDate).format(dateTimeFormat);
+        completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
 
         subTask = await createSubTask(createdTaskId);
-        subTaskCreatedDate = format(new Date(subTask.entry.createdDate), formatDate);
+        subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         await browser.sleep(3000);
         await loginSSOPage.login(testUser.username, testUser.password);
