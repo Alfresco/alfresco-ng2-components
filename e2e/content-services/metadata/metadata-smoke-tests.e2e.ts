@@ -143,7 +143,7 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
-        fit('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
+        it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();

@@ -37,7 +37,7 @@
 <div class="adf-existing-categories-panel" *ngIf="existingCategoriesPanelVisible">
     <ng-container *ngIf="isCRUDMode && (!existingCategoriesLoading || existingCategories)">
         <span class="adf-create-category-label"
-              (click)="addCategory()"
+            (click)="addCategory()"
             [hidden]="categoryNameControl.invalid || typing">
             {{ 'CATEGORIES_MANAGEMENT.GENERIC_CREATE' | translate : { name: categoryNameControl.value } }}
         </span>

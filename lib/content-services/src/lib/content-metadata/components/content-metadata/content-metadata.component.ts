@@ -221,10 +221,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     group: CardViewGroup;
 
-     /** Emitted when content's editable state is changed. **/
-    @Output()
-    editableChange = new EventEmitter<boolean>();
-
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -478,6 +474,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.expanded = true;
                 }
                 break;
+
             default:
                 break;
         }
