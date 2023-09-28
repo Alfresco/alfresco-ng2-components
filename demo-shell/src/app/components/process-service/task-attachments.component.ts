@@ -28,6 +28,14 @@ import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+/**
+ * Provide a task upload service factory
+ *
+ * @param api api client
+ * @param config config service
+ * @param discoveryApiService discovery service
+ * @returns factory function
+ */
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService, discoveryApiService: DiscoveryApiService) {
     return new TaskUploadService(api, config, discoveryApiService);
 }
