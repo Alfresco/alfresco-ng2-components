@@ -28,13 +28,15 @@ export class AttachmentComponent implements OnChanges {
     @Input()
     taskId: string;
 
-    /** Emitted when an error occurs while creating or uploading an
+    /**
+     * Emitted when an error occurs while creating or uploading an
      *  attachment from the user within the component.
      */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when an attachment is created or uploaded successfully
+    /**
+     * Emitted when an attachment is created or uploaded successfully
      * from within the component.
      */
     @Output()
