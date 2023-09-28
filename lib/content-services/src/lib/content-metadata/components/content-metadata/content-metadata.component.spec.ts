@@ -105,11 +105,6 @@ describe('ContentMetadataComponent', () => {
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
         fixture.detectChanges();
-    }
-
-    const clickOnTagsSave = () => {
-        findSaveTagsButton().click();
-        fixture.detectChanges();
     };
 
     const clickOnTagsSave = () => {
@@ -334,7 +329,7 @@ describe('ContentMetadataComponent', () => {
             tag2.tag = tagName2;
             expect(tagService.removeTag).toHaveBeenCalledWith(node.id, tagPaging.list.entries[1].entry.id);
             expect(tagService.assignTagsToNode).toHaveBeenCalledWith(node.id, [tag1, tag2]);
-          }));
+        }));
 
         it('should call getTagsByNodeId on TagService on save click', () => {
             component.editableTags = true;
@@ -1164,7 +1159,6 @@ describe('ContentMetadataComponent', () => {
         it('should render tags after loading tags in ngOnInit', () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
-            fixture.whenStable();
             fixture.detectChanges();
             const tagElements = findTagElements();
             expect(tagElements).toHaveSize(2);

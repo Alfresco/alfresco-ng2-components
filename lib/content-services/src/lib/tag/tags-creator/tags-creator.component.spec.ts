@@ -21,7 +21,7 @@ import { NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatError, MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -300,7 +300,7 @@ describe('TagsCreatorComponent', () => {
             const tagNameField = fixture.debugElement.query(By.css(tagNameFieldSelector));
             expect(tagNameField).toBeTruthy();
             expect(tagNameField.nativeElement.hasAttribute('hidden')).toBeFalsy();
-            expect(tagNameField).toBeTruthy();
+            expect(tagNameField.query(By.directive(MatFormField))).toBeTruthy();
         });
 
         it('should input be autofocused', fakeAsync(() => {

@@ -114,6 +114,7 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
+
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
         await metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
 
