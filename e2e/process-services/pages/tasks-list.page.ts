@@ -28,16 +28,16 @@ export class TasksListPage {
         return this.dataTable;
     }
 
-    getRowsDisplayedWithSameName(taskName: string): Promise<string> {
-        return this.dataTable.getRowsWithSameColumnValues('Task Name', taskName);
+    getRowsDisplayedWithSameName(taskName: string, column = 'Task Name'): Promise<string> {
+        return this.dataTable.getRowsWithSameColumnValues(column, taskName);
     }
 
-    async checkContentIsDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsDisplayed('Task Name', taskName);
+    async checkContentIsDisplayed(taskName: string, column = 'Task Name'): Promise<void> {
+        await this.dataTable.checkContentIsDisplayed(column, taskName);
     }
 
-    async checkContentIsNotDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsNotDisplayed('Task Name', taskName);
+    async checkContentIsNotDisplayed(taskName: string, column = 'Task Name'): Promise<void> {
+        await this.dataTable.checkContentIsNotDisplayed(column, taskName);
     }
 
     async checkRowIsSelected(taskName: string): Promise<void> {
@@ -49,8 +49,8 @@ export class TasksListPage {
         await browser.sleep(1000);
     }
 
-    getAllRowsNameColumn(): Promise<string[]> {
-        return this.dataTable.getAllRowsColumnValues('Task Name');
+    getAllRowsNameColumn(column = 'Task Name'): Promise<string[]> {
+        return this.dataTable.getAllRowsColumnValues(column);
     }
 
     async checkTaskListIsLoaded(): Promise<void> {

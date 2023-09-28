@@ -132,7 +132,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
             });
 
@@ -150,7 +150,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
             });
             await paginationPage.checkNextPageButtonIsDisabled();
@@ -164,7 +164,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(0, 5))).toEqual(true);
             });
 
@@ -176,7 +176,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(5, 10))).toEqual(true);
             });
 
@@ -187,7 +187,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(10, 15))).toEqual(true);
             });
 
@@ -197,7 +197,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
             });
         });
@@ -209,7 +209,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(0, 10))).toEqual(true);
             });
             await paginationPage.clickOnNextPage();
@@ -218,7 +218,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(10, 20))).toEqual(true);
             });
         });
@@ -230,7 +230,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(0, 15))).toEqual(true);
             });
             currentPage++;
@@ -239,7 +239,7 @@ describe('Start Task - Custom App', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
             await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
             });
         });
@@ -272,7 +272,7 @@ describe('Start Task - Custom App', () => {
 
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(0, 5))).toEqual(true);
             });
 
@@ -288,7 +288,7 @@ describe('Start Task - Custom App', () => {
 
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(5, 10))).toEqual(true);
             });
 
@@ -302,7 +302,7 @@ describe('Start Task - Custom App', () => {
             await paginationPage.checkPageSelectorIsDisplayed();
 
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(10, 15))).toEqual(true);
             });
 
@@ -317,7 +317,7 @@ describe('Start Task - Custom App', () => {
 
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
 
-            await taskListSinglePage.taskList().getAllRowsNameColumn().then(async (list) => {
+            await taskListSinglePage.taskList().getAllRowsNameColumn('Name').then(async (list) => {
                 await expect(ArrayUtil.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
             });
         });
@@ -388,9 +388,9 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.typeAppId(appRuntime.id);
             await expect(await taskListSinglePage.getAppId()).toEqual(appRuntime.id.toString());
 
-            await taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName);
-            await taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName);
-            await taskListSinglePage.taskList().checkContentIsNotDisplayed(paginationTasksName[13]);
+            await taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName, 'Name');
+            await taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName, 'Name');
+            await taskListSinglePage.taskList().checkContentIsNotDisplayed(paginationTasksName[13], 'Name');
         });
 
         it('[C280569] Should be able to see No tasks found when typing an invalid appId', async () => {
@@ -404,8 +404,8 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.typeTaskName(paginationTasksName[13]);
             await expect(await taskListSinglePage.getTaskName()).toEqual(paginationTasksName[13]);
 
-            await taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[13]);
-            await expect((await taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13])).length).toBe(2);
+            await taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[13], 'Name');
+            await expect((await taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13], 'Name')).length).toBe(2);
         });
 
         it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', async () => {
@@ -420,7 +420,7 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
             await expect(await taskListSinglePage.getTaskId()).toEqual(taskWithDueDate.id);
 
-            await taskListSinglePage.taskList().checkContentIsDisplayed(taskWithDueDate.name);
+            await taskListSinglePage.taskList().checkContentIsDisplayed(taskWithDueDate.name, 'Name');
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         });
 
@@ -436,9 +436,9 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.selectState('Completed');
             await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
 
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name);
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name);
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name, 'Name');
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(3);
         });
 
@@ -446,11 +446,11 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.selectState('Active');
             await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
 
-            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[0].name);
-            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[1].name);
-            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[2].name);
+            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[0].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[1].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[2].name, 'Name');
 
-            const list = await taskListSinglePage.taskList().getAllRowsNameColumn();
+            const list = await taskListSinglePage.taskList().getAllRowsNameColumn('Name');
 
             await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(20);
@@ -460,11 +460,11 @@ describe('Start Task - Custom App', () => {
             await taskListSinglePage.selectState('All');
             await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
 
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name);
-            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name);
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name, 'Name');
+            await taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name, 'Name');
 
-            const list = await taskListSinglePage.taskList().getAllRowsNameColumn();
+            const list = await taskListSinglePage.taskList().getAllRowsNameColumn('Name');
             await expect(ArrayUtil.arrayContainsArray(list, allTasksName)).toEqual(true);
 
             await expect(await taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
