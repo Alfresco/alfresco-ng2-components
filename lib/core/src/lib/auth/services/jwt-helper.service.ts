@@ -130,12 +130,13 @@ export class JwtHelperService {
     /**
      * Gets a named value from the user access token.
      *
-     * @param accessToken your SSO access token where the value is encode
+     * @param token your SSO access token where the value is encode
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
     getValueFromToken<T>(token: string, key: string): T {
-        let value;
+        let value: T;
+
         if (token) {
             const tokenPayload = this.decodeToken(token);
             value = tokenPayload[key];
@@ -156,6 +157,7 @@ export class JwtHelperService {
     /**
      * Gets Client roles.
      *
+     * @param clientName client name
      * @returns Array of client roles
      */
     getClientRoles(clientName: string): string[] {

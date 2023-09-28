@@ -79,6 +79,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      *
      * @param groupId The ID of the group
      * @param roles Array of roles to assign
+     * @returns request result
      */
     assignRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
@@ -92,6 +93,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      *
      * @param groupId The ID of the group
      * @param roles Array of roles to remove
+     * @returns request result
      */
     removeRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
@@ -114,6 +116,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     /**
      * Queries groups.
      *
+     * @param requestQuery query settings
      * @returns Array of user information objects
      */
     queryGroups(requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {

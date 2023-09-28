@@ -21,6 +21,9 @@ describe('AlfrescoApiUtils', () => {
 
     describe('isConstructor', () => {
         class MockClass {}
+        /**
+         * Mock function for tests
+         */
         function mockFUnction() {}
 
         it('should return true for class and functions', () => {

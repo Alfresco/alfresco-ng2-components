@@ -42,6 +42,12 @@ describe('Auth Guard SSO role service', () => {
         routerService = TestBed.inject(Router);
     });
 
+    /**
+     * Spy on user access
+     *
+     * @param realmRoles roles
+     * @param resourceAccess resource access values
+     */
     function spyUserAccess(realmRoles: string[], resourceAccess: any) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({

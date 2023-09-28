@@ -29,6 +29,13 @@ type NonFunctionPropertyNames<T> = {[K in keyof T]: T[K] extends () => any ? nev
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 type StoryWithoutFunction<T> = NonFunctionProperties<Story<T>>;
 
+/**
+ * Copy storybook story
+ *
+ * @param story story
+ * @param annotations annotations
+ * @returns a copy of the story
+ */
 function storybookCopyStory<T>( story: Story<T>, annotations?: StoryWithoutFunction<T> ): Story<T> {
   const cloned = story.bind({});
   return Object.assign(cloned, annotations);

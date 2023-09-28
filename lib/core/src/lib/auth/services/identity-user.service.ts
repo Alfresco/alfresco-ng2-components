@@ -320,6 +320,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     /**
      * Gets details for all users.
      *
+     * @param requestQuery query model
      * @returns Array of user information objects.
      */
     queryUsers(requestQuery: IdentityUserQueryCloudRequestModel): Observable<IdentityUserQueryResponse> {
@@ -396,7 +397,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * Changes user password.
      *
      * @param userId Id of the user.
-     * @param credentials Details of user Credentials.
+     * @param newPassword Details of user Credentials.
      * @returns Empty response when the password changed.
      */
     changePassword(userId: string, newPassword: IdentityUserPasswordModel): Observable<any> {
@@ -499,7 +500,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
      * Removes assigned roles.
      *
      * @param userId Id of the user.
-     * @param roles Array of roles.
+     * @param removedRoles Array of roles.
      * @returns Empty response when the role removed.
      */
     removeRoles(userId: string, removedRoles: IdentityRoleModel[]): Observable<any> {
