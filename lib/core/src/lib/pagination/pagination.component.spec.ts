@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
+import { PaginationModule } from './pagination.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from '../app-config/app-config.service';
+import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
+import { StorageService } from '../common';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -37,21 +39,28 @@ class FakePaginationInput implements PaginationModel {
     }
 }
 
-xdescribe('PaginationComponent', () => {
+describe('PaginationComponent', () => {
 
     let fixture: ComponentFixture<PaginationComponent>;
     let component: PaginationComponent;
+    let storageService: StorageService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
-                CoreTestingModule
+                PaginationModule
             ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            providers: [
+                {provide: AppConfigService, useValue: AppConfigServiceMock },
+                StorageService
+            ],
+            declarations: [PaginationComponent]
         });
 
         fixture = TestBed.createComponent(PaginationComponent);
+        storageService = TestBed.inject(StorageService);
+        storageService.setItem('fake-username__supportedPageSizes', "[5,10,15,20]");
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -68,8 +77,9 @@ xdescribe('PaginationComponent', () => {
     });
 
     describe('Single page', () => {
-        beforeEach(async () => {
+        beforeEach(() => {
             component.pagination = new FakePaginationInput(1, 1, 10);
+            fixture.detectChanges();
         });
 
         it('has a single page', () => {

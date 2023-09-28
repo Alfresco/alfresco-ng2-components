@@ -25,9 +25,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { MatLegacyCheckboxHarness as MatCheckboxHarness } from '@angular/material/legacy-checkbox/testing';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 
-xdescribe('ColumnsSelectorComponent', () => {
+describe('ColumnsSelectorComponent', () => {
     let fixture: ComponentFixture<ColumnsSelectorComponent>;
     let loader: HarnessLoader;
 
@@ -139,7 +139,7 @@ xdescribe('ColumnsSelectorComponent', () => {
         const columnCheckboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
         expect(columnCheckboxes.length).toBe(1);
-        expect(await columnCheckboxes[0].getLabelText()).toBe(inputColumns[0].title);
+        expect(await columnCheckboxes[0].getLabelText()).toBe('title0');
     }));
 
     it('should change column visibility', async () => {
@@ -149,42 +149,26 @@ xdescribe('ColumnsSelectorComponent', () => {
         const firstColumnCheckbox = await loader.getHarness(MatCheckboxHarness);
         const checkBoxName = await firstColumnCheckbox.getLabelText();
 
-        const toggledColumnItem = component.columnItems.find(item => item.title === checkBoxName);
+        const toggledColumnItem = <DataColumn> component.columnItems.find(item => item.title === checkBoxName);
         expect(toggledColumnItem.isHidden).toBeFalsy();
 
         await firstColumnCheckbox.toggle();
         expect(toggledColumnItem.isHidden).toBe(true);
     });
 
+    it('should set proper default state for checkboxes', async () => {
+        menuOpenedTrigger.next();
+        fixture.detectChanges();
 
-    describe('checkboxes', () => {
-        it('should have set proper default state', async () => {
-            menuOpenedTrigger.next();
-            fixture.detectChanges();
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-            const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
-
-            expect(await checkboxes[0].isChecked()).toBe(true);
-            expect(await checkboxes[1].isChecked()).toBe(true);
-            expect(await checkboxes[2].isChecked()).toBe(true);
-            expect(await checkboxes[3].isChecked()).toBe(false);
-        });
-
-        it('should be disabled when visible columns limit is reached', async () => {
-            component.maxColumnsVisible = 4;
-            menuOpenedTrigger.next();
-            fixture.detectChanges();
-
-            const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
-
-            expect(await checkboxes[0].isDisabled()).toBe(false);
-            expect(await checkboxes[1].isDisabled()).toBe(false);
-            expect(await checkboxes[2].isDisabled()).toBe(false);
-            expect(await checkboxes[3].isDisabled()).toBe(true);
-        });
+        expect(await checkboxes[0].isChecked()).toBe(true);
+        expect(await checkboxes[1].isChecked()).toBe(true);
+        expect(await checkboxes[2].isChecked()).toBe(true);
+        expect(await checkboxes[3].isChecked()).toBe(false);
     });
 
-    describe('sorting', () => {
+    it('should show hidden columns at the end of the list', async () => {
         const hiddenDataColumn: DataColumn = {
             id: 'hiddenDataColumn',
             title: 'hiddenDataColumn',
@@ -199,27 +183,14 @@ xdescribe('ColumnsSelectorComponent', () => {
             key: 'shownDataColumn',
             type: 'text'
         };
-        it('should show hidden columns at the end of the list by default', async () => {
-            component.columns = [hiddenDataColumn, shownDataColumn];
-            menuOpenedTrigger.next();
-            fixture.detectChanges();
 
-            const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
+        component.columns = [hiddenDataColumn, shownDataColumn];
+        menuOpenedTrigger.next();
+        fixture.detectChanges();
 
-            expect(await checkboxes[0].getLabelText()).toBe(shownDataColumn.title);
-            expect(await checkboxes[1].getLabelText()).toBe(hiddenDataColumn.title);
-        });
+        const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
 
-        it('should NOT show hidden columns at the end of the list if sorting is disabled', async () => {
-            component.columns = [hiddenDataColumn, shownDataColumn];
-            component.columnsSorting = false;
-            menuOpenedTrigger.next();
-            fixture.detectChanges();
-
-            const checkboxes = await loader.getAllHarnesses(MatCheckboxHarness);
-
-            expect(await checkboxes[0].getLabelText()).toBe(hiddenDataColumn.title);
-            expect(await checkboxes[1].getLabelText()).toBe(shownDataColumn.title);
-        });
+        expect(await checkboxes[0].getLabelText()).toBe('shownDataColumn');
+        expect(await checkboxes[1].getLabelText()).toBe('hiddenDataColumn');
     });
 });

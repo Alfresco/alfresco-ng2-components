@@ -87,7 +87,7 @@ class ProvidesNotificationServiceComponent {
 
 }
 
-xdescribe('NotificationService', () => {
+describe('NotificationService', () => {
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
@@ -154,7 +154,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar without custom configuration', (done) => {
@@ -165,7 +165,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar with custom configuration', (done) => {
@@ -176,7 +176,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar with action', (done) => {
@@ -187,7 +187,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar with action and custom configuration', (done) => {
@@ -198,7 +198,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar with action and no custom configuration', (done) => {
@@ -209,7 +209,7 @@ xdescribe('NotificationService', () => {
 
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('mat-snack-bar-container')).not.toBeNull();
     });
 
     it('should open a message notification bar with a decorative icon', (done) => {

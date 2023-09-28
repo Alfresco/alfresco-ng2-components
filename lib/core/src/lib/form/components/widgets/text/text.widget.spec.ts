@@ -32,7 +32,7 @@ const enterValueInTextField = (element: HTMLInputElement, value: string) => {
     element.dispatchEvent(new Event('input'));
 };
 
-xdescribe('TextWidgetComponent', () => {
+describe('TextWidgetComponent', () => {
 
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
@@ -104,8 +104,8 @@ xdescribe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Your name here');
+                const input = <HTMLInputElement> element.querySelector<HTMLElement>('#text-id');
+                expect(input.placeholder).toBe('Your name here');
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
@@ -301,8 +301,8 @@ xdescribe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', () => {
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('simple placeholder');
+                const label = <HTMLInputElement> element.querySelector<HTMLElement>('#text-id');
+                expect(label.placeholder).toBe('simple placeholder');
             });
 
             it('should show the field placeholder when clicked', async () => {
@@ -310,8 +310,8 @@ xdescribe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('simple placeholder');
+                const label = <HTMLInputElement> element.querySelector<HTMLElement>('#text-id');
+                expect(label.placeholder).toBe('simple placeholder');
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
@@ -442,12 +442,12 @@ xdescribe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector<HTMLInputElement>('#text-id');
             });
 
             it('should show the input mask placeholder', () => {
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Phone : (__) ___-___');
+                const label = <HTMLInputElement> element.querySelector<HTMLElement>('#text-id');
+                expect(label.placeholder).toBe('Phone : (__) ___-___');
             });
 
             it('should show the input mask placeholder when clicked', async () => {
@@ -455,8 +455,8 @@ xdescribe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Phone : (__) ___-___');
+                const label = <HTMLInputElement> element.querySelector<HTMLElement>('#text-id');
+                expect(label.placeholder).toBe('Phone : (__) ___-___');
             });
         });
 

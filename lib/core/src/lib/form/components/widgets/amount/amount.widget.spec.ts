@@ -177,21 +177,21 @@ describe('AmountWidgetComponent - rendering', () => {
         });
         fixture.detectChanges();
 
-        let widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        let widgetPrefix = fixture.nativeElement.querySelector('div.mat-mdc-form-field-icon-prefix');
         expect(widgetPrefix.textContent.trim()).toBe('$');
 
         widget.field.currency = '£';
         widget.ngOnInit();
         fixture.detectChanges();
 
-        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        widgetPrefix = fixture.nativeElement.querySelector('div.mat-mdc-form-field-icon-prefix');
         expect(widgetPrefix.textContent.trim()).toBe('£');
 
         widget.field.currency = '€';
         widget.ngOnInit();
         fixture.detectChanges();
 
-        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        widgetPrefix = fixture.nativeElement.querySelector('div.mat-mdc-form-field-icon-prefix');
         expect(widgetPrefix.textContent.trim()).toBe('€');
     });
 
@@ -216,11 +216,11 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const widgetPlaceholder = fixture.nativeElement.querySelector('label.mat-form-field-label');
-        expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text');
+        const widgetPlaceholder = fixture.nativeElement.querySelector('input.mat-mdc-input-element');
+        expect(widgetPlaceholder.placeholder).toBe('Check Placeholder Text');
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
-        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-mdc-form-field-icon-prefix');
         expect(widgetPrefix.textContent.trim()).toBe('$');
         expect(widget.field.isValid).toBe(false);
         const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
@@ -265,7 +265,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
-        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
+        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-mdc-form-field-icon-prefix');
         expect(widgetPrefix.textContent.trim()).toBe('£');
         expect(widget.field.isValid).toBe(false);
         const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');

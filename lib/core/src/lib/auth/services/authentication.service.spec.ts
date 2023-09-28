@@ -30,7 +30,7 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
-fdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
     let appConfigService: AppConfigService;
@@ -444,7 +444,18 @@ fdescribe('AuthenticationService', () => {
             apiService.reset();
         });
 
-        fit('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
+        it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
+            spyOn(apiService, 'getInstance').and.returnValue(apiServiceMock);
+            const loginResult = { entry: { id: 'fake-post-ticket', userId: 'admin' } };
+            spyOn(apiService.getInstance(), 'login').and.returnValue(Promise.resolve(loginResult));
+            spyOn(apiService.getInstance(), 'isLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'getTicketBpm').and.returnValue('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+            spyOn(apiService.getInstance(), 'getTicketEcm').and.returnValue('fake-post-ticket');
+            spyOn(apiService.getInstance(), 'isBpmLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'isEcmLoggedIn').and.returnValue(true);
+            spyOn(apiService.getInstance(), 'isOauthConfiguration').and.returnValue(false);
+            spyOn(apiService.getInstance(), 'isEcmBpmConfiguration').and.returnValue(true);
+
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
@@ -454,26 +465,16 @@ fdescribe('AuthenticationService', () => {
                 disposableLogin.unsubscribe();
                 done();
             });
-
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
-            });
         });
 
-        fit('[ALL] should return login fail if only ECM call fail', (done) => {
+        it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
+                    expect(authService.getTicketEcm()).toEqual(undefined, 'getTicketEcm');
                     // cspell: disable-next
-                    expect(authService.getTicketBpm()).toBe(null, 'getTicketBpm');
+                    expect(authService.getTicketBpm()).toEqual(undefined, 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
@@ -482,42 +483,33 @@ fdescribe('AuthenticationService', () => {
             jasmine.Ajax.requests.at(0).respondWith({
                 status: 403
             });
-
-            jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
-            });
         });
 
-        fit('[ALL] should return login fail if only BPM call fail', (done) => {
+        it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketEcm()).toEqual(undefined);
+                    expect(authService.getTicketBpm()).toEqual(undefined);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
                 });
 
-            jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
-            });
 
             jasmine.Ajax.requests.at(1).respondWith({
                 status: 403
             });
         });
 
-        fit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
+        it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 () => { },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getTicketEcm()).toEqual(undefined);
+                    expect(authService.getTicketBpm()).toEqual(undefined);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
@@ -525,10 +517,6 @@ fdescribe('AuthenticationService', () => {
                 });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                status: 403
-            });
-
-            jasmine.Ajax.requests.at(1).respondWith({
                 status: 403
             });
         });

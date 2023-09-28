@@ -44,7 +44,7 @@ class TestComponent {
     }
 }
 
-xdescribe('InfiniteSelectScrollDirective', () => {
+describe('InfiniteSelectScrollDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
 
@@ -71,7 +71,7 @@ xdescribe('InfiniteSelectScrollDirective', () => {
     }));
 
     it('should call an action on scrollEnd event', fakeAsync(() => {
-        const panel = document.querySelector('.mat-select-panel')  as HTMLElement;
+        const panel = document.querySelector('.mat-mdc-select-panel')  as HTMLElement;
         panel.scrollTop = panel.scrollHeight;
         panel.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();

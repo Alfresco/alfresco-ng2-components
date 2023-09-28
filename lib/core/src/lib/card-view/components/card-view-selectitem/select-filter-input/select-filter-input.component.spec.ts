@@ -65,7 +65,7 @@ export class TestComponent {
     }
 }
 
-xdescribe('SelectFilterInputComponent', () => {
+describe('SelectFilterInputComponent', () => {
     let testFixture: ComponentFixture<TestComponent>;
     let testComponent: TestComponent;
     let fixture: ComponentFixture<SelectFilterInputComponent>;
@@ -162,7 +162,7 @@ xdescribe('SelectFilterInputComponent', () => {
             testComponent.multiple = true;
             testFixture.detectChanges();
 
-            const dropdown: HTMLElement = testFixture.nativeElement.querySelector('.mat-select-trigger');
+            const dropdown: HTMLElement = testFixture.nativeElement.querySelector('.mat-mdc-select-trigger');
             dropdown.click();
             await testFixture.whenStable();
             testFixture.detectChanges();

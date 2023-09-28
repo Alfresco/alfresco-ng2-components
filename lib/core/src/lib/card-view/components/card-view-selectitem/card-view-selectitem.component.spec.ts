@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 
-xdescribe('CardViewSelectItemComponent', () => {
+describe('CardViewSelectItemComponent', () => {
     let fixture: ComponentFixture<CardViewSelectItemComponent>;
     let component: CardViewSelectItemComponent;
     let overlayContainer: OverlayContainer;
@@ -153,9 +153,9 @@ xdescribe('CardViewSelectItemComponent', () => {
             selectBox.triggerEventHandler('click', {});
 
             fixture.detectChanges();
-            const noneElement: HTMLElement = overlayContainer.getContainerElement().querySelector('mat-option');
+            const noneElement: HTMLElement | null  = overlayContainer.getContainerElement().querySelector('mat-option');
             expect(noneElement).toBeDefined();
-            expect(noneElement.innerText).toEqual('CORE.CARDVIEW.NONE');
+            expect(noneElement?.innerText).toEqual('CORE.CARDVIEW.NONE');
         });
 
         it('should render select box if editable property is TRUE', () => {

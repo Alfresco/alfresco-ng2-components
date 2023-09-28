@@ -28,7 +28,7 @@ import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
 
-xdescribe('CardViewComponent', () => {
+describe('CardViewComponent', () => {
 
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
@@ -158,7 +158,7 @@ xdescribe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-mdc-select-trigger'));
         labelValue.triggerEventHandler('click', null);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -187,7 +187,7 @@ xdescribe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-mdc-select-trigger'));
         labelValue.triggerEventHandler('click', null);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -216,7 +216,7 @@ xdescribe('CardViewComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
+        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-mdc-select-trigger'));
         labelValue.triggerEventHandler('click', null);
         fixture.detectChanges();
         await fixture.whenStable();

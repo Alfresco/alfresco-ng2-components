@@ -21,7 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../../testing';
 import { DateCellComponent } from '../date-cell/date-cell.component';
 
-xdescribe('DateCellComponent', () => {
+describe('DateCellComponent', () => {
     let appConfigService: AppConfigService;
     let userPreferencesService: UserPreferencesService;
     let fixture: ComponentFixture<DateCellComponent>;

@@ -24,7 +24,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 
-xdescribe('CardViewArrayItemComponent', () => {
+describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
     let service: CardViewUpdateService;
