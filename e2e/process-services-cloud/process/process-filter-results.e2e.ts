@@ -36,6 +36,7 @@ import { ProcessListPage } from '../../process-services/pages/process-list.page'
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
 import { addDays, format, subDays } from 'date-fns';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 
 describe('Process filters cloud', () => {
@@ -67,9 +68,9 @@ describe('Process filters cloud', () => {
     const queryService = new QueryService(apiService);
     const tasksService = new TasksService(apiService);
 
-    const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
+    const beforeDate = DateFnsUtils.formatDate(subDays(new Date(), 1), 'DD/MM/YYYY');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
-    const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
+    const afterDate = DateFnsUtils.formatDate(addDays(new Date(), 1), 'DD/MM/YYYY');
     const processListCloudConfiguration = new ProcessListCloudConfiguration();
     const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
     const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
