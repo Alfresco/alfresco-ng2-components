@@ -275,7 +275,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     * Get the the material icons equivalent of the glyphicon icon
+     * Get the material icons equivalent of the glyphicon icon
      *
      * @param icon glyphicon name
      * @returns material icons equivalent of the icon
