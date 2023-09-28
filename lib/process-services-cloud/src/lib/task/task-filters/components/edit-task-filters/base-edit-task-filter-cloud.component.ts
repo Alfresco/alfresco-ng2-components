@@ -30,7 +30,7 @@ import { IdentityUserModel } from '../../../../people/models/identity-user.model
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
-import {format,isValid} from 'date-fns';
+import {isValid} from 'date-fns';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DatetimeAdapter } from '@mat-datetimepicker/core';
 
@@ -292,7 +292,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            const date = format(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
+            const date = DateFnsUtils.formatDate(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
             const controller = this.getPropertyController(dateProperty);
 
             if (isValid(date)) {
