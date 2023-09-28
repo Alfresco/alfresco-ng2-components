@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
+import { ActivitiContentApi, RelatedContentRepresentation, ResultListDataRepresentationRelatedProcessTask } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -181,6 +181,19 @@ export class ProcessContentService {
     createTaskRelatedContent(taskId: string, file: any, opts?: any) {
         return from(this.contentApi.createRelatedContentOnTask(taskId, file, opts))
             .pipe(catchError((err) => this.handleError(err)));
+    }
+
+    /**
+     * Lists processes and tasks on workflow started with provided document
+     *
+     * @param sourceId - id of the document that workflow or task has been started with
+     * @param source - source of the document that workflow or task has been started with
+     * @param size - size of the entries to get
+     * @param page - page number
+     * @return Promise<ResultListDataRepresentationRelatedProcessTask>
+     */
+    getProcessesAndTasksOnContent(sourceId: string, source: string, size?: number, page?: number): Observable<ResultListDataRepresentationRelatedProcessTask> {
+        return from(this.contentApi.getProcessesAndTasksOnContent(sourceId, source, size, page)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
