@@ -28,7 +28,8 @@ import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-oper
 })
 export class CheckAllowableOperationDirective implements OnChanges {
 
-    /** Node permission to check (create, delete, update, updatePermissions,
+    /**
+     * Node permission to check (create, delete, update, updatePermissions,
      * !create, !delete, !update, !updatePermissions).
      */
     @Input('adf-check-allowable-operation')
@@ -57,7 +58,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
     /**
      * Updates disabled state for the decorated element
      *
-     * @memberof CheckAllowableOperationDirective
+     * @returns the new state
      */
     updateElement(): boolean {
         const enable = this.hasAllowableOperations(this.nodes, this.permission);
@@ -112,7 +113,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
      *
      * @param  nodes Node collection to check
      * @param  permission Permission to check for each node
-     * @memberof CheckAllowableOperationDirective
+     * @returns `true` if there are allowable operations, otherwise `false`
      */
     hasAllowableOperations(nodes: NodeEntry[], permission: string): boolean {
         if (nodes && nodes.length > 0) {

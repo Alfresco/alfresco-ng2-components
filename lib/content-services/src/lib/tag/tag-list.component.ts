@@ -56,11 +56,6 @@ export class TagListComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    /**
-     * Constructor
-     *
-     * @param tagService
-     */
     constructor(private tagService: TagService) {
 
         this.defaultPagination = {

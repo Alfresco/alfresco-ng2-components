@@ -50,16 +50,30 @@ describe('SearchFacetChipTabbedComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Open the facet
+     */
     function openFacet() {
         const chip = fixture.debugElement.query(By.css('mat-chip'));
         chip.triggerEventHandler('click', {});
         fixture.detectChanges();
     }
 
+    /**
+     * Get the filter display value
+     *
+     * @returns filter value
+     */
     function getDisplayValue(): string {
         return fixture.debugElement.query(By.css('.adf-search-filter-ellipsis.adf-filter-value')).nativeElement.innerText.trim();
     }
 
+    /**
+     * Emit the event for the tabbed content
+     *
+     * @param eventName event name to trigger
+     * @param event event to trigger
+     */
     function emitChildEvent(eventName: string, event: any) {
         const debugElem = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         debugElem.triggerEventHandler(eventName, event);
@@ -98,7 +112,7 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     it('should display adf-search-facet-tabbed-content component', () => {
         openFacet();
-        let activeTabLabel = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
+        const activeTabLabel = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         expect(activeTabLabel).toBeTruthy();
     });
 

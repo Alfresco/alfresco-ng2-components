@@ -64,7 +64,8 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     @Input()
     skipResults: number = 0;
 
-    /** Search term to use when executing the search. Updating this value will
+    /**
+     * Search term to use when executing the search. Updating this value will
      * run a new search and update the results.
      */
     @Input()

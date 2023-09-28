@@ -31,7 +31,7 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     /**
      * Dialog title to show into the header.
      * If data.title is not provided, a default title is set
-     * */
+     */
     title: string;
 
     /** Emitted when an action is done. */

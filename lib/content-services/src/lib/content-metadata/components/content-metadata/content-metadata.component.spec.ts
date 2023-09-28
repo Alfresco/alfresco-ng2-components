@@ -92,18 +92,38 @@ describe('ContentMetadataComponent', () => {
     const findShowingTagInputButton = (): HTMLButtonElement =>
         fixture.debugElement.query(By.css('[data-automation-id=showing-tag-input-button]')).nativeElement;
 
+    /**
+     * Get metadata categories
+     *
+     * @returns list of native elements
+     */
     function getCategories(): HTMLParagraphElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-metadata-categories'))?.map((debugElem) => debugElem.nativeElement);
     }
 
+    /**
+     * Get a categories management component
+     *
+     * @returns angular component
+     */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {
         return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
     }
 
+    /**
+     * Get categories title button
+     *
+     * @returns native element
+     */
     function getAssignCategoriesBtn(): HTMLButtonElement {
         return fixture.debugElement.query(By.css('.adf-metadata-categories-title button')).nativeElement;
     }
 
+    /**
+     * Update aspect property
+     *
+     * @param newValue value to set
+     */
     async function updateAspectProperty(newValue: string): Promise<void> {
         component.editable = true;
         const property = { key: 'properties.property-key', value: 'original-value' } as CardViewBaseItemModel;

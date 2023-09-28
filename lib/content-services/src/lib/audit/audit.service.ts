@@ -68,7 +68,7 @@ export class AuditService {
      * @param auditApplicationId The identifier of an audit application.
      * @param auditAppBodyUpdate The audit application to update.
      * @param opts Options.
-     * @returns
+     * @returns audit application model
      */
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | any> {
         const defaultOptions = {};
@@ -117,7 +117,7 @@ export class AuditService {
      *
      * @param nodeId The identifier of a node.
      * @param opts Options.
-     * @returns
+     * @returns audit entry list
      */
     getAuditEntriesForNode(nodeId: string, opts?: any): Observable<AuditEntryPaging> {
         const defaultOptions = {
@@ -132,7 +132,7 @@ export class AuditService {
      *
      * @param auditApplicationId The identifier of an audit application.
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids.
-     * @returns
+     * @returns void operation
      */
     deleteAuditEntries(auditApplicationId: string, where: string): Observable<any> {
         return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where)).pipe(catchError((err: any) => this.handleError(err)));
@@ -143,7 +143,7 @@ export class AuditService {
      *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
-     * @returns
+     * @returns void operation
      */
     deleteAuditEntry(auditApplicationId: string, auditEntryId: string): Observable<any> {
         return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId)).pipe(catchError((err: any) => this.handleError(err)));

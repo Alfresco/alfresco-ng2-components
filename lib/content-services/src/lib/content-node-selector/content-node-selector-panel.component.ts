@@ -81,14 +81,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     currentFolderId: string = null;
 
-    /** Hide the "My Files" option added to the site list by default.
+    /**
+     * Hide the "My Files" option added to the site list by default.
      * See the [Sites Dropdown component](sites-dropdown.component.md)
      * for more information.
      */
     @Input()
     dropdownHideMyFiles: boolean = false;
 
-    /** Custom site for site dropdown. This is the same as the `siteList`.
+    /**
+     * Custom site for site dropdown. This is the same as the `siteList`.
      * property of the Sites Dropdown component (see its doc page
      * for more information).
      */
@@ -97,7 +99,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     _rowFilter: RowFilter = defaultValidation;
 
-    /** Custom *where* filter function. See the
+    /**
+     * Custom *where* filter function. See the
      * Document List component
      * for more information.
      */
@@ -120,7 +123,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     _excludeSiteContent: string[] = [];
 
-    /** Custom list of site content componentIds.
+    /**
+     * Custom list of site content componentIds.
      * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
@@ -149,13 +153,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     selectionMode: 'single' | 'multiple' = 'single';
 
-    /** Function used to decide if the selected node has permission to be selected.
+    /**
+     * Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
      */
     @Input()
     isSelectionValid: ValidationFunction = defaultValidation;
 
-    /** Transformation to be performed on the chosen/folder node before building the
+    /**
+     * Transformation to be performed on the chosen/folder node before building the
      * breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb.
      * You can change the path elements from the node that are used to build the
      * breadcrumb using this function.
@@ -427,7 +433,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
+     * Get current breadcrumb folder node
+     *
+     * @returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
     get breadcrumbFolderNode(): Node | null {
         let folderNode: Node;
@@ -443,6 +451,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Prepares the dialog for a new search
+     *
+     * @param searchRequest request options
      */
     prepareDialogForNewSearch(searchRequest: SearchRequest): void {
         this.target = searchRequest ? null : this.documentList;
@@ -527,6 +537,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
+     *
+     * @param $event node event
      */
     onFolderChange($event: NodeEntryEvent): void {
         this.folderIdToShow = $event.value.id;
@@ -540,6 +552,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Attempts to set the currently loaded node
+     *
+     * @param nodePaging pagination model
      */
     onFolderLoaded(nodePaging: NodePaging): void {
         setTimeout(() => {
@@ -554,6 +568,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
+     *
+     * @param nodePaging pagination model
      */
     updatePaginationAfterRowFilter(nodePaging: NodePaging): void {
         if (this.documentList.data.getRows().length < nodePaging.list.pagination.maxItems) {
@@ -563,6 +579,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Returns whether breadcrumb has to be shown or not
+     *
+     * @returns `true` if needs to show the breadcrumb, otherwise `false`
      */
     showBreadcrumbs() {
         return !this.showingSearchResults || this.chosenNode;
@@ -586,7 +604,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Selects node as chosen if it has the right permission, clears the selection otherwise
      *
-     * @param entry
+     * @param entry node entry
      */
     private attemptNodeSelection(entry: Node): void {
         if (entry && this.isSelectionValid(entry)) {
@@ -604,7 +622,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * It filters and emit the selection coming from the document list
      *
-     * @param nodesEntries
+     * @param nodesEntries selected nodes
      */
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
         const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));

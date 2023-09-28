@@ -285,6 +285,8 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds the current query and triggers the `updated` event.
+     *
+     * @param queryBody query settings
      */
     update(queryBody?: SearchRequest): void {
         const query = queryBody ? queryBody : this.buildQuery();
@@ -294,7 +296,7 @@ export abstract class BaseQueryBuilderService {
     /**
      * Builds and executes the current query.
      *
-     * @returns Nothing
+     * @param queryBody query settings
      */
     async execute(queryBody?: SearchRequest) {
         try {

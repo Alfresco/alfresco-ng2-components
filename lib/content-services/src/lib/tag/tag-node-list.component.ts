@@ -88,12 +88,6 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit, After
         this.changeDetectorRef.detectChanges();
     });
 
-    /**
-     * Constructor
-     *
-     * @param tagService
-     * @param changeDetectorRef
-     */
     constructor(private tagService: TagService, private changeDetectorRef: ChangeDetectorRef) {
     }
 

@@ -57,6 +57,11 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Add new auto-complete input
+     *
+     * @param value value to add
+     */
     function addNewOption(value: string) {
         const inputElement = fixture.debugElement.query(By.css('adf-search-chip-autocomplete-input input')).nativeElement;
         inputElement.value = value;

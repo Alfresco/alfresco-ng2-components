@@ -35,56 +35,59 @@ export class ContentMetadataCardComponent implements OnChanges {
     @Input()
     node: Node;
 
-    /** (optional) This flag displays/hides empty metadata
+    /**
+     * This flag displays/hides empty metadata
      * fields.
      */
     @Input()
-    displayEmpty: boolean = false;
+    displayEmpty?: boolean = false;
 
-    /** (optional) This flag displays desired aspect when open for the first time
-     * fields.
+    /**
+     * This flag displays desired aspect when open for the first time fields.
      */
     @Input()
-    displayAspect: string = null;
+    displayAspect?: string = null;
 
-    /** Display tags in the card **/
+    /** Display tags in the card */
     @Input()
     displayTags = true;
 
-    /** Display categories in the card **/
+    /** Display categories in the card */
     @Input()
     displayCategories = true;
 
-    /** (required) Name or configuration of the metadata preset, which defines aspects
+    /**
+     * Name or configuration of the metadata preset, which defines aspects
      * and their properties.
      */
     @Input()
     preset: string | PresetConfig;
 
-    /** (optional) This flag sets the metadata in read only mode
-     * preventing changes.
+    /**
+     * This flag sets the metadata in read only mode preventing changes.
      */
     @Input()
-    readOnly = false;
+    readOnly? = false;
 
-    /** (optional) This flag allows the component to display more
+    /**
+     * This flag allows the component to display more
      * than one accordion at a time.
      */
     @Input()
-    multi = false;
+    multi? = false;
 
-    /** (optional) This flag toggles editable of content. **/
+    /** This flag toggles editable of content. */
     @Input()
-    editable = false;
+    editable? = false;
 
-    /** Emitted when content's editable state is changed. **/
+    /** Emitted when content's editable state is changed. */
     @Output()
     editableChange = new EventEmitter<boolean>();
 
     private _displayDefaultProperties: boolean = true;
 
-    /** (optional) This flag displays/hides the metadata
-     * properties.
+    /**
+     * This flag displays/hides the metadata properties.
      */
     @Input()
     set displayDefaultProperties(value: boolean) {

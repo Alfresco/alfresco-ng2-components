@@ -80,10 +80,10 @@ export class SecurityControlsService {
     /**
      * Get All security groups
      *
-     * @param include Additional information about the security group
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
-     * @return Promise<SecurityControlsGroupResponse>
+     * @param include Additional information about the security group
+     * @returns Promise<SecurityControlsGroupResponse>
      */
     getSecurityGroup(
         skipCount = DEFAULT_SKIP_COUNT,
@@ -117,7 +117,7 @@ export class SecurityControlsService {
      * Create security group
      *
      * @param input securityGroupBody.
-     * @return Observable<SecurityGroupEntry>
+     * @returns Observable<SecurityGroupEntry>
      */
     createSecurityGroup(
         input: SecurityGroupBody
@@ -141,7 +141,7 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param input securityMarkBody[].
-     * @return Promise<SecurityMarkPaging | SecurityMarkEntry>
+     * @returns Promise<SecurityMarkPaging | SecurityMarkEntry>
      */
     createSecurityMarks(
         securityGroupId: string,
@@ -170,7 +170,7 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param skipCount The number of entities that exist in the collection before those included in this list.
-     * @return Promise<SecurityControlsMarkResponse>
+     * @returns Promise<SecurityControlsMarkResponse>
      */
     getSecurityMark(
         securityGroupId: string,
@@ -203,7 +203,7 @@ export class SecurityControlsService {
      * @param securityGroupId The Key of Security Group id for which info is required
      * @param input SecurityGroupBody
      * @param opts additional information about the security group
-     * @return Promise<SecurityGroupEntry>
+     * @returns Promise<SecurityGroupEntry>
      */
     updateSecurityGroup(
         securityGroupId: string,
@@ -242,7 +242,7 @@ export class SecurityControlsService {
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark is in use or not.
      * @param input securityMarkBody.
-     * @return Promise<SecurityMarkEntry>
+     * @returns Promise<SecurityMarkEntry>
      */
     updateSecurityMark(
         securityGroupId: string,
@@ -274,7 +274,7 @@ export class SecurityControlsService {
      * Delete security group
      *
      * @param securityGroupId The key for the security group id.
-     * @return Observable<void>
+     * @returns Observable<void>
      */
     deleteSecurityGroup(
         securityGroupId: string
@@ -292,7 +292,7 @@ export class SecurityControlsService {
      *
      * @param securityGroupId The key for the security group id.
      * @param securityMarkId The key for the security mark id.
-     * @return Promise<SecurityMarkEntry>
+     * @returns Promise<SecurityMarkEntry>
      */
     deleteSecurityMark(
         securityGroupId: string,
@@ -321,7 +321,7 @@ export class SecurityControlsService {
      * @param authorityName The name for the authority for which the clearance is to be fetched. Can be left blank in which case it will fetch it for all users with pagination
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
-     * @return Observable<AuthorityClearanceGroupPaging>
+     * @returns Observable<AuthorityClearanceGroupPaging>
      */
     getClearancesForAuthority(
         authorityName: string,
@@ -345,7 +345,7 @@ export class SecurityControlsService {
      *
      * @param authorityName The name for the authority for which the clearance is to be updated
      * @param securityMarksList NodeSecurityMarkBody[]
-     * @return Observable<SecurityMarkEntry | SecurityMarkPaging>
+     * @returns Observable<SecurityMarkEntry | SecurityMarkPaging>
      */
     updateClearancesForAuthority(authorityName: string, securityMarksList: NodeSecurityMarkBody[]): Observable<SecurityMarkEntry | SecurityMarkPaging> {
         this.loadingSource.next(true);

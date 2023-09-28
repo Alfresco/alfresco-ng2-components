@@ -137,7 +137,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     display: string = DisplayMode.List;
 
-    /** Define a set of CSS styles to apply depending on the permission
+    /**
+     * Define a set of CSS styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.
      */
@@ -156,7 +157,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     showHeader = ShowHeaderMode.Data;
 
-    /** User interaction for folder navigation or file preview.
+    /**
+     * User interaction for folder navigation or file preview.
      * Valid values are "click" and "dblclick". Default value: "dblclick"
      */
     @Input()
@@ -166,7 +168,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     thumbnails: boolean = false;
 
-    /** Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
+    /**
+     * Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
     @Input()
@@ -203,21 +206,24 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     allowDropFiles: boolean = false;
 
-    /** Defines default sorting. The format is an array of 2 strings `[key, direction]`
+    /**
+     * Defines default sorting. The format is an array of 2 strings `[key, direction]`
      * i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to
      * override the default sorting detected by the component based on columns.
      */
     @Input()
     sorting: string[] | DataSorting = ['name', 'asc'];
 
-    /** Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]`
+    /**
+     * Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]`
      * i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base
      * rule to be added to the sorting apart from the one driven by the header.
      */
     @Input()
     additionalSorting: DataSorting = new DataSorting('isFolder', 'desc');
 
-    /** Defines sorting mode. Can be either `client` (items in the list
+    /**
+     * Defines sorting mode. Can be either `client` (items in the list
      * are sorted client-side) or `server` (the ordering supplied by the
      * server is used without further client-side sorting).
      * Note that the `server` option *does not* request the server to sort the data
@@ -226,7 +232,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     sortingMode: 'server' | 'client' = 'server';
 
-    /** The inline style to apply to every row. See
+    /**
+     * The inline style to apply to every row. See
      * the Angular NgStyle
      * docs for more details and usage examples.
      */
@@ -237,14 +244,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     rowStyleClass: string;
 
-    /** Toggles the loading state and animated spinners for the component. Used in
+    /**
+     * Toggles the loading state and animated spinners for the component. Used in
      * combination with `navigate=false` to perform custom navigation and loading
      * state indication.
      */
     @Input()
     loading: boolean = false;
 
-    /** @hidden */
     @Input()
     _rowFilter: RowFilter | null = null;
 
@@ -292,7 +299,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
-    /** Array of nodes to be pre-selected. All nodes in the
+    /**
+     * Array of nodes to be pre-selected. All nodes in the
      * array are pre-selected in multi selection mode, but only the first node
      * is pre-selected in single selection mode.
      */
@@ -319,7 +327,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     folderChange = new EventEmitter<NodeEntryEvent>();
 
-    /** Emitted when the user acts upon files with either single or double click
+    /**
+     * Emitted when the user acts upon files with either single or double click
      * (depends on `navigation-mode`). Useful for integration with the
      * Viewer component.
      */
@@ -765,6 +774,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /**
      * Creates a set of predefined columns.
+     * @param preset preset to use
      */
     private setupDefaultColumns(preset: string = 'default'): void {
         if (this.data) {

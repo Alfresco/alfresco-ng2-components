@@ -34,26 +34,30 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     folderNode: Node = null;
 
-    /** (optional) Name of the root element of the breadcrumb. You can use
+    /**
+     * Name of the root element of the breadcrumb. You can use
      * this property to rename "Company Home" to "Personal Files" for
      * example. You can use an i18n resource key for the property value.
      */
     @Input()
-    root: string = null;
+    root?: string = null;
 
-    /** (optional) The id of the root element. You can use this property
+    /**
+     * The id of the root element. You can use this property
      * to set a custom element the breadcrumb should start with.
      */
     @Input()
-    rootId: string = null;
+    rootId?: string = null;
 
-    /** (optional) Document List component to operate with. The list will
+    /**
+     * Document List component to operate with. The list will
      * update when the breadcrumb is clicked.
      */
     @Input()
-    target: DocumentListComponent;
+    target?: DocumentListComponent;
 
-    /** Transformation to be performed on the chosen/folder node before building
+    /**
+     * Transformation to be performed on the chosen/folder node before building
      * the breadcrumb UI. Can be useful when custom formatting is needed for the
      * breadcrumb. You can change the path elements from the node that are used to
      * build the breadcrumb using this function.

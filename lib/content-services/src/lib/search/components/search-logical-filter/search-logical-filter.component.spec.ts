@@ -47,14 +47,30 @@ describe('SearchLogicalFilterComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Get search input elements
+     *
+     * @returns list of native elements
+     */
     function getInputs(): HTMLInputElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-search-input input')).map((input) => input.nativeElement);
     }
 
+    /**
+     * Get input label elements
+     *
+     * @returns list of labels
+     */
     function getInputsLabels(): string[] {
         return fixture.debugElement.queryAll(By.css('.adf-search-input mat-label')).map((label) => label.nativeElement.innerText);
     }
 
+    /**
+     * Enters a new phrase
+     *
+     * @param value new value
+     * @param index value index
+     */
     function enterNewPhrase(value: string, index: number) {
         const inputs = getInputs();
         inputs[index].value = value;
