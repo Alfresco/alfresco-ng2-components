@@ -4,7 +4,7 @@
             height: 56px;
 
             .adf-metadata-properties-title {
-                font-weight: normal;
+                font-weight: 700;
                 font-size: 15px;
                 padding-left: 12px;
             }
@@ -78,7 +78,10 @@
     &-metadata-action-buttons {
         display: flex;
         justify-content: space-evenly;
-        margin: 10px;
+
+        &-clear {
+          color: var(--theme-metadata-action-button-clear-color);  
+        }
     }
 
     &-metadata-categories-header {
@@ -111,7 +114,7 @@
 }
 
 .adf-content-metadata-card {
-    .mat-card:not([class*='mat-elevation-z']) {
+    .mat-card {
         box-shadow: none;
     }
 }

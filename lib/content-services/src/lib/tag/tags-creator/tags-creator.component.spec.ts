@@ -337,15 +337,16 @@ describe('TagsCreatorComponent', () => {
             });
         });
 
-        describe('isTagsEmpty', () => {
-            it('should return true when tags is not empty', () => {
+        describe('hasTags', () => {
+            it('should return true when has tags', () => {
                 component.tags = ['new tag 1', 'new tag 2'];
-                const result = component.isTagsEmpty;
+                const result = component.hasTags;
                 expect(result).toBeTrue();
             });
-            it('should return false when tags is empty', () => {
+
+            it('should return false when does not have tags', () => {
                 component.tags = [];
-                const result = component.isTagsEmpty;
+                const result = component.hasTags;
                 expect(result).toBeFalse();
             });
         });
