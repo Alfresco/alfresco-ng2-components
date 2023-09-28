@@ -222,14 +222,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
         const accountIdentifier = `alfresco-${repository.id}-${repository.name}`;
-        this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe((selections: any[]) => {
-            selections.forEach((node) => (node.isExternal = true));
+        this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe((selections) => {
+            selections.forEach((node) => (node['isExternal'] = true));
             this.tempFilesList.push(...selections);
             this.uploadFileFromCS(selections, accountIdentifier);
         });
     }
 
-    private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
+    private uploadFileFromCS(fileNodeList: Node[], accountId: string, siteId?: string) {
         const filesSaved = [];
 
         fileNodeList.forEach((node) => {
@@ -239,13 +239,13 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         from(fileNodeList)
             .pipe(
                 mergeMap((node) =>
-                    zip(of(node?.content?.mimeType), this.activitiContentService.applyAlfrescoNode(node, siteId, accountId), of(node.isExternal))
+                    zip(of(node?.content?.mimeType), this.activitiContentService.applyAlfrescoNode(node, siteId, accountId), of(node['isExternal']))
                 )
             )
             .subscribe(
                 ([mimeType, res, isExternal]) => {
                     res.mimeType = mimeType;
-                    res.isExternal = isExternal;
+                    res['isExternal'] = isExternal;
                     filesSaved.push(res);
                 },
                 (error) => {

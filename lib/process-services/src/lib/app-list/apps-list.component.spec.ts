@@ -25,6 +25,7 @@ import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.moc
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppDefinitionRepresentationModel } from '../task-list';
 
 describe('AppsListComponent', () => {
 
@@ -153,7 +154,7 @@ describe('AppsListComponent', () => {
             const appDataMock = {
                 defaultAppId: 'tasks',
                 name: null
-            };
+            } as AppDefinitionRepresentationModel;
             component.getAppName(appDataMock).subscribe((name) => {
                 expect(name).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
             });
@@ -163,7 +164,7 @@ describe('AppsListComponent', () => {
             const appDataMock = {
                 defaultAppId: 'uiu',
                 name: 'the-name'
-            };
+            } as AppDefinitionRepresentationModel;
 
             component.getAppName(appDataMock).subscribe((name) => {
                 expect(name).toBe(appDataMock.name);
