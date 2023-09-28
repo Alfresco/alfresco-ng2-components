@@ -21,6 +21,12 @@ import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 
+/**
+ * Create auth configuration factory
+ *
+ * @param authConfigService auth config service
+ * @returns factory function
+ */
 export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {
     return authConfigService.loadConfig();
 }

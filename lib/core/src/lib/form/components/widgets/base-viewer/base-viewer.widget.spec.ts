@@ -72,6 +72,16 @@ describe('BaseViewerWidgetComponent', () => {
     });
 });
 
+/**
+ * Assert the field value
+ *
+ * @param value field value
+ * @param expectedFileId field id
+ * @param fakeForm form model
+ * @param widget form widget
+ * @param fixture test fixture
+ * @param done callback
+ */
 function assertFileId(value: any, expectedFileId: string, fakeForm: FormModel, widget: BaseViewerWidgetComponent, fixture: ComponentFixture<BaseViewerWidgetComponent>, done: DoneFn) {
     const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value });
     widget.field = fakeField;

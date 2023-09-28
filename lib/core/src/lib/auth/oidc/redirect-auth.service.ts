@@ -34,7 +34,11 @@ export class RedirectAuthService extends AuthService {
   /** Subscribe to errors reaching the IdP. */
   idpUnreachable$!: Observable<Error>;
 
-  /** Get whether the user has valid Id/Access tokens. */
+  /**
+   * Get whether the user has valid Id/Access tokens.
+   *
+   * @returns `true` if the user is authenticated, otherwise `false`
+   */
   get authenticated(): boolean {
     return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
   }

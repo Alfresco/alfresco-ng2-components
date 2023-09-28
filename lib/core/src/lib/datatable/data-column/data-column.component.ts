@@ -29,8 +29,9 @@ export class DataColumnComponent implements OnInit {
     @Input()
     id: string = '';
 
-    /** Data source key. Can be either a column/property key like `title`
-     *  or a property path like `createdBy.name`.
+    /**
+     * Data source key. Can be either a column/property key like `title`
+     * or a property path like `createdBy.name`.
      */
     @Input()
     key: string;
@@ -39,7 +40,8 @@ export class DataColumnComponent implements OnInit {
     @Input()
     customData: any;
 
-    /** Value type for the column. Possible settings are 'text', 'image',
+    /**
+     * Value type for the column. Possible settings are 'text', 'image',
      * 'date', 'fileSize', 'location', and 'json'.
      */
     @Input()
@@ -61,7 +63,8 @@ export class DataColumnComponent implements OnInit {
     @Input()
     isHidden: boolean = false;
 
-    /** Display title of the column, typically used for column headers. You can use the
+    /**
+     * Display title of the column, typically used for column headers. You can use the
      * i18n resource key to get it translated automatically.
      */
     @Input()
@@ -98,7 +101,7 @@ export class DataColumnComponent implements OnInit {
     @Input()
     sortingKey: string;
 
-    /** Sets position of column. **/
+    /** Sets position of column. */
     @Input()
     order?: number;
 

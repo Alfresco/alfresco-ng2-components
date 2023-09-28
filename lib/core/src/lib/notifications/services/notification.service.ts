@@ -70,6 +70,7 @@ export class NotificationService {
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
      * @param showAction True if action should be visible, false if not. Default: true.
+     * @returns snackbar reference
      */
     showError(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
         return this.dispatchNotification(message, action, {
@@ -87,6 +88,7 @@ export class NotificationService {
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
      * @param showAction True if action should be visible, false if not. Default: true.
+     * @returns snackbar reference
      */
     showInfo(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
         return this.dispatchNotification(message, action, {
@@ -104,6 +106,7 @@ export class NotificationService {
      * @param action Action name
      * @param interpolateArgs The interpolation parameters to add for the translation
      * @param showAction True if action should be visible, false if not. Default: true.
+     * @returns snackbar reference
      */
     showWarning(message: string, action?: string, interpolateArgs?: any, showAction = true): MatSnackBarRef<any> {
         return this.dispatchNotification(message, action, {
@@ -117,8 +120,8 @@ export class NotificationService {
     /**
      *  dismiss the notification snackbar
      */
-    dismissSnackMessageAction() {
-        return this.snackBar.dismiss();
+    dismissSnackMessageAction(): void {
+        this.snackBar.dismiss();
     }
 
     /**

@@ -20,6 +20,12 @@ import { Injectable } from '@angular/core';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
+/**
+ * Create a factory to resolve an api service instance
+ *
+ * @param angularAlfrescoApiService loader service
+ * @returns factory function
+ */
 export function createAlfrescoApiInstance(angularAlfrescoApiService: AlfrescoApiLoaderService) {
     return () => angularAlfrescoApiService.init();
 }

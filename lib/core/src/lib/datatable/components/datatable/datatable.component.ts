@@ -103,7 +103,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     rows: any[] = [];
 
-    /** Define the sort order of the datatable. Possible values are :
+    /**
+     * Define the sort order of the datatable. Possible values are :
      * [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`]
      */
     @Input()
@@ -113,7 +114,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     columns: any[] = [];
 
-    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /**
+     * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.
      */
     @Input()
@@ -151,7 +153,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     contextMenu: boolean = false;
 
-    /** The inline style to apply to every row. See
+    /**
+     * The inline style to apply to every row. See
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
      * docs for more details and usage examples.
      */
@@ -198,7 +201,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Output()
     columnsWidthChanged = new EventEmitter<DataColumn[]>();
 
-    /** Flag that indicates if the datatable is in loading state and needs to show the
+    /**
+     * Flag that indicates if the datatable is in loading state and needs to show the
      * loading template (see the docs to learn how to configure a loading template).
      */
     @Input()

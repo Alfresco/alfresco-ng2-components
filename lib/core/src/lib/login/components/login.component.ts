@@ -42,6 +42,11 @@ interface ValidationMessage {
     params?: any;
 }
 
+interface LoginFormValues {
+    username: string;
+    password: string;
+};
+
 @Component({
     selector: 'adf-login',
     templateUrl: './login.component.html',
@@ -182,9 +187,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Method called on submit form
      *
-     * @param values
+     * @param values login form values
      */
-    onSubmit(values: any): void {
+    onSubmit(values: LoginFormValues): void {
         this.disableError();
 
         const args = new LoginSubmitEvent({
@@ -208,7 +213,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * The method check the error in the form and push the error in the formError object
      *
-     * @param data
+     * @param data form data
      */
     onValueChanged(data: any) {
         this.disableError();
@@ -232,7 +237,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    performLogin(values: { username: string; password: string }) {
+    performLogin(values: LoginFormValues) {
         this.authService.login(values.username, values.password, this.rememberMe).subscribe(
             (token) => {
                 const redirectUrl = this.authService.getRedirect();
@@ -260,6 +265,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * Check and display the right error message in the UI
+     *
+     * @param err error object
      */
     private displayErrorMessage(err: any): void {
         if (err.error?.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
@@ -276,8 +283,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Add a custom form error for a field
      *
-     * @param field
-     * @param msg
+     * @param field field
+     * @param msg error message
      */
     public addCustomFormError(field: string, msg: string) {
         this.formError[field] += msg;
@@ -286,10 +293,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Add a custom validation rule error for a field
      *
-     * @param field
+     * @param field field
      * @param ruleId - i.e. required | minlength | maxlength
-     * @param msg
-     * @param params
+     * @param msg message
+     * @param params parameters
      */
     addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
         if (field !== '__proto__' && field !== 'constructor' && field !== 'prototype') {
@@ -302,6 +309,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     /**
      * Display and hide the password value.
+     *
+     * @param event input event
      */
     toggleShowPassword(event: Event) {
         event.stopPropagation();
@@ -311,14 +320,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * The method return if a field is valid or not
      *
-     * @param field
+     * @param field form field to check
+     * @returns `true` if form field should display an error, otherwise `false`
      */
-    isErrorStyle(field: AbstractControl) {
+    isErrorStyle(field: AbstractControl): boolean {
         return !field.valid && field.dirty && !field.pristine;
     }
 
     /**
      * Trim username
+     *
+     * @param event event
      */
     trimUsername(event: any) {
         event.target.value = event.target.value.trim();

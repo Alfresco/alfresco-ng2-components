@@ -32,7 +32,8 @@ export class UploadDirective implements OnInit, OnDestroy {
     @Input('adf-upload-data')
     data: any;
 
-    /** Upload mode. Can be "drop" (receives dropped files) or "click"
+    /**
+     * Upload mode. Can be "drop" (receives dropped files) or "click"
      * (clicking opens a file dialog). Both modes can be active at once.
      */
     @Input()
@@ -191,6 +192,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      * Extract files from the DataTransfer object used to hold the data that is being dragged during a drag and drop operation.
      *
      * @param dataTransfer DataTransfer object
+     * @returns a list of file info objects
      */
     getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
         return new Promise((resolve) => {

@@ -36,6 +36,12 @@ describe('UserAccessService', () => {
         appConfigService = TestBed.inject(AppConfigService);
     });
 
+    /**
+     * spy on auth realm access
+     *
+     * @param realmRoles roles
+     * @param resourceAccess access settings
+     */
     function spyRealmAccess(realmRoles: string[], resourceAccess: any) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
@@ -44,6 +50,12 @@ describe('UserAccessService', () => {
         });
     }
 
+    /**
+     * spy on HxP authorisation
+     *
+     * @param appkey app key
+     * @param roles roles list
+     */
     function spyHxpAuthorization(appkey: string, roles: string[]) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({

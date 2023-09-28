@@ -57,6 +57,9 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
 
 /**
  * Removes null and undefined values from an object.
+ *
+ * @param obj object to process
+ * @returns object with updated values
  */
 export const removeNilValues = (obj: Record<string | number, unknown>) => {
 

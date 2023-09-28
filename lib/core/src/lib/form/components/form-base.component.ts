@@ -79,19 +79,20 @@ export abstract class FormBaseComponent {
 
     /** Emitted when the supplied form values have a validation error. */
     @Output()
-    formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
+    formError = new EventEmitter<FormFieldModel[]>();
 
-    /** Emitted when any outcome is executed. Default behaviour can be prevented
+    /**
+     * Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
     @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+    executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
     /**
      * Emitted when any error occurs.
      */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     form: FormModel;
 
@@ -158,6 +159,7 @@ export abstract class FormBaseComponent {
      * Invoked when user clicks outcome button.
      *
      * @param outcome Form outcome model
+     * @returns `true` if outcome button was clicked, otherwise `false`
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {

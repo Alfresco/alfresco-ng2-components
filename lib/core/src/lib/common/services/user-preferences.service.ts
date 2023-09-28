@@ -217,7 +217,11 @@ export class UserPreferencesService {
         }
     }
 
-    /** Current locale setting. */
+    /**
+     * Current locale setting.
+     *
+     * @returns locale name
+     */
     get locale(): string {
         return this.get(UserPreferenceValues.Locale);
     }

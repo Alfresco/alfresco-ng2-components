@@ -39,7 +39,8 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     autocomplete: boolean = false;
 
-    /** Toggles whether to use an expanding search control. If false
+    /**
+     * Toggles whether to use an expanding search control. If false
      * then a regular input is used.
      */
     @Input()
@@ -93,19 +94,21 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Input()
     hintLabel = '';
 
-    /** Emitted when the search term is changed. The search term is provided
+    /**
+     * Emitted when the search term is changed. The search term is provided
      * in the 'value' property of the returned object.  If the term is less
      * than three characters in length then it is truncated to an empty
      * string.
      */
     @Output()
-    searchChange: EventEmitter<string> = new EventEmitter();
+    searchChange = new EventEmitter<string>();
 
-    /** Emitted when the search is submitted by pressing the ENTER key.
+    /**
+     * Emitted when the search is submitted by pressing the ENTER key.
      * The search term is provided as the value of the event.
      */
     @Output()
-    submit: EventEmitter<any> = new EventEmitter();
+    submit = new EventEmitter<any>();
 
     /**  Emitted when the result list is selected */
     @Output()

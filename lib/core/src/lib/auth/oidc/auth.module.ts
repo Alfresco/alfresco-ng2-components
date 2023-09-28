@@ -33,6 +33,14 @@ import { OIDCAuthenticationService } from './oidc-authentication.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 
+/**
+ * Create a Login Factory function
+ *
+ * @param oAuthService auth service
+ * @param storage storage service
+ * @param config auth configuration
+ * @returns a factory function
+ */
 export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, config: AuthConfig) {
     const service = new RedirectAuthService(oAuthService, storage, config);
     return () => service.init();

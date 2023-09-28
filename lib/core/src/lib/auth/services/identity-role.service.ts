@@ -48,6 +48,8 @@ export class IdentityRoleService {
     /**
      * Ret all roles
      *
+     * @param skipCount skip count
+     * @param size page size
      * @returns List of roles
      */
     getRoles(

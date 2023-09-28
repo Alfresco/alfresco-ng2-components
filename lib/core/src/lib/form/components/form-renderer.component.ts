@@ -78,6 +78,9 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
 
     /**
      * Serializes column fields
+     *
+     * @param content container model
+     * @returns a list of form field models
      */
     getContainerFields(content: ContainerModel): FormFieldModel[] {
         const serialisedFormFields: FormFieldModel[] = [];
@@ -113,7 +116,8 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
     /**
      * Calculate the column width based on the numberOfColumns and current field's colspan property
      *
-     * @param container
+     * @param container container model
+     * @returns the column width for the given model
      */
     getColumnWith(container: ContainerModel): string {
         const colspan = container ? container.field.colspan : 1;

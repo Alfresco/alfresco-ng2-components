@@ -75,6 +75,9 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Register multiple components
+     *
+     * @param components map of components to register
+     * @param override replace existing components
      */
     register(components: { [key: string]: DynamicComponentResolveFunction }, override: boolean = false) {
         if (components) {

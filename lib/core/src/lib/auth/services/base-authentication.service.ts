@@ -239,7 +239,8 @@ export abstract class BaseAuthenticationService {
         this.redirectUrl = url;
     }
 
-    /** Gets the URL to redirect to after login.
+    /**
+     * Gets the URL to redirect to after login.
      *
      * @returns The redirect URL
      */

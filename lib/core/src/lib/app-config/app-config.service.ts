@@ -215,6 +215,7 @@ export class AppConfigService {
     /**
      * Call the discovery API to fetch configuration
      *
+     * @param hostIdp host address
      * @returns Discovery configuration
      */
      loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
@@ -234,6 +235,8 @@ export class AppConfigService {
 
     /**
      * OAuth2 configuration
+     *
+     * @returns auth config model
      */
     get oauth2(): OauthConfigModel {
         const config = this.get(AppConfigValues.OAUTHCONFIG, {});

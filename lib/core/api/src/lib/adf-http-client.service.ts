@@ -316,6 +316,10 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
     /**
      * Deserialize an HTTP response body into a value of the specified type.
+     *
+     * @param response response object
+     * @param returnType return type
+     * @returns deserialized object
      */
     private static deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
 
