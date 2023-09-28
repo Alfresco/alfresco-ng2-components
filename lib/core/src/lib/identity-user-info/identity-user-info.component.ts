@@ -59,7 +59,7 @@ export class IdentityUserInfoComponent implements OnDestroy {
      * Can be `right` or `left`.
      */
     @Input()
-    namePosition: 'right' | 'left';
+    namePosition: 'right' | 'left' = 'right';
 
     private destroy$ = new Subject();
 

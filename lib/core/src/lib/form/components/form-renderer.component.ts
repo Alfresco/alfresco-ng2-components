@@ -80,7 +80,7 @@ export class FormRendererComponent<T> implements OnChanges, OnDestroy {
      * Serializes column fields
      *
      * @param content container model
-     * @returns a lit of form field models
+     * @returns a list of form field models
      */
     getContainerFields(content: ContainerModel): FormFieldModel[] {
         const serialisedFormFields: FormFieldModel[] = [];
