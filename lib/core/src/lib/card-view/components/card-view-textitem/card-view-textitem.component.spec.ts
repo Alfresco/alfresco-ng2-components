@@ -80,7 +80,7 @@ describe('CardViewTextItemComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip-row`));
         expect(valueChips).not.toBeNull();
         expect(valueChips.length).toBe(length);
         expect(valueChips[0].nativeElement.innerText.trim()).toBe(param1);
@@ -223,8 +223,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
-
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
@@ -235,8 +234,8 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
 
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
@@ -247,8 +246,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true,
                 multivalued: true
             };
-            renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
-
+            await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
         });
 
         it('should render string for multivalue properties when chips are disabled', async () => {
@@ -271,8 +269,8 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toBe('item1,item2,item3');
             expect(valueChips).toBeNull();
         });
-        // eslint-disable-next-line
-        xit('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
+
+        it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
             const cardViewTextItemObject = {
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -293,8 +291,8 @@ describe('CardViewTextItemComponent', () => {
             expect(labelElement).not.toBeNull();
             expect(labelElement.nativeElement.innerText).toBe('Text label');
         });
-        // eslint-disable-next-line
-        xit('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
+
+        it('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
             const cardViewTextItemObject = {
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],

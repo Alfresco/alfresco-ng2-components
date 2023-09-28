@@ -137,25 +137,25 @@ describe('Custom InfoDrawer', () => {
 
     it('should select the tab 1 (index 0) as default', () => {
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        const tab: any = fixture.debugElement.queryAll(By.css('.mdc-tab--active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('TAB1');
+        expect(tab[0].nativeElement.querySelector('.mdc-tab__text-label span').innerText).toContain('Tab1');
     });
 
     it('should select the tab 2 (index 1)', () => {
         component.tabIndex = 1;
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
+        const tab: any = fixture.debugElement.queryAll(By.css('.mdc-tab--active'));
         expect(tab.length).toBe(1);
-        expect(tab[0].nativeElement.innerText).toContain('TAB2');
+        expect(tab[0].nativeElement.querySelector('.mdc-tab__text-label span').innerText).toContain('Tab2');
     });
 
     it('should render a tab with icon', () => {
         component.tabIndex = 2;
         fixture.detectChanges();
-        const tab: any = fixture.debugElement.queryAll(By.css('.mat-tab-label-active'));
-        expect(tab[0].nativeElement.innerText).not.toBe('TAB3');
-        expect(tab[0].nativeElement.innerText).toContain('tab-icon');
+        const tab: any = fixture.debugElement.queryAll(By.css('.mdc-tab--active'));
+        expect(tab[0].nativeElement.querySelector('.mdc-tab__text-label span').innerText).toBe('Tab3');
+        expect(tab[0].nativeElement.querySelector('.mdc-tab__text-label mat-icon').innerText).toContain('tab-icon');
     });
 });
 
