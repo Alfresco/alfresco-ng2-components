@@ -49,8 +49,9 @@ import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-content-services';
 import { ButtonType } from './button-type.enum';
+import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
+import { ContentService } from '../../../common/services/content.service';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -151,12 +152,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     groupChange = new EventEmitter<CardViewGroup>();
 
+    /** (optional) This flag toggles editable of categories content. **/
     @Input()
     editableCategories = false;
 
+    /** (optional) This flag toggles editable of tags content. **/
     @Input()
     editableTags = false;
 
+    /** group content state **/
     @Input()
     group: CardViewGroup;
 
@@ -360,6 +364,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node);
     }
 
+    // Returns the editing state of the panel
     isEditingPanel(): boolean {
         return (
             (this.editable && this.hasMetadataChanged) ||

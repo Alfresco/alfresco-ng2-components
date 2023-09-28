@@ -177,6 +177,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.cancelExistingCategoriesLoading$.complete();
     }
 
+    /*
+     * Returns `true` if categoryNameControlVisible is true, otherwise `false`
+    */
     get isNameCategoryVisible(): boolean {
         return (!this.categoryNameControlVisible && this.categories?.length > 0) || this.categoryNameControlVisible;
     }
@@ -185,7 +188,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         return this._categoryNameControl;
     }
 
-    get isCategoryEmpty(): boolean {
+    /*
+     * Returns `true` if has categories, otherwise `false`
+    */
+    get hasCategory(): boolean {
         return this.categories?.length > 0;
     }
 
