@@ -22,7 +22,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-process-services",
     "styleIncludePaths": [
-      "../../dist/libs/core/lib"
+      "../core/src/lib"
     ]
   }
 }
