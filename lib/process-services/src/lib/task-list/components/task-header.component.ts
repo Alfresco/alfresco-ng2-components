@@ -121,7 +121,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Return the process parent information
+     * Get the process parent information
+     *
+     * @returns a map of process instance and definition
      */
     getParentInfo(): Map<string, string> {
         if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
@@ -131,35 +133,46 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Does the task have an assignee
+     * Check if the task has an assignee
+     *
+     * @returns `true` if the task has an assignee, otherwise `false`
      */
     hasAssignee(): boolean {
         return !!this.taskDetails.assignee;
     }
 
     /**
-     * Returns true if the task is assigned to logged in user
+     * Check if the task is assigned to a user
+     *
+     * @param userId the id of the user to check
+     * @returns `true` if the task assigned to a user, otherwise `false`
      */
     isAssignedTo(userId: number): boolean {
         return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
     }
 
     /**
-     * Return true if the task assigned
+     * Check if the task is assigned to the current user
+     *
+     * @returns `true` if the task assigned to current user, otherwise `false`
      */
     isAssignedToCurrentUser(): boolean {
         return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
     }
 
     /**
-     * Return true if the user is a candidate member
+     * Check if the user is a candidate member
+     *
+     * @returns `true` if user is a candidate member, otherwise false
      */
     isCandidateMember(): boolean {
         return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
     /**
-     * Return true if the task claimable
+     * Check if the task is claimable
+     *
+     * @returns `true` if task can be claimed, otherwise `false`
      */
     isTaskClaimable(): boolean {
         return !this.hasAssignee() && this.isCandidateMember();
@@ -167,15 +180,19 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /**
      * Return true if the task claimed by candidate member.
+     *
+     * @returns `true` if the task is claimed, otherwise `false`
      */
     isTaskClaimedByCandidateMember(): boolean {
         return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     /**
-     * Returns task's status
+     * Get the status of the task
+     *
+     * @returns `Completed` or `Running`
      */
-    getTaskStatus(): string {
+    getTaskStatus(): 'Completed' | 'Running' {
         return this.taskDetails?.isCompleted() ? 'Completed' : 'Running';
     }
 
@@ -188,7 +205,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Returns true if the task is completed
+     * Returns the task completion state
+     *
+     * @returns `true` if the task is completed, otherwise `false`
      */
     isCompleted(): boolean {
         return !!this.taskDetails?.endDate;

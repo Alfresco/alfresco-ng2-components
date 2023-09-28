@@ -305,6 +305,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
      * Get custom set of outcomes for a Form Definition.
      *
      * @param form Form definition model.
+     * @returns list of form outcomes
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];

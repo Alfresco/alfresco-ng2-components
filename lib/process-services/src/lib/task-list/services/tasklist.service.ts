@@ -417,7 +417,7 @@ export class TaskListService {
     /**
      * Gets the search query for a task based on the supplied filter.
      *
-     * @param filter The filter to use
+     * @param filterModel The filter to use
      * @returns The search query
      */
      private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {

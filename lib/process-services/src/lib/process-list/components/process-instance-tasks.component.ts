@@ -31,11 +31,12 @@ import { share, takeUntil } from 'rxjs/operators';
     styleUrls: ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
-    /** (**required**) The ID of the process instance to display tasks for. */
+    /** The ID of the process instance to display tasks for. */
     @Input()
     processInstanceDetails: ProcessInstance;
 
-    /** Toggles whether to show a refresh button next to the list of tasks to allow
+    /**
+     * Toggles whether to show a refresh button next to the list of tasks to allow
      * it to be updated from the server.
      */
     @Input()

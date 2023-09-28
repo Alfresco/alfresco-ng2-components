@@ -50,8 +50,8 @@ export class TaskFormComponent implements OnInit, OnChanges {
     @Input()
     showCancelButton: boolean = true;
 
-    /** Toggles read-only state of the form. All form widgets render as read-only
-     * if enabled.
+    /**
+     * Toggles read-only state of the form. All form widgets render as read-only if enabled.
      */
     @Input()
     readOnlyForm: boolean = false;
@@ -88,7 +88,8 @@ export class TaskFormComponent implements OnInit, OnChanges {
     @Output()
     showAttachForm = new EventEmitter<void>();
 
-    /** Emitted when any outcome is executed. Default behaviour can be prevented
+    /**
+     * Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
     @Output()

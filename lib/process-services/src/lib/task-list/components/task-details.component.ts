@@ -112,7 +112,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     showFormSaveButton: boolean = true;
 
-    /** Toggles read-only state of the form. All form widgets render as read-only
+    /**
+     * Toggles read-only state of the form. All form widgets render as read-only
      * if enabled.
      */
     @Input()
@@ -154,7 +155,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     error = new EventEmitter<any>();
 
-    /** Emitted when any outcome is executed. Default behaviour can be prevented
+    /**
+     * Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
     @Output()

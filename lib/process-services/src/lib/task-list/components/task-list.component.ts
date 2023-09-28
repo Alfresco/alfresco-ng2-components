@@ -69,7 +69,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     state: string;
 
-    /** The assignment of the process. Possible values are: "assignee" (the current user
+    /**
+     * The assignment of the process. Possible values are: "assignee" (the current user
      * is the assignee), "candidate" (the current user is a task candidate, "group_x" (the task
      * is assigned to a group where the current user is a member,
      * no value (the current user is involved).
@@ -77,7 +78,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     assignment: string;
 
-    /** Define the sort order of the tasks. Possible values are : `created-desc`,
+    /**
+     * Define the sort order of the tasks. Possible values are : `created-desc`,
      * `created-asc`, `due-desc`, `due-asc`
      */
     @Input()
@@ -87,7 +89,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     name: string;
 
-    /** Define which task id should be selected after reloading. If the task id doesn't
+    /**
+     * Define which task id should be selected after reloading. If the task id doesn't
      * exist or nothing is passed then the first task will be selected.
      */
     @Input()
@@ -100,7 +103,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     data: DataTableAdapter;
 
-    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /**
+     * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
      */
@@ -183,8 +187,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Toggles custom data source mode.
      * When enabled the component reloads data from it's current source instead of the server side.
      * This allows generating and displaying custom data sets (i.e. filtered out content).
-     *
-     * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
 
@@ -255,6 +257,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Select the task given in input if present
+     *
+     * @param taskIdSelected selected task id
      */
     selectTask(taskIdSelected: string): void {
         if (!this.isListEmpty()) {
@@ -278,7 +282,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     }
 
     /**
-     * Return the current id
+     * Return the current instance id
+     *
+     * @returns the current instance id
      */
     getCurrentId(): string {
         return this.currentInstanceId;
@@ -287,7 +293,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /**
      * Check if the taskId is the same of the selected task
      *
-     * @param taskId
+     * @param taskId task id
+     * @returns `true` if current instance id is the same as task id, otherwise `false`
      */
     isEqualToCurrentId(taskId: string): boolean {
         return this.currentInstanceId === taskId;
@@ -295,6 +302,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Check if the list is empty
+     *
+     * @returns `true` if list is empty, otherwise `false`
      */
     isListEmpty(): boolean {
         return !this.rows || this.rows.length === 0;
@@ -397,7 +406,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /**
      * Optimize name field
      *
-     * @param instances
+     * @param instances task detail models
+     * @returns list of task detail models
      */
     private optimizeTaskDetails(instances: TaskDetailsModel[]): TaskDetailsModel[] {
         instances = instances.map((task) => {

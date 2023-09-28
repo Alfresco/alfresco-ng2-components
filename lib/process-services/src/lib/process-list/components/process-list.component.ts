@@ -68,7 +68,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Input()
     state: string;
 
-    /** Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`,
+    /**
+     * Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`,
      * `ended-desc`, `ended-asc`.
      */
     @Input()
@@ -90,7 +91,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Input()
     multiselect: boolean = false;
 
-    /** Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+    /**
+     * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
      * you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
      * multiple rows.
      */
@@ -199,7 +201,9 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     }
 
     /**
-     * Return the current id
+     * Get the id of the current instance
+     *
+     * @returns instance id
      */
     getCurrentId(): string {
         return this.currentInstanceId;
@@ -207,6 +211,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Check if the list is empty
+     *
+     * @returns `true` if list is empty, otherwise `false`
      */
     isListEmpty(): boolean {
         return !this.rows || this.rows.length === 0;
@@ -215,7 +221,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /**
      * Emit the event rowClick passing the current task id when the row is clicked
      *
-     * @param event
+     * @param event input event
      */
     onRowClick(event: DataRowEvent) {
         const item = event;
@@ -227,7 +233,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /**
      * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
      *
-     * @param event
+     * @param event keyboard event
      */
     onRowKeyUp(event: CustomEvent<any>) {
         if (event.detail.keyboardEvent.key === 'Enter') {

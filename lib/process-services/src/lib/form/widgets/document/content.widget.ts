@@ -123,6 +123,8 @@ export class ContentWidgetComponent implements OnChanges {
 
     /**
      * Invoke content download.
+     *
+     * @param content content link model
      */
     download(content: ContentLinkModel): void {
         this.processContentService.getFileRawContent(content.id).subscribe(

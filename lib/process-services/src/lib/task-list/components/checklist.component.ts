@@ -26,14 +26,15 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {
-    /** (required) The id of the parent task to which subtasks are
-     * attached.
+    /**
+     * The id of the parent task to which subtasks are attached.
      */
     @Input()
     taskId: string;
 
-    /** Toggle readonly state of the form. All form widgets
-     * will render as readonly if enabled.
+    /**
+     * Toggle readonly state of the form.
+     * All form widgets will render as readonly if enabled.
      */
     @Input()
     readOnly: boolean = false;

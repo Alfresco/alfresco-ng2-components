@@ -64,6 +64,11 @@ describe('StartProcessComponent', () => {
         }
     };
 
+    /**
+     * Change application id
+     *
+     * @param appId application id
+     */
     function changeAppId(appId: number) {
         const change = new SimpleChange(null, appId, true);
         component.appId = appId;

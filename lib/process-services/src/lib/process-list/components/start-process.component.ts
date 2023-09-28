@@ -41,21 +41,23 @@ const MAX_LENGTH = 255;
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
-    /** (optional) Limit the list of processes that can be started to those
+    /**
+     * Limit the list of processes that can be started to those
      * contained in the specified app.
      */
     @Input()
-    appId: number;
+    appId?: number;
 
-    /** (optional) Define the header of the component. */
+    /** Define the header of the component. */
     @Input()
-    title: string;
+    title?: string;
 
-    /** (optional) Definition name of the process to start. */
+    /** Definition name of the process to start. */
     @Input()
-    processDefinitionName: string;
+    processDefinitionName?: string;
 
-    /** Variables in the input to the process
+    /**
+     * Variables in the input to the process
      * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
      */
     @Input()
@@ -65,21 +67,21 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Input()
     values: FormValues;
 
-    /** (optional) Name to assign to the current process. */
+    /** Name to assign to the current process. */
     @Input()
-    name: string = '';
+    name?: string = '';
 
     /** Hide or show the process selection dropdown. */
     @Input()
     showSelectProcessDropdown: boolean = true;
 
-    /** (optional) Hide or show application selection dropdown. */
+    /** Hide or show application selection dropdown. */
     @Input()
-    showSelectApplicationDropdown: boolean = false;
+    showSelectApplicationDropdown?: boolean = false;
 
-    /** (optional) Parameter to enable selection of process when filtering. */
+    /** Parameter to enable selection of process when filtering. */
     @Input()
-    processFilterSelector: boolean = true;
+    processFilterSelector?: boolean = true;
 
     /** Emitted when the process starts. */
     @Output()

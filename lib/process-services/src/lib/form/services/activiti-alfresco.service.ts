@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, ExternalContent, ExternalContentLink } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, ExternalContent } from '@alfresco/adf-core';
 import { SitesService } from '@alfresco/adf-content-services';
 import { Injectable } from '@angular/core';
-import { IntegrationAlfrescoOnPremiseApi, Node, RelatedContentRepresentation, ActivitiContentApi } from '@alfresco/js-api';
+import { IntegrationAlfrescoOnPremiseApi, Node, RelatedContentRepresentation, ActivitiContentApi, AlfrescoEndpointRepresentation, AlfrescoContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -47,13 +47,14 @@ export class ActivitiContentService {
     /**
      * Returns a list of child nodes below the specified folder
      *
-     * @param accountId
-     * @param folderId
+     * @param accountId account id
+     * @param folderId folder id
+     * @returns list of external content instances
      */
-    getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
+    getAlfrescoNodes(accountId: string, folderId: string): Observable<AlfrescoContentRepresentation[]> {
         const accountShortId = accountId.replace('alfresco-', '');
         return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId)).pipe(
-            map(this.toJsonArray),
+            map(res => res?.data || []),
             catchError((err) => this.handleError(err))
         );
     }
@@ -61,16 +62,17 @@ export class ActivitiContentService {
     /**
      * Returns a list of all the repositories configured
      *
-     * @param tenantId
-     * @param includeAccount
+     * @param tenantId tenant id
+     * @param includeAccount include accounts
+     * @returns list of endpoints
      */
-    getAlfrescoRepositories(tenantId?: string, includeAccount?: boolean): Observable<any> {
+    getAlfrescoRepositories(tenantId?: string, includeAccount?: boolean): Observable<AlfrescoEndpointRepresentation[]> {
         const opts = {
             tenantId,
             includeAccounts: includeAccount ? includeAccount : true
         };
         return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts)).pipe(
-            map(this.toJsonArray),
+            map(res => res?.data || []),
             catchError((err) => this.handleError(err))
         );
     }
@@ -78,11 +80,12 @@ export class ActivitiContentService {
     /**
      * Returns a list of child nodes below the specified folder
      *
-     * @param accountId
-     * @param node
-     * @param siteId
+     * @param accountId account id
+     * @param node node details
+     * @param siteId site id
+     * @returns link to external content
      */
-    linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
+    linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<RelatedContentRepresentation> {
         return from(
             this.contentApi.createTemporaryRelatedContent({
                 link: true,
@@ -92,12 +95,12 @@ export class ActivitiContentService {
                 sourceId: node.id + '@' + siteId
             })
         ).pipe(
-            map(this.toJson),
+            map(res => res || {}),
             catchError((err) => this.handleError(err))
         );
     }
 
-    applyAlfrescoNode(node: Node, siteId: string, accountId: string) {
+    applyAlfrescoNode(node: Node, siteId: string, accountId: string): Observable<RelatedContentRepresentation> {
         const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
@@ -107,26 +110,12 @@ export class ActivitiContentService {
             link: node.isLink
         };
         return from(this.contentApi.createTemporaryRelatedContent(params)).pipe(
-            map(this.toJson),
+            map(res => res || {}),
             catchError((err) => this.handleError(err))
         );
     }
 
-    toJson(res: any) {
-        if (res) {
-            return res || {};
-        }
-        return {};
-    }
-
-    toJsonArray(res: any) {
-        if (res) {
-            return res.data || [];
-        }
-        return [];
-    }
-
-    handleError(error: any): Observable<any> {
+    private handleError(error: any): Observable<never> {
         let errMsg = ActivitiContentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message
