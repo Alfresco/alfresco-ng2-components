@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi, UserRepresentation } from '@alfresco/js-api';
+import { AdminTenantsApi, AdminUsersApi, AlfrescoApi, TenantRepresentation, AppDefinitionsApi, RuntimeAppDefinitionsApi, UserRepresentation, AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
 import { argv, exit } from 'node:process';
 import { spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
@@ -33,11 +33,10 @@ const ACTIVITI_APPS = require('./resources').ACTIVITI_APPS;
 
 let alfrescoJsApi: AlfrescoApi;
 
-export default async function() {
-    await main();
-}
-
-async function main() {
+/**
+ * Init APS command
+ */
+export default async function main() {
 
     program
         .version('0.1.0')
@@ -114,6 +113,9 @@ async function main() {
 
 }
 
+/**
+ * Initialise default applications
+ */
 async function initializeDefaultApps() {
     for (let x = 0; x < ACTIVITI_APPS.apps.length; x++) {
         const appInfo = ACTIVITI_APPS.apps[x];
@@ -126,6 +128,10 @@ async function initializeDefaultApps() {
         }
     }
 }
+
+/**
+ * Check environment
+ */
 async function checkEnv() {
     try {
         alfrescoJsApi = new AlfrescoApi({
@@ -160,7 +166,14 @@ async function checkEnv() {
     }
 }
 
-async function hasDefaultTenant(tenantId: number, tenantName: string) {
+/**
+ * Check if the default tenant is present
+ *
+ * @param tenantId tenant id
+ * @param tenantName tenant name
+ * @returns `true` if tenant is found, otherwise `false`
+ */
+async function hasDefaultTenant(tenantId: number, tenantName: string): Promise<boolean> {
     let tenant: TenantRepresentation;
 
     try {
@@ -180,6 +193,11 @@ async function hasDefaultTenant(tenantId: number, tenantName: string) {
     }
 }
 
+/**
+ * Create default tenant
+ *
+ * @param tenantName tenant name
+ */
 async function createDefaultTenant(tenantName: string) {
     const tenantPost = {
         active: true,
@@ -197,6 +215,12 @@ async function createDefaultTenant(tenantName: string) {
     }
 }
 
+/**
+ * Create users
+ *
+ * @param tenantId tenant id
+ * @param user user object
+ */
 async function createUsers(tenantId: number, user: any) {
     logger.info(`Create user ${user.email} on tenant: ${tenantId}`);
     const passwordCamelCase = 'Password';
@@ -220,6 +244,9 @@ async function createUsers(tenantId: number, user: any) {
     }
 }
 
+/**
+ * Update Activiti license
+ */
 async function updateLicense() {
     const fileContent = createReadStream(path.join(__dirname, '/activiti.lic'));
 
@@ -243,7 +270,13 @@ async function updateLicense() {
     }
 }
 
-async function isDefaultAppDeployed(appName: string) {
+/**
+ * Check if default application is deployed
+ *
+ * @param appName application name
+ * @returns `true` if application is deployed, otherwise `false`
+ */
+async function isDefaultAppDeployed(appName: string): Promise<boolean> {
     logger.info(`Verify ${appName} already deployed`);
     try {
         const runtimeAppDefinitionsApi = new RuntimeAppDefinitionsApi(alfrescoJsApi);
@@ -255,7 +288,12 @@ async function isDefaultAppDeployed(appName: string) {
     }
 }
 
-async function importPublishApp(appName: string) {
+/**
+ * Import and publish the application
+ *
+ * @param appName application name
+ */
+async function importPublishApp(appName: string): Promise<AppDefinitionUpdateResultRepresentation> {
     const appNameExtension = `../resources/${appName}.zip`;
     logger.info(`Import app ${appNameExtension}`);
     const pathFile = path.join(__dirname, appNameExtension);
@@ -271,6 +309,11 @@ async function importPublishApp(appName: string) {
     }
 }
 
+/**
+ * Deploy application
+ *
+ * @param appDefinitionId app definition id
+ */
 async function deployApp(appDefinitionId: number) {
     logger.info(`Deploy app with id ${appDefinitionId}`);
     const body = {
@@ -286,6 +329,9 @@ async function deployApp(appDefinitionId: number) {
     }
 }
 
+/**
+ * Checks if Activiti app has license
+ */
 async function hasLicense(): Promise<boolean> {
     try {
         const license = await alfrescoJsApi.oauth2Auth.callCustomApi(
@@ -310,6 +356,9 @@ async function hasLicense(): Promise<boolean> {
     }
 }
 
+/**
+ * Get default users from the realm
+ */
 async function getDefaultApsUsersFromRealm() {
     try {
         const users: any[] = await alfrescoJsApi.oauth2Auth.callCustomApi(
@@ -332,6 +381,12 @@ async function getDefaultApsUsersFromRealm() {
     }
 }
 
+/**
+ * Validate that ACS repo for Activiti is present
+ *
+ * @param tenantId tenant id
+ * @param contentName content service name
+ */
 async function isContentRepoPresent(tenantId: number, contentName: string): Promise<boolean> {
     try {
         const contentRepos = await alfrescoJsApi.oauth2Auth.callCustomApi(
@@ -351,6 +406,12 @@ async function isContentRepoPresent(tenantId: number, contentName: string): Prom
     }
 }
 
+/**
+ * Add content service with basic auth
+ *
+ * @param tenantId tenant id
+ * @param name content name
+ */
 async function addContentRepoWithBasic(tenantId: number, name: string) {
     logger.info(`Create Content with name ${name} and basic auth`);
 
@@ -384,6 +445,11 @@ async function addContentRepoWithBasic(tenantId: number, name: string) {
     }
 }
 
+/**
+ * Authorize activiti user to ACS repo
+ *
+ * @param user user object
+ */
 async function authorizeUserToContentRepo(user: any) {
     logger.info(`Authorize user ${user.email}`);
     try {
@@ -412,6 +478,12 @@ async function authorizeUserToContentRepo(user: any) {
     }
 }
 
+/**
+ * Authorize user with content using basic auth
+ *
+ * @param username username
+ * @param contentId content id
+ */
 async function authorizeUserToContentWithBasic(username: string, contentId: string) {
     logger.info(`Authorize ${username} on contentId: ${contentId} in basic auth`);
     try {
@@ -434,6 +506,11 @@ async function authorizeUserToContentWithBasic(username: string, contentId: stri
     }
 }
 
+/**
+ * Download APS license file
+ *
+ * @param apsLicensePath path to license file
+ */
 async function downloadLicenseFile(apsLicensePath: string) {
     const args = [
         `s3`,
@@ -454,6 +531,11 @@ async function downloadLicenseFile(apsLicensePath: string) {
     return true;
 }
 
+/**
+ * Perform a delay
+ *
+ * @param delay timeout in milliseconds
+ */
 function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {  }

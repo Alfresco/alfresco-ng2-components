@@ -120,11 +120,25 @@ function getCommits(options: DiffOptions): Array<Commit> {
         .filter((commit: Commit) => commitAuthorAllowed(commit, authorFilter));
 }
 
+/**
+ * Check if commit author is allowed
+ *
+ * @param commit git commit
+ * @param authorFilter filter
+ * @returns `true` if author is allowed, otherwise `false`
+ */
 function commitAuthorAllowed(commit: Commit, authorFilter: string): boolean {
     const filterRegex = RegExp(authorFilter);
     return !(filterRegex.test(commit.author) || filterRegex.test(commit.author_email));
 }
 
+/**
+ * Changelog command
+ *
+ * @param _args (unused)
+ * @param workingDir working directory
+ * @returns void
+ */
 export default function main(_args: string[], workingDir: string) {
     program
         .description('Generate changelog report for two branches of git repository')

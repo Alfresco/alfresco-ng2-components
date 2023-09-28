@@ -22,6 +22,11 @@ import { exec } from './exec';
 import { logger } from './logger';
 import program from 'commander';
 
+/**
+ * Zip artifact
+ *
+ * @param artifact artifact name
+ */
 function zipArtifact(artifact: string) {
     logger.info(`Perform zip artifact ${artifact}`);
 
@@ -29,6 +34,11 @@ function zipArtifact(artifact: string) {
     logger.info(response);
 }
 
+/**
+ * Copy to AWS S3
+ *
+ * @param output output path
+ */
 function awsCp(output: string) {
     logger.info(`aws s3 cp ${output}`);
     const response = exec('aws s3 cp', [`./s3-artifact.tmp ${output}`], {});
@@ -36,6 +46,9 @@ function awsCp(output: string) {
 }
 
 
+/**
+ * Artifact to S3 command
+ */
 export default function main() {
     program
         .version('0.1.0')

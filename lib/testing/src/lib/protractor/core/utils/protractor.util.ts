@@ -22,6 +22,8 @@ import { ElementFinder, browser } from 'protractor';
  *
  * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
  * @example ```const item = byCss`${variable}`;```
+ * @param literals literals
+ * @param placeholders placeholders
  * @returns Instance of `ElementFinder` type.
  */
 export const byCss = (literals: TemplateStringsArray, ...placeholders: string[]): ElementFinder => {

@@ -37,6 +37,12 @@ export interface PackageInfo {
     devDependencies?: string[];
 }
 
+/**
+ * Parse alfresco libraries in package.json file
+ *
+ * @param workingDir working directory
+ * @returns package info model
+ */
 function parseAlfrescoLibs(workingDir: string): PackageInfo {
     const packagePath = path.resolve(path.join(workingDir, 'package.json'));
 
@@ -57,10 +63,23 @@ function parseAlfrescoLibs(workingDir: string): PackageInfo {
     };
 }
 
+/**
+ * Format npm command
+ *
+ * @param deps dependencies
+ * @param tag tag
+ * @returns npm command to execute
+ */
 function formatNpmCommand(deps: string[], tag: string): string {
     return ['npm i -E', deps.map((name) => `${name}@${tag}`).join(' ')].join(' ');
 }
 
+/**
+ * Run npm command
+ *
+ * @param command command to execute
+ * @param workingDir working directory
+ */
 function runNpmCommand(command: string, workingDir: string) {
     if (shell.exec(command, { cwd: workingDir }).code !== 0) {
         shell.echo('Error running NPM command');
@@ -68,6 +87,13 @@ function runNpmCommand(command: string, workingDir: string) {
     }
 }
 
+/**
+ * Update libraries
+ *
+ * @param pkg package info model
+ * @param tag tag name
+ * @param workingDir working directory
+ */
 function updateLibs(pkg: PackageInfo, tag: string, workingDir: string) {
     if (pkg.dependencies && pkg.dependencies.length > 0) {
         runNpmCommand(formatNpmCommand(pkg.dependencies, tag), workingDir);
@@ -78,6 +104,12 @@ function updateLibs(pkg: PackageInfo, tag: string, workingDir: string) {
     }
 }
 
+/**
+ * Parse tag
+ *
+ * @param args update arguments
+ * @returns tag value
+ */
 function parseTag(args: UpdateArgs): string {
     if (args.alpha) {
         return 'alpha';
@@ -90,6 +122,12 @@ function parseTag(args: UpdateArgs): string {
     return args.version || 'latest';
 }
 
+/**
+ * update version command
+ *
+ * @param args arguments
+ * @param workingDir working directory
+ */
 export default function main(args: UpdateArgs, workingDir: string) {
     program
         .description(

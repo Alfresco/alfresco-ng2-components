@@ -25,7 +25,10 @@ import { GovernanceCheckPlugin } from './plugins/governance-check-plugin';
 
 let pluginEnv: CheckEnv;
 
-export default async function main(_args: string[]) {
+/**
+ * Check environment plugin
+ */
+export default async function main() {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
@@ -53,6 +56,9 @@ export default async function main(_args: string[]) {
     }
 }
 
+/**
+ * Check PS plugin
+ */
 async function checkProcessServicesPlugin() {
     const processServiceCheckPlugin = new ProcessServiceCheckPlugin(
         {
@@ -64,6 +70,9 @@ async function checkProcessServicesPlugin() {
     await processServiceCheckPlugin.checkProcessServicesPlugin();
 }
 
+/**
+ * Check APA plugin
+ */
 async function checkProcessAutomationPlugin() {
     const processAutomationCheckPlugin = new ProcessAutomationCheckPlugin(
         {
@@ -77,6 +86,9 @@ async function checkProcessAutomationPlugin() {
     await processAutomationCheckPlugin.checkProcessAutomationPlugin();
 }
 
+/**
+ * Check AGS plugin
+ */
 async function checkGovernancePlugin() {
     const governancePluginCheck = new GovernanceCheckPlugin(
         {

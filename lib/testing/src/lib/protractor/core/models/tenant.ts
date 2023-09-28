@@ -21,7 +21,6 @@ import { StringUtil } from '../../../shared/utils/string.util';
  * Create tenant JSON Object
  *
  * @param details - JSON object used to overwrite the default values
- * @constructor
  */
 export class Tenant {
 

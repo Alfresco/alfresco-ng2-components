@@ -30,6 +30,7 @@ export class StringUtil {
      * Generates a random string.
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
+     * @returns random string
      */
     static generateRandomString(length: number = 8): string {
         return StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
@@ -39,6 +40,7 @@ export class StringUtil {
      * Generates a random lowercase string.
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
+     * @returns random string
      */
     static generateRandomLowercaseString(length: number = 8): string {
         return StringUtil.generateRandomCharset(length, 'abcdefghijklmnopqrstuvwxyz0123456789');
@@ -47,8 +49,9 @@ export class StringUtil {
     /**
      * Generates a random email address following the format: abcdef@activiti.test.com
      *
-     * @param domain
-     * @param length
+     * @param domain email domain
+     * @param length email length
+     * @returns email address
      */
     static generateRandomEmail(domain: string, length: number = 5): string {
         let email = StringUtil.generateRandomCharset(length, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
@@ -59,7 +62,8 @@ export class StringUtil {
     /**
      * Generates a random string - digits only.
      *
-     * @param length {int} If this parameter is not provided the length is set to 8 by default.
+     * @param length If this parameter is not provided the length is set to 8 by default.
+     * @returns random string
      */
     static generateRandomStringDigits(length: number = 8): string {
         return StringUtil.generateRandomCharset(length, '0123456789');
@@ -68,7 +72,8 @@ export class StringUtil {
     /**
      * Generates a random string - non-latin characters only.
      *
-     * @param length {int} If this parameter is not provided the length is set to 3 by default.
+     * @param length If this parameter is not provided the length is set to 3 by default.
+     * @returns random string
      */
     static generateRandomStringNonLatin(length: number = 3): string {
         return StringUtil.generateRandomCharset(length, '密码你好𠮷');
@@ -79,6 +84,7 @@ export class StringUtil {
      *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @param charSet to use
+     * @returns random string
      */
     static generateRandomCharset(length: number = 8, charSet: string): string {
         let text = '';
@@ -93,11 +99,11 @@ export class StringUtil {
     /**
      * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
      *
-     * @param startIndex
-     * @param endIndex
+     * @param startIndex start index
+     * @param endIndex end index
      * @param baseName  the base name of all files
      * @param extension the extension of the file
-     * @return fileNames
+     * @returns list of file names
      */
     static generateFilesNames(startIndex: number, endIndex: number, baseName: string, extension: string): string [] {
         const fileNames: string[] = [];
@@ -107,17 +113,21 @@ export class StringUtil {
         return fileNames;
     }
 
-    /** Generates a random name for a process
+    /**
+     * Generates a random name for a process
      *
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
+     * @returns process name
      */
     static generateProcessName(length: number = 5): string {
         return 'process_' + StringUtil.generateRandomString(length);
     }
 
-    /** Generates a random name for a process
+    /**
+     * Generates a random name for a user task
      *
-     * @param length  {int} If this parameter is not provided the length is set to 5 by default.
+     * @param length If this parameter is not provided the length is set to 5 by default.
+     * @returns task name
      */
      static generateUserTaskName(length: number = 5): string {
         return 'userTask_' + StringUtil.generateRandomString(length);

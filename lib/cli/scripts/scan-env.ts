@@ -45,7 +45,10 @@ const green = '\x1b[32m';
 let alfrescoApi: AlfrescoApi;
 let loginAttempts: number = 0;
 
-export default async function main(_args: string[]) {
+/**
+ * Scan environment command
+ */
+export default async function main() {
     // eslint-disable-next-line no-console
     console.log = () => {};
 
@@ -72,6 +75,12 @@ export default async function main(_args: string[]) {
     logger.info(generateTable(rowsToPrint));
 }
 
+/**
+ * Generate table
+ *
+ * @param rowsToPrint list of table rows to print
+ * @returns table as a string
+ */
 function generateTable(rowsToPrint: Array<RowToPrint>) {
     const columnWidths = rowsToPrint.reduce(
         (maxWidths, row: RowToPrint) => ({
@@ -99,6 +108,9 @@ ${grey}╞${horizontalLine}╡${reset}`;
     return tableString;
 }
 
+/**
+ * Attempt to login
+ */
 async function attemptLogin() {
     logger.info(`    Logging into ${yellow}${program.host}${reset} with user ${yellow}${program.username}${reset}`);
     try {
@@ -123,6 +135,11 @@ async function attemptLogin() {
     }
 }
 
+/**
+ * Handles login error
+ *
+ * @param loginError error object
+ */
 async function handleLoginError(loginError) {
     if (loginAttempts === 0) {
         logger.error(`    ${red}Login SSO error${reset}`);
@@ -150,6 +167,11 @@ async function handleLoginError(loginError) {
     }
 }
 
+/**
+ * Check environment is reachable
+ *
+ * @param loginError error object
+ */
 function checkEnvReachable(loginError) {
     const failingErrorCodes = ['ENOTFOUND', 'ETIMEDOUT', 'ECONNREFUSED'];
     if (typeof loginError === 'object' && failingErrorCodes.indexOf(loginError.code) > -1) {
@@ -158,6 +180,11 @@ function checkEnvReachable(loginError) {
     }
 }
 
+/**
+ * Get people count
+ *
+ * @param skipCount skip count
+ */
 async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
     if (skipCount === 0) {
         logger.info(`    Fetching number of users`);
@@ -191,6 +218,9 @@ async function getPeopleCount(skipCount: number = 0): Promise<PeopleTally> {
     }
 }
 
+/**
+ * Count the amount of Home folders
+ */
 async function getHomeFoldersCount(): Promise<number> {
     logger.info(`    Fetching number of home folders`);
     try {
@@ -205,6 +235,9 @@ async function getHomeFoldersCount(): Promise<number> {
     }
 }
 
+/**
+ * Count the amount of groups
+ */
 async function getGroupsCount(): Promise<number> {
     logger.info(`    Fetching number of groups`);
     try {
@@ -216,6 +249,9 @@ async function getGroupsCount(): Promise<number> {
     }
 }
 
+/**
+ * Count the amount of sites
+ */
 async function getSitesCount(): Promise<number> {
     logger.info(`    Fetching number of sites`);
     try {
@@ -227,6 +263,9 @@ async function getSitesCount(): Promise<number> {
     }
 }
 
+/**
+ * Count the amount of files
+ */
 async function getFilesCount(): Promise<number> {
     logger.info(`    Fetching number of files`);
     try {
@@ -246,9 +285,14 @@ async function getFilesCount(): Promise<number> {
     }
 }
 
+/**
+ * Handle error
+ *
+ * @param error error object
+ */
 function handleError(error) {
     logger.error(`    ${red}Error encountered${reset}`);
-    if (error && error.response && error?.response?.text) {
+    if (error?.response && error?.response?.text) {
         try {
             const parsedJson = JSON.parse(error?.response?.text);
             if (typeof parsedJson === 'object' && parsedJson.error) {
@@ -262,11 +306,19 @@ function handleError(error) {
     failScript();
 }
 
+/**
+ * Log the error an exit
+ */
 function failScript() {
     logger.error(`${red}${bright}Environment scan failed. Exiting${reset}`);
     exit(0);
 }
 
+/**
+ * Wait with a certain period
+ *
+ * @param ms timeout in milliseconds
+ */
 async function wait(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);

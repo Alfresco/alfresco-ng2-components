@@ -46,7 +46,7 @@ export class DocumentListPage {
         await this.dataTable.selectRow('Display name', nodeName);
     }
 
-    /** @deprecated Use Playwright API instead */
+    // @deprecated Use Playwright API instead
     async selectRowsWithKeyboard(...contentNames: string[]): Promise<void> {
         let option: any;
         await browser.actions().sendKeys(protractor.Key.COMMAND).perform();

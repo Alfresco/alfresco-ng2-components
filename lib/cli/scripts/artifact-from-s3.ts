@@ -22,23 +22,41 @@ import { exec } from './exec';
 import { logger } from './logger';
 import program from 'commander';
 
+/**
+ * Perform a test
+ *
+ * @param output output path
+ */
 function test(output: string) {
     const response = exec('test !', [`-d ${output} && mkdir ${output}`], {});
     logger.info(response);
 }
 
+/**
+ * Copy AWS S3
+ *
+ * @param artifact artifact name
+ */
 function awsCp(artifact: string) {
     logger.info(`aws s3 cp ${artifact}`);
     const response = exec(`aws s3 cp  ${artifact}`, [`./s3-artifact.tmp ${artifact}`], {});
     logger.info(response);
 }
 
+/**
+ * Zip artifact
+ *
+ * @param output output name
+ */
 function zipArtifact(output: string) {
     logger.info(`Perform zip artifact ${output}`);
     const response = exec('tar', ['-xvf', `./s3-artifact.tmp`, '-C ' + program.output], {});
     logger.info(response);
 }
 
+/**
+ * Artifact from S3 command
+ */
 export default function main() {
     program
         .version('0.1.0')

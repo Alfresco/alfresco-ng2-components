@@ -19,6 +19,11 @@
 
 import * as docker from './docker';
 
+/**
+ * Docker publish command
+ *
+ * @param args command arguments
+ */
 export default function(args: any)  {
     docker.default(args);
 }

@@ -34,6 +34,12 @@ export interface PublishArgs {
 
 const projects = ['cli', 'core', 'insights', 'testing', 'content-services', 'process-services', 'process-services-cloud', 'extensions'];
 
+/**
+ * Publish to NPM command
+ *
+ * @param args command arguments
+ * @param project project name
+ */
 async function npmPublish(args: PublishArgs, project: string) {
     if (args.dryrun) {
         logger.info(`Dry run mode, no publish will be done`);
@@ -70,7 +76,14 @@ async function npmPublish(args: PublishArgs, project: string) {
     }
 }
 
-function npmCheckExist(project: string, version: string) {
+/**
+ * Checks the library exists on npm already
+ *
+ * @param project project name
+ * @param version project version
+ * @returns `true` if given project exists on NPM, otherwise `false`
+ */
+function npmCheckExist(project: string, version: string): boolean {
     logger.info(`Check if lib  ${project} is already in npm with version ${version}`);
     let exist = '';
     try {
@@ -82,6 +95,12 @@ function npmCheckExist(project: string, version: string) {
     return exist !== '';
 }
 
+/**
+ * Change NPM registry
+ *
+ * @param args command parameters
+ * @param project project name
+ */
 function changeRegistry(args: PublishArgs, project: string) {
     logger.info(`Change registry... to ${args.npmRegistry} `);
     const folder = `${args.pathProject}/dist/libs/${project}`;
@@ -98,6 +117,12 @@ always-auth=true
     }
 }
 
+/**
+ * Removes custom `.npmrc` configuration file
+ *
+ * @param args command arguments
+ * @param project project name
+ */
 function removeNpmConfig(args: PublishArgs, project: string) {
     logger.info(`Removing file from ${project}`);
     try {
@@ -108,6 +133,11 @@ function removeNpmConfig(args: PublishArgs, project: string) {
     }
 }
 
+/**
+ * Publish to NPM command
+ *
+ * @param args command arguments
+ */
 export default async function main(args: PublishArgs) {
     program
         .version('0.1.0')
@@ -132,6 +162,11 @@ export default async function main(args: PublishArgs) {
     }
 }
 
+/**
+ * Perform a timeout
+ *
+ * @param ms timeout in milliseconds
+ */
 async function sleep(ms: number) {
     logger.info(`Waiting for ${ms} milliseconds...`);
     return new Promise((resolve) => setTimeout(resolve, ms));

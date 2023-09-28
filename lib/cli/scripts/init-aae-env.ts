@@ -48,6 +48,11 @@ export interface ConfigArgs {
 
 export const AAE_MICROSERVICES = ['deployment-service', 'modeling-service', 'dmn-service'];
 
+/**
+ * Perform a health check
+ *
+ * @param nameService service name
+ */
 async function healthCheck(nameService: string) {
     const url = `${args.host}/${nameService}/actuator/health`;
 
@@ -85,6 +90,11 @@ async function healthCheck(nameService: string) {
     }
 }
 
+/**
+ * Get deployed application by status
+ *
+ * @param status application status
+ */
 async function getApplicationByStatus(status: string) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
@@ -120,6 +130,11 @@ async function getApplicationByStatus(status: string) {
     }
 }
 
+/**
+ * Get descriptors
+ *
+ * @returns deployment service descriptors
+ */
 function getDescriptors() {
     const url = `${args.host}/deployment-service/v1/descriptors`;
 
@@ -149,6 +164,11 @@ function getDescriptors() {
     }
 }
 
+/**
+ * Get projects
+ *
+ * @returns deployment service projects
+ */
 function getProjects() {
     const url = `${args.host}/modeling-service/v1/projects`;
 
@@ -178,6 +198,12 @@ function getProjects() {
     }
 }
 
+/**
+ * Get project release
+ *
+ * @param projectId project id
+ * @returns project release
+ */
 function getProjectRelease(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
@@ -207,6 +233,11 @@ function getProjectRelease(projectId: string) {
     }
 }
 
+/**
+ * Release project
+ *
+ * @param projectId project id
+ */
 async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
@@ -237,6 +268,12 @@ async function releaseProject(projectId: string) {
     }
 }
 
+/**
+ * Delete project
+ *
+ * @param projectId project id
+ * @returns response payload
+ */
 function deleteProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
 
@@ -266,6 +303,11 @@ function deleteProject(projectId: string) {
     }
 }
 
+/**
+ * Import and release project
+ *
+ * @param absoluteFilePath path to project file
+ */
 async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = fs.createReadStream(absoluteFilePath);
 
@@ -302,6 +344,12 @@ async function importAndReleaseProject(absoluteFilePath: string) {
     }
 }
 
+/**
+ * Deletes descriptor
+ *
+ * @param name descriptor name
+ * @returns response payload
+ */
 function deleteDescriptor(name: string) {
     const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
 
@@ -331,6 +379,12 @@ function deleteDescriptor(name: string) {
     }
 }
 
+/**
+ * Deploys a model
+ *
+ * @param model model object
+ * @returns response payload
+ */
 function deploy(model: any) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
@@ -360,11 +414,23 @@ function deploy(model: any) {
     }
 }
 
-function initializeDefaultToken(options) {
+/**
+ * Initialise default endpoint token
+ *
+ * @param options token options
+ * @returns options
+ */
+function initializeDefaultToken(options: any): any {
     options.tokenEndpoint = options.tokenEndpoint.replace('${clientId}', options.clientId);
     return options;
 }
 
+/**
+ * Get a new Alfresco Api instance
+ *
+ * @param configArgs command params
+ * @returns a new instance of Alfresco Api client
+ */
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
     let ssoHost = configArgs.oauth;
     ssoHost = ssoHost ?? configArgs.host;
@@ -388,6 +454,12 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
     return new AlfrescoApi(config);
 }
 
+/**
+ * Deploy missing applications
+ *
+ * @param tag tag
+ * @param envs environments
+ */
 async function deployMissingApps(tag?: string, envs?: string[]) {
     const deployedApps = await getApplicationByStatus('');
     findMissingApps(deployedApps.list.entries);
@@ -411,6 +483,13 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
     }
 }
 
+/**
+ * Check if application is released
+ *
+ * @param missingApps applications
+ * @param tag tag
+ * @param envs environments
+ */
 async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: string[]) {
     const projectList = await getProjects();
     let TIME = 5000;
@@ -478,6 +557,13 @@ async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: str
     }
 }
 
+/**
+ * Deploy with a payload
+ *
+ * @param currentAbsentApp current application
+ * @param projectRelease project release
+ * @param envId environment id
+ */
 async function deployWithPayload(currentAbsentApp: any, projectRelease: any, envId?: string) {
     const deployPayload = {
         name: currentAbsentApp.name,
@@ -493,6 +579,11 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
     logger.info(`Deployed ${currentAbsentApp.name} ${envId ? 'on env: ' + envId : ''}`);
 }
 
+/**
+ * Check if descriptor exists
+ *
+ * @param name descriptor name
+ */
 async function checkDescriptorExist(name: string): Promise<boolean> {
     logger.info(`Check descriptor ${name} exist in the list `);
     const descriptorList = await getDescriptors();
@@ -509,6 +600,12 @@ async function checkDescriptorExist(name: string): Promise<boolean> {
     return false;
 }
 
+/**
+ * Import and release project
+ *
+ * @param app application
+ * @param tag tag
+ */
 async function importProjectAndRelease(app: any, tag?: string) {
     const appLocationReplaced = app.file_location(tag);
     logger.warn('App fileLocation ' + appLocationReplaced);
@@ -519,6 +616,11 @@ async function importProjectAndRelease(app: any, tag?: string) {
     return projectRelease;
 }
 
+/**
+ * Find missing applications
+ *
+ * @param deployedApps applications
+ */
 function findMissingApps(deployedApps: any[]) {
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const isPresent = deployedApps.find((currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name);
@@ -529,6 +631,11 @@ function findMissingApps(deployedApps: any[]) {
     });
 }
 
+/**
+ * Find failing applications
+ *
+ * @param deployedApps applications
+ */
 function findFailingApps(deployedApps: any[]) {
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const failingApp = deployedApps.filter(
@@ -541,6 +648,12 @@ function findFailingApps(deployedApps: any[]) {
     });
 }
 
+/**
+ * Get file from the remote
+ *
+ * @param url url to file
+ * @param name name
+ */
 async function getFileFromRemote(url: string, name: string) {
     return new Promise<void>((resolve, reject) => {
         https.get(url, (response) => {
@@ -568,11 +681,21 @@ async function getFileFromRemote(url: string, name: string) {
     });
 }
 
+/**
+ * Deletes local file
+ *
+ * @param name file name
+ */
 async function deleteLocalFile(name: string) {
     logger.info(`Deleting local file ${name}.zip`);
     fs.unlinkSync(`${name}.zip`);
 }
 
+/**
+ * Perform a timeout
+ *
+ * @param time delay in milliseconds
+ */
 async function sleep(time: number) {
     logger.info(`Waiting for ${time} sec...`);
     await new Promise((done) => setTimeout(done, time));
@@ -580,12 +703,10 @@ async function sleep(time: number) {
     return;
 }
 
-// eslint-disable-next-line space-before-function-paren
-export default async function () {
-    await main();
-}
-
-async function main() {
+/**
+ * Init AAE environment command
+ */
+export default async function main() {
     program
         .version('0.1.0')
         .description(

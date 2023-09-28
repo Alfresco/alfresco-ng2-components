@@ -132,20 +132,20 @@ export class DataTableComponentPage {
     /**
      * Check the list is sorted.
      *
-     * @param sortOrder: 'ASC' if the list is await expected to be sorted ascending and 'DESC' for descending
-     * @param columnTitle: titleColumn column
-     * @param listType: 'string' for string typed lists and 'number' for number typed (int, float) lists
-     * @return 'true' if the list is sorted as await expected and 'false' if it isn't
+     * @param sortOrder 'ASC' if the list is await expected to be sorted ascending and 'DESC' for descending
+     * @param columnTitle titleColumn column
+     * @param listType 'string' for string typed lists and 'number' for number typed (int, float) lists
+     * @returns 'true' if the list is sorted as await expected and 'false' if it isn't
      */
     async checkListIsSorted(sortOrder: string, columnTitle: string, listType: string = 'STRING'): Promise<any> {
         const column = $$(`div.adf-datatable-cell[title='${columnTitle}'] span`);
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
-        const initialList = [];
+        const initialList: string[] = [];
 
         const length = await column.count();
 
         for (let i = 0; i < length; i++) {
-            const text = await BrowserActions.getText(column.get(i));
+            const text: string = await BrowserActions.getText(column.get(i));
             if (text.length !== 0) {
                 initialList.push(text.toLowerCase());
             }
@@ -259,7 +259,7 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
     }
 
-    /** @deprecated Use Playwright API instead */
+    // @deprecated Use Playwright API instead
     async getFirstElementDetail(detail: string): Promise<string> {
         const firstNode = $$(`adf-datatable div[title="${detail}"] span`).first();
         return BrowserActions.getText(firstNode);
@@ -268,7 +268,8 @@ export class DataTableComponentPage {
     /**
      *  Sort the list by name column.
      *
-     * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
+     * @param sortOrder 'ASC' to sort the list ascendant and 'DESC' for descendant
+     * @param titleColumn column title
      */
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
         const locator = $(`div[data-automation-id="auto_id_${titleColumn}"]`);
@@ -327,7 +328,7 @@ export class DataTableComponentPage {
         return this.rootElement.all(by.xpath(`//div[starts-with(@title, '${columnName}')]//div[contains(@data-automation-id, '${columnValue}')]//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`)).first();
     }
 
-    /** @deprecated use Playwright instead **/
+    // @deprecated use Playwright instead
     getRowByIndex(index: number): ElementFinder {
         return this.rootElement.element(by.xpath(`//div[contains(@class,'adf-datatable-body')]//adf-datatable-row[contains(@class,'adf-datatable-row')][${index}]`));
     }
@@ -400,7 +401,7 @@ export class DataTableComponentPage {
         }
     }
 
-    /** @deprecated use Playwright instead **/
+    // @deprecated use Playwright instead
     async isColumnDisplayed(columnTitle: string): Promise<boolean> {
         const isColumnDisplayed = (await this.allColumns).some(
             async column => {
@@ -412,7 +413,7 @@ export class DataTableComponentPage {
         return isColumnDisplayed;
     }
 
-    /** @deprecated use Playwright instead **/
+    // @deprecated use Playwright instead
     async getNumberOfColumns(): Promise<number> {
         return this.allColumns.count();
     }
