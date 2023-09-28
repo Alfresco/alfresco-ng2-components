@@ -33,7 +33,7 @@ import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.pag
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { infoDrawerConfiguration } from './../config/task.config';
 import CONSTANTS = require('../../util/constants');
-import * as moment from 'moment';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Info Drawer', () => {
 
@@ -161,7 +161,7 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDueDate();
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(moment('Aug 1, 2017').format(taskDetails.dateFormat));
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(DateFnsUtils.formatDate(new Date('Aug 1, 2017'), taskDetails.dateFormat));
 
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -342,10 +342,10 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getDescription()).toEqual(description);
         await expect(await taskPage.taskDetails().getStatus()).toEqual(status);
         await expect(await taskPage.taskDetails().getPriority()).toEqual(priority);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(dueDate !== 'No date' ? moment(dueDate).format(dateFormat) : 'No date');
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(dueDate !== 'No date' ? DateFnsUtils.formatDate(new Date(dueDate), dateFormat) : 'No date');
         await expect(await taskPage.taskDetails().getCategory()).toEqual(category);
         await expect(await taskPage.taskDetails().getParentName()).toEqual(parentName);
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(Date.now()).format(dateFormat));
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(DateFnsUtils.formatDate(new Date().getTime(), dateFormat));
         await taskPage.taskDetails().waitFormNameEqual(formName);
     }
 });

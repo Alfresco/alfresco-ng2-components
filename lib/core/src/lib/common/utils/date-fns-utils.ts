@@ -86,7 +86,8 @@ export class DateFnsUtils {
     static momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
-        A: 'a'
+        A: 'a',
+        ll: 'PP'
     };
 
     /**
@@ -95,7 +96,8 @@ export class DateFnsUtils {
     static dateFnsToMomentMap = {
         d: 'D',
         y: 'Y',
-        a: 'A'
+        a: 'A',
+        PP: 'll'
     };
 
     /**
