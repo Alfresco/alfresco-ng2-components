@@ -98,6 +98,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     sortingKey: string;
 
+    /** Sets position of column. **/
+    @Input()
+    order?: number;
+
     /** Data column header template */
     header?: TemplateRef<any>;
 

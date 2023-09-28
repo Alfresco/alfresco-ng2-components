@@ -39,7 +39,7 @@ export class FiltersPage {
     }
 
     async getAllRowsNameColumn(): Promise<string[]> {
-        return this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues('Task Name');
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {

@@ -49,4 +49,5 @@ export interface DataColumn<T = unknown> {
     isHidden?: boolean;
     width?: number;
     customData?: T;
+    order?: number;
 }
