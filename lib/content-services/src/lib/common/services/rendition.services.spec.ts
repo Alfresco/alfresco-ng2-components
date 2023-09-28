@@ -17,10 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, LogService, TranslationService, ViewUtilService } from '@alfresco/adf-core';
-import { RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
+import { Rendition, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
 import { RenditionService } from '@alfresco/adf-content-services';
 
-const getRenditionEntry = (status: 'NOT_CREATED' | 'CREATED'): RenditionEntry => {
+const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => {
     return {
         entry: {
             id: 'pdf',
@@ -29,7 +29,7 @@ const getRenditionEntry = (status: 'NOT_CREATED' | 'CREATED'): RenditionEntry =>
         }
     };
 };
-const getRenditionPaging = (status: 'NOT_CREATED' | 'CREATED'): RenditionPaging =>  {
+const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging =>  {
     return {
         list: {
             entries: [getRenditionEntry(status)]
@@ -57,14 +57,13 @@ describe('RenditionService', () => {
         });
         renditionService = TestBed.inject(RenditionService);
         renditionsApi = TestBed.inject(RenditionsApi);
-        // eslint-disable-next-line no-underscore-dangle
-        renditionService._renditionsApi = renditionsApi;
+        spyOnProperty(renditionService, 'renditionsApi').and.returnValue(renditionsApi)
     });
 
     describe('getRendition', () => {
         it('should retry getting the rendition until maxRetries if status is NOT_CREATED', async () => {
-            const mockRenditionPaging: RenditionPaging = getRenditionPaging('NOT_CREATED');
-            const mockRenditionEntry: RenditionEntry = getRenditionEntry('NOT_CREATED');
+            const mockRenditionPaging: RenditionPaging = getRenditionPaging(Rendition.StatusEnum.NOTCREATED);
+            const mockRenditionEntry: RenditionEntry = getRenditionEntry(Rendition.StatusEnum.NOTCREATED);
 
             renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
             renditionsApi.getRendition.and.returnValue(Promise.resolve(mockRenditionEntry));
@@ -75,13 +74,13 @@ describe('RenditionService', () => {
     });
 
     it('should return the rendition when status transitions from PENDING to CREATED', async () => {
-        const mockRenditionPaging: RenditionPaging = getRenditionPaging('NOT_CREATED');
-        const mockRenditionEntry: RenditionEntry = getRenditionEntry('CREATED');
+        const mockRenditionPaging: RenditionPaging = getRenditionPaging(Rendition.StatusEnum.NOTCREATED);
+        const mockRenditionEntry: RenditionEntry = getRenditionEntry(Rendition.StatusEnum.CREATED);
 
         renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
         renditionsApi.getRendition.and.returnValues(
-          Promise.resolve(getRenditionEntry('NOT_CREATED')),
-          Promise.resolve(getRenditionEntry('NOT_CREATED')),
+          Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
+          Promise.resolve(getRenditionEntry(Rendition.StatusEnum.NOTCREATED)),
           Promise.resolve(mockRenditionEntry)
         );
 
@@ -92,7 +91,7 @@ describe('RenditionService', () => {
     });
 
     it('should return the rendition when status is CREATED on the first run', async () => {
-        const mockRenditionPaging: RenditionPaging = getRenditionPaging('CREATED');
+        const mockRenditionPaging: RenditionPaging = getRenditionPaging(Rendition.StatusEnum.CREATED);
 
         renditionsApi.listRenditions.and.returnValue(Promise.resolve(mockRenditionPaging));
 
