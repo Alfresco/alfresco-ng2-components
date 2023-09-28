@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .adf-document-list {
     min-height: 0;
     height: 100%;
@@ -143,7 +141,7 @@
         word-break: break-all;
         white-space: pre-line;
 
-        @include layout-bp(lt-sm) {
+        @media screen and (max-width: 599px) {
             font-size: 48px;
         }
     }
@@ -165,12 +163,12 @@
         object-fit: contain;
         margin-top: 17px;
 
-        @include layout-bp(lt-sm) {
+        @media screen and (max-width: 599px) {
             width: 250px;
         }
     }
 
-    @include layout-bp(lt-md) {
+    @media screen and (max-width: 960px) {
         &-drag-drop,
         &-any-files-here-to-add {
             display: none;

@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .adf-edit-process-filter-date-error-container {
     position: absolute;
     height: 20px;
@@ -50,7 +48,7 @@
             max-width: 23%;
         }
 
-        @include layout-bp(lt-sm) {
+        @media screen and (max-width: 600px) {
             flex-flow: column;
 
             :not(:last-child) {

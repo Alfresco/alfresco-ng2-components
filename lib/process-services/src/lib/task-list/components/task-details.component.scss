@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 adf-task-details {
     width: 100%;
 
@@ -54,7 +52,7 @@ adf-task-details {
 
             &-sidebar {
                 &-drawer {
-                    @include layout-bp(lt-lg) {
+                    @media screen and (max-width: 1279px) {
                         margin-left: 0;
                     }
                 }

@@ -1,13 +1,11 @@
-@import 'styles/flex';
-
 .adf-hide-small {
-    @include layout-bp(lt-md) {
+    @media screen and (max-width: 959px) {
         display: none !important;
     }
 }
 
 .adf-hide-xsmall {
-    @include layout-bp(lt-sm) {
+    @media screen and (max-width: 599px) {
         display: none !important;
     }
 }

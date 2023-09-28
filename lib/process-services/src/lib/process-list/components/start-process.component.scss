@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .adf {
     &-start-process {
         width: 96%;
@@ -73,7 +71,7 @@
     }
 }
 
-@include layout-bp(lt-sm) {
+@media (max-width: 600px) {
     .adf-start-process {
         width: 90%;
         margin-left: auto;
