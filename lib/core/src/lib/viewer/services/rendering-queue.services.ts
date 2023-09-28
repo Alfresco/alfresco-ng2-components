@@ -43,21 +43,28 @@ export class RenderingQueueServices {
     isThumbnailViewEnabled: any = false;
 
     /**
-     * @param pdfViewer
+     * Set the instance of the PDF Viewer
+     *
+     * @param pdfViewer viewer instance
      */
-    setViewer(pdfViewer) {
+    setViewer(pdfViewer): void {
         this.pdfViewer = pdfViewer;
     }
 
     /**
-     * @param pdfThumbnailViewer
+     * Sets the instance of the PDF Thumbnail Viewer
+     *
+     * @param pdfThumbnailViewer viewer instance
      */
-    setThumbnailViewer(pdfThumbnailViewer) {
+    setThumbnailViewer(pdfThumbnailViewer): void {
         this.pdfThumbnailViewer = pdfThumbnailViewer;
     }
 
     /**
-     * @param  view
+     * Check if the view has highest rendering priority
+     *
+     * @param view view to render
+     * @returns `true` if the view has higher priority, otherwise `false`
      */
     isHighestPriority(view: any): boolean {
         return this.highestPriorityPage === view.renderingId;
@@ -132,7 +139,10 @@ export class RenderingQueueServices {
     }
 
     /**
-     * @param view
+     * Checks if the view rendering is finished
+     *
+     * @param view the View instance to check
+     * @returns `true` if rendering is finished, otherwise `false`
      */
     isViewFinished(view): boolean {
         return view.renderingState === this.renderingStates.FINISHED;
@@ -143,9 +153,10 @@ export class RenderingQueueServices {
      * based on the views state. If the view is already rendered it will return
      * false.
      *
-     * @param view
+     * @param view View instance to render
+     * @returns the rendered state of the view
      */
-    renderView(view: any) {
+    renderView(view: any): boolean {
         const state = view.renderingState;
         switch (state) {
             case this.renderingStates.FINISHED: {
