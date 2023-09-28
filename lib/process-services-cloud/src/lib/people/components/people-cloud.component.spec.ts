@@ -42,10 +42,21 @@ describe('PeopleCloudComponent', () => {
     let searchSpy: jasmine.Spy;
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    /**
+     * get the native element by selector
+     *
+     * @param selector selector
+     * @returns native element
+     */
     function getElement<T = HTMLElement>(selector: string): T {
         return fixture.nativeElement.querySelector(selector);
     }
 
+    /**
+     * Search users by value
+     *
+     * @param value value
+     */
     async function searchUsers(value: string) {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
@@ -57,6 +68,11 @@ describe('PeopleCloudComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Search users and blur the input
+     *
+     * @param value value
+     */
     async function searchUsersAndBlur(value: string) {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
@@ -71,14 +87,29 @@ describe('PeopleCloudComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Get users list UI
+     *
+     * @returns list of debug elements
+     */
     function getUsersListUI(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]'));
     }
 
+    /**
+     * Get users chip list UI
+     *
+     * @returns list of debug elements
+     */
     function getUsersChipsUI(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('mat-chip'));
     }
 
+    /**
+     * Get the first user from the list
+     *
+     * @returns native element
+     */
     function getFirstUserFromListUI(): Element {
         return element.querySelector('[data-automation-id="adf-people-cloud-row"]');
     }

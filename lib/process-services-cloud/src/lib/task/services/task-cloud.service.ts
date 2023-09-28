@@ -194,7 +194,8 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
      /**
       * Creates a new standalone task.
       *
-      * @param taskDetails Details of the task to create
+      * @param startTaskRequest request model
+      * @param appName application name
       * @returns Details of the newly created task
       */
     createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {

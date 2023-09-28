@@ -41,7 +41,8 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Input()
     displayEmpty: boolean;
 
-    /** Toggles between expanded (ie, full information) and collapsed
+    /**
+     * Toggles between expanded (ie, full information) and collapsed
      * (ie, reduced information) in the display
      */
     @Input()

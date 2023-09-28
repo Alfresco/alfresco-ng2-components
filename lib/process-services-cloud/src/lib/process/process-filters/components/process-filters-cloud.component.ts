@@ -84,8 +84,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Fetch the filter list based on appName
+     *
+     * @param appName application name
      */
-    getFilters(appName: string) {
+    getFilters(appName: string): void {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -103,8 +105,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Pass the selected filter as next
+     *
+     * @param paramFilter filter model
      */
-    public selectFilter(paramFilter: FilterParamsModel) {
+    selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
             this.currentFilter = this.filters.find(
                 (filter, index) =>
@@ -118,6 +122,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Check equality of the filter names by translating the given name strings
+     *
+     * @param name1 source name
+     * @param name2 target name
+     * @returns `true` if filter names are equal, otherwise `false`
      */
     private checkFilterNamesEquality(name1: string, name2: string): boolean {
         const translatedName1 = this.translationService.instant(name1);
@@ -128,8 +136,10 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Selects and emits the given filter
+     *
+     * @param newParamFilter new parameter filter
      */
-    public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+    selectFilterAndEmit(newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
             this.filterSelected.emit(this.currentFilter);
@@ -140,15 +150,19 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Select filter with the id
+     *
+     * @param id filter id
      */
-    public selectFilterById(id: string) {
+    selectFilterById(id: string) {
         this.selectFilterAndEmit({ id });
     }
 
     /**
      * Selects and emits the clicked filter
+     *
+     * @param filter filter model
      */
-    public onFilterClick(filter: ProcessFilterCloudModel) {
+    onFilterClick(filter: ProcessFilterCloudModel) {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
@@ -160,14 +174,16 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     /**
      * Select as default process filter the first in the list
      */
-    public selectDefaultProcessFilter() {
+    selectDefaultProcessFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
     }
 
     /**
-     * Return the current process
+     * Get current filter
+     *
+     * @returns filter model
      */
     getCurrentFilter(): ProcessFilterCloudModel {
         return this.currentFilter;
@@ -175,6 +191,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Check if the filter list is empty
+     *
+     * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
@@ -193,7 +211,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         this.onDestroy$.complete();
     }
 
-    isActiveFilter(filter: any): boolean {
+    isActiveFilter(filter: ProcessFilterCloudModel): boolean {
         return this.currentFilter.name === filter.name;
     }
 }

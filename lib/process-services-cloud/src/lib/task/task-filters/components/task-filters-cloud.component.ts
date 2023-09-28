@@ -73,13 +73,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     /**
-     * Return the filter list filtered by appName
+     * Loads the filter list filtered by appName
+     *
+     * @param appName application name
      */
-    getFilters(appName: string) {
+    getFilters(appName: string): void {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
-            (res: TaskFilterCloudModel[]) => {
+            (res) => {
                 this.resetFilter();
                 this.filters = res || [];
                 this.selectFilterAndEmit(this.filterParam);
@@ -157,8 +159,10 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Selects and emits the clicked filter.
+     *
+     * @param filter filter model
      */
-    public onFilterClick(filter: FilterParamsModel) {
+    onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
             this.updateFilterCounter(this.currentFilter);
@@ -179,6 +183,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Check if the filter list is empty
+     *
+     * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);

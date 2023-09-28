@@ -36,16 +36,26 @@ export class AppDetailsCloudComponent {
   /**
    * Pass the selected app as next
    *
-   * @param app
+   * @param app application model
    */
   onSelectApp(app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
   }
 
+  /**
+   * Get application instance theme
+   *
+   * @returns the name of the theme
+   */
   getTheme(): string {
     return this.applicationInstance.theme || DEFAULT_APP_INSTANCE_THEME;
   }
 
+  /**
+   * Get application instance icon
+   *
+   * @returns the name of the icon
+   */
   getIcon(): string {
     return this.applicationInstance.icon || DEFAULT_APP_INSTANCE_ICON;
   }

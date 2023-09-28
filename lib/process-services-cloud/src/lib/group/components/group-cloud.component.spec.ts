@@ -22,7 +22,7 @@ import { ProcessServiceCloudTestingModule } from './../../testing/process-servic
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
@@ -35,10 +35,21 @@ describe('GroupCloudComponent', () => {
     let findGroupsByNameSpy: jasmine.Spy;
 
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    /**
+     * get the native element for the selector
+     *
+     * @param selector selector
+     * @returns native element
+     */
     function getElement<T = HTMLElement>(selector: string): T {
         return fixture.nativeElement.querySelector(selector);
     }
 
+    /**
+     * search group by value
+     *
+     * @param value element input value
+     */
     async function searchGroup(value: string) {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
@@ -50,6 +61,11 @@ describe('GroupCloudComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * search group and invoke the blur event
+     *
+     * @param value value
+     */
     async function searchGroupsAndBlur(value: string) {
         const input = getElement<HTMLInputElement>('input');
         input.focus();
@@ -64,7 +80,12 @@ describe('GroupCloudComponent', () => {
         fixture.detectChanges();
     }
 
-    function getGroupListUI() {
+    /**
+     * get the group list UI
+     *
+     * @returns a list of debug elements
+     */
+    function getGroupListUI(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]'));
     }
 

@@ -65,9 +65,8 @@ export class TaskFilterCloudService extends BaseCloudService {
      * Creates and returns the default task filters for an app.
      *
      * @param appName Name of the target app
-     * @returns Observable of default filters task filters just created or created filters
      */
-    private createDefaultFilters(appName: string) {
+    private createDefaultFilters(appName: string): void {
         const key: string = this.prepareKey(appName);
         this.preferenceService
             .getPreferences(appName, key)
@@ -254,9 +253,9 @@ export class TaskFilterCloudService extends BaseCloudService {
      * Finds a task using an object with optional query properties.
      *
      * @returns Task information
-     * @param taskFilter
+     * @param taskFilter task filter model
      */
-    getTaskFilterCounter(taskFilter: TaskFilterCloudModel): Observable<any> {
+    getTaskFilterCounter(taskFilter: TaskFilterCloudModel): Observable<number> {
         if (taskFilter.appName || taskFilter.appName === '') {
             const queryUrl = `${this.getBasePath(taskFilter.appName)}/query/v1/tasks`;
             const queryParams = {
@@ -313,8 +312,8 @@ export class TaskFilterCloudService extends BaseCloudService {
      * Finds and returns the task filters from preferences
      *
      * @returns Array of TaskFilterCloudModel
-     * @param preferences
-     * @param key
+     * @param preferences preferences
+     * @param key key
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => filter.entry.key === key);

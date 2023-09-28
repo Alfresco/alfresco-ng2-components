@@ -63,9 +63,11 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     }
 
     /**
-     * Return the filter list filtered by appName
+     * Load the filter list filtered by appName
+     *
+     * @param appName application name
      */
-    getFilters(appName: string) {
+    getFilters(appName: string): void {
         this.filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -81,7 +83,12 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
         );
     }
 
-    public selectFilter(paramFilter: FilterParamsModel) {
+    /**
+     * Select filter
+     *
+     * @param paramFilter filter model
+     */
+    selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
             this.currentFilter = this.filters.find((filter, index) =>
                 paramFilter.index === index ||
@@ -107,8 +114,10 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Selects and emits the clicked filter.
+     *
+     * @param filter filter to select
      */
-    public onFilterClick(filter: FilterParamsModel) {
+    onFilterClick(filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
@@ -128,6 +137,8 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Check if the filter list is empty
+     *
+     * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
