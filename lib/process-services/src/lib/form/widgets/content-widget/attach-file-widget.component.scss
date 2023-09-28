@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .adf {
     &-attach-widget-container {
         margin-bottom: 15px;
@@ -74,7 +72,7 @@
             max-width: 200px;
         }
 
-        @include layout-bp(lt-md) {
+        @media screen and (max-width: 959px) {
             .mat-list-text {
                 max-width: 150px;
             }

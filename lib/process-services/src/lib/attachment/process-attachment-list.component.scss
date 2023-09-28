@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .adf-data-cell {
     cursor: pointer !important;
 }
@@ -45,7 +43,7 @@
     object-fit: contain;
     margin-top: 17px;
 
-    @include layout-bp(lt-sm) {
+    @media screen and (max-width: 599px) {
         width: 250px;
     }
 }

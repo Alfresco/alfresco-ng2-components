@@ -1,5 +1,3 @@
-@import 'styles/flex';
-
 .app-shell {
     display: flex;
     flex-direction: column;
@@ -23,7 +21,7 @@
     }
 }
 
-@include layout-bp(lt-sm) {
+@media screen and (max-width: 599px) {
     .adf-app-title {
         display: none;
     }
