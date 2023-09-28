@@ -57,7 +57,7 @@ describe('RenditionService', () => {
         });
         renditionService = TestBed.inject(RenditionService);
         renditionsApi = TestBed.inject(RenditionsApi);
-        spyOnProperty(renditionService, 'renditionsApi').and.returnValue(renditionsApi)
+        spyOnProperty(renditionService, 'renditionsApi').and.returnValue(renditionsApi);
     });
 
     describe('getRendition', () => {
