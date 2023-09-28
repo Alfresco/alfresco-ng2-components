@@ -272,6 +272,11 @@
             "karmaConfig": "lib/core/karma.conf.js",
             "sourceMap": true,
             "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            },
             "styles": [
               "demo-shell/src/styles.scss"
             ]
@@ -420,7 +425,12 @@
             "tsConfig": "lib/content-services/tsconfig.spec.json",
             "karmaConfig": "lib/content-services/karma.conf.js",
             "sourceMap": true,
-            "codeCoverage": true
+            "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         },
         "lint": {
@@ -538,7 +548,12 @@
             "tsConfig": "lib/process-services/tsconfig.spec.json",
             "karmaConfig": "lib/process-services/karma.conf.js",
             "sourceMap": true,
-            "codeCoverage": true
+            "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         },
         "lint": {
@@ -604,7 +619,12 @@
             "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
             "karmaConfig": "lib/process-services-cloud/karma.conf.js",
             "sourceMap": true,
-            "codeCoverage": true
+            "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         },
         "lint": {
@@ -733,7 +753,12 @@
             "tsConfig": "lib/insights/tsconfig.spec.json",
             "karmaConfig": "lib/insights/karma.conf.js",
             "sourceMap": true,
-            "codeCoverage": true
+            "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         },
         "lint": {
@@ -798,7 +823,12 @@
             "tsConfig": "lib/extensions/tsconfig.spec.json",
             "karmaConfig": "lib/extensions/karma.conf.js",
             "sourceMap": true,
-            "codeCoverage": true
+            "codeCoverage": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         },
         "lint": {
