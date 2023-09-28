@@ -7,3 +7,22 @@
         }
     }
 }
+
+.adf-text-widget {
+
+    &.custom-text-color{
+        .adf-label:not(.adf-container-widget .mat-focused label) {
+            color: var(--text-color);
+        }
+        .mat-form-field-label:not(.mat-form-field.mat-focused .mat-form-field-label) {
+            color: var(--text-color);
+        }
+        .mat-form-field-underline {
+            background-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+        }
+    }
+
+    &.custom-background-color{
+        background-color: var(--background-color);
+    }
+}

@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -39,6 +39,8 @@ import { WidgetComponent } from '../widget.component';
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
+    @HostBinding('style.--text-color') textColor: string;
+    @HostBinding('style.--background-color') backgroundColor: string;
 
     mask: string;
     placeholder: string;
@@ -54,5 +56,8 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
             this.placeholder = this.field.params['inputMask'] && this.field.params['inputMaskPlaceholder'] ? this.field.params['inputMaskPlaceholder'] : this.field.placeholder;
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
+
+        this.textColor = this.field?.params?.styles?.textColor;
+        this.backgroundColor = this.field?.params?.styles?.backgroundColor;;
     }
 }
