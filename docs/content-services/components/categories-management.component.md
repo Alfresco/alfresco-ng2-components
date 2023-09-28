@@ -42,32 +42,3 @@ Component allows to both assign/unassign categories to content and create multip
 | ---- | ---- | ----------- |
 | categoriesChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Category`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Category.md)`>` | Emitted when categories list changes. |
 | categoryNameControlVisibleChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when category name control visibility changes. |
-
-## Method: `get isNameCategoryVisible(): boolean`
-
-### Description
-This method calculates and returns a boolean value indicating whether the category name control should be visible in the Categories Management Component. The visibility is determined by a specific condition based on the component's internal state.
-
-### Return Value
-- Type: `boolean`
-- `true` if the category name control should be visible.
-- `false` if the category name control should not be visible.
-
-### Usage
-You can access this method to determine the visibility of the category name control within the Categories Management Component. The method is used to control the display of the category name input field based on the following condition:
-
-```typescript
-return (!this.categoryNameControlVisible && this.categories?.length > 0) || this.categoryNameControlVisible;
-```
-## Method: `isCategoryEmpty(): boolean`
-
-### Description
-The `isCategoryEmpty` method is used within the Categories Management Component to determine whether the list of categories is empty. It returns a boolean value indicating the presence or absence of categories.
-
-### Return Value
-- Type: `boolean`
-- `true` if the list of categories is not empty.
-- `false` if the list of categories is empty.
-
-### Usage
-You can use this method to check whether there are categories present in the Categories Management Component. It's particularly useful when you need to conditionally display or hide elements based on the presence of categories.

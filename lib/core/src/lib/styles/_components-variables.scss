@@ -47,6 +47,7 @@
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
         --theme-metadata-property-panel-border-color: $metadata-property-panel-border-color,
         --theme-metadata-buttons-background-color: $metadata-buttons-background-color,
+        --theme-metadata-action-button-clear-color: $metadata-action-button-clear-color
     );
 
     // propagates SCSS variables into the CSS variables scope
