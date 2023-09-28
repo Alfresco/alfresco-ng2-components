@@ -40,6 +40,8 @@ export class ViewUtilService {
 
     /**
      * Returns a list of the active Viewer content extensions.
+     *
+     * @returns list of extension references
      */
     get viewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService.getViewerExtensions();
@@ -47,6 +49,8 @@ export class ViewUtilService {
 
     /**
      * Provides a list of file extensions supported by external plugins.
+     *
+     * @returns list of extensions
      */
     get externalExtensions(): string[] {
         return this.viewerExtensions.map((ext) => ext.fileExtension);
@@ -58,6 +62,7 @@ export class ViewUtilService {
      * get File name from url
      *
      * @param  url - url file
+     * @returns file name portion of the url
      */
     getFilenameFromUrl(url: string): string {
         const anchor = url.indexOf('#');
@@ -73,6 +78,7 @@ export class ViewUtilService {
      * http://localhost/test.jpg#cache=1000
      *
      * @param fileName - file name
+     * @returns file extension
      */
     getFileExtension(fileName: string): string {
         if (fileName) {
