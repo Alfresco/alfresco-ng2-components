@@ -155,7 +155,7 @@ export class DataTableComponentPage {
         if (listType.toLocaleLowerCase() === 'string') {
             sortedList = sortedList.sort();
         } else if (listType.toLocaleLowerCase() === 'number') {
-            sortedList = sortedList.sort((a, b) => a - b);
+            sortedList = sortedList.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
         } else if (listType.toLocaleLowerCase() === 'priority') {
             sortedList = sortedList.sort(this.sortPriority);
         }
