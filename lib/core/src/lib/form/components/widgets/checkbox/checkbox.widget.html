@@ -1,4 +1,9 @@
 <div [ngClass]="field.className"
+     [class.custom-frame-color]="frameColor"
+     [class.custom-label-color]="labelColor"
+     [class.custom-checked-color]="checkedColor"
+     [class.custom-background-color]="backgroundColor"
+     [class.custom-font-size]="fontSize"
      [class.adf-invalid]="!field.isValid && isTouched()">
     <mat-checkbox
         [id]="field.id"

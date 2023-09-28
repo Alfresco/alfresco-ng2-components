@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, HostBinding, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -35,12 +35,29 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
+    styleUrls: ['./checkbox.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class CheckboxWidgetComponent extends WidgetComponent {
+export class CheckboxWidgetComponent extends WidgetComponent implements OnInit {
+    @HostBinding('style.--frame-color') frameColor: string;
+    @HostBinding('style.--label-color') labelColor: string;
+    @HostBinding('style.--checked-color') checkedColor: string;
+    @HostBinding('style.--background-color') backgroundColor: string;
+    @HostBinding('style.--font-size') fontSize: number;
+
     checkboxValue: boolean;
 
     constructor(public formService: FormService) {
         super(formService);
     }
+
+    ngOnInit(){
+        // TODO - connect with field values
+        // E.g. this.frameColor = this.field?.params?.styles?.frameColor;
+        this.frameColor = '#A44CD3';
+        this.labelColor = '#8800C7';
+        this.checkedColor = '#A44CD3';
+        this.backgroundColor = '#EEEEFF';
+        this.fontSize = 12;
+    };
 }

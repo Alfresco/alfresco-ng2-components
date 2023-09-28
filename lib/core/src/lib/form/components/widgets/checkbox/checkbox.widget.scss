@@ -1,0 +1,40 @@
+adf-cloud-form checkbox-widget {
+    .custom-frame-color {
+        .mat-checkbox-frame {
+            border-color: var(--frame-color);
+        }
+    } 
+
+    .custom-label-color {
+        .mat-checkbox-label {
+            color: var(--label-color);
+        }
+    } 
+
+    .custom-checked-color {
+        .mat-checkbox-checked .mat-checkbox-background, 
+        .mat-checkbox-indeterminate .mat-checkbox-background {
+            background-color: var(--checked-color);
+        }
+
+        .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+            background-color: var(--checked-color);
+        }
+    }
+
+    .custom-background-color {
+        background-color: var(--background-color);
+    }
+
+    .custom-font-size {
+        .mat-checkbox-label {
+            font-size: calc(var(--font-size) * 1px);
+        }
+        .mat-checkbox .mat-checkbox-frame {
+            transform: scale(calc(var(--font-size)/16));
+        }
+        .mat-checkbox-checked .mat-checkbox-background {
+            transform: scale(calc(var(--font-size)/16));
+        }
+    }
+}
