@@ -40,7 +40,7 @@ export class TaskListPage {
     }
 
     getRowsDisplayedWithSameName(taskName: string): Promise<string> {
-        return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
+        return this.dataTable.getRowsWithSameColumnValues('Task Name', taskName);
     }
 
     async checkContentIsDisplayedByColumn(column: string, processName: string): Promise<void> {
@@ -62,14 +62,14 @@ export class TaskListPage {
     }
 
     checkRowIsSelected(taskName: string): Promise<void> {
-        return this.dataTable.checkRowIsSelected('Name', taskName);
+        return this.dataTable.checkRowIsSelected('Task Name', taskName);
     }
 
     async selectRowByName(taskName: string): Promise<void> {
-        await this.dataTable.selectRow('Name', taskName);
+        await this.dataTable.selectRow('Task Name', taskName);
     }
 
     getAllRowsNameColumn(): Promise<any> {
-        return this.dataTable.getAllRowsColumnValues('Name');
+        return this.dataTable.getAllRowsColumnValues('Task Name');
     }
 }
