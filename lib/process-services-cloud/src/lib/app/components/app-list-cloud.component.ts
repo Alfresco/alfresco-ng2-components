@@ -45,7 +45,8 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
-    /** (**required**) Defines the layout of the apps. There are two possible
+    /**
+     * Defines the layout of the apps. There are two possible
      * values, "GRID" and "LIST".
      */
     @Input()
@@ -87,6 +88,8 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
     /**
      * Check if the value of the layoutType property is an allowed value
+     *
+     * @returns `true` is layout type is valid, otherwise `false`
      */
     isValidType(): boolean {
         if (this.layoutType && (this.layoutType === LAYOUT_LIST || this.layoutType === LAYOUT_GRID)) {
@@ -103,14 +106,18 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     }
 
     /**
-     * Return true if the layout type is LIST
+     * Check if the layout type is LIST
+     *
+     * @returns `true` if the layout is list, otherwise `false`
      */
     isList(): boolean {
         return this.layoutType === LAYOUT_LIST;
     }
 
     /**
-     * Return true if the layout type is GRID
+     * Check if the layout type is GRID
+     *
+     * @returns `true` if layout is grid, otherwise `false`
      */
     isGrid(): boolean {
         return this.layoutType === LAYOUT_GRID;

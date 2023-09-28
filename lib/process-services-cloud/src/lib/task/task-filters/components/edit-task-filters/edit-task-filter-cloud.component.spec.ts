@@ -120,12 +120,20 @@ describe('EditTaskFilterCloudComponent', () => {
             processInstanceIdInput: '[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'
         };
 
+        /**
+         * expand filter panel
+         */
         function expandFilterPanel(){
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
         }
 
+        /**
+         * resolve filter instance input element
+         *
+         * @returns native element
+         */
         function getProcessInstanceIdInputElement(){
             return fixture.debugElement.query(By.css(cssSelector.processInstanceIdInput)).nativeElement;
         }

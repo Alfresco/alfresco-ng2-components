@@ -94,9 +94,8 @@ export class ProcessFilterCloudService {
      * Creates and returns the default process instance filters for a app.
      *
      * @param appName Name of the target app
-     * @returns Observable of default process instance filters just created or created filters
      */
-    private createDefaultFilters(appName: string) {
+    private createDefaultFilters(appName: string): void {
         const key: string = this.prepareKey(appName);
         this.preferenceService
             .getPreferences(appName, key)
@@ -334,8 +333,8 @@ export class ProcessFilterCloudService {
      * Finds and returns the process instance filters from preferences
      *
      * @returns Array of ProcessFilterCloudModel
-     * @param preferences
-     * @param key
+     * @param preferences preferences
+     * @param key key
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ProcessFilterCloudModel[] {
         const result = preferences.find((filter: any) => filter.entry.key === key);

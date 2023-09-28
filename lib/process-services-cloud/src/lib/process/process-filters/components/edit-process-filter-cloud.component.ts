@@ -452,6 +452,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /**
      * Delete a process instance filter
+     *
+     * @param deleteAction filter action
      */
     delete(deleteAction: ProcessFilterAction) {
         this.processFilterCloudService
@@ -469,6 +471,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     /**
      * Save As a process instance filter
+     *
+     * @param saveAsAction filter action
      */
     saveAs(saveAsAction: ProcessFilterAction) {
         const dialogRef = this.dialog.open(ProcessFilterDialogCloudComponent, {
@@ -512,9 +516,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     /**
-     * Return filter name
+     * Get sanitized filter name
      *
-     * @param filterName
+     * @param filterName filter name
+     * @returns sanitized filter name
      */
     getSanitizeFilterName(filterName: string): string {
         const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
@@ -524,7 +529,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     /**
      * Return name with hyphen
      *
-     * @param name
+     * @param name name
+     * @returns updated value
      */
     replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');

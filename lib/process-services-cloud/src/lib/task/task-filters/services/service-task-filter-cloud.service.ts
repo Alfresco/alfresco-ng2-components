@@ -40,9 +40,8 @@ export class ServiceTaskFilterCloudService {
      * Creates and returns the default task filters for an app.
      *
      * @param appName Name of the target app
-     * @returns Observable of default filters task filters just created or created filters
      */
-    private createDefaultFilters(appName: string) {
+    private createDefaultFilters(appName: string): void {
         const key: string = this.prepareKey(appName);
         this.preferenceService
             .getPreferences(appName, key)
@@ -251,8 +250,8 @@ export class ServiceTaskFilterCloudService {
      * Finds and returns the task filters from preferences
      *
      * @returns Array of TaskFilterCloudModel
-     * @param preferences
-     * @param key
+     * @param preferences preferences
+     * @param key key
      */
     private findFiltersByKeyInPreferences(preferences: any, key: string): ServiceTaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => filter.entry.key === key);

@@ -68,19 +68,22 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     preSelectGroups: IdentityGroupModel[] = [];
 
-    /** This flag enables the validation on the preSelectGroups passed as input.
+    /**
+     * This flag enables the validation on the preSelectGroups passed as input.
      * In case the flag is true the components call the identity service to verify the validity of the information passed as input.
      * Otherwise, no check will be done.
      */
     @Input()
     validate = false;
 
-    /** Show the info in readonly mode
+    /**
+     * Show the info in readonly mode
      */
     @Input()
     readOnly = false;
 
-    /** Mark this field as required
+    /**
+     * Mark this field as required
      */
     @Input()
     required = false;

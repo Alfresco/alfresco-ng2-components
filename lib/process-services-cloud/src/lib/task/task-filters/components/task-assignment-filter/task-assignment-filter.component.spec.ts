@@ -34,6 +34,11 @@ describe('TaskAssignmentFilterComponent', () => {
     let fixture: ComponentFixture<TaskAssignmentFilterCloudComponent>;
     let identityUserService: IdentityUserService;
 
+    /**
+     * select the assignment type
+     *
+     * @param type type to select
+     */
     function selectAssignmentType(type: AssignmentType) {
         const assignmentTypeChangeSpy = spyOn(component.assignmentTypeChange, 'emit');
 

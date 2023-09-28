@@ -215,9 +215,10 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     /**
-     * Return filter name
+     * Get the sanitized filter name
      *
-     * @param filterName
+     * @param filterName filter name
+     * @returns sanitized filter name
      */
     getSanitizeFilterName(filterName: string): string {
         const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());

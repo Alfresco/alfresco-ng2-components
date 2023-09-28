@@ -24,6 +24,10 @@ import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
+export interface QueryParams {
+    include: 'variables';
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -32,9 +36,10 @@ export class StartProcessCloudService extends BaseCloudService {
      * Gets the process definitions associated with an app.
      *
      * @param appName Name of the target app
+     * @param queryParams optional query parameters
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string, queryParams?: { include: 'variables' }): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions(appName: string, queryParams?: QueryParams): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
@@ -85,6 +90,7 @@ export class StartProcessCloudService extends BaseCloudService {
      *
      * @param appName name of the Application
      * @param processInstanceId process instance to update
+     * @returns Observable<void>
      */
     deleteProcess(appName: string, processInstanceId: string): Observable<void> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;

@@ -65,24 +65,28 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     roles: string[];
 
-    /** This flag enables the validation on the preSelectUsers passed as input.
+    /**
+     * This flag enables the validation on the preSelectUsers passed as input.
      * In case the flag is true the components call the identity service to verify the validity of the information passed as input.
      * Otherwise, no check will be done.
      */
     @Input()
     validate: boolean = false;
 
-    /** Show the info in readonly mode
+    /**
+     * Show the info in readonly mode
      */
     @Input()
     readOnly: boolean = false;
 
-    /** Mark this field as required
+    /**
+     * Mark this field as required
      */
     @Input()
     required = false;
 
-    /** Array of users to be pre-selected. All users in the
+    /**
+     * Array of users to be pre-selected. All users in the
      * array are pre-selected in multi selection mode, but only the first user
      * is pre-selected in single selection mode.
      * Mandatory properties are: id, email, username
@@ -90,13 +94,15 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     preSelectUsers: IdentityUserModel[] = [];
 
-    /** Array of users to be excluded.
+    /**
+     * Array of users to be excluded.
      * Mandatory properties are: id, email, username
      */
     @Input()
     excludedUsers: IdentityUserModel[] = [];
 
-    /** Array of groups to restrict user searches.
+    /**
+     * Array of groups to restrict user searches.
      * Mandatory property is group name
      */
     @Input()
@@ -110,7 +116,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     searchUserCtrl = new UntypedFormControl({ value: '', disabled: false });
 
-    /** Placeholder translation key
+    /**
+     * Placeholder translation key
      */
     @Input()
     title: string;
