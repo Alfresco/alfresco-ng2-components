@@ -248,6 +248,7 @@ export class FormModel implements ProcessFormModel {
      * Returns a form variable that matches the identifier.
      *
      * @param identifier The `name` or `id` value.
+     * @returns form variable model
      */
     getFormVariable(identifier: string): FormVariableModel {
         if (identifier) {
@@ -261,6 +262,7 @@ export class FormModel implements ProcessFormModel {
      * Provides additional conversion of types (date, boolean).
      *
      * @param identifier The `name` or `id` value
+     * @returns form variable value
      */
     getDefaultFormVariableValue(identifier: string): any {
         const variable = this.getFormVariable(identifier);
@@ -278,6 +280,7 @@ export class FormModel implements ProcessFormModel {
      * is already resolved by the rest API with the name of variables.formVariableName
      *
      * @param name Variable name
+     * @returns process variable value
      */
     getProcessVariableValue(name: string): any {
         let value;

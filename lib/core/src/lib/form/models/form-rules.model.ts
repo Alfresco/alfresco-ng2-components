@@ -24,6 +24,12 @@ import { FormModel, FormService } from '../public-api';
 
 export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('form.rule.manager');
 
+/**
+ * A factory for forms rule manager
+ *
+ * @param injector Angular injector
+ * @returns FormsRuleManager instance
+ */
 export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager<T> {
     try {
         return injector.get(FORM_RULES_MANAGER);

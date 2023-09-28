@@ -247,7 +247,12 @@ describe('CardViewComponent', () => {
         expect(cardViewItemDispatcherComponent.displayLabelForChips).toBe(true);
     });
 
-    function getCardViewItemDispatcherComponent() {
+    /**
+     * Return the card view item dispatcher component
+     *
+     * @returns the dispatcher component instance
+     */
+    function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {
         const cardViewItemDispatcherDebugElement = fixture.debugElement.query(By.directive(CardViewItemDispatcherComponent));
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
     }

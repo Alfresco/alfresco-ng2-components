@@ -36,7 +36,8 @@ import { Track } from '../models/viewer.model';
 })
 export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
-    /** If you want to load an external file that does not come from ACS you
+    /**
+     * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.
      */
     @Input()
@@ -101,6 +102,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Returns a list of the active Viewer content extensions.
+     *
+     * @returns list of extension references
      */
     get viewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService.getViewerExtensions();
@@ -108,6 +111,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Provides a list of file extensions supported by external plugins.
+     *
+     * @returns list of extensions
      */
     get externalExtensions(): string[] {
         return this.viewerExtensions.map(ext => ext.fileExtension);

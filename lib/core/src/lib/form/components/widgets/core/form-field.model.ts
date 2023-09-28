@@ -474,11 +474,12 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     /**
-     * Skip the invalid field type
+     * Check if the field type is invalid, requires a type to be a `container`
      *
-     * @param type
+     * @param type field type
+     * @returns `true` if type is a `container`, otherwise `false`
      */
-    isInvalidFieldType(type: string) {
+    isInvalidFieldType(type: string): boolean {
         return type === 'container';
     }
 

@@ -71,7 +71,8 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
-    /** If you want to load an external file that does not come from ACS you
+    /**
+     * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.
      */
     @Input()
@@ -101,13 +102,15 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     showToolbar = true;
 
-    /** If `true` then show the Viewer as a full page over the current content.
+    /**
+     * If `true` then show the Viewer as a full page over the current content.
      * Otherwise fit inside the parent div.
      */
     @Input()
     overlayMode = false;
 
-    /** Toggles before/next navigation. You can use the arrow buttons to navigate
+    /**
+     * Toggles before/next navigation. You can use the arrow buttons to navigate
      * between documents in the collection.
      */
     @Input()
@@ -171,29 +174,29 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
-     * */
+     */
     enableDownloadPrompt: boolean = false;
 
     /**
      * Enable reminder dialogs to prompt user to download the file, in case the preview is not responding for a set period of time.
-     * */
+     */
     enableDownloadPromptReminder: boolean = false;
 
     /**
      * Initial time in seconds to wait before giving the first prompt to user to download the file
-     * */
+     */
     downloadPromptDelay: number = 50;
 
     /**
      * Time in seconds to wait before giving the second and consequent reminders to the user to download the file.
-     * */
+     */
     downloadPromptReminderDelay: number = 15;
 
     /**
      * Emitted when user clicks on download button on download prompt dialog.
-     * */
+     */
     @Output()
-    downloadFile: EventEmitter<void> = new EventEmitter<void>();
+    downloadFile = new EventEmitter<void>();
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()

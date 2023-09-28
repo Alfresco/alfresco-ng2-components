@@ -18,6 +18,13 @@
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from '../common/services/storage.service';
 
+/**
+ * Loads application config file
+ *
+ * @param appConfigService configuration service
+ * @param storageService storage service
+ * @returns a factory to load application config
+ */
 export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
     return () =>
         appConfigService.load().then(() => {

@@ -397,7 +397,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
      *
      * @param oldScale - old scale page
      * @param newScale - new scale page
-     *
+     * @returns `true` if the scale is the same, otherwise `false`
      */
     isSameScale(oldScale: number, newScale: number): boolean {
         return newScale === oldScale;
@@ -406,8 +406,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Check if is a land scape view
      *
-     * @param width
-     * @param height
+     * @param width target width
+     * @param height target height
+     * @returns `true` if the target is in the landscape mode, otherwise `false`
      */
     isLandscape(width: number, height: number): boolean {
         return width > height;
@@ -434,9 +435,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom in page pdf
      *
-     * @param ticks
+     * @param ticks number of ticks to zoom
      */
-    zoomIn(ticks?: number) {
+    zoomIn(ticks?: number): void {
         let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -450,9 +451,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * zoom out page pdf
      *
-     * @param ticks
+     * @param ticks number of ticks to scale
      */
-    zoomOut(ticks?: number) {
+    zoomOut(ticks?: number): void {
         let newScale: any = this.pdfViewer.currentScaleValue;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -507,7 +508,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     /**
      * Page Change Event
      *
-     * @param event
+     * @param event event
      */
     onPageChange(event: any) {
         if (event.source && event.source.container.id === `${this.randomPdfId}-viewer-pdf-viewer`) {

@@ -64,7 +64,7 @@ export class FormService implements FormValidationService {
      * @param json JSON to create the form
      * @param data Values for the form fields
      * @param readOnly Should the form fields be read-only?
-     * @param fixedSpace
+     * @param fixedSpace use fixed space
      * @returns Form model created from input data
      */
     parseForm(json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {

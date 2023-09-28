@@ -68,9 +68,12 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
     }
 
     /**
-     * check if the current extension in the viewer is compatible with this extension checking against supportedExtensions
+     * Check if the current extension in the viewer is compatible with this extension checking against `supportedExtensions`
+     *
+     * @param fileExtension file extension to check
+     * @returns `true` if file extension is compatible, otherwise `false`
      */
-    isVisible(fileExtension): boolean {
+    isVisible(fileExtension: string): boolean {
         let supportedExtension: string;
 
         if (this.supportedExtensions && (this.supportedExtensions instanceof Array)) {
