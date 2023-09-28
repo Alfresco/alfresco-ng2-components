@@ -52,12 +52,8 @@ export class CheckboxWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit(){
-        // TODO - connect with field values
-        // E.g. this.frameColor = this.field?.params?.styles?.frameColor;
-        this.frameColor = '#A44CD3';
-        this.labelColor = '#8800C7';
-        this.checkedColor = '#A44CD3';
-        this.backgroundColor = '#EEEEFF';
-        this.fontSize = 12;
+        this.frameColor = this.field?.params?.styles?.textColor;
+        this.labelColor = this.field?.params?.styles?.textColor;
+        this.backgroundColor = this.field?.params?.styles?.backgroundColor;
     };
 }
