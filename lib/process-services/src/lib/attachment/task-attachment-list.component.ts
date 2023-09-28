@@ -48,14 +48,16 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     @Input()
     disabled: boolean = false;
 
-    /** Emitted when the attachment is double-clicked or a view
+    /**
+     * Emitted when the attachment is double-clicked or a view
      * option is selected from the context menu by the user from within the component.
      * Returns a Blob representing the clicked object.
      */
     @Output()
     attachmentClick = new EventEmitter();
 
-    /** Emitted when the attachment list has fetched all the attachments.
+    /**
+     * Emitted when the attachment list has fetched all the attachments.
      * Returns a list of attachments.
      */
     @Output()

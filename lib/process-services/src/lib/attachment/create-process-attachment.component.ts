@@ -28,13 +28,15 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     @Input()
     processInstanceId: string;
 
-    /** Emitted when an error occurs while creating or uploading an attachment
+    /**
+     * Emitted when an error occurs while creating or uploading an attachment
      * from the user within the component.
      */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when an attachment is successfully created or uploaded
+    /**
+     * Emitted when an attachment is successfully created or uploaded
      * from within the component.
      */
     @Output()

@@ -106,6 +106,7 @@ export class PeopleProcessService {
      *
      * @param taskId ID of the task
      * @param searchWord Filter text to search for
+     * @param groupId group id
      * @returns Array of user information objects
      */
     getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {

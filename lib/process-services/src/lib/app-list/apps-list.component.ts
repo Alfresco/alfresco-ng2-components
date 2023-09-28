@@ -43,7 +43,8 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
-    /** (**required**) Defines the layout of the apps. There are two possible
+    /**
+     * Defines the layout of the apps. There are two possible
      * values, "GRID" and "LIST".
      */
     @Input()
@@ -102,11 +103,11 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         }
     }
 
-    isDefaultApp(app) {
+    isDefaultApp(app: AppDefinitionRepresentationModel) {
         return app.defaultAppId === DEFAULT_TASKS_APP;
     }
 
-    getAppName(app) {
+    getAppName(app: AppDefinitionRepresentationModel) {
         return this.isDefaultApp(app)
             ? this.translationService.get(DEFAULT_TASKS_APP_NAME)
             : of(app.name);
@@ -115,7 +116,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     /**
      * Pass the selected app as next
      *
-     * @param app
+     * @param app application model
      */
     selectApp(app: AppDefinitionRepresentationModel) {
         this.currentApp = app;
@@ -125,7 +126,8 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     /**
      * Return true if the appId is the current app
      *
-     * @param appId
+     * @param appId application id
+     * @returns `true` if application is selected, otherwise `false`
      */
     isSelected(appId: number): boolean {
         return (this.currentApp !== undefined && appId === this.currentApp.id);
@@ -133,6 +135,8 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     /**
      * Check if the value of the layoutType property is an allowed value
+     *
+     * @returns `true` if layout type is valid, otherwise `false`
      */
     isValidType(): boolean {
         return this.layoutType && (this.layoutType === APP_LIST_LAYOUT_LIST || this.layoutType === APP_LIST_LAYOUT_GRID);
@@ -146,14 +150,18 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     /**
-     * Return true if the layout type is LIST
+     * Check if the layout type is LIST
+     *
+     * @returns `true` if current layout is in the list mode, otherwise `false`
      */
     isList(): boolean {
         return this.layoutType === APP_LIST_LAYOUT_LIST;
     }
 
     /**
-     * Return true if the layout type is GRID
+     * Check if the layout type is GRID
+     *
+     * @returns `true` if current layout is in the grid mode, otherwise `false`
      */
     isGrid(): boolean {
         return this.layoutType === APP_LIST_LAYOUT_GRID;

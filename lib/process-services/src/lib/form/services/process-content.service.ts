@@ -190,7 +190,7 @@ export class ProcessContentService {
      * @param source - source of the document that workflow or task has been started with
      * @param size - size of the entries to get
      * @param page - page number
-     * @return Promise<ResultListDataRepresentationRelatedProcessTask>
+     * @returns Promise<ResultListDataRepresentationRelatedProcessTask>
      */
     getProcessesAndTasksOnContent(sourceId: string, source: string, size?: number, page?: number): Observable<ResultListDataRepresentationRelatedProcessTask> {
         return from(this.contentApi.getProcessesAndTasksOnContent(sourceId, source, size, page)).pipe(catchError((err) => this.handleError(err)));

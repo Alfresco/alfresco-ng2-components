@@ -33,7 +33,8 @@ import { Location } from '@angular/common';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
-    /** The parameters to filter the task filter. If there is no match then the default one
+    /**
+     * The parameters to filter the task filter. If there is no match then the default one
      * (ie, the first filter in the list) is selected.
      */
     @Input()
@@ -155,9 +156,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Return the filter list filtered by appName
      *
-     * @param appName
+     * @param appName application name
      */
-    getFiltersByAppName(appName: string) {
+    getFiltersByAppName(appName: string): void {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             (application) => {
                 this.getFiltersByAppId(application.id);
@@ -172,7 +173,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Pass the selected filter as next
      *
-     * @param filterModel
+     * @param filterModel filter model
      */
     selectFilter(filterModel: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filterModel;
@@ -182,8 +183,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Select the first filter of a list if present
+     *
+     * @param filterParam filter parameter
      */
-    selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
+    selectProcessFilter(filterParam: FilterProcessRepresentationModel): void {
         if (filterParam) {
             const newFilter = this.filters.find(
                 (processFilter, index) =>
@@ -219,7 +222,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     * Return the current task
+     * Get the current task
+     *
+     * @returns process instance filter
      */
     getCurrentFilter(): ProcessInstanceFilterRepresentation {
         return this.currentFilter;
@@ -227,13 +232,18 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Check if the filter list is empty
+     *
+     * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
-     * Return current filter icon
+     * Get the material icons equivalent of the glyphicon icon
+     *
+     * @param icon glyphicon name
+     * @returns material icons equivalent of the icon
      */
     getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);

@@ -58,10 +58,6 @@ export class ProcessAuditDirective implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /**
-     * @param downloadService
-     * @param processListService
-     */
     constructor(private downloadService: DownloadService,
                 private processListService: ProcessService) {
     }

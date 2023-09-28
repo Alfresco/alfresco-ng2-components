@@ -48,7 +48,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     @Input()
     disabled: boolean = false;
 
-    /** Emitted when the attachment is double-clicked or the
+    /**
+     * Emitted when the attachment is double-clicked or the
      * view option is selected from the context menu by the user from
      * within the component. Returns a Blob representing the object
      * that was clicked.
@@ -56,13 +57,15 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     @Output()
     attachmentClick = new EventEmitter();
 
-    /** Emitted when the attachment list has fetched all the attachments.
+    /**
+     * Emitted when the attachment list has fetched all the attachments.
      * Returns a list of attachments.
      */
     @Output()
     success = new EventEmitter();
 
-    /** Emitted when the attachment list is not able to fetch the attachments
+    /**
+     * Emitted when the attachment list is not able to fetch the attachments
      * (eg, following a network error).
      */
     @Output()

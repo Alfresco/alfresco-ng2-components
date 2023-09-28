@@ -69,7 +69,8 @@ export class ProcessUserInfoComponent implements OnDestroy {
     @Input()
     showName: boolean = true;
 
-    /** When the username is shown, this defines its position relative to the user info button.
+    /**
+     * When the username is shown, this defines its position relative to the user info button.
      * Can be `right` or `left`.
      */
     @Input()

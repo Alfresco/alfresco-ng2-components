@@ -58,6 +58,9 @@ describe('PeopleSearchComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * trigger search
+     */
     function triggerSearch() {
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';

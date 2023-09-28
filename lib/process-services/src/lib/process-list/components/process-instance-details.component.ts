@@ -67,12 +67,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     processInstanceDetails: ProcessInstance;
 
-    /**
-     * Constructor
-     *
-     * @param activitiProcess   Process service
-     * @param logService
-     */
     constructor(private activitiProcess: ProcessService, private logService: LogService) {}
 
     ngOnChanges(changes: SimpleChanges) {

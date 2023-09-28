@@ -32,7 +32,8 @@ import { filter, takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
-    /** Parameters to use for the task filter. If there is no match then
+    /**
+     * Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
      */
     @Input()
@@ -121,12 +122,12 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     /**
-     * Return the task list filtered by appId or by appName
+     * Load the task list filtered by appId or by appName
      *
-     * @param appId
-     * @param appName
+     * @param appId application id
+     * @param appName application name
      */
-    getFilters(appId?: number, appName?: string) {
+    getFilters(appId?: number, appName?: string): void {
         if (appName) {
             this.getFiltersByAppName(appName);
         } else {
@@ -160,9 +161,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Return the filter list filtered by appName
      *
-     * @param appName
+     * @param appName application name
      */
-    getFiltersByAppName(appName: string) {
+    getFiltersByAppName(appName: string): void {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             (application) => {
                 this.getFiltersByAppId(application.id);
@@ -176,9 +177,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Create default filters by appId
      *
-     * @param appId
+     * @param appId application id
      */
-    createFiltersByAppId(appId?: number) {
+    createFiltersByAppId(appId?: number): void {
         this.taskFilterService.createDefaultFilters(appId).subscribe(
             (resDefault: FilterRepresentationModel[]) => {
                 this.resetFilter();
@@ -195,9 +196,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Pass the selected filter as next
      *
-     * @param newFilter
+     * @param newFilter new filter model
      */
-    public selectFilter(newFilter: FilterParamsModel) {
+    public selectFilter(newFilter: FilterParamsModel): void {
         if (newFilter) {
             this.currentFilter = this.filters.find(
                 (entry, index) =>
@@ -215,6 +216,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Selects and emits the clicked filter.
+     *
+     * @param filterParams filter parameters model
      */
     onFilterClick(filterParams: FilterParamsModel) {
         this.selectFilter(filterParams);
@@ -224,9 +227,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Select filter with task
      *
-     * @param taskId
+     * @param taskId task id
      */
-    public selectFilterWithTask(taskId: string) {
+    selectFilterWithTask(taskId: string): void {
         const filteredFilterList: FilterRepresentationModel[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
             (filterModel: FilterRepresentationModel) => {
@@ -247,14 +250,16 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter() {
+    public selectDefaultTaskFilter(): void {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
     }
 
     /**
-     * Return the current task
+     * Get the current filter
+     *
+     * @returns filter model
      */
     getCurrentFilter(): FilterRepresentationModel {
         return this.currentFilter;
@@ -262,15 +267,20 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Check if the filter list is empty
+     *
+     * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
-     * Return current filter icon
+     * Get the material icons equivalent of the glyphicon icon
+     *
+     * @param icon glyphicon name
+     * @returns material icons equivalent of the icon
      */
-    getFilterIcon(icon): string {
+    getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 
