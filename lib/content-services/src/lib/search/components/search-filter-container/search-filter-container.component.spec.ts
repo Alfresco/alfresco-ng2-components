@@ -196,7 +196,7 @@ describe('SearchFilterContainerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const inputElement = fixture.debugElement.query(By.css('.mat-input-element'));
+            const inputElement = fixture.debugElement.query(By.css('.mat-mdc-input-element'));
             expect(document.activeElement).toBe(inputElement.nativeElement);
 
         });

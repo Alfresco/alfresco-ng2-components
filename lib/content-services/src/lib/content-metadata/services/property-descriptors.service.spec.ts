@@ -22,6 +22,31 @@ import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+const exifResponse: PropertyGroup = {
+    name: 'exif:exif',
+    title: '',
+    properties: {
+        'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
+        'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
+    }
+};
+
+const contentResponse: PropertyGroup = {
+    name: 'cm:content',
+    title: '',
+    properties: {
+        'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
+    }
+};
+
+const customResponse: PropertyGroup = {
+    name: 'custom:content',
+    title: '',
+    properties: {
+        'custom:content': { title: 'custom:content:id', name: 'custom:content', dataType: '', mandatory: false, multiValued: false }
+    }
+};
+
 describe('PropertyDescriptorLoaderService', () => {
 
     let service: PropertyDescriptorsService;
@@ -38,38 +63,27 @@ describe('PropertyDescriptorLoaderService', () => {
         classesApi = service['classesApi'];
     });
 
-    it('should load the groups passed by paramter', () => {
-        spyOn(classesApi, 'getClass');
+    it('should load the groups passed by paramter', (done) => {
+
+        const apiResponses = [exifResponse, contentResponse, customResponse];
+        let counter = 0;
+
+        spyOn(classesApi, 'getClass').and.callFake(() => Promise.resolve(apiResponses[counter++]));
 
         service.load(['exif:exif', 'cm:content', 'custom:custom'])
-            .subscribe(() => {});
-
-        expect(classesApi.getClass).toHaveBeenCalledTimes(3);
-        expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
-        expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
-        expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+            .subscribe({
+                next: () => {
+                    expect(classesApi.getClass).toHaveBeenCalledTimes(3);
+                    expect(classesApi.getClass).toHaveBeenCalledWith('exif_exif');
+                    expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+                    expect(classesApi.getClass).toHaveBeenCalledWith('custom_custom');
+                },
+                complete: () =>  done()
+            });
     });
 
     it('should merge the forked values', (done) => {
-
-        const exifResponse: PropertyGroup = {
-            name: 'exif:exif',
-            title: '',
-            properties: {
-                'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
-                'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
-            }
-        };
-
-        const contentResponse: PropertyGroup = {
-            name: 'cm:content',
-            title: '',
-            properties: {
-                'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
-            }
-        };
-
-        const apiResponses = [ exifResponse, contentResponse ];
+        const apiResponses = [exifResponse, contentResponse];
         let counter = 0;
 
         spyOn(classesApi, 'getClass').and.callFake(() => Promise.resolve(apiResponses[counter++]));

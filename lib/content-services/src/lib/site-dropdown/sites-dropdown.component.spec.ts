@@ -111,7 +111,7 @@ describe('DropdownSitesComponent', () => {
             });
 
             const openSelectBox = () => {
-                const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-option"] .mat-select-trigger')));
+                const selectBox = debug.query(By.css(('[data-automation-id="site-my-files-option"] .mat-mdc-select-trigger')));
                 selectBox.triggerEventHandler('click', null);
             };
 
@@ -131,7 +131,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -146,7 +146,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -206,7 +206,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -221,7 +221,7 @@ describe('DropdownSitesComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                    debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
                     fixture.detectChanges();
                     const options: any = debug.queryAll(By.css('mat-option'));
                     options[1].nativeElement.click();
@@ -305,7 +305,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
-                        debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                        debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
                         fixture.detectChanges();
                         fixture.whenStable().then(() => {
                             const options: any = debug.queryAll(By.css('mat-option'));
@@ -330,7 +330,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
-                        debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                        debug.query(By.css('.mat-mdc-select-trigger')).triggerEventHandler('click', null);
                         fixture.detectChanges();
                         fixture.whenStable().then(() => {
                             const options: any = debug.queryAll(By.css('mat-option'));

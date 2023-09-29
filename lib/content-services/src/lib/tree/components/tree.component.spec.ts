@@ -49,7 +49,7 @@ describe('TreeComponent', () => {
 
     const getNodePadding = (nodeId: string) => parseInt(getComputedStyle(getNode(nodeId).nativeElement).paddingLeft, 10);
 
-    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-progress-spinner`);
+    const getNodeSpinner = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .mat-mdc-progress-spinner`);
 
     const getExpandCollapseBtn = (nodeId: string) => fixture.nativeElement.querySelector(`${composeNodeSelector(nodeId)} .adf-icon`);
 
@@ -139,7 +139,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         component.loadingRoot$ = of(true);
         fixture.detectChanges();
-        const matSpinnerElement = fixture.nativeElement.querySelector('.adf-tree-loading-spinner-container .mat-progress-spinner');
+        const matSpinnerElement = fixture.nativeElement.querySelector('.adf-tree-loading-spinner-container .mat-mdc-progress-spinner');
         expect(matSpinnerElement).not.toBeNull();
     });
 

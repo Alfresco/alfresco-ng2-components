@@ -151,7 +151,7 @@ describe('ShareDialogComponent', () => {
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
         expect(renditionService.getNodeRendition).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(getShareToggleLinkedClasses()).toContain('mat-checked');
+        expect(getShareToggleLinkedClasses()).toContain('mat-mdc-slide-toggle-checked');
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
@@ -176,7 +176,7 @@ describe('ShareDialogComponent', () => {
 
         expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(getShareToggleLinkedClasses()).toContain('mat-checked');
+        expect(getShareToggleLinkedClasses()).toContain('mat-mdc-slide-toggle-checked');
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
@@ -247,8 +247,9 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
+        const slideToggleButton: HTMLButtonElement = fixture.debugElement.query(By.css('[data-automation-id="adf-share-toggle"] button')).nativeElement;
 
-        expect(getShareToggleLinkedClasses()).toContain('mat-disabled');
+        expect(slideToggleButton.classList).toContain('mdc-switch--disabled');
     });
 
     it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
@@ -286,7 +287,8 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"]').classList).toContain('mat-disabled');
+        expect(fixture.nativeElement.querySelector('.mat-mdc-slide-toggle[data-automation-id="adf-expire-toggle"] .mdc-switch')
+        .classList).toContain('mdc-switch--disabled');
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]').style.display).toEqual('none');
     });
 

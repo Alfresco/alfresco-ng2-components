@@ -45,7 +45,7 @@ describe('SearchFacetChipComponent', () => {
   });
 
   it('should update search query on apply click',  () => {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
         chip.triggerEventHandler('click', { stopPropagation: () => null });
         fixture.detectChanges();
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
@@ -54,7 +54,7 @@ describe('SearchFacetChipComponent', () => {
     });
 
   it('should update search query on cancel click',  () => {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
         chip.triggerEventHandler('click', { stopPropagation: () => null });
         fixture.detectChanges();
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
@@ -65,9 +65,9 @@ describe('SearchFacetChipComponent', () => {
     it('should display arrow down icon and not disable the chip when items are loaded',  () => {
         component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
         fixture.detectChanges();
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeUndefined();
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-chip-option-disabled']).toBeUndefined();
         expect(icon).toEqual('keyboard_arrow_down');
     });
 
@@ -75,20 +75,20 @@ describe('SearchFacetChipComponent', () => {
         component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
         component.onMenuOpen();
         fixture.detectChanges();
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
         expect(icon).toEqual('keyboard_arrow_up');
     });
 
     it('should display remove icon and disable facet when no items are loaded',  () => {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeTrue();
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-mdc-chip-disabled']).toBeTrue();
         expect(icon).toEqual('remove');
     });
 
     it('should not open context menu when no items are loaded',  () => {
         spyOn(component.menuTrigger, 'openMenu');
-        const chip = fixture.debugElement.query(By.css('mat-chip')).nativeElement;
+        const chip = fixture.debugElement.query(By.css('mat-chip-option')).nativeElement;
         chip.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
         expect(component.menuTrigger.openMenu).not.toHaveBeenCalled();
     });

@@ -68,7 +68,7 @@ describe('SearchFacetTabbedContentComponent', () => {
      * @returns list of native elements
      */
     function getTabs(): HTMLDivElement[] {
-        return fixture.debugElement.queryAll(By.css('.mat-tab-label-content')).map((element) => element.nativeElement);
+        return fixture.debugElement.queryAll(By.css('.mdc-tab__text-label')).map((element) => element.nativeElement);
     }
 
     /**
@@ -115,11 +115,11 @@ describe('SearchFacetTabbedContentComponent', () => {
     });
 
     it('should display creator tab as active initially and allow navigation', () => {
-        let activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
+        let activeTabLabel = fixture.debugElement.query(By.css('.mdc-tab--active .mdc-tab__text-label')).nativeElement.innerText;
         expect(activeTabLabel).toBe(component.tabbedFacet.facets['field'].label);
 
         changeTab(1);
-        activeTabLabel = fixture.debugElement.query(By.css('.mat-tab-label-active .mat-tab-label-content')).nativeElement.innerText;
+        activeTabLabel = fixture.debugElement.query(By.css('.mdc-tab--active .mdc-tab__text-label')).nativeElement.innerText;
         expect(activeTabLabel).toBe(component.tabbedFacet.facets['field2'].label);
     });
 

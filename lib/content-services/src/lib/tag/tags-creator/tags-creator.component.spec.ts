@@ -563,8 +563,8 @@ describe('TagsCreatorComponent', () => {
              * @returns list of tags
              */
             function getExistingTags(): string[] {
-                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag .mat-list-text`));
-                return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
+                const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag .mdc-list-item__primary-text`));
+                return tagElements.map(el => (el.nativeElement as HTMLElement).innerText);
             }
 
             it('should call findTagByName on tagService using name set in input', fakeAsync(() => {
@@ -782,7 +782,7 @@ describe('TagsCreatorComponent', () => {
              * @returns debug element
              */
             function getSpinner(): DebugElement {
-                return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
+                return fixture.debugElement.query(By.css(`.mat-mdc-progress-spinner`));
             }
 
             it('should be displayed when existing tags are loading', fakeAsync(() => {

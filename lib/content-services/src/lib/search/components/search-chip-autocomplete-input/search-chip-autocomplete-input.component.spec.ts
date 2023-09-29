@@ -86,7 +86,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * @returns list of chips
      */
     function getChipList(): MatChip[] {
-        return fixture.debugElement.queryAll(By.css('mat-chip')).map((chip) => chip.nativeElement);
+        return fixture.debugElement.queryAll(By.css('mat-chip-row')).map((chip) => chip.nativeElement);
     }
 
     /**
@@ -96,7 +96,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * @returns chip value
      */
     function getChipValue(index: number): string {
-        return fixture.debugElement.queryAll(By.css('mat-chip span')).map((chip) => chip.nativeElement)[index].innerText;
+        return fixture.debugElement.queryAll(By.css('.mdc-evolution-chip__text-label span')).map((chip) => chip.nativeElement)[index].innerText;
     }
 
     /**
@@ -105,7 +105,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
      * @returns list of debug elements
      */
     function getOptionElements(): DebugElement[] {
-        return fixture.debugElement.queryAll(By.css('mat-option'));
+        return fixture.debugElement.queryAll(By.css('.mat-mdc-option'));
     }
 
     /**
@@ -275,7 +275,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
     it('should show full category path when fullPath provided', () => {
         component.filteredOptions = [{id: 'test-id', value: 'test-value', fullPath: 'test-full-path'}];
         enterNewInputValue('test-value');
-        const matOption = fixture.debugElement.query(By.css('.mat-option span')).nativeElement;
+        const matOption = fixture.debugElement.query(By.css('.mat-mdc-option span')).nativeElement;
         fixture.detectChanges();
 
         expect(matOption.innerHTML).toEqual(' test-full-path ');

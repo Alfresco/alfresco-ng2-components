@@ -34,7 +34,7 @@ describe('NewVersionUploaderDialog', () => {
         adfVersionUploadButton: '#adf-version-upload-button',
         adfVersionComparison: '#adf-version-comparison',
         adfVersionList: '.adf-version-list',
-        matDialogTitle: '.mat-dialog-title'
+        matDialogTitle: '.mat-mdc-dialog-title'
     };
 
     const mockDialogRef = {

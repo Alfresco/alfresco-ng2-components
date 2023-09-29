@@ -458,7 +458,7 @@ describe('SearchFilterComponent', () => {
             firstOption.triggerEventHandler('change', { checked: true });
             fixture.detectChanges();
 
-            const checkedOption = fixture.debugElement.query(By.css(`${panel} mat-checkbox.mat-checkbox-checked`));
+            const checkedOption = fixture.debugElement.query(By.css(`${panel} mat-checkbox.mat-mdc-checkbox-checked`));
             expect(checkedOption.nativeElement.innerText).toEqual('Extra Small (10239)');
 
             expect(queryBuilder.update).toHaveBeenCalledTimes(1);
@@ -486,20 +486,20 @@ describe('SearchFilterComponent', () => {
             firstOption.triggerEventHandler('change', { checked: true });
             fixture.detectChanges();
 
-            let panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-checkbox-checked`));
+            let panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-mdc-checkbox-checked`));
             expect(panel1CheckedOption.nativeElement.innerText).toEqual('my1 (806)');
 
             const panel2Options = fixture.debugElement.query(By.css(`${panel2} mat-checkbox`));
             panel2Options.triggerEventHandler('change', { checked: true });
             fixture.detectChanges();
 
-            const panel2CheckedOption = fixture.debugElement.query(By.css(`${panel2} mat-checkbox.mat-checkbox-checked`));
+            const panel2CheckedOption = fixture.debugElement.query(By.css(`${panel2} mat-checkbox.mat-mdc-checkbox-checked`));
             expect(panel2CheckedOption.nativeElement.innerText).toEqual('SEARCH.FACET_QUERIES.MIMETYPE (13)');
 
             filteredMenu = getAllMenus(`${panel1} mat-checkbox`, fixture);
             expect(filteredMenu).toEqual(filteredResult);
 
-            panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-checkbox-checked`));
+            panel1CheckedOption = fixture.debugElement.query(By.css(`${panel1} mat-checkbox.mat-mdc-checkbox-checked`));
             expect(panel1CheckedOption.nativeElement.innerText).toEqual('my1 (806)');
 
             expect(queryBuilder.update).toHaveBeenCalledTimes(2);

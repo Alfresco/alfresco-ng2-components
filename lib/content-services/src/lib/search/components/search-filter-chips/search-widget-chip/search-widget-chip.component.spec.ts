@@ -47,7 +47,7 @@ describe('SearchWidgetChipComponent', () => {
     });
 
     it('should update search query on apply click', () => {
-      const chip = fixture.debugElement.query(By.css('mat-chip'));
+      const chip = fixture.debugElement.query(By.css('mat-chip-option'));
       chip.triggerEventHandler('click', { stopPropagation: () => null });
       fixture.detectChanges();
       const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
@@ -56,7 +56,7 @@ describe('SearchWidgetChipComponent', () => {
     });
 
     it('should update search query on cancel click', () => {
-      const chip = fixture.debugElement.query(By.css('mat-chip'));
+      const chip = fixture.debugElement.query(By.css('mat-chip-option'));
       chip.triggerEventHandler('click', { stopPropagation: () => null });
       fixture.detectChanges();
       const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
@@ -65,14 +65,14 @@ describe('SearchWidgetChipComponent', () => {
     });
 
     it('should display arrow down icon', () => {
-      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+      const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
       expect(icon).toEqual('keyboard_arrow_down');
     });
 
     it('should display arrow up icon when menu is opened', () => {
       component.onMenuOpen();
       fixture.detectChanges();
-      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+      const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
       expect(icon).toEqual('keyboard_arrow_up');
     });
 });

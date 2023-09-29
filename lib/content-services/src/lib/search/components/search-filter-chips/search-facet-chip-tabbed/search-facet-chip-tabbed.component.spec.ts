@@ -54,7 +54,7 @@ describe('SearchFacetChipTabbedComponent', () => {
      * Open the facet
      */
     function openFacet() {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
         chip.triggerEventHandler('click', {});
         fixture.detectChanges();
     }
@@ -91,15 +91,16 @@ describe('SearchFacetChipTabbedComponent', () => {
     });
 
     it('should display remove icon and disable facet when no items are loaded', () => {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeTrue();
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
+
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-mdc-chip-disabled']).toBeTrue();
         expect(icon).toEqual('remove');
     });
 
     it('should not open context menu when no items are loaded', () => {
         spyOn(component.menuTrigger, 'openMenu');
-        const chip = fixture.debugElement.query(By.css('mat-chip')).nativeElement;
+        const chip = fixture.debugElement.query(By.css('mat-chip-option')).nativeElement;
         chip.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
         expect(component.menuTrigger.openMenu).not.toHaveBeenCalled();
     });
@@ -119,9 +120,9 @@ describe('SearchFacetChipTabbedComponent', () => {
     it('should display arrow down icon and not disable the chip when items are loaded', () => {
         component.isPopulated = true;
         fixture.detectChanges();
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeUndefined();
+        const chip = fixture.debugElement.query(By.css('mat-chip-option'));
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
+        expect(chip.classes['mat-mdc-chip-disabled']).toBeUndefined();
         expect(icon).toEqual('keyboard_arrow_down');
     });
 
@@ -129,7 +130,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         openFacet();
         emitChildEvent('isPopulated', true);
         await fixture.whenStable();
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
+        const icon = fixture.debugElement.query(By.css('mat-chip-option mat-icon')).nativeElement.innerText;
         expect(icon).toEqual('keyboard_arrow_up');
     });
 

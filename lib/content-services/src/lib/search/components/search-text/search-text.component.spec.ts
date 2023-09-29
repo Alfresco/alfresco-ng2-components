@@ -100,7 +100,7 @@ describe('SearchTextComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.value).toEqual('secret.pdf');
-        const input = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix input');
+        const input = fixture.debugElement.nativeElement.querySelector('.mat-mdc-form-field-infix input');
         expect(input.value).toEqual('secret.pdf');
     });
 

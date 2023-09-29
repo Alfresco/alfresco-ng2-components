@@ -75,8 +75,8 @@ describe('PermissionContainerComponent', () => {
     it('should emit update event on  role change', () => {
         spyOn(component.update, 'emit');
 
-        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
-        selectBox.triggerEventHandler('click', null);
+        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-mdc-select-trigger')));
+        selectBox.nativeElement.dispatchEvent(new Event('click'));
         fixture.detectChanges();
 
         const options = fixture.debugElement.queryAll(By.css('mat-option'));

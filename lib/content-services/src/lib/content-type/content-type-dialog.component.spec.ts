@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TypeEntry } from '@alfresco/js-api';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentTypeDialogComponent } from './content-type-dialog.component';
-import { ContentTypeService } from './content-type.service';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
-import { TypeEntry } from '@alfresco/js-api';
+import { ContentTypeService } from './content-type.service';
 
 const elementCustom: TypeEntry = {
     entry: {
@@ -152,7 +152,8 @@ describe('Content Type Dialog Component', () => {
         showPropertyAccordion.click();
         fixture.detectChanges();
         await fixture.whenStable();
-        const propertyShowed: NodeList = fixture.nativeElement.querySelectorAll('.adf-content-type-table .mat-row');
+        const propertyShowed: NodeList = fixture.nativeElement.querySelectorAll('.adf-content-type-table .mat-mdc-row');
+
         expect(propertyShowed.length).toBe(3);
     });
 

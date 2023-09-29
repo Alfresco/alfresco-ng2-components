@@ -115,7 +115,7 @@ describe('SearchChipListComponent', () => {
 
         fixture.detectChanges();
 
-        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-chip-remove`));
+        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-mdc-chip-remove`));
         chips[0].nativeElement.click();
 
         await fixture.whenStable();
@@ -131,7 +131,7 @@ describe('SearchChipListComponent', () => {
 
         fixture.detectChanges();
 
-        const closeButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-chip-remove');
+        const closeButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-mdc-chip-remove');
         expect(closeButtons.length).toBe(2);
 
         closeButtons[0].click();
@@ -157,7 +157,7 @@ describe('SearchChipListComponent', () => {
 
         fixture.detectChanges();
 
-        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-chip-remove`));
+        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-mdc-chip-remove`));
         expect(chips.length).toBe(1);
 
         const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="reset-filter"]`));

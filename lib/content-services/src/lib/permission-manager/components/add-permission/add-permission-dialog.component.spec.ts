@@ -127,7 +127,7 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
+        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-mdc-select-trigger')));
         selectBox.nativeElement.dispatchEvent(new Event('click'));
         fixture.detectChanges();
 
@@ -170,13 +170,13 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css(('[id="adf-bulk-select-role-permission"] .mat-select-trigger')));
+        const selectBox = fixture.debugElement.query(By.css(('#adf-bulk-select-role-permission .mat-mdc-select-trigger')));
         selectBox.nativeElement.dispatchEvent(new Event('click'));
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const options = fixture.debugElement.queryAll(By.css('mat-option'));
+        const options = fixture.debugElement.queryAll(By.css('.mat-mdc-option'));
         expect(options).not.toBeNull();
         expect(options.length).toBe(2);
         options[0].triggerEventHandler('click', {});
@@ -212,7 +212,7 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
+        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-mdc-select-trigger')));
         selectBox.nativeElement.dispatchEvent(new Event('click'));
 
         fixture.detectChanges();

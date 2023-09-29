@@ -68,7 +68,7 @@ describe('SearchFormComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        const matOption = fixture.debugElement.queryAll(By.css('.mat-menu-item'))[2].nativeElement;
+        const matOption = fixture.debugElement.queryAll(By.css('.mat-mdc-menu-item'))[2].nativeElement;
         matOption.click();
     });
 
@@ -83,7 +83,7 @@ describe('SearchFormComponent', () => {
         expect(title.nativeElement.innerText).toContain('one');
 
         fixture.detectChanges();
-        const matOption = fixture.debugElement.query(By.css('.mat-menu-item'));
+        const matOption = fixture.debugElement.query(By.css('.mat-mdc-menu-item'));
         expect(matOption).toBe(null, 'should not show mat menu');
     });
 

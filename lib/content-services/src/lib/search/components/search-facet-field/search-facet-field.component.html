@@ -7,7 +7,7 @@
             <mat-form-field class="adf-facet-search-field">
                 <input matInput placeholder="{{ 'SEARCH.FILTER.ACTIONS.SEARCH' | translate }}"
                        [attr.data-automation-id]="'facet-result-filter-'+field.label" [(ngModel)]="field.buckets.filterText">
-                <button *ngIf="field.buckets.filterText" mat-button matSuffix mat-icon-button
+                <button *ngIf="field.buckets.filterText" matSuffix mat-icon-button
                         [attr.title]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate"
                         (click)="field.buckets.filterText = ''">
                     <mat-icon role="button" [attr.aria-label]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate">clear</mat-icon>

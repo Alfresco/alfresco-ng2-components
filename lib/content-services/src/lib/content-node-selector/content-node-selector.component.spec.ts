@@ -126,7 +126,7 @@ describe('ContentNodeSelectorComponent', () => {
     };
 
     const selectTabByIndex = (tabIndex: number) => {
-        const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[tabIndex];
+        const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[tabIndex];
         const attributes = uploadFromLocalTab.nativeNode.attributes as NamedNodeMap;
         const tabPositionInSet = Number(attributes.getNamedItem('aria-posinset').value) - 1;
         component.onTabSelectionChange(tabPositionInSet);
@@ -263,7 +263,7 @@ describe('ContentNodeSelectorComponent', () => {
             fixture.detectChanges();
 
             let infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
-            let uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            let uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[1];
 
             expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
             expect(infoMatIcon).toBeFalsy();
@@ -271,7 +271,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.showingSearch = true;
             fixture.detectChanges();
 
-            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[1];
             infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
 
             expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('true');
@@ -281,7 +281,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.showingSearch = false;
             fixture.detectChanges();
 
-            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[1];
             infoMatIcon = fixture.debugElement.query(By.css('[data-automation-id="adf-content-node-selector-disabled-tab-info-icon"]'));
 
             expect(uploadFromLocalTab.nativeElement.getAttribute('aria-disabled')).toBe('false');
@@ -454,7 +454,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should show drag and drop area with the empty list template when no upload has started', async () => {
             enableLocalUpload();
-            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[1];
             uploadFromLocalTab.nativeElement.click();
 
             fixture.detectChanges();
@@ -468,7 +468,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should not show the empty list template when an upload has started', async () => {
             enableLocalUpload();
-            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-tab-label'))[1];
+            const uploadFromLocalTab = fixture.debugElement.queryAll(By.css('.mat-mdc-tab'))[1];
             uploadFromLocalTab.nativeElement.click();
 
             component.uploadStarted = true;
