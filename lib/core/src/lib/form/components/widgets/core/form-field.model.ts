@@ -29,7 +29,7 @@ import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { isValid } from 'date-fns';
-import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
+import { DateFnsUtils } from '../../../../common';
 
 // Maps to FormFieldRepresentation
 
