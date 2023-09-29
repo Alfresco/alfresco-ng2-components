@@ -171,11 +171,11 @@ export class NodesApiService {
     /**
      * Create a new Node from form metadata.
      *
-     * @param path Path to the node
      * @param nodeType Node type
-     * @param name Node name
      * @param nameSpace Namespace for properties
      * @param data Property data to store in the node under namespace
+     * @param path Path to the node
+     * @param name Node name
      * @returns The created node
      */
     public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {

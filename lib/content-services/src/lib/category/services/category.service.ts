@@ -52,7 +52,7 @@ export class CategoryService {
      * @param parentCategoryId The identifier of a parent category.
      * @param skipCount Number of top categories to skip.
      * @param maxItems Maximum number of subcategories returned from Observable.
-     * @return Observable<CategoryPaging>
+     * @returns Observable<CategoryPaging>
      */
     getSubcategories(parentCategoryId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
         return from(this.categoriesApi.getSubcategories(parentCategoryId ?? '-root-', {skipCount, maxItems}));
@@ -67,7 +67,7 @@ export class CategoryService {
      * @param opts.include Returns additional information about the category. The following optional fields can be requested:
      * count
      * path
-     * @return Observable<CategoryEntry>
+     * @returns Observable<CategoryEntry>
      */
     getCategory(categoryId: string, opts?: any): Observable<CategoryEntry> {
         return from(this.categoriesApi.getCategory(categoryId, opts));
@@ -78,7 +78,7 @@ export class CategoryService {
      *
      * @param parentCategoryId The identifier of a parent category.
      * @param payload List of categories to be created.
-     * @return Observable<CategoryPaging | CategoryEntry>
+     * @returns Observable<CategoryPaging | CategoryEntry>
      */
     createSubcategories(parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, {}));
@@ -89,7 +89,7 @@ export class CategoryService {
      *
      * @param categoryId The identifier of a category.
      * @param payload Updated category body
-     * @return Observable<CategoryEntry>
+     * @returns Observable<CategoryEntry>
      */
     updateCategory(categoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
         return from(this.categoriesApi.updateCategory(categoryId, payload, {}));
@@ -99,7 +99,7 @@ export class CategoryService {
      * Deletes category
      *
      * @param categoryId The identifier of a category.
-     * @return Observable<void>
+     * @returns Observable<void>
      */
     deleteCategory(categoryId: string): Observable<void> {
         return from(this.categoriesApi.deleteCategory(categoryId));
@@ -111,7 +111,7 @@ export class CategoryService {
      * @param name Value for name which should be used during searching categories.
      * @param skipCount Specify how many first results should be skipped. Default 0.
      * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
-     * @return Observable<ResultSetPaging> Found categories which name contains searched name.
+     * @returns Observable<ResultSetPaging> Found categories which name contains searched name.
      */
     searchCategories(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
@@ -132,7 +132,7 @@ export class CategoryService {
      * List of categories that node is assigned to
      *
      * @param nodeId The identifier of a node.
-     * @return Observable<CategoryPaging> Categories that node is assigned to
+     * @returns Observable<CategoryPaging> Categories that node is assigned to
      */
     getCategoryLinksForNode(nodeId: string): Observable<CategoryPaging> {
         return from(this.categoriesApi.getCategoryLinksForNode(nodeId, {include: ['path']}));
@@ -143,7 +143,7 @@ export class CategoryService {
      *
      * @param nodeId The identifier of a node.
      * @param categoryId The identifier of a category.
-     * @return Observable<void>
+     * @returns Observable<void>
      */
      unlinkNodeFromCategory(nodeId: string, categoryId: string): Observable<void> {
         return from(this.categoriesApi.unlinkNodeFromCategory(nodeId, categoryId));
@@ -154,7 +154,7 @@ export class CategoryService {
      *
      * @param nodeId The identifier of a node.
      * @param categoryLinkBodyCreate Array of a categories that node will be linked to.
-     * @return Observable<CategoryEntry>
+     * @returns Observable<CategoryEntry>
      */
      linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));

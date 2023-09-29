@@ -20,7 +20,19 @@
 import { spawnSync } from 'child_process';
 import { logger } from './logger';
 
-export function exec(command: string, args?: string[], opts?: { cwd?: string }) {
+export interface ExecOptions {
+    cwd?: string;
+}
+
+/**
+ * Exec function
+ *
+ * @param command command to execute
+ * @param args command arguments
+ * @param opts optional settings
+ * @returns void function
+ */
+export function exec(command: string, args?: string[], opts?: ExecOptions) {
     if (process.platform.startsWith('win')) {
         args.unshift('/c', command);
         command = 'cmd.exe';

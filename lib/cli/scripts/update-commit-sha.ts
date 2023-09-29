@@ -28,6 +28,12 @@ export interface CommitArgs {
     skipGnu: boolean;
 }
 
+/**
+ * Get commit SHA
+ *
+ * @param args command arguments
+ * @returns commit SHA value
+ */
 function getSha(args: CommitArgs): string {
     logger.info('Check commit sha...');
 
@@ -36,7 +42,13 @@ function getSha(args: CommitArgs): string {
     return exec('git', [`rev-parse`, `${gitPointer}`], {}).trim();
 }
 
-function replacePerform(args: CommitArgs, sha: string) {
+/**
+ * Performs the sha replacement
+ *
+ * @param args command parameters
+ * @param sha value to use
+ */
+function performReplace(args: CommitArgs, sha: string) {
     logger.info(`Replace commit ${sha} in package...`);
 
     // eslint-disable-next-line no-useless-escape
@@ -49,6 +61,11 @@ function replacePerform(args: CommitArgs, sha: string) {
     }
 }
 
+/**
+ * Update commit SHA command
+ *
+ * @param args command arguments
+ */
 export default function main(args: CommitArgs) {
     program
         .version('0.1.0')
@@ -70,5 +87,5 @@ export default function main(args: CommitArgs) {
 
     const sha = getSha(args);
 
-    replacePerform(args, sha);
+    performReplace(args, sha);
 }

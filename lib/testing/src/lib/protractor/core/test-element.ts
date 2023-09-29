@@ -30,6 +30,7 @@ export class TestElement {
      * Create a new instance with the element located by the id
      *
      * @param id The id of the element
+     * @returns test element wrapper
      */
     static byId(id: string): TestElement {
         return new TestElement(element(by.id(id)));
@@ -39,6 +40,7 @@ export class TestElement {
      * Create a new instance with the element located by the CSS class name
      *
      * @param selector The CSS class name to lookup
+     * @returns test element wrapper
      */
     static byCss(selector: string): TestElement {
         return new TestElement($(selector));
@@ -49,6 +51,7 @@ export class TestElement {
      *
      * @param selector the CSS selector
      * @param text the text within the target element
+     * @returns test element wrapper
      */
     static byText(selector: string, text: string): TestElement {
         return new TestElement(element(by.cssContainingText(selector, text)));
@@ -58,6 +61,7 @@ export class TestElement {
      * Create a new instance with the element with specific HTML tag name
      *
      * @param selector the HTML tag name
+     * @returns test element wrapper
      */
     static byTag(selector: string): TestElement {
         return new TestElement(element(by.tagName(selector)));
@@ -186,6 +190,8 @@ export class TestElement {
 
     /**
      * Gets the `value` attribute for the given input element
+     *
+     * @returns input value
      */
     getInputValue(): Promise<string> {
         return BrowserActions.getInputValue(this.elementFinder);

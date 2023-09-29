@@ -28,12 +28,10 @@ const ACS_DEFAULT = require('./resources').ACS_DEFAULT;
 
 let alfrescoJsApi: AlfrescoApi;
 
-// eslint-disable-next-line space-before-function-paren
-export default async function () {
-    await main();
-}
-
-async function main() {
+/**
+ * Init ACS environment command
+ */
+export default async function main() {
     program
         .version('0.1.0')
         .option('--host [type]', 'Remote environment host')
@@ -48,6 +46,9 @@ async function main() {
     await initializeDefaultFiles();
 }
 
+/**
+ * Setup default files
+ */
 async function initializeDefaultFiles() {
     const e2eFolder = ACS_DEFAULT.e2eFolder;
     const parentFolder = await createFolder(e2eFolder.name, '-my-');
@@ -83,6 +84,12 @@ async function initializeDefaultFiles() {
     }
 }
 
+/**
+ * Create folder
+ *
+ * @param folderName folder name
+ * @param parentId parent folder id
+ */
 async function createFolder(folderName: string, parentId: string) {
     let createdFolder: NodeEntry;
     const body = {
@@ -102,6 +109,12 @@ async function createFolder(folderName: string, parentId: string) {
     return createdFolder;
 }
 
+/**
+ * Upload file
+ *
+ * @param fileName file name
+ * @param fileDestination destination path
+ */
 async function uploadFile(fileName: string, fileDestination: string): Promise<NodeEntry> {
     const filePath = `../resources/content/${fileName}`;
     const file = fs.createReadStream(path.join(__dirname, filePath));
@@ -120,6 +133,11 @@ async function uploadFile(fileName: string, fileDestination: string): Promise<No
     return uploadedFile;
 }
 
+/**
+ * Lock file node
+ *
+ * @param nodeId node id
+ */
 async function lockFile(nodeId: string): Promise<NodeEntry> {
     const data = {
         type: 'ALLOW_OWNER_CHANGES'
@@ -133,6 +151,11 @@ async function lockFile(nodeId: string): Promise<NodeEntry> {
     }
 }
 
+/**
+ * Share file node
+ *
+ * @param nodeId node id
+ */
 async function shareFile(nodeId: string) {
     const data = {
         nodeId
@@ -145,6 +168,11 @@ async function shareFile(nodeId: string) {
     }
 }
 
+/**
+ * Favorite file node
+ *
+ * @param nodeId node id
+ */
 async function favoriteFile(nodeId: string) {
     const data = {
         target: {
@@ -161,6 +189,9 @@ async function favoriteFile(nodeId: string) {
     }
 }
 
+/**
+ * Check environment state
+ */
 async function checkEnv() {
     try {
         alfrescoJsApi = new AlfrescoApi({
@@ -195,8 +226,12 @@ async function checkEnv() {
     }
 }
 
-/* eslint-enable */
 
+/**
+ * Perform a delay
+ *
+ * @param delay timeout in milliseconds
+ */
 function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {}

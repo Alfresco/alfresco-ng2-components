@@ -23,6 +23,9 @@ const MAX_RETRY = 10;
 const TIMEOUT = 60000;
 let counter = 0;
 
+/**
+ * Check PS environment command
+ */
 export default async function main() {
     program
         .version('0.1.0')
@@ -36,6 +39,9 @@ export default async function main() {
     await checkEnv();
 }
 
+/**
+ * Check environment
+ */
 async function checkEnv() {
     try {
         const alfrescoJsApi = new AlfrescoApi({
@@ -63,6 +69,11 @@ async function checkEnv() {
     }
 }
 
+/**
+ * Perform a delay
+ *
+ * @param delay timeout in milliseconds
+ */
 function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {}

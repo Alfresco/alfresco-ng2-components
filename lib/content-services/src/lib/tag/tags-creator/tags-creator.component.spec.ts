@@ -85,29 +85,59 @@ describe('TagsCreatorComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Get name input element
+     *
+     * @returns native element
+     */
     function getNameInput(): HTMLInputElement {
         return fixture.debugElement.query(By.css(`.adf-tag-name-field input`))?.nativeElement;
     }
 
+    /**
+     * Get the create tag label
+     *
+     * @returns native element
+     */
     function getCreateTagLabel(): HTMLSpanElement {
         return fixture.debugElement.query(By.css('.adf-create-tag-label'))?.nativeElement;
     }
 
+    /**
+     * Get remove tag buttons
+     *
+     * @returns list of native elements
+     */
     function getRemoveTagButtons(): HTMLButtonElement[] {
         const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
         return elements.map(el => el.nativeElement);
     }
 
+    /**
+     * Click at the hide name input button
+     */
     function clickAtHideNameInputButton() {
         fixture.debugElement.query(By.css(`[data-automation-id="hide-tag-name-input-button"]`)).nativeElement.click();
         fixture.detectChanges();
     }
 
+    /**
+     * Get newly added tags
+     *
+     * @returns list of tags
+     */
     function getAddedTags(): string[] {
         const tagElements = fixture.debugElement.queryAll(By.css(`.adf-tags-creation .adf-tag`));
         return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
     }
 
+    /**
+     * Adds tag to the added list
+     *
+     * @param tagName tag name
+     * @param addUsingEnter use Enter when adding
+     * @param typingTimeout typing timeout in milliseconds (default 300)
+     */
     function addTagToAddedList(tagName: string, addUsingEnter?: boolean, typingTimeout = 300): void {
         typeTag(tagName, typingTimeout);
 
@@ -121,6 +151,12 @@ describe('TagsCreatorComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * type a new tag
+     *
+     * @param tagName tag name
+     * @param timeout typing timeout in milliseconds (default 300)
+     */
     function typeTag(tagName: string, timeout = 300): void {
         component.tagNameControlVisible = true;
         fixture.detectChanges();
@@ -133,10 +169,20 @@ describe('TagsCreatorComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Find the selection list
+     *
+     * @returns material component
+     */
     function findSelectionList(): MatSelectionList {
         return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
     }
 
+    /**
+     * Get the existing tags label
+     *
+     * @returns label
+     */
     function getExistingTagsLabel(): string {
         return fixture.debugElement.query(By.css('.adf-existing-tags-label')).nativeElement.textContent.trim();
     }
@@ -323,6 +369,11 @@ describe('TagsCreatorComponent', () => {
         }));
 
         describe('Errors', () => {
+            /**
+             * Get first error
+             *
+             * @returns error text
+             */
             function getFirstError(): string {
                 const error = fixture.debugElement.query(By.directive(MatError));
                 return error?.nativeElement.textContent;
@@ -407,6 +458,11 @@ describe('TagsCreatorComponent', () => {
     });
 
     describe('Existing tags panel', () => {
+        /**
+         * Get the existing tags panel
+         *
+         * @returns debug element
+         */
         function getPanel(): DebugElement {
             return fixture.debugElement.query(By.css(`.adf-existing-tags-panel`));
         }
@@ -498,6 +554,11 @@ describe('TagsCreatorComponent', () => {
         });
 
         describe('Existing tags', () => {
+            /**
+             * Get the existing tags
+             *
+             * @returns list of tags
+             */
             function getExistingTags(): string[] {
                 const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag .mat-list-text`));
                 return tagElements.map(el => el.nativeElement.firstChild.nodeValue.trim());
@@ -710,6 +771,11 @@ describe('TagsCreatorComponent', () => {
         });
 
         describe('Spinner', () => {
+            /**
+             * Get the material progress spinner
+             *
+             * @returns debug element
+             */
             function getSpinner(): DebugElement {
                 return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
             }

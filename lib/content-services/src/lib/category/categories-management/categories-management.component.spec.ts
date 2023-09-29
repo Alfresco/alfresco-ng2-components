@@ -67,18 +67,40 @@ describe('CategoriesManagementComponent', () => {
         categoryService = TestBed.inject(CategoryService);
     });
 
+    /**
+     * Get no categories message
+     *
+     * @returns message text
+     */
     function getNoCategoriesMessage(): string {
         return fixture.debugElement.query(By.css(`.adf-no-categories-message`))?.nativeElement.textContent.trim();
     }
 
+    /**
+     * Get assigned categories list
+     *
+     * @returns list of native elements
+     */
     function getAssignedCategoriesList(): HTMLSpanElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-assigned-categories'))?.map((debugElem) => debugElem.nativeElement);
     }
 
+    /**
+     * Get the exiting categories list
+     *
+     * @returns list of material option element
+     */
     function getExistingCategoriesList(): MatListOption[] {
         return fixture.debugElement.queryAll(By.directive(MatListOption))?.map((debugElem) => debugElem.componentInstance);
     }
 
+    /**
+     * Create new category
+     *
+     * @param name name of the category
+     * @param addUsingEnter use Enter key
+     * @param typingTimeout typing timeout in milliseconds (default 300)
+     */
     function createCategory(name: string, addUsingEnter?: boolean, typingTimeout = 300): void {
         typeCategory(name, typingTimeout);
 
@@ -92,26 +114,57 @@ describe('CategoriesManagementComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Get first error
+     *
+     * @returns error text
+     */
     function getFirstError(): string {
         return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent;
     }
 
+    /**
+     * Get selection list
+     *
+     * @returns material selection list
+     */
     function getSelectionList(): MatSelectionList {
         return fixture.debugElement.query(By.directive(MatSelectionList)).componentInstance;
     }
 
+    /**
+     * Get remove category buttons
+     *
+     * @returns list of native elements
+     */
     function getRemoveCategoryButtons(): HTMLButtonElement[] {
         return fixture.debugElement.queryAll(By.css(`[data-automation-id="categories-remove-category-button"]`)).map((debugElem) => debugElem.nativeElement);
     }
 
+    /**
+     * Get category control input
+     *
+     * @returns native input element
+     */
     function getCategoryControlInput(): HTMLInputElement {
         return fixture.debugElement.query(By.css('.adf-category-name-field input'))?.nativeElement;
     }
 
+    /**
+     * Get create category label
+     *
+     * @returns native element
+     */
     function getCreateCategoryLabel(): HTMLSpanElement {
         return fixture.debugElement.query(By.css('.adf-existing-categories-panel span'))?.nativeElement;
     }
 
+    /**
+     * Type new category
+     *
+     * @param name name of the category
+     * @param timeout typing timeout in milliseconds (default 300)
+     */
     function typeCategory(name: string, timeout = 300): void {
         component.categoryNameControlVisible = true;
         fixture.detectChanges();
@@ -208,6 +261,11 @@ describe('CategoriesManagementComponent', () => {
         });
 
         describe('Spinner', () => {
+            /**
+             * Get the spinner element
+             *
+             * @returns debug element
+             */
             function getSpinner(): DebugElement {
                 return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
             }

@@ -54,6 +54,7 @@ export class AppExtensionService {
      * The result is filtered by the **disabled** state.
      *
      * @param key Preset key.
+     * @returns list of document list presets
      */
     getDocumentListPreset(key: string): DocumentListPresetRef[] {
         return this.extensionService
@@ -66,6 +67,8 @@ export class AppExtensionService {
     /**
      * Provides a list of the Viewer content extensions,
      * filtered by **disabled** state and **rules**.
+     *
+     * @returns list of viewer extension references
      */
     getViewerExtensions(): ViewerExtensionRef[] {
         return this.extensionService

@@ -285,7 +285,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     /**
      * Called when user selects any tag from list of existing tags. It moves tag from existing tags list to top list.
      *
-     * @param change
+     * @param change changes
      */
     addExistingTagToTagsToAssign(change: MatSelectionListChange): void {
         const selectedTag: TagEntry = change.options[0].value;
@@ -299,7 +299,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     /**
      * Checks if component is in Create mode.
      *
-     * @return true if Create mode, false otherwise.
+     * @returns `true` if `Create` mode, `false` otherwise.
      */
     isOnlyCreateMode(): boolean {
         return this.mode === TagsCreatorMode.CREATE;

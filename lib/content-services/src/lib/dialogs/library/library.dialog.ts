@@ -49,7 +49,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the new library is created successfully. The
+    /**
+     * Emitted when the new library is created successfully. The
      * event parameter is a SiteEntry object with the details of the
      * newly-created library.
      */

@@ -109,7 +109,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * Gets children of the node
      *
      * @param parentNode Parent node
-     *
      * @returns children of parent node
      */
     public getChildren(parentNode: T): T[] {

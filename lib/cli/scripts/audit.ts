@@ -24,6 +24,13 @@ import * as fs from 'fs';
 import { argv, exit } from 'node:process';
 import program from 'commander';
 
+/**
+ * Audit report command
+ *
+ * @param _args (unused)
+ * @param workingDir working directory
+ * @returns void
+ */
 export default function main(_args: string[], workingDir: string) {
     program
         .description('Generate an audit report')

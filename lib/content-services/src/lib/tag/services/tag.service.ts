@@ -194,8 +194,7 @@ export class TagService {
      *
      * @param nodeId Id of node to which tags should be assigned.
      * @param tags List of tags to create and assign or just assign if they already exist.
-     *
-     * @return Just linked tags to node or single tag if linked only one tag.
+     * @returns Just linked tags to node or single tag if linked only one tag.
      */
     assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
         return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(

@@ -31,7 +31,7 @@ export class SearchChipListComponent {
     /**
      * Search filter to supply the data for the chips.
      * Not required from 4.5.0 and later versions @deprecated
-     * */
+     */
     @Input()
     searchFilter: SearchFilterComponent;
 

@@ -95,7 +95,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     showViewer = true;
 
-    /** Number of times the Viewer will retry fetching content Rendition.
+    /**
+     * Number of times the Viewer will retry fetching content Rendition.
      * There is a delay of at least one second between attempts.
      */
     @Input()
@@ -109,13 +110,15 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     showToolbar = true;
 
-    /** If `true` then show the Viewer as a full page over the current content.
+    /**
+     * If `true` then show the Viewer as a full page over the current content.
      * Otherwise fit inside the parent div.
      */
     @Input()
     overlayMode = false;
 
-    /** Toggles before/next navigation. You can use the arrow buttons to navigate
+    /**
+     * Toggles before/next navigation. You can use the arrow buttons to navigate
      * between documents in the collection.
      */
     @Input()

@@ -31,13 +31,15 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     protected translationService = inject(TranslationService);
     protected ngZone = inject(NgZone);
 
-    /** Sets a limit on the maximum size (in bytes) of a file to be uploaded.
+    /**
+     * Sets a limit on the maximum size (in bytes) of a file to be uploaded.
      * Has no effect if undefined.
      */
     @Input()
     maxFilesSize: number;
 
-    /** The ID of the root. Use the nodeId for
+    /**
+     * The ID of the root. Use the nodeId for
      * Content Services or the taskId/processId for Process Services.
      */
     @Input()
@@ -99,7 +101,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     /**
      * Upload a list of file in the specified path
      *
-     * @param files
+     * @param files files to upload
      */
     uploadFiles(files: File[]): void {
         const filteredFiles: FileModel[] = files
@@ -142,6 +144,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
      * Checks if the given file is allowed by the extension filters
      *
      * @param file FileModel
+     * @returns `true` if file is acceptable, otherwise `false`
      */
     protected isFileAcceptable(file: FileModel): boolean {
         if (this.acceptedFilesType === '*') {
@@ -158,10 +161,11 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     /**
      * Creates FileModel from File
      *
-     * @param file
-     * @param parentId
-     * @param path
-     * @param id
+     * @param file file instance
+     * @param parentId parent id
+     * @param path upload path
+     * @param id model id
+     * @returns file model
      */
     protected createFileModel(file: File, parentId: string, path: string, id?: string): FileModel {
         return new FileModel(file, {
@@ -195,6 +199,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
      * Checks if the given file is an acceptable size
      *
      * @param file FileModel
+     * @returns `true` if file size is acceptable, otherwise `false`
      */
     private isFileSizeAcceptable(file: FileModel): boolean {
         let acceptableSize = true;

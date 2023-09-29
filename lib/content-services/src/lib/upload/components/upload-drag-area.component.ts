@@ -77,7 +77,11 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
             });
     }
 
-    /** Returns true or false considering the component options and node permissions */
+    /**
+     * Check if content is droppable
+     *
+     * @returns `true` or `false` considering the component options and node permissions
+     */
     isDroppable(): boolean {
         return !this.disabled;
     }

@@ -54,6 +54,7 @@ export class NodeActionsService {
      *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
+     * @returns operation result
      */
     copyContent(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.COPY, 'content', contentEntry, permission);
@@ -64,6 +65,7 @@ export class NodeActionsService {
      *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
+     * @returns operation result
      */
     copyFolder(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.COPY, 'folder', contentEntry, permission);
@@ -74,6 +76,7 @@ export class NodeActionsService {
      *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
+     * @returns operation result
      */
     moveContent(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.MOVE, 'content', contentEntry, permission);
@@ -84,6 +87,7 @@ export class NodeActionsService {
      *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
+     * @returns operation result
      */
     moveFolder(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.MOVE, 'folder', contentEntry, permission);
@@ -96,6 +100,7 @@ export class NodeActionsService {
      * @param type type of the content (content|folder)
      * @param contentEntry the contentEntry which has to have the action performed on
      * @param permission permission which is needed to apply the action
+     * @returns operation result
      */
     private doFileOperation(action: NodeAction.COPY | NodeAction.MOVE, type: 'content' | 'folder', contentEntry: Node, permission?: string): Subject<string> {
         const observable = new Subject<string>();

@@ -151,10 +151,11 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     /**
      * Checks if node is LoadMoreNode node
      *
+     * @param _idx (unused)
      * @param node node to be checked
-     * @returns boolean
+     * @returns `true` if there are more items to load, otherwise `false`
      */
-    public isLoadMoreNode(_: number, node: T): boolean {
+    public isLoadMoreNode(_idx: number, node: T): boolean {
         return node.nodeType === TreeNodeType.LoadMoreNode;
     }
 

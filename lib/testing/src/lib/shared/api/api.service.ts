@@ -47,6 +47,8 @@ export class ApiService {
     /**
      * Login using one of the account profiles from the `browser.params.testConfig`.
      * Example: loginWithProfile('admin')
+     *
+     * @param profileName profile name
      */
     async loginWithProfile(profileName: string): Promise<void> {
         const profile = this.config.users[profileName];
@@ -64,7 +66,7 @@ export class ApiService {
         }
     }
 
-    /** @deprecated */
+    // @deprecated
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.appConfig.hostBpm + path;
@@ -85,7 +87,7 @@ export class ApiService {
         });
     }
 
-    /** @deprecated */
+    // @deprecated
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.appConfig.oauth2.host.replace('/realms', '/admin/realms') + path;
@@ -106,7 +108,7 @@ export class ApiService {
         });
     }
 
-    /** @deprecated */
+    // @deprecated
     async performECMOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const uri = this.config.appConfig.hostEcm + path;

@@ -45,10 +45,20 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Get the input element
+     *
+     * @returns native element
+     */
     function getInput(): HTMLInputElement {
         return fixture.debugElement.query(By.css('input')).nativeElement;
     }
 
+    /**
+     * Enter the new input value
+     *
+     * @param value value to input
+     */
     function enterNewInputValue(value: string) {
         const inputElement = getInput();
         inputElement.dispatchEvent(new Event('focusin'));
@@ -57,6 +67,11 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Add new option
+     *
+     * @param value value to input
+     */
     function addNewOption(value: string) {
         const inputElement = getInput();
         inputElement.value = value;
@@ -65,18 +80,39 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Get material chip list
+     *
+     * @returns list of chips
+     */
     function getChipList(): MatChip[] {
         return fixture.debugElement.queryAll(By.css('mat-chip')).map((chip) => chip.nativeElement);
     }
 
+    /**
+     * Get chip value by specific index
+     *
+     * @param index index of the chip
+     * @returns chip value
+     */
     function getChipValue(index: number): string {
         return fixture.debugElement.queryAll(By.css('mat-chip span')).map((chip) => chip.nativeElement)[index].innerText;
     }
 
+    /**
+     * Get material option elements
+     *
+     * @returns list of debug elements
+     */
     function getOptionElements(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('mat-option'));
     }
 
+    /**
+     * Get added options for auto-complete
+     *
+     * @returns list of debug elements
+     */
     function getAddedOptionElements(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
     }

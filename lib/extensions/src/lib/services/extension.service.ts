@@ -28,6 +28,11 @@ import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+/**
+ * The default extensions factory
+ *
+ * @returns the list of extension json files
+ */
 export function extensionJsonsFactory() {
     return [];
 };
@@ -38,6 +43,12 @@ export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons',
 });
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+/**
+ * Provides the extension json values for the angular modules
+ *
+ * @param jsons files to provide
+ * @returns a provider section
+ */
 export function provideExtensionConfig(jsons: string[]) {
     return {
         provide: EXTENSION_JSONS,

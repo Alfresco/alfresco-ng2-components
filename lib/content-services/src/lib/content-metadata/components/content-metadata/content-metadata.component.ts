@@ -76,7 +76,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayEmpty: boolean = false;
 
-    /** Toggles between expanded (ie, full information) and collapsed
+    /**
+     * Toggles between expanded (ie, full information) and collapsed
      * (ie, reduced information) in the display
      */
     @Input()

@@ -49,6 +49,12 @@ const missingRepositories = {
     'rxjs-compat': 'https://github.com/ReactiveX/rxjs/tree/master/compat'
 };
 
+/**
+ * Get a license with MD link
+ *
+ * @param licenseExp license expression
+ * @returns license
+ */
 function licenseWithMDLinks(licenseExp: string): string {
     let licenseUrl = '';
 
@@ -69,6 +75,12 @@ function licenseWithMDLinks(licenseExp: string): string {
     }
 }
 
+/**
+ * Get package file
+ *
+ * @param packagePath package.json path
+ * @returns package model
+ */
 function getPackageFile(packagePath: string): PackageInfo {
     try {
         return JSON.parse(fs.readFileSync(packagePath).toString());
@@ -78,6 +90,13 @@ function getPackageFile(packagePath: string): PackageInfo {
     }
 }
 
+/**
+ * Licenses command
+ *
+ * @param _args (not used)
+ * @param workingDir working directory
+ * @returns void function
+ */
 export default function main(_args: string[], workingDir: string) {
     program
         .description('Generate a licences report')

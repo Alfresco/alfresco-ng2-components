@@ -76,13 +76,15 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     permissionEvent = new EventEmitter();
 
-    /** Emitted when an error occurs during the action.
+    /**
+     * Emitted when an error occurs during the action.
      * Applies to copy and move actions.
      */
     @Output()
     error = new EventEmitter();
 
-    /** Emitted when the action succeeds with the success string message.
+    /**
+     * Emitted when the action succeeds with the success string message.
      * Applies to copy, move and delete actions.
      */
     @Output()

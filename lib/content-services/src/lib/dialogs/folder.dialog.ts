@@ -39,12 +39,14 @@ export class FolderDialogComponent implements OnInit {
 
     folder: Node = null;
 
-    /** Emitted when the edit/create folder give error for example a folder with same name already exist
+    /**
+     * Emitted when the edit/create folder give error for example a folder with same name already exist
      */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the edit/create folder is successfully created/modified
+    /**
+     * Emitted when the edit/create folder is successfully created/modified
      */
     @Output()
     success: EventEmitter<any> = new EventEmitter<Node>();

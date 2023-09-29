@@ -46,13 +46,24 @@ export interface PublishArgs {
     sourceTag?: string;
 }
 
-function loginPerform(args: PublishArgs) {
+/**
+ * Perform a login
+ *
+ * @param args arguments
+ */
+function login(args: PublishArgs) {
     logger.info(`Perform docker login...${args.loginRepo}`);
     const loginDockerRes = exec('docker', ['login', `-u=${args.loginUsername}`, `-p=${args.loginPassword}`, `${args.loginRepo}`]);
     logger.info(loginDockerRes);
 }
 
-function buildImagePerform(args: PublishArgs, tag: string) {
+/**
+ * Build Docker image
+ *
+ * @param args command arguments
+ * @param tag tag
+ */
+function buildImage(args: PublishArgs, tag: string) {
     logger.info(`Perform docker build...${args.dockerRepo}:${tag}`);
 
     const buildArgs = [];
@@ -71,19 +82,38 @@ function buildImagePerform(args: PublishArgs, tag: string) {
     logger.info(response);
 }
 
-function tagImagePerform(args: PublishArgs, tagImage: string, newTag: string) {
-    logger.info(`Perform docker tag... ${args.dockerRepo}:${tagImage} on ${args.dockerRepo}:${newTag}`);
-    const response = exec('docker', ['tag', `${args.dockerRepo}:${tagImage}`, `${args.dockerRepo}:${newTag}`], {});
+/**
+ * Tag Docker image
+ *
+ * @param args command arguments
+ * @param imageTag image tag
+ * @param newTag new image tag
+ */
+function tagImage(args: PublishArgs, imageTag: string, newTag: string) {
+    logger.info(`Perform docker tag... ${args.dockerRepo}:${imageTag} on ${args.dockerRepo}:${newTag}`);
+    const response = exec('docker', ['tag', `${args.dockerRepo}:${imageTag}`, `${args.dockerRepo}:${newTag}`], {});
     logger.info(response);
 }
 
-function pullImagePerform(dockerRepo: string, sourceTag: string) {
+/**
+ * Pull Docker image
+ *
+ * @param dockerRepo repository
+ * @param sourceTag tag
+ */
+function pullImage(dockerRepo: string, sourceTag: string) {
     logger.info(`Perform docker pull... ${dockerRepo}:${sourceTag}`);
     const response = exec('docker', ['pull', `${dockerRepo}:${sourceTag}`], {});
     logger.info(response);
 }
 
-function pushImagePerform(args: PublishArgs, tag: string) {
+/**
+ * Push Docker image
+ *
+ * @param args command arguments
+ * @param tag tag
+ */
+function pushImage(args: PublishArgs, tag: string) {
     if (args.dryrun) {
         logger.info(`Dry-run Perform docker push... ${args.dockerRepo}:${tag}`);
     } else {
@@ -93,12 +123,23 @@ function pushImagePerform(args: PublishArgs, tag: string) {
     }
 }
 
-function cleanImagePerform(args: PublishArgs, tag: string) {
+/**
+ * Clean Docker image
+ *
+ * @param args command arguments
+ * @param tag tag
+ */
+function cleanImage(args: PublishArgs, tag: string) {
     logger.info(`Perform docker clean on tag:${tag}...`);
     const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {});
     logger.info(response);
 }
 
+/**
+ * Publish to Docker command
+ *
+ * @param args command arguments
+ */
 export default function main(args: PublishArgs) {
     program
         .version('0.1.0')
@@ -150,7 +191,7 @@ export default function main(args: PublishArgs) {
     }
 
     if (args.loginCheck === true) {
-        loginPerform(args);
+        login(args);
     }
 
     let mainTag: string;
@@ -162,17 +203,17 @@ export default function main(args: PublishArgs) {
                     if (index === 0) {
                         logger.info(`Build only once`);
                         mainTag = tag;
-                        buildImagePerform(args, mainTag);
+                        buildImage(args, mainTag);
                     }
                 } else {
                     mainTag = args.sourceTag;
-                    pullImagePerform(args.dockerRepo, mainTag);
+                    pullImage(args.dockerRepo, mainTag);
                 }
-                tagImagePerform(args, mainTag, tag);
-                pushImagePerform(args, tag);
+                tagImage(args, mainTag, tag);
+                pushImage(args, tag);
             }
         });
-        cleanImagePerform(args, mainTag);
+        cleanImage(args, mainTag);
     } else {
         logger.error(`dockerTags cannot be empty ...`);
     }

@@ -40,9 +40,10 @@ const DEFAULT_PAGE_SIZE: number = 5;
     providedIn: 'root'
 })
 export class SearchFacetFiltersService implements OnDestroy {
-    /** All facet field items to be displayed in the component. These are updated according to the response.
-     *  When a new search is performed, the already existing items are updated with the new bucket count values and
-     *  the newly received items are added to the responseFacets.
+    /**
+     * All facet field items to be displayed in the component. These are updated according to the response.
+     * When a new search is performed, the already existing items are updated with the new bucket count values and
+     * the newly received items are added to the responseFacets.
      */
     responseFacets: FacetField[] = null;
     /* tabbed facet incorporating creator and modifier facets */

@@ -55,27 +55,47 @@ export class SearchFilterList<T> implements Iterable<T> {
         this.currentPageSize = this.pageSize;
     }
 
-    /** Returns visible portion of the items.  */
+    /**
+     * Returns visible portion of the items.
+     *
+     * @returns list of items
+     */
     get visibleItems(): T[] {
         return this.filteredItems.slice(0, this.currentPageSize);
     }
 
-    /** Returns entire collection length including items not displayed on the page. */
+    /**
+     * Get items length
+     *
+     * @returns entire collection length including items not displayed on the page
+     */
     get length(): number {
         return this.items.length;
     }
 
-    /** Detects whether more items can be displayed. */
+    /**
+     * Detect whether more items can be displayed.
+     *
+     * @returns `true` if can show more items, otherwise `false`
+     */
     get canShowMoreItems(): boolean {
         return this.filteredItems.length > this.currentPageSize;
     }
 
-    /** Detects whether less items can be displayed. */
+    /**
+     * Detect whether less items can be displayed.
+     *
+     * @returns `true` if can show less items, otherwise `false`
+     */
     get canShowLessItems(): boolean {
         return this.currentPageSize > this.pageSize;
     }
 
-    /** Detects whether content fits single page. */
+    /**
+     * Detect whether content fits single page.
+     *
+     * @returns `true` if content fits single page, otherwise `false`.
+     */
     get fitsPage(): boolean {
         return this.pageSize >= this.filteredItems.length;
     }

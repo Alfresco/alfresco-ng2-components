@@ -24,7 +24,8 @@ module.exports = {
                 'plugin:@cspell/recommended',
                 'plugin:@angular-eslint/ng-cli-compat',
                 'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
-                'plugin:@angular-eslint/template/process-inline-templates'
+                'plugin:@angular-eslint/template/process-inline-templates',
+                'plugin:jsdoc/recommended-typescript-error'
             ],
             plugins: [
                 'eslint-plugin-unicorn',
@@ -35,7 +36,8 @@ module.exports = {
                 '@cspell',
                 'eslint-plugin-import',
                 '@angular-eslint/eslint-plugin',
-                '@typescript-eslint'
+                '@typescript-eslint',
+                'jsdoc'
             ],
             rules: {
                 // Uncomment this to enable prettier checks as part of the ESLint

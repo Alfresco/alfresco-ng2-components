@@ -20,27 +20,6 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import { WebscriptApi } from '@alfresco/js-api';
 
 /**
- * <adf-webscript-get [scriptPath]="string"
- *                         [scriptArgs]="Object"
- *                         [contextRoot]="string"
- *                         [servicePath]="string"
- *                         [contentType]="JSON|HTML|DATATABLE"
- *                         (success)="customMethod($event)>
- * </adf-webscript-get>
- *
- * This component, provide a get webscript viewer
- *
- * @InputParam {string} scriptPath path to Web Script (as defined by Web Script)
- * @InputParam {Object} scriptArgs arguments to pass to Web Script
- * @InputParam {string} contextRoot path where application is deployed default value 'alfresco'
- * @InputParam {string} servicePath path where Web Script service is mapped default value 'service'
- * @InputParam {string} contentType JSON | HTML | DATATABLE | TEXT
- *
- * @Output - success - The event is emitted when the data are received
- *
- */
-
-/**
  * @deprecated Webscript component has never been turned into a product and has no UI/UX and no use cases in ACA/ADW/ACC.
  */
 @Component({
@@ -75,13 +54,15 @@ export class WebscriptComponent implements OnChanges {
     @Input()
     servicePath: string = 'service';
 
-    /** Content type to interpret the data received from the webscript.
+    /**
+     * Content type to interpret the data received from the webscript.
      * Can be "JSON" , "HTML" , "DATATABLE" or "TEXT"
      */
     @Input()
     contentType: string = 'TEXT';
 
-    /** Emitted when the operation succeeds. You can get the plain data from
+    /**
+     * Emitted when the operation succeeds. You can get the plain data from
      * the webscript through the **success** event parameter and use it as you
      * need in your application.
      */
@@ -124,8 +105,7 @@ export class WebscriptComponent implements OnChanges {
     /**
      * show the data in a ng2-alfresco-datatable
      *
-     * @param data
-     *
+     * @param data data
      * @returns the data as datatable
      */
     showDataAsDataTable(data: any) {

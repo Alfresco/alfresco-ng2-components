@@ -25,6 +25,9 @@ const TIMEOUT = 20000;
 let counter = 0;
 let alfrescoJsApi: AlfrescoApi;
 
+/**
+ * Check CS environment command
+ */
 export default async function main() {
     program
         .version('0.1.0')
@@ -42,6 +45,9 @@ export default async function main() {
     // await checkDiskSpaceFullEnv();
 }
 
+/**
+ * Check environment
+ */
 async function checkEnv() {
     try {
         alfrescoJsApi = new AlfrescoApi({
@@ -111,6 +117,11 @@ async function checkDiskSpaceFullEnv() {
 }
 */
 
+/**
+ * Perform a delay
+ *
+ * @param delay timeout in milliseconds
+ */
 function sleep(delay: number) {
     const start = new Date().getTime();
     while (new Date().getTime() < start + delay) {}

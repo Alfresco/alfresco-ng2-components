@@ -41,6 +41,12 @@ export interface ConfigArgs {
     intervalTime: string;
 }
 
+/**
+ * Get Alfresco Api instance
+ *
+ * @param args command parameters
+ * @returns Alfresco Api instance
+ */
 function getAlfrescoJsApiInstance(args: ConfigArgs): AlfrescoApi {
     const config: AlfrescoApiConfig = {
         provider: 'BPM',
@@ -60,6 +66,13 @@ function getAlfrescoJsApiInstance(args: ConfigArgs): AlfrescoApi {
     return new AlfrescoApi(config);
 }
 
+/**
+ * Perform login
+ *
+ * @param username username
+ * @param password password
+ * @param alfrescoJsApi api client
+ */
 async function login(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     logger.info(`Perform login...`);
     try {
@@ -71,6 +84,13 @@ async function login(username: string, password: string, alfrescoJsApi: Alfresco
     logger.info(`Perform done...`);
 }
 
+/**
+ * Deletes deployment descriptor
+ *
+ * @param args command arguments
+ * @param apiService api client
+ * @param name descriptor name
+ */
 async function deleteDescriptor(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Delete the descriptor ${name}`);
 
@@ -104,6 +124,13 @@ async function deleteDescriptor(args: ConfigArgs, apiService: AlfrescoApi, name:
     }
 }
 
+/**
+ * Deletes modeling project
+ *
+ * @param args arguments
+ * @param apiService api client
+ * @param projectId project id
+ */
 async function deleteProject(args: ConfigArgs, apiService: AlfrescoApi, projectId: string) {
     logger.warn(`Delete the project ${projectId}`);
 
@@ -137,6 +164,13 @@ async function deleteProject(args: ConfigArgs, apiService: AlfrescoApi, projectI
     }
 }
 
+/**
+ * Deletes modeling project by name
+ *
+ * @param args arguments
+ * @param apiService api client
+ * @param name project name
+ */
 async function deleteProjectByName(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Get the project by name ${name}`);
     const url = `${args.host}/modeling-service/v1/projects?name=${name}`;
@@ -172,6 +206,13 @@ async function deleteProjectByName(args: ConfigArgs, apiService: AlfrescoApi, na
     }
 }
 
+/**
+ * Get applications by name
+ *
+ * @param args command arguments
+ * @param apiService api client
+ * @param name application name
+ */
 async function getApplicationsByName(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Get the applications by name ${name}`);
     const url = `${args.host}/deployment-service/v1/applications?name=${name}`;
@@ -203,6 +244,13 @@ async function getApplicationsByName(args: ConfigArgs, apiService: AlfrescoApi, 
     }
 }
 
+/**
+ * Undeploy applications by name
+ *
+ * @param args command arguments
+ * @param apiService api client
+ * @param name application name
+ */
 async function undeployApplication(args: ConfigArgs, apiService: AlfrescoApi, name: string) {
     logger.warn(`Undeploy the application ${name}`);
 
@@ -234,11 +282,6 @@ async function undeployApplication(args: ConfigArgs, apiService: AlfrescoApi, na
             `Not possible to undeploy the applications ${name} status:  ${JSON.stringify(error.status)}  ${JSON.stringify(error?.response?.text)}`
         );
     }
-}
-
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions,space-before-function-paren
-export default async function (args: ConfigArgs) {
-    await main(args);
 }
 
 const main = async (args: ConfigArgs) => {
@@ -330,3 +373,5 @@ const main = async (args: ConfigArgs) => {
         }
     }
 };
+
+export default main;

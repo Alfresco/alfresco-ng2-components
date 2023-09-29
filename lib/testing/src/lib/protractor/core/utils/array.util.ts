@@ -20,9 +20,9 @@ export class ArrayUtil {
     /**
      * Returns TRUE if the first array contains all elements from the second one.
      *
-     * @param  superset
-     * @param  subset
-     *
+     * @param superset source array
+     * @param subset target array
+     * @returns `true` if array is included, otherwise `false`
      */
     static arrayContainsArray(superset: any[], subset: any[]): boolean {
         if (0 === subset.length) {

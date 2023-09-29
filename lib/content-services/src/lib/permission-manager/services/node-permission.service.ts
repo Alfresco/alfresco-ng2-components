@@ -67,6 +67,7 @@ export class NodePermissionService {
      * Get permissions for a given node
      *
      * @param node Node to check permissions for
+     * @returns list of permission models
      */
     getNodePermissions(node: Node): PermissionDisplayModel[] {
         const result: PermissionDisplayModel[] = [];

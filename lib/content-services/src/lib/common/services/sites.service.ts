@@ -158,7 +158,7 @@ export class SitesService {
      * @param siteId The identifier of a site
      * @param siteMembershipBodyCreate The person to add and their role
      * @param opts Optional parameters
-     * @return Observable<SiteMemberEntry>
+     * @returns Observable<SiteMemberEntry>
      */
     createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry> {
         return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts)).pipe(catchError((err: any) => this.handleError(err)));
@@ -171,7 +171,7 @@ export class SitesService {
      * @param personId The identifier of a person.
      * @param siteMembershipBodyUpdate The persons new role
      * @param opts Optional parameters
-     * @return Observable<SiteMemberEntry>
+     * @returns Observable<SiteMemberEntry>
      */
     updateSiteMembership(
         siteId: string,
@@ -189,7 +189,7 @@ export class SitesService {
      *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
-     * @return  Null response notifying when the operation is complete
+     * @returns Null response notifying when the operation is complete
      */
     deleteSiteMembership(siteId: string, personId: string): Observable<void> {
         return from(this.sitesApi.deleteSiteMembership(siteId, personId)).pipe(catchError((err: any) => this.handleError(err)));
@@ -246,7 +246,7 @@ export class SitesService {
      *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
-     * @return Observable<SiteGroupEntry>
+     * @returns Observable<SiteGroupEntry>
      */
     getSiteGroupMembership(siteId: string, groupId: string): Observable<SiteGroupEntry> {
         return from(this.sitesApi.getSiteGroupMembership(siteId, groupId)).pipe(catchError((err: any) => this.handleError(err)));
@@ -258,7 +258,7 @@ export class SitesService {
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @param siteMembershipBodyUpdate The group new role
-     * @return Observable<SiteGroupEntry>
+     * @returns Observable<SiteGroupEntry>
      */
     updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate): Observable<SiteGroupEntry> {
         return from(this.sitesApi.updateSiteGroupMembership(siteId, groupId, siteMembershipBodyUpdate)).pipe(
@@ -271,7 +271,7 @@ export class SitesService {
      *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
-     * @return Observable<void>
+     * @returns Observable<void>
      */
     deleteSiteGroupMembership(siteId: string, groupId: string): Observable<void> {
         return from(this.sitesApi.deleteSiteGroupMembership(siteId, groupId)).pipe(catchError((err: any) => this.handleError(err)));

@@ -57,10 +57,20 @@ describe('TagNodeList', () => {
     let tagService: TagService;
     let resizeCallback: ResizeObserverCallback;
 
+    /**
+     * Find 'More' button
+     *
+     * @returns native element
+     */
     function findViewMoreButton(): HTMLButtonElement {
         return element.querySelector('.adf-view-more-button');
     }
 
+    /**
+     * Get the tag chips
+     *
+     * @returns native element list
+     */
     function findTagChips(): NodeListOf<Element> {
         return element.querySelectorAll('.adf-tag-chips');
     }
@@ -149,7 +159,12 @@ describe('TagNodeList', () => {
     describe('Limit tags display', () => {
         let initialEntries: TagEntry[];
 
-        async function renderTags(entries?: TagEntry[]): Promise<any> {
+        /**
+         * Render tags
+         *
+         * @param entries tags to render
+         */
+        async function renderTags(entries?: TagEntry[]) {
             dataTag.list.entries = entries || initialEntries;
             component.tagsEntries = dataTag.list.entries;
             fixture.detectChanges();

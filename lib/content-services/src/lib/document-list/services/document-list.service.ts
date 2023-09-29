@@ -170,7 +170,7 @@ export class DocumentListService implements DocumentListLoader {
      * Load a folder by Node Id.
      *
      * @param nodeId ID of the folder node
-     * @param pagination
+     * @param pagination pagination model
      * @param includeFields List of data field names to include in the results
      * @param where  Optionally filter the list
      * @param orderBy order by node property

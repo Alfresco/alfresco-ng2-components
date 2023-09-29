@@ -62,15 +62,28 @@ describe('SearchFacetTabbedContentComponent', () => {
         fixture.detectChanges();
     });
 
+    /**
+     * Get the tab label content
+     *
+     * @returns list of native elements
+     */
     function getTabs(): HTMLDivElement[] {
         return fixture.debugElement.queryAll(By.css('.mat-tab-label-content')).map((element) => element.nativeElement);
     }
 
+    /**
+     * Set selected tab
+     *
+     * @param tabIndex index of the tab
+     */
     function changeTab(tabIndex: number) {
         getTabs()[tabIndex].click();
         fixture.detectChanges();
     }
 
+    /**
+     * Trigger component property change event
+     */
     function triggerComponentChanges() {
         component.ngOnChanges({
             tabbedFacet: new SimpleChange(null, component.tabbedFacet, false)
@@ -78,6 +91,12 @@ describe('SearchFacetTabbedContentComponent', () => {
         fixture.detectChanges();
     }
 
+    /**
+     * Add new item to the bucket
+     *
+     * @param field field name
+     * @param displayValue value to display
+     */
     function addBucketItem(field: string, displayValue: string) {
         component.tabbedFacet.facets[field].buckets.items.push({
             count: 1,

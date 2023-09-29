@@ -51,6 +51,9 @@ export class AnalyticsService {
 
     /**
      * Retrieve all the Deployed app
+     *
+     * @param appId application id
+     * @returns list or report parameter models
      */
     getReportList(appId: number): Observable<ReportParametersModel[]> {
         return from(this.reportApi.getReportList())
@@ -72,7 +75,8 @@ export class AnalyticsService {
     /**
      * Retrieve Report by name
      *
-     * @param reportName - string - The name of report
+     * @param reportName - The name of report
+     * @returns report model
      */
     getReportByName(reportName: string): Observable<any> {
         return from(this.reportApi.getReportList())
