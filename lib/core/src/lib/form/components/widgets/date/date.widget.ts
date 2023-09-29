@@ -27,7 +27,8 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 import { isValid } from 'date-fns';
-import { DateFormatTranslationService } from '../../../services/date-format-translation.service';
+import { FormFieldModel } from '../core';
+import { TranslationService } from '../../../../../../../core/src/lib/translation/translation.service';
 
 @Component({
     selector: 'date-widget',
@@ -63,7 +64,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
-                protected dateFormatTranslationService: DateFormatTranslationService) {
+                private translationService: TranslationService) {
         super(formService);
     }
 
@@ -76,8 +77,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
 
         if (this.field) {
-            this.minDate = isValid(this.field.minValue) ? this.dateFormatTranslationService.format(new Date(this.field.minValue), this.DATE_FORMAT) : this.field.minValue;
-            this.maxDate = isValid(this.field.maxValue) ? this.dateFormatTranslationService.format(new Date(this.field.maxValue), this.DATE_FORMAT) : this.field.maxValue;
+            this.minDate = isValid(this.field.minValue) ? DateFnsUtils.formatDate(new Date(this.field.minValue), this.DATE_FORMAT) : this.field.minValue;
+            this.maxDate = isValid(this.field.maxValue) ? DateFnsUtils.formatDate(new Date(this.field.maxValue), this.DATE_FORMAT) : this.field.maxValue;
         }
     }
 
@@ -86,10 +87,17 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.onDestroy$.complete();
     }
 
+    formatLabel(field: FormFieldModel): string {
+        const displayName = this.translationService.instant(field.name);
+        const displayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
+
+        return `${displayName} (${displayFormat})`;
+    }
+
     onDateChanged(newDateValue) {
-        const date = this.dateFormatTranslationService.parse(newDateValue, this.field.dateDisplayFormat, new Date());
+        const date = DateFnsUtils.parseDate(newDateValue, this.field.dateDisplayFormat);
         if (isValid(date)) {
-            this.field.value = this.dateFormatTranslationService.format(date, this.field.dateDisplayFormat);
+            this.field.value = DateFnsUtils.formatDate(date, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

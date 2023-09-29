@@ -86,7 +86,9 @@ export class DateFnsUtils {
     static momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
-        A: 'a'
+        A: 'a',
+        Z: 'XXX',
+        T: `'T'`
     };
 
     /**
@@ -95,7 +97,8 @@ export class DateFnsUtils {
     static dateFnsToMomentMap = {
         d: 'D',
         y: 'Y',
-        a: 'A'
+        a: 'A',
+        xxx: 'Z'
     };
 
     /**
@@ -105,6 +108,14 @@ export class DateFnsUtils {
      * @returns The equivalent date-fns format string.
      */
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
+        // Check if 'A' is present in the format string
+        const containsA = dateDisplayFormat.includes('A');
+
+        // Replace 'HH' with 'hh' if 'A' is also present
+        if (containsA) {
+            dateDisplayFormat = dateDisplayFormat.replace(/HH/g, 'hh');
+        }
+
         if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
             for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
                 dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
@@ -150,5 +161,20 @@ export class DateFnsUtils {
      */
     static parseDate(value: string, dateFormat: string): Date {
         return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+    }
+
+    /**
+     * Adds seconds to a date time value represented as a string in the format 'YYYY-MM-DDTHH:mm:ssZ'.
+     *
+     * @param value - The input time value to which seconds will be added.
+     * @returns - A string representing the input date time value with seconds added.
+     */
+    static addSeconds(value: string): string {
+        const colonIndex: number = value.lastIndexOf(':');
+        const updatedValue = value.slice(0, colonIndex) + ':' + value.slice(colonIndex + 1);
+        const dateParts: string[] = updatedValue.split(':');
+        dateParts[2] = '00.' + dateParts[2];
+        value = dateParts.join(':');
+        return value;
     }
 }
