@@ -6,12 +6,14 @@
         max-height: 180px;
         padding: 5px 0;
         overflow-y: auto;
+
         /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-label {
             text-overflow: ellipsis;
             overflow: hidden;
             width: 100%;
         }
+
         /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         .mat-checkbox-layout {
             width: 100%;
@@ -25,6 +27,7 @@
 
         .mat-mdc-checkbox {
             margin: 5px;
+
             /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             &.mat-checkbox-checked .mat-checkbox-label {
                 font-weight: bold;
@@ -57,10 +60,12 @@
                 font-size: var(--theme-body-1-font-size);
                 line-height: 24px;
                 letter-spacing: 0.25px;
+
                 /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
                 .mat-form-field-underline {
                     display: none;
                 }
+
                 /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
                 .mat-form-field-suffix {
                     padding-right: 1px;
@@ -80,6 +85,7 @@
             padding-top: 15px;
         }
     }
+
     /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
     .mat-checkbox-label,
     .mat-radio-label {

@@ -47,6 +47,7 @@ h2.adf-search-results-label {
                 }
             }
         }
+
         /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
         .mat-form-field-underline .mat-form-field-ripple {
             height: 1px;
@@ -63,6 +64,7 @@ h2.adf-search-results-label {
         .adf-site-dropdown-list-element {
             width: 100%;
             margin-bottom: 0;
+
             /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
             .mat-select-trigger {
                 font-size: var(--theme-body-1-font-size);

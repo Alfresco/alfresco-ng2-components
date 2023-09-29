@@ -51,6 +51,7 @@ $search-result-height: calc(100% - 75px);
         mat-pseudo-checkbox {
             display: none;
         }
+
         /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
         .mat-list-text {
             display: flex;

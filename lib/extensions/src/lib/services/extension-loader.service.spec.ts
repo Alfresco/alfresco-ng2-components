@@ -57,7 +57,7 @@ describe('ExtensionLoaderService', () => {
 
     afterEach(() => {
         httpMock.verify();
-    })
+    });
 
     it('should load default registered app extensions when no custom $references defined', fakeAsync(() => {
         extensionLoaderService.load('assets/app.extensions.json', 'assets/plugins', ['test.extension.1.json']).then((config: ExtensionConfig) => {

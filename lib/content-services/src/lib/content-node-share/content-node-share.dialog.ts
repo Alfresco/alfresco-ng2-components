@@ -50,7 +50,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isLinkWithExpiryDate = false;
     form: FormGroup = new FormGroup({
         sharedUrl: new FormControl(''),
-        time: new FormControl({ value: '', disabled: true }, [Validators.required, this.minDateValidator])
+        time: new FormControl({value: '', disabled: true}, [Validators.required, this.minDateValidator])
     });
     type: DatePickerType = 'date';
     maxDebounceTime = 500;

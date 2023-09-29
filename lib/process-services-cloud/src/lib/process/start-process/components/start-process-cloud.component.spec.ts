@@ -25,8 +25,7 @@ import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule, MatCommonModule } from '@angular/material/core';
-import { MatOptionModule } from '@angular/material/core';
+import { MatRippleModule, MatCommonModule, MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -126,7 +125,7 @@ describe('StartProcessCloudComponent', () => {
             component.name = 'My formless new process';
             component.appName = 'myApp';
             getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-            formDefinitionSpy.and.returnValue({})
+            formDefinitionSpy.and.returnValue({});
             fixture.detectChanges();
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ appName: change });

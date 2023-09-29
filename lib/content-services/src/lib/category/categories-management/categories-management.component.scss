@@ -43,11 +43,13 @@
         overflow-wrap: anywhere;
         padding: 5px 0;
         font-size: 14px;
+
         /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
         &.mat-list-item-disabled {
             background-color: inherit;
             color: inherit;
         }
+
         /* TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version. */
         .mat-list-item-content,
         .mat-list-item-content-reverse {
