@@ -541,4 +541,20 @@ describe('DateWidgetComponent', () => {
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
     });
+
+    describe('format label', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                name: 'Date Field',
+                dateDisplayFormat: 'd-M-yyyy'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should format label correctly', () => {
+            const result = widget.formatLabel(widget.field);
+
+            expect(result).toBe('Date Field (D-M-YYYY)');
+        });
+    });
 });

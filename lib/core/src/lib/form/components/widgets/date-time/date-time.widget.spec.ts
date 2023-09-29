@@ -331,4 +331,20 @@ describe('DateTimeWidgetComponent', () => {
             expect(adfLeftLabel).toBeNull();
         });
     });
+
+    describe('format label', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                name: 'Date Time',
+                dateDisplayFormat: 'd-M-yyyy hh:mm a'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should format label correctly', () => {
+            const result = widget.formatLabel(widget.field);
+
+            expect(result).toBe('Date Time (D-M-YYYY hh:mm A)');
+        });
+    });
 });
