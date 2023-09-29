@@ -322,7 +322,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this._saving = false;
                 return of(null);
             }))
-            .subscribe((result: {updatedNode: Node, LinkingCategories: any}) => {
+            .subscribe((result: any) => {
                 if (result) {
                     this.updateUndefinedNodeProperties(result.updatedNode);
                     if (this.hasContentTypeChanged(this.changedProperties)) {

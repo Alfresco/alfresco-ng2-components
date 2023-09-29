@@ -38,8 +38,7 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
-    private minDateValidator = (control: AbstractControl): any =>
-        isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
+    private minDateValidator = (control: AbstractControl): any => isBefore(endOfDay(new Date(control.value)), this.minDate) ? {invalidDate: true} : null;
 
     minDate = add(new Date(), { days: 1 });
     sharedId: string;
