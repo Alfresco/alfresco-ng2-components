@@ -35,8 +35,8 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ProcessListPage } from '../../process-services/pages/process-list.page';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
 import { ProcessListCloudConfiguration } from './../config/process-list-cloud.config';
-import { addDays, format, subDays } from 'date-fns';
-import { DateFnsUtils } from '@alfresco/adf-core';
+import { addDays, subDays } from 'date-fns';
+import { DateFnsUtils } from 'lib/core';
 
 
 describe('Process filters cloud', () => {

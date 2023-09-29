@@ -35,8 +35,7 @@ import Task = require('../../models/APS/Task');
 import TaskModel = require('../../models/APS/TaskModel');
 import FormModel = require('../../models/APS/FormModel');
 import CONSTANTS = require('../../util/constants');
-import { format } from 'date-fns';
-import { DateFnsUtils } from '@alfresco/adf-core';
+import { DateFnsUtils } from 'lib/core';
 
 describe('Task Details component', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
