@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
@@ -39,9 +39,14 @@ import { WidgetComponent } from '../widget.component';
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
+    @HostBinding('style.--text-color') textColor: string;
+    @HostBinding('style.--background-color') backgroundColor: string;
 
     constructor(public formService: FormService) {
         super(formService);
+
+        this.textColor = this.field.params?.styles?.textColor;
+        this.backgroundColor = this.field.params?.styles?.textColor;
     }
 
 }
