@@ -57,8 +57,8 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.displayValue = this.field.value;
         }
 
-        this.textColor = this.field.params?.styles?.textColor;
-        this.backgroundColor = this.field.params?.styles?.textColor;
+        this.textColor = this.field.params?.styles?.textColor?.rgba;
+        this.backgroundColor = this.field.params?.styles?.textColor?.rgba;
     }
 
 }

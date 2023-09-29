@@ -45,8 +45,8 @@ export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
     constructor(public formService: FormService) {
         super(formService);
 
-        this.textColor = this.field.params?.styles?.textColor;
-        this.backgroundColor = this.field.params?.styles?.textColor;
+        this.textColor = this.field.params?.styles?.textColor?.rgba;
+        this.backgroundColor = this.field.params?.styles?.textColor?.rgba;
     }
 
 }
