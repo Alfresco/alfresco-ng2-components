@@ -130,7 +130,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
     });
@@ -149,7 +149,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-2');
         expect(widget.field.isValid).toBe(true);
     });
@@ -169,7 +169,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         fixture.detectChanges();
-        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+        const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
         expect(selectedOption.innerText).toBe('opt-name-1');
         expect(widget.field.isValid).toBe(true);
     });

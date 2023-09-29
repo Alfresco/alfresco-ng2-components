@@ -19,6 +19,8 @@ import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
+    // AlfrescoApiService,
+    // AlfrescoApiServiceMock,
     AppConfigService,
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
@@ -78,7 +80,8 @@ describe('ProcessListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            providers:[ ]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -532,32 +535,34 @@ describe('ProcessListCloudComponent', () => {
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reset pagination when resetPaginationValues is called', async () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
             fixture.detectChanges();
-
-            const size = component.size;
-            const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
-                fixture.detectChanges();
-                expect(component.size).toBe(size);
-                expect(component.skipCount).toBe(skipCount);
-                expect(updatedPagination.maxItems).toEqual(size);
-                expect(updatedPagination.skipCount).toEqual(skipCount);
-                done();
-            });
+            await fixture.whenStable();
 
             const pagination = {
                 maxItems: 250,
                 skipCount: 200
             };
+            const size = component.size;
+            const skipCount = component.skipCount;
+
             component.updatePagination(pagination);
-            fixture.whenStable().then(() => {
-                component.resetPagination();
-            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(pagination.maxItems).toEqual(component.size);
+            expect(pagination.skipCount).toEqual(component.skipCount);
+
+            component.resetPagination();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.size).toBe(size);
+            expect(component.skipCount).toBe(skipCount);
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {

@@ -16,7 +16,8 @@
                     cancel
                 </mat-icon>
             </mat-chip-row>
-            <input *ngIf="!isReadonly()" matInput
+            <input matInput
+                   [disabled]="isReadonly()"
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"

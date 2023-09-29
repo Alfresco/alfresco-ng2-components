@@ -102,7 +102,7 @@ describe('PeopleCloudComponent', () => {
      * @returns list of debug elements
      */
     function getUsersChipsUI(): DebugElement[] {
-        return fixture.debugElement.queryAll(By.css('mat-chip'));
+        return fixture.debugElement.queryAll(By.css('mat-chip-row'));
     }
 
     /**
@@ -408,7 +408,7 @@ describe('PeopleCloudComponent', () => {
 
                 fixture.detectChanges();
 
-                const chipList = getElement('mat-chip-list');
+                const chipList = getElement('mat-chip-grid');
 
                 expect(getUsersChipsUI()).toBeDefined();
                 expect(chipList).toBeDefined();
@@ -424,7 +424,7 @@ describe('PeopleCloudComponent', () => {
 
                 fixture.detectChanges();
 
-                const chipList = getElement('mat-chip-list');
+                const chipList = getElement('mat-chip-grid');
 
                 expect(getUsersChipsUI()).toBeDefined();
                 expect(chipList).toBeDefined();

@@ -140,7 +140,7 @@ describe('AppListCloudComponent', () => {
         it('should defined adf-cloud-app-details when layout type is grid', () => {
             fixture.detectChanges();
             const adfCloudDetailsElement = fixture.nativeElement.querySelectorAll('adf-cloud-app-details');
-            const appName = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-title');
+            const appNames = fixture.nativeElement.querySelectorAll('.adf-app-listgrid-item-card-title');
             expect(adfCloudDetailsElement).toBeDefined();
             expect(adfCloudDetailsElement).not.toBeNull();
 
@@ -148,7 +148,7 @@ describe('AppListCloudComponent', () => {
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
 
-            expect(appName.innerText.trim()).toEqual(fakeApplicationInstance[0].name);
+            expect(appNames[0].innerText).toEqual(fakeApplicationInstance[0].name);
         });
 
         it('should display a grid when configured to', () => {
@@ -180,7 +180,7 @@ describe('AppListCloudComponent', () => {
             fixture.detectChanges();
             const appListElement = fixture.nativeElement.querySelectorAll('mat-list');
             const appListItemElement = fixture.nativeElement.querySelectorAll('mat-list-item');
-            const appName = fixture.nativeElement.querySelector('.mat-list-text');
+            const appName = fixture.nativeElement.querySelector('.mdc-list-item__primary-text span');
             expect(appListElement).toBeDefined();
             expect(appListElement).not.toBeNull();
 
@@ -200,7 +200,7 @@ describe('AppListCloudComponent', () => {
     it('should emit a click event when app selected', () => {
         spyOn(component.appClick, 'emit');
         fixture.detectChanges();
-        const onAppClick = fixture.nativeElement.querySelector('.mat-card');
+        const onAppClick = fixture.nativeElement.querySelector('.mat-mdc-card');
         onAppClick.click();
         expect(component.appClick.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });

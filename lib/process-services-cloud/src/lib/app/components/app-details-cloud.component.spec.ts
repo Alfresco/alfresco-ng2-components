@@ -50,7 +50,7 @@ describe('AppDetailsCloudComponent', () => {
     it('should emit a click event when app selected', () => {
         spyOn(component.selectedApp, 'emit');
         fixture.detectChanges();
-        const app = fixture.nativeElement.querySelector('.mat-card');
+        const app = fixture.nativeElement.querySelector('.mat-mdc-card');
         app.click();
         expect(component.selectedApp.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });
@@ -69,7 +69,7 @@ describe('AppDetailsCloudComponent', () => {
     it('should render card with a non ApplicationInstanceModel input object', () => {
         component.applicationInstance =  { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' };
         fixture.detectChanges();
-        const app = fixture.nativeElement.querySelector('.mat-card');
+        const app = fixture.nativeElement.querySelector('.mat-mdc-card');
         expect(app).toBeTruthy();
    });
 });

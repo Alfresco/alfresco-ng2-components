@@ -236,7 +236,7 @@ describe('GroupCloudComponent', () => {
         });
 
         it('should show only one mat chip with the first preSelectedGroup', () => {
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
             expect(chips.length).toEqual(1);
             expect(chips[0].attributes['data-automation-id']).toEqual(`adf-cloud-group-chip-${mockVegetableAubergine.name}`);
         });
@@ -257,7 +257,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
             component.ngOnChanges({ preSelectGroups: change });
             fixture.detectChanges();
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
             expect(chips.length).toBe(2);
         });
 
@@ -266,7 +266,7 @@ describe('GroupCloudComponent', () => {
             const changedGroupsEmitterSpy = spyOn(component.changedGroups, 'emit');
             component.mode = 'multiple';
 
-            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+            const removeIcon = fixture.debugElement.query(By.css('mat-chip-row mat-icon'));
             removeIcon.nativeElement.click();
             fixture.detectChanges();
 
@@ -294,7 +294,7 @@ describe('GroupCloudComponent', () => {
 
             await fixture.whenStable();
 
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row');
 
             expect(chipList.length).toBe(2);
             const removeIconAubergine = getElement(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockVegetableAubergine.name}"]`);
@@ -317,7 +317,7 @@ describe('GroupCloudComponent', () => {
             fixture.whenStable();
             fixture.detectChanges();
 
-            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip');
+            const chipList = fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row');
             expect(chipList.length).toBe(2);
 
             const removeIcon = getElement(`[data-automation-id="adf-cloud-group-chip-remove-icon-${mockMeatChicken.name}"]`);
@@ -325,7 +325,7 @@ describe('GroupCloudComponent', () => {
             fixture.detectChanges();
 
             expect(removeGroupSpy).toHaveBeenCalled();
-            expect(fixture.nativeElement.querySelectorAll('mat-chip-list mat-chip').length).toBe(1);
+            expect(fixture.nativeElement.querySelectorAll('mat-chip-grid mat-chip-row').length).toBe(1);
         });
 
         it('should removeDuplicatedGroups return only unique groups', () => {
@@ -372,8 +372,8 @@ describe('GroupCloudComponent', () => {
 
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
-            const chipList = getElement('mat-chip-list');
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
+            const chipList = getElement('mat-chip-grid');
 
             expect(chips).toBeDefined();
             expect(chipList).toBeDefined();
@@ -389,8 +389,8 @@ describe('GroupCloudComponent', () => {
 
             fixture.detectChanges();
 
-            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
-            const chipList = getElement('mat-chip-list');
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip-row'));
+            const chipList = getElement('mat-chip-grid');
 
             expect(chips).toBeDefined();
             expect(chipList).toBeDefined();
