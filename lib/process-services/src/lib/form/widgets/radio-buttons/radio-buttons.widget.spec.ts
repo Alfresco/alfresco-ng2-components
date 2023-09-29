@@ -24,7 +24,9 @@ import {
     FormFieldOption,
     FormFieldModel,
     FormModel,
-    CoreTestingModule
+    CoreTestingModule,
+    TranslationService,
+    TranslationMock
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { MatIconModule } from '@angular/material/icon';
@@ -49,6 +51,10 @@ describe('RadioButtonsWidgetComponent', () => {
                 MatRadioModule,
                 FormsModule,
                 MatIconModule
+            ],
+            declarations:[RadioButtonsWidgetComponent],
+            providers:[
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         });
         taskFormService = TestBed.inject(TaskFormService);
@@ -186,7 +192,7 @@ describe('RadioButtonsWidgetComponent', () => {
             expect(element.querySelector('label').innerText).toBe('radio-name-label');
         });
         // eslint-disable-next-line
-        xit('should be able to set a Radio Button widget as required', async () => {
+        it('should be able to set a Radio Button widget as required', async () => {
             radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
                 id: 'radio-id',
                 name: 'radio-name-label',
@@ -211,7 +217,7 @@ describe('RadioButtonsWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-radio-checked"]');
+            const selectedOption = element.querySelector<HTMLElement>('[class*="mat-mdc-radio-checked"]');
             expect(selectedOption.innerText).toBe('opt-name-1');
             expect(radioButtonWidget.field.isValid).toBe(true);
         });
