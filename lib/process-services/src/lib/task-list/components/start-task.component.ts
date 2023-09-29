@@ -27,10 +27,10 @@ import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserProcessModel } from '../../common/models/user-process.model';
-import { isValid, parse } from 'date-fns';
+import { isValid } from 'date-fns';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
-const FORMAT_DATE = 'dd/MM/yyyy';
+const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
 
 @Component({
@@ -190,7 +190,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             let date: Date;
 
             if (typeof newDateValue === 'string') {
-                date = parse(newDateValue, FORMAT_DATE, new Date());
+                date = DateFnsUtils.parseDate(newDateValue, FORMAT_DATE);
             } else {
                 date = newDateValue;
             }
