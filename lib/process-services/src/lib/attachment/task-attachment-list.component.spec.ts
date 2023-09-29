@@ -146,7 +146,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenu = window.document.querySelectorAll('button.mat-mdc-menu-item').length;
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
@@ -166,7 +166,7 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
+        const actionMenu = window.document.querySelectorAll('button.mat-mdc-menu-item').length;
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
         expect(window.document.querySelector('[data-automation-id="ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
