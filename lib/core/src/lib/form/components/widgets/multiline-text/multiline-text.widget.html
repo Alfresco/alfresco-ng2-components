@@ -1,4 +1,7 @@
 <div class="adf-multiline-text-widget {{field.className}}"
+    [style.padding-left.px]="field.params?.styles?.backgroundColor 
+                                                || (field.params?.styles?.borderWidth 
+                                                && field.params?.styles?.borderStyle !== 'none') ? 12 : 0"
     [ngStyle]="{ 'border-width.px': this.field?.params?.styles?.borderWidth,
                  'border-style': this.field?.params?.styles?.borderStyle,
                  'border-color': this.field?.params?.styles?.borderColor?.rgba,
