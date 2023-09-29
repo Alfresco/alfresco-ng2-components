@@ -9,7 +9,9 @@
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
     </div>
-    <div>
+    <div [style.padding-left.px]="field.params?.styles?.backgroundColor 
+                                        || (field.params?.styles?.borderWidth 
+                                        && field.params?.styles?.borderStyle !== 'none') ? 12 : 0">
         <mat-form-field [hideRequiredMarker]="true">
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
             <input matInput

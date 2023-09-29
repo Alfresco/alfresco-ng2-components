@@ -10,6 +10,7 @@
 
 
 .adf-number-widget {
+    box-sizing: border-box;
 
     &.custom-label-color{
         .adf-label:not(.adf-container-widget .mat-focused label) {
