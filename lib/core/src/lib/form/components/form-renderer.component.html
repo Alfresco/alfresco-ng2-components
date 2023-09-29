@@ -27,7 +27,9 @@
                                  'border-bottom-width.px': currentRootElement?.field?.params?.styles?.borderWidth,
                                  'border-bottom-style': currentRootElement?.field?.params?.styles?.borderStyle,
                                  'background-color': currentRootElement?.field?.params?.styles?.backgroundColor?.rgba,
-                                 'border-radius': currentRootElement?.field?.params?.styles?.borderRadius }"
+                                 'border-radius': currentRootElement?.field?.params?.styles?.borderRadius,
+                                 'font-size.px': currentRootElement?.field?.params?.styles?.fontSize 
+                                }"
                     class="adf-container-widget__header-text" id="container-header"
                     [class.adf-collapsible]="currentRootElement?.isCollapsible()">
                     <button *ngIf="currentRootElement?.isCollapsible()"
