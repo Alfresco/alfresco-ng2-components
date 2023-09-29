@@ -17,11 +17,11 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
-import { format, isAfter, isBefore, isValid, parse } from 'date-fns';
+import { isAfter, isBefore, isValid } from 'date-fns';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 export interface FormFieldValidator {
 
@@ -146,9 +146,9 @@ export class DateFieldValidator implements FormFieldValidator {
     ];
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
-    static isValidDate(inputDate: string, dateFormat: string = 'd-M-yyyy'): boolean {
+    static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
         if (inputDate) {
-            const d = parseUpdate(inputDate, dateFormat);
+            const d = DateFnsUtils.parseDate(inputDate, dateFormat);
             return isValid(d);
         }
 
@@ -180,8 +180,8 @@ export class DateTimeFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'YYYY-MM-DD HH:mm'): boolean {
         if (inputDate) {
-            const d = moment(inputDate, dateFormat, true);
-            return d.isValid();
+            const d = DateFnsUtils.parseDate(inputDate, dateFormat);
+            return isValid(d);
         }
 
         return false;
@@ -193,7 +193,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
+            if (DateTimeFieldValidator.isValidDate(field.value, DateFnsUtils.convertMomentToDateFnsFormat(field.dateDisplayFormat))) {
                 return true;
             }
             field.validationSummary.message = field.dateDisplayFormat;
@@ -245,17 +245,17 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
         // remove time and timezone info
         let fieldValueData;
         if (typeof field.value === 'string') {
-            fieldValueData = parseUpdate(field.value.split('T')[0], dateFormat);
+            fieldValueData = DateFnsUtils.parseDate(field.value.split('T')[0], dateFormat);
         } else {
             fieldValueData = field.value;
         }
 
         const minValueDateFormat = this.extractDateFormat(field.minValue);
-        const min = parseUpdate(field.minValue, minValueDateFormat);
+        const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
 
         if (isBefore(fieldValueData, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', formatUpdate(min, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase());
             isFieldValid = false;
         }
         return isFieldValid;
@@ -275,17 +275,17 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
         // remove time and timezone info
         let fieldValueData;
         if (typeof field.value === 'string') {
-            fieldValueData = parseUpdate(field.value.split('T')[0], dateFormat);
+            fieldValueData = DateFnsUtils.parseDate(field.value.split('T')[0], dateFormat);
         } else {
             fieldValueData = field.value;
         }
 
         const maxValueDateFormat = this.extractDateFormat(field.maxValue);
-        const max = parseUpdate(field.maxValue, maxValueDateFormat);
+        const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
 
         if (isAfter(fieldValueData, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', formatUpdate(max, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase());
             isFieldValid = false;
         }
         return isFieldValid;
@@ -302,7 +302,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MIN_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
+    MIN_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm A';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -328,15 +328,15 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         let isFieldValid = true;
         let fieldValueDate;
         if (typeof field.value === 'string') {
-            fieldValueDate = moment(field.value, dateFormat);
+            fieldValueDate = DateFnsUtils.parseDate(field.value, dateFormat);
         } else {
             fieldValueDate = field.value;
         }
-        const min = moment(field.minValue, this.MIN_DATETIME_FORMAT);
+        const min = DateFnsUtils.formatDate(new Date(field.minValue), this.MIN_DATETIME_FORMAT);
 
-        if (fieldValueDate.isBefore(min)) {
+        if (isBefore(fieldValueDate, new Date(min))) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', min.format(field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(new Date(min), field.dateDisplayFormat).replace(':', '-'));
             isFieldValid = false;
         }
         return isFieldValid;
@@ -348,7 +348,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MAX_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
+    MAX_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm A';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -375,15 +375,16 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         let fieldValueDate;
 
         if (typeof field.value === 'string') {
-            fieldValueDate = moment(field.value, dateFormat);
+            fieldValueDate = DateFnsUtils.parseDate(field.value, dateFormat);
         } else {
             fieldValueDate = field.value;
         }
-        const max = moment(field.maxValue, this.MAX_DATETIME_FORMAT);
+        const max = DateFnsUtils.formatDate(new Date(field.maxValue), this.MAX_DATETIME_FORMAT);
 
-        if (fieldValueDate.isAfter(max)) {
+
+        if (isAfter(fieldValueDate, new Date(max))) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(new Date(max), field.dateDisplayFormat).replace(':', '-'));
             isFieldValid = false;
         }
         return isFieldValid;
@@ -584,39 +585,3 @@ export const FORM_FIELD_VALIDATORS = [
     new MinDateTimeFieldValidator(),
     new MaxDateTimeFieldValidator()
 ];
-
-export const momentToDateFnsMap = {
-    M: 'M',
-    D: 'd',
-    Y: 'y',
-    A: 'a'
-};
-
-export const dateFnsToMomentMap = {
-    M: 'M',
-    d: 'D',
-    y: 'Y',
-    a: 'A'
-};
-
-export function convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
-    for (const [search, replace] of Object.entries(momentToDateFnsMap)) {
-        dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
-    }
-    return dateDisplayFormat;
-}
-
-export function convertDateFnsToMomentFormat(dateDisplayFormat: string): string {
-    for (const [search, replace] of Object.entries(dateFnsToMomentMap)) {
-        dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
-    }
-    return dateDisplayFormat;
-}
-
-export function formatUpdate(date: number|Date, dateFormat: string): string {
-    return format(date, convertMomentToDateFnsFormat(dateFormat));
-}
-
-export function parseUpdate(value: string, dateFormat: string, date = new Date()): Date {
-    return parse(value, convertMomentToDateFnsFormat(dateFormat), date);
-}

@@ -16,7 +16,6 @@
  */
 
 /* eslint-disable @angular-eslint/component-selector */
-import moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -30,11 +29,9 @@ import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { isValid } from 'date-fns';
-import { DateFormatTranslationService } from '../../../services/date-format-translation.service';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 // Maps to FormFieldRepresentation
-
-export const dateFormatTranslationService = new DateFormatTranslationService();
 
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
@@ -43,7 +40,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _required: boolean = false;
 
     readonly defaultDateFormat: string = 'd-M-yyyy';
-    readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
+    readonly defaultDateTimeFormat: string = 'd-M-yyyy hh:mm a';
 
     // model members
     fieldType: string;
@@ -248,7 +245,7 @@ export class FormFieldModel extends FormWidgetModel {
             Object.keys(jsonField.fields).forEach((el) => {
                 if(jsonField.fields[el]) {
                     jsonField.fields[el].forEach((element) => {
-                        element.dateDisplayFormat = element.dateDisplayFormat? dateFormatTranslationService.convertMomentToDateFnsFormat(element.dateDisplayFormat): element.dateDisplayFormat;
+                        element.dateDisplayFormat = element.dateDisplayFormat? DateFnsUtils.convertMomentToDateFnsFormat(element.dateDisplayFormat): element.dateDisplayFormat;
                     });
                 }
             });
@@ -353,12 +350,12 @@ export class FormFieldModel extends FormWidgetModel {
             if (value) {
                 let dateValue;
                 if (isNumberValue(value)) {
-                    dateValue = moment(value);
+                    dateValue = new Date(value);
                 } else {
-                    dateValue = moment.utc(value, 'YYYY-MM-DD hh:mm A');
+                    dateValue = DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A');
                 }
-                if (dateValue?.isValid()) {
-                    value = dateValue.utc().format(this.dateDisplayFormat);
+                if (isValid(dateValue)) {
+                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
                 }
             }
         }
@@ -369,10 +366,10 @@ export class FormFieldModel extends FormWidgetModel {
                 if (isNumberValue(value)) {
                     dateValue = new Date(value);
                 } else {
-                    dateValue = dateFormatTranslationService.parse(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
                 }
                 if (isValid(dateValue)) {
-                    value = dateFormatTranslationService.format(dateValue, this.dateDisplayFormat);
+                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
                 }
             }
         }
@@ -445,13 +442,13 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = dateFormatTranslationService.format(new Date(), this.dateDisplayFormat);
+                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateValue = dateFormatTranslationService.parse(this.value, this.dateDisplayFormat);
+                const dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
 
                 if (isValid(dateValue)) {
-                    this.form.values[this.id] = `${dateFormatTranslationService.format(dateValue, 'YYYY-MM-DD')}T00:00:00.000Z`;
+                    this.form.values[this.id] = `${DateFnsUtils.formatDate(dateValue, 'YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;
@@ -460,13 +457,14 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATETIME: {
                 if (typeof this.value === 'string' && this.value === 'now') {
-                    this.value = moment(new Date()).utc().format(this.dateDisplayFormat);
+                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateTimeValue = moment.utc(this.value, this.dateDisplayFormat, true);
-                if (dateTimeValue?.isValid()) {
+                const dateTimeValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
+
+                if (isValid(dateTimeValue)) {
                     /* cspell:disable-next-line */
-                    this.form.values[this.id] = `${dateTimeValue.utc().format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
+                    this.form.values[this.id] = `${DateFnsUtils.formatDate(dateTimeValue, 'YYYY-MM-DDTHH:mm:ss')}.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;

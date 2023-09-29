@@ -66,7 +66,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
-                protected dateFormatTranslationService: DateFormatTranslationService) {
+                private translationService: TranslationService) {
         super(formService);
     }
 

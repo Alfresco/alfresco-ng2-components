@@ -17,14 +17,12 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { isValid } from 'date-fns';
-import { DateFormatTranslationService } from '../form/services/date-format-translation.service';
+import { DateFnsUtils } from '../common/utils/date-fns-utils';
 
 @Pipe({ name: 'adfDate' })
-export class DatePipe implements PipeTransform {
-    constructor(private dateFormatTranslationService: DateFormatTranslationService) {}
-
+export class ADFDatePipe implements PipeTransform {
     transform(value: Date | string, dateFormat: string): string {
         const date = value instanceof Date ? value : new Date(value);
-        return isValid(date) ? this.dateFormatTranslationService.format(date, dateFormat) : value.toString();
+        return isValid(date) ? DateFnsUtils.formatDate(date, dateFormat) : value.toString();
     }
 }

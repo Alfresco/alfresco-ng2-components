@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
@@ -25,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
+import { DateFnsUtils } from '../../../../common';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -52,7 +52,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '1982-03-13T10:00:000Z';
+        let minValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -62,8 +62,10 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const expected = moment(minValue, 'YYYY-MM-DDTHH:mm:ssZ');
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
+        minValue = DateFnsUtils.addSeconds(minValue);
+
+        const expected = DateFnsUtils.formatDate(new Date(minValue), 'YYYY-MM-DDTHH:mm:ssZ');
+        expect(widget.minDate).toBe(expected);
     });
 
     it('should date field be present', () => {
@@ -79,14 +81,16 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '1982-03-13T10:00:000Z';
+        let maxValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             maxValue
         });
         fixture.detectChanges();
 
-        const expected = moment(maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
-        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+        maxValue = DateFnsUtils.addSeconds(maxValue);
+
+        const expected = DateFnsUtils.formatDate(new Date(maxValue), 'YYYY-MM-DDTHH:mm:ssZ');
+        expect(widget.maxDate).toBe(expected);
     });
 
     it('should eval visibility on date changed', () => {
@@ -101,7 +105,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         widget.field = field;
-        const mockDate = moment('1982-03-13T10:00:000Z', 'YYYY-MM-DDTHH:mm:ssZ');
+        const mockDate = DateFnsUtils.formatDate(new Date('1982-03-13 10:00 AM'), 'YYYY-MM-DDTHH:mm:ssZ');
         widget.onDateChanged(mockDate);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);

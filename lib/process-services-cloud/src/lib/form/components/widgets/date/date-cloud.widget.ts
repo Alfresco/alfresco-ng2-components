@@ -23,7 +23,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
     WidgetComponent,
-    UserPreferencesService, UserPreferenceValues, FormService, DateFormatTranslationService, DateFnsUtils
+    UserPreferencesService, UserPreferenceValues, FormService, DateFnsUtils, TranslationService, FormFieldModel
 } from '@alfresco/adf-core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
@@ -61,7 +61,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
                 private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
-                protected dateFormatTranslationService: DateFormatTranslationService) {
+                private translationService: TranslationService) {
         super(formService);
     }
 
@@ -77,20 +77,20 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             if (this.field.dynamicDateRangeSelection) {
                 const today = new Date();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
-                    this.minDate = this.dateFormatTranslationService.format(subDays(today, this.field.minDateRangeValue), DATE_FORMAT_CLOUD);
+                    this.minDate = DateFnsUtils.formatDate(subDays(today, this.field.minDateRangeValue), DATE_FORMAT_CLOUD);
                     this.field.minValue = this.minDate;
                 }
                 if (Number.isInteger(this.field.maxDateRangeValue)) {
-                    this.maxDate = this.dateFormatTranslationService.format(addDays(today, this.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
+                    this.maxDate = DateFnsUtils.formatDate(addDays(today, this.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
                     this.field.maxValue = this.maxDate;
                 }
             } else {
                 if (this.field.minValue) {
-                    this.minDate = this.dateFormatTranslationService.format(new Date(this.field.minValue), DATE_FORMAT_CLOUD);
+                    this.minDate = DateFnsUtils.formatDate(new Date(this.field.minValue), DATE_FORMAT_CLOUD);
                 }
 
                 if (this.field.maxValue) {
-                    this.maxDate = this.dateFormatTranslationService.format(new Date(this.field.maxValue), DATE_FORMAT_CLOUD);
+                    this.maxDate = DateFnsUtils.formatDate(new Date(this.field.maxValue), DATE_FORMAT_CLOUD);
                 }
             }
         }
@@ -101,10 +101,17 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         this.onDestroy$.complete();
     }
 
+    formatLabel(field: FormFieldModel): string {
+        const displayName = this.translationService.instant(field.name);
+        const displayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
+
+        return `${displayName} (${displayFormat})`;
+    }
+
     onDateChanged(newDateValue) {
-        const date = this.dateFormatTranslationService.parse(newDateValue, this.field.dateDisplayFormat, new Date());
+        const date = DateFnsUtils.parseDate(newDateValue, this.field.dateDisplayFormat);
         if (isValid(date)) {
-            this.field.value = this.dateFormatTranslationService.format(date, this.field.dateDisplayFormat);
+            this.field.value = DateFnsUtils.formatDate(date, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

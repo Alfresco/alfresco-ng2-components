@@ -55,4 +55,13 @@ describe('Date Format Translations', () => {
 
         expect(result).toEqual(expectedParsedDate);
     });
+
+    it('should add seconds to a date time value', () => {
+        const inputDateTime = '2023-09-02T10:00:00Z';
+        const expectedUpdatedValue = '2023-09-02T10:00:00.00Z';
+
+        const result = DateFnsUtils.addSeconds(inputDateTime);
+
+        expect(result).toEqual(expectedUpdatedValue);
+    });
 });

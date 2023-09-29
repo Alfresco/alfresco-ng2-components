@@ -15,19 +15,12 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
-import { DateFormatTranslationService } from '../../../public-api';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 describe('FormFieldModel', () => {
-
-    let dateFormatTranslationService: DateFormatTranslationService;
-
-    beforeEach(() => {
-        dateFormatTranslationService = new DateFormatTranslationService();
-    });
 
     it('should store the form reference', () => {
         const form = new FormModel();
@@ -281,8 +274,8 @@ describe('FormFieldModel', () => {
         });
 
         const currentDate = new Date();
-        const expectedDate = dateFormatTranslationService.format(currentDate, 'DD-MM-YYYY');
-        const expectedDateFormat = `${dateFormatTranslationService.format(currentDate, 'YYYY-MM-DD')}T00:00:00.000Z`;
+        const expectedDate = DateFnsUtils.formatDate(currentDate, 'DD-MM-YYYY');
+        const expectedDateFormat = `${DateFnsUtils.formatDate(currentDate, 'YYYY-MM-DD')}T00:00:00.000Z`;
 
         expect(field.value).toBe(expectedDate);
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);
@@ -311,9 +304,12 @@ describe('FormFieldModel', () => {
             dateDisplayFormat: 'YYYY-MM-DD HH:mm'
         });
 
-        const currentDateTime = moment(new Date());
-        const expectedDateTime = moment.utc(currentDateTime).format('YYYY-MM-DD HH:mm');
-        const expectedDateTimeFormat = `${currentDateTime.utc().format('YYYY-MM-DDTHH:mm:00')}.000Z`;
+        const currentDateTime = new Date();
+        const formattedDate = DateFnsUtils.formatDate(currentDateTime, 'YYYY-MM-DD');
+        const formattedTime = DateFnsUtils.formatDate(currentDateTime, 'HH:mm');
+
+        const expectedDateTime = DateFnsUtils.formatDate(currentDateTime, 'YYYY-MM-DD HH:mm');
+        const expectedDateTimeFormat = formattedDate + `T${formattedTime}:00.000Z`;
 
         expect(field.value).toBe(expectedDateTime);
         expect(form.values['datetime']).toEqual(expectedDateTimeFormat);

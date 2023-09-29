@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DateFnsUtils } from '../../../../common';
 import { ErrorMessageModel } from './error-message.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
@@ -35,7 +36,6 @@ import {
 } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
-declare let moment: any;
 
 describe('FormFieldValidator', () => {
     describe('RequiredFieldValidator', () => {
@@ -708,7 +708,7 @@ describe('FormFieldValidator', () => {
 
         it('should take into account that max value is in UTC and NOT fail validating value checking the time', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
-            const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+            const maxValueSavedInForm = DateFnsUtils.formatDate(DateFnsUtils.parseDate(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A'), `YYYY-MM-DDTHH:mm:ssZ`);
 
             const localValidValue = '2018-3-30 11:59 PM';
 
@@ -723,7 +723,7 @@ describe('FormFieldValidator', () => {
 
         it('should take into account that max value is in UTC and fail validating value checking the time', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
-            const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+            const maxValueSavedInForm = DateFnsUtils.formatDate(DateFnsUtils.parseDate(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A'), `YYYY-MM-DDTHH:mm:ssZ`);
 
             const localInvalidValue = '2018-3-31 12:01 AM';
 
@@ -833,7 +833,7 @@ describe('FormFieldValidator', () => {
 
         it('should take into account that min value is in UTC and NOT fail validating value checking the time', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
-            const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+            const minValueSavedInForm = DateFnsUtils.formatDate(DateFnsUtils.parseDate(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A'), `YYYY-MM-DDTHH:mm:ssZ`);
 
             const localValidValue = '2018-3-02 06:01 AM';
 
@@ -848,7 +848,7 @@ describe('FormFieldValidator', () => {
 
         it('should take into account that min value is in UTC and fail validating value checking the time', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
-            const minValueSavedInForm = moment(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
+            const minValueSavedInForm = DateFnsUtils.formatDate(DateFnsUtils.parseDate(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A'), `YYYY-MM-DDTHH:mm:ssZ`);
 
             const localInvalidValue = '2018-3-02 05:59 AM';
 
@@ -1113,7 +1113,7 @@ describe('FormFieldValidator', () => {
         it('should validate dateTime format with default format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '2021-06-09 14:10'
+                value: '2021-06-09 02:10 AM'
             });
             expect(validator.validate(field)).toBeTruthy();
         });
