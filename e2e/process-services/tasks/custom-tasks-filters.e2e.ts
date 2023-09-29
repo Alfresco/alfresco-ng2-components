@@ -29,6 +29,7 @@ import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import { addDays, format, subDays } from 'date-fns';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Start Task - Custom App', () => {
 
@@ -63,9 +64,9 @@ describe('Start Task - Custom App', () => {
     let currentPage = 1;
     const totalNrOfPages = 'of 4';
     const currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    const beforeDate = format(subDays(new Date(), 1), 'MM/dd/yyyy');
+    const beforeDate = DateFnsUtils.formatDate(subDays(new Date(), 1), 'MM/DD/YYYY');
     const currentDate = DateUtil.formatDate('MM/DD/YYYY');
-    const afterDate = format(addDays(new Date(), 1), 'MM/dd/yyyy');
+    const afterDate = DateFnsUtils.formatDate(addDays(new Date(), 1), 'MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
 

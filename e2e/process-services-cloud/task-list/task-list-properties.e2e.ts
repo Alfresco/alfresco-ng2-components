@@ -26,7 +26,8 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './../config/task-list-cloud.config';
 import { taskFilterConfiguration } from './../config/task-filter.config';
-import { addDays, format, subDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Edit task filters and task list properties', () => {
 
@@ -54,9 +55,9 @@ describe('Edit task filters and task list properties', () => {
         let otherOwnerTask; let testUser; let groupInfo; let simpleTask;
     const priority = 1;
 
-    const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
+    const beforeDate = DateFnsUtils.formatDate(subDays(new Date(), 1), 'DD/MM/YYYY');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
-    const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
+    const afterDate = DateFnsUtils.formatDate(addDays(new Date(), 1), 'DD/MM/YYYY');
 
     beforeAll(async () => {
         await apiService.loginWithProfile('identityAdmin');

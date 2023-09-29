@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { format, parse } from 'date-fns';
+import { format, isMatch, parse } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 export class DateFnsUtils {
@@ -152,5 +152,16 @@ export class DateFnsUtils {
      */
     static parseDate(value: string, dateFormat: string): Date {
         return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+    }
+
+    /**
+     * Validates a date string using the specified date format.
+     *
+     * @param value - Date string to be matched.
+     * @param dateFormat - The date format string to use for matching.
+     * @returns true if given date string correct against the given format else will return false.
+     */
+    static isMatch(value: string, dateFormat: string): boolean {
+        return isMatch(value, this.convertMomentToDateFnsFormat(dateFormat));
     }
 }
