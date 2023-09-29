@@ -241,11 +241,13 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getDefaultDateFormat(jsonField: any): string {
-        if(jsonField.fields) {
+        if (jsonField.fields) {
             Object.keys(jsonField.fields).forEach((el) => {
-                if(jsonField.fields[el]) {
+                if (jsonField.fields[el]) {
                     jsonField.fields[el].forEach((element) => {
-                        element.dateDisplayFormat = element.dateDisplayFormat? DateFnsUtils.convertMomentToDateFnsFormat(element.dateDisplayFormat): element.dateDisplayFormat;
+                        element.dateDisplayFormat = element.dateDisplayFormat
+                            ? DateFnsUtils.convertMomentToDateFnsFormat(element.dateDisplayFormat)
+                            : element.dateDisplayFormat;
                     });
                 }
             });
@@ -346,7 +348,7 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti displaying/editing dates in d-M-YYYY format
          but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
-         if (this.isDateTimeField(json)) {
+        if (this.isDateTimeField(json)) {
             if (value) {
                 let dateValue;
                 if (isNumberValue(value)) {
