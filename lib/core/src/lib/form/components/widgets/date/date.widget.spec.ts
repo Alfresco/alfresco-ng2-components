@@ -259,4 +259,20 @@ describe('DateWidgetComponent', () => {
         fixture.detectChanges();
         expect(dateElement.value).toContain('03-02-2020');
     });
+
+    describe('format label', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                name: 'Date',
+                dateDisplayFormat: 'd-M-yyyy'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should format label correctly', () => {
+            const result = widget.formatLabel(widget.field);
+
+            expect(result).toBe('Date (D-M-YYYY)');
+        });
+    });
 });
