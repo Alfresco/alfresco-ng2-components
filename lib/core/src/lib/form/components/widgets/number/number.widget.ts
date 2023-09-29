@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, HostBinding } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
@@ -40,7 +40,9 @@ import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
-
+    @HostBinding('style.--text-color') textColor: string;
+    @HostBinding('style.--background-color') backgroundColor: string;
+    
     displayValue: number;
 
     constructor(public formService: FormService,
@@ -54,6 +56,9 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.displayValue = this.field.value;
         }
+
+        this.textColor = this.field.params?.styles?.textColor;
+        this.backgroundColor = this.field.params?.styles?.textColor;
     }
 
 }
