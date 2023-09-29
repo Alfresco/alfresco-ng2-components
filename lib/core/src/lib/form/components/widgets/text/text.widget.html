@@ -1,6 +1,6 @@
 <div [ngStyle]="{ 'border-width.px': this.field?.params?.styles?.borderWidth,
                   'border-style': this.field?.params?.styles?.borderStyle,
-                  'border-color': this.field?.params?.styles?.borderColor,
+                  'border-color': this.field?.params?.styles?.borderColor?.rgba,
                   'border-radius': this.field?.params?.styles?.borderRadius }" 
      class="adf-textfield adf-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid && isTouched()" 
