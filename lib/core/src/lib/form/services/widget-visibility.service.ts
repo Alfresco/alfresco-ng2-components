@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
-import { DateFnsUtils } from '../../../..';
+import { DateFnsUtils } from '../../common/utils/date-fns-utils';
 
 @Injectable({
     providedIn: 'root'
