@@ -9,6 +9,7 @@
 }
 
 .adf-text-widget {
+    box-sizing: border-box;
 
     &.custom-label-color{
         .adf-label:not(.adf-container-widget .mat-focused label) {
@@ -24,5 +25,9 @@
 
     &.custom-background-color{
         background-color: var(--background-color);
+
+        .mat-form-field-wrapper{
+            margin-left: 12px;
+        }
     }
 }
