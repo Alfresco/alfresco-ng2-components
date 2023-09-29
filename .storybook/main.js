@@ -8,5 +8,8 @@ module.exports = {
 
     docs: {
         autodocs: true
-    }
+    },
+
+    stories: [],
+    addons:[],
 };
