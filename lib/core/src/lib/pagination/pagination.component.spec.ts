@@ -60,7 +60,7 @@ describe('PaginationComponent', () => {
 
         fixture = TestBed.createComponent(PaginationComponent);
         storageService = TestBed.inject(StorageService);
-        storageService.setItem('fake-username__supportedPageSizes', "[5,10,15,20]");
+        storageService.setItem('fake-username__supportedPageSizes', '[5,10,15,20]');
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
