@@ -307,7 +307,7 @@ function handleError(error) {
 }
 
 /**
- * Log the error an exit
+ * Log the error and exit
  */
 function failScript() {
     logger.error(`${red}${bright}Environment scan failed. Exiting${reset}`);
