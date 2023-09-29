@@ -57,7 +57,7 @@ export class TextWidgetComponent extends WidgetComponent implements OnInit {
             this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
 
-        this.textColor = this.field?.params?.styles?.textColor;
-        this.backgroundColor = this.field?.params?.styles?.backgroundColor;;
+        this.textColor = this.field.params?.styles?.textColor?.rgba;
+        this.backgroundColor = this.field.params?.styles?.backgroundColor?.rgba;
     }
 }

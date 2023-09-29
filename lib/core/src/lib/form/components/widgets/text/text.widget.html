@@ -1,4 +1,8 @@
-<div class="adf-textfield adf-text-widget {{field.className}}"
+<div [ngStyle]="{ 'border-width.px': this.field?.params?.styles?.border?.width,
+                  'border-style': this.field?.params?.styles?.border?.style,
+                  'border-color': this.field?.params?.styles?.border?.color,
+                  'border-radius.px': this.field?.params?.styles?.border?.radius }" 
+     class="adf-textfield adf-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid && isTouched()" 
      [class.adf-readonly]="field.readOnly" 
      [class.adf-left-label-input-container]="field.leftLabels"
