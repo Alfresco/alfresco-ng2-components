@@ -22,10 +22,16 @@
     <div *ngFor="let currentRootElement of fieldToRender">
         <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'" class="adf-container-widget" [id]="'field-'+currentRootElement?.id+'-container'" [hidden]="!currentRootElement?.isVisible">
             <div [hidden]="!currentRootElement?.isGroup()" class="adf-container-widget__header">
-                <h4 [ngStyle]="{ 'color': currentRootElement?.field?.params?.styles?.textColor,
-                                 'border-bottom-color': currentRootElement?.field?.params?.styles?.textColor, 
-                                 'background-color': currentRootElement?.field?.params?.styles?.backgroundColor,
-                                 'fontSize.px': currentRootElement?.field?.params?.styles?.fontSize }" class="adf-container-widget__header-text" id="container-header"
+                <h4 [ngStyle]="{
+                                 'color': currentRootElement?.field?.params?.styles?.textColor?.rgba,
+                                 'border-color': currentRootElement?.field?.params?.styles?.border?.color,
+                                 'border-bottom-color': currentRootElement?.field?.params?.styles?.border?.color,
+                                 'border-bottom-width.px': currentRootElement?.field?.params?.styles?.border?.width,
+                                 'border-width.px': currentRootElement?.field?.params?.styles?.border?.width,
+                                 'background-color': currentRootElement?.field?.params?.styles?.backgroundColor?.rgba,
+                                 'border-radius': currentRootElement?.field?.params?.styles?.border?.radius,
+                                 'border-style': currentRootElement?.field?.params?.styles?.border?.style, }" 
+                    class="adf-container-widget__header-text" id="container-header"
                     [class.adf-collapsible]="currentRootElement?.isCollapsible()">
                     <button *ngIf="currentRootElement?.isCollapsible()"
                             mat-icon-button
