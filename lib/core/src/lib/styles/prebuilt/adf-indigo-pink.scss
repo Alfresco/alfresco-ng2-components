@@ -12,10 +12,8 @@
 //    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
 /* TODO(mdc-migration): Remove all-legacy-component-typographies once all legacy components are migrated */
 @include mat.all-component-typographies;
-@include mat.all-component-typographies;
 /* TODO(mdc-migration): Remove legacy-core once all legacy components are migrated */
-@include mat.core();
-@include mat.core();
+@include mat.core
 
 $primary: mat.define-palette(mat.$indigo-palette);
 $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
@@ -31,7 +29,5 @@ $theme: mat.define-light-theme(
 );
 
 /* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated */
-@include mat.all-component-themes($theme);
-
 @include mat.all-component-themes($theme);
 @include alfresco-material-theme($theme);
