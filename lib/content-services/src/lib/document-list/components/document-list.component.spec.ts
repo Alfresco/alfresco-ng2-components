@@ -1427,6 +1427,31 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
+    it('should not show loading state if pagination is updated with merge setting as true', fakeAsync (() => {
+        spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
+            of(new DocumentLoaderNode(null, {
+                list: {
+                    pagination: {},
+                    entries: mockPreselectedNodes
+                }
+            }))
+        );
+        fixture.detectChanges();
+        const fakeDatatableRows = [
+            new ShareDataRow(mockPreselectedNodes[0], contentService, null),
+            new ShareDataRow(mockPreselectedNodes[1], contentService, null)
+        ];
+        documentList.data.setRows(fakeDatatableRows);
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 0,
+            merge: true
+        });
+        fixture.detectChanges();
+
+        expect(element.querySelector('#adf-document-list-loading')).toBe(null);
+    }));
+
     it('should NOT reload data on first call of ngOnChanges', () => {
         spyOn(documentList, 'reload').and.stub();
 
