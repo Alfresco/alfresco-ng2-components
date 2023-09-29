@@ -40,7 +40,7 @@ import { DecimalNumberPipe } from '../../../../pipes/decimal-number.pipe';
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
-    @HostBinding('style.--text-color') textColor: string;
+    @HostBinding('style.--label-color') labelColor: string;
     @HostBinding('style.--background-color') backgroundColor: string;
     
     displayValue: number;
@@ -57,7 +57,7 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.displayValue = this.field.value;
         }
 
-        this.textColor = this.field.params?.styles?.textColor?.rgba;
+        this.labelColor = this.field.params?.styles?.labelColor?.rgba;
         this.backgroundColor = this.field.params?.styles?.backgroundColor?.rgba;
     }
 

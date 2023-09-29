@@ -22,7 +22,7 @@
     <div *ngFor="let currentRootElement of fieldToRender">
         <div *ngIf="currentRootElement.type === 'container' || currentRootElement.type === 'group'" class="adf-container-widget" [id]="'field-'+currentRootElement?.id+'-container'" [hidden]="!currentRootElement?.isVisible">
             <div [hidden]="!currentRootElement?.isGroup()" class="adf-container-widget__header">
-                <h4 [ngStyle]="{ 'color': currentRootElement?.field?.params?.styles?.textColor?.rgba,
+                <h4 [ngStyle]="{ 'color': currentRootElement?.field?.params?.styles?.labelColor?.rgba,
                                  'border-bottom-color': currentRootElement?.field?.params?.styles?.borderColor?.rgba,
                                  'border-bottom-width.px': currentRootElement?.field?.params?.styles?.borderWidth,
                                  'border-bottom-style': currentRootElement?.field?.params?.styles?.borderStyle,

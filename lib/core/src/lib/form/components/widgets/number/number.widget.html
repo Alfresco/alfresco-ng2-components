@@ -3,7 +3,7 @@
                     'border-style': this.field?.params?.styles?.borderStyle,
                     'border-color': this.field?.params?.styles?.borderColor?.rgba,
                     'border-radius': this.field?.params?.styles?.borderRadius }" 
-     [class.custom-text-color]="textColor"
+     [class.custom-label-color]="labelColor"
      [class.custom-background-color]="backgroundColor"
      [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly" [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
@@ -13,6 +13,7 @@
         <mat-form-field [hideRequiredMarker]="true">
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
             <input matInput
+                [ngStyle]="{ 'color': this.field?.params?.styles?.textColor.rgba }"
                 class="adf-input"
                 type="text"
                 pattern="-?[0-9]*(\.[0-9]+)?"

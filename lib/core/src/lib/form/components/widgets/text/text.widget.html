@@ -6,7 +6,7 @@
      [class.adf-invalid]="!field.isValid && isTouched()" 
      [class.adf-readonly]="field.readOnly" 
      [class.adf-left-label-input-container]="field.leftLabels"
-     [class.custom-text-color]="textColor"
+     [class.custom-label-color]="labelColor"
      [class.custom-background-color]="backgroundColor">
      <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
@@ -15,6 +15,7 @@
          <mat-form-field [hideRequiredMarker]="true">
              <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
              <input matInput
+                    [ngStyle]="{ 'color': this.field?.params?.styles?.textColor.rgba }"
                     class="adf-input"
                     type="text"
                     [id]="field.id"

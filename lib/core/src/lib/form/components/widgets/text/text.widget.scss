@@ -10,15 +10,15 @@
 
 .adf-text-widget {
 
-    &.custom-text-color{
+    &.custom-label-color{
         .adf-label:not(.adf-container-widget .mat-focused label) {
-            color: var(--text-color);
+            color: var(--label-color);
         }
         .mat-form-field-label:not(.mat-form-field.mat-focused .mat-form-field-label) {
-            color: var(--text-color);
+            color: var(--label-color);
         }
         .mat-form-field-underline {
-            background-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+            background-color: color-mix(in srgb, var(--label-color) 50%, transparent);
         }
     }
 

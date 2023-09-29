@@ -3,12 +3,13 @@
                  'border-style': this.field?.params?.styles?.borderStyle,
                  'border-color': this.field?.params?.styles?.borderColor?.rgba,
                  'border-radius': this.field?.params?.styles?.borderRadius }" 
-     [class.custom-text-color]="textColor"
+     [class.custom-label-color]="labelColor"
      [class.custom-background-color]="backgroundColor"
      [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly">
     <mat-form-field floatPlaceholder="never" [hideRequiredMarker]="true">
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <textarea matInput class="adf-input"
+                  [ngStyle]="{ 'color': this.field?.params?.styles?.textColor.rgba }"
                   [cdkTextareaAutosize]="true"
                   type="text"
                   rows="3"
