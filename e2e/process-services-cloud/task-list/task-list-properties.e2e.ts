@@ -27,7 +27,7 @@ import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './../config/task-list-cloud.config';
 import { taskFilterConfiguration } from './../config/task-filter.config';
 import { addDays, subDays } from 'date-fns';
-import { DateFnsUtils } from 'lib/core';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Edit task filters and task list properties', () => {
 

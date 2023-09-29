@@ -29,7 +29,7 @@ import { TaskListDemoPage } from './../pages/task-list-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TaskActionsApi, TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import { addDays, subDays } from 'date-fns';
-import { DateFnsUtils } from 'lib/core';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Start Task - Custom App', () => {
 
