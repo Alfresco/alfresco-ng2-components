@@ -160,7 +160,7 @@ describe('TagNodeList', () => {
         let initialEntries: TagEntry[];
 
         /**
-         * Renter tags
+         * Render tags
          *
          * @param entries tags to render
          */
