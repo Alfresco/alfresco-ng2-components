@@ -24,7 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
+import { DateFnsUtils } from '../../../../common';
 import { TranslationService } from '../../../../../../../core/src/lib/translation/translation.service';
 import { FormFieldModel } from '../core';
 import { isValid } from 'date-fns';

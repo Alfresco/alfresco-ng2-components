@@ -18,7 +18,7 @@
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
-import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
+import { DateFnsUtils } from '../../../../common';
 
 describe('FormFieldModel', () => {
 

@@ -25,7 +25,7 @@ import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
-import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
+import { DateFnsUtils } from '../../../../common';
 import { isValid } from 'date-fns';
 import { FormFieldModel } from '../core';
 import { TranslationService } from '../../../../../../../core/src/lib/translation/translation.service';

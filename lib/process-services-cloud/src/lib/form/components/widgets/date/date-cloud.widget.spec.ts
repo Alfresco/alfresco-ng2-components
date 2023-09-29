@@ -17,12 +17,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 import { By } from '@angular/platform-browser';
-import { addDays, format, subDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
 
@@ -52,7 +52,7 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = format(new Date(minValue), DATE_FORMAT_CLOUD);
+        const expected = DateFnsUtils.formatDate(new Date(minValue), DATE_FORMAT_CLOUD);
         expect(widget.minDate).toEqual(expected);
     });
 
@@ -75,7 +75,7 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = format(new Date(maxValue), DATE_FORMAT_CLOUD);
+        const expected = DateFnsUtils.formatDate(new Date(maxValue), DATE_FORMAT_CLOUD);
         expect(widget.maxDate).toEqual(expected);
     });
 
@@ -92,7 +92,7 @@ describe('DateWidgetComponent', () => {
 
         widget.field = field;
         const todayDate = new Date();
-        widget.onDateChanged({ value: format(todayDate, DATE_FORMAT_CLOUD) });
+        widget.onDateChanged({ value: DateFnsUtils.formatDate(todayDate, DATE_FORMAT_CLOUD) });
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -294,7 +294,7 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
 
             const todayDate = new Date();
-            const expected = format(subDays(todayDate, widget.field.minDateRangeValue), DATE_FORMAT_CLOUD);
+            const expected = DateFnsUtils.formatDate(subDays(todayDate, widget.field.minDateRangeValue), DATE_FORMAT_CLOUD);
             expect(widget.minDate).toEqual(expected);
         });
 
@@ -344,7 +344,7 @@ describe('DateWidgetComponent', () => {
             await fixture.whenStable();
 
             const todayDate = new Date();
-            const expected = format(addDays(todayDate, widget.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
+            const expected = DateFnsUtils.formatDate(addDays(todayDate, widget.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
             expect(widget.maxDate).toEqual(expected);
         });
 
@@ -404,7 +404,7 @@ describe('DateWidgetComponent', () => {
                 await fixture.whenStable();
 
                 const currentDate = new Date();
-                const expectedMinValueString = format(subDays(currentDate, 1), DATE_FORMAT_CLOUD);
+                const expectedMinValueString = DateFnsUtils.formatDate(subDays(currentDate, 1), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.minValue).toEqual(expectedMinValueString);
                 expect(widget.maxDate).toBeUndefined();
@@ -424,7 +424,7 @@ describe('DateWidgetComponent', () => {
                 await fixture.whenStable();
 
                 const currentDate = new Date();
-                const expectedMaxValueString = format(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
+                const expectedMaxValueString = DateFnsUtils.formatDate(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.maxValue).toEqual(expectedMaxValueString);
                 expect(widget.minDate).toBeUndefined();
@@ -462,8 +462,8 @@ describe('DateWidgetComponent', () => {
                 await fixture.whenStable();
 
                 const currentDate = new Date();
-                const expectedMaxValueString = format(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
-                const expectedMinValueString = format(subDays(currentDate, 10), DATE_FORMAT_CLOUD);
+                const expectedMaxValueString = DateFnsUtils.formatDate(addDays(currentDate, 8), DATE_FORMAT_CLOUD);
+                const expectedMinValueString = DateFnsUtils.formatDate(subDays(currentDate, 10), DATE_FORMAT_CLOUD);
 
                 expect(widget.field.maxValue).toEqual(expectedMaxValueString);
                 expect(widget.field.minValue).toEqual(expectedMinValueString);
