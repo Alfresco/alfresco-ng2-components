@@ -50,17 +50,16 @@ export class NodePermissionService {
      * @returns Array of strings representing the roles
      */
     getNodeRoles(node: Node): Observable<string[]> {
-        const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return this.searchApiService.searchByQueryBody(searchRequest).pipe(
-            switchMap((siteNodeList: any) => {
-                if (siteNodeList.list.entries.length > 0) {
+        if (node.path.elements.some(el => (el.nodeType === 'st:site' || el.nodeType === 'st:sites'))) {
+            const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
+            return this.searchApiService.searchByQueryBody(searchRequest).pipe(
+                switchMap((siteNodeList: any) => {
                     const siteName = siteNodeList.list.entries[0].entry.name;
                     return this.getGroupMembersBySiteName(siteName);
-                } else {
-                    return of(node.permissions?.settable);
-                }
-            })
-        );
+                }));
+        } else {
+            return of(node.permissions?.settable);
+        }
     }
 
     /**

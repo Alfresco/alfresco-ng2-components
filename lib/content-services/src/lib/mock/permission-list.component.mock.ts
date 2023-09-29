@@ -258,6 +258,83 @@ export const fakeReadOnlyNodeInherited = {
     }
 };
 
+export const fakeNodeWithoutSite: any = {
+    aspectNames: [
+        'cm:auditable',
+        'cm:taggable',
+        'cm:author',
+        'cm:titled',
+        'app:uifacets'
+    ],
+    createdAt: '2017-11-16T16:29:38.638+0000',
+    path: {
+        name: '/Company Home/User Homes/user/documentLibrary',
+        isComplete: true,
+        elements: [
+            {
+                id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
+                name: 'Company Home',
+                nodeType: 'cm:folder'
+            },
+            {
+                id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+                name: 'User Homes',
+                nodeType: 'cm:folder'
+            },
+            {
+                id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+                name: 'user',
+                nodeType: 'cm:folder'
+            },
+            {
+                id: '71626fae-0c04-4d0c-a129-20fa4c178716',
+                name: 'documentLibrary',
+                nodeType: 'cm:folder'
+            }
+        ]
+    },
+    isFolder: true,
+    isFile: false,
+    createdByUser: {
+        id: 'System',
+        displayName: 'System'
+    },
+    modifiedAt: '2018-03-21T03:17:58.783+0000',
+    permissions: {
+        locallySet: [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: [
+            'Contributor',
+            'Collaborator',
+            'Coordinator',
+            'Editor',
+            'Consumer'
+        ],
+        isInheritanceEnabled: false
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': [
+            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
+        ],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
 export const fakeNodeWithOnlyLocally: any = {
     aspectNames: [
         'cm:auditable',
@@ -273,19 +350,23 @@ export const fakeNodeWithOnlyLocally: any = {
         elements: [
           {
             id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home'
+            name: 'Company Home',
+            nodeType: 'cm:folder'
           },
           {
             id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites'
+            name: 'Sites',
+            nodeType: 'st:sites'
           },
           {
             id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite'
+            name: 'testsite',
+            nodeType: 'st:site'
           },
           {
             id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary'
+            name: 'documentLibrary',
+            nodeType: 'cm:folder'
           }
         ]
     },
