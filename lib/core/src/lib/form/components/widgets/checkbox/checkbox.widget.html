@@ -4,6 +4,9 @@
                   'border-color': this.field?.params?.styles?.borderColor?.rgba,
                   'border-radius': this.field?.params?.styles?.borderRadius
                 }"
+     [style.padding-left.px]="field.params?.styles?.backgroundColor 
+                                        || (field.params?.styles?.borderWidth 
+                                        && field.params?.styles?.borderStyle !== 'none') ? 12 : 0"
      [class.custom-frame-color]="frameColor"
      [class.custom-label-color]="labelColor"
      [class.custom-checked-color]="checkedColor"
