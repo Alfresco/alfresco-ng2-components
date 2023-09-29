@@ -82,6 +82,12 @@ export const fakeFilter: TaskQueryRequestRepresentationModel = {
     assignment: 'fake-assignee'
 };
 
+export const mockFilterNoState: TaskQueryRequestRepresentationModel = {
+    sort: 'created-desc',
+    text: '',
+    assignment: 'fake-assignee'
+};
+
 export const fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 1,
     name: 'CONTAIN FILTER',

@@ -60,19 +60,15 @@ Manages Task Instances.
     Fetches the Task Audit information in PDF format.
     -   _taskId:_ `string`  - ID of the target task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)`>` - Binary PDF data
--   **findAllTaskByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
+-   **findAllTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets all tasks matching a query and state value.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks.
-    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
--   **findAllTasksWithoutState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
-    Gets all tasks matching the supplied query but ignoring the task state.
-    -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
+    -   _state:_ `string`  - (Optional) Task state. Can be "active" or "completed". State "all" applies to both "active" and "completed" tasks.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **findTasksByState**(requestNode: [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts), state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>`<br/>
     Gets tasks matching a query and state value.
     -   _requestNode:_ [`TaskQueryRequestRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)  - Query to search for tasks
-    -   _state:_ `string`  - (Optional) Task state. Can be "open" or "completed".
+    -   _state:_ `string`  - (Optional) Task state. Can be "active" or "completed". State "all" applies to both "active" and "completed" tasks.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskListModel`](../../../lib/process-services/src/lib/task-list/models/task-list.model.ts)`>` - List of tasks
 -   **getFilterForTaskById**(taskId: `string`, filterList: [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
     Gets all the filters in the list that belong to a task.
