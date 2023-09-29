@@ -20,9 +20,8 @@ import { exampleProcess, mockError, fakeProcessDef, fakeTasksList } from '../../
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, DateFnsUtils } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { format } from 'date-fns';
 
 describe('ProcessService', () => {
     let service: ProcessService;
@@ -288,7 +287,7 @@ describe('ProcessService', () => {
                 const task = tasks[0];
                 expect(task.id).toBe(fakeTasks[0].id);
                 expect(task.name).toBe(fakeTasks[0].name);
-                expect(task.created).toEqual(format(new Date('2016-11-10T00:00:00+00:00'), 'yyyy-MM-dd'));
+                expect(task.created).toEqual(DateFnsUtils.formatDate(new Date('2016-11-10T00:00:00+00:00'), 'YYYY-MM-DD'));
                 done();
             });
         });

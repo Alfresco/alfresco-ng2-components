@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
+import { AlfrescoApiService, DateFnsUtils, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import {
     TasksApi,
@@ -34,7 +34,6 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessListModel } from '../models/process-list.model';
 import { map, catchError } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { format } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -213,7 +212,7 @@ export class ProcessService {
             .pipe(
                 map(this.extractData),
                 map((tasks) => tasks.map((task: any) => {
-                    task.created = format(new Date(task.created), 'yyyy-MM-dd');
+                    task.created = DateFnsUtils.formatDate(new Date(task.created), 'YYYY-MM-DD');
                     return task;
                 })),
                 catchError((err) => this.handleProcessError(err))
