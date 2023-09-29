@@ -1,7 +1,7 @@
-<div [ngStyle]="{ 'border-width.px': this.field?.params?.styles?.border?.width,
-                  'border-style': this.field?.params?.styles?.border?.style,
-                  'border-color': this.field?.params?.styles?.border?.color,
-                  'border-radius.px': this.field?.params?.styles?.border?.radius }" 
+<div [ngStyle]="{ 'border-width.px': this.field?.params?.styles?.borderWidth,
+                  'border-style': this.field?.params?.styles?.borderStyle,
+                  'border-color': this.field?.params?.styles?.borderColor,
+                  'border-radius.px': this.field?.params?.styles?.borderRadius }" 
      class="adf-textfield adf-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid && isTouched()" 
      [class.adf-readonly]="field.readOnly" 
