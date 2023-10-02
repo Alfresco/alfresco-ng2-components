@@ -29,8 +29,6 @@ let alfrescoJsApiModeler: AlfrescoApi;
 let alfrescoJsApiDevops: AlfrescoApi;
 let args: ConfigArgs;
 let isValid = true;
-const absentApps: any[] = [];
-const failingApps: any[] = [];
 export interface ConfigArgs {
     modelerUsername: string;
     modelerPassword: string;
@@ -91,15 +89,14 @@ async function healthCheck(nameService: string) {
 }
 
 /**
- * Get deployed application by status
+ * Get deployed application
  *
- * @param status application status
  */
-async function getApplicationByStatus(status: string) {
+async function getApplications(): Promise<{ list: { entries: any[] } }> {
     const url = `${args.host}/deployment-service/v1/applications`;
 
     const pathParams = {};
-    const queryParams = { status };
+    const queryParams = {};
     const headerParams = {};
     const formParams = {};
     const bodyParam = {};
@@ -461,9 +458,11 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
  * @param envs environments
  */
 async function deployMissingApps(tag?: string, envs?: string[]) {
-    const deployedApps = await getApplicationByStatus('');
-    findMissingApps(deployedApps.list.entries);
-    findFailingApps(deployedApps.list.entries);
+    const deployedApps = await getApplications();
+    console.debug(`Deployed apps`, deployedApps);
+
+    const failingApps = findFailingApps(deployedApps.list.entries);
+    const missingApps = findMissingApps(deployedApps.list.entries);
 
     if (failingApps.length > 0) {
         failingApps.forEach((app) => {
@@ -473,9 +472,9 @@ async function deployMissingApps(tag?: string, envs?: string[]) {
             logger.error(`${red}${bright}ERROR: App ${app.entry.name} down or inaccessible ${reset}${red} with status ${app.entry.status}${reset}`);
         });
         exit(1);
-    } else if (absentApps.length > 0) {
-        logger.warn(`Missing apps: ${JSON.stringify(absentApps)}`);
-        await checkIfAppIsReleased(absentApps, tag, envs);
+    } else if (missingApps.length > 0) {
+        logger.warn(`Missing apps: ${JSON.stringify(missingApps)}`);
+        await checkIfAppIsReleased(missingApps, tag, envs);
     } else {
         const reset = '\x1b[0m';
         const green = '\x1b[32m';
@@ -620,32 +619,44 @@ async function importProjectAndRelease(app: any, tag?: string) {
  * Find missing applications
  *
  * @param deployedApps applications
+ * @returns list of missing apps
  */
-function findMissingApps(deployedApps: any[]) {
+function findMissingApps(deployedApps: any[]): any[] {
+    console.debug('Verifying missing apps: ', ACTIVITI_CLOUD_APPS);
+    const result = [];
+
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const isPresent = deployedApps.find((currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name);
 
         if (!isPresent) {
-            absentApps.push(ACTIVITI_CLOUD_APPS[key]);
+            result.push(ACTIVITI_CLOUD_APPS[key]);
         }
     });
+
+    return result;
 }
 
 /**
  * Find failing applications
  *
  * @param deployedApps applications
+ * @returns list of failing apps
  */
-function findFailingApps(deployedApps: any[]) {
+function findFailingApps(deployedApps: any[]): any[] {
+    console.debug('Verifying failing apps: ', ACTIVITI_CLOUD_APPS);
+    const result = [];
+
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const failingApp = deployedApps.filter(
             (currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Running' !== currentApp.entry.status
         );
 
         if (failingApp?.length > 0) {
-            failingApps.push(...failingApp);
+            result.push(...failingApp);
         }
     });
+
+    return result;
 }
 
 /**
