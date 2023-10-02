@@ -333,6 +333,7 @@ describe('StartProcessComponent', () => {
             expect(getDefinitionsSpy).toHaveBeenCalledWith(123);
         });
 
+        //eslint-disable-next-line
         xit('should display the correct number of processes in the select list', async () => {
             const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
             selectElement.click();
