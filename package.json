@@ -151,7 +151,7 @@
     "eslint-plugin-rxjs": "^5.0.3",
     "eslint-plugin-unicorn": "^46.0.0",
     "github-api": "^3.4.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "husky": "^7.0.4",
     "jasmine-ajax": "4.0.0",
