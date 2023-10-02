@@ -142,24 +142,6 @@ describe('ProcessUserInfoComponent', () => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#tab-group-env')).classes['adf-hide-tab']).toBeFalsy();
         });
-        // eslint-disable-next-line
-        xit('should get the bpm user information', async () => {
-            spyOn(component, 'getBpmUserImage').and.returnValue(profilePictureUrl);
-            await whenFixtureReady();
-            openUserInfo();
-            const bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
-            bpmTab.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
-            const bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
-            expect(element.querySelector('#userinfo_container')).not.toBeNull();
-            expect(bpmUsername).not.toBeNull();
-            expect(bpmImage).not.toBeNull();
-            expect(bpmImage.properties.src).toContain(profilePictureUrl);
-            expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
-            expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
-        });
 
         it('should get the ecm user information', async () => {
             spyOn(component, 'getEcmAvatar').and.returnValue(profilePictureUrl);

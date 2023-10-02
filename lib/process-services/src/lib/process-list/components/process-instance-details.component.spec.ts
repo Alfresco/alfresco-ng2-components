@@ -71,20 +71,20 @@ describe('ProcessInstanceDetailsComponent', () => {
         expect(component.processInstanceDetails).toBeFalsy();
         expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
     });
-    // eslint-disable-next-line
-    xit('should display a header when the processInstanceId is provided', async () => {
+
+    it('should display a header when the processInstanceId is provided', async () => {
         fixture.detectChanges();
         component.ngOnChanges({ processInstanceId: new SimpleChange(null, '123', true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-mdc-card-title '));
         expect(headerEl).not.toBeNull();
         expect(headerEl.nativeElement.innerText).toBe('Process 123');
     });
-    // eslint-disable-next-line
-    xit('should display default details when the process instance has no name', async () => {
+
+    it('should display default details when the process instance has no name', async () => {
         fixture.detectChanges();
         getProcessSpy.and.returnValue(of(exampleProcessNoName));
         fixture.detectChanges();
@@ -93,7 +93,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
+        const headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-mdc-card-title '));
         expect(headerEl).not.toBeNull();
         expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
     });
