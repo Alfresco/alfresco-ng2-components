@@ -18,7 +18,7 @@
  */
 
 import program from 'commander';
-import https from 'https';
+import http from 'node:http';
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
@@ -607,10 +607,13 @@ async function checkDescriptorExist(name: string): Promise<boolean> {
  */
 async function importProjectAndRelease(app: any, tag?: string) {
     const appLocationReplaced = app.file_location(tag);
+
     logger.warn('App fileLocation ' + appLocationReplaced);
     await getFileFromRemote(appLocationReplaced, app.name);
+
     logger.warn('Project imported ' + app.name);
     const projectRelease = await importAndReleaseProject(`${app.name}.zip`);
+
     await deleteLocalFile(`${app.name}`);
     return projectRelease;
 }
@@ -667,7 +670,7 @@ function findFailingApps(deployedApps: any[]): any[] {
  */
 async function getFileFromRemote(url: string, name: string) {
     return new Promise<void>((resolve, reject) => {
-        https.get(url, (response) => {
+        http.get(url, (response) => {
             if (response.statusCode !== 200) {
                 reject(new Error(`HTTP error! Status: ${response.statusCode}`));
                 return;
