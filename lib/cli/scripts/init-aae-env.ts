@@ -563,7 +563,7 @@ async function checkIfAppIsReleased(missingApps: any[], tag?: string, envs?: str
  * @param projectRelease project release
  * @param envId environment id
  */
-async function deployWithPayload(currentAbsentApp: any, projectRelease: any, envId?: string) {
+async function deployWithPayload(currentAbsentApp: any, projectRelease: any, envId?: string): Promise<void> {
     const deployPayload = {
         name: currentAbsentApp.name,
         releaseId: projectRelease.entry.id,
