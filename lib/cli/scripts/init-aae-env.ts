@@ -18,7 +18,7 @@
  */
 
 import program from 'commander';
-import http from 'node:http';
+import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
@@ -666,28 +666,16 @@ function findFailingApps(deployedApps: any[]): any[] {
  */
 async function getFileFromRemote(url: string, name: string) {
     return new Promise<void>((resolve, reject) => {
-        http.get(url, (response) => {
-            if (response.statusCode !== 200) {
-                reject(new Error(`HTTP error! Status: ${response.statusCode}`));
-                return;
-            }
-
-            const outputFile = fs.createWriteStream(`${name}.zip`);
-            response.pipe(outputFile);
-
-            outputFile.on('finish', () => {
+        request(url)
+            .pipe(fs.createWriteStream(`${name}.zip`))
+            .on('finish', () => {
                 logger.info(`The file is finished downloading.`);
                 resolve();
-            });
-
-            outputFile.on('error', (error) => {
-                logger.error(`Not possible to download the project from remote`);
+            })
+            .on('error', (error: any) => {
+                logger.error(`Not possible to download the project form remote`);
                 reject(error);
             });
-        }).on('error', (error) => {
-            logger.error(`Failed to fetch file from remote: ${error.message}`);
-            reject(error);
-        });
     });
 }
 
