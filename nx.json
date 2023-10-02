@@ -1,5 +1,4 @@
 {
-  "npmScope": "adf",
   "cli": {
     "defaultCollection": "@nx/angular"
   },
