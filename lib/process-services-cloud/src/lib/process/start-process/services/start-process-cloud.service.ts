@@ -89,7 +89,7 @@ export class StartProcessCloudService extends BaseCloudService {
      * Delete an existing process instance
      *
      * @param appName name of the Application
-     * @param processInstanceId process instance to update
+     * @param processInstanceId the identifier of the process instance to update
      * @returns Observable<void>
      */
     deleteProcess(appName: string, processInstanceId: string): Observable<void> {
