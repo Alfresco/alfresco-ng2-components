@@ -84,10 +84,6 @@
     }
 
     &-userinfo-supporting-text {
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
         overflow: hidden;
         padding: 32px;
         column-count: 2;
@@ -99,28 +95,8 @@
         }
     }
 
-    &-userinfo-title {
-        font-size: var(--theme-title-font-size);
-    }
-
-    &-userinfo__detail-profile {
-        align-items: flex-start;
-        font-size: var(--theme-body-1-font-size);
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
-        display: block;
-        padding: 0;
-        margin: 0;
-    }
-
     &-userinfo__detail-title {
         text-overflow: ellipsis;
-        font-size: var(--theme-subheading-2-font-size);
-        font-weight: 400;
-        letter-spacing: 0.04em;
-        line-height: 20px;
-        align-items: flex-start;
     }
 
     &-userinfo__secondary-info {
