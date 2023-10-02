@@ -459,8 +459,6 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs): AlfrescoApi {
  */
 async function deployMissingApps(tag?: string, envs?: string[]) {
     const deployedApps = await getApplications();
-    console.debug(`Deployed apps`, deployedApps);
-
     const failingApps = findFailingApps(deployedApps.list.entries);
     const missingApps = findMissingApps(deployedApps.list.entries);
 
@@ -625,7 +623,6 @@ async function importProjectAndRelease(app: any, tag?: string) {
  * @returns list of missing apps
  */
 function findMissingApps(deployedApps: any[]): any[] {
-    console.debug('Verifying missing apps: ', ACTIVITI_CLOUD_APPS);
     const result = [];
 
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
@@ -646,7 +643,6 @@ function findMissingApps(deployedApps: any[]): any[] {
  * @returns list of failing apps
  */
 function findFailingApps(deployedApps: any[]): any[] {
-    console.debug('Verifying failing apps: ', ACTIVITI_CLOUD_APPS);
     const result = [];
 
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
