@@ -174,7 +174,7 @@ describe('InfinitePaginationComponent', () => {
             loadMoreButton.triggerEventHandler('click', {});
         });
 
-        it('should trigger the loadMore event with merge false to reload all the elements', (done) => {
+        it('should trigger the loadMore event with merge true to reload all the elements', (done) => {
             pagination = {maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true};
 
             component.target.pagination.next(pagination);
@@ -184,7 +184,7 @@ describe('InfinitePaginationComponent', () => {
             changeDetectorRef.detectChanges();
 
             component.loadMore.subscribe((newPagination: RequestPaginationModel) => {
-                expect(newPagination.merge).toBe(false);
+                expect(newPagination.merge).toBe(true);
                 done();
             });
 
@@ -222,7 +222,7 @@ describe('InfinitePaginationComponent', () => {
                 skipCount: 0,
                 maxItems: 50,
                 hasMoreItems: false,
-                merge: false
+                merge: true
             });
         });
 
@@ -237,7 +237,7 @@ describe('InfinitePaginationComponent', () => {
                 maxItems: 14,
                 skipCount: 0,
                 hasMoreItems: false,
-                merge: false
+                merge: true
             });
         });
 
