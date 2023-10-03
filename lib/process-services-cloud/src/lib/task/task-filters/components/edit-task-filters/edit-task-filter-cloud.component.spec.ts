@@ -944,7 +944,7 @@ describe('EditTaskFilterCloudComponent', () => {
             const lastModifiedToFilter = set(new Date(lastModifiedToControl.value),{
                hours: 23,
                minutes: 59,
-               seconds: 59});
+               seconds: 59 });
 
             component.filterChange.subscribe(() => {
                 if (component.changedTaskFilter instanceof TaskFilterCloudModel) {

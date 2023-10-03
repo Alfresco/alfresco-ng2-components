@@ -34,7 +34,6 @@ import {isValid} from 'date-fns';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { DatetimeAdapter } from '@mat-datetimepicker/core';
 
-
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export interface DropdownOption {
@@ -151,13 +150,10 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.setLocale(locale)
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale))
             );
     }
 
-    setLocale(locale) {
-        this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
-    }
     ngOnChanges(changes: SimpleChanges) {
         const { id } = changes;
         if (id && id.currentValue !== id.previousValue) {
@@ -296,7 +292,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             const controller = this.getPropertyController(dateProperty);
 
             if (isValid(date)) {
-             controller.setValue(new Date(date).toISOString());
+                controller.setValue(new Date(date).toISOString());
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });

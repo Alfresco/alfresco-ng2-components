@@ -89,7 +89,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue =  set(new Date(formValues.lastModifiedTo), { hours: 23, minutes: 59,seconds: 59});
+            const lastModifiedToFilterValue =  set(new Date(formValues.lastModifiedTo), { hours: 23, minutes: 59,seconds: 59 });
             formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString();
         }
     }
