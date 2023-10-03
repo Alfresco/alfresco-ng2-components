@@ -296,7 +296,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             const controller = this.getPropertyController(dateProperty);
 
             if (isValid(date)) {
-             controller.setValue( new Date(date).toISOString() );
+             controller.setValue(new Date(date).toISOString());
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });
