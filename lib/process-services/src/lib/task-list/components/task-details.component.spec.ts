@@ -67,6 +67,7 @@ describe('TaskDetailsComponent', () => {
     let component: TaskDetailsComponent;
     let fixture: ComponentFixture<TaskDetailsComponent>;
     let getTaskDetailsSpy: jasmine.Spy;
+    let getCommentsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
     let logService: LogService;
@@ -101,7 +102,7 @@ describe('TaskDetailsComponent', () => {
         assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
         taskCommentsService = TestBed.inject(TaskCommentsService);
 
-        spyOn(taskCommentsService, 'get').and.returnValue(of([
+        getCommentsSpy = spyOn(taskCommentsService, 'get').and.returnValue(of([
             new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
             new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
             new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) })
@@ -114,6 +115,7 @@ describe('TaskDetailsComponent', () => {
 
     afterEach(() => {
         getTaskDetailsSpy.calls.reset();
+        getCommentsSpy.calls.reset();
         fixture.destroy();
     });
 

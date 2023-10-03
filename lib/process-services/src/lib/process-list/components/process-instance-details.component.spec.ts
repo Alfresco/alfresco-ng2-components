@@ -52,6 +52,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         const commentService = fixture.debugElement.injector.get(CommentProcessService);
 
         getProcessSpy = spyOn(service, 'getProcess').and.returnValue(of(exampleProcess));
+        spyOn(service, 'getProcessTasks').and.returnValue(of());
         spyOn(commentService, 'get').and.returnValue(of(mockProcessInstanceComments));
     });
 
