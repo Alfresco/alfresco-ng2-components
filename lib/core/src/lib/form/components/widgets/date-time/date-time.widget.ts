@@ -25,7 +25,7 @@ import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFnsUtils } from '../../../../common';
-import { TranslationService } from '../../../../../../../core/src/lib/translation';
+import { TranslationService } from '../../../../../lib/translation/translation.service';
 import { FormFieldModel } from '../core';
 import { isValid } from 'date-fns';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
@@ -63,20 +63,28 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
         if (this.field) {
             if (this.field.minValue) {
-                this.field.minValue = DateFnsUtils.addSeconds(this.field.minValue);
+                if (!this.field.minValue.includes('00.')) {
+                    this.field.minValue = DateFnsUtils.addSeconds(this.field.minValue);
+                }
 
-                const minDate = new Date(this.field.minValue);
+                const [year, month, day, hours, minutes, seconds] = this.field.minValue.split(/[-T:.Z]/).map(Number);
+                const minDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+
                 if (isValid(minDate)) {
-                    this.minDate = DateFnsUtils.formatDate(minDate, 'YYYY-MM-DDTHH:mm:ssZ');
+                    this.minDate = minDate.toISOString();
                 }
             }
 
             if (this.field.maxValue) {
-                this.field.maxValue = DateFnsUtils.addSeconds(this.field.maxValue);
+                if (!this.field.maxValue.includes('00.')) {
+                    this.field.maxValue = DateFnsUtils.addSeconds(this.field.maxValue);
+                }
 
-                const maxDate = new Date(this.field.maxValue);
+                const [year, month, day, hours, minutes, seconds] = this.field.maxValue.split(/[-T:.Z]/).map(Number);
+                const maxDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+
                 if (isValid(maxDate)) {
-                    this.maxDate = DateFnsUtils.formatDate(maxDate, 'YYYY-MM-DDTHH:mm:ssZ');
+                    this.maxDate = maxDate.toISOString();
                 }
             }
         }

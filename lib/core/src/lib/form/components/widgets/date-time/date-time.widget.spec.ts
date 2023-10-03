@@ -62,9 +62,12 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        minValue = DateFnsUtils.addSeconds(minValue);
+        if (!minValue.includes('00.')) {
+            minValue = DateFnsUtils.addSeconds(minValue);
+        }
 
-        const expected = DateFnsUtils.formatDate(new Date(minValue), 'YYYY-MM-DDTHH:mm:ssZ');
+        const [year, month, day, hours, minutes, seconds] = minValue.split(/[-T:.Z]/).map(Number);        
+        const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
         expect(widget.minDate).toBe(expected);
     });
 
@@ -87,9 +90,12 @@ describe('DateTimeWidgetComponent', () => {
         });
         fixture.detectChanges();
 
-        maxValue = DateFnsUtils.addSeconds(maxValue);
+        if (!maxValue.includes('00.')) {
+            maxValue = DateFnsUtils.addSeconds(maxValue);
+        }
 
-        const expected = DateFnsUtils.formatDate(new Date(maxValue), 'YYYY-MM-DDTHH:mm:ssZ');
+        const [year, month, day, hours, minutes, seconds] = maxValue.split(/[-T:.Z]/).map(Number);        
+        const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
         expect(widget.maxDate).toBe(expected);
     });
 
