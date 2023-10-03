@@ -374,14 +374,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
-    showSnackbarError(message: string): void {
-        this.notificationService.showError(message);
-    }
-
     toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
         event.stopPropagation();
         if (this.isEditingPanel()) {
-            this.showSnackbarError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
             return;
         }
 
@@ -397,21 +393,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.editableTags = false;
                 this.editableCategories = false;
                 break;
-
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.editableTagsChange.emit(this.editableTags);
                 this.isTagPanelVisible = this.editableTags;
                 this.tagNameControlVisible = true;
                 break;
-
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.editableCategoriesChange.emit(this.editableCategories);
                 this.isCategoriesPanelVisible = this.editableCategories;
                 this.categoryControlVisible = true;
                 break;
-
             case ButtonType.Group:
                 group.editable = !group.editable;
                 this.groupChange.emit(group);
@@ -420,7 +413,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.expanded = true;
                 }
                 break;
-
             default:
                 break;
         }

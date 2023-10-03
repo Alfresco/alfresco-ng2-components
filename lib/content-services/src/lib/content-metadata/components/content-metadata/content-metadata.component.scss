@@ -1,14 +1,22 @@
 .adf {
     &-metadata-properties {
         mat-expansion-panel-header {
-            height: 56px;
-
-            .adf-metadata-properties-title {
-                font-weight: 700;
-                font-size: 15px;
-                padding-left: 12px;
+                height: 56px;
+                padding: 0 12px;
+        
+                .adf-metadata-properties-title {
+                    font-weight: 700;
+                    font-size: 15px;
+                    padding-left: 12px;
+                }
+        
+                .adf-metadata-properties-group-title {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 80px;
+                }
             }
-        }
 
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
@@ -47,7 +55,7 @@
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            padding: 24px;
+            padding-top: 16px;
         }
 
         &-tags {
@@ -116,5 +124,17 @@
 .adf-content-metadata-card {
     .mat-card {
         box-shadow: none;
+    }
+}
+
+.adf-metadata-grouped-properties-container .mat-content.mat-content-hide-toggle {
+    align-items: center;
+}
+
+.adf-metadata-grouped-properties-container {
+    .mat-expansion-panel {
+        .mat-expansion-panel-body {
+            padding: 0 24px 0px;
+        }
     }
 }

@@ -199,8 +199,10 @@
                                 <mat-icon>
                                     {{ group.expanded ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
-                                <mat-panel-title class="adf-metadata-properties-title">
-                                    {{ group.title | translate }}
+                                <mat-panel-title class="adf-metadata-properties-title" matTooltip="{{ group.title | translate }}">
+                                    <p class="adf-metadata-properties-group-title">
+                                        {{ group.title | translate }}
+                                    </p>
                                 </mat-panel-title>
                             </div>
                             <button *ngIf="hasGroupToggleEdit(group)"
