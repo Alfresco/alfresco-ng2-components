@@ -20,8 +20,7 @@ import {
     mockEuropeCountriesData,
     mockCountriesIncorrectData,
     mockInvalidSchemaDefinition,
-    mockSchemaDefinition,
-    mockSchemaDefinitionWithDifferentTypes
+    mockSchemaDefinition
 } from '../../../mocks/data-table-widget.mock';
 import { ObjectDataRow } from '@alfresco/adf-core';
 
@@ -30,14 +29,6 @@ describe('WidgetDataTableAdapter', () => {
 
     beforeEach(() => {
         widgetDataTableAdapter = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-    });
-
-    it('should set columns type to "text" during initialization', () => {
-        widgetDataTableAdapter = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinitionWithDifferentTypes);
-
-        widgetDataTableAdapter.getColumns().forEach(column =>
-            expect(column.type).toBe('text')
-        );
     });
 
     it('should return rows if all columns are linked to data', () => {

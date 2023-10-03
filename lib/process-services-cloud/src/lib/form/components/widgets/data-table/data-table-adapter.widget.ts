@@ -30,8 +30,6 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
         super(data, schema);
         this.rows = super.getRows();
         this.columns = super.getColumns();
-
-        this.setColumnsTypeToText();
     }
 
     getRows(): DataRow[] {
@@ -54,9 +52,5 @@ export class WidgetDataTableAdapter extends ObjectDataTableAdapter {
         const availableColumnKeys: string[] = this.columns.map(column => column.key);
 
         return availableColumnKeys.every(columnKey => this.rows.some(row => Object.keys(row.obj).includes(columnKey)));
-    }
-
-    private setColumnsTypeToText(): void {
-        super.setColumns(this.columns.map(column => ({ ...column, type: 'text' })));
     }
 }

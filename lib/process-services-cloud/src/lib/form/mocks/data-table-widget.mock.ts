@@ -35,23 +35,6 @@ export const mockSchemaDefinition: DataColumn[] = [
     }
 ];
 
-export const mockSchemaDefinitionWithDifferentTypes: DataColumn[] = [
-    {
-        type: 'json',
-        key: 'id',
-        title: 'Country ID',
-        sortable: true,
-        draggable: true
-    },
-    {
-        type: 'date',
-        key: 'name',
-        title: 'Country Name',
-        sortable: true,
-        draggable: true
-    }
-];
-
 export const mockInvalidSchemaDefinition: DataColumn[] = [
     {
         type: 'text',
