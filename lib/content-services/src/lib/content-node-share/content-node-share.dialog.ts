@@ -18,13 +18,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import {
-    UntypedFormGroup,
-    UntypedFormControl,
-    AbstractControl,
-    Validators,
-    ValidationErrors
-} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
@@ -44,9 +38,8 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
-    private minDateValidator = (control: AbstractControl): ValidationErrors | null => {
-        return isBefore(endOfDay(new Date(control.value)), this.minDate) ? {invalidDate: true} : null;
-    };
+    private minDateValidator = (control: AbstractControl): any =>
+        isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
     minDate = add(new Date(), { days: 1 });
     sharedId: string;
@@ -55,9 +48,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isFileShared = false;
     isDisabled = false;
     isLinkWithExpiryDate = false;
-    form: UntypedFormGroup = new UntypedFormGroup({
-        sharedUrl: new UntypedFormControl(''),
-        time: new UntypedFormControl({value: '', disabled: true}, [Validators.required, this.minDateValidator])
+    form: FormGroup = new FormGroup({
+        sharedUrl: new FormControl(''),
+        time: new FormControl({ value: '', disabled: true }, [Validators.required, this.minDateValidator])
     });
     type: DatePickerType = 'date';
     maxDebounceTime = 500;

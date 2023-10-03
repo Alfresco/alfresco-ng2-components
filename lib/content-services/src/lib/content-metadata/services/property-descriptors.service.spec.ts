@@ -80,7 +80,7 @@ describe('PropertyDescriptorLoaderService', () => {
                     expect(data['exif:exif']).toBe(exifResponse);
                     expect(data['cm:content']).toBe(contentResponse);
                 },
-                complete: done
+                complete: () => done()
             });
     });
 });

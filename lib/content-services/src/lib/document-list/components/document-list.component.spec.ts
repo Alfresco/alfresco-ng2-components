@@ -341,7 +341,7 @@ describe('DocumentList', () => {
         documentList.executeContentAction(node, action);
 
         expect(action.execute).not.toHaveBeenCalled();
-        deleteObservable.next();
+        deleteObservable.next(undefined);
         expect(action.execute).toHaveBeenCalledWith(node);
     });
 

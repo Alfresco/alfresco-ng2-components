@@ -161,7 +161,7 @@ describe('Confirm Dialog Component', () => {
                 By.css('[data-automation-id="adf-confirm-dialog-confirm-all"]')
             );
             expect(thirdOptionElement).not.toBeNull();
-            expect(thirdOptionElement.nativeElement.innerText).toBe('YES ALL');
+            expect(thirdOptionElement.nativeElement.innerText.toUpperCase()).toBe('YES ALL');
         });
     });
 });

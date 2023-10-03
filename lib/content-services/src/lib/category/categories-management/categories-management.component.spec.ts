@@ -504,12 +504,16 @@ describe('CategoriesManagementComponent', () => {
         describe('Errors', () => {
             it('should display validation error when searching for empty category', fakeAsync(() => {
                 typeCategory('   ');
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
 
                 expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.EMPTY_CATEGORY');
             }));
 
             it('should show error for required', fakeAsync(() => {
                 typeCategory('');
+                component.categoryNameControl.markAsTouched();
+                fixture.detectChanges();
 
                 expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.REQUIRED');
             }));
@@ -534,6 +538,7 @@ describe('CategoriesManagementComponent', () => {
             it('should show error for required when not typed anything and blur input', fakeAsync(() => {
                 typeCategory('');
                 getCategoryControlInput().blur();
+                component.categoryNameControl.markAsTouched();
                 fixture.detectChanges();
 
                 expect(getFirstError()).toBe('CATEGORIES_MANAGEMENT.ERRORS.REQUIRED');

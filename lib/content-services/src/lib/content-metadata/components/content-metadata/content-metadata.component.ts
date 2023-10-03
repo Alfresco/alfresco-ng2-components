@@ -116,7 +116,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     displayCategories = false;
 
     private _assignedTags: string[] = [];
-    private assignedTagsEntries: TagEntry[];
+    private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
@@ -318,7 +318,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this._saving = false;
                 return of(null);
             }))
-            .subscribe((result) => {
+            .subscribe((result: any) => {
                 if (result) {
                     this.updateUndefinedNodeProperties(result.updatedNode);
                     if (this.hasContentTypeChanged(this.changedProperties)) {
