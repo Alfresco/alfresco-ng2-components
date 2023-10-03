@@ -30,7 +30,7 @@
             </button>
         </span>
     </div>
-    <p *ngIf="!hasCategory" class="adf-no-categories-message">
+    <p *ngIf="isCategoryEmpty" class="adf-no-categories-message">
         {{ noCategoriesMsg | translate }}
     </p>
 </div>

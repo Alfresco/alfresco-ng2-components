@@ -11,7 +11,6 @@ adf-tags-creator {
         border-radius: 16px;
         padding: 6px 0;
         padding-left: 12px;
-        margin-left: 8px;
 
         .adf-remove-tag {
             line-height: 24px;
@@ -21,7 +20,6 @@ adf-tags-creator {
     }
 
     .adf-no-tags-message {
-        margin-left: 9px;
         margin-top: 28.5px;
         margin-bottom: 0;
         height: 30px;
@@ -55,7 +53,6 @@ adf-tags-creator {
         border-radius: 12px;
         align-items: center;
         display: flex;
-        padding: 0 12px;
 
         .mat-form-field-underline {
             display: none;
@@ -70,7 +67,7 @@ adf-tags-creator {
         color: var(--theme-primary-color);
         cursor: pointer;
         margin-top: -1px;
-        padding-left: 27px;
+        padding-left: 12px;
         overflow-wrap: anywhere;
         display: inline-block;
         padding-right: 12px;
@@ -79,10 +76,13 @@ adf-tags-creator {
 
     .adf-tags-list {
         padding-right: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
     }
 
     .adf-tag {
-        margin-top: 0;
+        margin-top: 8px;
         overflow-wrap: anywhere;
 
         & + .adf-tag {
@@ -104,7 +104,7 @@ adf-tags-creator {
         }
 
         .adf-tags-list {
-            padding-left: 18px;
+            padding-left: 12px;
             margin-top: -2px;
             padding-right: 0;
             display: flex;
@@ -123,7 +123,7 @@ adf-tags-creator {
                 }
 
                 .mat-list-item-content-reverse {
-                    padding: 0 6px;
+                    padding: 0;
 
                     .mat-pseudo-checkbox {
                         display: none;
