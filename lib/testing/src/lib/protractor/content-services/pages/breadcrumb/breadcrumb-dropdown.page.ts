@@ -26,7 +26,7 @@ export class BreadcrumbDropdownPage {
     parentFolder = this.breadCrumb.$(`button[data-automation-id='dropdown-breadcrumb-trigger']`);
     currentFolder = this.breadCrumb.$(`div span[data-automation-id="current-folder"]`);
 
-    breadCrumbDropdown = new DropdownPage($$(`div[class*='mat-select-panel']`).first());
+    breadCrumbDropdown = new DropdownPage($$(`div[class*='mat-mdc-select-panel']`).first());
 
     async choosePath(pathName: string): Promise<void> {
         await this.breadCrumbDropdown.selectOption(pathName);

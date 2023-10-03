@@ -49,7 +49,7 @@ export class DropdownPage {
     }
 
     async getNumberOfOptions(): Promise<number> {
-        const dropdownOptions = $$('.mat-select-panel mat-option');
+        const dropdownOptions = $$('.mat-mdc-select-panel mat-option');
         return dropdownOptions.count();
     }
 
@@ -76,7 +76,7 @@ export class DropdownPage {
     }
 
     async checkOptionsPanelIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($$(`.mat-select-panel`).first());
+        await BrowserVisibility.waitUntilElementIsVisible($$(`.mat-mdc-select-panel`).first());
     }
 
     async getSelectedOptionText(): Promise<string> {

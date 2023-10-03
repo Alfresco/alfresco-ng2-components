@@ -78,6 +78,21 @@ export class ContentServicesPage {
         await BrowserActions.click(this.versionManagerAction);
     }
 
+    async clickFileHyperlink(fileName: string): Promise<void> {
+        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+        await BrowserActions.click(hyperlink);
+    }
+
+    async checkFileHyperlinkIsEnabled(fileName: string): Promise<void> {
+        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+        await BrowserVisibility.waitUntilElementIsVisible(hyperlink);
+    }
+
+    async clickHyperlinkNavigationToggle(): Promise<void> {
+        const hyperlinkToggle = element(by.cssContainingText('.mat-mdc-slide-toggle', 'Hyperlink navigation'));
+        await BrowserActions.click(hyperlinkToggle);
+    }
+
     async getElementsDisplayedId() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
     }
@@ -233,6 +248,15 @@ export class ContentServicesPage {
 
     async checkUploadButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
+    }
+
+    async uploadButtonIsEnabled(): Promise<boolean> {
+        return this.uploadFileButton.isEnabled();
+    }
+
+    async enableInfiniteScrolling(): Promise<void> {
+        const infiniteScrollButton = element(by.cssContainingText('.mat-mdc-slide-toggle', 'Enable Infinite Scrolling'));
+        await BrowserActions.click(infiniteScrollButton);
     }
 
     async enableMediumTimeFormat(): Promise<void> {
