@@ -90,7 +90,7 @@ describe('TagService', () => {
         });
 
         describe('createTags', () => {
-            it('should call createTags on tagsApi', () => {
+            it('should call createTags on tagsApi', (done) => {
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
                 const tag1 = new TagBody();
                 tag1.tag = 'Some tag 1';
@@ -98,7 +98,9 @@ describe('TagService', () => {
                 tag2.tag = 'Some tag 2';
                 const tags = [tag1, tag2];
                 service.createTags(tags);
+
                 expect(service.tagsApi.createTags).toHaveBeenCalledWith(tags);
+                done();
             });
 
             it('should emit refresh when tags creation is success', fakeAsync(() => {

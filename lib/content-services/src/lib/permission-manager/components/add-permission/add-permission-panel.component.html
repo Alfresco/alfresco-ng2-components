@@ -41,7 +41,7 @@
             <mat-list-option id="adf-add-permission-group-everyone"
                              class="adf-list-option-item"
                              #eveyone
-                             disableRipple
+                             [disableRipple]="true"
                              [value]="EVERYONE">
                 <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
                 <p class="adf-result-name">
@@ -50,7 +50,7 @@
             </mat-list-option>
 
             <mat-list-option *ngFor="let item of data?.list?.entries; let idx = index"
-                             disableRipple
+                             [disableRipple]="true"
                              [value]="item"
                              class="adf-list-option-item"
                              id="result_option_{{idx}}"

@@ -82,7 +82,7 @@ export class PermissionListService {
 
     toggleInherited(change: MatSlideToggleChange) {
         if (this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-            let updateLocalPermission$ = of(null);
+            let updateLocalPermission$: Observable<Node> = of(null);
             const nodeBody = {
                 permissions: {
                     isInheritanceEnabled: !this.node.permissions.isInheritanceEnabled

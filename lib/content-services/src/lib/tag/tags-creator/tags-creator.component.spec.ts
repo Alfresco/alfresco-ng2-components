@@ -381,12 +381,15 @@ describe('TagsCreatorComponent', () => {
 
             it('should show error for only spaces', fakeAsync(() => {
                 typeTag('  ');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
 
             it('should show error for only spaces if tags are changed', fakeAsync(() => {
                 typeTag('  ');
+                component.tagNameControl.markAsTouched();
                 component.tags = ['new tag 1', 'new tag 2'];
                 fixture.detectChanges();
                 expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
@@ -394,12 +397,15 @@ describe('TagsCreatorComponent', () => {
 
             it('should show error for required', fakeAsync(() => {
                 typeTag('');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
             }));
 
             it('should not show error for required if tags are changed', fakeAsync(() => {
                 typeTag('');
+                component.tagNameControl.markAsTouched();
                 component.tags = ['new tag 1', 'new tag 2'];
                 fixture.detectChanges();
                 expect(getFirstError()).toBeUndefined();
@@ -443,10 +449,7 @@ describe('TagsCreatorComponent', () => {
 
             it('should error for required when not typed anything and blur input', fakeAsync(() => {
                 component.tagNameControlVisible = true;
-                fixture.detectChanges();
-                tick(100);
-
-                getNameInput().blur();
+                component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
 
                 const error = getFirstError();
@@ -600,6 +603,8 @@ describe('TagsCreatorComponent', () => {
                 );
 
                 typeTag('Tag');
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
 
                 const tagElements = getExistingTags();
                 expect(tagElements).toEqual([tag1, tag2]);
@@ -782,6 +787,8 @@ describe('TagsCreatorComponent', () => {
 
             it('should be displayed when existing tags are loading', fakeAsync(() => {
                 typeTag('tag', 0);
+                component.tagNameControl.markAsTouched();
+                fixture.detectChanges();
 
                 const spinner = getSpinner();
                 expect(spinner).toBeTruthy();

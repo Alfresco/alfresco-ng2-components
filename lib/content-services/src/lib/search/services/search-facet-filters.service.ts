@@ -422,7 +422,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.onDestroy$.next();
+        this.onDestroy$.next(undefined);
         this.onDestroy$.complete();
     }
 
