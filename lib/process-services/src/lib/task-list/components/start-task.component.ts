@@ -119,8 +119,8 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
-            const isValid =  control.value.length === 0 || !isWhitespace;
-            return isValid ? null : { whitespace: true };
+            const isControlValid =  control.value.length === 0 || !isWhitespace;
+            return isControlValid ? null : { whitespace: true };
         }
         return null;
     }
