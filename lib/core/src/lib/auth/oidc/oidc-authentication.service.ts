@@ -42,7 +42,7 @@ export class OIDCAuthenticationService extends BaseAuthenticationService {
             this.oauthService.events.pipe(
                 filter((event)=> event.type === 'token_received')
             ).subscribe(()=>{
-                this.onLogin.next();
+                this.onLogin.next({});
             });
         });
     }

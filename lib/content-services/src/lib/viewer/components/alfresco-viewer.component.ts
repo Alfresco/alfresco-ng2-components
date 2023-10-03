@@ -170,7 +170,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Emitted when the shared link used is not valid. */
     @Output()
-    invalidSharedLink = new EventEmitter();
+    invalidSharedLink = new EventEmitter<void>();
 
     /** Emitted when user clicks 'Navigate Before' ("<") button. */
     @Output()
@@ -272,7 +272,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             await this.setUpSharedLinkFile(sharedLinkEntry);
         } catch (error) {
             this.logService.error('This sharedLink does not exist');
-            this.invalidSharedLink.next();
+            this.invalidSharedLink.next(undefined);
             this.mimeType = 'invalid-link';
             this.urlFileContent = 'invalid-file';
         }

@@ -104,9 +104,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
                 if (this.filesUploadingList.length && !this.isDialogActive) {
                     this.isDialogActive = true;
-                    this.dialogActive.next();
+                    this.dialogActive.next(undefined);
                 } else {
-                    this.dialogActive.next();
+                    this.dialogActive.next(undefined);
                 }
             });
 
@@ -159,7 +159,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.isConfirmation = !this.isConfirmation;
 
         if (!this.isConfirmation) {
-            this.dialogActive.next();
+            this.dialogActive.next(undefined);
         }
 
         if (this.isDialogMinimized) {
@@ -172,7 +172,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     cancelAllUploads() {
         this.toggleConfirmation();
-        this.dialogActive.next();
+        this.dialogActive.next(undefined);
         this.uploadList.cancelAllFiles();
     }
 

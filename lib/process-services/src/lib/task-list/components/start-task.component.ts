@@ -22,7 +22,7 @@ import {
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
-import { Observable, of, Subject } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -226,7 +226,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     }
 
     private attachForm(taskId: string, formKey: string): Observable<any> {
-        let response = of();
+        let response: any = EMPTY;
         if (taskId && formKey) {
             response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
         }
@@ -234,7 +234,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     }
 
     private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
-        let response = of();
+        let response: any = EMPTY;
         if (taskId && userId) {
             response = this.taskService.assignTaskByUserId(taskId, userId);
         }

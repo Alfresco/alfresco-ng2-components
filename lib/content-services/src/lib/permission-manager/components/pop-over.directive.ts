@@ -72,7 +72,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this.element.nativeElement.removeEventListener('keydown', this.preventDefaultForEnter);
         this.detachOverlay();
-        this.destroy$.next();
+        this.destroy$.next(undefined);
         this.destroy$.complete();
     }
 

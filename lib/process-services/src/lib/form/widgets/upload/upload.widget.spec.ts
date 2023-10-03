@@ -45,10 +45,10 @@ const fakePngAnswer = new RelatedContentRepresentation({
     thumbnailStatus: 'queued'
 });
 
-const fakeJpgAnswer = {
+const fakeJpgAnswer = new RelatedContentRepresentation({
     id: 1156,
     name: 'a_jpg_file.jpg',
-    created: '2017-07-25T17:17:37.118Z',
+    created: new Date('2017-07-25T17:17:37.118Z'),
     createdBy: {id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin'},
     relatedContent: false,
     contentAvailable: true,
@@ -57,7 +57,7 @@ const fakeJpgAnswer = {
     simpleType: 'image',
     previewStatus: 'queued',
     thumbnailStatus: 'queued'
-};
+});
 
 describe('UploadWidgetComponent', () => {
 
@@ -191,7 +191,7 @@ describe('UploadWidgetComponent', () => {
         });
 
         it('should show the list file after upload a new content', async () => {
-            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValue(of(fakePngAnswer));
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValues(of(fakePngAnswer), of(fakeJpgAnswer));
 
             uploadWidgetComponent.field.params.multiple = false;
 
@@ -207,17 +207,7 @@ describe('UploadWidgetComponent', () => {
         });
 
         it('should update the form after deleted a file', async () => {
-            spyOn(contentService, 'createTemporaryRawRelatedContent').and.callFake((file: any) => {
-                if (file.name === 'file-fake.png') {
-                    return of(fakePngAnswer);
-                }
-
-                if (file.name === 'file-fake.jpg') {
-                    return of(fakeJpgAnswer);
-                }
-
-                return of(null);
-            });
+            spyOn(contentService, 'createTemporaryRawRelatedContent').and.returnValues(of(fakePngAnswer), of(fakeJpgAnswer));
 
             uploadWidgetComponent.field.params.multiple = true;
 

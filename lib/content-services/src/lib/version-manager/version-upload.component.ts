@@ -36,7 +36,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     comment: string;
     uploadVersion: boolean = false;
     disabled: boolean = false;
-    onDestroy$ = new Subject();
+    onDestroy$ = new Subject<void>();
     majorVersion = '2.0';
     minorVersion = '1.1';
 
@@ -133,7 +133,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next();
+        this.onDestroy$.next(undefined);
         this.onDestroy$.complete();
     }
 

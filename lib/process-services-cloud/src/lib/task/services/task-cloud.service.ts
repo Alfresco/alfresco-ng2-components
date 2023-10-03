@@ -138,7 +138,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
             return this.post(queryUrl).pipe(
                 map((res: any) => {
-                    this.dataChangesDetected$.next();
+                    this.dataChangesDetected$.next(res);
                     return res.entry;
                 })
             );
@@ -161,7 +161,7 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
             return this.post(queryUrl).pipe(
                 map((res: any) => {
-                    this.dataChangesDetected$.next();
+                    this.dataChangesDetected$.next(res);
                     return res.entry;
                 })
             );

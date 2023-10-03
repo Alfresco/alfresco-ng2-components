@@ -75,7 +75,7 @@ describe('VersionUploadComponent', () => {
             expect(component.disabled).toEqual(true);
         });
 
-        uploadService.fileUploadStarting.next();
+        uploadService.fileUploadStarting.next(undefined);
     });
 
     it('should enable upload button on error', () => {

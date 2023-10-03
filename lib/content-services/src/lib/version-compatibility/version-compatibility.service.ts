@@ -27,7 +27,7 @@ import { DiscoveryApiService } from '../common/services/discovery-api.service';
 export class VersionCompatibilityService {
     private acsVersion: VersionInfo;
 
-    acsVersionInitialized$ = new ReplaySubject();
+    acsVersionInitialized$ = new ReplaySubject<void>();
 
     constructor(private discoveryApiService: DiscoveryApiService) {
         this.discoveryApiService.ecmProductInfo$
@@ -37,7 +37,7 @@ export class VersionCompatibilityService {
 
     private initializeAcsVersion(acsVersion: VersionInfo) {
         this.acsVersion = acsVersion;
-        this.acsVersionInitialized$.next();
+        this.acsVersionInitialized$.next(undefined);
     }
 
     getAcsVersion(): VersionInfo {

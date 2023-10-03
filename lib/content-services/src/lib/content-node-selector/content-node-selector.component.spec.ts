@@ -296,7 +296,7 @@ describe('ContentNodeSelectorComponent', () => {
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.nativeElement.innerText).toEqual('file_uploadFORM.FIELD.UPLOAD');
+            expect(adfUploadButton.nativeElement.textContent).toEqual('file_uploadFORM.FIELD.UPLOAD');
         });
 
         it('should be able to disable UploadButton if showingSearch set to true', () => {
