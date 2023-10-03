@@ -83,7 +83,7 @@ describe('AddPermissionDialog', () => {
     it('should show the INJECTED title', () => {
         const titleElement = fixture.debugElement.query(By.css('#add-permission-dialog-title'));
         expect(titleElement).not.toBeNull();
-        expect(titleElement.nativeElement.innerText).toBe('dead or alive you are coming with me');
+        expect(titleElement.nativeElement.innerText.trim()).toBe('dead or alive you are coming with me');
     });
 
     it('should close the dialog when close button is clicked', () => {
