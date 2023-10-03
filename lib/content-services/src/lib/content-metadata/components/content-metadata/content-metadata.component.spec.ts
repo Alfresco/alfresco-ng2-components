@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { AppConfigService, CardViewBaseItemModel, CardViewComponent, LogService, UpdateNotification } from '@alfresco/adf-core';
+import { AppConfigService, CardViewBaseItemModel, CardViewComponent, LogService, NotificationService, UpdateNotification } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
@@ -52,6 +52,7 @@ describe('ContentMetadataComponent', () => {
     let tagService: TagService;
     let categoryService: CategoryService;
     let getClassSpy: jasmine.Spy;
+    let notificationService: NotificationService;
 
     const preset = 'custom-preset';
 
@@ -192,6 +193,7 @@ describe('ContentMetadataComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
         tagService = TestBed.inject(TagService);
         categoryService = TestBed.inject(CategoryService);
+        notificationService = TestBed.inject(NotificationService);
         const propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         const classesApi = propertyDescriptorsService['classesApi'];
 
@@ -441,6 +443,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('toggleEdit', () => {
         let mockEvent: MouseEvent;
+        let showErrorSpy: jasmine.Spy;
         const mockGroup: CardViewGroup = {
             editable: false,
             expanded: false,
@@ -450,6 +453,7 @@ describe('ContentMetadataComponent', () => {
         beforeEach(() => {
             mockEvent = new MouseEvent('click');
             component.editableGroup = mockGroup;
+            showErrorSpy = spyOn(notificationService, 'showError').and.stub();
         });
 
         it('should toggle General Info editing mode', () => {
@@ -489,10 +493,10 @@ describe('ContentMetadataComponent', () => {
 
         it('should show Snackbar when Editing Panel is Active', () => {
             spyOn(component, 'isEditingPanel').and.returnValue(true);
-            spyOn(component, 'showSnackbarError');
             component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
             expect(component.isEditingPanel).toHaveBeenCalled();
-            expect(component.showSnackbarError).toHaveBeenCalledWith('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            expect(showErrorSpy).toHaveBeenCalledWith('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            
         });
     });
 

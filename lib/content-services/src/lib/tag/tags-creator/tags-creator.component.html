@@ -14,16 +14,14 @@
     </div>
     <p
        class="adf-no-tags-message"
-       *ngIf="!hasTags">
+       *ngIf="isTagsEmpty">
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div
         class="adf-tags-list"
         [class.adf-tags-list-fixed]="!tagNameControlVisible"
         #tagsList>
-        <span
-        *ngFor="let tag of tags"
-        class="adf-tag adf-label-with-icon-button">
+        <span *ngFor="let tag of tags" class="adf-tag adf-label-with-icon-button">
             {{ tag }}
             <button
                 data-automation-id="remove-tag-button"

@@ -189,10 +189,10 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     /*
-     * Returns `true` if has categories, otherwise `false`
+     * Returns `true` if categories empty, otherwise `false`
     */
-    get hasCategory(): boolean {
-        return this.categories?.length > 0;
+    get isCategoryEmpty(): boolean {
+        return this.categories?.length === 0 && !this.categoryNameControlVisible;
     }
 
     get existingCategories(): Category[] {
