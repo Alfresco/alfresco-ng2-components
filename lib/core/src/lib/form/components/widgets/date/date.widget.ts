@@ -28,7 +28,7 @@ import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns
 import { DateFnsUtils } from '../../../../common';
 import { isValid } from 'date-fns';
 import { FormFieldModel } from '../core';
-import { TranslationService } from '../../../../../../../core/src/lib/translation';
+import { TranslationService } from '../../../../../lib/translation/translation.service';
 
 @Component({
     selector: 'date-widget',
