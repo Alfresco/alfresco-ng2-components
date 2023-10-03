@@ -550,12 +550,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    reload() {
+    reload(hideLoadingSpinner = false) {
         this.resetSelection();
-        this.reloadWithoutResettingSelection();
+        this.reloadWithoutResettingSelection(hideLoadingSpinner);
     }
 
-    reloadWithoutResettingSelection() {
+    reloadWithoutResettingSelection(hideLoadingSpinner = false) {
         if (this.node) {
             if (this.data) {
                 this.data.loadPage(this.node, this._pagination.merge, null);
@@ -565,7 +565,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.syncPagination();
             this.onDataReady(this.node);
         } else {
-            this.loadFolder();
+            this.loadFolder(hideLoadingSpinner);
         }
     }
 
@@ -713,8 +713,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    loadFolder() {
-        if (!this._pagination.merge) {
+    loadFolder(hideLoadingSpinner = false) {
+        if (!hideLoadingSpinner) {
             this.setLoadingState(true);
         }
 
@@ -944,9 +944,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updatePagination(requestPaginationModel: RequestPaginationModel) {
         this._pagination.maxItems = requestPaginationModel.maxItems;
-        this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
-        this.reload();
+        this.reload(requestPaginationModel.merge);
     }
 
     private syncPagination() {
