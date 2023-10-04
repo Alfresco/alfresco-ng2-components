@@ -76,14 +76,14 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         if (dateString && !dateString.includes('00.')) {
             this.field[targetProperty] = DateFnsUtils.addSeconds(dateString);
         }
-    
+
         const [year, month, day, hours, minutes, seconds] = dateString.split(/[-T:.Z]/).map(Number);
         const parsedDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
-    
+
         if (isValid(parsedDate)) {
             this[targetProperty] = parsedDate.toISOString();
         }
-    }
+    };
 
     ngOnDestroy() {
         this.onDestroy$.next(true);
