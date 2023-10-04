@@ -55,6 +55,7 @@ describe('Date Format Translations', () => {
 
         expect(result).toEqual(expectedParsedDate);
     });
+    
     it('should match a date correctly', () => {
         const dateString = '2023-09-22';
         const dateFormat = 'YYYY-MM-DD';
