@@ -164,7 +164,7 @@ export class DateFieldValidator implements FormFieldValidator {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
-            field.validationSummary.message = field.dateDisplayFormat;
+            field.validationSummary.message = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
             return false;
         }
         return true;
@@ -196,7 +196,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
             if (DateTimeFieldValidator.isValidDate(field.value, DateFnsUtils.convertMomentToDateFnsFormat(field.dateDisplayFormat))) {
                 return true;
             }
-            field.validationSummary.message = field.dateDisplayFormat;
+            field.validationSummary.message = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
             return false;
         }
         return true;
