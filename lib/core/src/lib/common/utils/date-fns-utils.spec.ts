@@ -57,7 +57,7 @@ describe('Date Format Translations', () => {
     });
     it('should match a date correctly', () => {
         const dateString = '2023-09-22';
-        const dateFormat = 'yyyy-MM-dd';
+        const dateFormat = 'YYYY-MM-DD';
 
         const result = DateFnsUtils.isMatch(dateString, dateFormat);
 
