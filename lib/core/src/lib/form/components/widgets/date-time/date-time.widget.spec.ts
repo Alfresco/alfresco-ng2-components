@@ -62,9 +62,7 @@ describe('DateTimeWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        if (!minValue.includes('00.')) {
-            minValue = DateFnsUtils.addSeconds(minValue);
-        }
+        widget.parseDateAndSetMinMaxValue(minValue, 'minDate');
 
         const [year, month, day, hours, minutes, seconds] = minValue.split(/[-T:.Z]/).map(Number);
         const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
@@ -90,9 +88,7 @@ describe('DateTimeWidgetComponent', () => {
         });
         fixture.detectChanges();
 
-        if (!maxValue.includes('00.')) {
-            maxValue = DateFnsUtils.addSeconds(maxValue);
-        }
+        widget.parseDateAndSetMinMaxValue(maxValue, 'minDate');
 
         const [year, month, day, hours, minutes, seconds] = maxValue.split(/[-T:.Z]/).map(Number);
         const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
