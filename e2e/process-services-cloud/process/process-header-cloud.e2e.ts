@@ -22,7 +22,7 @@ import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
-import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Process Header cloud component', () => {
 

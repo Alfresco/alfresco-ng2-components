@@ -23,7 +23,7 @@ import { ProcessServiceTabBarPage } from '../pages/process-service-tab-bar.page'
 import { ProcessListPage } from '../pages/process-list.page';
 import { ProcessDetailsPage } from '../pages/process-details.page';
 import { AppDefinitionRepresentation, ProcessInstanceRepresentation, ProcessInstancesApi } from '@alfresco/js-api';
-import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('Process Instance Details', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
