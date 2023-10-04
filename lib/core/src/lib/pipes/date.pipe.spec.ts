@@ -75,18 +75,13 @@ describe('ADFDatePipe', () => {
     it('should return the formatted date string when given a valid date string', () => {
         const inputDate = '2023-08-14';
 
-        let dateFormat = 'DD-MM-YYYY';
-        let expectedOutput = '14-08-2023';
+        let dateFormat = 'DD-MM-YY';
+        let expectedOutput = '14-08-23';
         let result = datePipe.transform(inputDate, dateFormat);
         expect(result).toBe(expectedOutput);
 
-        dateFormat = 'MM-DD-YYYY';
-        expectedOutput = '08-14-2023';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'YYYY-MM-DD';
-        expectedOutput = '2023-08-14';
+        dateFormat = 'MM-DD-YY';
+        expectedOutput = '08-14-23';
         result = datePipe.transform(inputDate, dateFormat);
         expect(result).toBe(expectedOutput);
 
@@ -95,13 +90,18 @@ describe('ADFDatePipe', () => {
         result = datePipe.transform(inputDate, dateFormat);
         expect(result).toBe(expectedOutput);
 
-        dateFormat = 'MM-DD-YY';
-        expectedOutput = '08-14-23';
+        dateFormat = 'YYYY-MM-DD';
+        expectedOutput = '2023-08-14';
         result = datePipe.transform(inputDate, dateFormat);
         expect(result).toBe(expectedOutput);
 
-        dateFormat = 'DD-MM-YY';
-        expectedOutput = '14-08-23';
+        dateFormat = 'MM-DD-YYYY';
+        expectedOutput = '08-14-2023';
+        result = datePipe.transform(inputDate, dateFormat);
+        expect(result).toBe(expectedOutput);
+
+        dateFormat = 'DD-MM-YYYY';
+        expectedOutput = '14-08-2023';
         result = datePipe.transform(inputDate, dateFormat);
         expect(result).toBe(expectedOutput);
     });

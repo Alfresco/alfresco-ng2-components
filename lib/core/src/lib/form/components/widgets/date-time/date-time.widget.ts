@@ -95,17 +95,17 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         this.onDestroy$.complete();
     }
 
-    formatLabel(field: FormFieldModel): string {
-        const displayName = this.translationService.instant(field.name);
-        const displayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
+    formatDateTimeLabel(field: FormFieldModel): string {
+        const dateTimeDisplayName = this.translationService.instant(field.name);
+        const dateTimeDisplayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
 
-        return `${displayName} (${displayFormat})`;
+        return `${dateTimeDisplayName} (${dateTimeDisplayFormat})`;
     }
 
     onDateChanged(newDateValue) {
-        const date = new Date(newDateValue);
-        if (isValid(date)) {
-            this.field.value = DateFnsUtils.formatDate(date, this.field.dateDisplayFormat);
+        const dateTimeValue = new Date(newDateValue);
+        if (isValid(dateTimeValue)) {
+            this.field.value = DateFnsUtils.formatDate(dateTimeValue, this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }

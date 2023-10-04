@@ -63,9 +63,9 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = parse(minValue, widget.field.dateDisplayFormat, new Date());
+        const expectedMinDate = parse(minValue, widget.field.dateDisplayFormat, new Date());
         const widgetDate = parse(widget.minDate, widget.field.dateDisplayFormat, new Date());
-        expect(isSameDay(widgetDate, expected)).toBeTruthy();
+        expect(isSameDay(widgetDate, expectedMinDate)).toBeTruthy();
     });
 
     it('should date field be present', () => {
@@ -87,9 +87,9 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = parse(maxValue, widget.field.dateDisplayFormat, new Date());
+        const expectedMaxDate = parse(maxValue, widget.field.dateDisplayFormat, new Date());
         const widgetDate = parse(widget.maxDate, widget.field.dateDisplayFormat, new Date());
-        expect(isSameDay(widgetDate, expected)).toBeTruthy();
+        expect(isSameDay(widgetDate, expectedMaxDate)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
@@ -270,7 +270,7 @@ describe('DateWidgetComponent', () => {
         });
 
         it('should format label correctly', () => {
-            const result = widget.formatLabel(widget.field);
+            const result = widget.formatDateLabel(widget.field);
 
             expect(result).toBe('Date (D-M-YYYY)');
         });

@@ -87,11 +87,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.onDestroy$.complete();
     }
 
-    formatLabel(field: FormFieldModel): string {
-        const displayName = this.translationService.instant(field.name);
-        const displayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
+    formatDateLabel(field: FormFieldModel): string {
+        const dateDisplayName = this.translationService.instant(field.name);
+        const dateDisplayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
 
-        return `${displayName} (${displayFormat})`;
+        return `${dateDisplayName} (${dateDisplayFormat})`;
     }
 
     onDateChanged(newDateValue) {
