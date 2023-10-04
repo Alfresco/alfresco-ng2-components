@@ -111,7 +111,7 @@ describe('Task Header cloud component', () => {
 
         completedCreatedDate = DateFnsUtils.formatDate(new Date(completedTask.entry.createdDate), formatDate);
         dueDate = DateFnsUtils.formatDate(new Date(completedTask.entry.dueDate), dateTimeFormat);
-        completedEndDate = DateFnsUtils.formatDate(new Date(completedTask.entry.endDate), formatDate);
+        completedEndDate = DateFnsUtils.formatDate(new Date(completedTask.entry.completedDate), formatDate);
 
         subTask = await createSubTask(createdTaskId);
         subTaskCreatedDate = DateFnsUtils.formatDate(new Date(subTask.entry.createdDate), formatDate);
