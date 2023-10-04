@@ -348,7 +348,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should format label correctly', () => {
-            const result = widget.formatLabel(widget.field);
+            const result = widget.formatDateTimeLabel(widget.field);
 
             expect(result).toBe('Date Time (D-M-YYYY hh:mm A)');
         });

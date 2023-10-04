@@ -148,8 +148,8 @@ export class DateFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
         if (inputDate) {
-            const d = DateFnsUtils.parseDate(inputDate, dateFormat);
-            return isValid(d);
+            const date = DateFnsUtils.parseDate(inputDate, dateFormat);
+            return isValid(date);
         }
 
         return false;
@@ -180,8 +180,8 @@ export class DateTimeFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'YYYY-MM-DD HH:mm'): boolean {
         if (inputDate) {
-            const d = DateFnsUtils.parseDate(inputDate, dateFormat);
-            return isValid(d);
+            const dateTime = DateFnsUtils.parseDate(inputDate, dateFormat);
+            return isValid(dateTime);
         }
 
         return false;
