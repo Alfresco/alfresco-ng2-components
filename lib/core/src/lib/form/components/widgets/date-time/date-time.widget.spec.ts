@@ -66,7 +66,7 @@ describe('DateTimeWidgetComponent', () => {
             minValue = DateFnsUtils.addSeconds(minValue);
         }
 
-        const [year, month, day, hours, minutes, seconds] = minValue.split(/[-T:.Z]/).map(Number);        
+        const [year, month, day, hours, minutes, seconds] = minValue.split(/[-T:.Z]/).map(Number);
         const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
         expect(widget.minDate).toBe(expected);
     });
@@ -94,7 +94,7 @@ describe('DateTimeWidgetComponent', () => {
             maxValue = DateFnsUtils.addSeconds(maxValue);
         }
 
-        const [year, month, day, hours, minutes, seconds] = maxValue.split(/[-T:.Z]/).map(Number);        
+        const [year, month, day, hours, minutes, seconds] = maxValue.split(/[-T:.Z]/).map(Number);
         const expected = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds)).toISOString();
         expect(widget.maxDate).toBe(expected);
     });
