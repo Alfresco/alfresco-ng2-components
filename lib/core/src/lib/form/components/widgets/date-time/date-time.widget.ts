@@ -63,30 +63,25 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
         if (this.field) {
             if (this.field.minValue) {
-                if (!this.field.minValue.includes('00.')) {
-                    this.field.minValue = DateFnsUtils.addSeconds(this.field.minValue);
-                }
-
-                const [year, month, day, hours, minutes, seconds] = this.field.minValue.split(/[-T:.Z]/).map(Number);
-                const minDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
-
-                if (isValid(minDate)) {
-                    this.minDate = minDate.toISOString();
-                }
+                this.parseDateAndSetMinMaxValue(this.field.minValue, 'minDate');
             }
 
             if (this.field.maxValue) {
-                if (!this.field.maxValue.includes('00.')) {
-                    this.field.maxValue = DateFnsUtils.addSeconds(this.field.maxValue);
-                }
-
-                const [year, month, day, hours, minutes, seconds] = this.field.maxValue.split(/[-T:.Z]/).map(Number);
-                const maxDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
-
-                if (isValid(maxDate)) {
-                    this.maxDate = maxDate.toISOString();
-                }
+                this.parseDateAndSetMinMaxValue(this.field.maxValue, 'maxDate');
             }
+        }
+    }
+
+    parseDateAndSetMinMaxValue = (dateString, targetProperty) => {
+        if (dateString && !dateString.includes('00.')) {
+            this.field[targetProperty] = DateFnsUtils.addSeconds(dateString);
+        }
+    
+        const [year, month, day, hours, minutes, seconds] = dateString.split(/[-T:.Z]/).map(Number);
+        const parsedDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+    
+        if (isValid(parsedDate)) {
+            this[targetProperty] = parsedDate.toISOString();
         }
     }
 
