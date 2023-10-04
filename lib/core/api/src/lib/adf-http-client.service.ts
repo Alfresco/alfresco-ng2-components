@@ -287,7 +287,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     /**
      * Chooses a content type from the given array, with JSON preferred; i.e. return JSON if included, otherwise return the first.
      *
-     * @param contentTypes
+     * @param contentTypes a contentType array
      * @returns  The chosen content type, preferring JSON.
      */
     private static jsonPreferredMime(contentTypes: readonly string[]): string {

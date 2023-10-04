@@ -105,11 +105,11 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * login Alfresco API
-     * @param  username:   // Username to login
-     * @param  password:   // Password to login
      *
+     * @param username username to login
+     * @param password password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     async executeLogin(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
             return Promise.reject('missing username or password');
@@ -206,12 +206,18 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         }
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     * @returns content auth token
+     */
     getTicketEcm(): string {
         return this.contentAuth.getToken();
     }
 
-    /** @deprecated */
+    /**
+     * @deprecated
+     * @returns process auth token
+     */
     getTicketBpm(): string {
         return this.processAuth.getToken();
     }
@@ -240,7 +246,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * logout Alfresco API
-     * */
+     */
     async logout(): Promise<any> {
         if (this.isBPMProvider()) {
             return this.processAuth.logout();
@@ -278,7 +284,8 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     reset(): void {
     }
 
-    /** Gets the URL to redirect to after login.
+    /**
+     * Gets the URL to redirect to after login.
      *
      * @returns The redirect URL
      */
@@ -347,6 +354,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     /**
      * Gets the BPM ticket from the Storage in Base 64 format.
      *
+     * @param requestUrl the request url
      * @returns The ticket or `null` if none was found
      */
     private getTicketEcmBase64(requestUrl: string): string | null {

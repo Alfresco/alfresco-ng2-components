@@ -168,6 +168,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
 
     /**
      * @deprecated
+     * @returns the logged username
      */
     getEcmUsername(): string {
         if (this.isOauth()) {
@@ -179,6 +180,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
 
     /**
      * @deprecated
+     * @returns the logged username
      */
     getBpmUsername(): string {
         if (this.isOauth()) {

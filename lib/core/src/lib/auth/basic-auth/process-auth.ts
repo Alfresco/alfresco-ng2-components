@@ -70,11 +70,11 @@ export class ProcessAuth {
 
     /**
      * login Activiti API
-     * @param  username:   // Username to login
-     * @param  password:   // Password to login
      *
+     * @param username Username to login
+     * @param password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     login(username: string, password: string): Promise<any> {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
@@ -126,8 +126,9 @@ export class ProcessAuth {
 
     /**
      * logout Alfresco API
+     *
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
-     * */
+     */
     async logout(): Promise<any> {
         this.saveUsername('');
         return new Promise((resolve, reject) => {
@@ -167,8 +168,8 @@ export class ProcessAuth {
     /**
      * Set the current Ticket
      *
-     * @param ticket
-     * */
+     * @param ticket a string representing the ticket
+     */
     setTicket(ticket: string) {
         if (ticket && ticket !== 'null') {
             this.authentications.basicAuth.ticket = ticket;
@@ -189,8 +190,8 @@ export class ProcessAuth {
     }
 
     /**
-     * Get the current Ticket
-     * */
+     * @returns the current Ticket
+     */
     getToken(): string {
         if (!this.ticket) {
             this.onError.next('error');
@@ -201,7 +202,7 @@ export class ProcessAuth {
     }
 
     /**
-     * If the client is logged in return true
+     * @returns If the client is logged in return true
      */
     isLoggedIn(): boolean {
         return !!this.ticket;

@@ -66,6 +66,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.
      *
+     * @param requestUrl the request url
      * @param headersArg Header that will receive the token
      * @returns The new header with the token added
      */
@@ -88,7 +89,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     }
 
     isECMProvider(): boolean {
-        const provider = <string>this.appConfig.get('providers');
+        const provider = this.appConfig.get('providers') as string;
         return provider && provider.toUpperCase() === 'ECM';
     }
 
@@ -112,12 +113,12 @@ export abstract class BaseAuthenticationService implements AuthenticationService
      * @returns True if both are supported, false otherwise
      */
     isALLProvider(): boolean {
-        const provider = <string>this.appConfig.get('providers');
+        const provider = this.appConfig.get('providers') as string;
         return provider && provider.toUpperCase() === 'ALL';
     }
 
     isOauthConfiguration(): boolean {
-        const authType = <string>this.appConfig.get('authType');
+        const authType = this.appConfig.get('authType') as string;
         return authType === 'OAUTH';
     }
 

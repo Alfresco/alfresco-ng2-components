@@ -109,7 +109,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
                 this.onLogin.next(accessToken);
 
                 return {
-                    type: <string>this.appConfig.get(AppConfigValues.PROVIDERS),
+                    type: this.appConfig.get(AppConfigValues.PROVIDERS) as string,
                     ticket: accessToken
                 };
             } catch (err) {
@@ -124,6 +124,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     /**
      * @deprecated
+     * @returns the logged username
      */
     getEcmUsername(): string {
         return this.getUsername();
@@ -131,6 +132,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     /**
      * @deprecated
+     * @returns the logged username
      */
     getBpmUsername(): string {
         return this.getUsername();
