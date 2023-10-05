@@ -287,6 +287,17 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
+                            <div *ngSwitchCase="'boolean'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
+                                 [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
+                                <adf-datatable-cell
+                                    [copyContent]="col.copyContent"
+                                    [data]="data"  
+                                    [column]="col"
+                                    [row]="row"
+                                    [resolverFn]="resolverFn"
+                                    [tooltip]="getCellTooltip(row, col)">
+                                </adf-datatable-cell>
+                            </div>
                             <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value">
                                 <adf-json-cell
                                     [editable]="col.editable"
