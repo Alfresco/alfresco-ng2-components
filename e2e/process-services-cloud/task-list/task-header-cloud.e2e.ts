@@ -131,7 +131,7 @@ describe('Task Header cloud component', () => {
         await appListCloudComponent.goToApp(simpleApp);
     });
 
-    fit('[C291943] Should display task details for assigned task', async () => {
+    it('[C291943] Should display task details for assigned task', async () => {
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
