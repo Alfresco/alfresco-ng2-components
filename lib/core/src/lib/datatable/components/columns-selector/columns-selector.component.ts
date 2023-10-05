@@ -37,6 +37,9 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     @Input()
     columnsSorting = true;
 
+    @Input()
+    maxColumnsVisible?: number;
+
     @Output()
     submitColumnsVisibility = new EventEmitter<DataColumn[]>();
 
@@ -83,6 +86,10 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     apply(): void {
         this.submitColumnsVisibility.emit(this.columnItems);
         this.closeMenu();
+    }
+
+    isCheckboxDisabled(column: DataColumn): boolean {
+        return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(column => !column.isHidden).length;
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {

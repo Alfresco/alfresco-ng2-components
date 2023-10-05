@@ -313,6 +313,14 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     maxItems: number = this.DEFAULT_PAGINATION.maxItems;
 
+    /** Key of columns preset if columns are not specified  */
+    @Input()
+    columnsPresetKey?: string;
+
+    /** Limit of possible visible columns, including "$thumbnail" column if provided */
+    @Input()
+    maxColumnsVisible?: number;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
@@ -467,6 +475,9 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.enforceSingleClickNavigationForMobile();
         if (this.filterValue && Object.keys(this.filterValue).length > 0) {
             this.showHeader = ShowHeaderMode.Always;
+        }
+        if (this.columnsPresetKey) {
+            this.setPresetKey(this.columnsPresetKey);
         }
     }
 
