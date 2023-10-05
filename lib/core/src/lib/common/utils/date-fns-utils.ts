@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { format, parse } from 'date-fns';
+import { format, parse, parseISO } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 export class DateFnsUtils {
@@ -139,7 +139,10 @@ export class DateFnsUtils {
      * @param dateFormat - The date format string to use for formatting.
      * @returns The formatted date as a string.
      */
-    static formatDate(date: number | Date, dateFormat: string): string {
+    static formatDate(date: number | Date | string, dateFormat: string): string {
+        if (typeof date === 'string') {
+            date = parseISO(date);
+        }
         return format(date, this.convertMomentToDateFnsFormat(dateFormat));
     }
 
