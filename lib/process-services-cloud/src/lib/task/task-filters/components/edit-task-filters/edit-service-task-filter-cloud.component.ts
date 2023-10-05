@@ -55,7 +55,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         this.filterChange.emit(this.changedTaskFilter);
     }
 
-    protected getTaskFilterById(appName: string, id: string) {
+    protected getTaskFilterById(appName: string, id: string): Observable<ServiceTaskFilterCloudModel> {
         return this.serviceTaskFilterCloudService.getTaskFilterById(appName, id);
     }
 
@@ -67,7 +67,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         return ['id', 'activityName', 'startedDate', 'completedDate'];
     }
 
-    protected updateFilter(filterToUpdate: ServiceTaskFilterCloudModel) {
+    protected updateFilter(filterToUpdate: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         return this.serviceTaskFilterCloudService.updateFilter(filterToUpdate);
     }
 
@@ -75,7 +75,7 @@ export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloud
         return this.serviceTaskFilterCloudService.deleteFilter(filterToDelete);
     }
 
-    protected addFilter(filterToAdd: ServiceTaskFilterCloudModel): Observable<any> {
+    protected addFilter(filterToAdd: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         return this.serviceTaskFilterCloudService
             .addFilter(filterToAdd)
             .pipe(takeUntil(this.onDestroy$));

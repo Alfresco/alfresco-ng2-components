@@ -242,7 +242,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         }
     }
 
-    getRunningApplications() {
+    getRunningApplications(): void {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(BaseEditTaskFilterCloudComponent.APP_RUNNING_STATUS, this.role)
             .subscribe((applications) => {
@@ -257,7 +257,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    getProcessDefinitions() {
+    getProcessDefinitions(): void {
         this.taskCloudService.getProcessDefinitions(this.appName).subscribe((processDefinitions) => {
             if (processDefinitions && processDefinitions.length > 0) {
                 this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
@@ -289,7 +289,8 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
             const controller = this.getPropertyController(dateProperty);
-            const date = DateFnsUtils.parseDate(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
+            const formatted = DateFnsUtils.formatDate(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
+            const date = DateFnsUtils.parseDate(formatted, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
 
             if (isValid(date)) {
                 controller.setValue(date.toISOString());

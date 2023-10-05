@@ -95,7 +95,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         return this.taskFilterCloudService.deleteFilter(filterToDelete);
     }
 
-    protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<any> {
+    protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         return this.taskFilterCloudService.addFilter(filterToAdd).pipe(takeUntil(this.onDestroy$));
     }
 
