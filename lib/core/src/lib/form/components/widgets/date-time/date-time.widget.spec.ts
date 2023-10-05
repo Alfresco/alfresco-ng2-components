@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
-import { DateFnsUtils } from '../../../../common';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -52,7 +52,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        let minValue = '1982-03-13T10:00:000Z';
+        const minValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
@@ -82,7 +82,7 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        let maxValue = '1982-03-13T10:00:000Z';
+        const maxValue = '1982-03-13T10:00:000Z';
         widget.field = new FormFieldModel(null, {
             maxValue
         });
@@ -107,7 +107,7 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         widget.field = field;
-        const mockDate = DateFnsUtils.formatDate(new Date('1982-03-13 10:00 AM'), 'YYYY-MM-DDTHH:mm:ssZ');
+        const mockDate = DateFnsUtils.formatDate(new Date(DateFnsUtils.addSeconds('1982-03-13T10:00:000Z')), 'YYYY-MM-DDTHH:mm:ssZ');
         widget.onDateChanged(mockDate);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);

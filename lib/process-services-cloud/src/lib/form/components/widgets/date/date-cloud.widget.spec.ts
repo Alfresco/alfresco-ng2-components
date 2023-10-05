@@ -22,7 +22,7 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { TranslateModule } from '@ngx-translate/core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 import { By } from '@angular/platform-browser';
-import { addDays, subDays } from 'date-fns';
+import { addDays, isSameDay, subDays } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
 
@@ -52,8 +52,8 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = DateFnsUtils.formatDate(new Date(minValue), DATE_FORMAT_CLOUD);
-        expect(widget.minDate).toEqual(expected);
+        const expected = DateFnsUtils.parseDate(minValue, DATE_FORMAT_CLOUD);
+        expect(isSameDay(widget.minDate, expected)).toBeTruthy();
     });
 
     it('should date field be present', () => {
@@ -75,8 +75,8 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = DateFnsUtils.formatDate(new Date(maxValue), DATE_FORMAT_CLOUD);
-        expect(widget.maxDate).toEqual(expected);
+        const expected = DateFnsUtils.parseDate(maxValue, DATE_FORMAT_CLOUD);
+        expect(isSameDay(widget.maxDate, expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
@@ -119,7 +119,7 @@ describe('DateWidgetComponent', () => {
             expect(element.querySelector('#date-field-id')).toBeDefined();
             expect(element.querySelector('#date-field-id')).not.toBeNull();
             const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement.value).toContain('9-9-9999');
+            expect(dateElement.value).toContain('9999-9-9');
         });
 
         it('should show the correct format type', async () => {
@@ -131,7 +131,7 @@ describe('DateWidgetComponent', () => {
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
-            widget.field.dateDisplayFormat = 'YYYY-DD-MM';
+            widget.field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-DD-MM');
             widget.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -192,7 +192,7 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY';
+        field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('MM-DD-YYYY');
         widget.field = field;
         widget.ngOnInit();
         fixture.detectChanges();
@@ -295,7 +295,8 @@ describe('DateWidgetComponent', () => {
 
             const todayDate = new Date();
             const expected = DateFnsUtils.formatDate(subDays(todayDate, widget.field.minDateRangeValue), DATE_FORMAT_CLOUD);
-            expect(widget.minDate).toEqual(expected);
+            const minDateFormatted = DateFnsUtils.formatDate(widget.minDate, DATE_FORMAT_CLOUD);
+            expect(minDateFormatted).toEqual(expected);
         });
 
         it('should min date and max date be undefined if dynamic min and max date are not set', async () => {
@@ -345,7 +346,8 @@ describe('DateWidgetComponent', () => {
 
             const todayDate = new Date();
             const expected = DateFnsUtils.formatDate(addDays(todayDate, widget.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
-            expect(widget.maxDate).toEqual(expected);
+            const maxDateFormatted = DateFnsUtils.formatDate(widget.maxDate, DATE_FORMAT_CLOUD);
+            expect(maxDateFormatted).toEqual(expected);
         });
 
         it('should maxDate and minDate be undefined if minDateRangeValue and maxDateRangeValue are null', async () => {

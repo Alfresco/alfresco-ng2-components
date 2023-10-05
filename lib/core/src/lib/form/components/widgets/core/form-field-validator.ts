@@ -21,7 +21,7 @@ import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
 import { isAfter, isBefore, isValid } from 'date-fns';
-import { DateFnsUtils } from '../../../../common';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 export interface FormFieldValidator {
 
@@ -180,7 +180,13 @@ export class DateTimeFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'YYYY-MM-DD HH:mm'): boolean {
         if (inputDate) {
-            const dateTime = DateFnsUtils.parseDate(inputDate, dateFormat);
+            let dateTime = DateFnsUtils.parseDate(inputDate, dateFormat);
+
+            if (!isValid(dateTime) && dateFormat !== 'YYYY-MM-DD HH:mm') {
+                dateFormat = 'YYYY-MM-DD HH:mm';
+                dateTime =  DateFnsUtils.parseDate(inputDate, dateFormat);
+            }
+
             return isValid(dateTime);
         }
 
@@ -193,7 +199,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateTimeFieldValidator.isValidDate(field.value, DateFnsUtils.convertMomentToDateFnsFormat(field.dateDisplayFormat))) {
+            if (DateTimeFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
             field.validationSummary.message = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
@@ -302,7 +308,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MIN_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm A';
+    MIN_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -348,7 +354,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MAX_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm A';
+    MAX_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&

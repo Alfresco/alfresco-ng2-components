@@ -52,8 +52,8 @@ import { addDays, isValid, subDays } from 'date-fns';
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
 
-    minDate: string;
-    maxDate: string;
+    minDate: Date;
+    maxDate: Date;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -77,20 +77,20 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             if (this.field.dynamicDateRangeSelection) {
                 const today = new Date();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
-                    this.minDate = DateFnsUtils.formatDate(subDays(today, this.field.minDateRangeValue), DATE_FORMAT_CLOUD);
-                    this.field.minValue = this.minDate;
+                    this.minDate = subDays(today, this.field.minDateRangeValue);
+                    this.field.minValue = DateFnsUtils.formatDate(this.minDate, DATE_FORMAT_CLOUD);
                 }
                 if (Number.isInteger(this.field.maxDateRangeValue)) {
-                    this.maxDate = DateFnsUtils.formatDate(addDays(today, this.field.maxDateRangeValue), DATE_FORMAT_CLOUD);
-                    this.field.maxValue = this.maxDate;
+                    this.maxDate = addDays(today, this.field.maxDateRangeValue);
+                    this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DATE_FORMAT_CLOUD);
                 }
             } else {
                 if (this.field.minValue) {
-                    this.minDate = DateFnsUtils.formatDate(new Date(this.field.minValue), DATE_FORMAT_CLOUD);
+                    this.minDate = DateFnsUtils.parseDate(this.field.minValue, DATE_FORMAT_CLOUD);
                 }
 
                 if (this.field.maxValue) {
-                    this.maxDate = DateFnsUtils.formatDate(new Date(this.field.maxValue), DATE_FORMAT_CLOUD);
+                    this.maxDate = DateFnsUtils.parseDate(this.field.maxValue, DATE_FORMAT_CLOUD);
                 }
             }
         }

@@ -88,7 +88,7 @@ export class DateFnsUtils {
         Y: 'y',
         A: 'a',
         ll: 'PP',
-        Z: 'XXX',
+        Z: ` zzzz`,
         T: `'T'`
     };
 

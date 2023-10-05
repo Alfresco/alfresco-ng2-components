@@ -28,91 +28,54 @@ describe('ADFDatePipe', () => {
         datePipe = TestBed.inject(ADFDatePipe);
     });
 
-    it('should return the formatted date string when given a valid date object', () => {
-        const inputDate = new Date('2023-08-14');
+    it('should transform a valid date string into a Date object', () => {
+        const testDates = [
+            { dateString: '2023-10-05', dateFormat: 'yyyy-MM-dd' },
+            { dateString: '2023-10-5', dateFormat: 'yyyy-M-d' },
+            { dateString: '05-10-2023', dateFormat: 'dd-MM-yyyy' },
+            { dateString: '5-10-2023', dateFormat: 'd-M-yyyy' },
+            { dateString: '10-5-2023', dateFormat: 'M-d-yyyy' },
+            { dateString: '10-05-2023', dateFormat: 'MM-d-yyyy' }
+        ];
+        testDates.forEach(({ dateString, dateFormat }) => {
+            const transformedDate = datePipe.transform(dateString, dateFormat);
 
-        let dateFormat = 'DD-MM-YYYY';
-        let expectedOutput = '14-08-2023';
-        let result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'MM-DD-YYYY';
-        expectedOutput = '08-14-2023';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'YYYY-MM-DD';
-        expectedOutput = '2023-08-14';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'YYYY-DD-MM';
-        expectedOutput = '2023-14-08';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'MM-DD-YY';
-        expectedOutput = '08-14-23';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'DD-MM-YY';
-        expectedOutput = '14-08-23';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
+            expect(transformedDate instanceof Date).toBe(true);
+            expect(transformedDate.getFullYear()).toBe(2023);
+            expect(transformedDate.getMonth()).toBe(9); // October is 9 (0-based)
+            expect(transformedDate.getDate()).toBe(5);
+        });
     });
 
-    it('should return the input value when given an invalid date object', () => {
-        const inputDate = new Date('invalid');
-        const dateFormat = 'DD-MM-YYYY';
-        const expectedOutput = 'Invalid Date';
+    it('should transform a valid date object into a Date object', () => {
+        const testDates = [
+            { dateString: new Date(), dateFormat: 'yyyy-MM-dd' },
+            { dateString: new Date(), dateFormat: 'yyyy-M-d' },
+            { dateString: new Date(), dateFormat: 'dd-MM-yyyy' },
+            { dateString: new Date(), dateFormat: 'd-M-yyyy' },
+            { dateString: new Date(), dateFormat: 'M-d-yyyy' },
+            { dateString: new Date(), dateFormat: 'MM-d-yyyy' }
+        ];
 
-        const result = datePipe.transform(inputDate, dateFormat);
+        testDates.forEach(({ dateString, dateFormat }) => {
+            const transformedDate = datePipe.transform(dateString, dateFormat);
+            const today = new Date();
 
-        expect(result).toBe(expectedOutput);
+            expect(transformedDate instanceof Date).toBe(true);
+            expect(transformedDate.getFullYear()).toBe(today.getFullYear());
+            expect(transformedDate.getMonth()).toBe(today.getMonth()); // October is 9 (0-based)
+            expect(transformedDate.getDate()).toBe(today.getDate());
+        });
     });
 
-    it('should return the formatted date string when given a valid date string', () => {
-        const inputDate = '2023-08-14';
+    it('should handle undefined input by returning the current date', () => {
+        const undefinedInput = undefined;
+        const dateFormat = 'dd-MM-yyyy';
 
-        let dateFormat = 'DD-MM-YY';
-        let expectedOutput = '14-08-23';
-        let result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
+        const transformedDate = datePipe.transform(undefinedInput, dateFormat);
+        const today = new Date();
 
-        dateFormat = 'MM-DD-YY';
-        expectedOutput = '08-14-23';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'YYYY-DD-MM';
-        expectedOutput = '2023-14-08';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'YYYY-MM-DD';
-        expectedOutput = '2023-08-14';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'MM-DD-YYYY';
-        expectedOutput = '08-14-2023';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-
-        dateFormat = 'DD-MM-YYYY';
-        expectedOutput = '14-08-2023';
-        result = datePipe.transform(inputDate, dateFormat);
-        expect(result).toBe(expectedOutput);
-    });
-
-    it('should return the input value when given an invalid date string', () => {
-        const inputDate = 'not_a_valid_date';
-        const dateFormat = 'DD-MM-YYYY';
-        const expectedOutput = inputDate;
-
-        const result = datePipe.transform(inputDate, dateFormat);
-
-        expect(result).toBe(expectedOutput);
+        expect(transformedDate instanceof Date).toBe(true);
+        expect(transformedDate).toEqual(today);
     });
 });

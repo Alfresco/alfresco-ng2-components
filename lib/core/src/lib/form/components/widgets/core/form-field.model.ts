@@ -28,8 +28,8 @@ import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
-import { isValid } from 'date-fns';
-import { DateFnsUtils } from '../../../../common';
+import { isValid, parseISO } from 'date-fns';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 // Maps to FormFieldRepresentation
 
@@ -354,7 +354,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (isNumberValue(value)) {
                     dateValue = new Date(value);
                 } else {
-                    dateValue = DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A');
+                    dateValue = parseISO(value);
                 }
                 if (isValid(dateValue)) {
                     value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
@@ -368,7 +368,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (isNumberValue(value)) {
                     dateValue = new Date(value);
                 } else {
-                    dateValue = DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = parseISO(value);
                 }
                 if (isValid(dateValue)) {
                     value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);

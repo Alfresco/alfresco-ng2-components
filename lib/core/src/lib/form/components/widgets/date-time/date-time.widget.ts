@@ -24,7 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DateFnsUtils } from '../../../../common';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 import { TranslationService } from '../../../../../lib/translation/translation.service';
 import { FormFieldModel } from '../core';
 import { isValid } from 'date-fns';
@@ -40,8 +40,8 @@ import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-    minDate: string;
-    maxDate: string;
+    minDate: Date;
+    maxDate: Date;
 
     private onDestroy$ = new Subject<boolean>();
 
