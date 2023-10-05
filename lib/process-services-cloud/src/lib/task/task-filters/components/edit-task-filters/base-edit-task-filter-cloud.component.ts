@@ -288,13 +288,13 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            const date = DateFnsUtils.formatDate(new Date(newDateValue), BaseEditTaskFilterCloudComponent.FORMAT_DATE);
             const controller = this.getPropertyController(dateProperty);
-            if (isValid(new Date(date))) {
-                controller.setValue(new Date(date).toISOString());
+            const date = DateFnsUtils.parseDate(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE);
+
+            if (isValid(date)) {
+                controller.setValue(date.toISOString());
                 controller.setErrors(null);
             } else {
-
                 controller.setErrors({ invalid: true });
             }
         }
