@@ -393,7 +393,12 @@
                 "command": "npm publish --tag {args.tag}",
                 "forwardAllArgs": true
               }
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "lib", "lib/core/src/lib"
+              ]
+            }
           }
         }
       }
