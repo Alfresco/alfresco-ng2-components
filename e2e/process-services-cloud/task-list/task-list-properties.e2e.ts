@@ -273,9 +273,9 @@ describe('Edit task filters and task list properties', () => {
 
         it('[C297692] Task is displayed when typing into lastModifiedFrom field a date before the tasks due date ' +
             'and into lastModifiedTo a date after', async () => {
-            await editTaskFilter.setTaskName(createdTask.entry.name);
             await editTaskFilter.setLastModifiedFrom(beforeDate);
             await editTaskFilter.setLastModifiedTo(afterDate);
+            await editTaskFilter.setTaskName(createdTask.entry.name);
             await editTaskFilter.closeFilter();
             await taskList.checkContentIsDisplayedByName(createdTask.entry.name);
         });
