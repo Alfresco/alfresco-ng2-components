@@ -20,8 +20,10 @@ import { NodePermissionService } from './node-permission.service';
 import { SearchService } from '../../search/services/search.service';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of, throwError } from 'rxjs';
-import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
-         fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
+import {
+    fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
+    fakeNodeToRemovePermission, fakeNodeWithoutPermissions, fakeNodeWithoutSite
+} from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -79,10 +81,11 @@ describe('NodePermissionService', () => {
         });
     });
 
-    it('should return a list of settable if node has no site', (done) => {
-        spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
+    it('should not call search api and return a list of settable if node has no site', (done) => {
+        spyOn(searchApiService, 'searchByQueryBody');
 
-        service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
+        service.getNodeRoles(fakeNodeWithoutSite).subscribe((roleArray: string[]) => {
+            expect(searchApiService.searchByQueryBody).not.toHaveBeenCalled();
             expect(roleArray).not.toBeNull();
             expect(roleArray.length).toBe(5);
             expect(roleArray[0]).toBe('Contributor');

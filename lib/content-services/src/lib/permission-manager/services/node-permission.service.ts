@@ -18,7 +18,17 @@
 import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
-import { Group, GroupMemberEntry, GroupMemberPaging, GroupsApi, Node, PathElement, PermissionElement, SearchRequest } from '@alfresco/js-api';
+import {
+    Group,
+    GroupMemberEntry,
+    GroupMemberPaging,
+    GroupsApi,
+    Node,
+    PathElement,
+    PermissionElement,
+    ResultSetPaging,
+    SearchRequest
+} from '@alfresco/js-api';
 import { SearchService } from '../../search/services/search.service';
 import { Injectable } from '@angular/core';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
@@ -50,17 +60,16 @@ export class NodePermissionService {
      * @returns Array of strings representing the roles
      */
     getNodeRoles(node: Node): Observable<string[]> {
-        const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
-        return this.searchApiService.searchByQueryBody(searchRequest).pipe(
-            switchMap((siteNodeList: any) => {
-                if (siteNodeList.list.entries.length > 0) {
+        if (node.path.elements.some(el => (el.nodeType === 'st:site' || el.nodeType === 'st:sites'))) {
+            const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
+            return this.searchApiService.searchByQueryBody(searchRequest).pipe(
+                switchMap((siteNodeList: ResultSetPaging) => {
                     const siteName = siteNodeList.list.entries[0].entry.name;
                     return this.getGroupMembersBySiteName(siteName);
-                } else {
-                    return of(node.permissions?.settable);
-                }
-            })
-        );
+                }));
+        } else {
+            return of(node.permissions?.settable);
+        }
     }
 
     /**
