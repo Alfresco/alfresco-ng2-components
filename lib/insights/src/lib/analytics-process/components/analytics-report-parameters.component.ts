@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadService, LogService } from '@alfresco/adf-core';
+import { DateFnsUtils, DownloadService, LogService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -31,7 +31,6 @@ import {
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import moment from 'moment';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
@@ -187,11 +186,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     convertMomentDate(date: string) {
-        return moment(date, FORMAT_DATE_ACTIVITI, true).format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+        return DateFnsUtils.formatDate(new Date(date), FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z'
     }
 
     getTodayDate() {
-        return moment().format(FORMAT_DATE_ACTIVITI);
+        return DateFnsUtils.formatDate(new Date(), FORMAT_DATE_ACTIVITI);
     }
 
     convertNumber(value: string): number {
