@@ -34,6 +34,9 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     @Input()
     mainMenuTrigger: MatMenuTrigger;
 
+    @Input()
+    columnsSorting = true;
+
     @Output()
     submitColumnsVisibility = new EventEmitter<DataColumn[]>();
 
@@ -47,7 +50,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$)
         ).subscribe(() => {
             const columns = this.columns.map(column => ({...column}));
-            this.columnItems = this.sortColumns(columns);
+            this.columnItems = this.columnsSorting ? this.sortColumns(columns) : columns;
         });
 
         this.mainMenuTrigger.menuClosed.pipe(

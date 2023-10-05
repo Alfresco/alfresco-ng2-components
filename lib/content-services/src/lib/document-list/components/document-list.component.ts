@@ -38,13 +38,11 @@ import { ContentService } from '../../common/services/content.service';
 
 import {
     DataCellEvent,
-    DataColumn,
     DataRowActionEvent,
     DataSorting,
     DataTableComponent,
     DisplayMode,
     ShowHeaderMode,
-    ObjectDataColumn,
     PaginatedComponent,
     AppConfigService,
     DataColumnListComponent,
@@ -58,7 +56,7 @@ import {
     AlfrescoApiService,
     UserPreferenceValues,
     DataRow,
-    DataTableService
+    DataTableService, DataTableSchema, DataColumn
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
@@ -97,7 +95,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
-export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
+export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -371,7 +369,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
     sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
-    private layoutPresets = {};
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout: any;
     private onDestroy$ = new Subject<boolean>();
@@ -395,6 +392,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         private lockService: LockService,
         private dialog: MatDialog
     ) {
+        super(appConfig, 'default', presetsDefaultModel);
         this.nodeService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });
@@ -421,10 +419,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return null;
     }
 
-    private get hasCustomLayout(): boolean {
-        return this.columnList?.columns?.length > 0;
-    }
-
     private getDefaultSorting(): DataSorting {
         let defaultSorting: DataSorting;
         if (Array.isArray(this.sorting)) {
@@ -437,9 +431,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return defaultSorting;
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map((col) => new ObjectDataColumn(col));
-    }
 
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -480,29 +471,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngAfterContentInit() {
-        if (this.columnList) {
-            this.columnList.columns.changes.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setTableSchema());
-        }
         this.setTableSchema();
     }
 
     private setTableSchema() {
-        let schema: DataColumn[] = [];
-
-        if (this.hasCustomLayout) {
-            schema = this.columnList.columns.map((c) => c as DataColumn);
-        }
-
-        if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
-        } else if (schema && schema.length > 0) {
-            this.data.setColumns(schema);
-        }
-
-        const columns = this.data.getColumns();
-        if (!columns || columns.length === 0) {
-            this.setupDefaultColumns(this.currentFolderId);
-        }
+        this.createDatatableSchema();
+        this.data.setColumns(this.columns);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -718,10 +692,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setLoadingState(true);
         }
 
-        if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(this.currentFolderId);
-        }
-
         if (this.documentListService.isCustomSourceService(this.currentFolderId)) {
             this.updateCustomSourceData(this.currentFolderId);
         }
@@ -772,17 +742,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [`${this.additionalSorting.key} ${this.additionalSorting.direction}`, `${currentKey} ${currentDirection}`];
     }
 
-    /**
-     * Creates a set of predefined columns.
-     * @param preset preset to use
-     */
-    private setupDefaultColumns(preset: string = 'default'): void {
-        if (this.data) {
-            const columns = this.getLayoutPreset(preset);
-            this.data.setColumns(columns);
-        }
-    }
-
     onPreviewFile(node: NodeEntry) {
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
@@ -797,7 +756,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
         }
     }
-
+    onColumnsVisibilityChange(e: Array<DataColumn>): void {
+        this.data.setColumns(e);
+    }
     onNodeClick(nodeEntry: NodeEntry) {
         const domEvent = new CustomEvent('node-click', {
             detail: {
@@ -932,10 +893,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return canNavigateFolder;
     }
 
-    private loadLayoutPresets(): void {
-        const externalSettings = this.appConfig.get('document-list.presets', null);
-        this.layoutPresets = externalSettings ? Object.assign({}, presetsDefaultModel, externalSettings) : presetsDefaultModel;
-    }
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
