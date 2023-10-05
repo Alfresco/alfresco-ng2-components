@@ -16,12 +16,10 @@
  */
 
 import {
-    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel,
-    MOMENT_DATE_FORMATS, MomentDateAdapter
+    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel, DateFnsUtils
 } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -29,6 +27,8 @@ import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserProcessModel } from '../../common/models/user-process.model';
+import { isValid } from 'date-fns';
+import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -38,8 +38,8 @@ const MAX_LENGTH = 255;
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: DateAdapter, useClass: DateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
@@ -75,7 +75,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskListService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<DateFnsAdapter>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: UntypedFormBuilder,
                 private logService: LogService) {
@@ -93,7 +93,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
 
         this.loadFormsTask();
         this.buildForm();
@@ -119,8 +119,8 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     whitespaceValidator(control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
-            const isValid =  control.value.length === 0 || !isWhitespace;
-            return isValid ? null : { whitespace: true };
+            const isControlValid =  control.value.length === 0 || !isWhitespace;
+            return isControlValid ? null : { whitespace: true };
         }
         return null;
     }
@@ -187,16 +187,16 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate: moment.Moment;
+            let date: Date;
 
             if (typeof newDateValue === 'string') {
-                momentDate = moment(newDateValue, FORMAT_DATE, true);
+                date = DateFnsUtils.parseDate(newDateValue, FORMAT_DATE);
             } else {
-                momentDate = newDateValue;
+                date = newDateValue;
             }
 
-            if (momentDate.isValid()) {
-                this.taskDetailsModel.dueDate = momentDate.toDate();
+            if (isValid(date)) {
+                this.taskDetailsModel.dueDate = date;
             } else {
                 this.dateError = true;
                 this.taskDetailsModel.dueDate = null;
