@@ -18,9 +18,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
 import { TaskFilterCloudModel, TaskFilterProperties, TaskFilterAction, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
@@ -59,11 +58,11 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         this.filterChange.emit(this.changedTaskFilter);
     }
 
-    protected getTaskFilterById(appName: string, id: string) {
-        return this.taskFilterCloudService.getTaskFilterById(appName, id).pipe(map((response) => new TaskFilterCloudModel(response)));
+    protected getTaskFilterById(appName: string, id: string): Observable<TaskFilterCloudModel> {
+        return this.taskFilterCloudService.getTaskFilterById(appName, id);
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties(): TaskFilterProperties[] {
         const result = super.createAndFilterProperties();
 
         if (this.hasLastModifiedProperty()) {

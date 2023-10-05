@@ -398,7 +398,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return [];
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties(): TaskFilterProperties[] {
         this.checkMandatoryFilterProperties();
 
         if (this.checkForProperty(BaseEditTaskFilterCloudComponent.APPLICATION_NAME)) {
