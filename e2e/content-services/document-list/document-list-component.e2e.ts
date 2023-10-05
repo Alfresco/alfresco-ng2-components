@@ -21,7 +21,7 @@ import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions, V
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
-import { DateFnsUtils } from '@alfresco/adf-core';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Document List Component', () => {
     let uploadedFolder: NodeEntry;

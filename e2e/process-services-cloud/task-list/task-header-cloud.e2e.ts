@@ -29,7 +29,7 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { DateFnsUtils } from '@alfresco/adf-core';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 const isValueInvalid = (value: any): boolean => value === null || value === undefined;
 
@@ -131,7 +131,7 @@ describe('Task Header cloud component', () => {
         await appListCloudComponent.goToApp(simpleApp);
     });
 
-    it('[C291943] Should display task details for assigned task', async () => {
+    fit('[C291943] Should display task details for assigned task', async () => {
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
 
