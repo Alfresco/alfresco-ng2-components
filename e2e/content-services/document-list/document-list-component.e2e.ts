@@ -17,11 +17,11 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { createApiService, LoginPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import * as moment from 'moment';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Document List Component', () => {
     let uploadedFolder: NodeEntry;
@@ -35,9 +35,9 @@ describe('Document List Component', () => {
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
-    let acsUser = null;
-    let testFileNode: any;
-    let pdfBFileNode: any;
+    let acsUser: UserModel = null;
+    let testFileNode: NodeEntry;
+    let pdfBFileNode: NodeEntry;
 
     afterEach(async () => {
         await apiService.loginWithProfile('admin');
@@ -78,7 +78,10 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
 
-        let pdfUploadedNode; let docxUploadedNode; let timeAgoUploadedNode; let mediumDateUploadedNode;
+        let pdfUploadedNode: NodeEntry;
+        let docxUploadedNode: NodeEntry;
+        let timeAgoUploadedNode: NodeEntry;
+        let mediumDateUploadedNode: NodeEntry;
 
         beforeAll(async () => {
             /* cspell:disable-next-line */
@@ -146,7 +149,7 @@ describe('Document List Component', () => {
         it('[C279929] Should be able to display the date with date type', async () => {
             await apiService.login(acsUser.username, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
-            const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
+            const createdDate = DateFnsUtils.formatDate(mediumDateUploadedNode.entry.createdAt, 'll');
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');

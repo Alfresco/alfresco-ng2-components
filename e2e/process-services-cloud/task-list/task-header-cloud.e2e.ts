@@ -29,7 +29,7 @@ import { createApiService,
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import * as moment from 'moment';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 const isValueInvalid = (value: any): boolean => value === null || value === undefined;
 
@@ -91,7 +91,7 @@ describe('Task Header cloud component', () => {
         const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
-        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
+        basicCreatedDate = DateFnsUtils.formatDate(new Date(basicCreatedTask.entry.createdDate), formatDate);
         return createdTaskId;
     };
 
@@ -109,12 +109,12 @@ describe('Task Header cloud component', () => {
 
         completedTask = await createCompletedTask();
 
-        completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
-        dueDate = moment(completedTask.entry.dueDate).format(dateTimeFormat);
-        completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
+        completedCreatedDate = DateFnsUtils.formatDate(new Date(completedTask.entry.createdDate), formatDate);
+        dueDate = DateFnsUtils.formatDate(new Date(completedTask.entry.dueDate), dateTimeFormat);
+        completedEndDate = DateFnsUtils.formatDate(new Date(completedTask.entry.completedDate), formatDate);
 
         subTask = await createSubTask(createdTaskId);
-        subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
+        subTaskCreatedDate = DateFnsUtils.formatDate(new Date(subTask.entry.createdDate), formatDate);
 
         await browser.sleep(3000);
         await loginSSOPage.login(testUser.username, testUser.password);

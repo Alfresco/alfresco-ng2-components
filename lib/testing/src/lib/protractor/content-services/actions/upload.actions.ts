@@ -34,7 +34,7 @@ export class UploadActions {
         this.nodesApi = new NodesApi(apiService.getInstance());
     }
 
-    async uploadFile(fileLocation, fileName, parentFolderId): Promise<any> {
+    async uploadFile(fileLocation: fs.PathLike, fileName: string, parentFolderId: string): Promise<NodeEntry> {
         const file = fs.createReadStream(fileLocation);
 
         return this.uploadApi.uploadFile(
@@ -50,7 +50,7 @@ export class UploadActions {
         );
     }
 
-    async createEmptyFiles(emptyFileNames: string[], parentFolderId): Promise<NodeEntry> {
+    async createEmptyFiles(emptyFileNames: string[], parentFolderId: string): Promise<NodeEntry> {
         const filesRequest = [];
 
         // eslint-disable-next-line @typescript-eslint/prefer-for-of
@@ -64,7 +64,7 @@ export class UploadActions {
         return this.nodesApi.createNode(parentFolderId, filesRequest as any, {});
     }
 
-    async createFolder(folderName, parentFolderId): Promise<NodeEntry> {
+    async createFolder(folderName: string, parentFolderId: string): Promise<NodeEntry> {
         return this.nodesApi.createNode(parentFolderId, {
             name: folderName,
             nodeType: 'cm:folder'

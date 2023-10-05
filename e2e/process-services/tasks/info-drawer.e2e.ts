@@ -33,7 +33,7 @@ import { ProcessServiceTabBarPage } from './../pages/process-service-tab-bar.pag
 import { ProcessFiltersPage } from './../pages/process-filters.page';
 import { infoDrawerConfiguration } from './../config/task.config';
 import CONSTANTS = require('../../util/constants');
-import * as moment from 'moment';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Info Drawer', () => {
 
@@ -161,7 +161,7 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDueDate();
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(moment('Aug 1, 2017').format(taskDetails.dateFormat));
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(DateFnsUtils.formatDate(new Date('Aug 1, 2017'), taskDetails.dateFormat));
 
         await taskPage.taskDetails().clickCompleteFormTask();
 
@@ -187,7 +187,7 @@ describe('Info Drawer', () => {
 
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
+        await taskPage.createTask({ ...taskDetails, formName: '', name });
         await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
@@ -204,7 +204,7 @@ describe('Info Drawer', () => {
 
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(name);
@@ -337,15 +337,32 @@ describe('Info Drawer', () => {
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
-    async function shouldHaveInfoDrawerDetails({ description, status, priority, category, parentName, dateFormat, formName, fullName, dueDate }) {
-        await expect(await taskPage.taskDetails().getAssignee()).toEqual(fullName);
-        await expect(await taskPage.taskDetails().getDescription()).toEqual(description);
-        await expect(await taskPage.taskDetails().getStatus()).toEqual(status);
-        await expect(await taskPage.taskDetails().getPriority()).toEqual(priority);
-        await expect(await taskPage.taskDetails().getDueDate()).toEqual(dueDate !== 'No date' ? moment(dueDate).format(dateFormat) : 'No date');
-        await expect(await taskPage.taskDetails().getCategory()).toEqual(category);
-        await expect(await taskPage.taskDetails().getParentName()).toEqual(parentName);
-        await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(Date.now()).format(dateFormat));
-        await taskPage.taskDetails().waitFormNameEqual(formName);
+    interface TaskDetailsProps {
+        description: string;
+        status: string;
+        priority: string;
+        category: string;
+        parentName: string;
+        dateFormat: string;
+        formName: string;
+        fullName: string;
+        dueDate: string;
+    }
+
+    /**
+     * Validate the info drawer has expected values for the task details
+     *
+     * @param props task details properties to validate
+     */
+    async function shouldHaveInfoDrawerDetails(props: TaskDetailsProps) {
+        await expect(await taskPage.taskDetails().getAssignee()).toEqual(props.fullName);
+        await expect(await taskPage.taskDetails().getDescription()).toEqual(props.description);
+        await expect(await taskPage.taskDetails().getStatus()).toEqual(props.status);
+        await expect(await taskPage.taskDetails().getPriority()).toEqual(props.priority);
+        await expect(await taskPage.taskDetails().getDueDate()).toEqual(props.dueDate !== 'No date' ? DateFnsUtils.formatDate(new Date(props.dueDate), props.dateFormat) : 'No date');
+        await expect(await taskPage.taskDetails().getCategory()).toEqual(props.category);
+        await expect(await taskPage.taskDetails().getParentName()).toEqual(props.parentName);
+        await expect(await taskPage.taskDetails().getCreated()).toEqual(DateFnsUtils.formatDate(new Date().getTime(), props.dateFormat));
+        await taskPage.taskDetails().waitFormNameEqual(props.formName);
     }
 });

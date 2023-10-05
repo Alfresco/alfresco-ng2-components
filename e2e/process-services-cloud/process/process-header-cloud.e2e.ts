@@ -21,8 +21,8 @@ import { ProcessCloudDemoPage } from './../pages/process-cloud-demo.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import * as moment from 'moment';
 import { EditProcessFilterConfiguration } from './../config/edit-process-filter.config';
+import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
 
 describe('Process Header cloud component', () => {
 
@@ -76,7 +76,7 @@ describe('Process Header cloud component', () => {
             runningProcess = await processInstancesService.createProcessInstance(simpleProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
 
-            runningCreatedDate = moment(runningProcess.entry.startDate).format(formatDate);
+            runningCreatedDate = DateFnsUtils.formatDate(new Date(runningProcess.entry.startDate), formatDate);
 
             parentCompleteProcess = await processInstancesService.createProcessInstance(processparent.entry.key,
                 subProcessApp);
@@ -86,7 +86,7 @@ describe('Process Header cloud component', () => {
 
             childCompleteProcess = parentProcessInstance.list.entries[0];
 
-            completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
+            completedCreatedDate = DateFnsUtils.formatDate(new Date(childCompleteProcess.entry.startDate), formatDate);
 
             await loginSSOPage.login(testUser.username, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
