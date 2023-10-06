@@ -16,25 +16,24 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { startOfMinute, isBefore, isValid, endOfMinute } from 'date-fns';
 
 export interface DatetimeRangeValue {
     from: string;
     to: string;
 }
-
-declare let moment: any;
 
 const DEFAULT_DATETIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
@@ -47,10 +46,10 @@ const DEFAULT_DATETIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
-    from: UntypedFormControl;
-    to: UntypedFormControl;
+    from: FormControl;
+    to: FormControl;
 
-    form: UntypedFormGroup;
+    form: FormGroup;
     matcher = new LiveErrorStateMatcher();
 
     id: string;
@@ -66,7 +65,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DatetimeAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
+    constructor(private dateAdapter: DatetimeAdapter<DateFnsAdapter>, private userPreferencesService: UserPreferencesService) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
@@ -101,21 +100,21 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         const validators = Validators.compose([Validators.required]);
 
         if (this.settings?.maxDatetime) {
-            this.maxDatetime = moment(this.settings.maxDatetime);
+            this.maxDatetime = new Date(this.settings.maxDatetime);
         }
 
         if (this.startValue) {
             const splitValue = this.startValue.split('||');
             const fromValue = this.dateAdapter.parse(splitValue[0], this.datetimePickerFormat);
             const toValue = this.dateAdapter.parse(splitValue[1], this.datetimePickerFormat);
-            this.from = new UntypedFormControl(fromValue, validators);
-            this.to = new UntypedFormControl(toValue, validators);
+            this.from = new FormControl(fromValue, validators);
+            this.to = new FormControl(toValue, validators);
         } else {
-            this.from = new UntypedFormControl('', validators);
-            this.to = new UntypedFormControl('', validators);
+            this.from = new FormControl('', validators);
+            this.to = new FormControl('', validators);
         }
 
-        this.form = new UntypedFormGroup({
+        this.form = new FormGroup({
             from: this.from,
             to: this.to
         });
@@ -133,8 +132,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = moment.utc(model.from).startOf('minute').format();
-            const end = moment.utc(model.to).endOf('minute').format();
+            const start = DateFnsUtils.formatDate(startOfMinute(new Date(model.from)), `yyyy-MM-dd'T'HH:mm:ss'Z'`);
+            const end = DateFnsUtils.formatDate(endOfMinute(new Date(model.to)), `yyyy-MM-dd'T'HH:mm:ss'Z'`);
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.updateDisplayValue();
@@ -211,10 +210,10 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         }
     }
 
-    onChangedHandler(event: any, formControl: UntypedFormControl) {
+    onChangedHandler(event: any, formControl: FormControl) {
         const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datetimePickerFormat);
-        if (formatDate?.isValid()) {
+        if (formatDate && isValid(formatDate)) {
             formControl.setValue(formatDate);
         } else if (formatDate) {
             formControl.setErrors({
@@ -225,12 +224,11 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.setFromMaxDatetime();
     }
 
-    setLocale(locale) {
-        this.dateAdapter.setLocale(locale);
-        moment.locale(locale);
+    setLocale(locale: string) {
+        this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale));
     }
 
-    hasParseError(formControl): boolean {
+    hasParseError(formControl: FormControl): boolean {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 
@@ -240,6 +238,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     setFromMaxDatetime() {
         this.fromMaxDatetime =
-            !this.to.value || (this.maxDatetime && moment(this.maxDatetime).isBefore(this.to.value)) ? this.maxDatetime : moment(this.to.value);
+            (!this.to.value || (this.maxDatetime && isBefore(this.maxDatetime, this.to.value))) ? this.maxDatetime : this.to.value;
     }
 }

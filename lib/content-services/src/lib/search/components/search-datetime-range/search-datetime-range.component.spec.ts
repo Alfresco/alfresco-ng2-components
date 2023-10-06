@@ -19,8 +19,8 @@ import { SearchDatetimeRangeComponent } from './search-datetime-range.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-
-declare let moment: any;
+import { isValid } from 'date-fns';
+import { DateFnsUtils } from '@alfresco/adf-core';
 
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
@@ -59,13 +59,14 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         const inputString = '20-feb-18 20:00';
-        const momentFromInput = moment(inputString, datetimeFormatFixture);
+        
+        const dateFromInput = DateFnsUtils.parseDate(inputString, datetimeFormatFixture);
 
-        expect(momentFromInput.isValid()).toBeTruthy();
+        expect(isValid(dateFromInput)).toBeTruthy();
 
         component.onChangedHandler({ value: inputString }, component.from);
 
-        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
+        expect(component.from.value.toString()).toEqual(dateFromInput.toString());
     });
 
     it('should NOT setup form control with invalid datetime on change', async () => {
@@ -75,13 +76,14 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         const inputString = '2017-10-16 20:f:00';
-        const momentFromInput = moment(inputString, datetimeFormatFixture);
+        
+        const dateFromInput = DateFnsUtils.parseDate(inputString, datetimeFormatFixture);
 
-        expect(momentFromInput.isValid()).toBeFalsy();
+        expect(isValid(dateFromInput)).toBeFalsy();
 
         component.onChangedHandler({ value: inputString }, component.from);
 
-        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
+        expect(component.from.value.toString()).not.toEqual(dateFromInput.toString());
     });
 
     it('should reset form', async () => {
