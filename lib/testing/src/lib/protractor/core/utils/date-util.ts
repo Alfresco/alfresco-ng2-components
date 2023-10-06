@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import * as moment from 'moment';
+import { addDays } from 'date-fns';
+import { DateFnsUtils } from '../../../../../../core/src/lib/common/utils/date-fns-utils';
 
 export class DateUtil {
 
-    static formatDate(dateFormat: string, date: Date = new Date(), days: number | string = 0): string {
-        return moment(date).add(days, 'days').format(dateFormat);
+    static formatDate(dateFormat: string, date: Date = new Date(), days: number = 0): string {
+        return DateFnsUtils.formatDate(addDays(date, days), dateFormat);
     }
 
     static parse(date: string, dateFormat: string = 'DD-MM-YY'): Date {
-        return moment(date, dateFormat).toDate();
+        return DateFnsUtils.parseDate(date, dateFormat);
     }
 }
