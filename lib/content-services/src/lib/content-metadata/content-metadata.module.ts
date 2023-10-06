@@ -23,6 +23,7 @@ import { ContentMetadataComponent } from './components/content-metadata/content-
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
 import { TagModule } from '../tag/tag.module';
 import { CategoriesModule } from '../category/category.module';
+import { ExtensionsModule } from '@alfresco/adf-extensions';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { CategoriesModule } from '../category/category.module';
         MaterialModule,
         CoreModule,
         TagModule,
-        CategoriesModule
+        CategoriesModule,
+        ExtensionsModule
     ],
     exports: [
         ContentMetadataComponent,

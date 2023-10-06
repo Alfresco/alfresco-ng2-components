@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
-import { PresetConfig } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataCustomPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { VersionCompatibilityService } from '../../../version-compatibility/version-compatibility.service';
 import { ContentService } from '../../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
@@ -79,6 +79,10 @@ export class ContentMetadataCardComponent implements OnChanges {
     /** This flag toggles editable of content. */
     @Input()
     editable? = false;
+
+    /** List of custom metadata panels to be displayed with registered custom components */
+    @Input()
+    customPanels: ContentMetadataCustomPanel[];
 
     /** Emitted when content's editable state is changed. */
     @Output()
