@@ -83,7 +83,7 @@ export class UserPreferencesService {
      * @param property The property to watch
      * @returns Notification callback
      */
-    select(property: string): Observable<any> {
+    select<T = any>(property: string): Observable<T> {
         return this.onChange
             .pipe(
                 map((userPreferenceStatus) => userPreferenceStatus[property]),

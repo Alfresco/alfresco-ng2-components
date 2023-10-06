@@ -24,8 +24,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 declare let moment: any;
 
-// eslint-disable-next-line ban/ban, @cspell/spellchecker
-fdescribe('SearchDateRangeComponent', () => {
+describe('SearchDateRangeComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeComponent>;
     let component: SearchDateRangeComponent;
     let adapter: MomentDateAdapter;
