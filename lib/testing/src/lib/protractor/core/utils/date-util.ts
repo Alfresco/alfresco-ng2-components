@@ -20,7 +20,10 @@ import { DateFnsUtils } from '../../../../../../core/src/lib/common/utils/date-f
 
 export class DateUtil {
 
-    static formatDate(dateFormat: string, date: Date = new Date(), days: number = 0): string {
+    static formatDate(dateFormat: string, date: Date = new Date(), days: number | string = 0): string {
+        if(typeof days === 'string') {
+            days = parseInt(days);
+        }
         return DateFnsUtils.formatDate(addDays(date, days), dateFormat);
     }
 
@@ -28,3 +31,5 @@ export class DateUtil {
         return DateFnsUtils.parseDate(date, dateFormat);
     }
 }
+
+
