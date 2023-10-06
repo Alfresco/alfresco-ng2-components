@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
-
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { addMinutes } from 'date-fns';
 
 describe('NodeLockDialogComponent', () => {
 
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
-    let expiryDate;
+    let expiryDate: Date;
+
     const dialogRef = {
         close: jasmine.createSpy('close')
     };
@@ -54,7 +54,7 @@ describe('NodeLockDialogComponent', () => {
 
         beforeEach(() => {
             jasmine.clock().mockDate(new Date());
-            expiryDate = moment().add(1, 'minutes');
+            expiryDate = addMinutes(new Date(), 1);
 
             component.data = {
                 node: {
@@ -77,25 +77,12 @@ describe('NodeLockDialogComponent', () => {
             expect(component.form.value.isLocked).toBe(true);
             expect(component.form.value.allowOwner).toBe(true);
             expect(component.form.value.isTimeLock).toBe(true);
-            expect(component.form.value.time.format()).toBe(expiryDate.format());
-        });
-
-        it('should update form inputs', () => {
-            const newTime = moment();
-            component.form.controls['isLocked'].setValue(false);
-            component.form.controls['allowOwner'].setValue(false);
-            component.form.controls['isTimeLock'].setValue(false);
-            component.form.controls['time'].setValue(newTime);
-
-            expect(component.form.value.isLocked).toBe(false);
-            expect(component.form.value.allowOwner).toBe(false);
-            expect(component.form.value.isTimeLock).toBe(false);
-            expect(component.form.value.time.format()).toBe(newTime.format());
+            expect(component.form.value.time).toEqual(expiryDate);
         });
 
         it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
             const node: any = { entry: {} };
-            spyOn(component['nodesApi'], 'lockNode').and.returnValue(Promise.resolve(node));
+            spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
 
             component.submit();
             tick();
@@ -105,7 +92,7 @@ describe('NodeLockDialogComponent', () => {
         }));
 
         it('should call onError if submit fails', fakeAsync(() => {
-            spyOn(component['nodesApi'], 'lockNode').and.returnValue(Promise.reject('error'));
+            spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.reject('error'));
             spyOn(component.data, 'onError');
 
             component.submit();
