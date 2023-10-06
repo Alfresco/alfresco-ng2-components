@@ -78,8 +78,7 @@ const expectElementToBeValid = (fieldId: string, fixture: ComponentFixture<FormR
     expect(invalidElementContainer).toBeFalsy();
 };
 
-// eslint-disable-next-line ban/ban, @cspell/spellchecker
-fdescribe('Form Renderer Component', () => {
+describe('Form Renderer Component', () => {
     let formRendererComponent: FormRendererComponent<any>;
     let fixture: ComponentFixture<FormRendererComponent<any>>;
     let formService: FormService;
