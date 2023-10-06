@@ -22,8 +22,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { addMinutes } from 'date-fns';
 
-// eslint-disable-next-line ban/ban, @cspell/spellchecker
-fdescribe('NodeLockDialogComponent', () => {
+describe('NodeLockDialogComponent', () => {
 
     let fixture: ComponentFixture<NodeLockDialogComponent>;
     let component: NodeLockDialogComponent;
