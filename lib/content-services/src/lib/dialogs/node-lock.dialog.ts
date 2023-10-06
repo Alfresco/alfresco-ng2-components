@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
-
 import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-
+import { differenceInSeconds } from 'date-fns';
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
@@ -35,7 +33,7 @@ export class NodeLockDialogComponent implements OnInit {
     node: Node = null;
     nodeName: string;
 
-    _nodesApi: NodesApi;
+    private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
         return this._nodesApi;
@@ -55,18 +53,20 @@ export class NodeLockDialogComponent implements OnInit {
         const { node } = this.data;
         this.nodeName = node.name;
 
+        const isTimeLock = !!node.properties['cm:expiryDate'];
+        const time = isTimeLock ? new Date(node.properties['cm:expiryDate']) : new Date();
+
         this.form = this.formBuilder.group({
             isLocked: node.isLocked || false,
             allowOwner: node.properties['cm:lockType'] === 'WRITE_LOCK',
-            isTimeLock: !!node.properties['cm:expiryDate'],
-            time: node.properties['cm:expiryDate'] ? moment(node.properties['cm:expiryDate']) : moment()
+            isTimeLock,
+            time
         });
     }
 
     private get lockTimeInSeconds(): number {
         if (this.form.value.isTimeLock) {
-            const duration = moment.duration(moment(this.form.value.time).diff(moment()));
-            return duration.asSeconds();
+            return differenceInSeconds(new Date(this.form.value.time), Date.now());
         }
 
         return 0;
