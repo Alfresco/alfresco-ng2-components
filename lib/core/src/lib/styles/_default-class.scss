@@ -1,4 +1,4 @@
-@import 'styles/flex';
+@import './flex';
 
 .adf-hide-small {
     @include layout-bp(lt-md) {

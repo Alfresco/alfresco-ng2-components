@@ -6,7 +6,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-extensions",
     "styleIncludePaths": [
-      "../../dist/libs/core/src/lib"
+      "../core/src/lib"
     ]
   }
 }

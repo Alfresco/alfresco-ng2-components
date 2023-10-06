@@ -23,7 +23,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-process-services-cloud",
     "styleIncludePaths": [
-      "../../dist/libs/core/lib"
+      "../core/src/lib"
     ]
   },
   "allowedNonPeerDependencies": [

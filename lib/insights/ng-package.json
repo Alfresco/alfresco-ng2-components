@@ -17,7 +17,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-insights",
     "styleIncludePaths": [
-      "../../dist/libs/core/lib"
+      "../core/src/lib"
     ]
   }
 }
