@@ -16,10 +16,9 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
+import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -27,6 +26,7 @@ import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export interface DateRangeValue {
     from: string;
@@ -42,17 +42,17 @@ const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } }
     ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy {
-    from: UntypedFormControl;
-    to: UntypedFormControl;
+    from: FormControl;
+    to: FormControl;
 
-    form: UntypedFormGroup;
+    form: FormGroup;
     matcher = new LiveErrorStateMatcher();
 
     id: string;
@@ -95,11 +95,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     ngOnInit() {
         this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
 
-        const customDateAdapter = this.dateAdapter as MomentDateAdapter;
-        customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
-
         this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
+            .select<string>(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((locale) => this.setLocale(locale));
 
@@ -117,14 +114,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             const splitValue = this.startValue.split('||');
             const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerFormat);
             const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerFormat);
-            this.from = new UntypedFormControl(fromValue, validators);
-            this.to = new UntypedFormControl(toValue, validators);
+            this.from = new FormControl(fromValue, validators);
+            this.to = new FormControl(toValue, validators);
         } else {
-            this.from = new UntypedFormControl('', validators);
-            this.to = new UntypedFormControl('', validators);
+            this.from = new FormControl('', validators);
+            this.to = new FormControl('', validators);
         }
 
-        this.form = new UntypedFormGroup({
+        this.form = new FormGroup({
             from: this.from,
             to: this.to
         });
@@ -220,7 +217,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    onChangedHandler(event: any, formControl: UntypedFormControl) {
+    onChangedHandler(event: any, formControl: FormControl) {
         const inputValue = event.value;
         const formatDate = this.dateAdapter.parse(inputValue, this.datePickerFormat);
         if (formatDate?.isValid()) {
@@ -234,12 +231,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         this.setFromMaxDate();
     }
 
-    setLocale(locale) {
+    setLocale(locale: string) {
         this.dateAdapter.setLocale(locale);
         moment.locale(locale);
     }
 
-    hasParseError(formControl): boolean {
+    hasParseError(formControl: FormControl): boolean {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
 

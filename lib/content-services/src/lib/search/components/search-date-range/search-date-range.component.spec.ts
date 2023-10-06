@@ -16,11 +16,11 @@
  */
 
 import { SearchDateRangeComponent } from './search-date-range.component';
-import { MomentDateAdapter } from '@alfresco/adf-core';
 import { DateAdapter } from '@angular/material/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 declare let moment: any;
 
@@ -47,26 +47,12 @@ describe('SearchDateRangeComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should use moment adapter', () => {
-        fixture.detectChanges();
-
-        expect(adapter instanceof MomentDateAdapter).toBe(true);
-        expect(component.datePickerFormat).toBe('DD/MM/YYYY');
-    });
-
     it('should setup form elements on init', () => {
         fixture.detectChanges();
 
         expect(component.from).toBeDefined();
         expect(component.to).toBeDefined();
         expect(component.form).toBeDefined();
-    });
-
-    it('should setup the format of the date from configuration', () => {
-        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
-        fixture.detectChanges();
-
-        expect(adapter.overrideDisplayFormat).toBe(dateFormatFixture);
     });
 
     it('should setup form control with formatted valid date on change', () => {
