@@ -1,6 +1,6 @@
 <div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid && isTouched()">
     <mat-form-field [floatLabel]="'always'" class="adf-date-widget">
-        <mat-label>{{field.name | translate }} ({{field.dateDisplayFormat}})</mat-label>
+        <mat-label class="adf-label" [id]="field.id + '-label'">{{field.name | translate }} ({{field.dateDisplayFormat}})</mat-label>
         <input matInput [matDatepicker]="datePicker"
             [id]="field.id"
             [(ngModel)]="value"
