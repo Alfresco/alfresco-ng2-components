@@ -57,7 +57,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     startAt: Moment;
 
     @Input()
-    value = null;
+    value: any = null;
 
     private onDestroy$ = new Subject<boolean>();
 
