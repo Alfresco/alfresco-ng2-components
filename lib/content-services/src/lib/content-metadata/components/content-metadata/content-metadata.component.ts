@@ -191,7 +191,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Group content state
      *
-     * @Input group: CardViewGroup;
+     * @type {CardViewGroup}
      */
     @Input()
     group: CardViewGroup;
@@ -323,9 +323,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Called after clicking the save button. It confirms all changes done for metadata and hides both category and tag name controls.
      *
-     * @param {string} buttonType - The type of button clicked.
-     * @param {Event} event - The click event.
-     * @param {string} group - The group associated with the action.
+     * @param buttonType - The type of button clicked.
+     * @param event - The click event.
+     * @param group - The group associated with the action.
      */
     saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
