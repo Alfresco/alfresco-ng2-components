@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment';
+import { DateAdapter } from '@angular/material/core';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateWidgetComponent } from './date.widget';
@@ -28,6 +28,7 @@ describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
     let element: HTMLElement;
+    let adapter: DateAdapter<Date>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,6 +38,7 @@ describe('DateWidgetComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(DateWidgetComponent);
+        adapter = fixture.debugElement.injector.get(DateAdapter);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -62,8 +64,8 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = moment(minValue, widget.field.dateDisplayFormat);
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
+        const expected = adapter.parse(minValue, widget.DATE_FORMAT) as Date;
+        expect(adapter.compareDate(widget.minDate, expected)).toBe(0);
     });
 
     it('should date field be present', () => {
@@ -85,8 +87,8 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expected = moment(maxValue, widget.field.dateDisplayFormat);
-        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+        const expected = adapter.parse(maxValue, widget.DATE_FORMAT) as Date;
+        expect(adapter.compareDate(widget.maxDate, expected)).toBe(0);
     });
 
     it('should eval visibility on date changed', () => {
@@ -101,7 +103,7 @@ describe('DateWidgetComponent', () => {
         });
         widget.field = field;
         widget.onDateChange({
-            value: moment('12/12/2012', widget.field.dateDisplayFormat)
+            value: new Date('12/12/2012')
         } as any);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
@@ -197,13 +199,13 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
 
             let dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton.disabled).toBeFalsy();
+            expect(dateButton?.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton.disabled).toBeTruthy();
+            expect(dateButton?.disabled).toBeTruthy();
         });
 
         it('should set isValid to false when the value is not a correct date value', () => {
