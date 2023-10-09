@@ -27,7 +27,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
 import { startOfMinute, isBefore, isValid, endOfMinute } from 'date-fns';
 
 export interface DatetimeRangeValue {
@@ -65,7 +64,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DatetimeAdapter<DateFnsAdapter>, private userPreferencesService: UserPreferencesService) {}
+    constructor(private dateAdapter: DatetimeAdapter<string>, private userPreferencesService: UserPreferencesService) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
@@ -128,12 +127,12 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.onDestroy$.complete();
     }
 
-    apply(model: { from: string; to: string }, isValid: boolean) {
-        if (isValid && this.id && this.context && this.settings && this.settings.field) {
+    apply(model: { from: string; to: string }, isFieldValid: boolean) {
+        if (isFieldValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = DateFnsUtils.formatDate(startOfMinute(new Date(model.from)), `yyyy-MM-dd'T'HH:mm:ss'Z'`);
-            const end = DateFnsUtils.formatDate(endOfMinute(new Date(model.to)), `yyyy-MM-dd'T'HH:mm:ss'Z'`);
+            const start = startOfMinute(new Date(model.from)).toISOString();
+            const end = endOfMinute(new Date(model.to)).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
             this.updateDisplayValue();

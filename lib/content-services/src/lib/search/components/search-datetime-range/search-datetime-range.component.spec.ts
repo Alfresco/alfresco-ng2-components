@@ -25,9 +25,9 @@ import { DateFnsUtils } from '@alfresco/adf-core';
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
     let component: SearchDatetimeRangeComponent;
-    const fromDatetime = '2016-10-16 12:30';
-    const toDatetime = '2017-10-16 20:00';
-    const maxDatetime = '10-Mar-20 20:00';
+    const fromDatetime = '2016-10-16 12:30 GMT';
+    const toDatetime = '2017-10-16 20:00 GMT';
+    const maxDatetime = '10-Mar-20 20:00 GMT';
     const datetimeFormatFixture = 'DD-MMM-YY HH:mm';
 
     beforeEach(() => {
@@ -59,7 +59,7 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         const inputString = '20-feb-18 20:00';
-        
+
         const dateFromInput = DateFnsUtils.parseDate(inputString, datetimeFormatFixture);
 
         expect(isValid(dateFromInput)).toBeTruthy();
@@ -76,7 +76,7 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         const inputString = '2017-10-16 20:f:00';
-        
+
         const dateFromInput = DateFnsUtils.parseDate(inputString, datetimeFormatFixture);
 
         expect(isValid(dateFromInput)).toBeFalsy();
@@ -154,7 +154,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toDatetime
         }, true);
 
-        const expectedQuery = `cm:created:['2016-10-16T12:30:00Z' TO '2017-10-16T20:00:59Z']`;
+        const expectedQuery = `cm:created:['2016-10-16T12:30:00.000Z' TO '2017-10-16T20:00:59.999Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
@@ -182,7 +182,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toInGmt
         }, true);
 
-        const expectedQuery = `cm:created:['2021-02-24T15:00:00Z' TO '2021-02-28T13:00:59Z']`;
+        const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.999Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
