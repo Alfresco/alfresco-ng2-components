@@ -129,18 +129,26 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     customPanels: ContentMetadataCustomPanel[] = [];
 
-    /** (optional) This flag sets the metadata in read only mode
-    /** (optional) This flag sets the metadata in read only mode
+    /**
+     * (optional) This flag sets the metadata in read-only mode,
      * preventing changes.
      */
     @Input()
     readOnly = false;
 
-    /** Emitted when content's editable state is changed. **/
+    /**
+     * Emitted when content's editable state is changed.
+     *
+     * @Output
+     */
     @Output()
     editableChange = new EventEmitter<boolean>();
 
-    /** Emitted when content's editableTags state is changed. **/
+    /**
+     * Emitted when content's editableTags state is changed.
+     *
+     * @Output
+     */
     @Output()
     editableTagsChange = new EventEmitter<boolean>();
 
@@ -148,19 +156,35 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     editableCategoriesChange = new EventEmitter<boolean>();
 
-    /** Emitted when content's group state is changed. **/
+    /**
+     * Emitted when content's group state is changed.
+     *
+     * @Output
+     */
     @Output()
     groupChange = new EventEmitter<CardViewGroup>();
 
-    /** (optional) This flag toggles editable of categories content. **/
+    /**
+     * (optional) This flag toggles editable of categories content.
+     *
+     * @Input
+     */
     @Input()
     editableCategories = false;
 
-    /** (optional) This flag toggles editable of tags content. **/
+    /**
+     * (optional) This flag toggles editable of tags content.
+     *
+     * @Input
+     */
     @Input()
     editableTags = false;
 
-    /** group content state **/
+    /**
+     * group content state
+     * @Input()
+     * group: CardViewGroup;
+     */
     @Input()
     group: CardViewGroup;
 
@@ -290,7 +314,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
-     * Before clicking on that button they are not saved.
+     *
+     * @param Before clicking on that button they are not saved.
      */
     saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
@@ -390,21 +415,21 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.editable = !this.editable;
                 this.editableChange.emit(this.editable);
                 this.panel.open();
-                group.editable =false;
+                group.editable = false;
                 break;
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.editableTagsChange.emit(this.editableTags);
                 this.isTagPanelVisible = this.editableTags;
                 this.tagNameControlVisible = true;
-                group.editable =false;
+                group.editable = false;
                 break;
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.editableCategoriesChange.emit(this.editableCategories);
                 this.isCategoriesPanelVisible = this.editableCategories;
                 this.categoryControlVisible = true;
-                group.editable =false;
+                group.editable = false;
                 break;
             case ButtonType.Group:
                 group.editable = !group.editable;
@@ -455,7 +480,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
@@ -465,13 +491,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
             ...(this.displayTags ? this.saveTags() : {}),
             ...(this.displayCategories ? this.saveCategories() : {})
-        }).pipe(
-            catchError((err) => {
-                this.cardViewContentUpdateService.updateElement(this.targetProperty);
-                this.handleUpdateError(err);
-                this._saving = false;
-                return of(null);
-            }))
+        })
+            .pipe(
+                catchError((err) => {
+                    this.cardViewContentUpdateService.updateElement(this.targetProperty);
+                    this.handleUpdateError(err);
+                    this._saving = false;
+                    return of(null);
+                })
+            )
             .subscribe((result: any) => {
                 if (result) {
                     this.updateUndefinedNodeProperties(result.updatedNode);
@@ -485,9 +513,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                         this.loadTagsForNode(this.node.id);
                     }
                     if (this.displayCategories && !!result.LinkingCategories) {
-                        this.assignedCategories = result.LinkingCategories.list ?
-                            result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry) :
-                            [result.LinkingCategories.entry];
+                        this.assignedCategories = result.LinkingCategories.list
+                            ? result.LinkingCategories.list.entries.map((entry: CategoryEntry) => entry.entry)
+                            : [result.LinkingCategories.entry];
                     }
                 }
                 this._saving = false;
@@ -524,11 +552,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private getProperties(node: Node) {
         const properties$ = this.contentMetadataService.getBasicProperties(node);
         const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
-        return zip(properties$, contentTypeProperty$)
-            .pipe(map(([properties, contentTypeProperty]) => {
-                const filteredProperties = contentTypeProperty.filter((property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1);
+        return zip(properties$, contentTypeProperty$).pipe(
+            map(([properties, contentTypeProperty]) => {
+                const filteredProperties = contentTypeProperty.filter(
+                    (property) => properties.findIndex((baseProperty) => baseProperty.key === property.key) === -1
+                );
                 return [...properties, ...filteredProperties];
-            }));
+            })
+        );
     }
 
     private isEmpty(value: any): boolean {
@@ -584,11 +615,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 }
             });
             if (this.tags.length) {
-                observables.tagsAssigning = this.tagService.assignTagsToNode(this.node.id, this.tags.map((tag) => {
-                    const tagBody = new TagBody();
-                    tagBody.tag = tag;
-                    return tagBody;
-                }));
+                observables.tagsAssigning = this.tagService.assignTagsToNode(
+                    this.node.id,
+                    this.tags.map((tag) => {
+                        const tagBody = new TagBody();
+                        tagBody.tag = tag;
+                        return tagBody;
+                    })
+                );
             }
         }
         return observables;

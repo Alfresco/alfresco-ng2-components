@@ -340,7 +340,7 @@ describe('TagsCreatorComponent', () => {
         describe('isTagsEmpty', () => {
             it('should return true when tags empty', () => {
                 component.tags = [];
-                component.tagNameControlVisible = false; 
+                component.tagNameControlVisible = false;
                 const result = component.isTagsEmpty;
                 expect(result).toBeTrue();
             });
