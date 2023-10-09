@@ -357,6 +357,7 @@ for more information about installing and using the source code.
 | [Base Card View Content Update interface](content-services/interfaces/base-card-view-content-update.interface.md) | Specifies required properties and methods for Card View Content Update service. |  |
 | Extends from BaseCardViewUpdate. | [Source](../lib/content-services/src/lib/interfaces/base-card-view-content-update.interface.ts) |  |
 | [Search widget interface](content-services/interfaces/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/src/lib/search/models/search-widget.interface.ts) |
+| [Content Metadata Custom Panel interface](content-services/interfaces/content-metadata-custom-panel.interface.md) | Specifies required properties for metadata custom panel. | [Source](../lib/content-services/src/lib/content-metadata/interfaces/content-metadata-custom-panel.interface.ts) |
 
 ### Models
 

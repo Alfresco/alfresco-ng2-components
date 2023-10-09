@@ -12,6 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v6.4.0](#v640)
 -   [v6.2.0](#v620)
 -   [v6.1.0](#v610)
 -   [v6.0.0](#v600)
@@ -42,6 +43,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.2.0](#v220)
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
+
+## v6.4.0
+
+<!--v640 start-->
+
+-   [Content Metadata Custom Panel interface](content-services/interfaces/content-metadata-custom-panel.interface.md)
+
+<!--v640 end-->
 
 ## v6.2.0
 

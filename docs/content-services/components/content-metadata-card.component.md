@@ -27,6 +27,7 @@ Displays and edits metadata related to a node.
     -   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
 -   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
 -   [Search select options (ACS 7+)](#search-select-options-acs-7)
+-   [Custom metadata panels](#custom-metadata-panels)
 
 ## Basic Usage
 
@@ -53,6 +54,7 @@ Displays and edits metadata related to a node.
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
 | displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
 | editable | `boolean` |  | (optional) This flag toggles editable of content. |
+| customPanels | [`ContentMetadataCustomPanel`](../interfaces/content-metadata-custom-panel.interface.md)`[]` | | (optional) List of custom metadata panels to be displayed as [`Dynamic components`](../../extensions/components/dynamic.component.md). |
 
 ### Events
 
@@ -438,3 +440,7 @@ When the list of values is too long, the options selection panel will be enhance
 ```
 
 ![Chips for multi value properties](../../docassets/images/adf-search-select.png)
+
+## Custom metadata panels
+
+If there is a need to display some custom node properties that require additional UI or data to be fetched you can define custom metadata panels for the metadata component. After creating custom component to be displayed it has to be registered in [Extension Service](../../extensions/services/extension.service.md). Both `panelTitle` and `component` properties have to be defined.

@@ -36,7 +36,7 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup, PresetConfig } from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -114,6 +114,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /** True if categories should be displayed, false otherwise */
     @Input()
     displayCategories = false;
+
+    /** List of custom metadata panels to be displayed with registered custom components */
+    @Input()
+    customPanels: ContentMetadataCustomPanel[] = [];
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
