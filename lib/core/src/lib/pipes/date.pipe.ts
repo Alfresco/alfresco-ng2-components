@@ -17,17 +17,12 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DateFnsUtils } from '../common/utils/date-fns-utils';
-import { isDate } from 'date-fns';
+import { isValid } from 'date-fns';
 
 @Pipe({ name: 'adfDate' })
 export class ADFDatePipe implements PipeTransform {
     transform(value: Date | string, dateFormat: string): Date {
-        if (value) {
-            const date = typeof value === 'string' ? DateFnsUtils.parseDate(value, dateFormat) : value;
-            if (isDate(date)) {
-                return date;
-            }
-        }
-        return new Date();
+        const date = value instanceof Date ? value : new Date(value);
+        return isValid(date) ? DateFnsUtils.parseDate(date, dateFormat) : date;
     }
 }

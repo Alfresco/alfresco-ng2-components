@@ -165,7 +165,7 @@ describe('DateWidgetComponent', () => {
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
-            widget.field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('MM-DD-YYYY');
+            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -174,7 +174,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement?.value).toContain('12-30-9999');
 
             widget.field.value = '05.06.2019';
-            widget.field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('DD.MM.YYYY');
+            widget.field.dateDisplayFormat = 'DD.MM.YYYY';
 
             fixture.componentInstance.ngOnInit();
             fixture.detectChanges();
@@ -233,7 +233,7 @@ describe('DateWidgetComponent', () => {
         });
 
         field.isVisible = true;
-        field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('MM-DD-YYYY');
+        field.dateDisplayFormat = 'MM-DD-YYYY';
         widget.field = field;
 
         fixture.detectChanges();

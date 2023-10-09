@@ -28,7 +28,7 @@ import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
-import { isValid, parseISO } from 'date-fns';
+import { isValid } from 'date-fns';
 import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 // Maps to FormFieldRepresentation
@@ -190,7 +190,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
-            this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
+            this.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat(json.dateDisplayFormat) || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
@@ -354,7 +354,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (isNumberValue(value)) {
                     dateValue = new Date(value);
                 } else {
-                    dateValue = parseISO(value);
+                    dateValue = DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A');
                 }
                 if (isValid(dateValue)) {
                     value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
@@ -368,7 +368,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (isNumberValue(value)) {
                     dateValue = new Date(value);
                 } else {
-                    dateValue = parseISO(value);
+                    dateValue = DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
                 }
                 if (isValid(dateValue)) {
                     value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);

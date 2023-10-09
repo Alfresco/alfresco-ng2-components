@@ -119,7 +119,7 @@ describe('DateWidgetComponent', () => {
             expect(element.querySelector('#date-field-id')).toBeDefined();
             expect(element.querySelector('#date-field-id')).not.toBeNull();
             const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement.value).toContain('9999-9-9');
+            expect(dateElement.value).toContain('9-9-9999');
         });
 
         it('should show the correct format type', async () => {
@@ -131,7 +131,7 @@ describe('DateWidgetComponent', () => {
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
-            widget.field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-DD-MM');
+            widget.field.dateDisplayFormat = 'YYYY-DD-MM';
             widget.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -192,7 +192,7 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         field.isVisible = true;
-        field.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat('MM-DD-YYYY');
+        field.dateDisplayFormat = 'MM-DD-YYYY';
         widget.field = field;
         widget.ngOnInit();
         fixture.detectChanges();

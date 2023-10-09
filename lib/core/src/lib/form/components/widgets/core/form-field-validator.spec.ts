@@ -710,7 +710,7 @@ describe('FormFieldValidator', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
             const maxValueSavedInForm = DateFnsUtils.parseDate(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').toISOString();
 
-            const localValidValue = new Date('2018-3-30 11:59 PM').toISOString();
+            const localValidValue = '2018-3-30 11:59 PM';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -725,7 +725,7 @@ describe('FormFieldValidator', () => {
             const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
             const maxValueSavedInForm = DateFnsUtils.parseDate(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').toISOString();
 
-            const localInvalidValue = new Date('2018-3-31 12:01 AM').toISOString();
+            const localInvalidValue = '2018-3-31 12:01 AM';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -835,7 +835,7 @@ describe('FormFieldValidator', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
             const minValueSavedInForm = DateFnsUtils.parseDate(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').toISOString();
 
-            const localValidValue = new Date('2018-3-02 06:01 AM').toISOString();
+            const localValidValue = '2018-3-02 06:01 AM';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -850,7 +850,7 @@ describe('FormFieldValidator', () => {
             const minValueFromActivitiInput = '02-3-2018 06:00 AM';
             const minValueSavedInForm = DateFnsUtils.parseDate(minValueFromActivitiInput, 'DD-M-YYYY hh:mm A').toISOString();
 
-            const localInvalidValue = new Date('2018-3-02 05:59 AM').toISOString();
+            const localInvalidValue = '2018-3-02 05:59 AM';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,

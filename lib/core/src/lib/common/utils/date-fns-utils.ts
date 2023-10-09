@@ -111,7 +111,10 @@ export class DateFnsUtils {
      */
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
         // Check if 'A' is present in the format string
-        const containsA = dateDisplayFormat.includes('A');
+        let containsA;
+        if (dateDisplayFormat) {
+            containsA = dateDisplayFormat.includes('A');
+        }
 
         // Replace 'HH' with 'hh' if 'A' is also present
         if (containsA) {
@@ -164,8 +167,11 @@ export class DateFnsUtils {
      * @param dateFormat - The date format string to use for parsing.
      * @returns The parsed Date object.
      */
-    static parseDate(value: string, dateFormat: string): Date {
-        return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+    static parseDate(date: Date | string, dateFormat: string): Date {
+        if (date instanceof Date) {
+            date = date.toISOString();
+        }
+        return parse(date, this.convertMomentToDateFnsFormat(dateFormat), new Date());
     }
 
     /**
