@@ -434,13 +434,12 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
+                    this.value = moment(new Date()).format(this.dateDisplayFormat);
                 }
 
-                const dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
-
-                if (isValid(dateValue)) {
-                    this.form.values[this.id] = `${DateFnsUtils.formatDate(dateValue, 'YYYY-MM-DD')}T00:00:00.000Z`;
+                const dateValue = moment(this.value, this.dateDisplayFormat, true);
+                if (dateValue?.isValid()) {
+                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;
