@@ -496,7 +496,6 @@ describe('ContentMetadataComponent', () => {
             component.toggleEdit(mockEvent, mockGroup, ButtonType.GeneralInfo);
             expect(component.isEditingPanel).toHaveBeenCalled();
             expect(showErrorSpy).toHaveBeenCalledWith('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
-            
         });
     });
 
