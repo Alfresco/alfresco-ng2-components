@@ -139,7 +139,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Emitted when content's editable state is changed.
      *
-     * @Output
+     * @event editableChange
+     * @type {EventEmitter<boolean>}
      */
     @Output()
     editableChange = new EventEmitter<boolean>();
@@ -147,19 +148,26 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Emitted when content's editableTags state is changed.
      *
-     * @Output
+     * @event editableTagsChange
+     * @type {EventEmitter<boolean>}
      */
     @Output()
     editableTagsChange = new EventEmitter<boolean>();
 
-    /** Emitted when content's editableCategories state is changed. **/
+    /**
+     * Emitted when content's editableCategories state is changed.
+     *
+     * @event editableCategoriesChange
+     * @type {EventEmitter<boolean>}
+     */
     @Output()
     editableCategoriesChange = new EventEmitter<boolean>();
 
     /**
      * Emitted when content's group state is changed.
      *
-     * @Output
+     * @event groupChange
+     * @type {EventEmitter<CardViewGroup>}
      */
     @Output()
     groupChange = new EventEmitter<CardViewGroup>();
@@ -167,7 +175,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * (optional) This flag toggles editable of categories content.
      *
-     * @Input
+     * @type {boolean}
      */
     @Input()
     editableCategories = false;
@@ -175,15 +183,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * (optional) This flag toggles editable of tags content.
      *
-     * @Input
+     * @type {boolean}
      */
     @Input()
     editableTags = false;
 
     /**
-     * group content state
-     * @Input()
-     * group: CardViewGroup;
+     * Group content state
+     *
+     * @Input group: CardViewGroup;
      */
     @Input()
     group: CardViewGroup;
@@ -313,9 +321,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /**
-     * Called after clicking save button. It confirms all changes done for metadata and hides both category and tag name controls.
+     * Called after clicking the save button. It confirms all changes done for metadata and hides both category and tag name controls.
      *
-     * @param Before clicking on that button they are not saved.
+     * @param {string} buttonType - The type of button clicked.
+     * @param {Event} event - The click event.
+     * @param {string} group - The group associated with the action.
      */
     saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
