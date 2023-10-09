@@ -16,6 +16,7 @@
  */
 
 /* eslint-disable @angular-eslint/component-selector */
+import moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -39,7 +40,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _isValid: boolean = true;
     private _required: boolean = false;
 
-    readonly defaultDateFormat: string = 'd-M-yyyy';
+    readonly defaultDateFormat: string = 'D-M-YYYY';
     readonly defaultDateTimeFormat: string = 'd-M-yyyy hh:mm a';
 
     // model members
@@ -190,7 +191,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;
             this.enableFractions = json.enableFractions;
             this.currency = json.currency;
-            this.dateDisplayFormat = DateFnsUtils.convertMomentToDateFnsFormat(json.dateDisplayFormat) || this.getDefaultDateFormat(json);
+            this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
             this.tooltip = json.tooltip;
@@ -241,22 +242,11 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getDefaultDateFormat(jsonField: any): string {
-        if (jsonField.fields) {
-            Object.keys(jsonField.fields).forEach((el) => {
-                if (jsonField.fields[el]) {
-                    jsonField.fields[el].forEach((element) => {
-                        element.dateDisplayFormat = element.dateDisplayFormat
-                            ? DateFnsUtils.convertMomentToDateFnsFormat(element.dateDisplayFormat)
-                            : element.dateDisplayFormat;
-                    });
-                }
-            });
-        }
         let originalType = jsonField.type;
         if (FormFieldTypes.isReadOnlyType(jsonField.type) && jsonField.params && jsonField.params.field) {
             originalType = jsonField.params.field.type;
         }
-        return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
+        return originalType === FormFieldTypes.DATETIME ? DateFnsUtils.convertMomentToDateFnsFormat(this.defaultDateTimeFormat) : this.defaultDateFormat;
     }
 
     private isTypeaheadFieldType(type: string): boolean {
@@ -366,12 +356,12 @@ export class FormFieldModel extends FormWidgetModel {
             if (value) {
                 let dateValue;
                 if (isNumberValue(value)) {
-                    dateValue = new Date(value);
+                    dateValue = moment(value);
                 } else {
-                    dateValue = DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = moment.utc(value.split('T')[0], 'YYYY-M-D');
                 }
-                if (isValid(dateValue)) {
-                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
+                if (dateValue?.isValid()) {
+                    value = dateValue.utc().format(this.dateDisplayFormat);
                 }
             }
         }

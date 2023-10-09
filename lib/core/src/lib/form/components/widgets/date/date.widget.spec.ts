@@ -16,14 +16,13 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import moment from 'moment';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateWidgetComponent } from './date.widget';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
-import { isSameDay } from 'date-fns';
-import { DateFnsUtils } from '../../../../common';
 
 describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;
@@ -63,8 +62,8 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expectedMinDate = DateFnsUtils.parseDate(minValue, widget.field.dateDisplayFormat);
-        expect(isSameDay(widget.minDate, expectedMinDate)).toBeTruthy();
+        const expected = moment(minValue, widget.field.dateDisplayFormat);
+        expect(widget.minDate.isSame(expected)).toBeTruthy();
     });
 
     it('should date field be present', () => {
@@ -86,8 +85,8 @@ describe('DateWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        const expectedMaxDate = DateFnsUtils.parseDate(maxValue, widget.field.dateDisplayFormat);
-        expect(isSameDay(widget.maxDate, expectedMaxDate)).toBeTruthy();
+        const expected = moment(maxValue, widget.field.dateDisplayFormat);
+        expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
@@ -249,21 +248,5 @@ describe('DateWidgetComponent', () => {
         await fixture.whenStable();
 
         expect(dateElement?.value).toContain('03-02-2020');
-    });
-
-    describe('format label', () => {
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                name: 'Date',
-                dateDisplayFormat: 'd-M-yyyy'
-            });
-            fixture.detectChanges();
-        });
-
-        it('should format label correctly', () => {
-            const result = widget.formatDateLabel(widget.field);
-
-            expect(result).toBe('Date (D-M-YYYY)');
-        });
     });
 });

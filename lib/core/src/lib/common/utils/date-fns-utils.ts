@@ -163,7 +163,7 @@ export class DateFnsUtils {
     /**
      * Parses a date string using the specified date format.
      *
-     * @param value - The date string to parse.
+     * @param date - The date string to parse.
      * @param dateFormat - The date format string to use for parsing.
      * @returns The parsed Date object.
      */

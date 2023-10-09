@@ -46,7 +46,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
+                private dateAdapter: DateAdapter<Date>,
                 private userPreferencesService: UserPreferencesService,
                 @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
                 private translationService: TranslationService) {

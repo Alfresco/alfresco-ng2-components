@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
@@ -273,9 +274,9 @@ describe('FormFieldModel', () => {
             dateDisplayFormat: 'DD-MM-YYYY'
         });
 
-        const currentDate = new Date();
-        const expectedDate = DateFnsUtils.formatDate(currentDate, 'DD-MM-YYYY');
-        const expectedDateFormat = `${DateFnsUtils.formatDate(currentDate, 'YYYY-MM-DD')}T00:00:00.000Z`;
+        const currentDate = moment(new Date());
+        const expectedDate = moment(currentDate).format('DD-MM-YYYY');
+        const expectedDateFormat = `${currentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
 
         expect(field.value).toBe(expectedDate);
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);

@@ -17,6 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
+import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
@@ -148,8 +149,8 @@ export class DateFieldValidator implements FormFieldValidator {
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
         if (inputDate) {
-            const date = DateFnsUtils.parseDate(inputDate, dateFormat);
-            return isValid(date);
+            const d = moment(inputDate, dateFormat, true);
+            return d.isValid();
         }
 
         return false;
@@ -164,7 +165,7 @@ export class DateFieldValidator implements FormFieldValidator {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
-            field.validationSummary.message = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
+            field.validationSummary.message = field.dateDisplayFormat;
             return false;
         }
         return true;
@@ -211,8 +212,8 @@ export class DateTimeFieldValidator implements FormFieldValidator {
 
 export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 
-    DATE_FORMAT_CLOUD = 'yyyy-MM-dd';
-    DATE_FORMAT = 'dd-MM-yyyy';
+    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+    DATE_FORMAT = 'DD-MM-YYYY';
 
     supportedTypes = [
         FormFieldTypes.DATE
@@ -251,17 +252,17 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
         // remove time and timezone info
         let fieldValueData;
         if (typeof field.value === 'string') {
-            fieldValueData = DateFnsUtils.parseDate(field.value.split('T')[0], dateFormat);
+            fieldValueData = moment(field.value.split('T')[0], dateFormat);
         } else {
             fieldValueData = field.value;
         }
 
         const minValueDateFormat = this.extractDateFormat(field.minValue);
-        const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
+        const min = moment(field.minValue, minValueDateFormat);
 
-        if (isBefore(fieldValueData, min)) {
+        if (fieldValueData.isBefore(min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set('minValue', min.format(field.dateDisplayFormat).toLocaleUpperCase());
             isFieldValid = false;
         }
         return isFieldValid;
@@ -281,17 +282,17 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
         // remove time and timezone info
         let fieldValueData;
         if (typeof field.value === 'string') {
-            fieldValueData = DateFnsUtils.parseDate(field.value.split('T')[0], dateFormat);
+            fieldValueData = moment(field.value.split('T')[0], dateFormat);
         } else {
             fieldValueData = field.value;
         }
 
         const maxValueDateFormat = this.extractDateFormat(field.maxValue);
-        const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
+        const max = moment(field.maxValue, maxValueDateFormat);
 
-        if (isAfter(fieldValueData, max)) {
+        if (fieldValueData.isAfter(max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).toLocaleUpperCase());
             isFieldValid = false;
         }
         return isFieldValid;
@@ -320,7 +321,7 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
-            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+            if (!DateTimeFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 isFieldValid = false;
             } else {
@@ -366,7 +367,7 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
         if (this.isSupported(field) && field.value && field.isVisible) {
             const dateFormat = field.dateDisplayFormat;
 
-            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+            if (!DateTimeFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 isFieldValid = false;
             } else {

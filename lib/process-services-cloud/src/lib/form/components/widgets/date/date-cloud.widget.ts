@@ -17,23 +17,22 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import moment, { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
-    WidgetComponent,
-    UserPreferencesService, UserPreferenceValues, FormService, DateFnsUtils, TranslationService, FormFieldModel
+    MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
+    UserPreferencesService, UserPreferenceValues, FormService
 } from '@alfresco/adf-core';
 import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
-import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
-import { addDays, isValid, subDays } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
+        { provide: DateAdapter, useClass: MomentDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     templateUrl: './date-cloud.widget.html',
     styleUrls: ['./date-cloud.widget.scss'],
     host: {
@@ -52,16 +51,14 @@ import { addDays, isValid, subDays } from 'date-fns';
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
 
-    minDate: Date;
-    maxDate: Date;
+    minDate: Moment;
+    maxDate: Moment;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
-                private userPreferencesService: UserPreferencesService,
-                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats,
-                private translationService: TranslationService) {
+                private dateAdapter: DateAdapter<Moment>,
+                private userPreferencesService: UserPreferencesService) {
         super(formService);
     }
 
@@ -69,31 +66,36 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
+            .subscribe(locale => this.dateAdapter.setLocale(locale));
 
-        this.dateFormatConfig.display.dateInput = this.field.dateDisplayFormat;
+        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
+        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                const today = new Date();
+                const today = this.getTodaysFormattedDate();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
-                    this.minDate = subDays(today, this.field.minDateRangeValue);
-                    this.field.minValue = DateFnsUtils.formatDate(this.minDate, DATE_FORMAT_CLOUD);
+                    this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
+                    this.field.minValue = this.minDate.format(DATE_FORMAT_CLOUD);
                 }
                 if (Number.isInteger(this.field.maxDateRangeValue)) {
-                    this.maxDate = addDays(today, this.field.maxDateRangeValue);
-                    this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DATE_FORMAT_CLOUD);
+                    this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
+                    this.field.maxValue = this.maxDate.format(DATE_FORMAT_CLOUD);
                 }
             } else {
                 if (this.field.minValue) {
-                    this.minDate = DateFnsUtils.parseDate(this.field.minValue, DATE_FORMAT_CLOUD);
+                    this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
                 }
 
                 if (this.field.maxValue) {
-                    this.maxDate = DateFnsUtils.parseDate(this.field.maxValue, DATE_FORMAT_CLOUD);
+                    this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
                 }
             }
         }
+    }
+
+    getTodaysFormattedDate() {
+        return moment().format(DATE_FORMAT_CLOUD);
     }
 
     ngOnDestroy() {
@@ -101,17 +103,10 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         this.onDestroy$.complete();
     }
 
-    formatLabel(field: FormFieldModel): string {
-        const displayName = this.translationService.instant(field.name);
-        const displayFormat = DateFnsUtils.convertDateFnsToMomentFormat(field.dateDisplayFormat);
-
-        return `${displayName} (${displayFormat})`;
-    }
-
     onDateChanged(newDateValue) {
-        const date = DateFnsUtils.parseDate(newDateValue, this.field.dateDisplayFormat);
-        if (isValid(date)) {
-            this.field.value = DateFnsUtils.formatDate(date, this.field.dateDisplayFormat);
+        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
+        if (date.isValid()) {
+            this.field.value = date.format(this.field.dateDisplayFormat);
         } else {
             this.field.value = newDateValue;
         }
