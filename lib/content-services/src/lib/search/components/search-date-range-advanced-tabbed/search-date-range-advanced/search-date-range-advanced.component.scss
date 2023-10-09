@@ -40,6 +40,10 @@
                     margin-top: 2em;
                 }
             }
+
+            .mat-form-field-wrapper:focus-within {
+                outline: 2px auto -webkit-focus-ring-color;
+            }
         }
     }
 }
