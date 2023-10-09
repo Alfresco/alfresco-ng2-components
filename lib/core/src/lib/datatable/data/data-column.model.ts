@@ -17,6 +17,7 @@
 
 import { TemplateRef } from '@angular/core';
 
+// Marker 1: Interface of DataColumn
 export interface DataColumnTypes {
     text: string;
     image: string;
@@ -25,6 +26,7 @@ export interface DataColumnTypes {
     icon: string;
     fileSize: string;
     location: string;
+    // eslint-disable-next-line id-blacklist
     boolean: string;
 }
 

@@ -53,6 +53,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
 import { ResizableModule } from './directives/resizable/resizable.module';
 import { DataColumnModule } from './data-column/data-column.module';
+import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 
 @NgModule({
     imports: [
@@ -83,6 +84,7 @@ import { DataColumnModule } from './data-column/data-column.module';
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
+        BooleanCellComponent,
         ColumnsSelectorComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
@@ -107,6 +109,7 @@ import { DataColumnModule } from './data-column/data-column.module';
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
+        BooleanCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
