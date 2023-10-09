@@ -21,6 +21,30 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
 
+/**
+ * Date-fns adapter with moment-to-date-fns conversion.
+ *
+ * Automatically switches locales based on user preferences.
+ * Supports custom display format.
+ *
+ * @example
+ *
+ * Add the following to the component `providers` section
+ *
+ * providers: [
+ *  { provide: MAT_DATE_FORMATS, useValue: ADF_FORM_DATE_FORMATS },
+ *  { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+ * ]
+ *
+ * Setting custom format
+ *
+ * constructor(private dateAdapter: DateAdapter<Date>) {}
+ *
+ * ngOnInit() {
+ *   const adapter = this.dateAdapter as AdfDateFnsAdapter;
+     adapter.displayFormat = '<custom date-fns format>';
+ * }
+ */
 @Injectable()
 export class AdfDateFnsAdapter extends DateFnsAdapter {
     private _displayFormat?: string = null;
