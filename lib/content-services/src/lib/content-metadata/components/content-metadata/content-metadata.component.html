@@ -78,14 +78,12 @@
                 </adf-categories-management>
             </div>
         </ng-container>
-        <ng-container *ngFor="let customPanel of customPanels">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>{{ customPanel.panelTitle | translate }}</mat-panel-title>
-                </mat-expansion-panel-header>
-                <adf-dynamic-component [id]="customPanel.component" [data]="{ node }"></adf-dynamic-component>
-            </mat-expansion-panel>
-        </ng-container>
+        <mat-expansion-panel *ngFor="let customPanel of customPanels">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ customPanel.panelTitle | translate }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <adf-dynamic-component [id]="customPanel.component" [data]="{ node }"></adf-dynamic-component>
+        </mat-expansion-panel>
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
                 <div *ngFor="let group of groupedProperties; let first = first;"

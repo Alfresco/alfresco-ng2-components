@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-10-06
 ---
 
-# [Content Metadata Custom Panel interface](../../../lib/content-services/src/lib/content-metadata//interfaces/content-metadata-custom-panel.interface.ts "Defined in content-metadata-custom-panel.interface.ts")
+# [Content Metadata Custom Panel interface](../../../lib/content-services/src/lib/content-metadata/interfaces/content-metadata-custom-panel.interface.ts "Defined in content-metadata-custom-panel.interface.ts")
 
 Specifies required properties for custom metadata panel to be displayed in [ContentMetadataCardComponent](../components/content-metadata-card.component.md).
 
