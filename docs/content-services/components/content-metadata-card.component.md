@@ -443,4 +443,4 @@ When the list of values is too long, the options selection panel will be enhance
 
 ## Custom metadata panels
 
-If there is a need to display some custom node properties that require additional UI or data to be fetched you can define custom metadata panels for the metadata component. After creating custom compoent to be displayed it has to be registered in [Extension Service](../../extensions/services/extension.service.md). Both `panelTitle` and `component` properties have to be defined.
+If there is a need to display some custom node properties that require additional UI or data to be fetched you can define custom metadata panels for the metadata component. After creating custom component to be displayed it has to be registered in [Extension Service](../../extensions/services/extension.service.md). Both `panelTitle` and `component` properties have to be defined.

@@ -23,9 +23,9 @@ export interface ContentMetadataCustomPanel {
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | panelTitle | `string` |  | Title for the panel the will be displayed in expansion panel header. |
-| component | `string` |  | Id of the registered [Dynamic compnent](../../extensions/components/dynamic.component.md) to be displayed inside expansion panel. |
+| component | `string` |  | Id of the registered [Dynamic component](../../extensions/components/dynamic.component.md) to be displayed inside expansion panel. |
 
 ## See also
 
 -   [ContentMetadataCardComponent](../components/content-metadata-card.component.md)
--    [Dynamic Component](../../extensions/components/dynamic.component.md)
+-   [Dynamic Component](../../extensions/components/dynamic.component.md)

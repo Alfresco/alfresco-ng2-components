@@ -1408,7 +1408,7 @@ describe('ContentMetadataComponent', () => {
 
     describe('Custom metadata panels', () => {
         it('should render correct custom panel with title and component', () => {
-            component.customPanels = [{ panelTitle: 'testTitle', component: 'testComponent' }]
+            component.customPanels = [{ panelTitle: 'testTitle', component: 'testComponent' }];
             fixture.detectChanges();
             const panelTitle = fixture.debugElement.queryAll(By.css('mat-panel-title'))[1].nativeElement;
             const customComponent = fixture.debugElement.query(By.css('adf-dynamic-component')).nativeElement;

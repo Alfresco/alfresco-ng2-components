@@ -117,7 +117,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** List of custom metadata panels to be displayed with registered custom components */
     @Input()
-    customPanels: ContentMetadataCustomPanel[];
+    customPanels: ContentMetadataCustomPanel[] = [];
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
