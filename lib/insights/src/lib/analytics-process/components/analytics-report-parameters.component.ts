@@ -185,11 +185,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    convertMomentDate(date: string) {
+    convertMomentDate(date: string): string {
         return DateFnsUtils.formatDate(new Date(date), FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z'
     }
 
-    getTodayDate() {
+    getTodayDate(): string {
         return DateFnsUtils.formatDate(new Date(), FORMAT_DATE_ACTIVITI);
     }
 

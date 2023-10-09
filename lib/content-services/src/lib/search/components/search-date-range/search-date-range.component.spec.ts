@@ -22,7 +22,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
-import { endOfDay, endOfToday, isValid, parse, startOfDay } from 'date-fns';
+import { endOfDay, endOfToday, isValid, startOfDay } from 'date-fns';
 
 declare let moment: any;
 
@@ -77,7 +77,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const inputString = '20-feb-18';
-        const dateFromInput = parse(inputString, DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture), new Date());
+        const dateFromInput = DateFnsUtils.parseDate(inputString, DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture));
 
         expect(isValid(dateFromInput)).toBeTruthy();
 
@@ -91,7 +91,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const inputString = '20.f.18';
-        const dateFromInput = parse(inputString, DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture), new Date());
+        const dateFromInput = DateFnsUtils.parseDate(inputString, DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture));
 
         expect(isValid(dateFromInput)).toBeFalsy();
 

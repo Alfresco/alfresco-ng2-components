@@ -115,8 +115,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
 
         if (this.startValue) {
             const splitValue = this.startValue.split('||');
-            const fromValue = this.dateAdapter.parse(splitValue[0], DateFnsUtils.convertMomentToDateFnsFormat(this.datePickerFormat));
-            const toValue = this.dateAdapter.parse(splitValue[1], DateFnsUtils.convertMomentToDateFnsFormat(this.datePickerFormat));
+            const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerFormat);
+            const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerFormat);
             this.from = new UntypedFormControl(fromValue, validators);
             this.to = new UntypedFormControl(toValue, validators);
         } else {
