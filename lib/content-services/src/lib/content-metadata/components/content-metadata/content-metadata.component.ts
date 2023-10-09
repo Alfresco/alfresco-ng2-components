@@ -390,20 +390,21 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.editable = !this.editable;
                 this.editableChange.emit(this.editable);
                 this.panel.open();
-                this.editableTags = false;
-                this.editableCategories = false;
+                group.editable =false;
                 break;
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.editableTagsChange.emit(this.editableTags);
                 this.isTagPanelVisible = this.editableTags;
                 this.tagNameControlVisible = true;
+                group.editable =false;
                 break;
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.editableCategoriesChange.emit(this.editableCategories);
                 this.isCategoriesPanelVisible = this.editableCategories;
                 this.categoryControlVisible = true;
+                group.editable =false;
                 break;
             case ButtonType.Group:
                 group.editable = !group.editable;

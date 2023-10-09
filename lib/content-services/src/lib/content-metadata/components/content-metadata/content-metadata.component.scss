@@ -120,6 +120,12 @@
     }
 }
 
+.adf-metadata-properties .adf-metadata-grouped-properties-container .mat-expansion-panel {
+    .mat-expansion-panel-body {
+        padding: 0 24px;
+    }
+}
+
 .adf-info-drawer-layout-content .adf-content-metadata-card .adf-metadata-properties .mat-expansion-panel {
     border: 1px solid var(--theme-metadata-property-panel-border-color);
     border-radius: 12px;
@@ -134,12 +140,4 @@
 
 .adf-metadata-grouped-properties-container .mat-content.mat-content-hide-toggle {
     align-items: center;
-}
-
-.adf-metadata-grouped-properties-container {
-    .mat-expansion-panel {
-        .mat-expansion-panel-body {
-            padding: 0 24px 0px;
-        }
-    }
 }
