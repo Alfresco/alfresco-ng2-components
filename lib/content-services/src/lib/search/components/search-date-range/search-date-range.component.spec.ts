@@ -67,9 +67,12 @@ describe('SearchDateRangeComponent', () => {
 
     it('should check the format of the date from component', () => {
         component.settings = { field: 'cm:created', dateFormat: DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture) };
+        const privateComponent = component as any;
+        spyOn(privateComponent.dateFormatConfig.display, 'dateInput').and.callThrough();
+
         fixture.detectChanges();
 
-        expect(component.datePickerFormat).toBe(DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture));
+        expect((component as any).dateFormatConfig.display.dateInput).toBe(DateFnsUtils.convertMomentToDateFnsFormat(dateFormatFixture));
     });
 
     it('should setup form control with formatted valid date on change', () => {
