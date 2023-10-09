@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-export * from './object-utils';
-export * from './file-utils';
-export * from './moment-date-formats.model';
-export * from './moment-date-adapter';
-export * from './string-utils';
-export * from './date-fns-utils';
-export * from './date-fns-adapter';
+import { MatDateFormats } from '@angular/material/core';
+
+export const ADF_FORM_DATE_FORMATS: MatDateFormats = {
+    parse: {
+        dateInput: 'dd-MM-yyyy'
+    },
+    display: {
+        dateInput: 'dd-MM-yyyy',
+        monthLabel: 'LLL',
+        monthYearLabel: 'LLL uuuu',
+        dateA11yLabel: 'PP',
+        monthYearA11yLabel: 'LLLL uuuu'
+    }
+};
