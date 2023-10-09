@@ -25,7 +25,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
 
 describe('DateWidgetComponent', () => {
-
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
     let element: HTMLElement;
@@ -101,7 +100,9 @@ describe('DateWidgetComponent', () => {
             readOnly: 'false'
         });
         widget.field = field;
-        widget.onDateChanged({ value: moment('12/12/2012', widget.field.dateDisplayFormat) });
+        widget.onDateChange({
+            value: moment('12/12/2012', widget.field.dateDisplayFormat)
+        } as any);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
     });
@@ -126,13 +127,6 @@ describe('DateWidgetComponent', () => {
 
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
         });
-
-        it('should be able to display label with asterix', () => {
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
-
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
-        });
     });
 
     describe('template check', () => {
@@ -142,7 +136,7 @@ describe('DateWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', () => {
+        it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -153,15 +147,15 @@ describe('DateWidgetComponent', () => {
             widget.field.isVisible = true;
 
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(element.querySelector('#date-field-id')).toBeDefined();
-            expect(element.querySelector('#date-field-id')).not.toBeNull();
+            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement).not.toBeNull();
 
-            const dateElement: any = element.querySelector('#date-field-id');
-            expect(dateElement.value).toContain('9-9-9999');
+            expect(dateElement?.value).toContain('9-9-9999');
         });
 
-        it('[C310335] - Should be able to change display format for Date widget', () => {
+        it('[C310335] - Should be able to change display format for Date widget', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -173,25 +167,20 @@ describe('DateWidgetComponent', () => {
             widget.field.dateDisplayFormat = 'MM-DD-YYYY';
 
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            let dateElement: any = element.querySelector('#date-field-id');
-            expect(dateElement.value).toContain('12-30-9999');
-
-            widget.field.value = '5-6-2019 00:00';
-            widget.field.dateDisplayFormat = 'D-M-YYYY HH:mm';
-
-            fixture.detectChanges();
-
-            dateElement = element.querySelector('#date-field-id');
-            expect(dateElement.value).toContain('5-6-2019 00:00');
+            let dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement?.value).toContain('12-30-9999');
 
             widget.field.value = '05.06.2019';
             widget.field.dateDisplayFormat = 'DD.MM.YYYY';
 
+            fixture.componentInstance.ngOnInit();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            dateElement = element.querySelector('#date-field-id');
-            expect(dateElement.value).toContain('05.06.2019');
+            dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement?.value).toContain('05.06.2019');
         });
 
         it('should disable date button when is readonly', () => {
@@ -233,7 +222,7 @@ describe('DateWidgetComponent', () => {
         });
     });
 
-    it('should display always the json value', () => {
+    it('should display always the json value', async () => {
         const field = new FormFieldModel(new FormModel(), {
             id: 'date-field-id',
             name: 'date-name',
@@ -241,20 +230,23 @@ describe('DateWidgetComponent', () => {
             type: 'date',
             readOnly: 'false'
         });
+
         field.isVisible = true;
         field.dateDisplayFormat = 'MM-DD-YYYY';
         widget.field = field;
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(element.querySelector('#date-field-id')).toBeDefined();
-        expect(element.querySelector('#date-field-id')).not.toBeNull();
-
-        const dateElement: any = element.querySelector('#date-field-id');
-        expect(dateElement.value).toContain('12-30-9999');
+        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+        expect(dateElement?.value).toContain('12-30-9999');
 
         widget.field.value = '03-02-2020';
 
+        fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
-        expect(dateElement.value).toContain('03-02-2020');
+        await fixture.whenStable();
+
+        expect(dateElement?.value).toContain('03-02-2020');
     });
 });

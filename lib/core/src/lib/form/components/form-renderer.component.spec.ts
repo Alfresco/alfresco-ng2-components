@@ -45,19 +45,12 @@ import { CoreTestingModule } from '../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormRenderingService } from '../services/form-rendering.service';
 import { TextWidgetComponent } from './widgets';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { FormRulesManager } from '../models/form-rules.model';
 
 const typeIntoInput = (targetInput: HTMLInputElement, message: string) => {
     expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
     targetInput.value = message;
     targetInput.dispatchEvent(new Event('input'));
-};
-
-const typeIntoDate = (targetInput: DebugElement, date: { srcElement: { value: string } }) => {
-    expect(targetInput).toBeTruthy('Expected input to set to be valid and not null');
-    targetInput.triggerEventHandler('change', date);
 };
 
 const expectElementToBeHidden = (targetElement: HTMLElement): void => {
@@ -113,11 +106,13 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const inputDateTestOne = fixture.debugElement.query(By.css('#Date0hwq20'));
+            const inputDateTestOne = fixture.nativeElement.querySelector('#Date0hwq20') as HTMLInputElement;
             let displayTextElementContainer: HTMLInputElement = fixture.nativeElement.querySelector('#field-Text0pqd1u-container');
             expectElementToBeHidden(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
+            inputDateTestOne.value = '2019-11-19';
+            inputDateTestOne.dispatchEvent(new Event('change'));
+
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -130,11 +125,14 @@ describe('Form Renderer Component', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const inputDateTestOne = fixture.debugElement.query(By.css('#Date0hwq20'));
+            const inputDateTestOne = fixture.nativeElement.querySelector('#Date0hwq20') as HTMLInputElement;
+
             let displayTextElementContainer: HTMLDivElement = fixture.nativeElement.querySelector('#field-Text0uyqd3-container');
             expectElementToBeVisible(displayTextElementContainer);
 
-            typeIntoDate(inputDateTestOne, { srcElement: { value: '2019-11-19' } });
+            inputDateTestOne.value = '2019-11-19';
+            inputDateTestOne.dispatchEvent(new Event('change'));
+
             fixture.detectChanges();
             await fixture.whenStable();
 

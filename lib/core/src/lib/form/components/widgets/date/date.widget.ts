@@ -20,13 +20,14 @@
 import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
 import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
     selector: 'date-widget',
@@ -34,7 +35,6 @@ import { takeUntil } from 'rxjs/operators';
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -54,6 +54,10 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     minDate: Moment;
     maxDate: Moment;
+    startAt: Moment;
+
+    @Input()
+    value: any = null;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -80,6 +84,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             if (this.field.maxValue) {
                 this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
             }
+
+            this.startAt = moment(this.field.value, this.field.dateDisplayFormat);
+            this.value = moment(this.field.value, this.field.dateDisplayFormat);
         }
     }
 
@@ -88,12 +95,15 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.onDestroy$.complete();
     }
 
-    onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
+    onDateChange(event: MatDatepickerInputEvent<Moment>) {
+        const value = event.value;
+        const input = event.targetElement as HTMLInputElement;
+
+        const date = moment(value, this.field.dateDisplayFormat, true);
         if (date.isValid()) {
             this.field.value = date.format(this.field.dateDisplayFormat);
         } else {
-            this.field.value = newDateValue;
+            this.field.value = input.value;
         }
         this.onFieldChanged(this.field);
     }
