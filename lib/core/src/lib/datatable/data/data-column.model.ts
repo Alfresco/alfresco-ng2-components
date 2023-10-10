@@ -17,7 +17,6 @@
 
 import { TemplateRef } from '@angular/core';
 
-// Marker 1: Interface of DataColumn
 export interface DataColumnTypes {
     text: string;
     image: string;
