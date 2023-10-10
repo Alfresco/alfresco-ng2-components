@@ -29,6 +29,8 @@ import { ProcessFormModel } from './process-form-model.interface';
 import { isNumberValue } from './form-field-utils';
 import { VariableConfig } from './form-field-variable-options';
 import { DataColumn } from '../../../../datatable/data/data-column.model';
+import { DateFnsUtils } from '../../../../common';
+import { isValid as isValidDate } from 'date-fns';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -417,12 +419,14 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = moment(new Date()).format(this.dateDisplayFormat);
+                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateValue = moment(this.value, this.dateDisplayFormat, true);
-                if (dateValue?.isValid()) {
-                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                const dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
+
+                if (isValidDate(dateValue)) {
+                    const datePart = DateFnsUtils.formatDate(dateValue, 'yyyy-MM-dd');
+                    this.form.values[this.id] = `${datePart}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;
