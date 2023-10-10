@@ -180,6 +180,7 @@
     "NAME": "Category name",
     "LOADING": "Loading",
     "HIDE_INPUT": "Hide input",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
       "REQUIRED": "Category name is required",
