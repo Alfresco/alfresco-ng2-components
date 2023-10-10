@@ -83,21 +83,12 @@ export class DateFnsUtils {
     /**
      * A mapping of Moment.js format tokens to date-fns format tokens.
      */
-    static momentToDateFnsMap = {
+    private static momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
+        AZ: 'aa',
         A: 'a',
         ll: 'PP'
-    };
-
-    /**
-     * A mapping of date-fns format tokens to Moment.js format tokens.
-     */
-    static dateFnsToMomentMap = {
-        d: 'D',
-        y: 'Y',
-        a: 'A',
-        PP: 'll'
     };
 
     /**
@@ -109,22 +100,6 @@ export class DateFnsUtils {
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
         if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
             for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
-                dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
-            }
-            return dateDisplayFormat;
-        }
-        return '';
-    }
-
-    /**
-     * Converts a date-fns date format string to the equivalent Moment.js format string.
-     *
-     * @param dateDisplayFormat - The date-fns date format string to convert.
-     * @returns The equivalent Moment.js format string.
-     */
-    static convertDateFnsToMomentFormat(dateDisplayFormat: string): string {
-        if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
-            for (const [search, replace] of Object.entries(this.dateFnsToMomentMap)) {
                 dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
             }
             return dateDisplayFormat;
@@ -149,17 +124,34 @@ export class DateFnsUtils {
     /**
      * Parses a date string using the specified date format.
      *
-     * @param value - The date string to parse.
+     * @param value - The date value to parse
      * @param dateFormat - The date format string to use for parsing.
      * @param options - Additional options
      * @param options.dateOnly - Strip the time and zone
      * @returns The parsed Date object.
      */
-    static parseDate(value: string, dateFormat: string, options?: { dateOnly?: boolean }): Date {
-        if (options?.dateOnly && value && value.includes('T')) {
-            value = value.split('T')[0];
+    static parseDate(value: string | Date, dateFormat: string, options?: { dateOnly?: boolean }): Date {
+        if (value) {
+            if (typeof value === 'string') {
+                if (options?.dateOnly && value.includes('T')) {
+                    value = value.split('T')[0];
+                }
+
+                return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+            }
+            return value;
         }
-        return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+        return new Date('error');
+    }
+
+    /**
+     * Parses a datetime string using the ISO format
+     *
+     * @param value - The date and time string to parse
+     * @returns returns the parsed Date object
+     */
+    static parseDateTime(value: string): Date {
+        return parseISO(value);
     }
 
     /**

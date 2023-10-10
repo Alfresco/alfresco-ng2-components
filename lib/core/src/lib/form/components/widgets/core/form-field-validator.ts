@@ -17,7 +17,6 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
@@ -231,14 +230,7 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        let fieldValueData: Date;
-
-        if (typeof field.value === 'string') {
-            fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
-        } else {
-            fieldValueData = field.value;
-        }
-
+        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
         const minValueDateFormat = this.extractDateFormat(field.minValue);
         const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
 
@@ -263,14 +255,7 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
 
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        let fieldValueData: Date;
-
-        if (typeof field.value === 'string') {
-            fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
-        } else {
-            fieldValueData = field.value;
-        }
-
+        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
         const maxValueDateFormat = this.extractDateFormat(field.maxValue);
         const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
 
@@ -291,12 +276,19 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
     }
 }
 
+/**
+ * Validates the min constraint for the datetime value.
+ *
+ * Notes for developers:
+ * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
+ * Min/Max values can be parsed with standard `new Date(value)` calls.
+ *
+ */
 export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MIN_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -320,29 +312,34 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        let fieldValueDate;
-        if (typeof field.value === 'string') {
-            fieldValueDate = moment(field.value, dateFormat);
-        } else {
-            fieldValueDate = field.value;
-        }
-        const min = moment(field.minValue, this.MIN_DATETIME_FORMAT);
+        const fieldValueDate = DateFnsUtils.parseDate(field.value, dateFormat);
+        const min = new Date(field.minValue);
 
-        if (fieldValueDate.isBefore(min)) {
+        if (DateFnsUtils.isBeforeDate(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', min.format(field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set(
+                'minValue',
+                DateFnsUtils.formatDate(min, field.dateDisplayFormat).replace(':', '-')
+            );
             isValid = false;
         }
         return isValid;
     }
 }
 
+/**
+ * Validates the max constraint for the datetime value.
+ *
+ * Notes for developers:
+ * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
+ * Min/Max values can be parsed with standard `new Date(value)` calls.
+ *
+ */
 export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
         FormFieldTypes.DATETIME
     ];
-    MAX_DATETIME_FORMAT = 'YYYY-MM-DD hh:mm AZ';
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
@@ -366,18 +363,15 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
         let isValid = true;
-        let fieldValueDate;
+        const fieldValueDate = DateFnsUtils.parseDate(field.value, dateFormat);
+        const max = new Date(field.maxValue);
 
-        if (typeof field.value === 'string') {
-            fieldValueDate = moment(field.value, dateFormat);
-        } else {
-            fieldValueDate = field.value;
-        }
-        const max = moment(field.maxValue, this.MAX_DATETIME_FORMAT);
-
-        if (fieldValueDate.isAfter(max)) {
+        if (DateFnsUtils.isAfterDate(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).replace(':', '-'));
+            field.validationSummary.attributes.set(
+                'maxValue',
+                DateFnsUtils.formatDate(max, field.dateDisplayFormat).replace(':', '-')
+            );
             isValid = false;
         }
         return isValid;
