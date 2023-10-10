@@ -60,6 +60,7 @@ Displays the documents from a repository.
 | ---- | ---- | ------------- | ----------- |
 | additionalSorting | [`DataSorting`](../../../lib/core/src/lib/datatable/data/data-sorting.model.ts) |  | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
 | allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
+| columnsPresetKey | `string` |  | Key of columns preset set in extension.json|
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
@@ -72,6 +73,7 @@ Displays the documents from a repository.
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
+| maxColumnsVisible | `number` |  | Limit of possible visible columns, including "$thumbnail" column if provided |
 | maxItems | `number` |  | Default value is stored in the user preference settings. Use this only if you are not using pagination. |
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |

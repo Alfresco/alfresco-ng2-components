@@ -313,7 +313,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     maxItems: number = this.DEFAULT_PAGINATION.maxItems;
 
-    /** Key of columns preset if columns are not specified  */
+    /** Key of columns preset set in extension.json  */
     @Input()
     columnsPresetKey?: string;
 
