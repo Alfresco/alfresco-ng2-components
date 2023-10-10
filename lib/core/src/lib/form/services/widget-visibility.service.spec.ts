@@ -37,9 +37,9 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('WidgetVisibilityService', () => {
-
     let service: WidgetVisibilityService;
-    let booleanResult: boolean;
+    let booleanResult: boolean | undefined;
+
     const stubFormWithFields = new FormModel(fakeFormJson);
 
     beforeEach(() => {
@@ -125,7 +125,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should return undefined for invalid operation', () => {
-            booleanResult = service.evaluateCondition(null, null, undefined);
+            booleanResult = service.evaluateCondition(null, null, '');
             expect(booleanResult).toBeUndefined();
         });
 
@@ -154,7 +154,7 @@ describe('WidgetVisibilityService', () => {
         let visibilityObjTest: WidgetVisibilityModel;
         let fakeFormWithField: FormModel;
 
-        const jsonFieldFake = {
+        const jsonFieldFake: { id: string; value: string; visibilityCondition?: WidgetVisibilityModel } = {
             id: 'FAKE_FORM_FIELD_ID',
             value: 'FAKE_FORM_FIELD_VALUE',
             visibilityCondition: undefined
@@ -174,10 +174,6 @@ describe('WidgetVisibilityService', () => {
             fakeFormWithField = new FormModel(fakeFormJson);
             formTest.values = formValues;
             jsonFieldFake.visibilityCondition = visibilityObjTest;
-        });
-
-        afterEach(() => {
-            service.cleanProcessVariable();
         });
 
         it('should be able to retrieve a field value searching in the form', () => {
@@ -336,7 +332,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should return always true when field does not have a visibility condition', () => {
-            jsonFieldFake.visibilityCondition = null;
+            jsonFieldFake.visibilityCondition = undefined;
             const fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             fakeFormField.isVisible = false;
             service.refreshEntityVisibility(fakeFormField);
@@ -345,14 +341,14 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to retrieve the value of a form variable', () => {
-            const varValue = service.getVariableValue(fakeForm, 'FORM_VARIABLE_TEST', null);
+            const varValue = service.getVariableValue(fakeForm, 'FORM_VARIABLE_TEST', []);
 
             expect(varValue).not.toBeUndefined();
             expect(varValue).toBe('form_value_test');
         });
 
         it('should return undefined for not existing form variable', () => {
-            const varValue = service.getVariableValue(fakeForm, 'MYSTERY_FORM_VARIABLE', null);
+            const varValue = service.getVariableValue(fakeForm, 'MYSTERY_FORM_VARIABLE', []);
 
             expect(varValue).toBeUndefined();
         });
@@ -547,14 +543,14 @@ describe('WidgetVisibilityService', () => {
 
         it('should evaluate radio box LABEL condition', (done) => {
             visibilityObjTest.leftFormFieldId = 'radioBoxField_LABEL';
-            visibilityObjTest.leftRestResponseId = null;
+            visibilityObjTest.leftRestResponseId = undefined;
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'No';
             visibilityObjTest.rightType = null;
             visibilityObjTest.rightFormFieldId = '';
             visibilityObjTest.rightRestResponseId = '';
             visibilityObjTest.nextConditionOperator = '';
-            visibilityObjTest.nextCondition = null;
+            visibilityObjTest.nextCondition = undefined;
 
             const radioBoxForm = new FormModel({
                 id: '9999',

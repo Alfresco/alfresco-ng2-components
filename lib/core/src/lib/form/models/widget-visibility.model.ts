@@ -21,7 +21,7 @@ export class WidgetVisibilityModel {
     leftRestResponseId?: string;
     leftFormFieldId?: string;
     operator: string;
-    nextCondition: WidgetVisibilityModel;
+    nextCondition?: WidgetVisibilityModel;
     nextConditionOperator: string;
 
     constructor(private json?: any) {
@@ -81,7 +81,7 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set rightType(rightType: string) {
+    set rightType(rightType: string | null) {
         this.json.rightType = rightType;
     }
 
