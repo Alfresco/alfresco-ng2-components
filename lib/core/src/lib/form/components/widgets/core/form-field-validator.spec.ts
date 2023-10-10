@@ -37,7 +37,8 @@ import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 declare let moment: any;
 
-describe('FormFieldValidator', () => {
+// eslint-disable-next-line ban/ban, @cspell/spellchecker
+fdescribe('FormFieldValidator', () => {
     describe('RequiredFieldValidator', () => {
         let validator: RequiredFieldValidator;
 

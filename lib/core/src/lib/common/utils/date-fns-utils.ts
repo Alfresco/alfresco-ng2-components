@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO } from 'date-fns';
+import { format, parse, parseISO, isValid as isValid } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 export class DateFnsUtils {
@@ -155,5 +155,20 @@ export class DateFnsUtils {
      */
     static parseDate(value: string, dateFormat: string): Date {
         return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
+    }
+
+    /**
+     * Checks if the date string is a valid date according to the specified format
+     *
+     * @param dateValue Date value
+     * @param dateFormat The date format
+     * @returns `true` if the date is valid, otherwise `false`
+     */
+    static isValidDate(dateValue: string, dateFormat: string): boolean {
+        if (dateValue) {
+            const date = this.parseDate(dateValue, dateFormat);
+            return isValid(date);
+        }
+        return false;
     }
 }

@@ -21,6 +21,7 @@ import moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
+import { DateFnsUtils } from '../../../../common';
 
 export interface FormFieldValidator {
 
@@ -178,12 +179,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'YYYY-MM-DD HH:mm'): boolean {
-        if (inputDate) {
-            const d = moment(inputDate, dateFormat, true);
-            return d.isValid();
-        }
-
-        return false;
+        return DateFnsUtils.isValidDate(inputDate, dateFormat);
     }
 
     isSupported(field: FormFieldModel): boolean {
