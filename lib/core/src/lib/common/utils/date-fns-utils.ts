@@ -112,7 +112,7 @@ export class DateFnsUtils {
      *
      * @param date - The date to format, can be a number or a Date object.
      * @param dateFormat - The date format string to use for formatting.
-     * @returns The formatted date as a string.
+     * @returns The formatted date as a string
      */
     static formatDate(date: number | Date | string, dateFormat: string): string {
         if (typeof date === 'string') {
@@ -124,7 +124,7 @@ export class DateFnsUtils {
     /**
      * Parses a date string using the specified date format.
      *
-     * @param value - The date value to parse
+     * @param value - The date value to parse. Can be a string or a Date (for generic calls)
      * @param dateFormat - The date format string to use for parsing.
      * @param options - Additional options
      * @param options.dateOnly - Strip the time and zone
