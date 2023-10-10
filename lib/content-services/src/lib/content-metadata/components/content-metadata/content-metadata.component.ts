@@ -481,11 +481,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.cdr.detectChanges();
     }
 
-    hasTags(): boolean {
+    isTagsEmpty(): boolean {
         return this.tags?.length === 0 && !this.editableTags;
     }
 
-    hasCategories(): boolean {
+    isCategoryEmpty(): boolean {
         return this.categories?.length === 0 && !this.editableCategories;
     }
 
