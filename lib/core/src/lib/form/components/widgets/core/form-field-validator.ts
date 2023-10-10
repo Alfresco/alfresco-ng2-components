@@ -230,22 +230,24 @@ export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
 export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
-
         let isValid = true;
-        // remove time and timezone info
-        let fieldValueData;
+        let fieldValueData: Date;
+
         if (typeof field.value === 'string') {
-            fieldValueData = moment(field.value.split('T')[0], dateFormat);
+            fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
         } else {
             fieldValueData = field.value;
         }
 
         const minValueDateFormat = this.extractDateFormat(field.minValue);
-        const min = moment(field.minValue, minValueDateFormat);
+        const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
 
-        if (fieldValueData.isBefore(min)) {
+        if (DateFnsUtils.isBeforeDate(fieldValueData, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', min.format(field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set(
+                'minValue',
+                DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase()
+            );
             isValid = false;
         }
         return isValid;
@@ -260,22 +262,24 @@ export class MinDateFieldValidator extends BoundaryDateFieldValidator {
 export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
 
     checkDate(field: FormFieldModel, dateFormat: string): boolean {
-
         let isValid = true;
-        // remove time and timezone info
-        let fieldValueData;
+        let fieldValueData: Date;
+
         if (typeof field.value === 'string') {
-            fieldValueData = moment(field.value.split('T')[0], dateFormat);
+            fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
         } else {
             fieldValueData = field.value;
         }
 
         const maxValueDateFormat = this.extractDateFormat(field.maxValue);
-        const max = moment(field.maxValue, maxValueDateFormat);
+        const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
 
-        if (fieldValueData.isAfter(max)) {
+        if (DateFnsUtils.isAfterDate(fieldValueData, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', max.format(field.dateDisplayFormat).toLocaleUpperCase());
+            field.validationSummary.attributes.set(
+                'maxValue',
+                DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase()
+            );
             isValid = false;
         }
         return isValid;

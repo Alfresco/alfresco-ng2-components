@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { format, parse, parseISO, isValid as isValid } from 'date-fns';
+import { format, parse, parseISO, isValid, isBefore, isAfter } from 'date-fns';
 import { ar, cs, da, de, enUS, es, fi, fr, it, ja, nb, nl, pl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
 
 export class DateFnsUtils {
@@ -151,9 +151,14 @@ export class DateFnsUtils {
      *
      * @param value - The date string to parse.
      * @param dateFormat - The date format string to use for parsing.
+     * @param options - Additional options
+     * @param options.dateOnly - Strip the time and zone
      * @returns The parsed Date object.
      */
-    static parseDate(value: string, dateFormat: string): Date {
+    static parseDate(value: string, dateFormat: string, options?: { dateOnly?: boolean }): Date {
+        if (options?.dateOnly && value && value.includes('T')) {
+            value = value.split('T')[0];
+        }
         return parse(value, this.convertMomentToDateFnsFormat(dateFormat), new Date());
     }
 
@@ -170,5 +175,27 @@ export class DateFnsUtils {
             return isValid(date);
         }
         return false;
+    }
+
+    /**
+     * Validates a date is before another one
+     *
+     * @param source source date to compare
+     * @param target target date to compare
+     * @returns `true` if the source date is before the target one, otherwise `false`
+     */
+    static isBeforeDate(source: Date, target: Date): boolean {
+        return isBefore(source, target);
+    }
+
+    /**
+     * Validates a date is after another one
+     *
+     * @param source source date to compare
+     * @param target target date to compare
+     * @returns `true` if the source date is after the target one, otherwise `false`
+     */
+    static isAfterDate(source: Date, target: Date): boolean {
+        return isAfter(source, target);
     }
 }
