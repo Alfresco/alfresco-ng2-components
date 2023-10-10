@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import * as analyticParamsMock from '../../mock';
-import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
+import { AnalyticsReportParametersComponent, ReportFormValues } from '../components/analytics-report-parameters.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
 import { of } from 'rxjs';
@@ -61,7 +61,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should initialize the Report form with a Form Group ', async () => {
             const fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 expect(component.reportForm.get('taskGroup')).toBeDefined();
                 expect(component.reportForm.get('taskGroup').get('taskName')).toBeDefined();
@@ -70,7 +70,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-status');
                 expect(element.querySelector('h4').textContent.trim()).toEqual('Fake Task overview status');
@@ -94,7 +94,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a number with the default value when the definition parameter type is \'integer\' ', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const numberElement: any = element.querySelector('#slowProcessInstanceInteger');
                 expect(numberElement.value).toEqual('10');
@@ -112,7 +112,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a duration component when the definition parameter type is "duration"', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     const numberElement: any = element.querySelector('#duration');
@@ -147,12 +147,12 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(res.processDefinitionId).toEqual('FakeProcess:1:22');
                 expect(res.taskName).toEqual('FakeTaskName');
                 expect(res.duration).toEqual(22);
-                expect(res.dateRangeInterval).toEqual(120);
+                expect(res.dateRangeInterval).toEqual('120');
                 expect(res.slowProcessInstanceInteger).toEqual(2);
                 expect(res.typeFiltering).toEqual(true);
             });
 
-            const values: any = {
+            const values: ReportFormValues = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
                 },
@@ -169,10 +169,10 @@ describe('AnalyticsReportParametersComponent', () => {
                     duration: 22
                 },
                 dateIntervalGroup: {
-                    dateRangeInterval: 120
+                    dateRangeInterval: '120'
                 },
                 processInstanceGroup: {
-                    slowProcessInstanceInteger: 2
+                    slowProcessInstanceInteger: '2'
                 },
                 typeFilteringGroup: {
                     typeFiltering: true
@@ -183,7 +183,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const checkElement: any = element.querySelector('#typeFiltering-input');
                 expect(checkElement.checked).toBeTruthy();
@@ -201,7 +201,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 const dateElement: any = element.querySelector('adf-date-range-widget');
                 expect(dateElement).toBeDefined();
             });
@@ -219,7 +219,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', async () => {
-            await component.successReportParams.subscribe(() => {
+            component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-dateRangeInterval');
                 expect(dropDown).toBeDefined();
@@ -244,7 +244,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
             ' reportId change', async () => {
-            await component.successParamOpt.subscribe(() => {
+            component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -276,7 +276,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
             ' appId change', async () => {
-            await component.successParamOpt.subscribe(() => {
+            component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
@@ -347,7 +347,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should emit an error with a 404 response when the options response is not found', async () => {
-            await component.error.subscribe((err) => {
+            component.error.subscribe((err) => {
                 expect(err).toBeDefined();
             });
 
@@ -370,7 +370,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should emit an error with a 404 response when the report parameters response is not found', async () => {
-            await component.error.subscribe((err) => {
+            component.error.subscribe((err) => {
                 expect(err).toBeDefined();
             });
 
@@ -386,7 +386,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should convert a string in number', () => {
-            const numberConvert = component.convertNumber('2');
+            const numberConvert = component.parseNumber('2');
             expect(numberConvert).toEqual(2);
         });
 
