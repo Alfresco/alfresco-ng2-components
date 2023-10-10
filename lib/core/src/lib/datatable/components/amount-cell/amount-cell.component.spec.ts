@@ -90,7 +90,6 @@ describe('AmountCellComponent locale', () => {
     let fixture: ComponentFixture<AmountCellComponent>;
 
     it('should render currency value with custom locale', () => {
-
         TestBed.configureTestingModule({
             imports: [AmountCellComponent],
             providers: [{ provide: LOCALE_ID, useValue: 'pl-PL' }]
