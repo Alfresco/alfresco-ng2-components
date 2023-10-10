@@ -54,6 +54,7 @@ import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent
 import { ResizableModule } from './directives/resizable/resizable.module';
 import { DataColumnModule } from './data-column/data-column.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
+import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 
 @NgModule({
     imports: [
@@ -71,7 +72,8 @@ import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.com
         ReactiveFormsModule,
         ResizableModule,
         DataColumnModule,
-        BooleanCellComponent
+        BooleanCellComponent,
+        AmountCellComponent
     ],
     declarations: [
         DataTableComponent,

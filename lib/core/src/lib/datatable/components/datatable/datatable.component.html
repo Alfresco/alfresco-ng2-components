@@ -306,6 +306,18 @@
                                     [row]="row">
                                 </adf-json-cell>
                             </div>
+                            <div *ngSwitchCase="'amount'"
+                                class="adf-cell-value"
+                                [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
+                                [attr.data-automation-id]="'amount_' + data.getValue(row, col, resolverFn)">
+                                <adf-amount-cell
+                                    [data]="data"
+                                    [column]="col"
+                                    [resolverFn]="resolverFn"
+                                    [row]="row"
+                                    [currencyConfig]="col.currencyConfig">
+                                </adf-amount-cell>
+                            </div>
                             <span *ngSwitchDefault class="adf-cell-value">
                     <!-- empty cell for unknown column type -->
                     </span>
