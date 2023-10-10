@@ -313,6 +313,10 @@ export class WidgetVisibilityService {
         return Array.isArray(leftValue) && Array.isArray(rightValue) && rightValue.every((element) => leftValue.includes(element));
     }
 
+    cleanProcessVariable() {
+        this.processVarList = [];
+    }
+
     private isValidCondition(condition: WidgetVisibilityModel): boolean {
         return !!condition?.operator;
     }
