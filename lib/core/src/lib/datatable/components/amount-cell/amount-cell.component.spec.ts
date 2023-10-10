@@ -34,10 +34,6 @@ describe('AmountCellComponent', () => {
         component = fixture.componentInstance;
     });
 
-    afterEach(() => {
-        TestBed.resetTestingModule();
-    });
-
     it('should set default currency config', () => {
         expect(component.defaultCurrencyConfig.code).toBe('USD');
         expect(component.defaultCurrencyConfig.display).toBe('symbol');
