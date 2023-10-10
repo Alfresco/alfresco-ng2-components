@@ -1,11 +1,11 @@
-<ng-container [formGroup]="form">
+<div class="adf-search-date-range-container" [formGroup]="form">
   <mat-radio-group formControlName="dateRangeType">
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.ANY" data-automation-id="date-range-advanced-anytime">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
       </mat-radio-button>
     </span>
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-advanced-in-last">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
       </mat-radio-button>
@@ -24,7 +24,7 @@
         </mat-select>
       </mat-form-field>
     </span>
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-advanced-between">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
       </mat-radio-button>
@@ -45,4 +45,4 @@
       </mat-form-field>
     </span>
   </mat-radio-group>
-</ng-container>
+</div>
