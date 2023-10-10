@@ -44,7 +44,7 @@ export class AmountCellComponent extends DataTableCellComponent implements OnIni
     @Input()
     currencyConfig: CurrencyConfig;
 
-    readonly defaultCurrencyConfig = {
+    readonly defaultCurrencyConfig: CurrencyConfig = {
         code: this.defaultCurrencyCode,
         display: 'symbol',
         digitsInfo: undefined,
