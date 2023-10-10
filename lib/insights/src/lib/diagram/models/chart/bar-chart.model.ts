@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import moment from 'moment';
 import { Chart } from './chart.model';
+import { format } from 'date-fns';
 
 export class BarChart extends Chart {
     xAxisType: string;
@@ -24,17 +24,20 @@ export class BarChart extends Chart {
     options: any = {
         responsive: true,
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
                 }
-            }],
-            xAxes: [{
-                ticks: {
-                },
-                stacked: false
-            }]
+            ],
+            xAxes: [
+                {
+                    ticks: {},
+                    stacked: false
+                }
+            ]
         }
     };
 
@@ -59,30 +62,30 @@ export class BarChart extends Chart {
                     });
                 });
                 if (dataValue && dataValue.length > 0) {
-                    this.datasets.push({data: dataValue, label: params.key});
+                    this.datasets.push({ data: dataValue, label: params.key });
                 }
             });
         }
     }
 
-    xAxisTickFormatFunction(xAxisType) {
-        return (value) => {
-            if (xAxisType !== null && xAxisType !== undefined) {
+    xAxisTickFormatFunction(xAxisType: string) {
+        return (value: string) => {
+            if (xAxisType) {
                 if ('date_day' === xAxisType) {
-                    return moment(new Date(value)).format('DD');
+                    return format(new Date(value), 'dd');
                 } else if ('date_month' === xAxisType) {
-                    return moment(new Date(value)).format('MMMM');
+                    return format(new Date(value), 'MMMM');
                 } else if ('date_year' === xAxisType) {
-                    return moment(new Date(value)).format('YYYY');
+                    return format(new Date(value), 'yyyy');
                 }
             }
             return value;
         };
-    };
+    }
 
-    yAxisTickFormatFunction(yAxisType) {
-        return (value) => {
-            if (yAxisType !== null && yAxisType !== undefined) {
+    yAxisTickFormatFunction(yAxisType: string) {
+        return (value: string) => {
+            if (yAxisType) {
                 if ('count' === yAxisType) {
                     const label = '' + value;
                     if (label.indexOf('.') !== -1) {
@@ -92,5 +95,5 @@ export class BarChart extends Chart {
             }
             return value;
         };
-    };
+    }
 }

@@ -33,7 +33,7 @@ import {
     imports: [
         NoopAnimationsModule,
         TranslateModule,
-        CoreModule,
+        CoreModule.forRoot(),
         InsightsModule
     ],
     providers: [

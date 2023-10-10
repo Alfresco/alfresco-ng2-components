@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DownloadService, LogService } from '@alfresco/adf-core';
+import { AdfDateFnsAdapter, DownloadService, LogService } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -29,10 +29,8 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import moment from 'moment';
-import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/report-parameter-details.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
@@ -41,6 +39,62 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
+
+export interface ReportFormProps {
+    taskGroup?: FormGroup<{
+        taskName: FormControl<string | null>;
+    }>;
+    processDefGroup?: FormGroup<{
+        processDefinitionId: FormControl<string | null>;
+    }>;
+    dateIntervalGroup?: FormGroup<{
+        dateRangeInterval: FormControl<string | null>;
+    }>;
+    dateRange?: FormGroup<{
+        startDate?: FormControl<string | null>;
+        endDate?: FormControl<string | null>;
+    }>;
+    statusGroup?: FormGroup<{
+        status: FormControl<string | null>;
+    }>;
+    typeFilteringGroup?: FormGroup<{
+        typeFiltering: FormControl<boolean | null>;
+    }>;
+    durationGroup?: FormGroup<{
+        duration: FormControl<number | null>;
+    }>;
+    processInstanceGroup?: FormGroup<{
+        slowProcessInstanceInteger: FormControl<string | null>;
+    }>;
+}
+
+export interface ReportFormValues {
+    taskGroup?: {
+        taskName?: string;
+    };
+    processDefGroup?: {
+        processDefinitionId?: string;
+    };
+    dateIntervalGroup?: {
+        dateRangeInterval?: string;
+    };
+    dateRange?: {
+        startDate?: string;
+        endDate?: string;
+    };
+    statusGroup?: {
+        status?: string;
+    };
+    typeFilteringGroup?: {
+        typeFiltering?: boolean;
+    };
+    durationGroup?: {
+        duration?: number;
+    };
+    processInstanceGroup?: {
+        slowProcessInstanceInteger?: string;
+    };
+}
 
 @Component({
     selector: 'adf-analytics-report-parameters',
@@ -63,7 +117,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     /** success. */
     @Output()
-    success = new EventEmitter();
+    success = new EventEmitter<ReportQuery>();
 
     /** error. */
     @Output()
@@ -88,12 +142,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @ViewChild('reportNameDialog')
     reportNameDialog: any;
 
-    onDropdownChanged = new EventEmitter();
+    onDropdownChanged = new EventEmitter<ReportParameterDetailsModel>();
     successReportParams = new EventEmitter<ReportParametersModel>();
     successParamOpt = new EventEmitter();
 
     reportParameters: ReportParametersModel;
-    reportForm: UntypedFormGroup;
+    reportForm: FormGroup<ReportFormProps>;
     action: string;
     isEditable: boolean = false;
     reportName: string;
@@ -105,10 +159,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     constructor(
         private analyticsService: AnalyticsService,
-        private formBuilder: UntypedFormBuilder,
+        private formBuilder: FormBuilder,
         private logService: LogService,
         private downloadService: DownloadService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private dateAdapter: AdfDateFnsAdapter
     ) {}
 
     ngOnInit() {
@@ -152,7 +207,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 if (this.reportParameters.hasParameters()) {
                     this.successReportParams.emit(res);
                 } else {
-                    this.reportForm = this.formBuilder.group({});
+                    this.reportForm = this.formBuilder.group<ReportFormProps>({});
                     this.success.emit();
                 }
             },
@@ -162,18 +217,18 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         );
     }
 
-    onProcessDefinitionChanges(field: any) {
+    onProcessDefinitionChanges(field: ReportParameterDetailsModel) {
         if (field.value) {
             this.onDropdownChanged.emit(field);
         }
     }
 
-    public submit(values: any) {
+    public submit(values: ReportFormValues) {
         this.reportParamQuery = this.convertFormValuesToReportParamQuery(values);
         this.success.emit(this.reportParamQuery);
     }
 
-    onValueChanged(values: any) {
+    onValueChanged(values: ReportFormValues) {
         this.formValueChanged.emit(values);
         if (this.reportForm?.valid) {
             this.submit(values);
@@ -186,23 +241,20 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    convertMomentDate(date: string) {
-        return moment(date, FORMAT_DATE_ACTIVITI, true).format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    private parseDate(input: string) {
+        const date = this.dateAdapter.parse(input, FORMAT_DATE_ACTIVITI);
+        return this.dateAdapter.format(date, FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
-    getTodayDate() {
-        return moment().format(FORMAT_DATE_ACTIVITI);
-    }
-
-    convertNumber(value: string): number {
+    parseNumber(value: string): number {
         return value != null ? parseInt(value, 10) : 0;
     }
 
-    convertFormValuesToReportParamQuery(values: any): ReportQuery {
-        const reportParamQuery: ReportQuery = new ReportQuery();
+    private convertFormValuesToReportParamQuery(values: ReportFormValues): ReportQuery {
+        const reportParamQuery = new ReportQuery();
         if (values.dateRange) {
-            reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
-            reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
+            reportParamQuery.dateRange.startDate = this.parseDate(values.dateRange.startDate);
+            reportParamQuery.dateRange.endDate = this.parseDate(values.dateRange.endDate);
         }
         if (values.statusGroup) {
             reportParamQuery.status = values.statusGroup.status;
@@ -220,7 +272,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateRangeInterval;
         }
         if (values.processInstanceGroup) {
-            reportParamQuery.slowProcessInstanceInteger = this.convertNumber(values.processInstanceGroup.slowProcessInstanceInteger);
+            reportParamQuery.slowProcessInstanceInteger = this.parseNumber(values.processInstanceGroup.slowProcessInstanceInteger);
         }
         if (values.typeFilteringGroup) {
             reportParamQuery.typeFiltering = values.typeFilteringGroup.typeFiltering;
@@ -256,7 +308,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     showDialog(event: string) {
         this.dialog.open(this.reportNameDialog, { width: '500px' });
         this.action = event;
-        this.reportName = this.reportParameters.name + ' ( ' + this.getTodayDate() + ' )';
+
+        const date = this.dateAdapter.format(new Date(), FORMAT_DATE_ACTIVITI);
+        this.reportName = `${this.reportParameters.name} ( ${date} )`;
     }
 
     closeDialog() {
@@ -274,23 +328,23 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.resetActions();
     }
 
-    resetActions() {
+    private resetActions() {
         this.action = '';
         this.reportName = '';
     }
 
-    isSaveAction() {
+    isSaveAction(): boolean {
         return this.action === 'Save';
     }
 
-    doExport(paramQuery: ReportQuery) {
+    private doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe((data: any) => {
             const blob: Blob = new Blob([data], { type: 'text/csv' });
             this.downloadService.downloadBlob(blob, paramQuery.reportName + '.csv');
         });
     }
 
-    doSave(paramQuery: ReportQuery) {
+    private doSave(paramQuery: ReportQuery) {
         this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
             this.saveReportSuccess.emit(this.reportId);
         });
@@ -315,105 +369,106 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.hideParameters = !this.hideParameters;
     }
 
-    isParametersHide() {
+    isParametersHide(): boolean {
         return this.hideParameters;
     }
 
-    isFormValid() {
+    isFormValid(): boolean {
         return this.reportForm?.dirty && this.reportForm.valid;
     }
 
-    get taskGroup(): UntypedFormGroup {
-        return this.reportForm.controls.taskGroup as UntypedFormGroup;
+    get taskGroup(): FormGroup {
+        return this.reportForm.controls.taskGroup;
     }
 
-    get processDefGroup(): UntypedFormGroup {
-        return this.reportForm.controls.processDefGroup as UntypedFormGroup;
+    get processDefGroup(): FormGroup {
+        return this.reportForm.controls.processDefGroup;
     }
 
-    get dateIntervalGroup(): UntypedFormGroup {
-        return this.reportForm.controls.dateIntervalGroup as UntypedFormGroup;
+    get dateIntervalGroup(): FormGroup {
+        return this.reportForm.controls.dateIntervalGroup;
     }
 
-    get dateRange(): UntypedFormGroup {
-        return this.reportForm.controls.dateRange as UntypedFormGroup;
+    get dateRange(): FormGroup {
+        return this.reportForm.controls.dateRange;
     }
 
-    get statusGroup(): UntypedFormGroup {
-        return this.reportForm.controls.statusGroup as UntypedFormGroup;
+    get statusGroup(): FormGroup {
+        return this.reportForm.controls.statusGroup;
     }
 
-    get typeFilteringGroup(): UntypedFormGroup {
-        return this.reportForm.controls.typeFilteringGroup as UntypedFormGroup;
+    get typeFilteringGroup(): FormGroup {
+        return this.reportForm.controls.typeFilteringGroup;
     }
 
-    get durationGroup(): UntypedFormGroup {
-        return this.reportForm.controls.durationGroup as UntypedFormGroup;
+    get durationGroup(): FormGroup {
+        return this.reportForm.controls.durationGroup;
     }
 
-    get processInstanceGroup(): UntypedFormGroup {
-        return this.reportForm.controls.processInstanceGroup as UntypedFormGroup;
+    get processInstanceGroup(): FormGroup {
+        return this.reportForm.controls.processInstanceGroup;
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
-        const formBuilderGroup: any = {};
-        parameters.forEach((param: ReportParameterDetailsModel) => {
+        const formBuilderGroup: ReportFormProps = {};
+
+        parameters.forEach((param) => {
             switch (param.type) {
                 case 'dateRange':
-                    formBuilderGroup.dateRange = new UntypedFormGroup({}, Validators.required);
+                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
-                    formBuilderGroup.processDefGroup = new UntypedFormGroup(
+                    formBuilderGroup.processDefGroup = new FormGroup(
                         {
-                            processDefinitionId: new UntypedFormControl(null, Validators.required, null)
+                            processDefinitionId: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'duration':
-                    formBuilderGroup.durationGroup = new UntypedFormGroup(
+                    formBuilderGroup.durationGroup = new FormGroup(
                         {
-                            duration: new UntypedFormControl(null, Validators.required, null)
+                            duration: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'dateInterval':
-                    formBuilderGroup.dateIntervalGroup = new UntypedFormGroup(
+                    formBuilderGroup.dateIntervalGroup = new FormGroup(
                         {
-                            dateRangeInterval: new UntypedFormControl(null, Validators.required, null)
+                            dateRangeInterval: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'boolean':
-                    formBuilderGroup.typeFilteringGroup = new UntypedFormGroup(
+                    formBuilderGroup.typeFilteringGroup = new FormGroup(
                         {
-                            typeFiltering: new UntypedFormControl(null, Validators.required, null)
+                            typeFiltering: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'task':
-                    formBuilderGroup.taskGroup = new UntypedFormGroup(
+                    formBuilderGroup.taskGroup = new FormGroup(
                         {
-                            taskName: new UntypedFormControl(null, Validators.required, null)
+                            taskName: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'integer':
-                    formBuilderGroup.processInstanceGroup = new UntypedFormGroup(
+                    formBuilderGroup.processInstanceGroup = new FormGroup(
                         {
-                            slowProcessInstanceInteger: new UntypedFormControl(null, Validators.required, null)
+                            slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
                     break;
                 case 'status':
-                    formBuilderGroup.statusGroup = new UntypedFormGroup(
+                    formBuilderGroup.statusGroup = new FormGroup(
                         {
-                            status: new UntypedFormControl(null, Validators.required, null)
+                            status: new FormControl(null, Validators.required, null)
                         },
                         Validators.required
                     );
@@ -422,7 +477,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                     return;
             }
         });
-        this.reportForm = this.formBuilder.group(formBuilderGroup);
+        this.reportForm = this.formBuilder.group<ReportFormProps>(formBuilderGroup);
         this.reportForm.valueChanges.subscribe((data) => this.onValueChanged(data));
         this.reportForm.statusChanges.subscribe(() => this.onStatusChanged());
     }
@@ -430,7 +485,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
         parameters.forEach((param) => {
             this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
-                (opts: ParameterValueModel[]) => {
+                (opts) => {
                     param.options = opts;
                     this.successParamOpt.emit(opts);
                 },
