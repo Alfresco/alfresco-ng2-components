@@ -17,23 +17,21 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ADF_FORM_DATE_FORMATS } from '../../../date-formats';
+import { AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        { provide: MAT_DATE_FORMATS, useValue: ADF_FORM_DATE_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+    ],
     templateUrl: './date.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -49,44 +47,40 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
     encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+    DATE_FORMAT = 'dd-MM-yyyy';
 
-    DATE_FORMAT = 'DD-MM-YYYY';
-
-    minDate: Moment;
-    maxDate: Moment;
-    startAt: Moment;
+    minDate: Date;
+    maxDate: Date;
+    startAt: Date;
 
     @Input()
     value: any = null;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
         super(formService);
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
-
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
+        if (this.field.dateDisplayFormat) {
+            const adapter = this.dateAdapter as AdfDateFnsAdapter;
+            adapter.displayFormat = this.field.dateDisplayFormat;
+        }
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.DATE_FORMAT);
+                this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.DATE_FORMAT);
+                this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
             }
 
-            this.startAt = moment(this.field.value, this.field.dateDisplayFormat);
-            this.value = moment(this.field.value, this.field.dateDisplayFormat);
+            if (this.field.value) {
+                this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+                this.value = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+            }
         }
     }
 
@@ -95,16 +89,16 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.onDestroy$.complete();
     }
 
-    onDateChange(event: MatDatepickerInputEvent<Moment>) {
+    onDateChange(event: MatDatepickerInputEvent<Date>) {
         const value = event.value;
         const input = event.targetElement as HTMLInputElement;
 
-        const date = moment(value, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = date.format(this.field.dateDisplayFormat);
+        if (value) {
+            this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
         } else {
             this.field.value = input.value;
         }
+
         this.onFieldChanged(this.field);
     }
 }
