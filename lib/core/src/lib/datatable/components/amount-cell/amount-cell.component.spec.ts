@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AmountCellComponent } from './amount-cell.component';
+import { CurrencyConfig } from '../../data/data-column.model';
 import { BehaviorSubject } from 'rxjs';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
@@ -25,6 +26,17 @@ import localePL from '@angular/common/locales/pl';
 describe('AmountCellComponent', () => {
     let component: AmountCellComponent;
     let fixture: ComponentFixture<AmountCellComponent>;
+
+    const renderAndCheckCurrencyValue = (currencyConfig: CurrencyConfig, value: number, expectedResult: string) => {
+        component.value$ = new BehaviorSubject<number>(value);
+        component.currencyConfig = currencyConfig;
+
+        fixture.detectChanges();
+        const displayedAmount = fixture.nativeElement.querySelector('span');
+
+        expect(displayedAmount).toBeTruthy();
+        expect(displayedAmount.textContent.trim()).toBe(expectedResult);
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,46 +54,19 @@ describe('AmountCellComponent', () => {
     });
 
     it('should render currency value', () => {
-        component.value$ = new BehaviorSubject<number>(123.45);
-
-        fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
-
-        expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe('$123.45');
+        renderAndCheckCurrencyValue(component.currencyConfig, 123.45, '$123.45');
     });
 
     it('should render currency value with custom currency code', () => {
-        component.value$ = new BehaviorSubject<number>(123.45);
-        component.currencyConfig = { code: 'MY CUSTOM CURRENCY', display: 'symbol' };
-
-        fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
-
-        expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe('MY CUSTOM CURRENCY123.45');
+        renderAndCheckCurrencyValue({ code: 'MY CUSTOM CURRENCY', display: 'symbol' }, 123.45, 'MY CUSTOM CURRENCY123.45');
     });
 
     it('should render currency value with custom display code', () => {
-        component.value$ = new BehaviorSubject<number>(123.45);
-        component.currencyConfig = { code: 'EUR', display: 'symbol' };
-
-        fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
-
-        expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe('€123.45');
+        renderAndCheckCurrencyValue({ code: 'EUR', display: 'symbol' }, 123.45, '€123.45');
     });
 
     it('should render currency value with custom digitsInfo', () => {
-        component.value$ = new BehaviorSubject<number>(123.456789);
-        component.currencyConfig = { code: 'USD', display: 'symbol', digitsInfo: '1.2-2' };
-
-        fixture.detectChanges();
-        const displayedAmount = fixture.nativeElement.querySelector('span');
-
-        expect(displayedAmount).toBeTruthy();
-        expect(displayedAmount.textContent.trim()).toBe('$123.46');
+        renderAndCheckCurrencyValue({ code: 'USD', display: 'symbol', digitsInfo: '1.2-2' }, 123.456789, '$123.46');
     });
 });
 
