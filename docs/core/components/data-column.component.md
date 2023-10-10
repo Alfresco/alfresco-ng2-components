@@ -61,6 +61,33 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
 | type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', and 'json'. |
 | order | `number` |  | Sets position of column. |
+| currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
+
+## Properties configuration
+
+### `currencyConfig` Input
+
+The `currencyConfig` input allows you to customize the formatting and display of currency values within the component. It accepts an object of type `CurrencyConfig` with optional properties for specifying the currency code, display format, decimal precision, and locale.
+
+#### Properties
+
+- `code` (optional): A string representing the currency code (e.g., "USD" for US Dollars).
+- `display` (optional): A string specifying how the currency value should be displayed.
+- `digitsInfo` (optional): A string determining the number of decimal places and other formatting details.
+- `locale` (optional): A string indicating the locale or region-specific formatting to use for the currency.
+
+#### Default currency config
+
+By default, the `currencyConfig` input is not required. If not provided, the component will use the following default values:
+
+- `code`: "USD"
+- `display`: "symbol"
+- `digitsInfo`: undefined
+- `locale`: undefined
+
+These properties offer flexibility in customizing how currency values are presented within the component.
+
+For more details on the possible use cases of the above properties, see the [official Angular documents](https://angular.io/api/common/CurrencyPipe).
 
 ## Properties configuration
 
