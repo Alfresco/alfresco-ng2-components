@@ -20,6 +20,7 @@ import { DateFnsUtils } from './date-fns-utils';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
+import { Locale } from 'date-fns';
 
 /**
  * Date-fns adapter with moment-to-date-fns conversion.
@@ -58,7 +59,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
     }
 
     constructor(
-        @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: any,
+        @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
         @Optional() @Inject(MAT_DATE_FORMATS) private formats: MatDateFormats,
         preferences: UserPreferencesService
     ) {

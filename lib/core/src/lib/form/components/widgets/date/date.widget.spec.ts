@@ -199,13 +199,15 @@ describe('DateWidgetComponent', () => {
             fixture.detectChanges();
 
             let dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton?.disabled).toBeFalsy();
+            expect(dateButton).toBeDefined();
+            expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton?.disabled).toBeTruthy();
+            expect(dateButton).toBeDefined();
+            expect(dateButton.disabled).toBeTruthy();
         });
 
         it('should set isValid to false when the value is not a correct date value', () => {
