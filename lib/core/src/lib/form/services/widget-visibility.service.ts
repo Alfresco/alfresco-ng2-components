@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LogService } from '../../common/services/log.service';
 import { Injectable } from '@angular/core';
 import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
-import { DateFnsUtils } from '../../../..';
+import { format, isValid, parse } from 'date-fns';
 
 @Injectable({
     providedIn: 'root'
@@ -28,8 +27,6 @@ import { DateFnsUtils } from '../../../..';
 export class WidgetVisibilityService {
     private processVarList: TaskProcessVariableModel[];
     private form: FormModel;
-
-    constructor(private logService: LogService) {}
 
     public refreshVisibility(form: FormModel, processVarList?: TaskProcessVariableModel[]) {
         this.form = form;
@@ -87,12 +84,12 @@ export class WidgetVisibilityService {
         return !!result;
     }
 
-    private transformToLiteralExpression(currentExpression: any): string {
+    private transformToLiteralExpression(currentExpression: { value: any; operator: string }): string {
         const currentTransformedValue = currentExpression.value ? 'true' : 'false';
         return currentTransformedValue.concat(this.transformToLiteralOperator(currentExpression.operator));
     }
 
-    private transformToLiteralOperator(currentOperator): string {
+    private transformToLiteralOperator(currentOperator: string): string {
         switch (currentOperator) {
             case 'and':
                 return '&&';
@@ -107,11 +104,11 @@ export class WidgetVisibilityService {
         }
     }
 
-    public getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let leftValue = '';
-        if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.variable) {
+        if (visibilityObj.leftType === WidgetTypeEnum.variable) {
             leftValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
-        } else if (visibilityObj.leftType && visibilityObj.leftType === WidgetTypeEnum.field) {
+        } else if (visibilityObj.leftType === WidgetTypeEnum.field) {
             leftValue = this.getFormValue(form, visibilityObj.leftValue);
             if (leftValue === undefined || leftValue === '') {
                 const variableValue = this.getVariableValue(form, visibilityObj.leftValue, this.processVarList);
@@ -121,19 +118,22 @@ export class WidgetVisibilityService {
         return leftValue;
     }
 
-    public getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
+    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel): string {
         let valueFound = '';
+
         if (visibilityObj.rightType === WidgetTypeEnum.variable) {
             valueFound = this.getVariableValue(form, visibilityObj.rightValue, this.processVarList);
         } else if (visibilityObj.rightType === WidgetTypeEnum.field) {
             valueFound = this.getFormValue(form, visibilityObj.rightValue);
         } else {
-            if (DateFnsUtils.isMatch(visibilityObj.rightValue, 'YYYY-MM-DD')) {
-                valueFound = visibilityObj.rightValue + 'T00:00:00.000Z';
+            const value = parse(`${visibilityObj.rightValue}`, 'yyyy-mm-dd', new Date());
+            if (isValid(value)) {
+                valueFound = `${format(value, 'yyyy-mm-dd')}T00:00:00.000Z`;
             } else {
                 valueFound = visibilityObj.rightValue;
             }
         }
+
         return valueFound;
     }
 
@@ -305,17 +305,12 @@ export class WidgetVisibilityService {
             case '!contains':
                 return !this.contains(leftValue, rightValue);
             default:
-                this.logService.error(`Invalid operator: ${operator}`);
                 return undefined;
         }
     }
 
     private contains(leftValue: any, rightValue: any) {
         return Array.isArray(leftValue) && Array.isArray(rightValue) && rightValue.every((element) => leftValue.includes(element));
-    }
-
-    cleanProcessVariable() {
-        this.processVarList = [];
     }
 
     private isValidCondition(condition: WidgetVisibilityModel): boolean {
