@@ -450,6 +450,9 @@
           "REQUIRED": "End Date required",
           "INVALID_FORMAT": "End Date invalid"
         }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
       }
     },
     "SEARCH_PROPERTIES": {

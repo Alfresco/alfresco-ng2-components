@@ -1,16 +1,19 @@
-<ng-container [formGroup]="form">
+<div class="adf-search-date-range-container" [formGroup]="form">
   <mat-radio-group formControlName="dateRangeType">
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.ANY" data-automation-id="date-range-advanced-anytime">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.ANYTIME' | translate }}
       </mat-radio-button>
     </span>
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.IN_LAST" data-automation-id="date-range-advanced-in-last">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.IN_LAST' | translate }}
       </mat-radio-button>
       <mat-form-field class="adf-search-date-range-form-field adf-search-date-range-input-field">
-        <input matInput type="number" min="1" formControlName="inLastValue" data-automation-id="date-range-advanced-in-last-input" (input)="narrowDownAllowedCharacters($event)" (keydown)="preventIncorrectNumberCharacters($event)">
+        <input matInput [attr.aria-label]="'SEARCH.DATE_RANGE_ADVANCED.ARIA_LABEL.NUMBER_INPUT' | translate"
+               type="number" min="1" formControlName="inLastValue"
+               data-automation-id="date-range-advanced-in-last-input" (input)="narrowDownAllowedCharacters($event)"
+               (keydown)="preventIncorrectNumberCharacters($event)">
         <mat-error *ngIf="form.controls.inLastValue.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.IN_LAST' | translate }}</mat-error>
       </mat-form-field>
       <mat-form-field class="adf-search-date-range-form-field">
@@ -21,7 +24,7 @@
         </mat-select>
       </mat-form-field>
     </span>
-    <span class="adf-search-date-range-horizontal-container">
+    <span class="adf-search-date-range-container-row">
       <mat-radio-button [value]="DateRangeType.BETWEEN" data-automation-id="date-range-advanced-between">
         {{ 'SEARCH.DATE_RANGE_ADVANCED.OPTIONS.BETWEEN' | translate }}
       </mat-radio-button>
@@ -42,4 +45,4 @@
       </mat-form-field>
     </span>
   </mat-radio-group>
-</ng-container>
+</div>
