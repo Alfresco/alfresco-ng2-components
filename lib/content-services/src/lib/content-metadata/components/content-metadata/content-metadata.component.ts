@@ -296,8 +296,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return properties.length > 0;
     }
 
-    canExpandTheCard(group: CardViewGroup): boolean {
-        return group.title === this.displayAspect;
+    canExpandTheCard(groupTitle: string): boolean {
+        return groupTitle === this.displayAspect;
     }
 
     canExpandProperties(): boolean {
