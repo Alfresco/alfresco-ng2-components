@@ -17,11 +17,9 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
-import moment, { Moment } from 'moment';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import {
     ProcessFilterCloudModel,
@@ -30,13 +28,16 @@ import {
     ProcessFilterOptions,
     ProcessSortFilterProperty
 } from '../models/process-filter-cloud.model';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
+import { isValid, set } from 'date-fns';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { DatetimeAdapter } from '@mat-datetimepicker/core';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -179,7 +180,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     constructor(
         private formBuilder: UntypedFormBuilder,
         public dialog: MatDialog,
-        private dateAdapter: DateAdapter<Moment>,
+        private dateAdapter: DatetimeAdapter<DateFnsAdapter>,
         private userPreferencesService: UserPreferencesService,
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
@@ -191,7 +192,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
+            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -363,12 +364,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.editProcessFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: Moment, dateProperty: ProcessFilterProperties) {
+    onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
             const controller = this.getPropertyController(dateProperty);
 
-            if (newDateValue.isValid()) {
-                controller.setValue(newDateValue);
+            if (isValid(newDateValue)) {
+                controller.setValue(newDateValue.toISOString());
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });
@@ -563,13 +564,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
-            lastModifiedToFilterValue.set({
-                hour: 23,
-                minute: 59,
-                second: 59
-            });
-            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
+            const lastModifiedToFilterValue = set(new Date(formValues.lastModifiedTo), { hours: 23, minutes: 59, seconds: 59 });
+            formValues.lastModifiedTo = new Date(lastModifiedToFilterValue.toISOString());
+
         }
     }
 
@@ -608,11 +605,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         let lastModifiedTo;
 
         if (filterModel.lastModifiedFrom) {
-            lastModifiedFrom = moment(filterModel.lastModifiedFrom);
+            lastModifiedFrom = new Date(filterModel.lastModifiedFrom);
         }
 
         if (filterModel.lastModifiedTo) {
-            lastModifiedTo = moment(filterModel.lastModifiedTo);
+            lastModifiedTo = new Date(filterModel.lastModifiedTo);
         }
 
         return [
