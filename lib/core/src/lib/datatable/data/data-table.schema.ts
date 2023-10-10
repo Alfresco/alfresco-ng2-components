@@ -49,7 +49,6 @@ export abstract class DataTableSchema<T = unknown> {
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
-
         if (!this.columns || this.columns.length === 0) {
             this.createColumns();
             this.columnsSchemaSubject$.next(true);
@@ -94,11 +93,12 @@ export abstract class DataTableSchema<T = unknown> {
         if (columnList?.columns?.length > 0) {
             schema = columnList.columns.map((c) => c as DataColumn);
         }
+        console.log(schema);
         return schema;
     }
 
     public getSchemaFromConfig(presetColumn: string): DataColumn[] {
-        return presetColumn ? this.layoutPresets[presetColumn].map((col) => new ObjectDataColumn(col)) : [];
+        return presetColumn && this.layoutPresets[presetColumn] ? this.layoutPresets[presetColumn].map((col) => new ObjectDataColumn(col)) : [];
     }
 
     private getDefaultLayoutPreset(): DataColumn[] {

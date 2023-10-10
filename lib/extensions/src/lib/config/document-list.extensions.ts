@@ -27,6 +27,7 @@ export interface DocumentListPresetRef extends ExtensionElement {
   template: string;
   desktopOnly: boolean;
   sortingKey: string;
+  isHidden?: boolean;
   rules?: {
     [key: string]: string;
     visible?: string;
