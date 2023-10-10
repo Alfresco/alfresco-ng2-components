@@ -105,7 +105,7 @@
                     class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
-                <div *ngIf="hasTags()" class="adf-metadata-no-item-added">
+                <div *ngIf="isTagsEmpty()" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableTags" class="adf-metadata-properties-tags">
@@ -166,7 +166,7 @@
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
-                <div *ngIf="hasCategories()" class="adf-metadata-no-item-added">
+                <div *ngIf="isCategoryEmpty()" class="adf-metadata-no-item-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
