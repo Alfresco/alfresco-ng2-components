@@ -78,8 +78,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
             }
 
             if (this.field.value) {
-                this.startAt = this.dateAdapter.parse(this.field.value, this.field.dateDisplayFormat);
-                this.value = this.dateAdapter.parse(this.field.value, this.field.dateDisplayFormat);
+                this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+                this.value = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
             }
         }
     }
@@ -94,7 +94,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         const input = event.targetElement as HTMLInputElement;
 
         if (value) {
-            this.field.value = this.dateAdapter.format(value, this.field.dateDisplayFormat);
+            this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
         } else {
             this.field.value = input.value;
         }
