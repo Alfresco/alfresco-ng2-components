@@ -16,19 +16,140 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BooleanCellComponent } from './boolean-cell.component';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 
 describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
     let fixture: ComponentFixture<BooleanCellComponent>;
+    const getBooleanCell = () => fixture.debugElement.nativeElement.querySelector('.adf-boolean-cell-value');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [BooleanCellComponent]
+            imports: [BooleanCellComponent]
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
+    });
+
+    describe('Initialization', () => {
+        let rowData: any;
+        let columnData: any;
+        let dataTableAdapter: ObjectDataTableAdapter;
+        let nextSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            rowData = {
+                id: '1',
+                value: false
+            };
+            columnData = { type: 'boolean', key: 'value' };
+            dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
+            nextSpy = spyOn(component.value$, 'next');
+        });
+
+        it('should setup inital value', () => {
+            component.column = dataTableAdapter.getColumns()[0];
+            component.row = dataTableAdapter.getRows()[0];
+            component.data = dataTableAdapter;
+
+            fixture.detectChanges();
+
+            expect(nextSpy).toHaveBeenCalledOnceWith(rowData.value);
+        });
+
+        it('should NOT setup inital value', () => {
+            fixture.detectChanges();
+
+            expect(nextSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('UI', () => {
+        it('should render "true" inside cell', () => {
+            component.value$.next(true);
+            fixture.detectChanges();
+
+            const booleanCell = getBooleanCell();
+
+            expect(booleanCell).toBeTruthy();
+            expect(booleanCell.textContent.trim()).toBe('true');
+        });
+
+        it('should render "false" inside cell', () => {
+            component.value$.next(false);
+            fixture.detectChanges();
+
+            const booleanCell = getBooleanCell();
+
+            expect(booleanCell).toBeTruthy();
+            expect(booleanCell.textContent.trim()).toBe('false');
+        });
+
+        describe('should NOT render value inside cell in case of', () => {
+            it('string', () => {
+                component.value$.next('true');
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('number', () => {
+                component.value$.next(0);
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('object', () => {
+                component.value$.next({});
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('null', () => {
+                component.value$.next(null);
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('undefined', () => {
+                component.value$.next(undefined);
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('empty string', () => {
+                component.value$.next('');
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
+            it('NaN', () => {
+                component.value$.next(NaN);
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+        });
     });
 });

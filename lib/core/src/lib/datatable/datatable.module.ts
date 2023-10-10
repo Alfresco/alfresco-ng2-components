@@ -70,7 +70,8 @@ import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.com
         FormsModule,
         ReactiveFormsModule,
         ResizableModule,
-        DataColumnModule
+        DataColumnModule,
+        BooleanCellComponent
     ],
     declarations: [
         DataTableComponent,
@@ -84,7 +85,6 @@ import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.com
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
-        BooleanCellComponent,
         ColumnsSelectorComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
@@ -109,7 +109,6 @@ import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.com
         FileSizeCellComponent,
         LocationCellComponent,
         JsonCellComponent,
-        BooleanCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,

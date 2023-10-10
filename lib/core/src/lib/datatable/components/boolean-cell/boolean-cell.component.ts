@@ -15,23 +15,53 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { DataTableService } from '../../../../..';
+import { CommonModule } from '@angular/common';
+import { DataTableService } from '../../services/datatable.service';
+import { Subscription } from 'rxjs';
 
 @Component({
+    standalone: true,
+    imports: [CommonModule],
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container>
-            <span [title]="tooltip" class="adf-boolean-cell-value">{{ value$ | async }}</span>
+        <ng-container *ngIf="value !== null">
+            <span [title]="tooltip" class="adf-boolean-cell-value">
+                {{ value }}
+            </span>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-boolean-cell adf-datatable-content-cell' }
 })
-export class BooleanCellComponent extends DataTableCellComponent {
+export class BooleanCellComponent extends DataTableCellComponent implements OnInit, OnDestroy {
+    private subscription: Subscription;
+    value: boolean | null = null;
+
     constructor(@Optional() dataTableService: DataTableService) {
         super(dataTableService);
+    }
+
+    ngOnInit() {
+        this.handleValueChanges();
+        if (this.column?.key && this.row && this.data) {
+            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
+        }
+    }
+
+    private handleValueChanges() {
+        this.subscription = this.value$.subscribe((value) => {
+            this.value = this.isBoolean(value) ? value : null;
+        });
+    }
+
+    private isBoolean(value: any): boolean {
+        return value === true || value === false;
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
