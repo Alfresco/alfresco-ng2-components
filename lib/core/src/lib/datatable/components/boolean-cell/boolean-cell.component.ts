@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CommonModule } from '@angular/common';
 import { DataTableService } from '../../services/datatable.service';
-import { Subscription } from 'rxjs';
+import { BooleanPipe } from '../../../pipes/boolean.pipe';
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, BooleanPipe],
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="value !== null">
+        <ng-container *ngIf="value$ | async | boolean as value">
             <span [title]="tooltip" class="adf-boolean-cell-value">
                 {{ value }}
             </span>
@@ -36,32 +36,14 @@ import { Subscription } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
-export class BooleanCellComponent extends DataTableCellComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
-    value: boolean | null = null;
-
+export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
     constructor(@Optional() dataTableService: DataTableService) {
         super(dataTableService);
     }
 
     ngOnInit() {
-        this.handleValueChanges();
         if (this.column?.key && this.row && this.data) {
             this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
         }
-    }
-
-    private handleValueChanges() {
-        this.subscription = this.value$.subscribe((value) => {
-            this.value = this.isBoolean(value) ? value : null;
-        });
-    }
-
-    private isBoolean(value: any): boolean {
-        return value === true || value === false || value === 'true' || value === 'false';
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 }

@@ -63,7 +63,6 @@ describe('BooleanCellComponent', () => {
             fixture.detectChanges();
 
             expect(nextSpy).not.toHaveBeenCalled();
-            expect(component.value).toBe(null);
         });
     });
 

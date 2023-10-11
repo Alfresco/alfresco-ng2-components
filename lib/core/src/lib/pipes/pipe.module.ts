@@ -36,11 +36,13 @@ import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
 import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
 import { DateTimePipe } from './date-time.pipe';
+import { BooleanPipe } from './boolean.pipe';
 
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        BooleanPipe
     ],
     declarations: [
         FileSizePipe,
@@ -77,8 +79,7 @@ import { DateTimePipe } from './date-time.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
-    ],
+        FilterOutArrayObjectsByPropPipe    ],
     exports: [
         FileSizePipe,
         HighlightPipe,
@@ -96,8 +97,7 @@ import { DateTimePipe } from './date-time.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
-    ]
+        FilterOutArrayObjectsByPropPipe    ]
 })
 export class PipeModule {
 }
