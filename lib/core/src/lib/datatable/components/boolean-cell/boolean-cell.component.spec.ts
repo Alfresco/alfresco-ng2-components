@@ -113,6 +113,15 @@ describe('BooleanCellComponent', () => {
         });
 
         describe('should NOT render value inside cell in case of', () => {
+            it('invalid string', () => {
+                component.value$.next('tru');
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeFalsy();
+            });
+
             it('number', () => {
                 component.value$.next(0);
                 fixture.detectChanges();
