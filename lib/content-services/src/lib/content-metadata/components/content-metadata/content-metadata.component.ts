@@ -196,31 +196,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     group: CardViewGroup;
 
-     /** Emitted when content's editable state is changed. **/
-    @Output()
-    editableChange = new EventEmitter<boolean>();
-
-    /** Emitted when content's editableTags state is changed. **/
-    @Output()
-    editableTagsChange = new EventEmitter<boolean>();
-
-    /** Emitted when content's editableCategories state is changed. **/
-    @Output()
-    editableCategoriesChange = new EventEmitter<boolean>();
-
-    /** Emitted when content's group state is changed. **/
-    @Output()
-    groupChange = new EventEmitter<CardViewGroup>();
-
-    @Input()
-    editableCategories = false;
-
-    @Input()
-    editableTags = false;
-
-    @Input()
-    group: CardViewGroup;
-
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _editable = false;
@@ -474,7 +449,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                     group.expanded = true;
                 }
                 break;
-
             default:
                 break;
         }
@@ -516,8 +490,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) {
-            // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
