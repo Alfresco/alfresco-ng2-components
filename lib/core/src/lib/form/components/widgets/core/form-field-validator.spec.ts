@@ -1113,9 +1113,21 @@ describe('FormFieldValidator', () => {
         it('should validate dateTime format with default format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '2021-06-09 14:10'
+                value: '9-6-2021 11:10 AM'
             });
-            expect(validator.validate(field)).toBeTruthy();
+            expect(field.value).toBe('9-6-2021 11:10 AM');
+            expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
+            expect(validator.validate(field)).toBeTrue();
+        });
+
+        it('should not validate dateTime format with default format', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATETIME,
+                value: '2021-06-09 14:10' // 14:10 does not conform to A
+            });
+            expect(field.value).toBe('2021-06-09 14:10');
+            expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
+            expect(validator.validate(field)).toBeFalse();
         });
     });
 });
