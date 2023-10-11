@@ -89,7 +89,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     }
 
     isCheckboxDisabled(column: DataColumn): boolean {
-        return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(column => !column.isHidden).length;
+        return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(dataColumn => !dataColumn.isHidden).length;
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {

@@ -24,6 +24,32 @@ export const presetsDefaultModel = {
             sortable: false
         },
         {
+            key: 'name',
+            type: 'text',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            cssClass: 'full-width ellipsis-cell',
+            sortable: true
+        },
+        {
+            key: 'path',
+            type: 'location',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
+            sortable: true
+        },
+        {
+            key: 'content.sizeInBytes',
+            type: 'fileSize',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            sortable: true
+        },
+        {
+            key: 'archivedAt',
+            type: 'date',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON',
+            format: 'timeAgo',
+            sortable: true
+        },
+        {
             key: 'archivedByUser.displayName',
             type: 'text',
             title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY',
