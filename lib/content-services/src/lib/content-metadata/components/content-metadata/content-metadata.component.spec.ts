@@ -95,22 +95,12 @@ describe('ContentMetadataComponent', () => {
     const clickOnGeneralInfoSave = () => {
         findSaveGeneralInfoButton().click();
         fixture.detectChanges();
-    }
-
-    const clickOnTagsSave = () => {
-        findSaveTagsButton().click();
-        fixture.detectChanges();
-    }
-
-    const clickOnTagsSave = () => {
-        findSaveTagsButton().click();
-        fixture.detectChanges();
     };
 
     const clickOnTagsSave = () => {
         findSaveTagsButton().click();
         fixture.detectChanges();
-    }
+    };
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
 
