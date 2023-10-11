@@ -33,7 +33,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
     public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number, name?: string): Observable<TreeResponse<CategoryNode>> {
         return !name ? this.categoryService.getSubcategories(parentNodeId, skipCount, maxItems).pipe(map((response: CategoryPaging) => {
             const parentNode: CategoryNode = this.getParentNode(parentNodeId);
-            const nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => ({
+            let nodesList: CategoryNode[] = response.list.entries.map((entry: CategoryEntry) => ({
                     id: entry.entry.id,
                     nodeName: entry.entry.name,
                     parentId: entry.entry.parentId,
@@ -54,6 +54,7 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
                 };
                 nodesList.push(loadMoreNode);
             }
+            nodesList = nodesList.sort((category1, category2) => category1.nodeName.localeCompare(category2.nodeName));
             const treeResponse: TreeResponse<CategoryNode> = {entries: nodesList, pagination: response.list.pagination};
             return treeResponse;
         })) : this.categoryService.searchCategories(name, skipCount, maxItems).pipe(mergeMap((pagingResult) => {
@@ -76,7 +77,10 @@ export class CategoryTreeDatasourceService extends TreeService<CategoryNode>  {
                 );
             }),
                 toArray(),
-                map(res =>  ({entries: res, pagination: pagingResult.list.pagination})));
+                map(res =>  {
+                    const sortedResults = res.sort((category1, category2) => category1.nodeName.localeCompare(category2.nodeName));
+                    return {entries: sortedResults, pagination: pagingResult.list.pagination};
+                }));
         }));
     }
 }
