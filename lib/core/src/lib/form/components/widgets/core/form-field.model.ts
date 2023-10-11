@@ -16,7 +16,6 @@
  */
 
 /* eslint-disable @angular-eslint/component-selector */
-import moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';
@@ -339,14 +338,18 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
-                let dateValue;
+                let dateValue: Date;
+
                 if (isNumberValue(value)) {
-                    dateValue = moment(value);
+                    dateValue = new Date(value);
                 } else {
-                    dateValue = this.isDateTimeField(json) ? moment.utc(value, 'YYYY-MM-DD hh:mm A') : moment.utc(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = this.isDateTimeField(json)
+                        ? DateFnsUtils.parseDate(value, 'YYYY-MM-DD hh:mm A')
+                        : DateFnsUtils.parseDate(value.split('T')[0], 'YYYY-M-D');
                 }
-                if (dateValue?.isValid()) {
-                    value = dateValue.utc().format(this.dateDisplayFormat);
+
+                if (isValidDate(dateValue)) {
+                    value = DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
                 }
             }
         }

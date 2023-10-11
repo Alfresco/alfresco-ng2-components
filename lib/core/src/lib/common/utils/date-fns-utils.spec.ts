@@ -29,6 +29,11 @@ describe('DateFnsUtils', () => {
             const dateFnsFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-MM-DDTHH:mm:ssZ');
             expect(dateFnsFormat).toBe(`yyyy-MM-dd'T'HH:mm:ss'Z'`);
         });
+
+        it('should convert custom moment datetime format', () => {
+            const dateFnsFormat = DateFnsUtils.convertMomentToDateFnsFormat('D-M-YYYY hh:mm A');
+            expect(dateFnsFormat).toBe('d-M-yyyy hh:mm a');
+        });
     });
 
 
@@ -90,5 +95,20 @@ describe('DateFnsUtils', () => {
             `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`
         );
         expect(result).toBe('2023-10-10T18:28:50.082Z');
+    });
+
+    it('should validate datetime with moment format', () => {
+        const result = DateFnsUtils.isValidDate('2021-06-09 14:10', 'YYYY-MM-DD HH:mm');
+        expect(result).toBeTrue();
+    });
+
+    it('should validate datetime with date-fns format', () => {
+        const result = DateFnsUtils.isValidDate('2021-06-09 14:10', 'yyyy-MM-dd HH:mm');
+        expect(result).toBeTrue();
+    });
+
+    it('should not validate datetime with custom moment format', () => {
+        const result = DateFnsUtils.isValidDate('2021-06-09 14:10', 'D-M-YYYY hh:mm A');
+        expect(result).toBeFalse();
     });
 });
