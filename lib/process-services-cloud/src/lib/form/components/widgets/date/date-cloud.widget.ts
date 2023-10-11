@@ -17,22 +17,22 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS/*, MAT_DATE_LOCALE*/ } from '@angular/material/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import {
-    MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
-    UserPreferencesService, UserPreferenceValues, FormService
-} from '@alfresco/adf-core';
-import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
+import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { CLOUD_FORM_DATE_FORMATS } from '../../../date-formats';
+import { addDays, subDays } from 'date-fns';
+// import { enUS } from 'date-fns/locale';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
+        // { provide: MAT_DATE_LOCALE, useValue: enUS },
+        { provide: MAT_DATE_FORMATS, useValue: CLOUD_FORM_DATE_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+    ],
     templateUrl: './date-cloud.widget.html',
     styleUrls: ['./date-cloud.widget.scss'],
     host: {
@@ -50,52 +50,58 @@ import { DATE_FORMAT_CLOUD } from '../../../../models/date-format-cloud.model';
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
+    DATE_FORMAT = 'dd-MM-yyyy';
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: Date;
+    maxDate: Date;
+    startAt: Date;
+
+    /**
+     * Current date value.
+     * The value is always stored in the format `dd-MM-yyyy`,
+     * but displayed in the UI component using `dateDisplayFormat`
+     */
+    @Input()
+    value: any = null;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+                private dateAdapter: DateAdapter<Date>) {
         super(formService);
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
-
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
+        if (this.field.dateDisplayFormat) {
+            const adapter = this.dateAdapter as AdfDateFnsAdapter;
+            adapter.displayFormat = this.field.dateDisplayFormat;
+        }
 
         if (this.field) {
             if (this.field.dynamicDateRangeSelection) {
-                const today = this.getTodaysFormattedDate();
                 if (Number.isInteger(this.field.minDateRangeValue)) {
-                    this.minDate = moment(today).subtract(this.field.minDateRangeValue, 'days');
-                    this.field.minValue = this.minDate.format(DATE_FORMAT_CLOUD);
+                    this.minDate = subDays(this.dateAdapter.today(), this.field.minDateRangeValue);
+                    this.field.minValue = DateFnsUtils.formatDate(this.minDate, this.DATE_FORMAT);
                 }
                 if (Number.isInteger(this.field.maxDateRangeValue)) {
-                    this.maxDate = moment(today).add(this.field.maxDateRangeValue, 'days');
-                    this.field.maxValue = this.maxDate.format(DATE_FORMAT_CLOUD);
+                    this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
+                    this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, this.DATE_FORMAT);
                 }
             } else {
                 if (this.field.minValue) {
-                    this.minDate = moment(this.field.minValue, DATE_FORMAT_CLOUD);
+                    this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
                 }
 
                 if (this.field.maxValue) {
-                    this.maxDate = moment(this.field.maxValue, DATE_FORMAT_CLOUD);
+                    this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
                 }
             }
-        }
-    }
 
-    getTodaysFormattedDate() {
-        return moment().format(DATE_FORMAT_CLOUD);
+            if (this.field.value) {
+                this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+                this.value = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -103,13 +109,17 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         this.onDestroy$.complete();
     }
 
-    onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = date.format(this.field.dateDisplayFormat);
+    onDateChanged(event: MatDatepickerInputEvent<Date>) {
+        const value = event.value;
+        const input = event.targetElement as HTMLInputElement;
+
+        if (value) {
+            // store back to the `dd-MM-yyyy` format
+            this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
         } else {
-            this.field.value = newDateValue;
+            this.field.value = input.value;
         }
+
         this.onFieldChanged(this.field);
     }
 }
