@@ -24,12 +24,10 @@ import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils } from '@
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { CLOUD_FORM_DATE_FORMATS } from '../../../date-formats';
 import { addDays, subDays } from 'date-fns';
-// import { enUS } from 'date-fns/locale';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        // { provide: MAT_DATE_LOCALE, useValue: enUS },
         { provide: MAT_DATE_FORMATS, useValue: CLOUD_FORM_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
