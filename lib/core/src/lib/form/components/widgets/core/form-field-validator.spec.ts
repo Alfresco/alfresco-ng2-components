@@ -718,9 +718,6 @@ describe('FormFieldValidator', () => {
         });
 
         it('should take into account that max value is in UTC and fail validating value checking the time', () => {
-            // const maxValueFromActivitiInput = '31-3-2018 12:00 AM';
-            // const maxValueSavedInForm = moment(maxValueFromActivitiInput, 'DD-M-YYYY hh:mm A').utc().format();
-
             const localInvalidValue = '2018-3-31 12:01 AM';
 
             const field = new FormFieldModel(new FormModel(), {
