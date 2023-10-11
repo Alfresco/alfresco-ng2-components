@@ -1,0 +1,8 @@
+<ng-container *ngIf="value$ | async as number">
+    <span [title]="number">
+        {{ number | number:
+            (decimalConfig?.digitsInfo || defaultDecimalConfig.digitsInfo):
+            (decimalConfig?.locale || defaultDecimalConfig.locale)
+        }}
+    </span>
+</ng-container>

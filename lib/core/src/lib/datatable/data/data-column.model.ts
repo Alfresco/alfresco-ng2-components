@@ -15,8 +15,24 @@
  * limitations under the License.
  */
 
+/* eslint-disable id-blacklist */
+
 import { TemplateRef } from '@angular/core';
-import { DataColumnType } from '@alfresco/adf-extensions';
+
+export interface DataColumnTypes {
+    text: string;
+    image: string;
+    date: string;
+    json: string;
+    icon: string;
+    fileSize: string;
+    location: string;
+    boolean: string;
+    amount: string;
+    number: string;
+}
+
+export type DataColumnType = keyof DataColumnTypes;
 
 export interface DataColumn<T = unknown> {
     id?: string;
@@ -40,11 +56,13 @@ export interface DataColumn<T = unknown> {
     customData?: T;
     order?: number;
     currencyConfig?: CurrencyConfig;
+    decimalConfig?: DecimalConfig;
 }
-
-export interface CurrencyConfig {
-    code?: string;
-    display?: string;
+export interface DecimalConfig {
     digitsInfo?: string;
     locale?: string;
+}
+export interface CurrencyConfig extends DecimalConfig {
+    code?: string;
+    display?: string;
 }

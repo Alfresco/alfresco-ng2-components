@@ -55,6 +55,7 @@ import { ResizableModule } from './directives/resizable/resizable.module';
 import { DataColumnModule } from './data-column/data-column.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
+import { NumberCellComponent } from './components/number-cell/number-cell.component';
 
 @NgModule({
     imports: [
@@ -73,7 +74,9 @@ import { AmountCellComponent } from './components/amount-cell/amount-cell.compon
         ResizableModule,
         DataColumnModule,
         BooleanCellComponent,
-        AmountCellComponent
+        DataColumnModule,
+        AmountCellComponent,
+        NumberCellComponent
     ],
     declarations: [
         DataTableComponent,
