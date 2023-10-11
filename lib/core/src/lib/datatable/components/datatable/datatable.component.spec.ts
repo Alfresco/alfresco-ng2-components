@@ -33,6 +33,7 @@ import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
+import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
 
 @Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
 class CustomColumnTemplateComponent {
@@ -1194,6 +1195,17 @@ describe('DataTable', () => {
         const rows3 = dataTable.data.getRows();
         expect(rows3[0].isSelected).toBeFalsy();
         expect(rows3[1].isSelected).toBeTruthy();
+    });
+
+    it('should be able to display column of type boolean', () => {
+        dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
+
+        fixture.detectChanges();
+        const rows = dataTable.data.getRows();
+
+        expect(rows[0].getValue('is_available')).toBe('false');
+        expect(rows[1].getValue('is_available')).toBe('true');
+        expect(rows[2].getValue('is_available')).toBe('true');
     });
 });
 
