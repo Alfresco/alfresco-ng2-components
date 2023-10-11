@@ -79,7 +79,8 @@ import { BooleanPipe } from './boolean.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe    ],
+        FilterOutArrayObjectsByPropPipe
+    ],
     exports: [
         FileSizePipe,
         HighlightPipe,
@@ -97,7 +98,8 @@ import { BooleanPipe } from './boolean.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe    ]
+        FilterOutArrayObjectsByPropPipe
+    ]
 })
 export class PipeModule {
 }
