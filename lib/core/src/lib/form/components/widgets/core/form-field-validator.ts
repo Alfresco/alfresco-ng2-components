@@ -20,7 +20,7 @@
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
-import { DateFnsUtils } from '../../../../common';
+import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 
 export interface FormFieldValidator {
 

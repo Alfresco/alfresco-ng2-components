@@ -80,15 +80,14 @@ export class DateFnsUtils {
         return dateFnsLocale;
     }
 
-    /**
-     * A mapping of Moment.js format tokens to date-fns format tokens.
-     */
     private static momentToDateFnsMap = {
         D: 'd',
         Y: 'y',
         AZ: 'aa',
         A: 'a',
-        ll: 'PP'
+        ll: 'PP',
+        T: `'T'`,
+        Z: `'Z'`
     };
 
     /**
@@ -99,6 +98,11 @@ export class DateFnsUtils {
      */
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
         if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
+            // normalise the input to support double conversion of the same string
+            dateDisplayFormat = dateDisplayFormat
+                .replace(`'T'`, 'T')
+                .replace(`'Z'`, 'Z');
+
             for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
                 dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
             }

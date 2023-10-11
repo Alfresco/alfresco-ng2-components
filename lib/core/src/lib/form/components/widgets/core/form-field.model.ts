@@ -435,13 +435,13 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATETIME: {
                 if (typeof this.value === 'string' && this.value === 'now') {
-                    this.value = moment(new Date()).utc().format(this.dateDisplayFormat);
+                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
                 }
 
-                const dateTimeValue = moment.utc(this.value, this.dateDisplayFormat, true);
-                if (dateTimeValue?.isValid()) {
-                    /* cspell:disable-next-line */
-                    this.form.values[this.id] = `${dateTimeValue.utc().format('YYYY-MM-DDTHH:mm:ss')}.000Z`;
+                const dateTimeValue = new Date(this.value);
+
+                if (isValidDate(dateTimeValue)) {
+                    this.form.values[this.id] = dateTimeValue.toISOString();
                 } else {
                     this.form.values[this.id] = null;
                     this._value = this.value;
