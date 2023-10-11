@@ -767,8 +767,8 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             }
         }
     }
-    onColumnsVisibilityChange(e: Array<DataColumn>): void {
-        this.data.setColumns(e);
+    onColumnsVisibilityChange(updatedColumns: Array<DataColumn>): void {
+        this.data.setColumns(updatedColumns);
     }
     onNodeClick(nodeEntry: NodeEntry) {
         const domEvent = new CustomEvent('node-click', {

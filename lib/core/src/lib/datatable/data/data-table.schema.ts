@@ -93,7 +93,6 @@ export abstract class DataTableSchema<T = unknown> {
         if (columnList?.columns?.length > 0) {
             schema = columnList.columns.map((c) => c as DataColumn);
         }
-        console.log(schema);
         return schema;
     }
 
