@@ -58,7 +58,7 @@ export class BooleanCellComponent extends DataTableCellComponent implements OnIn
     }
 
     private isBoolean(value: any): boolean {
-        return value === true || value === false;
+        return value === true || value === false || value === 'true' || value === 'false';
     }
 
     ngOnDestroy() {

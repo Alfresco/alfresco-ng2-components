@@ -68,36 +68,51 @@ describe('BooleanCellComponent', () => {
     });
 
     describe('UI', () => {
-        it('should render "true" inside cell', () => {
-            component.value$.next(true);
-            fixture.detectChanges();
+        describe('should render "true" inside cell when', () => {
+            it('boolean value is true', () => {
+                component.value$.next(true);
+                fixture.detectChanges();
 
-            const booleanCell = getBooleanCell();
+                const booleanCell = getBooleanCell();
 
-            expect(booleanCell).toBeTruthy();
-            expect(booleanCell.textContent.trim()).toBe('true');
-        });
+                expect(booleanCell).toBeTruthy();
+                expect(booleanCell.textContent.trim()).toBe('true');
+            });
 
-        it('should render "false" inside cell', () => {
-            component.value$.next(false);
-            fixture.detectChanges();
-
-            const booleanCell = getBooleanCell();
-
-            expect(booleanCell).toBeTruthy();
-            expect(booleanCell.textContent.trim()).toBe('false');
-        });
-
-        describe('should NOT render value inside cell in case of', () => {
-            it('string', () => {
+            it('exact string is provided', () => {
                 component.value$.next('true');
                 fixture.detectChanges();
 
                 const booleanCell = getBooleanCell();
 
-                expect(booleanCell).toBeFalsy();
+                expect(booleanCell).toBeTruthy();
+                expect(booleanCell.textContent.trim()).toBe('true');
+            });
+        });
+
+        describe('should render "false" inside cell when', () => {
+            it('boolean value is false', () => {
+                component.value$.next(false);
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeTruthy();
+                expect(booleanCell.textContent.trim()).toBe('false');
             });
 
+            it('exact string is provided', () => {
+                component.value$.next('false');
+                fixture.detectChanges();
+
+                const booleanCell = getBooleanCell();
+
+                expect(booleanCell).toBeTruthy();
+                expect(booleanCell.textContent.trim()).toBe('false');
+            });
+        });
+
+        describe('should NOT render value inside cell in case of', () => {
             it('number', () => {
                 component.value$.next(0);
                 fixture.detectChanges();
