@@ -19,6 +19,10 @@ import { MatDateFormats } from '@angular/material/core';
 
 /**
  * Provides date/time display formatting for the cloud components.
+ *
+ * Notes for developers: display formats are different from the storage formats.
+ * Components have a fixed format for saving dates and datetime values,
+ * while dynamic format for UI display.
  */
 export const CLOUD_FORM_DATE_FORMATS: MatDateFormats = {
     parse: {
