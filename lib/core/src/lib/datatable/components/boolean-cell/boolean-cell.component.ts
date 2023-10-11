@@ -34,7 +34,7 @@ import { Subscription } from 'rxjs';
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-boolean-cell adf-datatable-content-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit, OnDestroy {
     private subscription: Subscription;

@@ -23,7 +23,7 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
     let fixture: ComponentFixture<BooleanCellComponent>;
-    const getBooleanCell = () => fixture.debugElement.nativeElement.querySelector('.adf-boolean-cell-value');
+    const getBooleanCell = () => fixture.debugElement.nativeElement.querySelector('span');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -63,6 +63,7 @@ describe('BooleanCellComponent', () => {
             fixture.detectChanges();
 
             expect(nextSpy).not.toHaveBeenCalled();
+            expect(component.value).toBe(null);
         });
     });
 
