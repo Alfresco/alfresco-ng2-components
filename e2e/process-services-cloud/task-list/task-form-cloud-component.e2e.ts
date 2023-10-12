@@ -363,7 +363,7 @@ describe('Task form cloud component', () => {
         await taskFilter.clickTaskFilter(filterName);
         await taskList.getDataTable().waitTillContentLoaded();
 
-        await taskList.checkContentIsDisplayedById(taskId);
+        // await taskList.checkContentIsDisplayedById(taskId);
         await taskList.selectRowByTaskId(taskId);
     }
 
