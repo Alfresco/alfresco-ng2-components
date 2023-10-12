@@ -251,4 +251,22 @@ describe('CardViewSelectItemComponent', () => {
             expect(filterInput).not.toBe(null);
         });
     });
+
+   it('should return true for isNonEditableField when editable is true and property.editable is false', () => {
+        component.editable = true;
+        component.property.editable = false;
+
+        const result = component.isNonEditableField;
+
+        expect(result).toBe(true);
+    });
+
+    it('should return false for isNonEditableField when editable is false and property.editable is true', () => {
+        component.editable = false;
+        component.property.editable = true;
+
+        const result = component.isNonEditableField;
+
+        expect(result).toBe(false);
+    });
 });

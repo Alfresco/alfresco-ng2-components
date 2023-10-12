@@ -232,6 +232,45 @@ describe('CardViewDateItemComponent', () => {
         expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
     });
 
+    it('should not show divider when editable is true', () => {
+        component.editable = true;
+        spyOn(component, 'showProperty').and.returnValue(true); // Mock showProperty result
+        const result = component.showDivider;
+        expect(result).toBe(false);
+    });
+
+    it('should not show divider when showProperty returns false', () => {
+        component.editable = false;
+        spyOn(component, 'showProperty').and.returnValue(false);
+        const result = component.showDivider;
+        expect(result).toBe(false);
+    });
+
+    it('should show divider when editable is false', () => {
+        component.editable = false;
+        spyOn(component, 'showProperty').and.returnValue(true);
+        const result = component.showDivider;
+        expect(result).toBe(true);
+    });
+
+    it('should return true for isNonEditableField when editable is true and property.editable is false', () => {
+        component.editable = true;
+        component.property.editable = false;
+
+        const result = component.isNonEditableField;
+
+        expect(result).toBe(true);
+    });
+
+    it('should return false for isNonEditableField when editable is false and property.editable is true', () => {
+        component.editable = false;
+        component.property.editable = true;
+
+        const result = component.isNonEditableField;
+
+        expect(result).toBe(false);
+    });
+
     describe('clear icon', () => {
         it('should render the clear icon in case of displayClearAction:true', () => {
             component.editable = true;

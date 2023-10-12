@@ -296,6 +296,51 @@ describe('CardViewTextItemComponent', () => {
             const labelElement = fixture.debugElement.query(By.css(`.adf-property-label`));
             expect(labelElement).toBeNull();
         });
+
+        it('should not show divider when editable is true', () => {
+            component.editable = true;
+            spyOnProperty(component, 'showProperty', 'get').and.returnValue(true);
+
+            const result = component.showDivider;
+
+            expect(result).toBe(false);
+        });
+
+        it('should not show divider when showProperty returns false', () => {
+            component.editable = false;
+            spyOnProperty(component, 'showProperty', 'get').and.returnValue(false);
+
+            const result = component.showDivider;
+
+            expect(result).toBe(false);
+        });
+
+        it('should show divider when editable is false', () => {
+            component.editable = false;
+            spyOnProperty(component, 'showProperty', 'get').and.returnValue(true);
+
+            const result = component.showDivider;
+
+            expect(result).toBe(true);
+        });
+
+        it('should return true for isNonEditableField when editable is true and property.editable is false', () => {
+            component.editable = true;
+            component.property.editable = false;
+
+            const result = component.isNonEditableField;
+
+            expect(result).toBe(true);
+        });
+
+        it('should return false for isNonEditableField when editable is false and property.editable is true', () => {
+            component.editable = false;
+            component.property.editable = true;
+
+            const result = component.isNonEditableField;
+
+            expect(result).toBe(false);
+        });
     });
 
     describe('clickable', () => {
@@ -474,7 +519,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('myValueToCopy', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
         });
-      
+
     });
 
     describe('Update', () => {
