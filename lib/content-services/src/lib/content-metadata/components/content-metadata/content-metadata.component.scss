@@ -63,9 +63,7 @@
         }
 
         .adf-metadata-no-item-added {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            word-break: break-all;
             font-size: 15px;
             padding-top: 16px;
         }
