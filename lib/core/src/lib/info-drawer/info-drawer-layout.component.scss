@@ -57,7 +57,9 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 color: var(--adf-theme-foreground-text-color-054);
 
                 & > div {
-                    width: 220px;
+                    width: 195px;
+                    overflow: hidden;
+                    white-space: nowrap;
                     text-overflow: ellipsis;
                     color: var(--theme-metadata-property-panel-title-color);
                 }
