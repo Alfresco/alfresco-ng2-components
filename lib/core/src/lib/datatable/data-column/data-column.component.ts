@@ -42,7 +42,7 @@ export class DataColumnComponent implements OnInit {
     customData: any;
 
     /**
-     * Value type for the column. Possible settings are defined via DataColumnType. 
+     * Value type for the column. Possible settings are defined via DataColumnType.
      * Example types: `text`, `date`, `image`, `icon`, `boolean`.
      */
     @Input()
