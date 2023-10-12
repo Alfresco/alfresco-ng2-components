@@ -14,6 +14,10 @@
             line-height: 20px;
         }
 
+        .adf-empty-field {
+            padding: 0;
+        }
+
         .adf-property-label-not-editable {
             color: var(--theme-metadata-property-panel-label-color);
 
@@ -40,7 +44,7 @@
             }
 
             .mat-form-field-wrapper {
-                padding-bottom: 0 ;
+                padding-bottom: 0;
             }
 
             .mat-form-field-label {

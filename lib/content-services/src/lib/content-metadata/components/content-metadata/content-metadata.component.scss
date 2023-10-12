@@ -68,6 +68,7 @@ $panel-properties-height: 56px !default;
             word-break: break-all;
             font-size: 15px;
             padding-top: 16px;
+            text-align: center;
         }
 
         &-tags {
@@ -124,12 +125,6 @@ $panel-properties-height: 56px !default;
                 visibility: hidden;
             }
         }
-    }
-}
-
-.adf-metadata-properties .adf-metadata-grouped-properties-container .mat-expansion-panel {
-    .mat-expansion-panel-body {
-        padding: 0 24px;
     }
 }
 

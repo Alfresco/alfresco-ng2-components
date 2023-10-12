@@ -6,7 +6,7 @@
     {{ property.label | translate }}
 </label>
 <div class="adf-property-value adf-property-value-padding-top"
-    [ngClass]="{'adf-property-dateitem-edit-mode' : editable, 'adf-property-label-not-editable' : isNonEditableField}">
+    [ngClass]="{'adf-property-dateitem-edit-mode' : editable, 'adf-property-label-not-editable' : isNonEditableField, 'adf-empty-field' : !showProperty()}">
     <span *ngIf="!isEditable() && !property.multivalued"
           [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span *ngIf="showProperty()"
