@@ -18,7 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'boolean',
+    name: 'adfBoolean',
     standalone: true
 })
 export class BooleanPipe implements PipeTransform {

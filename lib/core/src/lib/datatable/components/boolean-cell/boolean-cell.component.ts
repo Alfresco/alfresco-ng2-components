@@ -27,7 +27,7 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="value$ | async | boolean as value">
+        <ng-container *ngIf="value$ | async | adfBoolean as value">
             <span [title]="tooltip" class="adf-boolean-cell-value">
                 {{ value }}
             </span>
