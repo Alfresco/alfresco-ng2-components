@@ -17,16 +17,14 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { UserPreferencesService, UserPreferenceValues, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {  MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-date-editor',
@@ -37,7 +35,7 @@ import { takeUntil } from 'rxjs/operators';
     ],
     styleUrls: ['./date.editor.scss']
 })
-export class DateEditorComponent implements OnInit, OnDestroy {
+export class DateEditorComponent implements OnInit {
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
     value: any;
@@ -54,25 +52,13 @@ export class DateEditorComponent implements OnInit, OnDestroy {
     minDate: Moment;
     maxDate: Moment;
 
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(private dateAdapter: DateAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
+    constructor(private dateAdapter: DateAdapter<Moment>) {}
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
-
         const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     onDateChanged(newDateValue: MatDatepickerInputEvent<any> | HTMLInputElement) {

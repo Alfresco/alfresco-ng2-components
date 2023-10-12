@@ -17,8 +17,8 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment, { Moment } from 'moment';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
@@ -26,8 +26,6 @@ import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-datetime-editor',
@@ -40,7 +38,7 @@ import { takeUntil } from 'rxjs/operators';
     ],
     styleUrls: ['./datetime.editor.scss']
 })
-export class DateTimeEditorComponent implements OnInit, OnDestroy {
+export class DateTimeEditorComponent implements OnInit {
     DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
     value: any;
@@ -57,25 +55,13 @@ export class DateTimeEditorComponent implements OnInit, OnDestroy {
     minDate: Moment;
     maxDate: Moment;
 
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(private dateAdapter: DateAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
+    constructor(private dateAdapter: DateAdapter<Moment>) {}
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((locale) => this.dateAdapter.setLocale(locale));
-
         const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_TIME_FORMAT;
 
         this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_TIME_FORMAT);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     onDateChanged(newDateValue) {
