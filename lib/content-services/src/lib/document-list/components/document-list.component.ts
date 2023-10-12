@@ -56,7 +56,9 @@ import {
     AlfrescoApiService,
     UserPreferenceValues,
     DataRow,
-    DataTableService, DataTableSchema, DataColumn
+    DataTableService,
+    DataTableSchema,
+    DataColumn
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
