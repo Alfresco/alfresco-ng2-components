@@ -27,6 +27,13 @@ describe('VariableMapperService', () => {
     let variable: ProcessInstanceVariable;
     let column: DataColumn<ProcessListDataColumnCustomData>;
     let objectWithVariables: { variables: ProcessInstanceVariable[] };
+    const checkTypeMapping = (processVariableType: string, expectedColumnType: string) => {
+        variable.type = processVariableType;
+
+        const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
+
+        expect(viewModel[0].variablesMap[column.title].type).toEqual(expectedColumnType);
+    };
 
     beforeEach(() => {
         service = new VariableMapperService();
@@ -66,51 +73,27 @@ describe('VariableMapperService', () => {
 
     describe('should map correct column type according to process variable type in case of', () => {
         it('date type', () => {
-            variable.type = 'boolean';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('boolean');
+            checkTypeMapping('boolean', 'boolean');
         });
 
         it('integer type', () => {
-            variable.type = 'integer';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('text');
+            checkTypeMapping('integer', 'text');
         });
 
         it('string type', () => {
-            variable.type = 'string';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('text');
+            checkTypeMapping('string', 'text');
         });
 
         it('date type', () => {
-            variable.type = 'date';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('date');
+            checkTypeMapping('date', 'date');
         });
 
         it('datetime type', () => {
-            variable.type = 'datetime';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('date');
+            checkTypeMapping('datetime', 'date');
         });
 
         it('other types', () => {
-            variable.type = 'custom';
-
-            const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
-
-            expect(viewModel[0].variablesMap[column.title].type).toEqual('text');
+            checkTypeMapping('custom', 'text');
         });
     });
 });
