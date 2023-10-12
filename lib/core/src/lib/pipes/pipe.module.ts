@@ -41,8 +41,7 @@ import { BooleanPipe } from './boolean.pipe';
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule,
-        BooleanPipe
+        TranslateModule
     ],
     declarations: [
         FileSizePipe,
@@ -98,8 +97,7 @@ import { BooleanPipe } from './boolean.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe,
-        BooleanPipe
+        FilterOutArrayObjectsByPropPipe
     ]
 })
 export class PipeModule {
