@@ -160,7 +160,7 @@ describe('Custom InfoDrawer', () => {
     });
 
     it('should render a icon with title', () => {
-        component.nodeIcon = "/assets/images/ft_ic_miscellaneous.svg";
+        component.nodeIcon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
         const icon =  fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
@@ -200,7 +200,7 @@ describe('Header visibility InfoDrawer', () => {
     });
 
     it('should show info drawer header by default', () => {
-        component.nodeIcon = "/assets/images/ft_ic_miscellaneous.svg";
+        component.nodeIcon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         const icon = fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
