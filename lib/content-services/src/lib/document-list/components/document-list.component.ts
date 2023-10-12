@@ -482,14 +482,15 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     ngAfterContentInit() {
-        this.setTableSchema();
-    }
-
-    private setTableSchema() {
+        if (this.columnList) {
+            this.columnList.columns.changes.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+                this.createColumns();
+                this.data.setColumns(this.columns);
+            });
+        }
         this.createDatatableSchema();
         this.data.setColumns(this.columns);
     }
-
     ngOnChanges(changes: SimpleChanges) {
         if (!changes['preselectNodes']) {
             this.resetSelection();
