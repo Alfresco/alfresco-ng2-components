@@ -17,14 +17,12 @@
 
 import { ErrorMessageModel } from '@alfresco/adf-core';
 
-/* eslint-disable @angular-eslint/component-selector */
-
 export class DynamicRowValidationSummary extends ErrorMessageModel {
-
     isValid: boolean;
 
     constructor(json?: any) {
         super(json);
-        this.isValid = json.isValid;
+
+        this.isValid = json?.isValid;
     }
 }
