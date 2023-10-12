@@ -23,16 +23,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class BooleanPipe implements PipeTransform {
     transform(value: any): string {
-        if(!this.isBoolean(value)){
-            return '';
-        }
-        if(typeof value === 'boolean'){
+        if (typeof value === 'boolean') {
             return value ? 'true' : 'false';
         }
-        return value;
+        return this.isRecognizedAsBoolean(value) ? value : '';
     }
 
-    private isBoolean(value: any): boolean {
-        return value === true || value === false || value === 'true' || value === 'false';
+    private isRecognizedAsBoolean(value: any): boolean {
+        return value === 'true' || value === 'false';
     }
 }

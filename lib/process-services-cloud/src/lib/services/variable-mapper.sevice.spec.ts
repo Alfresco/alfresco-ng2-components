@@ -65,7 +65,7 @@ describe('VariableMapperService', () => {
     });
 
     describe('should map correct column type according to process variable type in case of', () => {
-        it('date type', ()=> {
+        it('date type', () => {
             variable.type = 'boolean';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
@@ -73,7 +73,7 @@ describe('VariableMapperService', () => {
             expect(viewModel[0].variablesMap[column.title].type).toEqual('boolean');
         });
 
-        it('integer type', ()=> {
+        it('integer type', () => {
             variable.type = 'integer';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
@@ -81,7 +81,7 @@ describe('VariableMapperService', () => {
             expect(viewModel[0].variablesMap[column.title].type).toEqual('text');
         });
 
-        it('string type', ()=> {
+        it('string type', () => {
             variable.type = 'string';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
@@ -89,7 +89,7 @@ describe('VariableMapperService', () => {
             expect(viewModel[0].variablesMap[column.title].type).toEqual('text');
         });
 
-        it('date type', ()=> {
+        it('date type', () => {
             variable.type = 'date';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
@@ -97,7 +97,7 @@ describe('VariableMapperService', () => {
             expect(viewModel[0].variablesMap[column.title].type).toEqual('date');
         });
 
-        it('datetime type', ()=> {
+        it('datetime type', () => {
             variable.type = 'datetime';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
@@ -105,7 +105,7 @@ describe('VariableMapperService', () => {
             expect(viewModel[0].variablesMap[column.title].type).toEqual('date');
         });
 
-        it('other types', ()=> {
+        it('other types', () => {
             variable.type = 'custom';
 
             const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);

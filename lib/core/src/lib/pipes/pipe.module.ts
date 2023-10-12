@@ -98,7 +98,8 @@ import { BooleanPipe } from './boolean.pipe';
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
+        FilterOutArrayObjectsByPropPipe,
+        BooleanPipe
     ]
 })
 export class PipeModule {
