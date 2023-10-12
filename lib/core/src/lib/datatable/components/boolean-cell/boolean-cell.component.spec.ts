@@ -24,6 +24,17 @@ describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
     let fixture: ComponentFixture<BooleanCellComponent>;
     const getBooleanCell = () => fixture.debugElement.nativeElement.querySelector('span');
+    const renderAndCheckResult = (value: any, expectedOccurrence: boolean, expectedLabel?: string) => {
+        component.value$.next(value);
+        fixture.detectChanges();
+
+        const booleanCell = getBooleanCell();
+
+        expectedOccurrence ? expect(booleanCell).toBeTruthy() : expect(booleanCell).toBeFalsy();
+        if (expectedLabel) {
+            expect(booleanCell.textContent.trim()).toBe(expectedLabel);
+        }
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -69,110 +80,51 @@ describe('BooleanCellComponent', () => {
     describe('UI', () => {
         describe('should render "true" inside cell when', () => {
             it('boolean value is true', () => {
-                component.value$.next(true);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeTruthy();
-                expect(booleanCell.textContent.trim()).toBe('true');
+                renderAndCheckResult(true, true, 'true');
             });
 
             it('exact string is provided', () => {
-                component.value$.next('true');
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeTruthy();
-                expect(booleanCell.textContent.trim()).toBe('true');
+                renderAndCheckResult('true', true, 'true');
             });
         });
 
         describe('should render "false" inside cell when', () => {
             it('boolean value is false', () => {
-                component.value$.next(false);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeTruthy();
-                expect(booleanCell.textContent.trim()).toBe('false');
+                renderAndCheckResult(false, true, 'false');
             });
 
             it('exact string is provided', () => {
-                component.value$.next('false');
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeTruthy();
-                expect(booleanCell.textContent.trim()).toBe('false');
+                renderAndCheckResult('false', true, 'false');
             });
         });
 
         describe('should NOT render value inside cell in case of', () => {
             it('invalid string', () => {
-                component.value$.next('tru');
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult('tru', false);
             });
 
             it('number', () => {
-                component.value$.next(0);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult(0, false);
             });
 
             it('object', () => {
-                component.value$.next({});
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult({}, false);
             });
 
             it('null', () => {
-                component.value$.next(null);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult(null, false);
             });
 
             it('undefined', () => {
-                component.value$.next(undefined);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult(undefined, false);
             });
 
             it('empty string', () => {
-                component.value$.next('');
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult('', false);
             });
 
             it('NaN', () => {
-                component.value$.next(NaN);
-                fixture.detectChanges();
-
-                const booleanCell = getBooleanCell();
-
-                expect(booleanCell).toBeFalsy();
+                renderAndCheckResult(NaN, false);
             });
         });
     });
