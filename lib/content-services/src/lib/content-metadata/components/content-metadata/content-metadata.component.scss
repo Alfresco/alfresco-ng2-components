@@ -7,6 +7,10 @@ $panel-properties-height: 56px !default;
             padding: 0 12px;
             border-radius: 12px;
 
+            &.mat-expanded {
+                height: $panel-properties-height;
+            }
+
             .mat-content {
                 display: contents;
             }
