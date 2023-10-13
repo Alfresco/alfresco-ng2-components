@@ -87,7 +87,8 @@ export class DateFnsUtils {
         A: 'a',
         ll: 'PP',
         T: `'T'`,
-        Z: `'Z'`
+        ZZ: 'XX',
+        Z: `XXX`
     };
 
     /**
@@ -99,9 +100,7 @@ export class DateFnsUtils {
     static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
         if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
             // normalise the input to support double conversion of the same string
-            dateDisplayFormat = dateDisplayFormat
-                .replace(`'T'`, 'T')
-                .replace(`'Z'`, 'Z');
+            dateDisplayFormat = dateDisplayFormat.replace(`'T'`, 'T');
 
             for (const [search, replace] of Object.entries(this.momentToDateFnsMap)) {
                 dateDisplayFormat = dateDisplayFormat.replace(new RegExp(search, 'g'), replace);
@@ -193,5 +192,13 @@ export class DateFnsUtils {
      */
     static isAfterDate(source: Date, target: Date): boolean {
         return isAfter(source, target);
+    }
+
+    static utcToLocal(date: Date): Date {
+        return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+    }
+
+    static localToUtc(date: Date): Date {
+        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
 }

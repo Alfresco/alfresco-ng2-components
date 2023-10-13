@@ -46,6 +46,23 @@ import { Locale } from 'date-fns';
      adapter.displayFormat = '<custom date-fns format>';
  * }
  */
+
+/**
+ * Material date formats for Date-fns
+ */
+export const ADF_DATE_FORMATS: MatDateFormats = {
+    parse: {
+        dateInput: 'dd-MM-yyyy'
+    },
+    display: {
+        dateInput: 'dd-MM-yyyy',
+        monthLabel: 'LLL',
+        monthYearLabel: 'LLL uuuu',
+        dateA11yLabel: 'PP',
+        monthYearA11yLabel: 'LLLL uuuu'
+    }
+};
+
 @Injectable()
 export class AdfDateFnsAdapter extends DateFnsAdapter {
     private _displayFormat?: string = null;
