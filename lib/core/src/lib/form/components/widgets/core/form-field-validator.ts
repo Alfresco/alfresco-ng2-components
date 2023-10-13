@@ -314,11 +314,6 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
         const fieldValueDate = new Date(field.value);
         const min = new Date(field.minValue);
 
-        if (!isDateValid(fieldValueDate) || !isDateValid(min)) {
-            // eslint-disable-next-line no-console
-            console.log(fieldValueDate, min);
-        }
-
         if (isBefore(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
             field.validationSummary.attributes.set(
