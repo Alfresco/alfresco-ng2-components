@@ -481,6 +481,36 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.cdr.detectChanges();
     }
 
+    isTagsEmpty(): boolean {
+        return this.tags?.length === 0 && !this.editableTags;
+    }
+
+    isCategoryEmpty(): boolean {
+        return this.categories?.length === 0 && !this.editableCategories;
+    }
+
+    get hasToggleEdit(): boolean {
+        return !this.editable && !this.readOnly && this.hasAllowableOperations;
+    }
+
+    get hasTagsToggleEdit(): boolean {
+        return !this.editableTags && !this.readOnly && this.hasAllowableOperations;
+    }
+
+    get hasCategoriesToggleEdit(): boolean {
+        return !this.editableCategories && !this.readOnly && this.hasAllowableOperations;
+    }
+
+    hasGroupToggleEdit(group: CardViewGroup): boolean {
+        return !group.editable && !this.readOnly && this.hasAllowableOperations;
+    }
+
+    showGroup(group: CardViewGroup): boolean {
+        const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
+
+        return properties.length > 0;
+    }
+
     canExpandTheCard(groupTitle: string): boolean {
         return groupTitle === this.displayAspect;
     }
