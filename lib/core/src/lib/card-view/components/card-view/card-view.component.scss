@@ -26,6 +26,13 @@
             }
         }
 
+        .adf-property-editable-property {
+
+            .adf-property-label {
+                color: var(--theme-metadata-property-panel-title-color);
+            }
+        }
+
         .adf-property-field {
             width: 100%;
 
