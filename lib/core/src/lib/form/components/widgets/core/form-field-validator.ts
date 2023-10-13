@@ -21,7 +21,7 @@ import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
 import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
-import { isValid as isDateValid, isBefore } from 'date-fns';
+import { isValid as isDateValid, isBefore, isAfter } from 'date-fns';
 
 export interface FormFieldValidator {
 
@@ -348,24 +348,22 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
     validate(field: FormFieldModel): boolean {
         let isValid = true;
         if (this.isSupported(field) && field.value && field.isVisible) {
-            const dateFormat = field.dateDisplayFormat;
-
             if (!DateTimeFieldValidator.isValidDateTime(field.value)) {
                 field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 isValid = false;
             } else {
-                isValid = this.checkDateTime(field, dateFormat);
+                isValid = this.checkDateTime(field);
             }
         }
         return isValid;
     }
 
-    private checkDateTime(field: FormFieldModel, dateFormat: string): boolean {
+    private checkDateTime(field: FormFieldModel): boolean {
         let isValid = true;
-        const fieldValueDate = DateFnsUtils.parseDate(field.value, dateFormat);
+        const fieldValueDate = new Date(field.value);
         const max = new Date(field.maxValue);
 
-        if (DateFnsUtils.isAfterDate(fieldValueDate, max)) {
+        if (isAfter(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
             field.validationSummary.attributes.set(
                 'maxValue',

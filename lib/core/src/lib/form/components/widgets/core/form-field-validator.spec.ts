@@ -706,7 +706,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should take into account that max value is in UTC and NOT fail validating value checking the time', () => {
-            const localValidValue = '2018-3-30 11:59 PM';
+            const localValidValue = '2018-03-30T22:59:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -718,7 +718,7 @@ describe('FormFieldValidator', () => {
         });
 
         it('should take into account that max value is in UTC and fail validating value checking the time', () => {
-            const localInvalidValue = '2018-3-31 12:01 AM';
+            const localInvalidValue = '2018-03-30T23:01:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
@@ -735,8 +735,8 @@ describe('FormFieldValidator', () => {
         it('should succeed validating value checking the time', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '08-02-9999 09:10 AM',
-                maxValue: '9999-02-08 10:10 AM'
+                value: '9999-02-08T09:10:00.000Z',
+                maxValue: '9999-02-08T10:10:00.000Z'
             });
 
             expect(validator.validate(field)).toBeTruthy();
@@ -745,8 +745,8 @@ describe('FormFieldValidator', () => {
         it('should fail validating value checking the time', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '08-02-9999 11:10 AM',
-                maxValue: '9999-02-08 10:10 AM'
+                value: '9999-02-08T11:10:00.000Z',
+                maxValue: '9999-02-08T10:10:00.000Z'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -757,8 +757,8 @@ describe('FormFieldValidator', () => {
         it('should succeed validating value checking the date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '08-02-9999 09:10 AM',
-                maxValue: '9999-02-08 10:10 AM'
+                value: '9999-02-08T09:10:00.000Z',
+                maxValue: '9999-02-08T10:10:00.000Z'
             });
 
             expect(validator.validate(field)).toBeTruthy();
@@ -825,12 +825,12 @@ describe('FormFieldValidator', () => {
         });
 
         it('should take into account that min value is in UTC and NOT fail validating value checking the time', () => {
-            const localValidValue = '2018-3-02 06:01 AM';
+            const localValidValue = '2018-03-02T06:01:00.000Z';
 
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
                 value: localValidValue,
-                minValue: '2018-03-02T06:00:00+00:00'
+                minValue: '2018-03-02T06:00:00.000Z'
             });
 
             expect(validator.validate(field)).toBeTruthy();
@@ -874,8 +874,8 @@ describe('FormFieldValidator', () => {
         it('should fail validating value by time', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '08-02-9999 09:00 AM',
-                minValue: '9999-02-08 09:10 AM'
+                value: '9999-08-02T08:10:00.000Z',
+                minValue: '9999-08-02T08:11:00.000Z'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -886,8 +886,8 @@ describe('FormFieldValidator', () => {
         it('should fail validating value by date', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '07-02-9999 09:10 AM',
-                minValue: '9999-02-08 09:10 AM'
+                value: '9999-02-07T09:10:00.000Z',
+                minValue: '9999-02-08T09:10:00.000Z'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -1110,9 +1110,9 @@ describe('FormFieldValidator', () => {
         it('should not validate dateTime format with default format', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DATETIME,
-                value: '2021-06-09 14:10' // 14:10 does not conform to A
+                value: '2021-06-09 14:10 AM' // 14:10 does not conform to A
             });
-            expect(field.value).toBe('2021-06-09 14:10');
+            expect(field.value).toBe('2021-06-09 14:10 AM');
             expect(field.dateDisplayFormat).toBe('D-M-YYYY hh:mm A');
             expect(validator.validate(field)).toBeFalse();
         });
