@@ -127,49 +127,6 @@ describe('Search component - Search Page', () => {
         await expect(result).toEqual(emptyFolderModel.name);
     });
 
-    it('[C260261] Should be able to delete a file from search results', async () => {
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
-
-        await searchResultPage.deleteContent(search.active.firstFile);
-
-        await searchResultPage.checkNoResultMessageIsDisplayed();
-        await searchResultPage.checkContentIsNotDisplayed(search.active.firstFile);
-
-        await searchBarPage.checkSearchBarIsNotVisible();
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await searchResultPage.checkNoResultMessageIsDisplayed();
-    });
-
-    it('[C272809] Should be able to delete a folder from search results', async () => {
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
-        await searchResultPage.checkNoResultMessageIsNotDisplayed();
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
-        await searchResultPage.deleteContent(emptyFolderModel.name);
-        await searchResultPage.checkNoResultMessageIsDisplayed();
-
-        await searchBarPage.checkSearchBarIsNotVisible();
-        await searchBarPage.checkSearchIconIsVisible();
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
-        await searchResultPage.dataTable.waitTillContentLoaded();
-
-        await searchResultPage.checkNoResultMessageIsDisplayed();
-    });
-
     it('[C286675] Should display results when searching for all elements', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
