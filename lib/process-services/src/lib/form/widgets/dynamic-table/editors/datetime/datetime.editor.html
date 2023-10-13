@@ -7,7 +7,7 @@
             [id]="column.id"
             [required]="column.required"
             [disabled]="!column.editable"
-            (focusout)="onDateChanged($any($event).srcElement.value)"
+            (focusout)="onDateChanged($any($event).target.value)"
             (dateChange)="onDateChanged($event)">
             <mat-datetimepicker-toggle
                 matSuffix

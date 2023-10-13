@@ -5,11 +5,11 @@
             id="dateInput"
             type="text"
             [matDatepicker]="datePicker"
-            [value]="value"
+            [(ngModel)]="value"
             [id]="column.id"
             [required]="column.required"
             [disabled]="!column.editable"
-            (focusout)="onDateChanged($any($event).srcElement)"
+            (focusout)="onDateChanged($any($event).target.value)"
             (dateChange)="onDateChanged($event)">
         <mat-datepicker-toggle  *ngIf="column.editable" matSuffix [for]="datePicker" class="adf-date-editor-button" ></mat-datepicker-toggle>
     </mat-form-field>

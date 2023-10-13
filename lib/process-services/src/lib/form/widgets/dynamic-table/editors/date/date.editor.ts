@@ -15,30 +15,29 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
-import {  MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import {  ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import moment, { Moment } from 'moment';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
+import { isValid } from 'date-fns';
 
 @Component({
     selector: 'adf-date-editor',
     templateUrl: './date.editor.html',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
-    value: any;
+    @Input()
+    value: Date;
 
     @Input()
     table: DynamicTableModel;
@@ -49,31 +48,32 @@ export class DateEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: Date;
+    maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Moment>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
+        const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        momentDateAdapter.displayFormat = this.DATE_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
+        this.value = this.table.getCellValue(this.row, this.column) as Date;
     }
 
-    onDateChanged(newDateValue: MatDatepickerInputEvent<any> | HTMLInputElement) {
-        if (newDateValue?.value) {
-            /* validates the user inputs */
-            const momentDate = moment(newDateValue.value, this.DATE_FORMAT, true);
+    onDateChanged(newDateValue: MatDatepickerInputEvent<Date> | string) {
+        if (typeof newDateValue === 'string') {
+            const newValue = DateFnsUtils.parseDate(newDateValue, this.DATE_FORMAT);
 
-            if (!momentDate.isValid()) {
-                this.row.value[this.column.id] = newDateValue.value;
-            } else {
-                this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
+            if (isValid(newValue)) {
+                this.row.value[this.column.id] = `${DateFnsUtils.formatDate(newValue, 'yyyy-MM-dd')}T00:00:00.000Z`;
                 this.table.flushValue();
+            } else {
+                this.row.value[this.column.id] = newDateValue;
             }
-        } else {
-            /* removes the date  */
+        } else if (newDateValue?.value) {
+            this.row.value[this.column.id] = `${DateFnsUtils.formatDate(newDateValue?.value, 'yyyy-MM-dd')}T00:00:00.000Z`;
+            this.table.flushValue();
+        }  else {
             this.row.value[this.column.id] = '';
         }
     }

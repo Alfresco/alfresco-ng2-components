@@ -22,7 +22,6 @@ import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 import { By } from '@angular/platform-browser';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateEditorComponent', () => {
@@ -55,7 +54,7 @@ describe('DateEditorComponent', () => {
 
     describe('using Date Piker', () => {
         it('should update row value on change', () => {
-            const input = {value: '14-03-2016'} as MatDatepickerInputEvent<any>;
+            const input = {value: '2016-03-14'} as any;
 
             component.ngOnInit();
             component.onDateChanged(input);
@@ -66,7 +65,7 @@ describe('DateEditorComponent', () => {
 
         it('should flush value on user input', () => {
             spyOn(table, 'flushValue').and.callThrough();
-            const input = {value: '14-03-2016'} as MatDatepickerInputEvent<any>;
+            const input = { value: '2016-03-14' } as any;
 
             component.ngOnInit();
             component.onDateChanged(input);

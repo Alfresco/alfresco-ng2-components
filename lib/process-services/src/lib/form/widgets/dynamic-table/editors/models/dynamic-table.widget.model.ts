@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
-import moment from 'moment';
 import { ValidateDynamicTableRowEvent } from '../../../../events/validate-dynamic-table-row.event';
 import { FormService, FormFieldModel, FormWidgetModel } from '@alfresco/adf-core';
 import { CellValidator } from './cell-validator.model';
@@ -178,7 +175,7 @@ export class DynamicTableModel extends FormWidgetModel {
 
         if (column.type === 'Date') {
             if (rowValue) {
-                return moment(rowValue.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
+                return new Date(rowValue.split('T')[0]);
             }
         }
 
