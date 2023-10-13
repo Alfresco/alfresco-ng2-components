@@ -18,7 +18,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -26,7 +26,7 @@ import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 export interface DateRangeValue {
     from: string;
@@ -99,6 +99,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             .select<string>(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((locale) => this.setLocale(locale));
+
+        const customDateAdapter = this.dateAdapter as MomentDateAdapter;
+        customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
 
         const validators = Validators.compose([Validators.required]);
 
