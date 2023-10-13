@@ -41,7 +41,7 @@ describe('DateCellValidator', () => {
 
     it('should support only date column type', () => {
         const date = { editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        expect(validator.isSupported(date));
+        expect(validator.isSupported(date)).toBeTrue();
 
         const unsupported = { editable: true, type: 'unknown' } as DynamicTableColumn;
         expect(validator.isSupported(unsupported)).toBeFalse();
