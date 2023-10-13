@@ -2,7 +2,7 @@
     <div
         [attr.data-automation-id]="'card-select-label-' + property.key"
         class="adf-property-label"
-        [ngClass]="{'adf-property-label-not-editable' : isNonEditableField}"
+        [ngClass]="{'adf-property-label-not-editable': isNonEditableField, 'adf-property-editable-property' : isEditable()}"
     >{{ property.label | translate }}</div>
     <div class="adf-property-field">
         <div
