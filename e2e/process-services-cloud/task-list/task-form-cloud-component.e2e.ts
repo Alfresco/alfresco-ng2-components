@@ -64,7 +64,7 @@ describe('Task form cloud component', () => {
     const completedTaskName = StringUtil.generateRandomString(); const assignedTaskName = StringUtil.generateRandomString();
     const myTasksFilter = 'my-tasks';
     const completedTasksFilter = 'completed-tasks';
-    const dateFieldId = 'Date0rzbb6';
+    const dateFieldId = 'outputDate';
     const defaultDate = '2020-07-09';
     const changedDate = '2020-07-10';
     const dropdownFieldId = 'DropdownOptions';
