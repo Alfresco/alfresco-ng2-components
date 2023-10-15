@@ -17,76 +17,88 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
-import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import moment, { Moment } from 'moment';
-import { UserPreferencesService, UserPreferenceValues } from '../../../../common/services/user-preferences.service';
-import { MomentDateAdapter } from '../../../../common/utils/moment-date-adapter';
-import { MOMENT_DATE_FORMATS } from '../../../../common/utils/moment-date-formats.model';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
+import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../../common/utils/datetime-fns-adapter';
+import { DateFnsUtils } from '../../../../common';
+import { isValid } from 'date-fns';
 
 @Component({
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
-        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
+        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     selector: 'date-time-widget',
     templateUrl: './date-time.widget.html',
     styleUrls: ['./date-time.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
+    minDate: Date;
+    maxDate: Date;
 
-    minDate: Moment;
-    maxDate: Moment;
-
-    private onDestroy$ = new Subject<boolean>();
+    @Input()
+    value: any = null;
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
-                private userPreferencesService: UserPreferencesService) {
+                private dateAdapter: DateAdapter<Date>,
+                private dateTimeAdapter: DatetimeAdapter<Date>) {
         super(formService);
     }
 
     ngOnInit() {
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(locale));
+        if (this.field.dateDisplayFormat) {
+            const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+            dateAdapter.displayFormat = this.field.dateDisplayFormat;
 
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
+            const dateTimeAdapter = this.dateTimeAdapter as AdfDateTimeFnsAdapter;
+            dateTimeAdapter.displayFormat = this.field.dateDisplayFormat;
+        }
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment.utc(this.field.minValue, 'YYYY-MM-DDTHH:mm:ssZ');
+                this.minDate = DateFnsUtils.localToUtc(new Date(this.field.minValue));
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment.utc(this.field.maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
+                this.maxDate = DateFnsUtils.localToUtc(new Date(this.field.maxValue));
+            }
+
+            if (this.field.value) {
+                this.value = DateFnsUtils.localToUtc(new Date(this.field.value));
             }
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+    onValueChanged(event: Event) {
+        const input = event.target as HTMLInputElement;
+        const newValue = this.dateTimeAdapter.parse(input.value, this.field.dateDisplayFormat);
+
+        if (isValid(newValue)) {
+            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
+        } else {
+            this.field.value = input.value;
+        }
+
+        this.onFieldChanged(this.field);
     }
 
-    onDateChanged(newDateValue) {
-        const date = moment(newDateValue, this.field.dateDisplayFormat, true);
-        if (date.isValid()) {
-            this.field.value = moment(date).utc().local().format(this.field.dateDisplayFormat);
+    onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
+        const newValue = event.value;
+        const input = event.targetElement as HTMLInputElement;
+
+        if (newValue && isValid(newValue)) {
+            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
         } else {
-            this.field.value = newDateValue;
+            this.field.value = input.value;
         }
+
         this.onFieldChanged(this.field);
     }
 }

@@ -65,6 +65,8 @@ import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 import { AdfDateFnsAdapter } from './common/utils/date-fns-adapter';
+import { MomentDateAdapter } from './common/utils/moment-date-adapter';
+import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 
 @NgModule({
     imports: [
@@ -150,6 +152,8 @@ export class CoreModule {
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
                 AdfDateFnsAdapter,
+                AdfDateTimeFnsAdapter,
+                MomentDateAdapter,
                 {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,

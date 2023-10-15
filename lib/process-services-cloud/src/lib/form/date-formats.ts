@@ -17,12 +17,19 @@
 
 import { MatDateFormats } from '@angular/material/core';
 
-export const ADF_FORM_DATE_FORMATS: MatDateFormats = {
+/**
+ * Provides date/time display formatting for the cloud components.
+ *
+ * Notes for developers: display formats are different from the storage formats.
+ * Components have a fixed format for saving dates and datetime values,
+ * while dynamic format for UI display.
+ */
+export const CLOUD_FORM_DATE_FORMATS: MatDateFormats = {
     parse: {
-        dateInput: 'dd-MM-yyyy'
+        dateInput: 'yyyy-MM-dd'
     },
     display: {
-        dateInput: 'dd-MM-yyyy',
+        dateInput: 'yyyy-MM-dd',
         monthLabel: 'LLL',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',

@@ -16,7 +16,6 @@
  */
 
 import { browser, protractor, ElementFinder, $$, $ } from 'protractor';
-import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
@@ -59,7 +58,6 @@ export class EditTaskFilterCloudComponentPage {
     dueDateRangeDropdown = new DropdownPage($(`mat-select[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
     dueDateRangeWithin = new DatePickerPage($(`mat-datepicker-toggle[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`));
 
-    editTaskFilterDialogPage = new EditTaskFilterDialogPage();
     peopleCloudComponent = new PeopleCloudComponentPage();
     groupCloudComponent = new GroupCloudComponentPage();
 
@@ -67,10 +65,6 @@ export class EditTaskFilterCloudComponentPage {
 
     private expansionPanelExtended = this.rootElement.$('mat-expansion-panel-header.mat-expanded');
     private content = this.rootElement.$('div.mat-expansion-panel-content[style*="visible"]');
-
-    editTaskFilterDialog(): EditTaskFilterDialogPage {
-        return this.editTaskFilterDialogPage;
-    }
 
     async isFilterDisplayed(): Promise<boolean> {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);

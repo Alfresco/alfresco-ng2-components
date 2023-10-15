@@ -17,34 +17,40 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import moment from 'moment';
 import { CellValidator } from './cell-validator.model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from './dynamic-table-column.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
+import { isValid } from 'date-fns';
 
 export class DateCellValidator implements CellValidator {
-    private supportedTypes: string[] = ['Date'];
+    static DATE_TYPE = 'Date';
+
+    private supportedTypes: string[] = [DateCellValidator.DATE_TYPE];
 
     isSupported(column: DynamicTableColumn): boolean {
-        return column?.editable && this.supportedTypes.indexOf(column.type) > -1;
+        return !!(column?.editable && this.supportedTypes.indexOf(column?.type) > -1);
     }
 
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
         if (this.isSupported(column)) {
-            const value = row.value[column.id];
+            const value = row?.value[column.id];
 
-            if (!value && !column.required) {
-                return true;
-            }
+            if (value) {
+                const dateValue = new Date(value);
 
-            const dateValue = moment(value, 'YYYY-MM-DDTHH:mm:ss.SSSSZ', true);
-            if (!dateValue.isValid()) {
+                if (isValid(dateValue)) {
+                    return true;
+                }
+
                 if (summary) {
                     summary.isValid = false;
                     summary.message = `Invalid '${column.name}' format.`;
                 }
+
                 return false;
+            } else {
+                return !column.required;
             }
         }
 

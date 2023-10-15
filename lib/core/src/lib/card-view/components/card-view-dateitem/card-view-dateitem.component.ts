@@ -79,7 +79,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(locale => {
-                this.dateAdapter.setLocale(locale);
                 this.property.locale = locale;
             });
 

@@ -25,9 +25,14 @@ describe('DateFnsUtils', () => {
             expect(dateFnsFormat).toBe('yyyy-MM-dd');
         });
 
-        it('should convert moment datetime format', () => {
+        it('should convert moment datetime format with zone', () => {
             const dateFnsFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-MM-DDTHH:mm:ssZ');
-            expect(dateFnsFormat).toBe(`yyyy-MM-dd'T'HH:mm:ss'Z'`);
+            expect(dateFnsFormat).toBe(`yyyy-MM-dd'T'HH:mm:ssXXX`);
+        });
+
+        it('should convert moment datetime format with zone hours and mins', () => {
+            const dateFnsFormat = DateFnsUtils.convertMomentToDateFnsFormat('YYYY-MM-DDTHH:mm:ssZZ');
+            expect(dateFnsFormat).toBe(`yyyy-MM-dd'T'HH:mm:ssXX`);
         });
 
         it('should convert custom moment datetime format', () => {
@@ -81,20 +86,29 @@ describe('DateFnsUtils', () => {
         expect(result).toEqual(expectedParsedDate);
     });
 
-    it('should format ISO datetime from date', () => {
-        const result = DateFnsUtils.formatDate(
-            new Date('2023-10-10T18:28:50.082Z'),
-            `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`
+    it('should parse alternative ISO datetime', () => {
+        const result = DateFnsUtils.parseDate(
+            '1982-03-13T10:00:000Z',
+            `yyyy-MM-dd'T'HH:mm:sssXXX`
         );
-        expect(result).toBe('2023-10-10T18:28:50.082Z');
+
+        expect(result.toISOString()).toBe('1982-03-13T10:00:00.000Z');
     });
 
-    it('should format ISO datetime from string', () => {
-        const result = DateFnsUtils.formatDate(
-            '2023-10-10T18:28:50.082Z',
-            `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`
+    it('should parse the datetime with zone', () => {
+        const result = DateFnsUtils.parseDate(
+            '1982-03-13T10:00:000+01:00',
+            `yyyy-MM-dd'T'HH:mm:sssXXX`
         );
-        expect(result).toBe('2023-10-10T18:28:50.082Z');
+        expect(result.toISOString()).toBe('1982-03-13T09:00:00.000Z');
+    });
+
+    it('should parse datetime with zone in moment format', () => {
+        const result = DateFnsUtils.parseDate(
+            '1982-03-13T10:00:00+0100',
+            `YYYY-MM-DDTHH:mm:ssZZ`
+        );
+        expect(result.toISOString()).toBe('1982-03-13T09:00:00.000Z');
     });
 
     it('should validate datetime with moment format', () => {

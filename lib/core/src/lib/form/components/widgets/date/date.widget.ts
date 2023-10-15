@@ -23,13 +23,12 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 import { Subject } from 'rxjs';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { ADF_FORM_DATE_FORMATS } from '../../../date-formats';
-import { AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common/utils/date-fns-adapter';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_FORM_DATE_FORMATS },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     templateUrl: './date.widget.html',
