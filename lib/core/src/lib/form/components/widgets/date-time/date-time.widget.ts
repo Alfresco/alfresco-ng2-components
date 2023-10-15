@@ -93,7 +93,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         const newValue = event.value;
         const input = event.targetElement as HTMLInputElement;
 
-        if (newValue) {
+        if (newValue && isValid(newValue)) {
             this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
         } else {
             this.field.value = input.value;
