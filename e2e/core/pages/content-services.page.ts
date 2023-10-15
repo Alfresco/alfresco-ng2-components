@@ -74,11 +74,11 @@ export class ContentServicesPage {
     siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
     sortingDropdown = new DropdownPage($('mat-select[data-automation-id="grid-view-sorting"]'));
 
-    async pressContextMenuActionNamed(actionName): Promise<void> {
+    async pressContextMenuActionNamed(actionName: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
     }
 
-    async isContextActionEnabled(actionName): Promise<boolean> {
+    async isContextActionEnabled(actionName: string): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
         return actionButton.isEnabled();

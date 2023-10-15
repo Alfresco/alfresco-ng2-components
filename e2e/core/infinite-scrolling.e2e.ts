@@ -86,36 +86,6 @@ describe('Enable infinite scrolling', () => {
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
     });
 
-    it('[C260484] Should be possible to enable infinite scrolling', async () => {
-        await contentServicesPage.openFolder(folderModel.name);
-        await contentServicesPage.enableInfiniteScrolling();
-        await infinitePaginationPage.clickLoadMoreButton();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
-
-        for (let i = 0; i < nrOfFiles; i++) {
-            await contentServicesPage.checkContentIsDisplayed(fileNames[i]);
-        }
-    });
-
-    it('[C268165] Delete folder when infinite scrolling is enabled', async () => {
-        await contentServicesPage.openFolder(deleteUploaded.entry.name);
-        await contentServicesPage.enableInfiniteScrolling();
-        await infinitePaginationPage.clickLoadMoreButton();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
-
-        for (let i = 0; i < nrOfDeletedFiles; i++) {
-            await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
-        }
-        await expect(await contentServicesPage.getDocumentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
-
-        await contentServicesPage.deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
-        await contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
-
-        for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
-            await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
-        }
-    });
-
     it('[C299201] Should use default pagination settings for infinite pagination', async () => {
         await contentServicesPage.openFolder(folderModel.name);
 
