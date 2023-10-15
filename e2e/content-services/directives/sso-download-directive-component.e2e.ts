@@ -25,10 +25,12 @@ import { createApiService,
     SettingsPage,
     StringUtil,
     UploadActions,
+    UserModel,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -54,7 +56,11 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    let pdfUploadedFile; let pngUploadedFile; let folder; let acsUser;
+    let pdfUploadedFile: NodeEntry;
+    let pngUploadedFile: NodeEntry;
+    let folder: NodeEntry;
+    let acsUser: UserModel
+    ;
     const folderName = StringUtil.generateRandomString(5);
 
     beforeAll(async () => {

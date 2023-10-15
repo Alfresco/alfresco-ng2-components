@@ -239,7 +239,7 @@ export class ContentServicesPage {
         await this.contentList.doubleClickRow(nodeName);
     }
 
-    async selectRow(nodeName): Promise<void> {
+    async selectRow(nodeName: string): Promise<void> {
         await this.contentList.selectRow(nodeName);
     }
 
