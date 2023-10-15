@@ -65,7 +65,7 @@ describe('Dynamic Table', () => {
             date: '12/12/2012',
             wrongDate: 'HELLO WORLD',
             wrongDateTime: 'Test',
-            dateTime: '15/07/2019 23:55',
+            dateTime: '2019-07-15 23:55',
             error: `Invalid 'columnDate' format.`,
             requiredError: `Field 'columnDate' is required.`
         };
