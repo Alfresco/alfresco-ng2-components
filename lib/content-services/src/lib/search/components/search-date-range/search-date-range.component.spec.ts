@@ -20,15 +20,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import moment, { Moment } from 'moment';
-import { startOfDay, endOfDay, parse } from 'date-fns';
+import { startOfDay, endOfDay, isValid } from 'date-fns';
 
 describe('SearchDateRangeComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeComponent>;
     let component: SearchDateRangeComponent;
-    const fromDate = '2016-10-16';
-    const toDate = '2017-10-16';
-    const dateFormatFixture = 'DD-MMM-YY';
+
+    const dateFormatFixture = 'dd-MMM-yy';
+    const fromDate = new Date('2016-10-16');
+    const toDate = new Date('2017-10-16');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -55,39 +55,31 @@ describe('SearchDateRangeComponent', () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         fixture.detectChanges();
 
-        const inputString = '20-feb-18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const date = new Date('20-feb-18');
+        expect(isValid(date)).toBeTrue();
 
-        expect(momentFromInput.isValid()).toBeTruthy();
-
-        component.onChangedHandler({ value: momentFromInput } as MatDatepickerInputEvent<Moment>, component.from);
-
-        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
+        component.onChangedHandler({ value: date } as MatDatepickerInputEvent<Date>, component.from);
+        expect(component.from.value.toString()).toEqual(date.toString());
     });
 
     it('should NOT setup form control with invalid date on change', () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         fixture.detectChanges();
 
-        const inputString = '20.f.18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const date = new Date('20.f.18');
+        expect(isValid(date)).toBeFalse();
 
-        expect(momentFromInput.isValid()).toBeFalsy();
-
-        component.onChangedHandler({ value: momentFromInput } as MatDatepickerInputEvent<Moment>, component.from);
-
-        expect(component.from.value).not.toEqual(momentFromInput);
+        component.onChangedHandler({ value: date } as MatDatepickerInputEvent<Date>, component.from);
+        expect(component.from.value).not.toEqual(date);
     });
 
     it('should reset form', () => {
-        const from = moment(fromDate);
-        const to = moment(toDate);
 
         fixture.detectChanges();
-        component.form.setValue({ from, to });
+        component.form.setValue({ from: fromDate, to: toDate });
 
-        expect(component.from.value).toEqual(from);
-        expect(component.to.value).toEqual(to);
+        expect(component.from.value).toEqual(fromDate);
+        expect(component.to.value).toEqual(toDate);
 
         component.reset();
 
@@ -98,7 +90,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should reset fromMaxDate on reset', () => {
         fixture.detectChanges();
-        component.fromMaxDate = moment(fromDate);
+        component.fromMaxDate = fromDate;
         component.reset();
 
         expect(component.fromMaxDate).toEqual(undefined);
@@ -138,12 +130,12 @@ describe('SearchDateRangeComponent', () => {
 
         fixture.detectChanges();
         component.apply({
-            from: moment(fromDate),
-            to: moment(toDate)
+            from: fromDate,
+            to: toDate
         }, true);
 
-        const startDate = startOfDay(parse(fromDate, 'yyyy-MM-dd', new Date())).toISOString();
-        const endDate = endOfDay(parse(toDate, 'yyyy-MM-dd', new Date())).toISOString();
+        const startDate = startOfDay(fromDate).toISOString();
+        const endDate = endOfDay(toDate).toISOString();
 
         const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
 
@@ -155,7 +147,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
-        input.value = '10-05-18';
+        input.value = '10-f-18';
         input.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
@@ -168,7 +160,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
-        input.value = '10/10/2018';
+        input.value = '10-10-2018';
         input.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
@@ -189,7 +181,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const expected = endOfDay(new Date(2020, 2, 10));
-        expect(component.maxDate.toDate()).toEqual(expected);
+        expect(component.maxDate).toEqual(expected);
     });
 
     it('should be able to set the maximum date to today', async () => {
@@ -197,6 +189,6 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
         const today = endOfDay(new Date());
 
-        expect(component.maxDate.toDate()).toEqual(today);
+        expect(component.maxDate).toEqual(today);
     });
 });

@@ -17,30 +17,26 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
-import { MomentDateAdapter } from '@alfresco/adf-core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Moment } from 'moment';
 import { Subject } from 'rxjs';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { startOfDay, endOfDay } from 'date-fns';
+import { startOfDay, endOfDay, isBefore, isValid as isValidDate } from 'date-fns';
 
 export interface DateRangeValue {
     from: string;
     to: string;
 }
 
-declare let moment: any;
-
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
 
 interface DateRangeForm {
-    from: FormControl<Moment>;
-    to: FormControl<Moment>;
+    from: FormControl<Date>;
+    to: FormControl<Date>;
 }
 
 @Component({
@@ -48,15 +44,15 @@ interface DateRangeForm {
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } }
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements SearchWidget, OnInit {
-    from: FormControl<Moment>;
-    to: FormControl<Moment>;
+    from: FormControl<Date>;
+    to: FormControl<Date>;
 
     form: FormGroup<DateRangeForm>;
     matcher = new LiveErrorStateMatcher();
@@ -65,14 +61,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     datePickerFormat: string;
-    maxDate: Moment;
-    fromMaxDate: Moment;
+    maxDate: Date;
+    fromMaxDate: Date;
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
     displayValue$ = new Subject<string>();
 
-    constructor(private dateAdapter: DateAdapter<Moment>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
@@ -99,16 +95,16 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     ngOnInit() {
         this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
 
-        const customDateAdapter = this.dateAdapter as MomentDateAdapter;
-        customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
+        const customDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        customDateAdapter.displayFormat = this.datePickerFormat;
 
         const validators = Validators.compose([Validators.required]);
 
         if (this.settings?.maxDate) {
             if (this.settings.maxDate === 'today') {
-                this.maxDate = this.dateAdapter.today().endOf('day');
+                this.maxDate = endOfDay(this.dateAdapter.today());
             } else {
-                this.maxDate = moment(this.settings.maxDate).endOf('day');
+                this.maxDate =  endOfDay(this.dateAdapter.parse(this.settings.maxDate, this.datePickerFormat));
             }
         }
 
@@ -132,12 +128,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
     }
 
-    apply(model: Partial<{ from: Moment; to: Moment }>, isValid: boolean) {
+    apply(model: Partial<{ from: Date; to: Date }>, isValid: boolean) {
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = startOfDay(model.from.toDate()).toISOString();
-            const end = endOfDay(model.to.toDate()).toISOString();
+            const start = startOfDay(model.from).toISOString();
+            const end = endOfDay(model.to).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
 
@@ -214,10 +210,10 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    onChangedHandler(event: MatDatepickerInputEvent<Moment>, formControl: FormControl) {
+    onChangedHandler(event: MatDatepickerInputEvent<Date>, formControl: FormControl) {
         const inputValue = event.value;
 
-        if (inputValue?.isValid()) {
+        if (isValidDate(inputValue)) {
             formControl.setValue(inputValue);
         } else if (inputValue) {
             formControl.setErrors({
@@ -237,6 +233,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     }
 
     setFromMaxDate() {
-        this.fromMaxDate = !this.to.value || (this.maxDate?.isBefore(this.to.value)) ? this.maxDate : this.to.value;
+        this.fromMaxDate = !this.to.value || (this.maxDate && isBefore(this.maxDate, this.to.value)) ? this.maxDate : this.to.value;
     }
 }
