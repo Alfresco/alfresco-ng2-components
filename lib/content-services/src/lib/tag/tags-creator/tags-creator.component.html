@@ -37,7 +37,7 @@
 </div>
 <div
     class="adf-existing-tags-panel"
-    *ngIf="existingTagsPanelVisible">
+    *ngIf="existingTagsPanelVisible && existingTags">
     <span *ngIf="!spinnerVisible || existingTags"
         class="adf-create-tag-label"
         (click)="addTag()"

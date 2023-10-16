@@ -36,6 +36,12 @@ $panel-properties-height: 56px !default;
             margin: 12px;
         }
 
+        .mat-expansion-panel-content {
+            .mat-expansion-panel-body {
+                padding: 0 12px 12px 12px;
+            }
+        }
+
         .adf-mat-divider {
             margin-left: -24px;
             margin-right: -24px;
