@@ -664,7 +664,7 @@ function findFailingApps(deployedApps: any[]): any[] {
  * @param url url to file
  * @param name name
  */
-async function getFileFromRemote(url: string, name: string) {
+async function getFileFromRemote(url: string, name: string): Promise<void> {
     return fetch(url)
         .then((response) => {
             if (!response.ok) {

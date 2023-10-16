@@ -95,7 +95,6 @@
     "node-fetch": "^3.3.2",
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",
-    "request": "^2.88.2",
     "rxjs": "6.6.6",
     "subscriptions-transport-ws": "^0.11.0",
     "tslib": "^2.6.2",
