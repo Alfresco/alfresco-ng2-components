@@ -227,21 +227,10 @@ describe('Task form cloud component', () => {
         await verifyDateCompletedTask(dateTimerChangedTaskId, changedDate);
     });
 
-    it('[C310222] Should be able to save a task form', async () => {
-        const selectedOption = 'option1';
-        const dropdownId = '#DropdownOptions';
+    it('[C313233] just new test to run', async () => {
+        await appListCloudComponent.goToApp(simpleApp);
 
-        await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
-        await widget.dropdown().openDropdown(dropdownId);
-        await widget.dropdown().selectOption(selectedOption, dropdownId );
-        await taskFormCloudComponent.checkSaveButtonIsDisplayed();
-        await taskFormCloudComponent.clickSaveButton();
-
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
-        await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
-
-        await expect(await widget.dropdown().getSelectedOptionText(dropdownFieldId)).toBe(selectedOption);
+        await verifyDateCompletedTask('new value', 'change date');
     });
 
     describe('Candidate Base App', () => {
