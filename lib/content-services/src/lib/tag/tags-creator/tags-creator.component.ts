@@ -230,7 +230,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * Returns `true` if tags empty, otherwise `false`
     */
     get isTagsEmpty(): boolean {
-        return this.tags.length === 0 && !this.tagNameControlVisible;
+        return this.tags?.length === 0 && !this.tagNameControlVisible;
     }
 
     get existingTags(): TagEntry[] {

@@ -121,8 +121,8 @@
         </ng-container>
         <ng-container *ngIf="displayCategories">
             <mat-expansion-panel
-                            (opened)="handleCategoriesPanelState(true)"
-                            (closed)="handleCategoriesPanelState(false)"
+                            (opened)="toggleCategoriesPanel(true)"
+                            (closed)="toggleCategoriesPanel(false)"
                             hideToggle
                             [expanded]="isCategoriesPanelVisible">
                 <mat-expansion-panel-header>

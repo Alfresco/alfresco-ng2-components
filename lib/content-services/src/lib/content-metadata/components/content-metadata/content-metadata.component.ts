@@ -476,7 +476,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.cdr.detectChanges();
     }
 
-    handleCategoriesPanelState(isCategoriesPanelVisible: boolean) {
+    toggleCategoriesPanel(isCategoriesPanelVisible: boolean) {
         this.isCategoriesPanelVisible = isCategoriesPanelVisible;
         this.cdr.detectChanges();
     }
