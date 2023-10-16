@@ -187,7 +187,7 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: e2e-artifact-output-${{ inputs.e2e-test-id }}
-        path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output-*
+        path: /home/runner/work/alfresco-ng2-components/alfresco-ng2-components/e2e-output*
 
     - name: upload smart-runner tests results on s3 to cache tests
       shell: bash
