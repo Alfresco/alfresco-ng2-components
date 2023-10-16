@@ -77,8 +77,7 @@ $panel-properties-height: 56px !default;
         .adf-metadata-no-item-added {
             word-break: break-all;
             font-size: 15px;
-            padding-top: 16px;
-            text-align: center;
+            padding: 16px 0 0 12px;
         }
 
         &-tags {
