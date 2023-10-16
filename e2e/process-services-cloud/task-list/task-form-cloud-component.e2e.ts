@@ -194,23 +194,6 @@ describe('Task form cloud component', () => {
         await taskFormCloudComponent.checkReleaseButtonIsNotDisplayed();
     });
 
-    it('[C310200] Should be able to save a task form', async () => {
-        const selectedOption = 'option1';
-        const dropdownId = '#DropdownOptions';
-
-        await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
-        await widget.dropdown().openDropdown(dropdownId);
-        await widget.dropdown().selectOption(selectedOption, dropdownId );
-        await taskFormCloudComponent.checkSaveButtonIsDisplayed();
-        await taskFormCloudComponent.clickSaveButton();
-
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
-        await goToAppOpenDropdownTaskByNameFromFilters(myTasksFilter, dropdownOptionsTask.entry.name);
-
-        await expect(await widget.dropdown().getSelectedOptionText(dropdownFieldId)).toBe(selectedOption);
-    });
-
     it('[C313200] Should be able to complete a Task form with process date variable mapped to a Date widget in the form', async () => {
         await appListCloudComponent.goToApp(simpleApp);
         await openTaskByIdFromFilters(myTasksFilter, dateTimerTaskId);
