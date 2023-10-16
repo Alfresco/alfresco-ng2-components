@@ -192,7 +192,8 @@
                      class="adf-metadata-grouped-properties-container">
                     <mat-expansion-panel *ngIf="showGroup(group) || editable"
                                          [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                                         [expanded]="canExpandTheCard(group.title) || !displayDefaultProperties && first">
+                                         [expanded]="canExpandTheCard(group.title) || !displayDefaultProperties && first"
+                                         hideToggle>
                         <mat-expansion-panel-header>
                             <div class="adf-metadata-properties-panel-content">
                                 <mat-icon>
