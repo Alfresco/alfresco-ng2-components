@@ -55,7 +55,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
@@ -120,7 +119,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         ProcessAttachmentsComponent,
         DemoPermissionComponent,
         DemoErrorComponent,
-        TreeViewSampleComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
