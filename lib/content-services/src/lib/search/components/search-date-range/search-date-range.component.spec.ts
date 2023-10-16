@@ -98,7 +98,7 @@ describe('SearchDateRangeComponent', () => {
 
     it('should reset fromMaxDate on reset', () => {
         fixture.detectChanges();
-        component.fromMaxDate = fromDate;
+        component.fromMaxDate = moment(fromDate);
         component.reset();
 
         expect(component.fromMaxDate).toEqual(undefined);

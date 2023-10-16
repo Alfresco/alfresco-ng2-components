@@ -65,8 +65,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     datePickerFormat: string;
-    maxDate: any;
-    fromMaxDate: any;
+    maxDate: Moment;
+    fromMaxDate: Moment;
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
@@ -228,11 +228,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         this.setFromMaxDate();
     }
 
-    setLocale(locale: string) {
-        this.dateAdapter.setLocale(locale);
-        moment.locale(locale);
-    }
-
     hasParseError(formControl: FormControl): boolean {
         return formControl.hasError('matDatepickerParse') && formControl.getError('matDatepickerParse').text;
     }
@@ -242,6 +237,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
     }
 
     setFromMaxDate() {
-        this.fromMaxDate = !this.to.value || (this.maxDate && moment(this.maxDate).isBefore(this.to.value)) ? this.maxDate : moment(this.to.value);
+        this.fromMaxDate = !this.to.value || (this.maxDate?.isBefore(this.to.value)) ? this.maxDate : this.to.value;
     }
 }
