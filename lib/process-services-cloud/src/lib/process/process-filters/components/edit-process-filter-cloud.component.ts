@@ -21,7 +21,6 @@ import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
-import moment, { Moment } from 'moment';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import {
     ProcessFilterCloudModel,
@@ -37,6 +36,7 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
+import { endOfDay, isValid } from 'date-fns';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -179,7 +179,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     constructor(
         private formBuilder: UntypedFormBuilder,
         public dialog: MatDialog,
-        private dateAdapter: DateAdapter<Moment>,
+        private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
@@ -363,11 +363,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.editProcessFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: Moment, dateProperty: ProcessFilterProperties) {
+    onDateChanged(newDateValue: Date, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
             const controller = this.getPropertyController(dateProperty);
 
-            if (newDateValue.isValid()) {
+            if (isValid(newDateValue)) {
                 controller.setValue(newDateValue);
                 controller.setErrors(null);
             } else {
@@ -484,7 +484,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result && result.action === ProcessFilterDialogCloudComponent.ACTION_SAVE) {
-                const filterId = Math.random().toString(36).substr(2, 9);
+                const filterId = Math.random().toString(36).substring(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
                 const newFilter = {
                     name: result.name,
@@ -562,14 +562,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
-        if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue = moment(formValues.lastModifiedTo);
-            lastModifiedToFilterValue.set({
-                hour: 23,
-                minute: 59,
-                second: 59
-            });
-            formValues.lastModifiedTo = lastModifiedToFilterValue.toDate();
+        if (isValid(formValues.lastModifiedTo)) {
+            formValues.lastModifiedTo = endOfDay(formValues.lastModifiedTo);
         }
     }
 
@@ -604,29 +598,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private createLastModifiedProperty(filterModel: ProcessFilterCloudModel): ProcessFilterProperties[] {
-        let lastModifiedFrom;
-        let lastModifiedTo;
-
-        if (filterModel.lastModifiedFrom) {
-            lastModifiedFrom = moment(filterModel.lastModifiedFrom);
-        }
-
-        if (filterModel.lastModifiedTo) {
-            lastModifiedTo = moment(filterModel.lastModifiedTo);
-        }
-
         return [
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_DATE_FORM',
                 type: 'date',
                 key: 'lastModifiedFrom',
-                value: lastModifiedFrom
+                value: filterModel.lastModifiedFrom
             },
             {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_TO',
                 type: 'date',
                 key: 'lastModifiedTo',
-                value: lastModifiedTo
+                value: filterModel.lastModifiedTo
             }
         ];
     }

@@ -30,7 +30,6 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from './../../../app/mock/app-model.mock';
-import moment from 'moment';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -990,7 +989,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ id: processFilterIdChange });
             fixture.detectChanges();
 
-            const date = moment();
+            const date = endOfDay(new Date());
 
             component.filterChange.subscribe(() => {
                 expect(component.processFilter.lastModifiedTo.toISOString()).toEqual(date.toISOString());
@@ -998,12 +997,11 @@ describe('EditProcessFilterCloudComponent', () => {
             });
 
             const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedTo');
-            lastModifiedToControl.setValue(date);
-            date.set({
-                hour: 23,
-                minute: 59,
-                second: 59
-            });
+            lastModifiedToControl.clearValidators();
+            lastModifiedToControl.setValue(new Date());
+
+            expect(lastModifiedToControl.valid).toBe(true);
+            expect(component.editProcessFilterForm.valid).toBe(true);
         });
 
         it('should set date range filter type when range is selected', (done) => {
@@ -1023,8 +1021,8 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const dateFilter = {
-                startDate: moment().startOf('day').toISOString(true),
-                endDate: moment().endOf('day').toISOString(true)
+                startDate: startOfDay(new Date()).toISOString(),
+                endDate: endOfDay(new Date()).toISOString()
             };
 
             component.onDateRangeFilterChanged(dateFilter, {
@@ -1069,8 +1067,8 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
 
             const dateFilter = {
-                startDate: moment().startOf('day').toISOString(true),
-                endDate: moment().endOf('day').toISOString(true)
+                startDate: startOfDay(new Date()).toISOString(),
+                endDate: endOfDay(new Date()).toISOString()
             };
 
             component.filterChange.subscribe(() => {
