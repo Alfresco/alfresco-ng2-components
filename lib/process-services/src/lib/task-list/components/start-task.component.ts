@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    LogService, UserPreferencesService, UserPreferenceValues, FormFieldModel, FormModel, DateFnsUtils
-} from '@alfresco/adf-core';
+import { LogService, FormFieldModel, FormModel, DateFnsUtils, AdfDateFnsAdapter, ADF_DATE_FORMATS } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { EMPTY, Observable, Subject } from 'rxjs';
@@ -28,7 +26,6 @@ import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
 import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { UserProcessModel } from '../../common/models/user-process.model';
 import { isValid } from 'date-fns';
-import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -38,8 +35,8 @@ const MAX_LENGTH = 255;
     templateUrl: './start-task.component.html',
     styleUrls: ['./start-task.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }],
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
@@ -75,8 +72,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private taskService: TaskListService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
-                private userPreferencesService: UserPreferencesService,
                 private formBuilder: UntypedFormBuilder,
                 private logService: LogService) {
     }
@@ -89,11 +84,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.validateMaxTaskNameLength();
 
         this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
-
-        this.userPreferencesService
-            .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
 
         this.loadFormsTask();
         this.buildForm();
@@ -142,10 +132,10 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         }
         this.taskService.createNewTask(this.taskDetailsModel)
             .pipe(
-                switchMap((createRes: any) =>
+                switchMap((createRes) =>
                     this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
                         defaultIfEmpty(createRes),
-                        switchMap((attachRes: any) =>
+                        switchMap((attachRes) =>
                             this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(
                                 defaultIfEmpty(attachRes ? attachRes : createRes)
                             )
@@ -183,7 +173,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return firstName + delimiter + lastName;
     }
 
-    onDateChanged(newDateValue: any) {
+    onDateChanged(newDateValue: Date | string) {
         this.dateError = false;
 
         if (newDateValue) {
@@ -233,12 +223,11 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
-        let response: any = EMPTY;
+    private assignTaskByUserId(taskId: string, userId: any): Observable<TaskDetailsModel> {
         if (taskId && userId) {
-            response = this.taskService.assignTaskByUserId(taskId, userId);
+            return this.taskService.assignTaskByUserId(taskId, userId);
         }
-        return response;
+        return EMPTY;
     }
 
     private loadFormsTask(): void {
