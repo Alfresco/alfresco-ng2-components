@@ -59,8 +59,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let pdfUploadedFile: NodeEntry;
     let pngUploadedFile: NodeEntry;
     let folder: NodeEntry;
-    let acsUser: UserModel
-    ;
+    let acsUser: UserModel;
     const folderName = StringUtil.generateRandomString(5);
 
     beforeAll(async () => {
