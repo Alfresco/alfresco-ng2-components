@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { MomentDateAdapter } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { startOfDay, endOfDay } from 'date-fns';
 
 export interface DateRangeValue {
     from: string;
@@ -36,6 +37,11 @@ export interface DateRangeValue {
 declare let moment: any;
 
 const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
+
+interface DateRangeForm {
+    from: FormControl<Moment>;
+    to: FormControl<Moment>;
+}
 
 @Component({
     selector: 'adf-search-date-range',
@@ -48,11 +54,11 @@ const DEFAULT_FORMAT_DATE: string = 'DD/MM/YYYY';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy {
-    from: FormControl;
-    to: FormControl;
+export class SearchDateRangeComponent implements SearchWidget, OnInit {
+    from: FormControl<Moment>;
+    to: FormControl<Moment>;
 
-    form: FormGroup;
+    form: FormGroup<DateRangeForm>;
     matcher = new LiveErrorStateMatcher();
 
     id: string;
@@ -64,11 +70,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new Subject<string>();
 
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(private dateAdapter: DateAdapter<Moment>, private userPreferencesService: UserPreferencesService) {}
+    constructor(private dateAdapter: DateAdapter<Moment>) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
@@ -95,11 +99,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     ngOnInit() {
         this.datePickerFormat = this.settings?.dateFormat ? this.settings.dateFormat : DEFAULT_FORMAT_DATE;
 
-        this.userPreferencesService
-            .select<string>(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((locale) => this.setLocale(locale));
-
         const customDateAdapter = this.dateAdapter as MomentDateAdapter;
         customDateAdapter.overrideDisplayFormat = this.datePickerFormat;
 
@@ -120,8 +119,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             this.from = new FormControl(fromValue, validators);
             this.to = new FormControl(toValue, validators);
         } else {
-            this.from = new FormControl('', validators);
-            this.to = new FormControl('', validators);
+            this.from = new FormControl(null, validators);
+            this.to = new FormControl(null, validators);
         }
 
         this.form = new FormGroup({
@@ -133,17 +132,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
-    apply(model: { from: string; to: string }, isValid: boolean) {
+    apply(model: Partial<{ from: Moment; to: Moment }>, isValid: boolean) {
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
-            const start = moment(model.from).startOf('day').format();
-            const end = moment(model.to).endOf('day').format();
+            const start = startOfDay(model.from.toDate()).toISOString();
+            const end = endOfDay(model.to.toDate()).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
 
@@ -195,8 +189,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     clear() {
         this.isActive = false;
         this.form.reset({
-            from: '',
-            to: ''
+            from: null,
+            to: null
         });
 
         if (this.id && this.context) {
@@ -220,12 +214,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    onChangedHandler(event: any, formControl: FormControl) {
+    onChangedHandler(event: MatDatepickerInputEvent<Moment>, formControl: FormControl) {
         const inputValue = event.value;
-        const formatDate = this.dateAdapter.parse(inputValue, this.datePickerFormat);
-        if (formatDate?.isValid()) {
-            formControl.setValue(formatDate);
-        } else if (formatDate) {
+
+        if (inputValue?.isValid()) {
+            formControl.setValue(inputValue);
+        } else if (inputValue) {
             formControl.setErrors({
                 invalidOnChange: true
             });
