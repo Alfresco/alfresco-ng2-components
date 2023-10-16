@@ -83,7 +83,7 @@ export class DateRangeFilterComponent implements OnInit {
         this.dateChanged.emit(dateRange);
     }
 
-    private hasPreselectedValues() {
+    private hasPreselectedValues(): boolean {
         return !!this.processFilterProperty?.attributes && !!this.processFilterProperty?.value;
     }
 
