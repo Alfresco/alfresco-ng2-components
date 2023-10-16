@@ -56,8 +56,7 @@ import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
 import { SimpleChanges } from '@angular/core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 
-// eslint-disable-next-line ban/ban, @cspell/spellchecker
-fdescribe('EditTaskFilterCloudComponent', () => {
+describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
     let service: TaskFilterCloudService;
     let appsService: AppsProcessCloudService;

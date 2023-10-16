@@ -38,8 +38,7 @@ import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filte
 import { fakeEnvironmentList } from '../../../../common/mock/environment.mock';
 import { mockApplicationTaskFilterProperties } from '../../mock/edit-task-filter-cloud.mock';
 
-// eslint-disable-next-line ban/ban, @cspell/spellchecker
-fdescribe('EditServiceTaskFilterCloudComponent', () => {
+describe('EditServiceTaskFilterCloudComponent', () => {
     let component: EditServiceTaskFilterCloudComponent;
     let service: ServiceTaskFilterCloudService;
     let appsService: AppsProcessCloudService;
