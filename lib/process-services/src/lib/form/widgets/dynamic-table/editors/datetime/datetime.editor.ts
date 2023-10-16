@@ -15,33 +15,31 @@
  * limitations under the License.
  */
 
-/* eslint-disable @angular-eslint/component-selector */
-
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
+import { ADF_DATETIME_FORMATS, ADF_DATE_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, /*MOMENT_DATE_FORMATS, MomentDateAdapter*/
+DateFnsUtils} from '@alfresco/adf-core';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
 import { DynamicTableModel } from '../models/dynamic-table.widget.model';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
-import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 
 @Component({
     selector: 'adf-datetime-editor',
     templateUrl: './datetime.editor.html',
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
-        { provide: DatetimeAdapter, useClass: MomentDatetimeAdapter },
-        { provide: MAT_DATETIME_FORMATS, useValue: MAT_MOMENT_DATETIME_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
+        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     styleUrls: ['./datetime.editor.scss']
 })
 export class DateTimeEditorComponent implements OnInit {
     DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
 
-    value: any;
+    @Input()
+    value: Date;
 
     @Input()
     table: DynamicTableModel;
@@ -52,28 +50,28 @@ export class DateTimeEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: Date;
+    maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Moment>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = this.DATE_TIME_FORMAT;
+        const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        momentDateAdapter.displayFormat = this.DATE_TIME_FORMAT;
 
-        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_TIME_FORMAT);
+        this.value = this.table.getCellValue(this.row, this.column) as Date;
     }
 
-    onDateChanged(newDateValue) {
-        if (newDateValue?.value) {
-            const newValue = moment(newDateValue.value, this.DATE_TIME_FORMAT);
-            this.row.value[this.column.id] = newDateValue.value.format(this.DATE_TIME_FORMAT);
+    onDateChanged(newDateValue: MatDatetimepickerInputEvent<Date> | string) {
+        if (typeof newDateValue === 'string') {
+            const newValue = DateFnsUtils.parseDate(newDateValue, this.DATE_TIME_FORMAT);
             this.value = newValue;
+            this.row.value[this.column.id] = newValue.toISOString();
             this.table.flushValue();
-        } else if (newDateValue) {
-            const newValue = moment(newDateValue, this.DATE_TIME_FORMAT);
-            this.value = newValue;
-            this.row.value[this.column.id] = newDateValue;
+        } else if (newDateValue.value) {
+            const newValue = DateFnsUtils.formatDate(newDateValue.value, this.DATE_TIME_FORMAT);
+            this.row.value[this.column.id] = newValue;
+            this.value = newDateValue.value;
             this.table.flushValue();
         } else {
             this.row.value[this.column.id] = '';

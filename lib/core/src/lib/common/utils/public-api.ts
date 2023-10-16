@@ -22,3 +22,4 @@ export * from './moment-date-adapter';
 export * from './string-utils';
 export * from './date-fns-utils';
 export * from './date-fns-adapter';
+export * from './datetime-fns-adapter';

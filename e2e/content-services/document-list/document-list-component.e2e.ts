@@ -60,7 +60,8 @@ describe('Document List Component', () => {
     });
 
     describe('Custom Column', () => {
-        let folderName;
+        let folderName: string;
+
         const pdfFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path

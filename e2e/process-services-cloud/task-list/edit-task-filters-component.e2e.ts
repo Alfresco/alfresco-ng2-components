@@ -22,7 +22,8 @@ import {
     LoginPage,
     TasksService,
     IdentityService,
-    GroupIdentityService
+    GroupIdentityService,
+    EditTaskFilterDialogPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -38,6 +39,7 @@ describe('Edit task filters cloud', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const editTaskFilter = tasksCloudDemoPage.editTaskFilterCloud;
     const taskFilter = tasksCloudDemoPage.taskFilterCloudComponent;
+    const editTaskFilterDialog = new EditTaskFilterDialogPage();
 
     const apiService = createApiService();
     const identityService = new IdentityService(apiService);
@@ -49,10 +51,18 @@ describe('Edit task filters cloud', () => {
     const completedTaskName = StringUtil.generateRandomString();
         const assignedTaskName = StringUtil.generateRandomString();
 
+    /**
+     * Click on the specified task filter
+     *
+     * @param name filter name
+     */
     async function clickTaskFilter(name: string) {
         await taskFilter.clickTaskFilter(name);
     }
 
+    /**
+     * Wait till the datatable component is loaded
+     */
     async function waitTillContentLoaded() {
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
     }
@@ -187,7 +197,6 @@ describe('Edit task filters cloud', () => {
 
         await editTaskFilter.clickSaveAsButton();
 
-        const editTaskFilterDialog = editTaskFilter.editTaskFilterDialog();
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
@@ -197,8 +206,8 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.setSortFilterDropDown('priority');
         await editTaskFilter.clickSaveAsButton();
-        await editTaskFilter.editTaskFilterDialog().setFilterName('New');
-        await editTaskFilter.editTaskFilterDialog().clickOnSaveButton();
+        await editTaskFilterDialog.setFilterName('New');
+        await editTaskFilterDialog.clickOnSaveButton();
 
         await expect(await taskFilter.getActiveFilterName()).toBe('New');
         await editTaskFilter.openFilter();
@@ -224,7 +233,6 @@ describe('Edit task filters cloud', () => {
 
         await editTaskFilter.clickSaveAsButton();
 
-        const editTaskFilterDialog = await editTaskFilter.editTaskFilterDialog();
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
@@ -252,7 +260,6 @@ describe('Edit task filters cloud', () => {
 
         await editTaskFilter.clickSaveAsButton();
 
-        const editTaskFilterDialog = await editTaskFilter.editTaskFilterDialog();
         await editTaskFilterDialog.setFilterName('New');
         await editTaskFilterDialog.clickOnSaveButton();
 
@@ -275,12 +282,10 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('priority');
         await editTaskFilter.clickSaveAsButton();
 
-        const dialog = editTaskFilter.editTaskFilterDialog();
-
-        await expect(await dialog.getFilterName()).toEqual('My Tasks');
-        await dialog.setFilterName('Cancel');
-        await expect(await dialog.getFilterName()).toEqual('Cancel');
-        await dialog.clickOnCancelButton();
+        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        await editTaskFilterDialog.setFilterName('Cancel');
+        await expect(await editTaskFilterDialog.getFilterName()).toEqual('Cancel');
+        await editTaskFilterDialog.clickOnCancelButton();
 
         await taskFilter.checkTaskFilterNotDisplayed('Cancel');
         await expect(await taskFilter.getActiveFilterName()).toEqual('My Tasks');
@@ -307,14 +312,12 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickSaveAsButton();
 
-        const dialog = editTaskFilter.editTaskFilterDialog();
-
-        await expect(await dialog.getFilterName()).toEqual('My Tasks');
-        await dialog.clearFilterName();
-        await expect(await dialog.getFilterName()).toEqual('');
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(false);
-        await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await dialog.clickOnCancelButton();
+        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        await editTaskFilterDialog.clearFilterName();
+        await expect(await editTaskFilterDialog.getFilterName()).toEqual('');
+        await expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(false);
+        await expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
+        await editTaskFilterDialog.clickOnCancelButton();
     });
 
     it('[C291799] Task filter dialog is displayed when clicking on Save As button', async () => {
@@ -326,15 +329,18 @@ describe('Edit task filters cloud', () => {
         await expect(await editTaskFilter.getSortFilterDropDownValue()).toEqual('id');
         await editTaskFilter.clickSaveAsButton();
 
-        const dialog = editTaskFilter.editTaskFilterDialog();
-
-        await expect(await dialog.checkSaveButtonIsEnabled()).toEqual(true);
-        await expect(await dialog.checkCancelButtonIsEnabled()).toEqual(true);
-        await expect(await dialog.getTitle()).toEqual('Save filter as');
-        await expect(await dialog.getFilterName()).toEqual('My Tasks');
-        await dialog.clickOnCancelButton();
+        await expect(await editTaskFilterDialog.checkSaveButtonIsEnabled()).toEqual(true);
+        await expect(await editTaskFilterDialog.checkCancelButtonIsEnabled()).toEqual(true);
+        await expect(await editTaskFilterDialog.getTitle()).toEqual('Save filter as');
+        await expect(await editTaskFilterDialog.getFilterName()).toEqual('My Tasks');
+        await editTaskFilterDialog.clickOnCancelButton();
     });
 
+    /**
+     * Creates new custom filter
+     *
+     * @param name Filter name
+     */
     async function createNewCustomFilter(name: string): Promise<void> {
         await clickTaskFilter('my-tasks');
         await waitTillContentLoaded();
@@ -347,8 +353,7 @@ describe('Edit task filters cloud', () => {
 
         await editTaskFilter.clickSaveAsButton();
 
-        const dialog = editTaskFilter.editTaskFilterDialog();
-        await dialog.setFilterName(name);
-        await dialog.clickOnSaveButton();
+        await editTaskFilterDialog.setFilterName(name);
+        await editTaskFilterDialog.clickOnSaveButton();
     }
 });

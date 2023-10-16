@@ -78,7 +78,7 @@
                 </adf-categories-management>
             </div>
         </ng-container>
-        <mat-expansion-panel *ngFor="let customPanel of customPanels">
+        <mat-expansion-panel *ngFor="let customPanel of customPanels" [expanded]="canExpandTheCard(customPanel.panelTitle)">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ customPanel.panelTitle | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
@@ -90,7 +90,7 @@
                      class="adf-metadata-grouped-properties-container">
                     <mat-expansion-panel *ngIf="showGroup(group) || editable"
                                          [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                                         [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first">
+                                         [expanded]="canExpandTheCard(group.title) || !displayDefaultProperties && first">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ group.title | translate }}

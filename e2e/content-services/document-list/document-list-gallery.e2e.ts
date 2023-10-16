@@ -20,6 +20,7 @@ import { browser } from 'protractor';
 import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
@@ -56,7 +57,11 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
         });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        let filePdfNode; let fileTestNode; let fileDocxNode; let folderNode; let filePDFSubNode;
+        let filePdfNode: NodeEntry;
+        let fileTestNode: NodeEntry;
+        let fileDocxNode: NodeEntry;
+        let folderNode: NodeEntry;
+        let filePDFSubNode: NodeEntry;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');

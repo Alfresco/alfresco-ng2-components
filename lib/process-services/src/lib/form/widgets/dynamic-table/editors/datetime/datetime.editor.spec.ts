@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment';
 import { FormFieldModel, FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { DynamicTableColumn } from '../models/dynamic-table-column.model';
 import { DynamicTableRow } from '../models/dynamic-table-row.model';
@@ -52,26 +51,27 @@ describe('DateTimeEditorComponent', () => {
         component.column = column;
     });
 
-    it('should update fow value on change', () => {
+    it('should update row value on change', () => {
         component.ngOnInit();
-        const newDate = moment('22-6-2018 04:20 AM', 'D-M-YYYY hh:mm A');
-        component.onDateChanged(newDate);
-        expect(moment(row.value[column.id]).isSame(newDate)).toBeTruthy();
+        const newDate = new Date('2018-6-22 04:20 AM');
+        component.onDateChanged({ value: newDate } as any);
+
+        expect(row.value[column.id]).toBe('22/06/2018 04:20');
     });
 
     it('should update row value upon user input', () => {
-        const input = '22-6-2018 04:20 AM';
+        const input = '22/6/2018 04:20';
 
         component.ngOnInit();
         component.onDateChanged(input);
 
         const actual = row.value[column.id];
-        expect(actual).toBe('22-6-2018 04:20 AM');
+        expect(actual).toBe('2018-06-22T04:20:00.000Z');
     });
 
     it('should flush value on user input', () => {
         spyOn(table, 'flushValue').and.callThrough();
-        const input = '22-6-2018 04:20 AM';
+        const input = '22/6/2018 04:20';
 
         component.ngOnInit();
         component.onDateChanged(input);

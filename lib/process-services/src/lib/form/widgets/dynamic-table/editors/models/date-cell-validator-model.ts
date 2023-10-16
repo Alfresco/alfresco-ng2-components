@@ -50,7 +50,7 @@ export class DateCellValidator implements CellValidator {
 
                 return false;
             } else {
-                return column.required ? false : true;
+                return !column.required;
             }
         }
 

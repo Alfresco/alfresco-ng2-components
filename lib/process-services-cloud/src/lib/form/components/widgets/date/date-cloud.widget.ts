@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS/*, MAT_DATE_LOCALE*/ } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -48,7 +48,7 @@ import { addDays, subDays } from 'date-fns';
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
-    DATE_FORMAT = 'dd-MM-yyyy';
+    readonly DATE_FORMAT = 'dd-MM-yyyy';
 
     minDate: Date;
     maxDate: Date;
@@ -112,7 +112,6 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         const input = event.targetElement as HTMLInputElement;
 
         if (value) {
-            // store back to the `dd-MM-yyyy` format
             this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
         } else {
             this.field.value = input.value;

@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import moment from 'moment';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
@@ -25,12 +24,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { By } from '@angular/platform-browser';
+import { DateFieldValidator, DateTimeFieldValidator } from '../core';
 
 describe('DateTimeWidgetComponent', () => {
 
     let widget: DateTimeWidgetComponent;
     let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let element: HTMLElement;
+    let form: FormModel;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,6 +45,9 @@ describe('DateTimeWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
+
+        form = new FormModel();
+        form.fieldValidators = [new DateFieldValidator(), new DateTimeFieldValidator() ];
     });
 
     afterEach(() => {
@@ -51,9 +55,9 @@ describe('DateTimeWidgetComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should setup min value for date picker', () => {
-        const minValue = '1982-03-13T10:00:000Z';
-        widget.field = new FormFieldModel(null, {
+    it('should setup min value for date picker', async () => {
+        const minValue = '1982-03-13T10:00:00Z';
+        widget.field = new FormFieldModel(form, {
             id: 'date-id',
             name: 'date-name',
             type: 'datetime',
@@ -61,13 +65,13 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        const expected = moment(minValue, 'YYYY-MM-DDTHH:mm:ssZ');
-        expect(widget.minDate.isSame(expected)).toBeTruthy();
+        expect(widget.minDate.toISOString()).toBe(`1982-03-13T10:00:00.000Z`);
     });
 
     it('should date field be present', () => {
-        widget.field = new FormFieldModel(null, {
+        widget.field = new FormFieldModel(form, {
             id: 'date-id',
             name: 'date-name',
             type: 'datetime'
@@ -78,33 +82,159 @@ describe('DateTimeWidgetComponent', () => {
         expect(element.querySelector('#data-time-widget')).not.toBeNull();
     });
 
-    it('should setup max value for date picker', () => {
-        const maxValue = '1982-03-13T10:00:000Z';
+    it('should setup max value for date picker', async () => {
+        const maxValue = '1982-03-13T10:00:00Z';
         widget.field = new FormFieldModel(null, {
             maxValue
         });
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        const expected = moment(maxValue, 'YYYY-MM-DDTHH:mm:ssZ');
-        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+        expect(widget.maxDate.toISOString()).toBe('1982-03-13T10:00:00.000Z');
     });
 
     it('should eval visibility on date changed', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
-        const field = new FormFieldModel(new FormModel(), {
+        const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
-            value: '09-12-9999 10:00 AM',
-            type: 'datetime',
-            readOnly: 'false'
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
         });
 
         widget.field = field;
-        const mockDate = moment('1982-03-13T10:00:000Z', 'YYYY-MM-DDTHH:mm:ssZ');
-        widget.onDateChanged(mockDate);
+        widget.onDateChanged({ value: new Date('1982-03-13T10:00:00.000Z') } as any);
 
         expect(widget.onFieldChanged).toHaveBeenCalledWith(field);
+    });
+
+    it('should validate the initial datetime value', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.whenStable();
+        await fixture.whenStable();
+
+        expect(field.isValid).toBeTrue();
+    });
+
+    it('should validate the updated datetime value', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.whenStable();
+        await fixture.whenStable();
+
+        widget.onDateChanged({ value: new Date('9999-09-12T09:10:00.000Z') } as any);
+
+        expect(field.value).toBe('9999-09-12T09:10:00.000Z');
+        expect(field.isValid).toBeTrue();
+    });
+
+    it('should forwad the incorrect datetime input for further validation', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        widget.onDateChanged({
+            value: null,
+            targetElement: {
+                value: '123abc'
+            }
+        } as any);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(field.value).toBe('123abc');
+        expect(field.isValid).toBeFalse();
+        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+    });
+
+    it('should process direct keyboard input', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.whenStable();
+        await fixture.whenStable();
+
+        widget.onValueChanged({ target: { value: '9999-09-12T09:10:00.000Z' } } as any);
+
+        expect(field.value).toBe('9999-09-12T09:10:00.000Z');
+        expect(field.isValid).toBeTrue();
+    });
+
+    it('should fail validating incorrect keyboard input', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        widget.onValueChanged({
+            target: {
+                value: '123abc'
+            }
+        } as any);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(field.value).toBe('123abc');
+        expect(field.isValid).toBeFalse();
+        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+    });
+
+    it('should allow empty dates when not required', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9999-09-12T09:00:00.000Z',
+            type: 'datetime'
+        });
+
+        widget.field = field;
+
+        fixture.whenStable();
+        await fixture.whenStable();
+
+        widget.onDateChanged({ value: null, targetElement: { value: '' } } as any);
+
+        expect(field.value).toBe('');
+        expect(field.isValid).toBeTrue();
     });
 
     describe('when tooltip is set', () => {
@@ -166,97 +296,95 @@ describe('DateTimeWidgetComponent', () => {
         it('should be able to display label with asterisk', () => {
             fixture.detectChanges();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = element.querySelector<HTMLElement>('.adf-asterisk');
 
-            expect(asterisk).toBeTruthy();
-            expect(asterisk.textContent).toEqual('*');
+            expect(asterisk).not.toBeNull();
+            expect(asterisk?.textContent).toEqual('*');
         });
     });
 
     describe('template check', () => {
 
-        it('should show visible date widget', () => {
-            widget.field = new FormFieldModel(new FormModel(), {
+        it('should show visible date widget', async () => {
+            widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '30-11-9999 10:30 AM',
-                type: 'datetime',
-                readOnly: 'false'
+                value: '9999-11-30T10:30:00.000Z',
+                type: 'datetime'
             });
 
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(element.querySelector('#date-field-id')).toBeDefined();
-            expect(element.querySelector('#date-field-id')).not.toBeNull();
-
-            const dateElement: any = element.querySelector('#date-field-id');
-            expect(dateElement.value).toBe('30-11-9999 10:30 AM');
+            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement).not.toBeNull();
+            expect(dateElement?.value).toBe('30-11-9999 10:30 AM');
         });
 
-        it('should show the correct format type', () => {
-            widget.field = new FormFieldModel(new FormModel(), {
+        it('should show the correct format type', async () => {
+            widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '12-30-9999 10:30 AM',
+                value: '9999-12-30T10:30:00.000Z',
                 dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
+                type: 'datetime'
             });
 
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(element.querySelector('#date-field-id')).toBeDefined();
-            expect(element.querySelector('#date-field-id')).not.toBeNull();
-
-            const dateElement: any = element.querySelector('#date-field-id');
-            expect(dateElement.value).toContain('12-30-9999 10:30 AM');
+            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+            expect(dateElement).not.toBeNull();
+            expect(dateElement?.value).toContain('12-30-9999 10:30 AM');
         });
 
         it('should disable date button when is readonly', () => {
-            widget.field = new FormFieldModel(new FormModel(), {
+            widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
-                value: '12-30-9999 10:30 AM',
+                value: '9999-12-30T10:30:00.000Z',
                 dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime',
-                readOnly: 'false'
+                type: 'datetime'
             });
             fixture.detectChanges();
 
             let dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton.disabled).toBeFalsy();
+            expect(dateButton).not.toBeNull();
+            expect(dateButton?.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
-            expect(dateButton.disabled).toBeTruthy();
+            expect(dateButton).not.toBeNull();
+            expect(dateButton?.disabled).toBeTruthy();
         });
     });
 
-    it('should display always the json value', () => {
-        const field = new FormFieldModel(new FormModel(), {
+    it('should display always the json value', async () => {
+        const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'datetime-field-name',
-            value: '12-30-9999 10:30 AM',
+            value: '9999-12-30T10:30:00.000Z',
             type: 'datetime',
-            readOnly: 'false'
+            dateDisplayFormat: 'MM-DD-YYYY HH:mm A'
         });
-        field.isVisible = true;
-        field.dateDisplayFormat = 'MM-DD-YYYY HH:mm A';
         widget.field = field;
+
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(element.querySelector('#date-field-id')).toBeDefined();
-        expect(element.querySelector('#date-field-id')).not.toBeNull();
+        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+        expect(dateElement).not.toBeNull();
+        expect(dateElement?.value).toContain('12-30-9999 10:30 AM');
 
-        const dateElement: any = element.querySelector('#date-field-id');
-        expect(dateElement.value).toContain('12-30-9999 10:30 AM');
+        widget.field.value = '2020-03-02T00:00:00.000Z';
 
-        widget.field.value = '03-02-2020 12:00 AM';
+        fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        expect(dateElement.value).toContain('03-02-2020 12:00 AM');
+        expect(dateElement?.value).toContain('03-02-2020 00:00 AM');
     });
 
     describe('when form model has left labels', () => {
