@@ -20,7 +20,7 @@ import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginPage, createApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
+    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './../pages/tasks-cloud-demo.page';
@@ -50,12 +50,21 @@ describe('Edit task filters and task list properties', () => {
     const processInstancesService = new ProcessInstancesService(apiService);
 
     const noTasksFoundMessage = 'No Tasks Found';
-    let createdTask; let notAssigned; let notDisplayedTask; let processDefinition; let processInstance; let priorityTask; let subTask;
-        let otherOwnerTask; let testUser; let groupInfo; let simpleTask;
+    let createdTask: any;
+    let notAssigned: any;
+    let notDisplayedTask: any;
+    let processDefinition: any;
+    let processInstance: any;
+    let priorityTask: any;
+    let subTask: any;
+    let otherOwnerTask: any;
+    let testUser: any;
+    let groupInfo: any;
+    let simpleTask: any;
     const priority = 1;
 
     const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
-    const currentDate = DateUtil.formatDate('DD/MM/YYYY');
+    const currentDate = format(new Date(), 'dd/MM/yyyy');
     const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
 
     beforeAll(async () => {
