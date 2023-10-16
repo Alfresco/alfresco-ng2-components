@@ -30,7 +30,6 @@ import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
-import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
@@ -243,11 +242,6 @@ export const appRoutes: Routes = [
             {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'treeview',
-                component: TreeViewSampleComponent,
                 canActivate: [AuthGuardEcm]
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
