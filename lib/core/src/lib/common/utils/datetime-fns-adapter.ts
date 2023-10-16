@@ -37,7 +37,7 @@ export const ADF_DATETIME_FORMATS: MatDatetimeFormats = {
         datetimeInput: 'Pp', // L LT
         timeInput: 'p', // LT
         monthYearLabel: 'LLL uuuu', // MMM YYYY
-        dateA11yLabel: 'PP', // LL
+        dateA11yLabel: 'Pp', // LL
         monthYearA11yLabel: 'LLLL uuuu', // MMMM YYYY
         popupHeaderDateLabel: 'ccc, dd MMM' // ddd, DD MMM
     }
