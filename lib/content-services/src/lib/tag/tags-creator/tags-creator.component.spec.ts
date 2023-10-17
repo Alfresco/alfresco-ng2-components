@@ -322,11 +322,11 @@ describe('TagsCreatorComponent', () => {
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
         }));
 
-        describe('isTagsEmpty', () => {
-            it('should return true when tags empty', () => {
+        describe('showEmptyTagMessage', () => {
+            it('should return true when tags empty and non editable state', () => {
                 component.tags = [];
                 component.tagNameControlVisible = false;
-                const result = component.isTagsEmpty;
+                const result = component.showEmptyTagMessage;
                 expect(result).toBeTrue();
             });
         });

@@ -230,11 +230,11 @@ describe('CategoriesManagementComponent', () => {
             });
         });
 
-        describe('isCategoryEmpty', () => {
-            it('should return true when categories empty', () => {
+        describe('showEmptyCategoryMessage', () => {
+            it('should return true when categories empty and category in non editable state', () => {
                 component.categories = [];
                 component.categoryNameControlVisible = false;
-                const result = component.isCategoryEmpty;
+                const result = component.showEmptyCategoryMessage;
                 expect(result).toBeTrue();
             });
         });

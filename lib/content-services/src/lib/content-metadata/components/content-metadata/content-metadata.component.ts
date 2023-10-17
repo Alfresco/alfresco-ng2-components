@@ -413,7 +413,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             return;
         }
 
-        if (this.editableGroup && this.editableGroup !== group) {
+        if (this.editableGroup && this.editableGroup.title !== group.title) {
             this.editableGroup.editable = false;
         }
 
@@ -463,8 +463,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    toggleGeneralInfoPanel() {
-        this.isGeneralInfoPanelVisible = !this.isGeneralInfoPanelVisible;
+    toggleGeneralInfoPanel(generalPanelState: boolean) {
+        this.isGeneralInfoPanelVisible = generalPanelState;
         this.cdr.detectChanges();
     }
 
@@ -478,11 +478,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.cdr.detectChanges();
     }
 
-    isTagsEmpty(): boolean {
+    showEmptyTagMessage(): boolean {
         return this.tags?.length === 0 && !this.editableTags;
     }
 
-    isCategoryEmpty(): boolean {
+    showEmptyCategoryMessage(): boolean {
         return this.categories?.length === 0 && !this.editableCategories;
     }
 

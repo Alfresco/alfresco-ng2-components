@@ -220,9 +220,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     /*
-     * Returns `true` if tags empty, otherwise `false`
+     * Returns `true` if tags empty and non editable state, otherwise `false`
     */
-    get isTagsEmpty(): boolean {
+    get showEmptyTagMessage(): boolean {
         return this.tags?.length === 0 && !this.tagNameControlVisible;
     }
 

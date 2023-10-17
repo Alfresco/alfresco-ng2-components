@@ -182,9 +182,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     /*
-     * Returns `true` if categories empty, otherwise `false`
+     * Returns `true` if categories empty and category panel non editable state, otherwise `false`
     */
-    get isCategoryEmpty(): boolean {
+    get showEmptyCategoryMessage(): boolean {
         return this.categories.length === 0 && !this.categoryNameControlVisible;
     }
 

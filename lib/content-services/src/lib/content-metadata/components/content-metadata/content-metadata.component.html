@@ -5,8 +5,8 @@
                              [expanded]="canExpandProperties()"
                              [attr.data-automation-id]="'adf-metadata-group-properties'"
                              hideToggle
-                             (opened)="toggleGeneralInfoPanel()"
-                             (closed)="toggleGeneralInfoPanel()">
+                             (opened)="toggleGeneralInfoPanel(true)"
+                             (closed)="toggleGeneralInfoPanel(false)">
             <mat-expansion-panel-header>
                 <div class="adf-metadata-properties-panel-content">
                     <mat-icon>
@@ -105,7 +105,7 @@
                     class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
-                <div *ngIf="isTagsEmpty()" class="adf-metadata-no-item-added">
+                <div *ngIf="showEmptyTagMessage()" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableTags" class="adf-metadata-properties-tags">
@@ -166,7 +166,7 @@
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
-                <div *ngIf="isCategoryEmpty()" class="adf-metadata-no-item-added">
+                <div *ngIf="showEmptyCategoryMessage()" class="adf-metadata-no-item-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
                 <div *ngIf="editableCategories" class="adf-metadata-categories-header">
