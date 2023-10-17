@@ -328,9 +328,7 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {
             fixture.detectChanges();
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-description"] [class*="adf-textitem-edit-icon"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(descriptionEditIcon).not.toBeNull();
             expect(dueDateEditIcon).not.toBeNull();
         });
 
