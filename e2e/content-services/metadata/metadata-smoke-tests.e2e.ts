@@ -30,7 +30,7 @@ import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { format } from 'date-fns';
+import * as moment from 'moment';
 
 describe('Metadata component', () => {
 
@@ -113,12 +113,9 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
             await expect(await metadataViewPage.getName()).toEqual(pngFileModel.name);
             await expect(await metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
-
-            const expectedDate = format(pngFileModel.createdAt, 'PP');
-
-            await expect(await metadataViewPage.getCreatedDate()).toEqual(expectedDate);
+            await expect(await metadataViewPage.getCreatedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
             await expect(await metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
-            await expect(await metadataViewPage.getModifiedDate()).toEqual(expectedDate);
+            await expect(await metadataViewPage.getModifiedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
             await expect(await metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
             await expect(await metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
 
