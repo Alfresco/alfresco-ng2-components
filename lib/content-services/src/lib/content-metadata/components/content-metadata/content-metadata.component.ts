@@ -402,10 +402,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     // Returns the editing state of the panel
     isEditingPanel(): boolean {
         return (
-            (this.editable && this.hasMetadataChanged) ||
-            (this.editableTags && this.hasMetadataChanged) ||
-            (this.editableCategories && this.hasMetadataChanged) ||
-            (this.editableGroup?.editable && this.hasMetadataChanged)
+            (this.editable || this.editableTags || this.editableCategories || this.editableGroup?.editable) && this.hasMetadataChanged
         );
     }
 

@@ -228,19 +228,6 @@ describe('CategoriesManagementComponent', () => {
                 const categoryControl = fixture.debugElement.query(By.css('.adf-category-name-field'));
                 expect(categoryControl).toBeTruthy();
             });
-
-            it('should return true when categoryNameControlVisible is true', () => {
-                component.categoryNameControlVisible = true;
-                const result = component.isNameCategoryVisible;
-                expect(result).toBeTrue();
-            });
-
-            it('should return false when categoryNameControlVisible is false and categories length is 0', () => {
-                component.categoryNameControlVisible = false;
-                component.categories = [];
-                const result = component.isNameCategoryVisible;
-                expect(result).toBeFalse();
-            });
         });
 
         describe('isCategoryEmpty', () => {

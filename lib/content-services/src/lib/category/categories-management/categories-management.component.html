@@ -1,5 +1,5 @@
 <div class="adf-categories-management">
-    <div *ngIf="isNameCategoryVisible"
+    <div *ngIf="categoryNameControlVisible"
          class="adf-category-name-field">
         <mat-form-field  appearance="fill">
             <input #categoryNameInput
@@ -7,7 +7,7 @@
                autocomplete="off"
                [formControl]="categoryNameControl"
                (keyup.enter)="addCategory()"
-               placeholder="{{'CATEGORIES_MANAGEMENT.INPUT_PLACEHOLDER' | translate }}"
+               placeholder="{{'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}"
                adf-auto-focus 
                />
             <mat-error *ngIf="categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>

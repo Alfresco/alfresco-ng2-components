@@ -322,21 +322,6 @@ describe('TagsCreatorComponent', () => {
             expect(getNameInput()).toBe(document.activeElement as HTMLInputElement);
         }));
 
-        describe('isNameTagsVisible', () => {
-            it('should return true when tagNameControlVisible is true', () => {
-                component.tagNameControlVisible = true;
-                const result = component.isNameTagsVisible;
-                expect(result).toBeTrue();
-            });
-
-            it('should return false when tagNameControlVisible is false and tags length is 0', () => {
-                component.tagNameControlVisible = false;
-                component.tags = [];
-                const result = component.isNameTagsVisible;
-                expect(result).toBeFalse();
-            });
-        });
-
         describe('isTagsEmpty', () => {
             it('should return true when tags empty', () => {
                 component.tags = [];

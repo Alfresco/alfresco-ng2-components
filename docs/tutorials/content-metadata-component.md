@@ -103,9 +103,9 @@ Now that the `my-preset` configuration is defined, let's use it in a view of the
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
-| editable | `boolean` |  | (optional) This flag toggles editable of content. |
-| editableTags | `boolean` |  | (optional) This flag toggles editable of tags content. |
-| editableCategories | `boolean` |  | (optional) This flag toggles editable of categories content. |
+| editable | `boolean` | false | (optional) This flag toggles editable of content. |
+| editableTags | `boolean` | false | (optional) This flag toggles editable of tags content. |
+| editableCategories | `boolean` | false | (optional) This flag toggles editable of categories content. |
 
 ### Events
 

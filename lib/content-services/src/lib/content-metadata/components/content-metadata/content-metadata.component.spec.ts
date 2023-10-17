@@ -133,8 +133,8 @@ describe('ContentMetadataComponent', () => {
      *
      * @returns native element
      */
-    function getAssignCategoriesBtn(): HTMLButtonElement {
-        return fixture.debugElement.query(By.css('.adf-metadata-categories-title')).nativeElement;
+    function getCategoriesButton(): HTMLButtonElement {
+        return fixture.debugElement.query(By.css('.adf-categories-button')).nativeElement;
     }
 
     /**
@@ -485,10 +485,7 @@ describe('ContentMetadataComponent', () => {
         it('should toggle Group editing mode', () => {
             component.toggleEdit(mockEvent, mockGroup, ButtonType.Group);
             expect(component.editable).toBe(false);
-            expect(component.editableGroup).toBe(mockGroup.editable ? mockGroup : null);
-            if (mockGroup.editable) {
-                expect(mockGroup.expanded).toBe(true);
-            }
+            expect(component.editableGroup).toBe(mockGroup);
         });
 
         it('should show Snackbar when Editing Panel is Active', () => {
@@ -1453,7 +1450,7 @@ describe('ContentMetadataComponent', () => {
             categoriesManagementComponent.categoryNameControlVisibleChange.emit(false);
             fixture.detectChanges();
             tick(100);
-            expect(getAssignCategoriesBtn().hasAttribute('hidden')).toBeFalse();
+            expect(getCategoriesButton().hasAttribute('hidden')).toBeFalse();
         }));
 
         it('should have correct mode', () => {

@@ -177,13 +177,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         this.cancelExistingCategoriesLoading$.complete();
     }
 
-    /*
-     * Returns `true` if categoryNameControlVisible is true, otherwise `false`
-    */
-    get isNameCategoryVisible(): boolean {
-        return (!this.categoryNameControlVisible && this.categories?.length > 0) || this.categoryNameControlVisible;
-    }
-
     get categoryNameControl(): FormControl<string> {
         return this._categoryNameControl;
     }
@@ -192,7 +185,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * Returns `true` if categories empty, otherwise `false`
     */
     get isCategoryEmpty(): boolean {
-        return this.categories?.length === 0 && !this.categoryNameControlVisible;
+        return this.categories.length === 0 && !this.categoryNameControlVisible;
     }
 
     get existingCategories(): Category[] {
