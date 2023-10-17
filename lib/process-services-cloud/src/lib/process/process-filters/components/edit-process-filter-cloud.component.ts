@@ -36,7 +36,7 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
-import { endOfDay, isValid } from 'date-fns';
+import { endOfDay, isValid, startOfDay } from 'date-fns';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -259,6 +259,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 takeUntil(this.onDestroy$)
             )
             .subscribe((formValues: ProcessFilterCloudModel) => {
+                this.setLastModifiedFromFilter(formValues);
                 this.setLastModifiedToFilter(formValues);
 
                 const newValue = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
@@ -571,6 +572,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
         if (isValid(formValues.lastModifiedTo)) {
             formValues.lastModifiedTo = endOfDay(formValues.lastModifiedTo);
+        }
+    }
+
+    private setLastModifiedFromFilter(formValues: ProcessFilterCloudModel) {
+        if (isValid(formValues.lastModifiedFrom)) {
+            formValues.lastModifiedFrom = startOfDay(formValues.lastModifiedFrom);
         }
     }
 

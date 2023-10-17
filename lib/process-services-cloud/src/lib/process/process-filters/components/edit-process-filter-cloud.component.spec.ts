@@ -1006,7 +1006,7 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(component.editProcessFilterForm.valid).toBe(true);
         });
 
-        it('should validate date input', async () => {
+        it('should validate lastModifiedTo date input', async () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
@@ -1015,18 +1015,38 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedTo');
+            const control = component.editProcessFilterForm.get('lastModifiedTo');
 
             component.onDateChanged('20/03/2023', { key: 'lastModifiedTo' } as any );
-            expect(lastModifiedToControl.value).toEqual(new Date('2023-03-20'));
-            expect(lastModifiedToControl.valid).toBeTrue();
+            expect(control.value).toEqual(new Date('2023-03-20'));
+            expect(control.valid).toBeTrue();
 
             component.onDateChanged('invalid date', { key: 'lastModifiedTo' } as any);
-            expect(isValid(lastModifiedToControl.value)).toBeFalse();
-            expect(lastModifiedToControl.valid).toBeFalse();
+            expect(isValid(control.value)).toBeFalse();
+            expect(control.valid).toBeFalse();
         });
 
-        it('should update lastModified from input', async () => {
+        it('should validate lastModifiedFrom date input', async () => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
+            const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({ id: processFilterIdChange });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const control = component.editProcessFilterForm.get('lastModifiedFrom');
+
+            component.onDateChanged('20/03/2023', { key: 'lastModifiedFrom' } as any );
+            expect(control.value).toEqual(new Date('2023-03-20'));
+            expect(control.valid).toBeTrue();
+
+            component.onDateChanged('invalid date', { key: 'lastModifiedFrom' } as any);
+            expect(isValid(control.value)).toBeFalse();
+            expect(control.valid).toBeFalse();
+        });
+
+        it('should update lastModifiedTo from input', async () => {
             component.appName = 'fake';
             component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
             const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
@@ -1045,6 +1065,48 @@ describe('EditProcessFilterCloudComponent', () => {
 
             expect(lastModifiedToControl.value).toEqual(new Date('2023-03-20'));
             expect(lastModifiedToControl.valid).toBeTrue();
+        });
+
+        it('should update lastModifiedFrom from input', async () => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
+            const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({ id: processFilterIdChange });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dateInput = nativeElement.querySelector<HTMLInputElement>(`[data-automation-id="adf-cloud-edit-process-property-lastModifiedFrom"]`);
+            expect(dateInput).not.toBeNull();
+
+            dateInput.value = '20/03/2023';
+            dateInput.dispatchEvent(new Event('keyup'));
+
+            const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedFrom');
+
+            expect(lastModifiedToControl.value).toEqual(new Date('2023-03-20'));
+            expect(lastModifiedToControl.valid).toBeTrue();
+        });
+
+        it('should fail validating lastModifiedFrom from input', async () => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'lastModified'];
+            const processFilterIdChange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({ id: processFilterIdChange });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const dateInput = nativeElement.querySelector<HTMLInputElement>(`[data-automation-id="adf-cloud-edit-process-property-lastModifiedFrom"]`);
+            expect(dateInput).not.toBeNull();
+
+            dateInput.value = 'invalid';
+            dateInput.dispatchEvent(new Event('keyup'));
+
+            const lastModifiedToControl = component.editProcessFilterForm.get('lastModifiedFrom');
+
+            expect(isValid(lastModifiedToControl.value)).toBeFalse();
+            expect(lastModifiedToControl.valid).toBeFalse();
         });
 
         it('should set date range filter type when range is selected', (done) => {

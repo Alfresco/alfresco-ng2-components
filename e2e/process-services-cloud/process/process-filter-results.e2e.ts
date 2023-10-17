@@ -17,7 +17,6 @@
 
 import { createApiService,
     AppListCloudPage,
-    DateUtil,
     GroupIdentityService,
     IdentityService,
     LocalStorageUtil,
@@ -68,7 +67,7 @@ describe('Process filters cloud', () => {
     const tasksService = new TasksService(apiService);
 
     const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
-    const currentDate = DateUtil.formatDate('DD/MM/YYYY');
+    const currentDate = format(new Date(), 'dd/MM/yyyy');
     const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
     const processListCloudConfiguration = new ProcessListCloudConfiguration();
     const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
