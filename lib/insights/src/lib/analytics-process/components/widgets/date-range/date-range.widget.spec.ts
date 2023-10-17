@@ -77,4 +77,20 @@ describe('DateRangeWidgetComponent', () => {
         expect(emitted.startDate).toBe('2023-03-13T00:00:00.000Z');
         expect(emitted.endDate).toBe('2023-04-14T00:00:00.000Z');
     });
+
+    it('should validate date range', async () => {
+        const field = new ReportParameterDetailsModel({
+            value: {
+                startDate: '2023-03-13',
+                endDate: '2023-01-14'
+            }
+        });
+
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(widget.dateRange.valid).toBeFalse();
+    });
 });
