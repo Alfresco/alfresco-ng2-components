@@ -19,9 +19,12 @@ import { SearchDatetimeRangeComponent } from './search-datetime-range.component'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { Moment } from 'moment';
 
 declare let moment: any;
 
+// eslint-disable-next-line ban/ban, @cspell/spellchecker
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
     let component: SearchDatetimeRangeComponent;
@@ -63,7 +66,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
         expect(momentFromInput.isValid()).toBeTruthy();
 
-        component.onChangedHandler({ value: inputString }, component.from);
+        component.onChangedHandler({ value: momentFromInput } as MatDatetimepickerInputEvent<Moment>, component.from);
 
         expect(component.from.value.toString()).toEqual(momentFromInput.toString());
     });
@@ -79,25 +82,25 @@ describe('SearchDatetimeRangeComponent', () => {
 
         expect(momentFromInput.isValid()).toBeFalsy();
 
-        component.onChangedHandler({ value: inputString }, component.from);
+        component.onChangedHandler({ value: momentFromInput } as MatDatetimepickerInputEvent<Moment>, component.from);
 
-        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
+        expect(component.from.value).toBeNull();
     });
 
     it('should reset form', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.form.setValue({ from: fromDatetime, to: toDatetime });
+        component.form.setValue({ from: moment(fromDatetime), to: moment(toDatetime) });
 
-        expect(component.from.value).toEqual(fromDatetime);
-        expect(component.to.value).toEqual(toDatetime);
+        expect(component.from.value).toEqual(moment(fromDatetime));
+        expect(component.to.value).toEqual(moment(toDatetime));
 
         component.reset();
 
-        expect(component.from.value).toEqual('');
-        expect(component.to.value).toEqual('');
-        expect(component.form.value).toEqual({ from: '', to: '' });
+        expect(component.from.value).toBeNull();
+        expect(component.to.value).toBeNull();
+        expect(component.form.value).toEqual({ from: null, to: null });
     });
 
     it('should reset fromMaxDatetime on reset', async () => {
@@ -148,11 +151,11 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         component.apply({
-            from: fromDatetime,
-            to: toDatetime
+            from: moment(fromDatetime),
+            to: moment(toDatetime)
         }, true);
 
-        const expectedQuery = `cm:created:['2016-10-16T12:30:00Z' TO '2017-10-16T20:00:59Z']`;
+        const expectedQuery = `cm:created:['2016-10-16T12:30:00.000Z' TO '2017-10-16T20:00:59.000Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
@@ -176,11 +179,11 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         component.apply({
-            from: fromInGmt,
-            to: toInGmt
+            from: moment(fromInGmt),
+            to: moment(toInGmt)
         }, true);
 
-        const expectedQuery = `cm:created:['2021-02-24T15:00:00Z' TO '2021-02-28T13:00:59Z']`;
+        const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.000Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
@@ -190,7 +193,7 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.onChangedHandler({ value: '10/14/2020 10:00:00 PM' }, component.from);
+        component.onChangedHandler({ value: moment('invalid') } as MatDatetimepickerInputEvent<Moment>, component.from);
 
         fixture.detectChanges();
         await fixture.whenStable();
