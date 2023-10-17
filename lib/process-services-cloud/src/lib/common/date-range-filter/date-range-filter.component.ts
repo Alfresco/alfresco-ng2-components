@@ -18,17 +18,21 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
-import { endOfDay, startOfDay } from 'date-fns';
+import { endOfDay, isValid, startOfDay } from 'date-fns';
+
+interface DateRangeFormProps {
+    from: FormControl<Date>;
+    to: FormControl<Date>;
+}
 
 @Component({
-     selector: 'adf-cloud-date-range-filter',
-     styleUrls: ['./date-range-filter.component.scss'],
-     templateUrl: './date-range-filter.component.html'
- })
- export class DateRangeFilterComponent implements OnInit {
-
+    selector: 'adf-cloud-date-range-filter',
+    styleUrls: ['./date-range-filter.component.scss'],
+    templateUrl: './date-range-filter.component.html'
+})
+export class DateRangeFilterComponent implements OnInit {
     @Input()
     processFilterProperty: ProcessFilterProperties;
 
@@ -43,9 +47,9 @@ import { endOfDay, startOfDay } from 'date-fns';
 
     type: DateCloudFilterType;
     filteredProperties: ProcessFilterOptions[] = [];
-    dateRangeForm = new UntypedFormGroup({
-        from: new UntypedFormControl(),
-        to: new UntypedFormControl()
+    dateRangeForm = new FormGroup<DateRangeFormProps>({
+        from: new FormControl(),
+        to: new FormControl()
     });
 
     ngOnInit() {
@@ -69,14 +73,17 @@ import { endOfDay, startOfDay } from 'date-fns';
     }
 
     onDateRangeClosed() {
+        const startDate = isValid(this.dateRangeForm.controls.from.value) ? startOfDay(this.dateRangeForm.controls.from.value).toISOString() : null;
+        const endDate = isValid(this.dateRangeForm.controls.to.value) ? endOfDay(this.dateRangeForm.controls.to.value).toISOString() : null;
+
         const dateRange = {
-            startDate: startOfDay(new Date(this.dateRangeForm.controls.from.value)).toISOString(),
-            endDate: endOfDay(new Date(this.dateRangeForm.controls.to.value)).toISOString()
+            startDate,
+            endDate
         };
         this.dateChanged.emit(dateRange);
     }
 
-    private hasPreselectedValues() {
+    private hasPreselectedValues(): boolean {
         return !!this.processFilterProperty?.attributes && !!this.processFilterProperty?.value;
     }
 
@@ -94,7 +101,7 @@ import { endOfDay, startOfDay } from 'date-fns';
         return this.processFilterProperty.attributes[key];
     }
 
-    private getFilterValue(attribute: string) {
+    private getFilterValue<T = any>(attribute: string): T {
         return this.processFilterProperty.value[attribute];
     }
 
@@ -115,7 +122,7 @@ import { endOfDay, startOfDay } from 'date-fns';
     }
 
     private createDefaultDateOptions(): ProcessFilterOptions[] {
-        return  [
+        return [
             {
                 value: DateCloudFilterType.NO_DATE,
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NO_DATE'
@@ -154,4 +161,4 @@ import { endOfDay, startOfDay } from 'date-fns';
             }
         ];
     }
- }
+}

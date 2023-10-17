@@ -15,30 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    BrowserActions,
-    DataTableComponentPage,
-    DatePickerCalendarPage,
-    DateUtil,
-    LocalStorageUtil,
-    LoginPage
-} from '@alfresco/adf-testing';
+import { BrowserActions, DataTableComponentPage, DateUtil, LoginPage } from '@alfresco/adf-testing';
 import { browser, ElementFinder } from 'protractor';
 import { SearchBarPage } from '../pages/search-bar.page';
-import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
-import { SearchConfiguration } from '../search.config';
 
 describe('Search Date Range Filter', () => {
-
     const loginPage = new LoginPage();
     const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();
-    const datePicker = new DatePickerCalendarPage();
-    const navigationBar = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async () => {
@@ -58,29 +46,6 @@ describe('Search Date Range Filter', () => {
 
     afterEach(async () => {
         await browser.refresh();
-   });
-
-    it('[C277106] Should display default values for Date Range widget', async () => {
-        await dateRangeFilter.checkFromFieldIsDisplayed();
-        await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        await dateRangeFilter.checkToFieldIsDisplayed();
-        await dateRangeFilter.checkToDateToggleIsDisplayed();
-        await dateRangeFilter.checkApplyButtonIsDisplayed();
-        await dateRangeFilter.checkApplyButtonIsDisabled();
-        await dateRangeFilter.checkClearButtonIsDisplayed();
-    });
-
-    it('[C277104] Should be able to set dates using date pickers', async () => {
-        await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const fromDatePicker = await dateRangeFilter.openFromDatePicker();
-        await fromDatePicker.selectTodayDate();
-        await expect(await dateRangeFilter.getFromDate()).toEqual(await dateRangeFilter.getFromCalendarSelectedDate());
-    });
-
-    it('[C277105] Should be able to type a date', async () => {
-        const date = '01-May-18';
-        await dateRangeFilter.putFromDate(date);
-        await expect(await dateRangeFilter.getFromCalendarSelectedDate()).toEqual(await dateRangeFilter.getFromDate());
     });
 
     it('[C277119] FROM and TO dates should depend on each other', async () => {
@@ -129,7 +94,7 @@ describe('Search Date Range Filter', () => {
 
         await searchResults.sortByCreated('ASC');
 
-        const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Created')) as ElementFinder[];
         for (const currentResult of results) {
             const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
             const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
@@ -137,67 +102,5 @@ describe('Search Date Range Filter', () => {
             await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
             await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
         }
-    });
-
-    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', async () => {
-        await dateRangeFilter.checkFromFieldIsDisplayed();
-        await dateRangeFilter.clickFromField();
-        await dateRangeFilter.clickToField();
-        await dateRangeFilter.checkFromErrorMessageIsDisplayed('Required value');
-        await dateRangeFilter.clickFromField();
-        await dateRangeFilter.checkToErrorMessageIsDisplayed('Required value');
-    });
-
-    it('[C277114] Should display warning message if user doesn\'t set the date range properly', async () => {
-        const toDate = '01-May-18';
-        const fromDate = '16-May-18';
-
-        await dateRangeFilter.checkToFieldIsDisplayed();
-        await dateRangeFilter.putToDate(toDate);
-        await dateRangeFilter.checkFromFieldIsDisplayed();
-        await dateRangeFilter.putFromDate(fromDate);
-        await dateRangeFilter.clickFromField();
-        await dateRangeFilter.checkToErrorMessageIsDisplayed('No days selected.');
-    });
-
-    it('[C277115] Should display warning message if user types a date later than today\'s date', async () => {
-        await dateRangeFilter.checkFromFieldIsDisplayed();
-        await dateRangeFilter.putFromDate(DateUtil.formatDate('DD-MMM-YY', new Date(), 1));
-        await dateRangeFilter.checkFromErrorMessageIsDisplayed('The date is beyond the maximum date.');
-    });
-
-    it('[C277108] Should display a warning message when user doesn\'t set the date range at all', async () => {
-        await dateRangeFilter.checkFromFieldIsDisplayed();
-        await dateRangeFilter.putFromDate('Wrong Format');
-        await dateRangeFilter.clickToField();
-        await dateRangeFilter.checkFromErrorMessageIsDisplayed('Invalid date. The date must be in the format \'DD-MMM-YY\'');
-        await dateRangeFilter.putFromDate('01-May-18');
-        await dateRangeFilter.checkFromErrorMessageIsNotDisplayed();
-    });
-
-    describe('configuration change', () => {
-        it('[C277117] Should be able to change date format', async () => {
-            await navigationBar.navigateToContentServices();
-
-            const jsonFile= SearchConfiguration.getConfiguration();
-            jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
-
-            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-            await searchBarPage.clickOnSearchIcon();
-            await searchBarPage.enterTextAndPressEnter('*');
-            await searchResults.dataTable.waitTillContentLoaded();
-
-            await searchFilters.checkCreatedRangeFilterIsDisplayed();
-            await searchFilters.clickCreatedRangeFilterHeader();
-            await searchFilters.checkCreatedRangeFilterIsExpanded();
-            await dateRangeFilter.checkFromFieldIsDisplayed();
-            await dateRangeFilter.openFromDatePicker();
-
-            const todayDate = DateUtil.formatDate('MM-DD-YY');
-            await datePicker.selectTodayDate();
-
-            await expect(await dateRangeFilter.getFromDate()).toEqual(todayDate);
-        });
     });
 });

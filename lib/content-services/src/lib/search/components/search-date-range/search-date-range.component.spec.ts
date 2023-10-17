@@ -16,22 +16,19 @@
  */
 
 import { SearchDateRangeComponent } from './search-date-range.component';
-import { DateAdapter } from '@angular/material/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-
-declare let moment: any;
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { startOfDay, endOfDay, isValid, addDays, format } from 'date-fns';
 
 describe('SearchDateRangeComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeComponent>;
     let component: SearchDateRangeComponent;
-    let adapter: MomentDateAdapter;
-    const fromDate = '2016-10-16';
-    const toDate = '2017-10-16';
-    const maxDate = '10-Mar-20';
-    const dateFormatFixture = 'DD-MMM-YY';
+
+    const dateFormatFixture = 'dd-MMM-yy';
+    const fromDate = new Date('2016-10-16');
+    const toDate = new Date('2017-10-16');
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,7 +38,6 @@ describe('SearchDateRangeComponent', () => {
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeComponent);
-        adapter = fixture.debugElement.injector.get(DateAdapter) as MomentDateAdapter;
         component = fixture.componentInstance;
     });
 
@@ -59,31 +55,26 @@ describe('SearchDateRangeComponent', () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         fixture.detectChanges();
 
-        const inputString = '20-feb-18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const date = new Date('20-feb-18');
+        expect(isValid(date)).toBeTrue();
 
-        expect(momentFromInput.isValid()).toBeTruthy();
-
-        component.onChangedHandler({ value: inputString }, component.from);
-
-        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
+        component.onChangedHandler({ value: date } as MatDatepickerInputEvent<Date>, component.from);
+        expect(component.from.value.toString()).toEqual(date.toString());
     });
 
     it('should NOT setup form control with invalid date on change', () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture };
         fixture.detectChanges();
 
-        const inputString = '20.f.18';
-        const momentFromInput = moment(inputString, dateFormatFixture);
+        const date = new Date('20.f.18');
+        expect(isValid(date)).toBeFalse();
 
-        expect(momentFromInput.isValid()).toBeFalsy();
-
-        component.onChangedHandler({ value: inputString }, component.from);
-
-        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
+        component.onChangedHandler({ value: date } as MatDatepickerInputEvent<Date>, component.from);
+        expect(component.from.value).not.toEqual(date);
     });
 
     it('should reset form', () => {
+
         fixture.detectChanges();
         component.form.setValue({ from: fromDate, to: toDate });
 
@@ -92,9 +83,9 @@ describe('SearchDateRangeComponent', () => {
 
         component.reset();
 
-        expect(component.from.value).toEqual('');
-        expect(component.to.value).toEqual('');
-        expect(component.form.value).toEqual({ from: '', to: '' });
+        expect(component.from.value).toBeNull();
+        expect(component.to.value).toBeNull();
+        expect(component.form.value).toEqual({ from: null, to: null });
     });
 
     it('should reset fromMaxDate on reset', () => {
@@ -143,8 +134,8 @@ describe('SearchDateRangeComponent', () => {
             to: toDate
         }, true);
 
-        const startDate = moment(fromDate).startOf('day').format();
-        const endDate = moment(toDate).endOf('day').format();
+        const startDate = startOfDay(fromDate).toISOString();
+        const endDate = endOfDay(toDate).toISOString();
 
         const expectedQuery = `cm:created:['${startDate}' TO '${endDate}']`;
 
@@ -156,7 +147,7 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
 
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
-        input.value = '10-05-18';
+        input.value = '10-f-18';
         input.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
@@ -165,11 +156,82 @@ describe('SearchDateRangeComponent', () => {
         expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
     });
 
+    it('should hide date-format error when correcting input', async () => {
+        fixture.detectChanges();
+
+        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        input.value = '10-f-18';
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
+
+        input.value = '10-10-2018';
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('');
+    });
+
+    it('should show error for max date constraint', async () => {
+        component.settings = { field: 'cm:created', maxDate: 'today' };
+        fixture.detectChanges();
+
+        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        input.value = format(addDays(new Date(), 1), 'dd-MM-yyyy');
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE');
+    });
+
+    it('should show error for required constraint', async () => {
+        fixture.detectChanges();
+
+        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        fromInput.value = '';
+        fromInput.dispatchEvent(new Event('input'));
+
+        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        toInput.value = '';
+        toInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.REQUIRED-VALUE');
+        expect(component.getToValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.REQUIRED-VALUE');
+    });
+
+    it('should show error for incorrect date range', async () => {
+        fixture.detectChanges();
+
+        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        fromInput.value = '11-10-2018';
+        fromInput.dispatchEvent(new Event('input'));
+
+        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        toInput.value = '10-10-2018';
+        toInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('');
+        expect(component.getToValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.NO-DAYS');
+    });
+
     it('should not show date-format error when valid found', async () => {
         fixture.detectChanges();
 
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
-        input.value = '10/10/2018';
+        input.value = '10-10-2018';
         input.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
@@ -182,31 +244,22 @@ describe('SearchDateRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.debugElement.nativeElement.querySelector('input[ng-reflect-max]')).toBeNull();
+        expect(component.maxDate).toBeUndefined();
     });
 
     it('should be able to set a fixed maximum date', async () => {
-        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate };
+        component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: '10-Mar-20' };
         fixture.detectChanges();
 
-        const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="Tue Mar 10 2020 23:59:59 GMT+0"]');
-
-        expect(inputs[0]).toBeDefined();
-        expect(inputs[0]).not.toBeNull();
-        expect(inputs[1]).toBeDefined();
-        expect(inputs[1]).not.toBeNull();
+        const expected = endOfDay(new Date(2020, 2, 10));
+        expect(component.maxDate).toEqual(expected);
     });
 
     it('should be able to set the maximum date to today', async () => {
         component.settings = { field: 'cm:created', dateFormat: dateFormatFixture, maxDate: 'today' };
         fixture.detectChanges();
-        const today = adapter.today().endOf('day').toString().slice(0, -3);
+        const today = endOfDay(new Date());
 
-        const inputs = fixture.debugElement.nativeElement.querySelectorAll('input[ng-reflect-max="' + today + '"]');
-
-        expect(inputs[0]).toBeDefined();
-        expect(inputs[0]).not.toBeNull();
-        expect(inputs[1]).toBeDefined();
-        expect(inputs[1]).not.toBeNull();
+        expect(component.maxDate).toEqual(today);
     });
 });

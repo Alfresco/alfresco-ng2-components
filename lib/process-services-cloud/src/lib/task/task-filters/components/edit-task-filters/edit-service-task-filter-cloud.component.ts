@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Moment } from 'moment';
-
 import { TaskFilterProperties, TaskFilterAction, ServiceTaskFilterCloudModel } from '../../models/filter-cloud.model';
-import { TranslationService, UserPreferencesService } from '@alfresco/adf-core';
-import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
-import { TaskCloudService } from '../../../services/task-cloud.service';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 
@@ -37,16 +29,10 @@ import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-ta
     encapsulation: ViewEncapsulation.None
 })
 export class EditServiceTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<ServiceTaskFilterCloudModel> {
-    constructor(
-        formBuilder: UntypedFormBuilder,
-        dialog: MatDialog,
-        translateService: TranslationService,
-        private serviceTaskFilterCloudService: ServiceTaskFilterCloudService,
-        dateAdapter: DateAdapter<Moment>,
-        userPreferencesService: UserPreferencesService,
-        appsProcessCloudService: AppsProcessCloudService,
-        taskCloudService: TaskCloudService) {
-        super(formBuilder, dateAdapter, userPreferencesService, appsProcessCloudService, taskCloudService, dialog, translateService);
+    private serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
+
+    constructor() {
+        super();
     }
 
     assignNewFilter(model: ServiceTaskFilterCloudModel) {

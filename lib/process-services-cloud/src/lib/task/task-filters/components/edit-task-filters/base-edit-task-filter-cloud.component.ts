@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter } from '@angular/core';
+import { OnChanges, SimpleChanges, OnInit, OnDestroy, Directive, Input, Output, EventEmitter, inject } from '@angular/core';
 import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
@@ -40,21 +40,22 @@ export interface DropdownOption {
     label: string;
 }
 
+const ACTION_SAVE = 'save';
+const ACTION_SAVE_AS = 'saveAs';
+const ACTION_DELETE = 'delete';
+const APP_RUNNING_STATUS = 'RUNNING';
+const APPLICATION_NAME = 'appName';
+const PROCESS_DEFINITION_NAME = 'processDefinitionName';
+const LAST_MODIFIED_PROPERTY = 'lastModified';
+const DATE_FORMAT = 'DD/MM/YYYY';
+const DEFAULT_ACTIONS = [ACTION_SAVE, ACTION_SAVE_AS, ACTION_DELETE];
+const SORT_PROPERTY = 'sort';
+const ORDER_PROPERTY = 'order';
+
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges, OnDestroy {
-    public static ACTION_SAVE = 'save';
-    public static ACTION_SAVE_AS = 'saveAs';
-    public static ACTION_DELETE = 'delete';
-    public static APP_RUNNING_STATUS: string = 'RUNNING';
-    public static APPLICATION_NAME: string = 'appName';
-    public static PROCESS_DEFINITION_NAME: string = 'processDefinitionName';
-    public static LAST_MODIFIED: string = 'lastModified';
-    public static SORT: string = 'sort';
-    public static ORDER: string = 'order';
-    public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
-    public static FORMAT_DATE: string = 'DD/MM/YYYY';
-    public static ACTIONS_DISABLED_BY_DEFAULT = [BaseEditTaskFilterCloudComponent.ACTION_SAVE, BaseEditTaskFilterCloudComponent.ACTION_DELETE];
+    public static ACTIONS_DISABLED_BY_DEFAULT = [ACTION_SAVE, ACTION_DELETE];
 
     /** (required) Name of the app. */
     @Input()
@@ -94,7 +95,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     /** List of task filter actions. */
     @Input()
-    actions: string[] = BaseEditTaskFilterCloudComponent.DEFAULT_ACTIONS;
+    actions: string[] = [...DEFAULT_ACTIONS];
 
     /** List of sort properties to display. */
     @Input()
@@ -135,15 +136,13 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
 
-    constructor(
-        protected formBuilder: UntypedFormBuilder,
-        protected dateAdapter: DateAdapter<Moment>,
-        protected userPreferencesService: UserPreferencesService,
-        protected appsProcessCloudService: AppsProcessCloudService,
-        protected taskCloudService: TaskCloudService,
-        protected dialog: MatDialog,
-        protected translateService: TranslationService
-    ) {}
+    protected translateService = inject(TranslationService);
+    protected taskCloudService = inject(TaskCloudService);
+    protected userPreferencesService = inject(UserPreferencesService);
+    protected appsProcessCloudService = inject(AppsProcessCloudService);
+    protected dialog = inject(MatDialog);
+    protected formBuilder = inject(UntypedFormBuilder);
+    protected dateAdapter = inject<DateAdapter<Moment>>(DateAdapter);
 
     ngOnInit() {
         this.userPreferencesService
@@ -167,17 +166,17 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     createFilterActions(): TaskFilterAction[] {
         return [
             {
-                actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE,
+                actionType: ACTION_SAVE,
                 icon: 'adf:save',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
             },
             {
-                actionType: BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS,
+                actionType: ACTION_SAVE_AS,
                 icon: 'adf:save-as',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
             },
             {
-                actionType: BaseEditTaskFilterCloudComponent.ACTION_DELETE,
+                actionType: ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
             }
@@ -185,13 +184,13 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     hasFormChanged(action: TaskFilterAction): boolean {
-        if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE) {
+        if (action.actionType === ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS) {
+        if (action.actionType === ACTION_SAVE_AS) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_DELETE) {
+        if (action.actionType === ACTION_DELETE) {
             return false;
         }
 
@@ -231,18 +230,18 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     executeFilterActions(action: TaskFilterAction): void {
-        if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE) {
+        if (action.actionType === ACTION_SAVE) {
             this.save(action);
-        } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_SAVE_AS) {
+        } else if (action.actionType === ACTION_SAVE_AS) {
             this.saveAs(action);
-        } else if (action.actionType === BaseEditTaskFilterCloudComponent.ACTION_DELETE) {
+        } else if (action.actionType === ACTION_DELETE) {
             this.delete(action);
         }
     }
 
     getRunningApplications() {
         this.appsProcessCloudService
-            .getDeployedApplicationsByStatus(BaseEditTaskFilterCloudComponent.APP_RUNNING_STATUS, this.role)
+            .getDeployedApplicationsByStatus(APP_RUNNING_STATUS, this.role)
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
@@ -268,7 +267,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     checkMandatoryActions(): void {
         if (this.actions === undefined || this.actions.length === 0) {
-            this.actions = BaseEditTaskFilterCloudComponent.DEFAULT_ACTIONS;
+            this.actions = [...DEFAULT_ACTIONS];
         }
     }
 
@@ -284,9 +283,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return this.editTaskFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
+    onDateChanged(newDateValue: string | Moment, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue, BaseEditTaskFilterCloudComponent.FORMAT_DATE, true);
+            const momentDate = moment(newDateValue, DATE_FORMAT, true);
             const controller = this.getPropertyController(dateProperty);
 
             if (momentDate.isValid()) {
@@ -363,7 +362,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     hasLastModifiedProperty(): boolean {
-        return this.filterProperties.indexOf(BaseEditTaskFilterCloudComponent.LAST_MODIFIED) >= 0;
+        return this.filterProperties.indexOf(LAST_MODIFIED_PROPERTY) >= 0;
     }
 
     get createSortProperties(): FilterOptions[] {
@@ -386,12 +385,12 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     hasSortProperty(): boolean {
-        return this.filterProperties.indexOf(BaseEditTaskFilterCloudComponent.SORT) >= 0;
+        return this.filterProperties.indexOf(SORT_PROPERTY) >= 0;
     }
 
     removeOrderProperty(filteredProperties: TaskFilterProperties[]): TaskFilterProperties[] {
         if (filteredProperties?.length > 0) {
-            return filteredProperties.filter((property) => property.key !== BaseEditTaskFilterCloudComponent.ORDER);
+            return filteredProperties.filter((property) => property.key !== ORDER_PROPERTY);
         }
         return [];
     }
@@ -399,11 +398,11 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     createAndFilterProperties() {
         this.checkMandatoryFilterProperties();
 
-        if (this.checkForProperty(BaseEditTaskFilterCloudComponent.APPLICATION_NAME)) {
+        if (this.checkForProperty(APPLICATION_NAME)) {
             this.applicationNames = [];
             this.getRunningApplications();
         }
-        if (this.checkForProperty(BaseEditTaskFilterCloudComponent.PROCESS_DEFINITION_NAME)) {
+        if (this.checkForProperty(PROCESS_DEFINITION_NAME)) {
             this.processDefinitionNames = [];
             this.getProcessDefinitions();
         }
