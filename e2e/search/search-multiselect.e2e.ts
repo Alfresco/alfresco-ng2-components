@@ -23,7 +23,7 @@ import { SearchFiltersPage } from './pages/search-filters.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
-import { SitesApi } from '@alfresco/js-api';
+import { NodeEntry, SiteEntry, SitesApi } from '@alfresco/js-api';
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
@@ -52,10 +52,14 @@ describe('Search Component - Multi-Select Facet', () => {
         name: `${randomName}.txt`
     });
 
-    let site; let userOption;
+    let site: SiteEntry;
+    let userOption: string;
 
     describe('', () => {
-        let jpgFile; let jpgFileSite; let txtFile; let txtFileSite;
+        let jpgFile: NodeEntry;
+        let jpgFileSite: NodeEntry;
+        let txtFile: NodeEntry;
+        let txtFileSite: NodeEntry;
         const acsUser = new UserModel();
 
         const jpgFileInfo = new FileModel({
@@ -67,11 +71,8 @@ describe('Search Component - Multi-Select Facet', () => {
             await createSite(acsUser);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, '-my-');
-
             jpgFileSite = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
-
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
-
             txtFileSite = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
             await browser.sleep(browser.params.testConfig.timeouts.index_search);
@@ -132,7 +133,8 @@ describe('Search Component - Multi-Select Facet', () => {
     });
 
     describe('', () => {
-        let jpgFile; let txtFile;
+        let jpgFile: NodeEntry;
+        let txtFile: NodeEntry;
         const userUploadingTxt = new UserModel();
         const userUploadingImg = new UserModel();
 
@@ -195,7 +197,7 @@ describe('Search Component - Multi-Select Facet', () => {
     });
 
     describe('', () => {
-        let txtFile;
+        let txtFile: NodeEntry;
         const acsUser = new UserModel();
 
         beforeAll(async () => {

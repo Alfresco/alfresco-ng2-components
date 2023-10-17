@@ -35,9 +35,9 @@ import {
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
 import { getYear } from 'date-fns';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Search Filters', () => {
-
     const loginPage = new LoginPage();
     const searchBarPage = new SearchBarPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -59,7 +59,8 @@ describe('Search Filters', () => {
     const uniqueFileName3 = fileNamePrefix + StringUtil.generateRandomString(5);
 
     const fileModel = new FileModel({
-        name: filename, shortName: filename.substring(0, 8)
+        name: filename,
+        shortName: filename.substring(0, 8)
     });
 
     const pngFileModel = new FileModel({
@@ -82,7 +83,11 @@ describe('Search Filters', () => {
         name: `${uniqueFileName3}.txt`
     });
 
-    let fileUploaded; let fileTypePng; let fileTypeTxt1; let fileTypeJpg; let fileTypeTxt2;
+    let fileUploaded: NodeEntry;
+    let fileTypePng: NodeEntry;
+    let fileTypeTxt1: NodeEntry;
+    let fileTypeJpg: NodeEntry;
+    let fileTypeTxt2: NodeEntry;
 
     const filter = { type: 'TYPE-PNG Image' };
 
@@ -90,9 +95,7 @@ describe('Search Filters', () => {
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
-
         await usersActions.createUser(acsUser);
-
         await apiService.login(acsUser.username, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
@@ -104,7 +107,6 @@ describe('Search Filters', () => {
         await loginPage.login(acsUser.username, acsUser.password);
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
-
     });
 
     beforeEach(async () => {
@@ -139,7 +141,6 @@ describe('Search Filters', () => {
             label: 'SEARCH.FACET_QUERIES.XTRASMALL',
             group: 'Size facet queries'
         };
-
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
@@ -257,7 +258,6 @@ describe('Search Filters', () => {
     });
 
     describe('Change config', () => {
-
         it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
             await navigationBarPage.navigateToContentServices();
 

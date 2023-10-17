@@ -15,22 +15,13 @@
  * limitations under the License.
  */
 
-import {
-    DropActions,
-    BrowserActions,
-    BrowserVisibility,
-    DocumentListPage,
-    DropdownPage,
-    Logger
-} from '@alfresco/adf-testing';
+import { DropActions, BrowserActions, BrowserVisibility, DocumentListPage, DropdownPage, Logger } from '@alfresco/adf-testing';
 import { $$, browser, by, element, protractor, $ } from 'protractor';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
-
 import * as path from 'path';
 
 export class ContentServicesPage {
-
     columns = {
         name: 'Display name',
         size: 'Size',
@@ -382,12 +373,16 @@ export class ContentServicesPage {
     }
 
     async checkDocumentCardPropertyIsShowed(elementName: string, propertyName: string): Promise<void> {
-        const elementProperty = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`);
+        const elementProperty = $(
+            `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`
+        );
         await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {
-        const elementSize = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`);
+        const elementSize = $(
+            `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
+        );
         return BrowserActions.getText(elementSize);
     }
 

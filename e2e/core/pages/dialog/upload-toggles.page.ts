@@ -19,7 +19,6 @@ import { $, browser } from 'protractor';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 
 export class UploadTogglesPage {
-
     togglePage = new TogglePage();
     multipleFileUploadToggle = $('#adf-multiple-upload-switch');
     uploadFolderToggle = $('#adf-folder-upload-switch');
@@ -42,11 +41,6 @@ export class UploadTogglesPage {
 
     async enableFolderUpload(): Promise<void> {
         await this.togglePage.enableToggle(this.uploadFolderToggle);
-    }
-
-    async checkMultipleFileUploadToggleIsEnabled(): Promise<void> {
-        const enabledToggle = $('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]');
-        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
     }
 
     async checkMaxSizeToggleIsEnabled(): Promise<void> {
