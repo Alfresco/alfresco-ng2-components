@@ -20,7 +20,7 @@ import { browser, ElementFinder } from 'protractor';
 import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
-import { parse } from 'date-fns';
+import { format, parse, addDays } from 'date-fns';
 
 describe('Search Date Range Filter', () => {
     const loginPage = new LoginPage();
@@ -78,7 +78,7 @@ describe('Search Date Range Filter', () => {
         await datePickerToday.selectTodayDate();
         await datePickerToday.checkDatePickerIsNotDisplayed();
         let fromDate = await dateRangeFilter.getFromDate();
-        fromDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(fromDate, 'DD-MMM-YY'));
+        fromDate = format(parse(fromDate, 'd-MMM-yy', new Date()), 'dd-MM-yy');
 
         await dateRangeFilter.checkApplyButtonIsDisabled();
 
@@ -88,7 +88,7 @@ describe('Search Date Range Filter', () => {
         await toDatePicker.selectTodayDate();
         await toDatePicker.checkDatePickerIsNotDisplayed();
         let toDate = await dateRangeFilter.getToDate();
-        toDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(toDate, 'DD-MMM-YY'), 1);
+        toDate = format(addDays(parse(toDate, 'dd-MMM-yy', new Date()), 1), 'dd-MM-yy');
 
         await dateRangeFilter.checkApplyButtonIsEnabled();
         await dateRangeFilter.clickApplyButton();
