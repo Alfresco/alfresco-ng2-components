@@ -35,8 +35,8 @@ describe('permissions', () => {
     const METADATA = {
         DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
+        COMMENTS_TAB: 'Comments',
+        PROPERTY_TAB: 'Properties',
         DEFAULT_ASPECT: 'Properties',
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
