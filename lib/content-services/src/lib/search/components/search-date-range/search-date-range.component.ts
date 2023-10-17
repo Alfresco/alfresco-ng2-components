@@ -182,6 +182,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
         this.to.markAsTouched();
         this.submitValues();
     }
+
     clear() {
         this.isActive = false;
         this.form.reset({
@@ -195,6 +196,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
                 this.updateQuery();
             }
         }
+
         this.setFromMaxDate();
     }
 

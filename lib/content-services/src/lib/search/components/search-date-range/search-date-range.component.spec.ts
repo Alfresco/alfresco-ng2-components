@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { startOfDay, endOfDay, isValid } from 'date-fns';
+import { startOfDay, endOfDay, isValid, addDays, format } from 'date-fns';
 
 describe('SearchDateRangeComponent', () => {
     let fixture: ComponentFixture<SearchDateRangeComponent>;
@@ -154,6 +154,77 @@ describe('SearchDateRangeComponent', () => {
         await fixture.whenStable();
 
         expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
+    });
+
+    it('should hide date-format error when correcting input', async () => {
+        fixture.detectChanges();
+
+        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        input.value = '10-f-18';
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATE');
+
+        input.value = '10-10-2018';
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('');
+    });
+
+    it('should show error for max date constraint', async () => {
+        component.settings = { field: 'cm:created', maxDate: 'today' };
+        fixture.detectChanges();
+
+        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        input.value = format(addDays(new Date(), 1), 'dd-MM-yyyy');
+        input.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.BEYOND-MAX-DATE');
+    });
+
+    it('should show error for required constraint', async () => {
+        fixture.detectChanges();
+
+        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        fromInput.value = '';
+        fromInput.dispatchEvent(new Event('input'));
+
+        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        toInput.value = '';
+        toInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.REQUIRED-VALUE');
+        expect(component.getToValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.REQUIRED-VALUE');
+    });
+
+    it('should show error for incorrect date range', async () => {
+        fixture.detectChanges();
+
+        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        fromInput.value = '11-10-2018';
+        fromInput.dispatchEvent(new Event('input'));
+
+        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        toInput.value = '10-10-2018';
+        toInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(component.getFromValidationMessage()).toEqual('');
+        expect(component.getToValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.NO-DAYS');
     });
 
     it('should not show date-format error when valid found', async () => {

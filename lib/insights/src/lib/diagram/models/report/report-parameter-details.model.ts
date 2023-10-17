@@ -26,7 +26,7 @@ export class ReportParameterDetailsModel {
     options: ParameterValueModel[];
     dependsOn: string;
 
-    constructor(obj?: any) {
+    constructor(obj?: Partial<ReportParameterDetailsModel>) {
         this.id = obj?.id;
         this.name = obj?.name;
         this.nameKey = obj?.nameKey;
