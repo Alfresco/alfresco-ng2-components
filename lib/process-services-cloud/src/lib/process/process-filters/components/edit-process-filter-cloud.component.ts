@@ -29,7 +29,7 @@ import {
     ProcessFilterOptions,
     ProcessSortFilterProperty
 } from '../models/process-filter-cloud.model';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
@@ -363,14 +363,21 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return this.editProcessFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: Date, dateProperty: ProcessFilterProperties) {
+    onDateChanged(newDateValue: Date | string, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
             const controller = this.getPropertyController(dateProperty);
 
-            if (isValid(newDateValue)) {
-                controller.setValue(newDateValue);
+            let date = newDateValue;
+
+            if (typeof newDateValue === 'string') {
+                date = DateFnsUtils.parseDate(newDateValue, 'dd/MM/yyyy');
+            }
+
+            if (isValid(date)) {
+                controller.setValue(date);
                 controller.setErrors(null);
             } else {
+                controller.setValue(date);
                 controller.setErrors({ invalid: true });
             }
         }
