@@ -20,6 +20,7 @@ import { DateRangeWidgetComponent } from './date-range.widget';
 import { TranslateModule } from '@ngx-translate/core';
 import { InsightsTestingModule } from '../../../../testing/insights.testing.module';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
+import { format } from 'date-fns';
 
 describe('DateRangeWidgetComponent', () => {
     let fixture: ComponentFixture<DateRangeWidgetComponent>;
@@ -50,8 +51,8 @@ describe('DateRangeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(widget.startDateValue.format('YYYY-MM-DD')).toEqual('2023-03-13');
-        expect(widget.endDateValue.format('YYYY-MM-DD')).toEqual('2023-04-14');
+        expect(format(widget.startDateValue, 'yyyy-MM-dd')).toEqual('2023-03-13');
+        expect(format(widget.endDateValue, 'yyyy-MM-dd')).toEqual('2023-04-14');
     });
 
     it('should emit dateRangeChanged with empty time/zone', async () => {

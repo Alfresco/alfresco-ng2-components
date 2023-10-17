@@ -17,19 +17,19 @@
 
 /* eslint-disable @angular-eslint/no-input-rename */
 
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import moment, { Moment } from 'moment';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
+import { isAfter } from 'date-fns';
 
-const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
-const DISPLAY_FORMAT = 'DD/MM/YYYY';
+const FORMAT_DATE_ACTIVITI = 'yyyy-MM-dd';
+const DISPLAY_FORMAT = 'dd/MM/yyyy';
 
 interface DateRangeProps {
-    startDate: FormControl<Moment>;
-    endDate: FormControl<Moment>;
+    startDate: FormControl<Date>;
+    endDate: FormControl<Date>;
 }
 
 @Component({
@@ -37,8 +37,8 @@ interface DateRangeProps {
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.scss'],
     providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -52,24 +52,24 @@ export class DateRangeWidgetComponent implements OnInit {
     @Output()
     dateRangeChanged = new EventEmitter<{ startDate: string; endDate: string }>();
 
-    minDate: Moment;
-    maxDate: Moment;
-    startDateValue: Moment = moment();
-    endDateValue: Moment = moment();
+    minDate: Date;
+    maxDate: Date;
+    startDateValue = new Date();
+    endDateValue = new Date();
 
-    constructor(private dateAdapter: DateAdapter<Moment>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
-        const momentDateAdapter = this.dateAdapter as MomentDateAdapter;
-        momentDateAdapter.overrideDisplayFormat = DISPLAY_FORMAT;
+        const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        momentDateAdapter.displayFormat = DISPLAY_FORMAT;
 
         if (this.field) {
             if (this.field.value?.startDate) {
-                this.startDateValue = moment(this.field.value.startDate, FORMAT_DATE_ACTIVITI);
+                this.startDateValue = this.dateAdapter.parse(this.field.value.startDate, FORMAT_DATE_ACTIVITI);
             }
 
             if (this.field.value?.endDate) {
-                this.endDateValue = moment(this.field.value.endDate, FORMAT_DATE_ACTIVITI);
+                this.endDateValue = this.dateAdapter.parse(this.field.value.endDate, FORMAT_DATE_ACTIVITI);
             }
         }
 
@@ -77,11 +77,11 @@ export class DateRangeWidgetComponent implements OnInit {
             this.dateRange = new FormGroup({} as any);
         }
 
-        const startDateControl = new FormControl<Moment>(this.startDateValue);
+        const startDateControl = new FormControl<Date>(this.startDateValue);
         startDateControl.setValidators(Validators.required);
         this.dateRange.addControl('startDate', startDateControl);
 
-        const endDateControl = new FormControl<Moment>(this.endDateValue);
+        const endDateControl = new FormControl<Date>(this.endDateValue);
         endDateControl.setValidators(Validators.required);
         this.dateRange.addControl('endDate', endDateControl);
 
@@ -97,14 +97,15 @@ export class DateRangeWidgetComponent implements OnInit {
         }
     }
 
-    private formatDateTime(date: Moment) {
-        return date.format(FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    private formatDateTime(date: Date) {
+        const datePart = this.dateAdapter.format(date, FORMAT_DATE_ACTIVITI);
+        return `${datePart}T00:00:00.000Z`;
     }
 
     dateCheck(formControl: FormGroup<DateRangeProps>) {
         const startDate = formControl.get('startDate').value;
         const endDate = formControl.get('endDate').value;
-        const isAfterCheck = startDate.isAfter(endDate);
+        const isAfterCheck = isAfter(startDate, endDate);
 
         return isAfterCheck ? { greaterThan: true } : null;
     }
