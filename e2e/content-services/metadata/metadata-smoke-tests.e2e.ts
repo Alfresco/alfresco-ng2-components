@@ -36,8 +36,8 @@ describe('Metadata component', () => {
     const METADATA = {
         DATA_FORMAT: 'PP',
         TITLE: 'Details',
-        COMMENTS_TAB: 'COMMENTS',
-        PROPERTY_TAB: 'PROPERTIES',
+        COMMENTS_TAB: 'Comments',
+        PROPERTY_TAB: 'Properties',
         DEFAULT_ASPECT: 'General info',
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
