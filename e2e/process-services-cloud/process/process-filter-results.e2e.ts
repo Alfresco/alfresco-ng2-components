@@ -66,17 +66,26 @@ describe('Process filters cloud', () => {
     const queryService = new QueryService(apiService);
     const tasksService = new TasksService(apiService);
 
-    const beforeDate = format(subDays(new Date(), 1), 'dd/MM/yyyy');
+    const beforeDate = format(subDays(new Date(), 2), 'dd/MM/yyyy');
     const currentDate = format(new Date(), 'dd/MM/yyyy');
-    const afterDate = format(addDays(new Date(), 1), 'dd/MM/yyyy');
+    const afterDate = format(addDays(new Date(), 2), 'dd/MM/yyyy');
     const processListCloudConfiguration = new ProcessListCloudConfiguration();
     const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
     const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
     const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
-    let completedProcess; let runningProcessInstance; let suspendProcessInstance; let testUser; let anotherUser; let groupInfo;
-        let anotherProcessInstance; let processDefinition; let anotherProcessDefinition;
-        let differentAppUserProcessInstance; let simpleAppProcessDefinition;
+    let completedProcess: any;
+    let runningProcessInstance: any;
+    let suspendProcessInstance: any;
+    let testUser: any;
+    let anotherUser: any;
+    let groupInfo: any;
+    let anotherProcessInstance: any;
+    let processDefinition: any;
+    let anotherProcessDefinition: any;
+    let differentAppUserProcessInstance: any;
+    let simpleAppProcessDefinition: any;
+
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
