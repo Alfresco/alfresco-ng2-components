@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, AbstractControl } from '@angular/forms';
+import { FormBuilder, AbstractControl, FormGroup, FormControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
@@ -50,6 +50,19 @@ const DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
 export interface DropdownOption {
     value: string;
     label: string;
+}
+
+interface ProcessFilterFormProps {
+    appName?: FormControl<string>;
+    appVersion?: FormControl<number | number[]>;
+    processDefinitionName?: FormControl<string>;
+    lastModifiedFrom?: FormControl<Date>;
+    lastModifiedTo?: FormControl<Date>;
+    status?: FormControl<string>;
+    order?: FormControl<string>;
+    sort?: FormControl<string>;
+    completedDateType?: FormControl<DateCloudFilterType>;
+    [x: string]: FormControl<unknown>;
 }
 
 @Component({
@@ -165,7 +178,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         value: ''
     };
     processDefinitionNames: any[] = [];
-    editProcessFilterForm: UntypedFormGroup;
+    editProcessFilterForm: FormGroup<ProcessFilterFormProps>;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
     toggleFilterActions: boolean = false;
@@ -177,7 +190,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     private filterChangeSub: Subscription;
 
     constructor(
-        private formBuilder: UntypedFormBuilder,
+        private formBuilder: FormBuilder,
         public dialog: MatDialog,
         private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,
@@ -222,6 +235,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return properties.reduce((result, current) => Object.assign(result, current), {});
     }
 
+    get lastModifiedFrom(): AbstractControl<Date> {
+        return this.editProcessFilterForm.get('lastModifiedFrom');
+    }
+
+    get lastModifiedTo(): AbstractControl<Date> {
+        return this.editProcessFilterForm.get('lastModifiedTo');
+    }
+
+    get completedDateType(): AbstractControl<DateCloudFilterType> {
+        return this.editProcessFilterForm.get('completedDateType');
+    }
+
     private getAttributesControlConfig(property: ProcessFilterProperties) {
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
@@ -258,7 +283,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 filter(() => this.isFormValid()),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe((formValues: ProcessFilterCloudModel) => {
+            .subscribe((formValues: Partial<ProcessFilterCloudModel>) => {
                 this.setLastModifiedFromFilter(formValues);
                 this.setLastModifiedToFilter(formValues);
 
@@ -569,13 +594,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             : false;
     }
 
-    private setLastModifiedToFilter(formValues: ProcessFilterCloudModel) {
+    private setLastModifiedToFilter(formValues: Partial<ProcessFilterCloudModel>) {
         if (isValid(formValues.lastModifiedTo)) {
             formValues.lastModifiedTo = endOfDay(formValues.lastModifiedTo);
         }
     }
 
-    private setLastModifiedFromFilter(formValues: ProcessFilterCloudModel) {
+    private setLastModifiedFromFilter(formValues: Partial<ProcessFilterCloudModel>) {
         if (isValid(formValues.lastModifiedFrom)) {
             formValues.lastModifiedFrom = startOfDay(formValues.lastModifiedFrom);
         }
