@@ -19,7 +19,6 @@ import {
     DropActions,
     BrowserActions,
     BrowserVisibility,
-    DateUtil,
     DocumentListPage,
     DropdownPage,
     Logger
@@ -94,28 +93,28 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
-    async deleteContent(content): Promise<void> {
+    async deleteContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.deleteContentElement);
         await this.checkContentIsNotDisplayed(content);
     }
 
-    async metadataContent(content): Promise<void> {
+    async metadataContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.metadataAction);
     }
 
-    async versionManagerContent(content): Promise<void> {
+    async versionManagerContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.versionManagerAction);
     }
 
-    async clickFileHyperlink(fileName): Promise<void> {
+    async clickFileHyperlink(fileName: string): Promise<void> {
         const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
         await BrowserActions.click(hyperlink);
     }
 
-    async checkFileHyperlinkIsEnabled(fileName): Promise<void> {
+    async checkFileHyperlinkIsEnabled(fileName: string): Promise<void> {
         const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
         await BrowserVisibility.waitUntilElementIsVisible(hyperlink);
     }
@@ -127,38 +126,6 @@ export class ContentServicesPage {
 
     async getElementsDisplayedId() {
         return this.contentList.dataTablePage().getAllRowsColumnValues(this.columns.nodeId);
-    }
-
-    checkElementsDateSortedAsc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = DateUtil.parse(elements[i], 'DD-MM-YY');
-            const right = DateUtil.parse(elements[i + 1], 'DD-MM-YY');
-            if (left > right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
-    }
-
-    checkElementsDateSortedDesc(elements) {
-        let sorted = true;
-        let i = 0;
-
-        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = DateUtil.parse(elements[i], 'DD-MM-YY');
-            const right = DateUtil.parse(elements[i + 1], 'DD-MM-YY');
-            if (left < right) {
-                sorted = false;
-            }
-            i++;
-        }
-
-        return sorted;
     }
 
     // @deprecated prefer waitTillContentLoaded
@@ -368,16 +335,16 @@ export class ContentServicesPage {
         await DropActions.dropFile(this.dragAndDrop, file);
     }
 
-    async checkLockIsDisplayedForElement(name): Promise<void> {
+    async checkLockIsDisplayedForElement(name: string): Promise<void> {
         const lockButton = $(`div.adf-datatable-cell[data-automation-id="${name}"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
     }
 
-    async getColumnValueForRow(file, columnName): Promise<string> {
+    async getColumnValueForRow(file: string, columnName: string): Promise<string> {
         return this.contentList.dataTablePage().getColumnValueForRow(this.columns.name, file, columnName);
     }
 
-    async checkEmptyFolderTextToBe(text): Promise<void> {
+    async checkEmptyFolderTextToBe(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyFolder);
         await expect(await this.emptyFolder.getText()).toContain(text);
     }
@@ -386,7 +353,7 @@ export class ContentServicesPage {
         await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
     }
 
-    async getRowIconImageUrl(fileName): Promise<string> {
+    async getRowIconImageUrl(fileName: string): Promise<string> {
         const iconRow = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`);
         return BrowserActions.getAttribute(iconRow, 'src');
     }
@@ -429,22 +396,8 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(elementMenu);
     }
 
-    async navigateToCardFolder(folderName: string): Promise<void> {
-        await BrowserActions.closeMenuAndDialogs();
-        const folderCard = $(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`);
-        await BrowserActions.click(folderCard);
-        const folderSelected = $(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`);
-        await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-    }
-
     async selectGridSortingFromDropdown(sortingOption: string): Promise<void> {
         await this.sortingDropdown.selectDropdownOption(sortingOption);
-    }
-
-    async checkRowIsDisplayed(rowName: string): Promise<void> {
-        const row = this.contentList.dataTablePage().getCellElementByValue(this.columns.name, rowName);
-        await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
     async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
