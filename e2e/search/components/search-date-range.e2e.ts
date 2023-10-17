@@ -20,6 +20,7 @@ import { browser, ElementFinder } from 'protractor';
 import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
+import { parse } from 'date-fns';
 
 describe('Search Date Range Filter', () => {
     const loginPage = new LoginPage();
@@ -99,8 +100,8 @@ describe('Search Date Range Filter', () => {
             const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
             const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+            await expect(currentDateFormatted <= parse(toDate, 'dd-MM-yy', new Date())).toBe(true);
+            await expect(currentDateFormatted >= parse(fromDate, 'dd-MM-yy', new Date())).toBe(true);
         }
     });
 });
