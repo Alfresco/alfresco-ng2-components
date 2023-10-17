@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { createApiService, BrowserActions,
+import {
+    createApiService,
+    BrowserActions,
     DataTableComponentPage,
-    DateUtil,
     LocalStorageUtil,
     LoginPage,
     UploadActions,
@@ -31,9 +32,10 @@ import { SearchFiltersPage } from '../pages/search-filters.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser, ElementFinder } from 'protractor';
 import { SearchConfiguration } from '../search.config';
+import { parse } from 'date-fns';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('Search Number Range Filter', () => {
-
     const loginPage = new LoginPage();
     const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
@@ -54,7 +56,8 @@ describe('Search Number Range Filter', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
-    let file2Bytes; let file0Bytes;
+    let file2Bytes: NodeEntry;
+    let file0Bytes: NodeEntry;
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
@@ -85,7 +88,7 @@ describe('Search Number Range Filter', () => {
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
     beforeEach(async () => {
         await searchFilters.checkSizeRangeFilterIsDisplayed();
@@ -95,7 +98,7 @@ describe('Search Number Range Filter', () => {
 
     afterEach(async () => {
         await browser.refresh();
-   });
+    });
 
     it('[C276921] Should display default values for Number Range widget', async () => {
         await sizeRangeFilter.checkFromFieldIsDisplayed();
@@ -173,7 +176,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
 
@@ -203,7 +206,7 @@ describe('Search Number Range Filter', () => {
 
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
@@ -217,7 +220,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.sortBySize('DESC');
 
-        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const resultsSize = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
@@ -225,7 +228,7 @@ describe('Search Number Range Filter', () => {
             }
         }
 
-        const resultsDisplay = await dataTable.geCellElementDetail('Display name') as ElementFinder[];
+        const resultsDisplay = (await dataTable.geCellElementDetail('Display name')) as ElementFinder[];
         for (const currentResult of resultsDisplay) {
             const name = await BrowserActions.getAttribute(currentResult, 'title');
             if (name && name.trim() !== '') {
@@ -263,7 +266,7 @@ describe('Search Number Range Filter', () => {
 
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
@@ -302,7 +305,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
@@ -315,7 +318,7 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.getFromNumber()).toEqual('');
         await expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
-        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const resultsSize = (await dataTable.geCellElementDetail('Size')) as ElementFinder[];
         for (const currentResult of resultsSize) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
@@ -393,7 +396,7 @@ describe('Search Number Range Filter', () => {
             await searchFilters.clickSizeRangeFilterHeader();
             await searchFilters.checkSizeRangeFilterIsExpanded();
 
-            const fromYear = (new Date()).getFullYear();
+            const fromYear = new Date().getFullYear();
             const toYear = fromYear + 1;
 
             await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -406,15 +409,15 @@ describe('Search Number Range Filter', () => {
 
             await searchResults.sortByCreated('DESC');
 
-            const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
+            const results = (await dataTable.geCellElementDetail('Created')) as ElementFinder[];
             for (const currentResult of results) {
                 const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
-                const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+                const currentDateFormatted = parse(currentDate, 'MMM dd, yyyy, h:mm:ss a', new Date());
 
                 await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
                 await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
             }
-    });
+        });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
             await navigationBarPage.navigateToContentServices();
