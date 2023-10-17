@@ -46,6 +46,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('inputValue', { static: true })
     input: ElementRef;
 
+    /** Emitted when a valid user has been highlighted */
     @Output()
     peopleSelected: EventEmitter<number> = new EventEmitter();
 
