@@ -21,12 +21,11 @@ import { TaskDetailsPage } from './task-details.page';
 import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
-import { element, by, $ } from 'protractor';
-import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
+import { $, by, element } from 'protractor';
+import { BrowserActions, BrowserVisibility, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
     createButton = $('button[data-automation-id="create-button"');
-    newTaskButton = $('button[data-automation-id="btn-start-task"]');
     addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
     rowByRowName = by.xpath('ancestor::mat-chip');
     checklistContainer = $('div[class*="checklist-menu"]');
@@ -42,10 +41,10 @@ export class TasksPage {
         return new StartTaskDialogPage();
     }
 
-    async createTask({ name, description = '', dueDate = '', formName = 'None'}): Promise<void> {
+    async createTask({ name, description = '', dueDate = '', formName = 'None' }): Promise<void> {
         await this.clickOnCreateButton();
         await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
-        const dialog =  new StartTaskDialogPage();
+        const dialog = new StartTaskDialogPage();
         await dialog.addName(name);
         await dialog.addDescription(description);
         await dialog.addDueDate(dueDate);
@@ -88,8 +87,7 @@ export class TasksPage {
 
     getChecklistByName(name: string) {
         const elem = this.getRowsName(name);
-        const row = elem.element(this.rowByRowName);
-        return row;
+        return elem.element(this.rowByRowName);
     }
 
     async checkChecklistIsDisplayed(name: string): Promise<void> {
@@ -150,5 +148,4 @@ export class TasksPage {
     async clickSortByNameDesc(): Promise<any> {
         return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
-
 }

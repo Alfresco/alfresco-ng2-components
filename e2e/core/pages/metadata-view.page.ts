@@ -31,7 +31,6 @@ export class MetadataViewPage {
     size = $(`[data-automation-id='card-textitem-value-content.sizeInBytes']`);
     description = $(`span[data-automation-id='card-textitem-value-properties.cm:description']`);
     author = $(`[data-automation-id='card-textitem-value-properties.cm:author']`);
-    titleProperty = $(`span[data-automation-id='card-textitem-value-properties.cm:title'] span`);
     editIcon = $(`button[data-automation-id='meta-data-card-toggle-edit']`);
     informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
     informationSpan = $(`span[data-automation-id='meta-data-card-toggle-expand-label']`);
@@ -94,10 +93,6 @@ export class MetadataViewPage {
 
     async getAuthor(): Promise<string> {
         return BrowserActions.getInputValue(this.author);
-    }
-
-    async getTitleProperty(): Promise<string> {
-        return BrowserActions.getText(this.titleProperty);
     }
 
     async editIconIsDisplayed(): Promise<void> {

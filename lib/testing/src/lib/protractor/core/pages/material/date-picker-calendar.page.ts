@@ -16,13 +16,12 @@
  */
 
 import { element, by, $ } from 'protractor';
-import { DateUtil } from '../../utils/date-util';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 import { TestElement } from '../../test-element';
+import { addDays, format, subDays } from 'date-fns';
 
 export class DatePickerCalendarPage {
-
     datePicker = $('mat-calendar[id*="mat-datepicker"]');
     nextMonthButton = $('button[class*="mat-calendar-next-button"]');
     previousMonthButton = $('button[class*="mat-calendar-previous-button"]');
@@ -33,8 +32,8 @@ export class DatePickerCalendarPage {
         return BrowserActions.getAttribute($('button[class*="mat-calendar-body-active"]'), 'aria-label');
     }
 
-    async checkDatesAfterDateAreDisabled(date): Promise<void> {
-        const afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
+    async checkDatesAfterDateAreDisabled(date: Date): Promise<void> {
+        const afterDate = format(addDays(date, 1), 'dd-MM-yy');
         const afterCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`);
         if (await afterCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(afterCalendar, 'aria-disabled');
@@ -44,8 +43,8 @@ export class DatePickerCalendarPage {
         await expect(isEnabled).toBe(false);
     }
 
-    async checkDatesBeforeDateAreDisabled(date): Promise<void> {
-        const beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
+    async checkDatesBeforeDateAreDisabled(date: Date): Promise<void> {
+        const beforeDate = format(subDays(date, 1), 'dd-MM-yy');
         const beforeCalendar = $(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`);
         if (await beforeCalendar.isPresent()) {
             const aria = await BrowserActions.getAttribute(beforeCalendar, 'aria-disabled');

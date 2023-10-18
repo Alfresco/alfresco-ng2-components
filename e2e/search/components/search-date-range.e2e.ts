@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { BrowserActions, DataTableComponentPage, DateUtil, LoginPage } from '@alfresco/adf-testing';
+import { BrowserActions, DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
 import { browser, ElementFinder } from 'protractor';
 import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
+import { format, parse, addDays } from 'date-fns';
 
 describe('Search Date Range Filter', () => {
     const loginPage = new LoginPage();
@@ -77,7 +78,7 @@ describe('Search Date Range Filter', () => {
         await datePickerToday.selectTodayDate();
         await datePickerToday.checkDatePickerIsNotDisplayed();
         let fromDate = await dateRangeFilter.getFromDate();
-        fromDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(fromDate, 'DD-MMM-YY'));
+        fromDate = format(parse(fromDate, 'd-MMM-yy', new Date()), 'dd-MM-yy');
 
         await dateRangeFilter.checkApplyButtonIsDisabled();
 
@@ -87,7 +88,7 @@ describe('Search Date Range Filter', () => {
         await toDatePicker.selectTodayDate();
         await toDatePicker.checkDatePickerIsNotDisplayed();
         let toDate = await dateRangeFilter.getToDate();
-        toDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(toDate, 'DD-MMM-YY'), 1);
+        toDate = format(addDays(parse(toDate, 'dd-MMM-yy', new Date()), 1), 'dd-MM-yy');
 
         await dateRangeFilter.checkApplyButtonIsEnabled();
         await dateRangeFilter.clickApplyButton();
@@ -97,10 +98,10 @@ describe('Search Date Range Filter', () => {
         const results = (await dataTable.geCellElementDetail('Created')) as ElementFinder[];
         for (const currentResult of results) {
             const currentDate = await BrowserActions.getAttribute(currentResult, 'title');
-            const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+            const currentDateFormatted = parse(currentDate, 'MMM dd, yyyy, h:mm:ss a', new Date());
 
-            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+            await expect(currentDateFormatted <= parse(toDate, 'dd-MM-yy', new Date())).toBe(true);
+            await expect(currentDateFormatted >= parse(fromDate, 'dd-MM-yy', new Date())).toBe(true);
         }
     });
 });

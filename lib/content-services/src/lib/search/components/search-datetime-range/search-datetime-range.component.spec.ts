@@ -15,20 +15,22 @@
  * limitations under the License.
  */
 
-import { SearchDatetimeRangeComponent } from './search-datetime-range.component';
+import { DEFAULT_DATETIME_FORMAT, SearchDatetimeRangeComponent } from './search-datetime-range.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { DateFnsUtils } from '@alfresco/adf-core';
+import { isValid } from 'date-fns';
 
-declare let moment: any;
 
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
     let component: SearchDatetimeRangeComponent;
-    const fromDatetime = '2016-10-16 12:30';
-    const toDatetime = '2017-10-16 20:00';
-    const maxDatetime = '10-Mar-20 20:00';
-    const datetimeFormatFixture = 'DD-MMM-YY HH:mm';
+    const fromDatetime = new Date('2016-10-16 12:30');
+    const toDatetime = new Date('2017-10-16 20:00');
+    const datetimeFormatFixture = 'DD-MMM-YY HH:mm'; // dd-MMM-yy HH:mm
+    const maxDatetime = DateFnsUtils.parseDate('10-Mar-20 20:00', datetimeFormatFixture);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -59,13 +61,13 @@ describe('SearchDatetimeRangeComponent', () => {
         await fixture.whenStable();
 
         const inputString = '20-feb-18 20:00';
-        const momentFromInput = moment(inputString, datetimeFormatFixture);
+        const fromDate = DateFnsUtils.parseDate(inputString, datetimeFormatFixture);
 
-        expect(momentFromInput.isValid()).toBeTruthy();
+        expect(isValid(fromDate)).toBeTrue();
 
-        component.onChangedHandler({ value: inputString }, component.from);
+        component.onChangedHandler({ value: fromDate } as MatDatetimepickerInputEvent<Date>, component.from);
 
-        expect(component.from.value.toString()).toEqual(momentFromInput.toString());
+        expect(component.from.value.toString()).toEqual(fromDate.toString());
     });
 
     it('should NOT setup form control with invalid datetime on change', async () => {
@@ -74,30 +76,28 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const inputString = '2017-10-16 20:f:00';
-        const momentFromInput = moment(inputString, datetimeFormatFixture);
+        component.onChangedHandler({ value: new Date('2017-10-16 20:f:00') } as MatDatetimepickerInputEvent<Date>, component.from);
 
-        expect(momentFromInput.isValid()).toBeFalsy();
-
-        component.onChangedHandler({ value: inputString }, component.from);
-
-        expect(component.from.value.toString()).not.toEqual(momentFromInput.toString());
+        expect(component.from.value).toBeNull();
     });
 
     it('should reset form', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.form.setValue({ from: fromDatetime, to: toDatetime });
+        component.form.setValue({
+            from: fromDatetime,
+            to: toDatetime
+        });
 
         expect(component.from.value).toEqual(fromDatetime);
         expect(component.to.value).toEqual(toDatetime);
 
         component.reset();
 
-        expect(component.from.value).toEqual('');
-        expect(component.to.value).toEqual('');
-        expect(component.form.value).toEqual({ from: '', to: '' });
+        expect(component.from.value).toBeNull();
+        expect(component.to.value).toBeNull();
+        expect(component.form.value).toEqual({ from: null, to: null });
     });
 
     it('should reset fromMaxDatetime on reset', async () => {
@@ -152,7 +152,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toDatetime
         }, true);
 
-        const expectedQuery = `cm:created:['2016-10-16T12:30:00Z' TO '2017-10-16T20:00:59Z']`;
+        const expectedQuery = `cm:created:['2016-10-16T12:30:00.000Z' TO '2017-10-16T20:00:59.000Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
@@ -163,8 +163,8 @@ describe('SearchDatetimeRangeComponent', () => {
             queryFragments: {},
             update: () => {}
         };
-        const fromInGmt = '2021-02-24T17:00:00+02:00';
-        const toInGmt = '2021-02-28T15:00:00+02:00';
+        const fromInGmt = new Date('2021-02-24T17:00:00+02:00');
+        const toInGmt = new Date('2021-02-28T15:00:00+02:00');
 
         component.id = 'createdDateRange';
         component.context = context;
@@ -180,7 +180,7 @@ describe('SearchDatetimeRangeComponent', () => {
             to: toInGmt
         }, true);
 
-        const expectedQuery = `cm:created:['2021-02-24T15:00:00Z' TO '2021-02-28T13:00:59Z']`;
+        const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.000Z']`;
 
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
         expect(context.update).toHaveBeenCalled();
@@ -190,7 +190,7 @@ describe('SearchDatetimeRangeComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        component.onChangedHandler({ value: '10/14/2020 10:00:00 PM' }, component.from);
+        component.onChangedHandler({ value: new Date('invalid') } as MatDatetimepickerInputEvent<Date>, component.from);
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -198,18 +198,17 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.getFromValidationMessage()).toEqual('SEARCH.FILTER.VALIDATION.INVALID-DATETIME');
     });
 
-    it('should not show datetime-format error when valid found', async () => {
+    it('should display date with default format in the input', async () => {
+        component.settings = { field: 'cm:created' };
+
         fixture.detectChanges();
         await fixture.whenStable();
+
+        component.onChangedHandler({ value: new Date() } as MatDatetimepickerInputEvent<Date>, component.from);
 
         const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="datetime-range-from-input"]');
-        input.value = '10/16/2017 9:00 PM';
-        input.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        expect(component.getFromValidationMessage()).toEqual('');
+        const expected = DateFnsUtils.formatDate(new Date(), DEFAULT_DATETIME_FORMAT);
+        expect(input.value).toBe(expected);
     });
 
     it('should have no maximum datetime by default', async () => {

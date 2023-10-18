@@ -19,7 +19,6 @@ import { $$ } from 'protractor';
 import { BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialogPage {
-
     folderDialog = $$('adf-folder-dialog').first();
     folderNameField = this.folderDialog.$('#adf-folder-name-input');
     createUpdateButton = this.folderDialog.$('#adf-folder-create-button');
@@ -29,7 +28,7 @@ export class FolderDialogPage {
         await BrowserActions.click(this.createUpdateButton);
     }
 
-    async addFolderName(folderName): Promise<void> {
+    async addFolderName(folderName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.folderNameField, folderName);
     }
 }

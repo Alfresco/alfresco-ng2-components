@@ -17,7 +17,8 @@
 
 import { browser } from 'protractor';
 
-import { createApiService,
+import {
+    createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
@@ -34,10 +35,9 @@ import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
-import { NodesApi } from '@alfresco/js-api';
+import { NodeEntry, NodesApi } from '@alfresco/js-api';
 
 describe('Search component - Search Bar', () => {
-
     const search = {
         inactive: {
             firstChar: 'x',
@@ -65,25 +65,29 @@ describe('Search component - Search Bar', () => {
     const firstFolderName = StringUtil.generateRandomString(16);
     const secondFolderName = StringUtil.generateRandomString(16);
     const thirdFolderName = StringUtil.generateRandomString(16);
-    const filesToDelete = [];
+    const filesToDelete: NodeEntry[] = [];
 
     const firstFileModel = new FileModel({
-        name: filename, shortName: filename.substring(0, 8)
+        name: filename,
+        shortName: filename.substring(0, 8)
     });
 
     const firstFolderModel = new FolderModel({
-        name: firstFolderName, shortName: firstFolderName.substring(0, 8)
+        name: firstFolderName,
+        shortName: firstFolderName.substring(0, 8)
     });
     const secondFolder = new FolderModel({
-        name: secondFolderName, shortName: secondFolderName.substring(0, 8)
+        name: secondFolderName,
+        shortName: secondFolderName.substring(0, 8)
     });
     const thirdFolder = new FolderModel({
-        name: thirdFolderName, shortName: thirdFolderName.substring(0, 8)
+        name: thirdFolderName,
+        shortName: thirdFolderName.substring(0, 8)
     });
 
     const term = 'Zoizo';
 
-    let fileHighlightUploaded;
+    let fileHighlightUploaded: NodeEntry;
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -116,7 +120,6 @@ describe('Search component - Search Bar', () => {
     afterAll(async () => {
         for (const currentNode of filesToDelete) {
             await uploadActions.deleteFileOrFolder(currentNode.entry.id);
-
         }
         await navigationBarPage.clickLogoutButton();
     });
@@ -249,7 +252,7 @@ describe('Search component - Search Bar', () => {
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
-    it('[C290137] Should be able to search by \'%\'', async () => {
+    it("[C290137] Should be able to search by '%'", async () => {
         await openSearchBar();
 
         await searchBarPage.enterTextAndPressEnter('%');
@@ -268,7 +271,6 @@ describe('Search component - Search Bar', () => {
 
             await searchBarPage.enterTextAndPressEnter(term);
             await searchResultPage.dataTable.waitTillContentLoaded();
-
         });
 
         it('[C299212] Should be able to configure the highlight option for search results', async () => {

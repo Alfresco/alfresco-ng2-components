@@ -33,7 +33,7 @@ export class FileModel {
     lastPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
     secondPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
     lastPageNumber = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
-    createdAt = '';
+    createdAt: Date = null;
     password = '';
     createdByUser = new CreatedByModel();
     modifiedByUser = new CreatedByModel();

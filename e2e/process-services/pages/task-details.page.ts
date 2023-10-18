@@ -81,7 +81,7 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.taskDetailsTitle);
     }
 
-    async checkSelectedForm(formName): Promise<void> {
+    async checkSelectedForm(formName: string): Promise<void> {
         await this.attachFormDropdown.checkOptionIsSelected(formName);
     }
 
@@ -263,7 +263,7 @@ export class TaskDetailsPage {
         await BrowserActions.clearSendKeys(this.addPeopleField, user);
     }
 
-    async selectUserToInvolve(user): Promise<void> {
+    async selectUserToInvolve(user: string): Promise<void> {
         const row = this.getRowsUser(user);
         await BrowserActions.click(row);
     }
@@ -282,15 +282,14 @@ export class TaskDetailsPage {
         return $(`div[data-automation-id="adf-people-full-name-${user.replace(' ', '-')}"]`);
     }
 
-    async removeInvolvedUser(user): Promise<void> {
+    async removeInvolvedUser(user: string): Promise<void> {
         const row = this.getRowsUser(user).element(by.xpath('ancestor::adf-datatable-row[contains(@class, "adf-datatable-row")]'));
         await BrowserActions.click(row.$('button[data-automation-id="action_menu_0"]'));
         await BrowserVisibility.waitUntilElementIsVisible(this.removeInvolvedPeople);
         await BrowserActions.click(this.removeInvolvedPeople);
-
     }
 
-    async getInvolvedUserEmail(user): Promise<string> {
+    async getInvolvedUserEmail(user: string): Promise<string> {
         return BrowserActions.getText($(`div[data-automation-id="adf-people-email-${user.replace(' ', '-')}"]`));
     }
 
@@ -401,5 +400,4 @@ export class TaskDetailsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.saveFormButton);
         await BrowserActions.click(this.saveFormButton);
     }
-
 }
