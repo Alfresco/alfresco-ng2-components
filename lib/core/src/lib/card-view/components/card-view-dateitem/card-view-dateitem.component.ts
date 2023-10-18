@@ -44,7 +44,6 @@ import { isValid } from 'date-fns';
     encapsulation: ViewEncapsulation.None
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
-
     @Input()
     property: CardViewDateItemModel;
 
@@ -65,11 +64,13 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private dateAdapter: DateAdapter<Date>,
-                private userPreferencesService: UserPreferencesService,
-                private appConfig: AppConfigService,
-                private clipboardService: ClipboardService,
-                private translateService: TranslationService) {
+    constructor(
+        private dateAdapter: DateAdapter<Date>,
+        private userPreferencesService: UserPreferencesService,
+        private appConfig: AppConfigService,
+        private clipboardService: ClipboardService,
+        private translateService: TranslationService
+    ) {
         super();
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
@@ -78,16 +79,20 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => {
+            .subscribe((locale) => {
                 this.property.locale = locale;
             });
 
         (this.dateAdapter as AdfDateFnsAdapter).displayFormat = 'MMM DD';
 
-        if (this.property.value) {
-            this.valueDate = DateFnsUtils.parseDate(this.property.value, this.dateFormat);
-        } else if (this.property.multivalued && !this.property.value) {
-            this.property.value = [];
+        if (this.property.multivalued) {
+            if (!this.property.value) {
+                this.property.value = [];
+            }
+        } else {
+            if (this.property.value && !Array.isArray(this.property.value)) {
+                this.valueDate = DateFnsUtils.localToUtc(DateFnsUtils.parseDate(this.property.value, this.dateFormat));
+            }
         }
     }
 
@@ -116,7 +121,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         if (event.value) {
             if (isValid(event.value)) {
                 this.valueDate = event.value;
-                this.property.value = event.value;
+                this.property.value = DateFnsUtils.utcToLocal(event.value);
                 this.update();
             }
         }
@@ -136,16 +141,18 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
-            if (isValid(event.value)) {
-                this.property.value.push(event.value);
+            if (isValid(event.value) && this.property.multivalued && Array.isArray(this.property.value)) {
+                this.property.value.push(DateFnsUtils.utcToLocal(event.value));
                 this.update();
             }
         }
     }
 
     removeValueFromList(itemIndex: number) {
-        this.property.value.splice(itemIndex, 1);
-        this.update();
+        if (this.property.multivalued && Array.isArray(this.property.value)) {
+            this.property.value.splice(itemIndex, 1);
+            this.update();
+        }
     }
 
     update() {

@@ -55,10 +55,10 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
         }
     }
 
-    transform(value: any, format?: string, locale?: string): any {
+    transform(value: Date | string | number, format?: string, locale?: string): string {
         const actualFormat = format || this.defaultFormat;
         const actualLocale = locale || this.defaultLocale;
-        const datePipe: DatePipe = new DatePipe(actualLocale);
+        const datePipe = new DatePipe(actualLocale);
         return datePipe.transform(value, actualFormat);
     }
 

@@ -236,7 +236,7 @@ describe('CardViewDateItemComponent', () => {
         it('should render the clear icon in case of displayClearAction:true', () => {
             component.editable = true;
             component.property.editable = true;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
@@ -257,7 +257,7 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             component.property.editable = true;
             component.displayClearAction = false;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
@@ -267,7 +267,7 @@ describe('CardViewDateItemComponent', () => {
         it('should remove the property value after a successful clear attempt', async () => {
             component.editable = true;
             component.property.editable = true;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             component.onDateClear();
@@ -294,7 +294,7 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
             const property = { ...component.property };
 
@@ -320,7 +320,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.dateFormat = 'M/d/yy, h:mm a';
-        component.property.value = 'Jul 10 2017 00:01:00';
+        component.property.value = new Date('Jul 10 2017 00:01:00');
         const expectedDate = new Date('Jul 10 2018');
         fixture.detectChanges();
 
