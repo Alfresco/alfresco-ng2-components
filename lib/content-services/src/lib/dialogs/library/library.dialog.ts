@@ -33,7 +33,7 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 
@@ -84,23 +84,14 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private formBuilder: UntypedFormBuilder,
-        private dialog: MatDialogRef<LibraryDialogComponent>
-    ) {
-    }
+        private dialog: MatDialogRef<LibraryDialogComponent>,
+        private notificationService: NotificationService
+    ) {}
 
     ngOnInit() {
         const validators = {
-            id: [
-                Validators.required,
-                Validators.maxLength(72),
-                this.forbidSpecialCharacters
-            ],
-            title: [
-                Validators.required,
-                this.forbidOnlySpaces,
-                Validators.minLength(2),
-                Validators.maxLength(256)
-            ],
+            id: [Validators.required, Validators.maxLength(72), this.forbidSpecialCharacters],
+            title: [Validators.required, this.forbidOnlySpaces, Validators.minLength(2), Validators.maxLength(256)],
             description: [Validators.maxLength(512)]
         };
 
@@ -164,13 +155,15 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         }
 
         this.disableCreateButton = true;
-        this.create().pipe(finalize(() => this.disableCreateButton = false)).subscribe(
-            (node: SiteEntry) => {
-                this.success.emit(node);
-                dialog.close(node);
-            },
-            (error) => this.handleError(error)
-        );
+        this.create()
+            .pipe(finalize(() => (this.disableCreateButton = false)))
+            .subscribe(
+                (node: SiteEntry) => {
+                    this.success.emit(node);
+                    dialog.close(node);
+                },
+                (error) => this.handleError(error)
+            );
     }
 
     visibilityChangeHandler(event) {
@@ -198,6 +191,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
 
     private handleError(error: any): any {
+        let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
+
         try {
             const {
                 error: { statusCode }
@@ -209,6 +204,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                 });
             }
         } catch {
+            this.notificationService.showError(errorMessage);
         }
 
         return error;
@@ -232,9 +228,9 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
         return this.queriesApi.findSites(libraryTitle, {
-                maxItems: 1,
-                fields: ['title']
-            });
+            maxItems: 1,
+            fields: ['title']
+        });
     }
 
     private forbidSpecialCharacters({ value }: UntypedFormControl) {
@@ -248,8 +244,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         return isValid
             ? null
             : {
-                message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
-            };
+                  message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
+              };
     }
 
     private forbidOnlySpaces({ value }: UntypedFormControl) {
@@ -262,8 +258,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         return isValid
             ? null
             : {
-                message: 'LIBRARY.ERRORS.ONLY_SPACES'
-            };
+                  message: 'LIBRARY.ERRORS.ONLY_SPACES'
+              };
     }
 
     private createSiteIdValidator() {
@@ -275,10 +271,14 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
             }
 
             return new Promise((resolve) => {
-                timer = setTimeout(() => this.sitesService.getSite(control.value).subscribe(
-                    () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                    () => resolve(null)
-                ), 300);
+                timer = setTimeout(
+                    () =>
+                        this.sitesService.getSite(control.value).subscribe(
+                            () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+                            () => resolve(null)
+                        ),
+                    300
+                );
             });
         };
     }

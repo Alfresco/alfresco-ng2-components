@@ -25,12 +25,14 @@ import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { SiteEntry } from '@alfresco/js-api';
 import { SitesService } from '../../common/services/sites.service';
+import { NotificationService } from '@alfresco/adf-core';
 
 describe('LibraryDialogComponent', () => {
     let fixture: ComponentFixture<LibraryDialogComponent>;
     let component: LibraryDialogComponent;
     let sitesService: SitesService;
     let findSitesSpy;
+    let notificationService: NotificationService;
     const findSitesResponse = { list: { entries: [] } };
     const dialogRef = {
         close: jasmine.createSpy('close')
@@ -51,6 +53,7 @@ describe('LibraryDialogComponent', () => {
         component = fixture.componentInstance;
         sitesService = TestBed.inject(SitesService);
         findSitesSpy = spyOn(component['queriesApi'], 'findSites');
+        notificationService = TestBed.inject(NotificationService);
     });
 
     afterEach(() => {
@@ -203,6 +206,26 @@ describe('LibraryDialogComponent', () => {
         expect(component.form.controls.id.errors).toEqual({
             message: 'LIBRARY.ERRORS.CONFLICT'
         });
+    }));
+
+    it('should handle default errors and show generic error in snackbar', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        const error = {};
+        spyOn(sitesService, 'createSite').and.callFake(() => throwError(error));
+        spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
+        spyOn(notificationService, 'showError').and.callThrough();
+
+        fixture.detectChanges();
+        component.form.controls.title.setValue('test');
+        tick(500);
+        flush();
+        fixture.detectChanges();
+
+        component.submit();
+        fixture.detectChanges();
+        flush();
+
+        expect(notificationService.showError).toHaveBeenCalledWith('CORE.MESSAGES.ERRORS.GENERIC');
     }));
 
     it('should not translate library title if value is not a valid id', fakeAsync(() => {
