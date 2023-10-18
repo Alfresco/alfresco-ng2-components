@@ -135,7 +135,7 @@ You can provide own format defaults by injecting a different `MAT_DATETIME_FORMA
 
 ## Date Utils
 
-If you need a lower-level manipulations with dates, ADF provides `DateFnsUtils` that addresses various scenarios like:
+If you need lower-level manipulations with dates, ADF provides `DateFnsUtils` that addresses various scenarios like:
 
 - converting `moment.js` format tokens to `date-fns`
 - parsing dates from strings, with moment.js/date-fns formatting tokens
