@@ -20,6 +20,10 @@ import { DateAdapter } from '@angular/material/core';
 import moment, { isMoment, Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
+/**
+ * @deprecated this class is deprecated and should not be used.
+ * Consider using `AdfDateFnsAdapter` or `AdfDateTimeFnsAdapter` instead
+ */
 @Injectable()
 export class MomentDateAdapter extends DateAdapter<Moment> {
     private localeData: any = moment.localeData();
