@@ -238,7 +238,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         return this.queriesApi.findSites(libraryTitle, {
                 maxItems: 1,
                 fields: ['title']
-        });
+            });
     }
 
     private forbidSpecialCharacters({ value }: UntypedFormControl) {
