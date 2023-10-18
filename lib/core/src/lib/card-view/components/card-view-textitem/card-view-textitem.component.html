@@ -37,11 +37,12 @@
                 </textarea>
 
         </mat-form-field>
-        <mat-divider *ngIf="showProperty && !editable"></mat-divider>
+        <mat-divider *ngIf="showDivider"></mat-divider>
     </div>
 
     <div *ngSwitchCase="'chipsTemplate'"
-         class="adf-property-field adf-textitem-chip-list-container">
+         class="adf-property-field adf-textitem-chip-list-container"
+         [ngClass]="{'adf-property-editable-property' : isEditable}">
         <mat-label *ngIf="showLabelForChips" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
             [ngClass]="{'adf-property-label-not-editable' : isNonEditableField}">
             {{ property.label | translate }}

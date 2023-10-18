@@ -18,6 +18,10 @@
         line-height: 20px;
     }
 
+    &-property-editable-property {
+        color: var(--theme-metadata-property-panel-title-color);
+    }
+
     &-property-dateitem-edit-mode {
         background-color: var(--theme-metadata-buttons-background-color);
         border-radius: 6px;
@@ -25,6 +29,18 @@
 
         .mat-select-value { 
             color: var(--theme-metadata-property-panel-text-color);
+        }
+
+        .adf-dateitem-editable {
+            .adf-datepicker-toggle {
+                color: var(--theme-metadata-property-panel-text-color);
+            } 
+        }
+    }
+
+    &-empty-field {
+        .adf-dateitem-editable-controls {
+            padding: 6px;
         }
     }
     
@@ -46,13 +62,12 @@
 
     &-dateitem-editable {
         cursor: pointer;
-        border-bottom: 1px solid var(--adf-theme-foreground-text-color-042);
-        padding-bottom: 6px;
 
         &-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-left: 12px;
 
             button.mat-icon-button {
                 line-height: 20px;

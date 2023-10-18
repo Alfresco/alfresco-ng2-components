@@ -1,6 +1,6 @@
 <label class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-     [ngClass]="{'adf-property-label-not-editable' : isNonEditableField}"
+     [ngClass]="{'adf-property-label-not-editable' : isNonEditableField, 'adf-property-editable-property': isEditable()}"
      *ngIf="showProperty() || isEditable()"
      [attr.for]="'card-view-dateitem-' + property.key">
     {{ property.label | translate }}
@@ -25,14 +25,6 @@
                       [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
                     {{ property.displayValue }}</span>
             </span>
-
-            <mat-icon *ngIf="showClearAction()"
-                      class="adf-date-reset-icon"
-                      (click)="onDateClear()"
-                      [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
-                      [attr.data-automation-id]="'datepicker-date-clear-' + property.key">
-                clear
-            </mat-icon>
 
             <mat-datetimepicker-toggle [attr.tabindex]="-1"
                                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
