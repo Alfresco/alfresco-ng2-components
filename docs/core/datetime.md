@@ -123,7 +123,7 @@ export const ADF_DATETIME_FORMATS: MatDatetimeFormats = {
 };
 ```
 
-You can provide own format defaults by injecting a different `MAT_DATE_FORMATS` value:
+You can provide own format defaults by injecting a different `MAT_DATETIME_FORMATS` value:
 
 ```ts
 @Component({
