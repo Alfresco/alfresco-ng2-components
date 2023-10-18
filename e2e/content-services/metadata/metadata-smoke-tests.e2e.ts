@@ -30,12 +30,12 @@ import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 
 describe('Metadata component', () => {
 
     const METADATA = {
-        DATA_FORMAT: 'll',
+        DATA_FORMAT: 'PP',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
@@ -108,21 +108,36 @@ describe('Metadata component', () => {
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
 
-            await expect(await metadataViewPage.getTitle()).toEqual(METADATA.TITLE);
-            await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-            await expect(await metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
-            await expect(await metadataViewPage.getName()).toEqual(pngFileModel.name);
-            await expect(await metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
-            await expect(await metadataViewPage.getCreatedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
-            await expect(await metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
-            await expect(await metadataViewPage.getModifiedDate()).toEqual(moment(pngFileModel.createdAt).format(METADATA.DATA_FORMAT));
-            await expect(await metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
-            await expect(await metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
+            const title = await metadataViewPage.getTitle();
+            const activeTab = await viewerPage.getActiveTab();
+            const expandedAspectName = await metadataViewPage.getExpandedAspectName();
+            const name = await metadataViewPage.getName();
+            const creator = await metadataViewPage.getCreator();
+            const createdDate = await metadataViewPage.getCreatedDate();
+            const modifier = await metadataViewPage.getModifier();
+            const modifiedDate = await metadataViewPage.getModifiedDate();
+            const mimeTypeName = await metadataViewPage.getMimetypeName();
+            const size = await metadataViewPage.getSize();
+
+            expect(title).toEqual(METADATA.TITLE);
+            expect(activeTab).toEqual(METADATA.PROPERTY_TAB);
+            expect(expandedAspectName).toEqual(METADATA.DEFAULT_ASPECT);
+            expect(name).toEqual(pngFileModel.name);
+            expect(creator).toEqual(pngFileModel.getCreatedByUser().displayName);
+            expect(createdDate).toEqual(format(new Date(pngFileModel.createdAt), METADATA.DATA_FORMAT), pngFileModel.createdAt);
+            expect(modifier).toEqual(pngFileModel.getCreatedByUser().displayName);
+            expect(modifiedDate).toEqual(format(new Date(pngFileModel.createdAt), METADATA.DATA_FORMAT), pngFileModel.createdAt);
+            expect(mimeTypeName).toEqual(pngFileModel.getContent().mimeTypeName);
+            expect(size).toEqual(pngFileModel.getContent().getSizeInBytes());
 
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.informationButtonIsDisplayed();
-            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
-            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
+
+            const informationButtonText = await metadataViewPage.getInformationButtonText();
+            const informationIconText = await metadataViewPage.getInformationIconText();
+
+            expect(informationButtonText).toEqual(METADATA.MORE_INFO_BUTTON);
+            expect(informationIconText).toEqual(METADATA.ARROW_DOWN);
         });
 
         it('[C272769] Should be possible to display more details when clicking on More Information button', async () => {
@@ -131,8 +146,12 @@ describe('Metadata component', () => {
             await metadataViewPage.clickOnPropertiesTab();
             await metadataViewPage.informationButtonIsDisplayed();
             await metadataViewPage.clickOnInformationButton();
-            await expect(await metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
-            await expect(await metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
+
+            const informationButtonText = await metadataViewPage.getInformationButtonText();
+            const informationIconText = await metadataViewPage.getInformationIconText();
+
+            expect(informationButtonText).toEqual(METADATA.LESS_INFO_BUTTON);
+            expect(informationIconText).toEqual(METADATA.ARROW_UP);
         });
 
         it('[C270952] Should be possible to open/close properties using info icon', async () => {
