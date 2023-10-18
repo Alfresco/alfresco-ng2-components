@@ -134,9 +134,11 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.property.default = null;
     }
 
-    copyToClipboard(valueToCopy: string) {
-        const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-        this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+    copyToClipboard(valueToCopy: string | string[]) {
+        if (typeof valueToCopy === 'string') {
+            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+        }
     }
 
     addDateToList(event: MatDatetimepickerInputEvent<Date>) {
