@@ -21,7 +21,9 @@ import { CardViewBaseItemModel } from './card-view-baseitem.model';
 import { CardViewDateItemProperties } from '../interfaces/card-view.interfaces';
 import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
-export class CardViewDateItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
+type DateItemType = Date | Date[] | null;
+
+export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> implements CardViewItem, DynamicComponentModel {
     type: string = 'date';
     format: string;
     locale: string;
@@ -41,19 +43,19 @@ export class CardViewDateItemModel extends CardViewBaseItemModel implements Card
 
     }
 
-    get displayValue() {
+    get displayValue(): string | string[] {
         if (this.multivalued) {
-            if (this.value) {
+            if (this.value && Array.isArray(this.value)) {
                 return this.value.map((date) => this.transformDate(date));
             } else {
                 return this.default ? [this.default] : [];
             }
         } else {
-            return this.value ? this.transformDate(this.value) : this.default;
+            return this.value && !Array.isArray(this.value) ? this.transformDate(this.value) : this.default;
         }
     }
 
-    transformDate(value: any) {
+    transformDate(value: Date | string | number): string {
         this.localizedDatePipe = new LocalizedDatePipe();
         return this.localizedDatePipe.transform(value, this.format, this.locale);
     }

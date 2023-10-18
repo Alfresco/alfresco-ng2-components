@@ -18,9 +18,9 @@
 import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
 import validatorsMap from '../validators/validators.map';
 
-export abstract class CardViewBaseItemModel {
+export abstract class CardViewBaseItemModel<T = any> {
     label: string;
-    value: any;
+    value: T;
     key: any;
     default: any;
     editable: boolean;
@@ -32,21 +32,21 @@ export abstract class CardViewBaseItemModel {
     type?: string;
     multivalued?: boolean;
 
-    constructor(cardViewItemProperties: CardViewItemProperties) {
-        this.label = cardViewItemProperties.label || '';
-        this.value = cardViewItemProperties.value?.displayName || cardViewItemProperties.value;
-        this.key = cardViewItemProperties.key;
-        this.default = cardViewItemProperties.default;
-        this.editable = !!cardViewItemProperties.editable;
-        this.clickable = !!cardViewItemProperties.clickable;
-        this.icon = cardViewItemProperties.icon || '';
-        this.hint = cardViewItemProperties.hint || '';
-        this.validators = cardViewItemProperties.validators || [];
-        this.data = cardViewItemProperties.data || null;
-        this.multivalued = !!cardViewItemProperties.multivalued;
+    constructor(props: CardViewItemProperties) {
+        this.label = props.label || '';
+        this.value = props.value?.displayName || props.value;
+        this.key = props.key;
+        this.default = props.default;
+        this.editable = !!props.editable;
+        this.clickable = !!props.clickable;
+        this.icon = props.icon || '';
+        this.hint = props.hint || '';
+        this.validators = props.validators || [];
+        this.data = props.data || null;
+        this.multivalued = !!props.multivalued;
 
-        if (cardViewItemProperties?.constraints?.length ?? 0) {
-            for (const constraint of cardViewItemProperties.constraints) {
+        if (props?.constraints?.length ?? 0) {
+            for (const constraint of props.constraints) {
                 if (constraint.type !== 'LIST') {
                     this.validators.push(validatorsMap[constraint.type.toLowerCase()](constraint.parameters));
                 }
@@ -55,10 +55,15 @@ export abstract class CardViewBaseItemModel {
     }
 
     isEmpty(): boolean {
-        return this.value === undefined || this.value === null || this.value.length === 0;
+        return (
+            this.value === undefined ||
+            this.value === null ||
+            (typeof this.value === 'string' && this.value.length === 0) ||
+            (Array.isArray(this.value) && this.value.length === 0)
+        );
     }
 
-    isValid(newValue: any): boolean {
+    isValid(newValue: T): boolean {
         if (!this.validators.length) {
             return true;
         }
@@ -66,7 +71,7 @@ export abstract class CardViewBaseItemModel {
         return this.validators.map((validator) => validator.isValid(newValue)).reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
-    getValidationErrors(value): CardViewItemValidator[] {
+    getValidationErrors(value: T): CardViewItemValidator[] {
         if (!this.validators.length) {
             return [];
         }

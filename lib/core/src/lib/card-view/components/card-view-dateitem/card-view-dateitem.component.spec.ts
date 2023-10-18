@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
@@ -26,6 +25,7 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '@alfresco/adf-core';
+import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 
 describe('CardViewDateItemComponent', () => {
 
@@ -192,15 +192,15 @@ describe('CardViewDateItemComponent', () => {
         const itemUpdatedSpy = spyOn(cardViewUpdateService.itemUpdated$, 'next');
         component.editable = true;
         component.property.editable = true;
-        const expectedDate = moment('Jul 10 2017', 'MMM DD YYYY');
+        const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
         const property = { ...component.property };
 
-        component.onDateChanged({ value: expectedDate });
+        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
             target: property,
             changed: {
-                dateKey: expectedDate.toDate()
+                dateKey: expectedDate
             }
         });
     });
@@ -209,13 +209,13 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = null;
-        const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
+        const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
 
-        component.onDateChanged({ value: expectedDate });
+        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         await fixture.whenStable();
-        expect(component.property.value).toEqual(expectedDate.toDate());
+        expect(component.property.value).toEqual(expectedDate);
     });
 
     it('should copy value to clipboard on double click', () => {
@@ -236,7 +236,7 @@ describe('CardViewDateItemComponent', () => {
         it('should render the clear icon in case of displayClearAction:true', () => {
             component.editable = true;
             component.property.editable = true;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
@@ -257,7 +257,7 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             component.property.editable = true;
             component.displayClearAction = false;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
@@ -267,7 +267,7 @@ describe('CardViewDateItemComponent', () => {
         it('should remove the property value after a successful clear attempt', async () => {
             component.editable = true;
             component.property.editable = true;
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
             component.onDateClear();
@@ -294,7 +294,7 @@ describe('CardViewDateItemComponent', () => {
             component.editable = true;
             component.property.editable = true;
             component.property.default = 'Jul 10 2017';
-            component.property.value = 'Jul 10 2017';
+            component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
             const property = { ...component.property };
 
@@ -320,8 +320,8 @@ describe('CardViewDateItemComponent', () => {
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.dateFormat = 'M/d/yy, h:mm a';
-        component.property.value = 'Jul 10 2017 00:01:00';
-        const expectedDate = moment('Jul 10 2018', 'MMM DD YY h:m:s');
+        component.property.value = new Date('Jul 10 2017 00:01:00');
+        const expectedDate = new Date('Jul 10 2018');
         fixture.detectChanges();
 
         await fixture.whenStable();
@@ -329,10 +329,10 @@ describe('CardViewDateItemComponent', () => {
         const element = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="card-date-value-fake-key"]');
         expect(element).toBeDefined();
         expect(element.innerText).toEqual('Jul 10, 2017');
-        component.onDateChanged({ value: expectedDate });
+        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         fixture.detectChanges();
-        expect(component.property.value).toEqual(expectedDate.toDate());
+        expect(component.property.value).toEqual(expectedDate);
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {

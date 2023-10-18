@@ -20,18 +20,18 @@ import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, 
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
-import moment, { Moment } from 'moment';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { debounceTime, filter, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { DateAdapter } from '@angular/material/core';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { MatDialog } from '@angular/material/dialog';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
 import { MatSelectChange } from '@angular/material/select';
 import { Environment } from '../../../../common/interface/environment.interface';
+import { isValid } from 'date-fns';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -142,7 +142,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected appsProcessCloudService = inject(AppsProcessCloudService);
     protected dialog = inject(MatDialog);
     protected formBuilder = inject(UntypedFormBuilder);
-    protected dateAdapter = inject<DateAdapter<Moment>>(DateAdapter);
+    protected dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
     ngOnInit() {
         this.userPreferencesService
@@ -283,13 +283,20 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return this.editTaskFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: string | Moment, dateProperty: TaskFilterProperties) {
+    onDateChanged(newDateValue: string | Date, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            const momentDate = moment(newDateValue, DATE_FORMAT, true);
+            let date: Date;
+
+            if (typeof newDateValue === 'string') {
+                date = DateFnsUtils.parseDate(newDateValue, DATE_FORMAT);
+            } else {
+                date = newDateValue;
+            }
+
             const controller = this.getPropertyController(dateProperty);
 
-            if (momentDate.isValid()) {
-                controller.setValue(momentDate.toISOString(true));
+            if (isValid(date)) {
+                controller.setValue(date.toISOString());
                 controller.setErrors(null);
             } else {
                 controller.setErrors({ invalid: true });
