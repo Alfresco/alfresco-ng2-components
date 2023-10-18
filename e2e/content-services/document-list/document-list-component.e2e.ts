@@ -21,7 +21,7 @@ import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, User
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
-import { DateFnsUtils } from '../../../lib/core/src/lib/common/utils/date-fns-utils';
+import { format } from 'date-fns';
 
 describe('Document List Component', () => {
     let uploadedFolder: NodeEntry;
@@ -123,7 +123,7 @@ describe('Document List Component', () => {
             await navigationBarPage.clickLogoutButton();
         });
 
-        it('[C279926] Should only display the user\'s files and folders', async () => {
+        it("[C279926] Should only display the user's files and folders", async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(folderName);
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -150,7 +150,7 @@ describe('Document List Component', () => {
         it('[C279929] Should be able to display the date with date type', async () => {
             await apiService.login(acsUser.username, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
-            const createdDate = DateFnsUtils.formatDate(mediumDateUploadedNode.entry.createdAt, 'll');
+            const createdDate = format(new Date(mediumDateUploadedNode.entry.createdAt), 'PP');
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
@@ -174,7 +174,9 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
-        let fileANode; let fileBNode; let fileCNode;
+        let fileANode: NodeEntry;
+        let fileBNode: NodeEntry;
+        let fileCNode: NodeEntry;
 
         beforeAll(async () => {
             await apiService.loginWithProfile('admin');
@@ -232,7 +234,6 @@ describe('Document List Component', () => {
     });
 
     describe('', () => {
-
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
         });
@@ -351,7 +352,7 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
         });
 
-        let file: any;
+        let file: NodeEntry;
         const viewer = new ViewerPage();
 
         beforeAll(async () => {

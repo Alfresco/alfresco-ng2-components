@@ -18,17 +18,16 @@
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { createApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
-import { SitesApi } from '@alfresco/js-api';
+import { SiteEntry, SitesApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
-
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = createApiService();
     const usersActions = new UsersActions(apiService);
 
-    let privateSite;
+    let privateSite: SiteEntry;
     let acsUser = null;
 
     describe('Permission Message', () => {
@@ -57,7 +56,7 @@ describe('Document List Component', () => {
         it('[C217334] Should display a message when accessing file without permissions', async () => {
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
-            await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
+            await expect(await errorPage.getErrorDescription()).toBe("You're not allowed access to this resource on the server.");
         });
-   });
+    });
 });

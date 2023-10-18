@@ -47,8 +47,6 @@ export class ContentServicesPage {
     createdHeader = $$('div[data-automation-id="auto_header_content_id_createdAt"] > span').first();
     emptyFolder = $('.adf-empty-folder-this-space-is-empty');
     emptyFolderImage = $('.adf-empty-folder-image');
-    gridViewButton = $('button[data-automation-id="document-list-grid-view"]');
-    cardViewContainer = $('div.app-document-list-container div.adf-datatable-card');
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
@@ -58,11 +56,8 @@ export class ContentServicesPage {
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
-    selectAllCheckbox = $$('.adf-checkbox-sr-only').first();
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
-    selectedNodesList = $$('.app-content-service-settings li');
     siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
-    sortingDropdown = new DropdownPage($('mat-select[data-automation-id="grid-view-sorting"]'));
 
     async pressContextMenuActionNamed(actionName: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
@@ -78,7 +73,7 @@ export class ContentServicesPage {
         return this.contentList;
     }
 
-    async checkDeleteIsDisabled(content): Promise<void> {
+    async checkDeleteIsDisabled(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         const disabledDelete = $(`button[data-automation-id='Delete'][disabled='true']`);
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
@@ -349,50 +344,11 @@ export class ContentServicesPage {
         return BrowserActions.getAttribute(iconRow, 'src');
     }
 
-    async checkGridViewButtonIsVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.gridViewButton);
-    }
-
-    async clickGridViewButton(): Promise<void> {
-        await this.checkGridViewButtonIsVisible();
-        await BrowserActions.click(this.gridViewButton);
-    }
-
-    async checkCardViewContainerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cardViewContainer);
-    }
-
-    async getCardElementShowedInPage(): Promise<number> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cardViewContainer);
-        return $$('div.app-document-list-container div.adf-datatable-card div.adf-cell-value img').count();
-    }
-
-    async getDocumentCardIconForElement(elementName: string): Promise<string> {
-        const elementIcon = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`);
-        return BrowserActions.getAttribute(elementIcon, 'src');
-    }
-
-    async checkDocumentCardPropertyIsShowed(elementName: string, propertyName: string): Promise<void> {
-        const elementProperty = $(
-            `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`
-        );
-        await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
-    }
-
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {
         const elementSize = $(
             `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
         );
         return BrowserActions.getText(elementSize);
-    }
-
-    async checkMenuIsShowedForElementIndex(elementIndex: number): Promise<void> {
-        const elementMenu = $(`button[data-automation-id="action_menu_${elementIndex}"]`);
-        await BrowserVisibility.waitUntilElementIsVisible(elementMenu);
-    }
-
-    async selectGridSortingFromDropdown(sortingOption: string): Promise<void> {
-        await this.sortingDropdown.selectDropdownOption(sortingOption);
     }
 
     async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
@@ -407,14 +363,6 @@ export class ContentServicesPage {
     async clickMultiSelectToggle() {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.multiSelectToggle);
-    }
-
-    async multiSelectToggleIsEnabled(): Promise<boolean> {
-        return this.multiSelectToggle.isEnabled();
-    }
-
-    async clickSelectAllCheckbox(): Promise<void> {
-        await BrowserActions.click(this.selectAllCheckbox);
     }
 
     async selectFolder(folderName: string): Promise<void> {
@@ -432,21 +380,5 @@ export class ContentServicesPage {
     async chooseSelectionMode(option: string): Promise<void> {
         const dropdownPage = new DropdownPage(this.selectionModeDropdown);
         await dropdownPage.selectDropdownOption(option);
-    }
-
-    async getItemSelected(): Promise<string> {
-        return BrowserActions.getArrayText(this.selectedNodesList);
-    }
-
-    async selectItemWithCheckbox(itemName: string): Promise<void> {
-        const item = $(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`);
-        await BrowserVisibility.waitUntilElementIsVisible(item);
-        await BrowserActions.click(item);
-    }
-
-    async unSelectItemWithCheckbox(itemName: string): Promise<void> {
-        const item = $(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`);
-        await BrowserVisibility.waitUntilElementIsVisible(item);
-        await BrowserActions.click(item);
     }
 }
