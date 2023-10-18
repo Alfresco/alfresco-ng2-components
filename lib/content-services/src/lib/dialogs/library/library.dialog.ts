@@ -33,7 +33,7 @@ import {
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 
@@ -84,7 +84,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private formBuilder: UntypedFormBuilder,
-        private dialog: MatDialogRef<LibraryDialogComponent>
+        private dialog: MatDialogRef<LibraryDialogComponent>,
+        private notificationService: NotificationService
     ) {
     }
 
@@ -198,6 +199,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
 
     private handleError(error: any): any {
+        let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
+
         try {
             const {
                 error: { statusCode }
@@ -209,6 +212,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                 });
             }
         } catch {
+            this.notificationService.showError(errorMessage);
         }
 
         return error;
