@@ -18,18 +18,101 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IconCellComponent } from './icon-cell.component';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 
 describe('IconCellComponent', () => {
     let component: IconCellComponent;
     let fixture: ComponentFixture<IconCellComponent>;
+    const getIconElement = () => fixture.debugElement.nativeElement.querySelector('mat-icon');
+    const renderAndCheckResult = (value: any, expectedOccurrence: boolean, expectedIconName?: string) => {
+        component.value$.next(value);
+        fixture.detectChanges();
+
+        const iconElement = getIconElement();
+
+        expectedOccurrence ? expect(iconElement).toBeTruthy() : expect(iconElement).toBeFalsy();
+
+        if (expectedIconName || expectedIconName === '') {
+            expect(iconElement.textContent.trim()).toBe(expectedIconName);
+        }
+    };
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [IconCellComponent]
+            imports: [IconCellComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(IconCellComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    describe('Initialization', () => {
+        let rowData: any;
+        let columnData: any;
+        let dataTableAdapter: ObjectDataTableAdapter;
+        let nextSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            rowData = {
+                id: '1',
+                value: 'group'
+            };
+            columnData = { type: 'icon', key: 'value' };
+            dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
+            nextSpy = spyOn(component.value$, 'next');
+        });
+
+        it('should setup inital value', () => {
+            component.column = dataTableAdapter.getColumns()[0];
+            component.row = dataTableAdapter.getRows()[0];
+            component.data = dataTableAdapter;
+
+            component.ngOnInit();
+
+            expect(nextSpy).toHaveBeenCalledOnceWith(rowData.value);
+        });
+
+        it('should NOT setup inital value', () => {
+            component.ngOnInit();
+
+            expect(nextSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('UI', () => {
+        it('should render icon element in case of non-empty string', () => {
+            renderAndCheckResult('group', true, 'group');
+            renderAndCheckResult('groupe', true, 'groupe');
+            renderAndCheckResult('0', true, '0');
+            renderAndCheckResult('true', true, 'true');
+        });
+
+        describe('should NOT render icon element in case of', () => {
+            it('empty string', () => {
+                renderAndCheckResult('', false);
+            });
+
+            it('number', () => {
+                renderAndCheckResult(0, false);
+            });
+
+            it('object', () => {
+                renderAndCheckResult({}, false);
+            });
+
+            it('null', () => {
+                renderAndCheckResult(null, false);
+            });
+
+            it('undefined', () => {
+                renderAndCheckResult(undefined, false);
+            });
+
+            it('NaN', () => {
+                renderAndCheckResult(NaN, false);
+            });
+        });
     });
 });
