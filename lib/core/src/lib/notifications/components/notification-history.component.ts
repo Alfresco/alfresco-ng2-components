@@ -63,7 +63,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
         this.unreadNotifications =
             JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
-                (notification) => notification.read == false
+                (notification) => !notification.read
             ) || [];
         this.badgeHidden = !this.badgeVisibility();
     }
