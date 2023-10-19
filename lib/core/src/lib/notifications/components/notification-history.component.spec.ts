@@ -37,7 +37,7 @@ fdescribe('Notification History Component', () => {
     const openNotification = () => {
         fixture.detectChanges();
         const button = element.querySelector<HTMLButtonElement>('#adf-notification-history-open-button');
-        button.click();
+        button?.click();
         fixture.detectChanges();
     };
 
@@ -87,7 +87,7 @@ fdescribe('Notification History Component', () => {
                 fixture.detectChanges();
                 expect(component.unreadNotifications.length).toBe(1);
                 const markAllAsRead = overlayContainerElement.querySelector<HTMLButtonElement>('#adf-notification-history-mark-as-read');
-                markAllAsRead.click();
+                markAllAsRead?.click();
                 fixture.detectChanges();
                 expect(component.unreadNotifications).toEqual([]);
                 expect(component.unreadNotifications.length).toBe(0);
@@ -125,7 +125,7 @@ fdescribe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
-                notification.click();
+                notification?.click();
                 expect(callBackSpy).toHaveBeenCalled();
                 done();
             });
@@ -186,39 +186,39 @@ fdescribe('Notification History Component', () => {
     });
 
     it('should return true when there are unread notifications', () => {
-    
-        component.unreadNotifications = [{
-            "type": NOTIFICATION_TYPE.INFO,
-            "icon": "info",
-            "datetime": new Date(),
-            "initiator": { "key": "*", "displayName": "SYSTEM" },
-            "messages": ["Moved 1 item."],
-            "read": false
-          }, {
-            "type": NOTIFICATION_TYPE.INFO,
-            "icon": "info",
-            "datetime": new Date(),
-            "initiator": { "key": "*", "displayName": "SYSTEM" },
-            "messages": ["Copied 1 item."],
-            "read": false
-          }];
-    
-        const result = component.badge();
+        component.unreadNotifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: false
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: false
+            }
+        ];
 
-        const matIconDebugElement = fixture.debugElement.query(By.css('[matBadge]'));
-        const matIconElement = matIconDebugElement.nativeElement;
+        const result = component.badgeVisibility();
+        const matIconDebugElement = fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
+
         expect(result).toBe(true);
-        expect(matIconElement.textContent).toContain('notifications');
-      });
-    
-      it('should return false when there are no unread notifications', () => {
+        expect(matIconDebugElement.textContent).toContain('notifications');
+    });
+
+    it('should return false when there are no unread notifications', () => {
         component.unreadNotifications = [];
-    
-        const result = component.badge();
-        const matBadgeDebugElement = fixture.debugElement.query(By.css('[matBadge]'));
-        const matIconElement = matBadgeDebugElement.nativeElement;
+
+        const result = component.badgeVisibility();
+        const matBadgeDebugElement = fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
 
         expect(result).toBe(false);
-        expect(matIconElement.textContent).toContain('');
-      });
+        expect(matBadgeDebugElement.textContent).toContain('');
+    });
 });

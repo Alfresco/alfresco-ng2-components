@@ -17,9 +17,7 @@
 
 import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { NotificationModel, 
-    //NOTIFICATION_TYPE 
-} from '../models/notification.model';
+import { NotificationModel } from '../models/notification.model';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -55,28 +53,19 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
     paginatedNotifications: NotificationModel[] = [];
+    unreadNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
     badgeHidden: boolean;
-    unreadNotifications: NotificationModel[] = [];
 
-    constructor(
-        private notificationService: NotificationService,
-        public storageService: StorageService,
-        public cd: ChangeDetectorRef) {
-
-    }
+    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
-
-        this.unreadNotifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter( (notification) => notification.read == false ) || [];
-
-        
-
-        //this.badgeHidden = this.badge() ? this.badgeHidden = false : this.badgeHidden = true
-        this.badgeHidden = !this.badge();
-
-        console.log('HTML CHECK', !this.notifications.length || this.badgeHidden);
+        this.unreadNotifications =
+            JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
+                (notification) => notification.read == false
+            ) || [];
+        this.badgeHidden = !this.badgeVisibility();
     }
 
     ngAfterViewInit(): void {
@@ -94,10 +83,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     addNewNotification(notification: NotificationModel) {
-        //this.badgeHidden = this.badge() ? this.badgeHidden = false : this.badgeHidden = true
-        this.badgeHidden = !this.badge();
-        console.log('ADD CHECK', !this.unreadNotifications.length || this.badgeHidden);
-
+        this.badgeHidden = !this.badgeVisibility();
         this.unreadNotifications.unshift(notification);
 
         if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
@@ -109,17 +95,12 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     saveNotifications() {
-        // this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications.filter((notification) =>
-        //     notification.type !== NOTIFICATION_TYPE.RECURSIVE
-        // )));
-        
-        this.unreadNotifications.forEach( notification => {
-            this.notifications.push(notification)
+        this.unreadNotifications.forEach((notification) => {
+            this.notifications.push(notification);
         });
 
         this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
-        this.badgeHidden = !this.badge();
-
+        this.badgeHidden = !this.badgeVisibility();
     }
 
     onMenuOpened() {
@@ -137,26 +118,14 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     markAsRead() {
-
-        // this.unreadNotifications.forEach( notification => {
-        //     this.notifications.push(notification)
-        // });
-
-        this.unreadNotifications = []
-        
-        this.notifications.forEach( notification => {
+        this.unreadNotifications = [];
+        this.notifications.forEach((notification) => {
             notification['read'] = true;
         });
 
-        this.badgeHidden = this.badge() ? this.badgeHidden = false : this.badgeHidden = true
-        console.log('MARK AS READ CHECK', !this.notifications.length || this.badgeHidden);
-
+        this.badgeHidden = !this.badgeVisibility();
         this.storageService.setItem('notification-history', JSON.stringify(this.notifications));
-
-
-        //this.notifications = [];
-        //this.paginatedNotifications = [];
-        //this.storageService.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
+        this.paginatedNotifications = [];
         this.createPagination();
         this.trigger.closeMenu();
     }
@@ -188,18 +157,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
     }
 
-    // badge (): boolean {
-    //     //this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
-    //     const arr = this.notifications.filter( (notif) => notif.read == false)
-    //     console.log('badge', arr, arr.length > 0)
-    //     return arr.length > 0; 
-    // }
-
-    // badge(): boolean {
-    //     return this.notifications.some(notif => !notif.read);
-    // }
-
-    badge(): boolean {
-        return this.unreadNotifications.length > 0
+    badgeVisibility(): boolean {
+        return this.unreadNotifications.length > 0;
     }
 }
