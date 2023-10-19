@@ -779,6 +779,37 @@ describe('ContentMetadataComponent', () => {
             const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
             expect(basicPropertiesGroup).toBeDefined();
         });
+
+        it('should revert changes for general info panel on cancel', () => {
+            const spy = spyOn(component as any, 'getProperties').and.returnValue(of(expectedNode));
+            const buttonType: ButtonType = ButtonType.GeneralInfo;
+            component.revertPanelChanges(expectedNode, buttonType);            
+            expect(spy).toHaveBeenCalledWith(expectedNode);
+        });
+
+        it('should revert changes for getGroupedProperties panel on cancel', () => {
+            spyOn(contentMetadataService, 'getGroupedProperties');
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+            const buttonType: ButtonType = ButtonType.Group;
+            component.revertPanelChanges(expectedNode, buttonType);
+            expect(contentMetadataService.getGroupedProperties).toHaveBeenCalledWith(expectedNode, 'custom-preset');
+        });
+
+        it('should revert changes for categories panel on cancel', () => {
+            const spy = spyOn(component as any, 'loadCategoriesForNode');
+            const buttonType: ButtonType = ButtonType.Categories;
+            component.displayCategories = true;
+            component.revertPanelChanges(expectedNode, buttonType);            
+            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+        });
+
+        it('should revert changes for tags panel on cancel', () => {
+            const spy = spyOn(component as any, 'loadTagsForNode');
+            const buttonType: ButtonType = ButtonType.Tags;
+            component.displayTags = true;            
+            component.revertPanelChanges(expectedNode, buttonType);
+            expect(spy).toHaveBeenCalledWith(expectedNode.id);
+        });        
     });
 
     describe('Properties displaying', () => {

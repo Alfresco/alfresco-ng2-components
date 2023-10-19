@@ -392,11 +392,33 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.categoryControlVisible = false;
     }
 
+    revertPanelChanges(node: Node, buttonType?: ButtonType) {
+        if (node) {
+            if(ButtonType.GeneralInfo === buttonType) {
+                console.log('inside general');
+                this.basicProperties$ = this.getProperties(node);
+            }
+            if(ButtonType.Group === buttonType) {
+                this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+            }
+            if (this.displayTags && ButtonType.Tags === buttonType) {
+                this.loadTagsForNode(node.id);
+            }
+            if (this.displayCategories && ButtonType.Categories === buttonType) {
+                this.loadCategoriesForNode(node.id);
+                if (!this.node.aspectNames.includes('generalclassifiable')) {
+                    this.categories = [];
+                    this.classifiableChangedSubject.next();
+                }
+            }
+        }
+    }
+
     cancelChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
         event.stopPropagation();
         this.toggleEditMode(buttonType, group);
         this.revertChanges();
-        this.loadProperties(this.node);
+        this.revertPanelChanges(this.node, buttonType);
     }
 
     // Returns the editing state of the panel
