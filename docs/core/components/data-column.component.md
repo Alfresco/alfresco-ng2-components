@@ -59,7 +59,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', and 'json'. |
+| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', 'json' and 'amount'. |
 | order | `number` |  | Sets position of column. |
 | currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
 
@@ -103,7 +103,7 @@ The `type` input allows us to specify the type of hosted values for a given colu
 - `fileSize` - TODO
 - `location` - TODO
 - `json` - TODO
-- `currency` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with `currencyConfig` (TODO: Add ref). The default setup use **USD** `code` with a **symbol** as a `display` option. Example output: $10.26 (for number 10.26)
+- `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config).
 
 ## Details
 
