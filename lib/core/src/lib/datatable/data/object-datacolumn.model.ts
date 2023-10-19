@@ -16,7 +16,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { DataColumnType } from '@alfresco/adf-extensions'
+import { DataColumnType } from '@alfresco/adf-extensions';
 import { CurrencyConfig, DataColumn } from './data-column.model';
 
 // Simple implementation of the DataColumn interface.

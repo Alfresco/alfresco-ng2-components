@@ -16,7 +16,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { DataColumnType } from '@alfresco/adf-extensions'
+import { DataColumnType } from '@alfresco/adf-extensions';
 
 export interface DataColumn<T = unknown> {
     id?: string;
