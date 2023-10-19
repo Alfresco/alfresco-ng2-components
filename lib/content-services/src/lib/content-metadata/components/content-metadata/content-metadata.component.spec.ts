@@ -783,7 +783,7 @@ describe('ContentMetadataComponent', () => {
         it('should revert changes for general info panel on cancel', () => {
             const spy = spyOn(component as any, 'getProperties').and.returnValue(of(expectedNode));
             const buttonType: ButtonType = ButtonType.GeneralInfo;
-            component.revertPanelChanges(expectedNode, buttonType);            
+            component.revertPanelChanges(expectedNode, buttonType);
             expect(spy).toHaveBeenCalledWith(expectedNode);
         });
 
@@ -799,17 +799,17 @@ describe('ContentMetadataComponent', () => {
             const spy = spyOn(component as any, 'loadCategoriesForNode');
             const buttonType: ButtonType = ButtonType.Categories;
             component.displayCategories = true;
-            component.revertPanelChanges(expectedNode, buttonType);            
+            component.revertPanelChanges(expectedNode, buttonType);
             expect(spy).toHaveBeenCalledWith(expectedNode.id);
         });
 
         it('should revert changes for tags panel on cancel', () => {
             const spy = spyOn(component as any, 'loadTagsForNode');
             const buttonType: ButtonType = ButtonType.Tags;
-            component.displayTags = true;            
+            component.displayTags = true;
             component.revertPanelChanges(expectedNode, buttonType);
             expect(spy).toHaveBeenCalledWith(expectedNode.id);
-        });        
+        });
     });
 
     describe('Properties displaying', () => {

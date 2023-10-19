@@ -395,7 +395,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     revertPanelChanges(node: Node, buttonType?: ButtonType) {
         if (node) {
             if(ButtonType.GeneralInfo === buttonType) {
-                console.log('inside general');
                 this.basicProperties$ = this.getProperties(node);
             }
             if(ButtonType.Group === buttonType) {
