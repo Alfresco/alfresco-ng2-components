@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-import { DataColumnType } from '../public-api';
+import { DataColumnType } from '../data/data-column.model';
 
 @Component({
     selector: 'data-column',
