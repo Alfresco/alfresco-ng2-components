@@ -16,21 +16,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-
-export interface DataColumnTypes {
-    text: string;
-    image: string;
-    date: string;
-    json: string;
-    icon: string;
-    fileSize: string;
-    location: string;
-    // eslint-disable-next-line id-blacklist
-    boolean: string;
-    amount: string;
-}
-
-export type DataColumnType = keyof DataColumnTypes;
+import { DataColumnType } from '@alfresco/adf-extensions';
 
 export interface DataColumn<T = unknown> {
     id?: string;

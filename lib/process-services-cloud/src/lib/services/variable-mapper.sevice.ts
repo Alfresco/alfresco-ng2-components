@@ -16,9 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { DataColumn, DataColumnType } from '@alfresco/adf-core';
+import { DataColumn } from '@alfresco/adf-core';
 import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 import { ProcessInstanceVariable, WithVariablesMap } from '../models/process-instance-variable.model';
+import { DataColumnType } from '@alfresco/adf-extensions';
 
 @Injectable({ providedIn: 'root' })
 export class VariableMapperService {

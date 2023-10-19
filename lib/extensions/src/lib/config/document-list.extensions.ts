@@ -17,9 +17,24 @@
 
 import { ExtensionElement } from './extension-element';
 
+export interface DataColumnTypes {
+    text: string;
+    image: string;
+    date: string;
+    json: string;
+    icon: string;
+    fileSize: string;
+    location: string;
+    // eslint-disable-next-line id-blacklist
+    boolean: string;
+    amount: string;
+}
+
+export type DataColumnType = keyof DataColumnTypes;
+
 export interface DocumentListPresetRef extends ExtensionElement {
   key: string;
-  type: string; // text|image|date
+  type: DataColumnType;
   title?: string;
   format?: string;
   class?: string;
