@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
+import { DataColumnType } from '@alfresco/adf-core';
 import { ExtensionElement } from './extension-element';
 
 export interface DocumentListPresetRef extends ExtensionElement {
   key: string;
-  type: string; // text|image|date
+  type: DataColumnType;
   title?: string;
   format?: string;
   class?: string;
