@@ -7,7 +7,7 @@
             id="adf-notification-history-open-button"
             (menuOpened)="onMenuOpened()">
         <mat-icon matBadge="&#8288;"
-                  [matBadgeHidden]="!notifications.length"
+                  [matBadgeHidden]="!unreadNotifications.length || badgeHidden"
                   matBadgeColor="accent"
                   matBadgeSize="small">notifications</mat-icon>
     </button>
@@ -21,7 +21,7 @@
              (click)="$event.stopPropagation()">
             <div mat-subheader role="menuitem">
                 <span>{{ 'NOTIFICATIONS.TITLE' | translate }}</span>
-                <button *ngIf="notifications.length"
+                <button *ngIf="unreadNotifications.length"
                         id="adf-notification-history-mark-as-read"
                         mat-icon-button
                         title="{{ 'NOTIFICATIONS.MARK_AS_READ' | translate }}"
@@ -33,7 +33,7 @@
             <mat-divider></mat-divider>
 
             <mat-list role="menuitem">
-                <ng-container *ngIf="notifications.length; else empty_list_template">
+                <ng-container *ngIf="unreadNotifications.length; else empty_list_template">
                     <mat-list-item *ngFor="let notification of paginatedNotifications"
                                    class="adf-notification-history-menu-item"
                                    (click)="onNotificationClick(notification)">

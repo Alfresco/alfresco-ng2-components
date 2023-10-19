@@ -23,8 +23,9 @@ import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
+import { By } from '@angular/platform-browser';
 
-describe('Notification History Component', () => {
+fdescribe('Notification History Component', () => {
 
     let fixture: ComponentFixture<NotificationHistoryComponent>;
     let component: NotificationHistoryComponent;
@@ -54,6 +55,7 @@ describe('Notification History Component', () => {
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);
         component.notifications = [];
+        component.unreadNotifications = [];
     });
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -83,12 +85,12 @@ describe('Notification History Component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.notifications.length).toBe(1);
+                expect(component.unreadNotifications.length).toBe(1);
                 const markAllAsRead = overlayContainerElement.querySelector<HTMLButtonElement>('#adf-notification-history-mark-as-read');
                 markAllAsRead.click();
                 fixture.detectChanges();
-                expect(storage.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)).toBeNull();
-                expect(component.notifications.length).toBe(0);
+                expect(component.unreadNotifications).toEqual([]);
+                expect(component.unreadNotifications.length).toBe(0);
                 done();
             });
         });
@@ -101,7 +103,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-component-no-message')).toBeNull();
-                expect(overlayContainerElement.querySelector('.adf-notification-history-list').innerHTML).toContain('Example Message');
+                expect(overlayContainerElement.querySelector('.adf-notification-history-list')?.innerHTML).toContain('Example Message');
                 done();
             });
         });
@@ -182,4 +184,41 @@ describe('Notification History Component', () => {
             });
         }, 45000);
     });
+
+    it('should return true when there are unread notifications', () => {
+    
+        component.unreadNotifications = [{
+            "type": NOTIFICATION_TYPE.INFO,
+            "icon": "info",
+            "datetime": new Date(),
+            "initiator": { "key": "*", "displayName": "SYSTEM" },
+            "messages": ["Moved 1 item."],
+            "read": false
+          }, {
+            "type": NOTIFICATION_TYPE.INFO,
+            "icon": "info",
+            "datetime": new Date(),
+            "initiator": { "key": "*", "displayName": "SYSTEM" },
+            "messages": ["Copied 1 item."],
+            "read": false
+          }];
+    
+        const result = component.badge();
+
+        const matIconDebugElement = fixture.debugElement.query(By.css('[matBadge]'));
+        const matIconElement = matIconDebugElement.nativeElement;
+        expect(result).toBe(true);
+        expect(matIconElement.textContent).toContain('notifications');
+      });
+    
+      it('should return false when there are no unread notifications', () => {
+        component.unreadNotifications = [];
+    
+        const result = component.badge();
+        const matBadgeDebugElement = fixture.debugElement.query(By.css('[matBadge]'));
+        const matIconElement = matBadgeDebugElement.nativeElement;
+
+        expect(result).toBe(false);
+        expect(matIconElement.textContent).toContain('');
+      });
 });

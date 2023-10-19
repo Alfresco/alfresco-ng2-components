@@ -31,7 +31,8 @@ export const info = (messages: string | string[], initiator: NotificationInitiat
     icon: 'info',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages)
+    messages: [].concat(messages),
+    read: false
 });
 
 export const warning = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
@@ -39,7 +40,8 @@ export const warning = (messages: string | string[], initiator: NotificationInit
     icon: 'warning',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages)
+    messages: [].concat(messages),
+    read: false
 });
 
 export const error = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
@@ -47,5 +49,12 @@ export const error = (messages: string | string[], initiator: NotificationInitia
     icon: 'error',
     datetime: new Date(),
     initiator,
-    messages: [].concat(messages)
+    messages: [].concat(messages),
+    read: false
 });
+
+// export const getId() => ({
+//     var randomStr = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+//     var id = randomStr + Date.now();
+//     return id
+// })
