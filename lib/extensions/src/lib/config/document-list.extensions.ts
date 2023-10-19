@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable id-blacklist */
+
 import { ExtensionElement } from './extension-element';
 
 export interface DataColumnTypes {
@@ -25,9 +27,9 @@ export interface DataColumnTypes {
     icon: string;
     fileSize: string;
     location: string;
-    // eslint-disable-next-line id-blacklist
     boolean: string;
     amount: string;
+    number: string;
 }
 
 export type DataColumnType = keyof DataColumnTypes;
