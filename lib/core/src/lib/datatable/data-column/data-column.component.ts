@@ -18,7 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-import { DataColumnType } from '../data/data-column.model';
+import { DataColumnType } from '@alfresco/adf-extensions'
 
 @Component({
     selector: 'data-column',
