@@ -52,9 +52,3 @@ export const error = (messages: string | string[], initiator: NotificationInitia
     messages: [].concat(messages),
     read: false
 });
-
-// export const getId() => ({
-//     var randomStr = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-//     var id = randomStr + Date.now();
-//     return id
-// })

@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
 import { By } from '@angular/platform-browser';
 
-fdescribe('Notification History Component', () => {
+describe('Notification History Component', () => {
 
     let fixture: ComponentFixture<NotificationHistoryComponent>;
     let component: NotificationHistoryComponent;
