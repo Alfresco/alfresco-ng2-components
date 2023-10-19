@@ -1207,6 +1207,17 @@ describe('DataTable', () => {
         expect(rows[1].getValue('is_available')).toBe('true');
         expect(rows[2].getValue('is_available')).toBe('true');
     });
+
+    it('should be able to display column of type amount', () => {
+        dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
+
+        fixture.detectChanges();
+        const rows = dataTable.data.getRows();
+
+        expect(rows[0].getValue('car_price')).toBe(599);
+        expect(rows[1].getValue('car_price')).toBe(15000.12345);
+        expect(rows[2].getValue('car_price')).toBe(10000);
+    });
 });
 
 describe('Accesibility', () => {

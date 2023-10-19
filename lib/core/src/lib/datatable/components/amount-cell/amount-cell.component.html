@@ -1,0 +1,10 @@
+<ng-container *ngIf="value$ | async as amount">
+    <span [title]="amount">
+        {{ amount | currency:
+            (currencyConfig?.code || defaultCurrencyConfig.code):
+            (currencyConfig?.display || defaultCurrencyConfig.display):
+            (currencyConfig?.digitsInfo || defaultCurrencyConfig.digitsInfo):
+            (currencyConfig?.locale || defaultCurrencyConfig.locale)
+        }}
+    </span>
+</ng-container>

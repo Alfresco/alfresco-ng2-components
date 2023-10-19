@@ -16,7 +16,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { DataColumn, DataColumnType } from './data-column.model';
+import { CurrencyConfig, DataColumn, DataColumnType } from './data-column.model';
 
 // Simple implementation of the DataColumn interface.
 export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
@@ -38,6 +38,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     customData?: T;
     width?: number;
     order?: number;
+    currencyConfig?: CurrencyConfig;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -58,5 +59,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.customData = input.customData;
         this.width = input.width;
         this.order = input.order;
+        this.currencyConfig = input.currencyConfig;
     }
 }

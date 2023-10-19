@@ -27,6 +27,7 @@ export interface DataColumnTypes {
     location: string;
     // eslint-disable-next-line id-blacklist
     boolean: string;
+    amount: string;
 }
 
 export type DataColumnType = keyof DataColumnTypes;
@@ -52,4 +53,12 @@ export interface DataColumn<T = unknown> {
     width?: number;
     customData?: T;
     order?: number;
+    currencyConfig?: CurrencyConfig;
+}
+
+export interface CurrencyConfig {
+    code?: string;
+    display?: string;
+    digitsInfo?: string;
+    locale?: string;
 }

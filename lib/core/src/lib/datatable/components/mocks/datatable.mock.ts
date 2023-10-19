@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { DataColumn } from '../../data/data-column.model';
+
 export const mockCarsData: any = [
     {
         car_id: 1,
@@ -48,7 +50,7 @@ export const mockCarsData: any = [
     }
 ];
 
-export const mockCarsSchemaDefinition: any[] = [
+export const mockCarsSchemaDefinition: DataColumn[] = [
     {
         type: 'icon',
         key: 'icon',
