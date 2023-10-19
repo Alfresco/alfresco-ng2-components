@@ -25,6 +25,8 @@ export interface DataColumnTypes {
     icon: string;
     fileSize: string;
     location: string;
+    // eslint-disable-next-line id-blacklist
+    boolean: string;
 }
 
 export type DataColumnType = keyof DataColumnTypes;

@@ -18,6 +18,7 @@
  /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
+import { DataColumnType } from '../public-api';
 
 @Component({
     selector: 'data-column',
@@ -41,11 +42,11 @@ export class DataColumnComponent implements OnInit {
     customData: any;
 
     /**
-     * Value type for the column. Possible settings are 'text', 'image',
-     * 'date', 'fileSize', 'location', and 'json'.
+     * Value type for the column. Possible settings are defined via DataColumnType.
+     * Example types: `text`, `date`, `image`, `icon`, `boolean`.
      */
     @Input()
-    type: string = 'text';
+    type: DataColumnType = 'text';
 
     /** Value format (if supported by the parent component), for example format of the date. */
     @Input()

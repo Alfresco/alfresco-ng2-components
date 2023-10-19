@@ -20,27 +20,31 @@ import { getProcessInstanceVariableMock } from '../mock/process-instance-variabl
 import { ProcessListDataColumnCustomData } from '../models/data-column-custom-data';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { VariableMapperService } from './variable-mapper.sevice';
-import { getDataColumnMock } from '@alfresco/adf-core';
+import { DataColumn, getDataColumnMock } from '@alfresco/adf-core';
 
 describe('VariableMapperService', () => {
     let service: VariableMapperService;
+    let variable: ProcessInstanceVariable;
+    let column: DataColumn<ProcessListDataColumnCustomData>;
+    let objectWithVariables: { variables: ProcessInstanceVariable[] };
+    const checkTypeMapping = (processVariableType: string, expectedColumnType: string) => {
+        variable.type = processVariableType;
+
+        const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
+
+        expect(viewModel[0].variablesMap[column.title].type).toEqual(expectedColumnType);
+    };
 
     beforeEach(() => {
         service = new VariableMapperService();
-    });
 
-    it('should map variables by column title', () => {
-        const variable: ProcessInstanceVariable = getProcessInstanceVariableMock({
+        variable = getProcessInstanceVariableMock({
             processDefinitionKey: 'processKey',
             name: 'variableName'
         });
 
-        const objectWithVariables = {
-            variables: [variable]
-        };
-
-        const column = getDataColumnMock<ProcessListDataColumnCustomData>({
-            title: 'column name',
+        column = getDataColumnMock<ProcessListDataColumnCustomData>({
+            title: 'Column Name',
             key: '',
             customData: {
                 variableDefinitionsPayload: ['processKey/variableName'],
@@ -49,8 +53,12 @@ describe('VariableMapperService', () => {
             }
         });
 
-        const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
+        objectWithVariables = {
+            variables: [variable]
+        };
+    });
 
+    it('should map variables by column title', () => {
         const expectedObjectWithVariableMap = {
             ...objectWithVariables,
             variablesMap: {
@@ -58,6 +66,34 @@ describe('VariableMapperService', () => {
             }
         };
 
+        const viewModel = service.mapVariablesByColumnTitle([objectWithVariables], [column]);
+
         expect(viewModel).toEqual([expectedObjectWithVariableMap]);
+    });
+
+    describe('should map correct column type according to process variable type in case of', () => {
+        it('date type', () => {
+            checkTypeMapping('boolean', 'boolean');
+        });
+
+        it('integer type', () => {
+            checkTypeMapping('integer', 'text');
+        });
+
+        it('string type', () => {
+            checkTypeMapping('string', 'text');
+        });
+
+        it('date type', () => {
+            checkTypeMapping('date', 'date');
+        });
+
+        it('datetime type', () => {
+            checkTypeMapping('datetime', 'date');
+        });
+
+        it('other types', () => {
+            checkTypeMapping('custom', 'text');
+        });
     });
 });

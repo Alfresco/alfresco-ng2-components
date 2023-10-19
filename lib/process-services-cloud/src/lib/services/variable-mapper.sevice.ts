@@ -78,6 +78,7 @@ export class VariableMapperService {
     private mapProcessVariableTypes(variableType: string): DataColumnType {
         switch (variableType) {
             case 'boolean':
+                return 'boolean';
             case 'integer':
             case 'string':
                 return 'text';
