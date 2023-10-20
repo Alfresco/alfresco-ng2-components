@@ -74,7 +74,6 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         ResizableModule,
         DataColumnModule,
         BooleanCellComponent,
-        DataColumnModule,
         AmountCellComponent,
         NumberCellComponent
     ],
