@@ -213,7 +213,7 @@ describe('Notification History Component', () => {
     });
 
     it('should return false when there are no unread notifications', () => {
-        component.unreadNotifications = [
+        component.notifications = [
             {
                 type: NOTIFICATION_TYPE.INFO,
                 icon: 'info',
