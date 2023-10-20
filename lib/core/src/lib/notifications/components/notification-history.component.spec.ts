@@ -213,11 +213,30 @@ describe('Notification History Component', () => {
     });
 
     it('should return false when there are no unread notifications', () => {
-        component.unreadNotifications = [];
+        component.unreadNotifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: true
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: true
+            }
+        ];
+        fixture.detectChanges();
 
         const result = component.badgeVisibility();
         const matBadgeDebugElement = fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
 
+        expect(component.unreadNotifications).toEqual([]);
         expect(result).toBe(false);
         expect(matBadgeDebugElement.textContent).toContain('');
     });

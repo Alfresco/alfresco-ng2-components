@@ -63,7 +63,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
         this.unreadNotifications =
             JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
-                (notification) => !notification.read
+                (notification: NotificationModel) => !notification.read
             ) || [];
         this.badgeHidden = !this.badgeVisibility();
     }
@@ -95,7 +95,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     saveNotifications() {
-        this.unreadNotifications.forEach((notification) => {
+        this.unreadNotifications.forEach((notification: NotificationModel) => {
             this.notifications.push(notification);
         });
 
@@ -119,7 +119,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
 
     markAsRead() {
         this.unreadNotifications = [];
-        this.notifications.forEach((notification) => {
+        this.notifications.forEach((notification: NotificationModel) => {
             notification['read'] = true;
         });
 
