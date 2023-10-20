@@ -37,7 +37,6 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <mat-divider class="adf-mat-divider"></mat-divider>
             <adf-card-view
                 (keydown)="keyDown($event)"
                 [properties]="basicProperties$ | async"
@@ -87,7 +86,6 @@
                         </div>
                         </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <mat-divider class="adf-mat-divider"></mat-divider>
                 <div *ngIf="!editableTags" class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
@@ -144,7 +142,6 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <mat-divider class="adf-mat-divider"></mat-divider>
                 <div *ngIf="!editableCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
@@ -210,7 +207,6 @@
                             </div>
                         </adf-content-metadata-header>
                     </mat-expansion-panel-header>
-                    <mat-divider class="adf-mat-divider"></mat-divider>
                     <div *ngIf="!showGroup(group) && !group.editable" class="adf-metadata-no-item-added">
                         {{ 'METADATA.BASIC.NO_ITEMS_MESSAGE' | translate: { groupTitle: group.title } }}
                     </div>

@@ -2,17 +2,26 @@ $panel-properties-height: 56px !default;
 
 .adf {
     &-metadata-properties {
+        .mat-expansion-panel:not([class*='mat-elevation-z']) {
+            box-shadow: none;
+            border: 1px solid var(--theme-metadata-property-panel-border-color);
+            border-radius: 12px;
+            margin: 12px;
+        }
+
         mat-expansion-panel-header {
             height: $panel-properties-height;
             padding: 0 12px;
-            border-radius: 12px;
+            border-radius: 12px 12px 0 0;
 
             &.mat-expanded {
                 height: $panel-properties-height;
+                border-bottom: 1px solid var(--theme-metadata-property-panel-border-color);
             }
 
             .mat-content {
                 display: contents;
+                margin-right: 0;
             }
 
             .adf-metadata-properties-title {
@@ -20,20 +29,6 @@ $panel-properties-height: 56px !default;
                 font-size: 15px;
                 padding-left: 12px;
             }
-
-            .adf-metadata-properties-group-title {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 80px;
-            }
-        }
-
-        .mat-expansion-panel:not([class*='mat-elevation-z']) {
-            box-shadow: none;
-            border: 1px solid var(--theme-metadata-property-panel-border-color);
-            border-radius: 12px;
-            margin: 12px;
         }
 
         .mat-expansion-panel-content {
@@ -49,10 +44,6 @@ $panel-properties-height: 56px !default;
 
         .adf-edit-icon-buttons {
             color: var(--adf-theme-foreground-text-color-054);
-        }
-
-        .mat-content.mat-content-hide-toggle {
-            margin-right: 0;
         }
 
         .adf-metadata-properties-tag {
@@ -128,18 +119,6 @@ $panel-properties-height: 56px !default;
                 visibility: hidden;
             }
         }
-    }
-}
-
-.adf-info-drawer-layout-content .adf-content-metadata-card .adf-metadata-properties .mat-expansion-panel {
-    border: 1px solid var(--theme-metadata-property-panel-border-color);
-    border-radius: 12px;
-    margin-bottom: 12px;
-}
-
-.adf-content-metadata-card {
-    .mat-card {
-        box-shadow: none;
     }
 }
 
