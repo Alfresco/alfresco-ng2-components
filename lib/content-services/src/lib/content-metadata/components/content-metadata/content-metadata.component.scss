@@ -37,11 +37,6 @@ $panel-properties-height: 56px !default;
             }
         }
 
-        .adf-mat-divider {
-            margin-left: -24px;
-            margin-right: -24px;
-        }
-
         .adf-edit-icon-buttons {
             color: var(--adf-theme-foreground-text-color-054);
         }
@@ -100,20 +95,12 @@ $panel-properties-height: 56px !default;
     }
 
     &-metadata-categories-header {
-        display: flex;
-        flex-direction: column;
-        padding-right: 24px;
-
         .adf-categories-button {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 15px;
             height: $panel-properties-height;
-
-            button {
-                margin-right: -14px;
-            }
 
             [hidden] {
                 visibility: hidden;

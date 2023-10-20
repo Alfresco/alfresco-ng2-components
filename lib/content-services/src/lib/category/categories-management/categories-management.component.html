@@ -3,12 +3,12 @@
          class="adf-category-name-field">
         <mat-form-field  appearance="fill">
             <input #categoryNameInput
-               matInput 
+               matInput
                autocomplete="off"
                [formControl]="categoryNameControl"
                (keyup.enter)="addCategory()"
                placeholder="{{'CATEGORIES_MANAGEMENT.CATEGORIES_SEARCH_PLACEHOLDER' | translate }}"
-               adf-auto-focus 
+               adf-auto-focus
                />
             <mat-error *ngIf="categoryNameControl.invalid">{{ categoryNameErrorMessageKey | translate }}</mat-error>
         </mat-form-field>
@@ -22,7 +22,6 @@
             <button
                 data-automation-id="categories-remove-category-button"
                 mat-icon-button
-                [class.adf-btn-padded]="!isCRUDMode"
                 (click)="removeCategory(category)"
                 [attr.title]="removeCategoryTitle | translate"
                 [disabled]="disableRemoval">
