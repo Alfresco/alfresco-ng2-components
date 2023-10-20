@@ -32,7 +32,6 @@ import {
     AppConfigService,
     CardViewBaseItemModel,
     CardViewItem,
-    LogService,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -213,7 +212,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private contentMetadataService: ContentMetadataService,
         private cardViewContentUpdateService: CardViewContentUpdateService,
         private nodesApiService: NodesApiService,
-        private logService: LogService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
         private tagService: TagService,
@@ -264,8 +262,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     protected handleUpdateError(error: Error) {
-        this.logService.error(error);
-
         let statusCode = 0;
 
         try {
