@@ -253,10 +253,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         this.cardViewContentUpdateService.updatedAspect$
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
-            .subscribe((node) => {
-                this.node.aspectNames = node.aspectNames;
-                this.loadProperties(node);
-            });
+            .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
         this.hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
