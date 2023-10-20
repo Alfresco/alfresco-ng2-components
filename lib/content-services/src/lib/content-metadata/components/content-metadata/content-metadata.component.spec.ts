@@ -467,7 +467,7 @@ describe('ContentMetadataComponent', () => {
         it('should toggle Tags editing mode', () => {
             component.editableTags = false;
             component.toggleEdit(mockEvent, mockGroup, ButtonType.Tags);
-            expect(component.isTagPanelVisible).toBe(component.editableTags);
+            expect(component.isTagPanelExpanded).toBe(component.editableTags);
             expect(component.tagNameControlVisible).toBe(true);
             expect(component.editableCategories).toBe(false);
             expect(component.editableGroup.editable).toBe(false);
@@ -476,7 +476,7 @@ describe('ContentMetadataComponent', () => {
         it('should toggle Categories editing mode', () => {
             component.editableCategories = false;
             component.toggleEdit(mockEvent, mockGroup, ButtonType.Categories);
-            expect(component.isCategoriesPanelVisible).toBe(component.editableCategories);
+            expect(component.isCategoriesPanelExpanded).toBe(component.editableCategories);
             expect(component.categoryControlVisible).toBe(true);
             expect(component.editableTags).toBe(false);
             expect(component.editableGroup.editable).toBe(false);

@@ -16,7 +16,6 @@
  */
 
 import {
-    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -140,7 +139,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Emitted when content's editable state is changed.
      *
      * @event editableChange
-     * @type {EventEmitter<boolean>}
      */
     @Output()
     editableChange = new EventEmitter<boolean>();
@@ -149,7 +147,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Emitted when content's editableTags state is changed.
      *
      * @event editableTagsChange
-     * @type {EventEmitter<boolean>}
      */
     @Output()
     editableTagsChange = new EventEmitter<boolean>();
@@ -158,7 +155,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Emitted when content's editableCategories state is changed.
      *
      * @event editableCategoriesChange
-     * @type {EventEmitter<boolean>}
      */
     @Output()
     editableCategoriesChange = new EventEmitter<boolean>();
@@ -167,31 +163,24 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * Emitted when content's group state is changed.
      *
      * @event groupChange
-     * @type {EventEmitter<CardViewGroup>}
      */
     @Output()
     groupChange = new EventEmitter<CardViewGroup>();
 
     /**
      * (optional) This flag toggles editable of categories content.
-     *
-     * @type {boolean}
      */
     @Input()
     editableCategories = false;
 
     /**
      * (optional) This flag toggles editable of tags content.
-     *
-     * @type {boolean}
      */
     @Input()
     editableTags = false;
 
     /**
      * Group content state
-     *
-     * @type {CardViewGroup}
      */
     @Input()
     group: CardViewGroup;
@@ -217,9 +206,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
-    isGeneralInfoPanelVisible: boolean;
-    isTagPanelVisible: boolean;
-    isCategoriesPanelVisible: boolean;
+    isTagPanelExpanded: boolean;
+    isCategoriesPanelExpanded: boolean;
     hasAllowableOperations = false;
     editableGroup: CardViewGroup;
     buttonType = ButtonType;
@@ -233,7 +221,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private appConfig: AppConfigService,
         private tagService: TagService,
         private categoryService: CategoryService,
-        private cdr: ChangeDetectorRef,
         private contentService: ContentService,
         private notificationService: NotificationService
     ) {
@@ -394,10 +381,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     revertPanelChanges(node: Node, buttonType?: ButtonType) {
         if (node) {
-            if(ButtonType.GeneralInfo === buttonType) {
+            if (ButtonType.GeneralInfo === buttonType) {
                 this.basicProperties$ = this.getProperties(node);
             }
-            if(ButtonType.Group === buttonType) {
+            if (ButtonType.Group === buttonType) {
                 this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
             }
             if (this.displayTags && ButtonType.Tags === buttonType) {
@@ -448,14 +435,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
                 this.editableTagsChange.emit(this.editableTags);
-                this.isTagPanelVisible = this.editableTags;
+                this.isTagPanelExpanded = this.editableTags;
                 this.tagNameControlVisible = true;
                 group.editable = false;
                 break;
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
                 this.editableCategoriesChange.emit(this.editableCategories);
-                this.isCategoriesPanelVisible = this.editableCategories;
+                this.isCategoriesPanelExpanded = this.editableCategories;
                 this.categoryControlVisible = true;
                 group.editable = false;
                 break;
@@ -482,21 +469,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (buttonType !== ButtonType.Categories) {
             this.editableCategories = false;
         }
-    }
-
-    toggleGeneralInfoPanel(generalPanelState: boolean) {
-        this.isGeneralInfoPanelVisible = generalPanelState;
-        this.cdr.detectChanges();
-    }
-
-    toggleTagsPanel(tagPanelState: boolean) {
-        this.isTagPanelVisible = tagPanelState;
-        this.cdr.detectChanges();
-    }
-
-    toggleCategoriesPanel(isCategoriesPanelVisible: boolean) {
-        this.isCategoriesPanelVisible = isCategoriesPanelVisible;
-        this.cdr.detectChanges();
     }
 
     showEmptyTagMessage(): boolean {
