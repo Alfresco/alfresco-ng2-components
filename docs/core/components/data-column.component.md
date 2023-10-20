@@ -77,6 +77,7 @@ The `type` input allows us to specify the type of hosted values for a given colu
 - `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config),
 - `number` - This column is responsible for displaying numbers (integers and decimals). It expects numerals represented by a string or a number. This type comes with [`decimalConfig`](#default-decimal-config)
 - `location` - This column displays a clickable location link pointing to the parent path of the node. **Note:** This type is strongly related to the document list component ([document-list.component.md](../../content-services/components/document-list.component.md)).
+- `icon` - Allows us to display Material Icons supported by Google. Example values: **group**, **favorite**, **thumb_up** and many more. The complete list of the icons - [Google Icons](https://fonts.google.com/icons).
 
 ### `currencyConfig` Input
 
