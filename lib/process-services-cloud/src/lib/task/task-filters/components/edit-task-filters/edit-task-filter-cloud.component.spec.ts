@@ -32,7 +32,6 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
-import moment from 'moment';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
@@ -55,6 +54,7 @@ import { mockFoodUsers } from '../../../../people/mock/people-cloud.mock';
 import { mockFoodGroups } from '../../../../group/mock/group-cloud.mock';
 import { SimpleChanges } from '@angular/core';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
+import { set } from 'date-fns';
 //eslint-disable-next-line
 xdescribe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -941,16 +941,16 @@ xdescribe('EditTaskFilterCloudComponent', () => {
 
             const lastModifiedToControl: AbstractControl = component.editTaskFilterForm.get('lastModifiedTo');
             lastModifiedToControl.setValue(new Date().toISOString());
-            const lastModifiedToFilter = moment(lastModifiedToControl.value);
-            lastModifiedToFilter.set({
-                hour: 23,
-                minute: 59,
-                second: 59
+            const lastModifiedToFilter = new Date(lastModifiedToControl.value);
+            set(lastModifiedToFilter, {
+                hours: 23,
+                minutes: 59,
+                seconds: 59
             });
 
             component.filterChange.subscribe(() => {
                 if (component.changedTaskFilter instanceof TaskFilterCloudModel) {
-                    expect(component.changedTaskFilter.lastModifiedTo).toEqual(lastModifiedToFilter.toISOString(true));
+                    expect(component.changedTaskFilter.lastModifiedTo).toEqual(lastModifiedToFilter.toISOString());
                 }
                 done();
             });

@@ -28,15 +28,6 @@ describe('Date Format Translations', () => {
         expect(result).toBe(expectedDateFnsFormat);
     });
 
-    it('should convert date-fns to moment format correctly', () => {
-        const dateFnsFormat = 'yyyy-MM-dd';
-        const expectedMomentFormat = 'YYYY-MM-DD';
-
-        const result = DateFnsUtils.convertDateFnsToMomentFormat(dateFnsFormat);
-
-        expect(result).toBe(expectedMomentFormat);
-    });
-
     it('should format a date correctly', () => {
         const date = new Date('2023-09-22T12:00:00Z');
         const dateFormat = 'yyyy-MM-dd';

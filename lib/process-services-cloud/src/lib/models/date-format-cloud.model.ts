@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export const DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
+export const DATE_FORMAT_CLOUD = 'yyyy-MM-dd';
