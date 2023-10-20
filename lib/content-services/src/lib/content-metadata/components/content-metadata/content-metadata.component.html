@@ -2,13 +2,13 @@
     <mat-accordion displayMode="flat" [multi]="multi">
         <mat-expansion-panel
             *ngIf="displayDefaultProperties"
-            [expanded]="canExpandProperties()"
+            [expanded]="isGeneralPanelExpanded"
             [attr.data-automation-id]="'adf-metadata-group-properties'"
             hideToggle
-            (opened)="generalInfoHeader.expanded = true"
-            (closed)="generalInfoHeader.expanded = false">
+            (opened)="isGeneralPanelExpanded = true"
+            (closed)="isGeneralPanelExpanded = false">
             <mat-expansion-panel-header>
-                <adf-content-metadata-header #generalInfoHeader [title]="'CORE.METADATA.BASIC.HEADER'">
+                <adf-content-metadata-header #generalInfoHeader [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
                     <button *ngIf="hasToggleEdit"
                             mat-icon-button
                             (click)="toggleEdit($event, group, buttonType.GeneralInfo)"

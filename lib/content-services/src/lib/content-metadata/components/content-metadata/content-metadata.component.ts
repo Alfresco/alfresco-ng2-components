@@ -24,7 +24,6 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
@@ -47,7 +46,6 @@ import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
-import { MatExpansionPanel } from '@angular/material/expansion';
 import { ButtonType } from './button-type.enum';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
@@ -62,8 +60,6 @@ const DEFAULT_SEPARATOR = ', ';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
-    @ViewChild(MatExpansionPanel)
-    panel: MatExpansionPanel;
     protected onDestroy$ = new Subject<boolean>();
 
     /** (required) The node entity to fetch metadata about */
@@ -206,6 +202,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
+    isGeneralPanelExpanded: boolean = true;
     isTagPanelExpanded: boolean;
     isCategoriesPanelExpanded: boolean;
     hasAllowableOperations = false;
@@ -244,6 +241,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         this.loadProperties(this.node);
         this.hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
+
+        if (this.displayAspect === 'Properties') {
+            this.isGeneralPanelExpanded = true;
+        }
     }
 
     get assignedTags(): string[] {
@@ -429,7 +430,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             case ButtonType.GeneralInfo:
                 this.editable = !this.editable;
                 this.editableChange.emit(this.editable);
-                this.panel.open();
+                this.isGeneralPanelExpanded = true;
                 group.editable = false;
                 break;
             case ButtonType.Tags:
@@ -503,10 +504,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     canExpandTheCard(groupTitle: string): boolean {
         return groupTitle === this.displayAspect;
-    }
-
-    canExpandProperties(): boolean {
-        return !this.expanded || this.displayAspect === 'Properties';
     }
 
     keyDown(event: KeyboardEvent) {
