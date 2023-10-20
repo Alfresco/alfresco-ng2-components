@@ -185,7 +185,66 @@ describe('Notification History Component', () => {
         }, 45000);
     });
 
-    it('should return true when there are unread notifications', () => {
+    it('should set unreadNotifications to an empty array when there are no notifications', () => {
+        component.notifications = [];
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications).toEqual([]);
+    });
+
+    it('should set unreadNotifications to an empty array when all notifcations are read', () => {
+        const notifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: true
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: true
+            }
+        ];
+        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(notifications));
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications.length).toEqual(0);
+        expect(component.unreadNotifications).toEqual([]);
+    });
+
+    it('should set unreadNotifications by filtering notifications where read is false', () => {
+        const notifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: '',
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: false
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: true
+            }
+        ];
+        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(notifications));
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications.length).toEqual(1);
+        expect(component.unreadNotifications[0].read).toEqual(false);
+    });
+
+    it('should return badgeVisibility true when there are unread notifications', () => {
         component.unreadNotifications = [
             {
                 type: NOTIFICATION_TYPE.INFO,
@@ -212,7 +271,7 @@ describe('Notification History Component', () => {
         expect(matIconDebugElement.textContent).toContain('notifications');
     });
 
-    it('should return false when there are no unread notifications', () => {
+    it('should return badgeVisibility false when there are no unread notifications', () => {
         component.notifications = [
             {
                 type: NOTIFICATION_TYPE.INFO,
