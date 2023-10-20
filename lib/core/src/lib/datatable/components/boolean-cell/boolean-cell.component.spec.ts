@@ -31,7 +31,7 @@ describe('BooleanCellComponent', () => {
         const booleanCell = getBooleanCell();
 
         expectedOccurrence ? expect(booleanCell).toBeTruthy() : expect(booleanCell).toBeFalsy();
-        if (expectedLabel || expectedLabel === '') {
+        if (expectedLabel) {
             expect(booleanCell.textContent.trim()).toBe(expectedLabel);
         }
     };

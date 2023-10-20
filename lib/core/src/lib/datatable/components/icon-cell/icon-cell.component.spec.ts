@@ -32,7 +32,7 @@ describe('IconCellComponent', () => {
         const iconElement = getIconElement();
 
         expectedOccurrence ? expect(iconElement).toBeTruthy() : expect(iconElement).toBeFalsy();
-        if (expectedIconName || expectedIconName === '') {
+        if (expectedIconName) {
             expect(iconElement.textContent.trim()).toBe(expectedIconName);
         }
     };
