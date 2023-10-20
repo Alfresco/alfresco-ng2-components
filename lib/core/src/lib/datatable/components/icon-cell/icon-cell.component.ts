@@ -29,7 +29,7 @@ import { DataTableService } from '../../services/datatable.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container *ngIf="value$ | async as value">
-            <mat-icon *ngIf="(value | adfTypeof) === 'string'" aria-hidden="true">{{ value }}</mat-icon>
+            <mat-icon [title]="tooltip" *ngIf="(value | adfTypeof) === 'string'" aria-hidden="true">{{ value }}</mat-icon>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -41,8 +41,6 @@ export class IconCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     ngOnInit(): void {
-        if (this.column?.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
-        }
+        super.ngOnInit();
     }
 }
