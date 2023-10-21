@@ -1,11 +1,9 @@
 <adf-info-drawer-layout [showHeader]="showHeader">
     <img *ngIf="icon" class="adf-info-drawer-icon" alt="{{ 'INFO_DRAWER.ICON' | translate }}" src="{{ icon }}" info-drawer-node-icon>
+    <div *ngIf="title" role="heading" aria-level="1" info-drawer-title>{{ title | translate }}</div>
 
-    <div role="heading" aria-level="1" *ngIf="title" info-drawer-title>{{ title | translate }}</div>
     <ng-content *ngIf="!title" info-drawer-title select="[info-drawer-title]"></ng-content>
-
     <ng-content info-drawer-buttons select="[info-drawer-buttons]"></ng-content>
-
     <ng-container info-drawer-content *ngIf="showTabLayout(); then tabLayout else singleLayout"></ng-container>
 
     <ng-template #tabLayout>

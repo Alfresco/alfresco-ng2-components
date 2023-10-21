@@ -63,16 +63,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     node: Node;
 
-    /** Toggles whether the edit button should be shown */
+    /** Toggles the editing mode for the general info */
     @Input()
-    set editable(editable: boolean) {
-        this._editable = editable;
-        this._assignedTags = [...this.tags];
-    }
-
-    get editable(): boolean {
-        return this._editable;
-    }
+    editable: boolean = false;
 
     /** Toggles whether to display empty values in the card view */
     @Input()
@@ -148,7 +141,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
-    private _editable = false;
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
     private _tags: string[] = [];
     private targetProperty: CardViewBaseItemModel;
@@ -299,6 +291,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 break;
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
+                this._assignedTags = [...this.tags];
                 break;
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
