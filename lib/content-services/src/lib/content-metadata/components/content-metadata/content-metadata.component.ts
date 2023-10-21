@@ -17,12 +17,10 @@
 
 import {
     Component,
-    EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
-    Output,
     SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
@@ -113,11 +111,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** True if tags should be displayed, false otherwise */
     @Input()
-    displayTags = false;
+    displayTags = true;
 
     /** True if categories should be displayed, false otherwise */
     @Input()
-    displayCategories = false;
+    displayCategories = true;
 
     /** List of custom metadata panels to be displayed with registered custom components */
     @Input()
@@ -129,38 +127,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input()
     readOnly = false;
-
-    /**
-     * Emitted when content's editable state is changed.
-     *
-     * @event editableChange
-     */
-    @Output()
-    editableChange = new EventEmitter<boolean>();
-
-    /**
-     * Emitted when content's editableTags state is changed.
-     *
-     * @event editableTagsChange
-     */
-    @Output()
-    editableTagsChange = new EventEmitter<boolean>();
-
-    /**
-     * Emitted when content's editableCategories state is changed.
-     *
-     * @event editableCategoriesChange
-     */
-    @Output()
-    editableCategoriesChange = new EventEmitter<boolean>();
-
-    /**
-     * Emitted when content's group state is changed.
-     *
-     * @event groupChange
-     */
-    @Output()
-    groupChange = new EventEmitter<CardViewGroup>();
 
     /**
      * (optional) This flag toggles editable of categories content.
@@ -425,27 +391,23 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         switch (buttonType) {
             case ButtonType.GeneralInfo:
                 this.editable = !this.editable;
-                this.editableChange.emit(this.editable);
                 this.isGeneralPanelExpanded = true;
                 group.editable = false;
                 break;
             case ButtonType.Tags:
                 this.editableTags = !this.editableTags;
-                this.editableTagsChange.emit(this.editableTags);
                 this.isTagPanelExpanded = this.editableTags;
                 this.tagNameControlVisible = true;
                 group.editable = false;
                 break;
             case ButtonType.Categories:
                 this.editableCategories = !this.editableCategories;
-                this.editableCategoriesChange.emit(this.editableCategories);
                 this.isCategoriesPanelExpanded = this.editableCategories;
                 this.categoryControlVisible = true;
                 group.editable = false;
                 break;
             case ButtonType.Group:
                 group.editable = !group.editable;
-                this.groupChange.emit(group);
                 this.editableGroup = group.editable ? group : null;
                 if (group.editable) {
                     group.expanded = true;

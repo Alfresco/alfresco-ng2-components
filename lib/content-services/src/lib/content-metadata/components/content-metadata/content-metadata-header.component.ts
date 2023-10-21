@@ -15,9 +15,15 @@
  * limitations under the License.
  */
 
+import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, MatIconModule, MatExpansionModule, TranslateModule],
     selector: 'adf-content-metadata-header',
     encapsulation: ViewEncapsulation.None,
     styles: [
