@@ -9,9 +9,9 @@
             (closed)="isGeneralPanelExpanded = false">
             <mat-expansion-panel-header>
                 <adf-content-metadata-header #generalInfoHeader [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
-                    <button *ngIf="hasToggleEdit"
+                    <button *ngIf="canEditGeneralInfo"
                             mat-icon-button
-                            (click)="toggleEdit($event, group, buttonType.GeneralInfo)"
+                            (click)="onToggleGeneralInfoEdit($event)"
                             [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                             [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                             data-automation-id="meta-data-general-info-edit"
@@ -21,14 +21,14 @@
                     <div *ngIf="isEditingGeneralInfo" class="adf-metadata-action-buttons">
                         <button mat-icon-button
                                 [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                                (click)="cancelChanges(buttonType.GeneralInfo, $event, group)"
+                                (click)="onCancelGeneralInfoEdit($event)"
                                 data-automation-id="reset-metadata"
                                 class="adf-metadata-action-buttons-clear">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button
                                 [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                                (click)="saveChanges(buttonType.GeneralInfo, $event, group)"
+                                (click)="onSaveGeneralInfoChanges($event)"
                                 color="primary"
                                 data-automation-id="save-general-info-metadata"
                                 [disabled]="!hasMetadataChanged">
@@ -57,9 +57,9 @@
                 <mat-expansion-panel-header>
                     <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="isTagPanelExpanded">
                         <div class="adf-tags-buttons">
-                            <button *ngIf="hasTagsToggleEdit"
+                            <button *ngIf="canEditTags"
                                     mat-icon-button
-                                    (click)="toggleEdit($event, group, buttonType.Tags)"
+                                    (click)="onToggleTagsEdit($event)"
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                     data-automation-id="showing-tag-input-button"
@@ -70,14 +70,14 @@
                         <div *ngIf="isEditingTags" class="adf-metadata-action-buttons">
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                                    (click)="cancelChanges(buttonType.Tags, $event, group)"
+                                    (click)="onCancelTagsEdit($event)"
                                     data-automation-id="reset-tags-metadata"
                                     class="adf-metadata-action-buttons-clear">
                                 <mat-icon>clear</mat-icon>
                             </button>
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                                    (click)="saveChanges(buttonType.Tags, $event, group)"
+                                    (click)="onSaveTagsChanges($event)"
                                     color="primary"
                                     data-automation-id="save-tags-metadata"
                                     [disabled]="!hasMetadataChanged">
@@ -113,9 +113,9 @@
                 <mat-expansion-panel-header>
                     <adf-content-metadata-header [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'" [expanded]="isCategoriesPanelExpanded">
                         <div class="adf-categories-button">
-                            <button *ngIf="hasCategoriesToggleEdit"
+                            <button *ngIf="canEditCategories"
                                     mat-icon-button
-                                    (click)="toggleEdit($event, group, buttonType.Categories)"
+                                    (click)="onToggleCategoriesEdit($event)"
                                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                     data-automation-id="meta-data-categories-edit"
@@ -126,14 +126,14 @@
                         <div *ngIf="isEditingCategories" class="adf-metadata-action-buttons">
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                                    (click)="cancelChanges(buttonType.Categories, $event, group)"
+                                    (click)="onCancelCategoriesEdit($event)"
                                     data-automation-id="reset-metadata"
                                     class="adf-metadata-action-buttons-clear">
                                 <mat-icon>clear</mat-icon>
                             </button>
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                                    (click)="saveChanges(buttonType.Categories, $event, group)"
+                                    (click)="onSaveCategoriesChanges($event)"
                                     color="primary"
                                     data-automation-id="save-categories-metadata"
                                     [disabled]="!hasMetadataChanged">
@@ -185,20 +185,20 @@
                                     [attr.aria-label]="'CORE.METADATA.ACCESSIBILITY.EDIT' | translate"
                                     data-automation-id="meta-data-card-toggle-edit"
                                     class="adf-edit-icon-buttons"
-                                    (click)="toggleEdit($event, group, buttonType.Group)">
+                                    (click)="onToggleGroupEdit(group, $event)">
                                 <mat-icon>mode_edit</mat-icon>
                             </button>
                             <div class="adf-metadata-action-buttons" *ngIf="group.editable">
                                 <button mat-icon-button
                                         [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
-                                        (click)="cancelChanges(buttonType.Group, $event, group)"
+                                        (click)="onCancelGroupEdit(group, $event)"
                                         data-automation-id="reset-metadata"
                                         class="adf-metadata-action-buttons-clear">
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button
                                         [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                                        (click)="saveChanges(buttonType.Group, $event, group)"
+                                        (click)="onSaveGroupChanges(group, $event)"
                                         color="primary"
                                         data-automation-id="save-metadata"
                                         [disabled]="!hasMetadataChanged">

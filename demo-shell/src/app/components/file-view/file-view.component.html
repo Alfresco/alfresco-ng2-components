@@ -29,20 +29,28 @@
         </adf-info-drawer-tab>
 
         <adf-info-drawer-tab label="Properties">
-            <adf-content-metadata-card *ngIf="isPreset" [node]="node"
-                                       [multi]="multi"
-                                       [preset]="customPreset"
-                                       [readOnly]="isReadOnly"
-                                       [displayAspect]="showAspect"
-                                       [displayDefaultProperties]="displayDefaultProperties"
-                                       [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+            <adf-content-metadata-card
+                *ngIf="isPreset" [node]="node"
+                [multi]="multi"
+                [preset]="customPreset"
+                [readOnly]="isReadOnly"
+                [displayAspect]="showAspect"
+                [displayDefaultProperties]="displayDefaultProperties"
+                [displayTags]="false"
+                [displayCategories]="false"
+                [displayEmpty]="displayEmptyMetadata">
+            </adf-content-metadata-card>
 
-            <adf-content-metadata-card *ngIf="!isPreset" [node]="node"
-                                       [multi]="multi"
-                                       [readOnly]="isReadOnly"
-                                       [displayAspect]="showAspect"
-                                       [displayDefaultProperties]="displayDefaultProperties"
-                                       [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
+            <adf-content-metadata-card
+                *ngIf="!isPreset" [node]="node"
+                [multi]="multi"
+                [readOnly]="isReadOnly"
+                [displayAspect]="showAspect"
+                [displayDefaultProperties]="displayDefaultProperties"
+                [displayTags]="false"
+                [displayCategories]="false"
+                [displayEmpty]="displayEmptyMetadata">
+            </adf-content-metadata-card>
 
             <p class="toggle">
                 <mat-slide-toggle

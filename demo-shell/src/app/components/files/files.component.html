@@ -243,7 +243,9 @@
                     <adf-info-drawer-tab label="Properties">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry"
-                            [displayEmpty]="displayEmptyMetadata">
+                            [displayEmpty]="displayEmptyMetadata"
+                            [displayTags]="false"
+                            [displayCategories]="false">
                         </adf-content-metadata-card>
                     </adf-info-drawer-tab>
                     <adf-info-drawer-tab label="Versions">

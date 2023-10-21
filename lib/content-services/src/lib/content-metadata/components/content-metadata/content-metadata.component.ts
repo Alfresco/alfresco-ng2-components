@@ -43,7 +43,6 @@ import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
-import { ButtonType } from './button-type.enum';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
 
@@ -117,12 +116,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     readOnly = false;
 
-    /**
-     * Group content state
-     */
-    @Input()
-    group: CardViewGroup;
-
     private _assignedTags: string[] = [];
     private assignedTagsEntries: TagEntry[] = [];
     private _tagsCreatorMode = TagsCreatorMode.CREATE_AND_ASSIGN;
@@ -147,8 +140,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     isTagPanelExpanded: boolean;
     isCategoriesPanelExpanded: boolean;
     hasAllowableOperations = false;
-    editableGroup: CardViewGroup;
-    buttonType = ButtonType;
+    currentGroup: CardViewGroup;
 
     isEditingGeneralInfo = false;
     isEditingTags = false;
@@ -250,47 +242,47 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    /**
-     * Called after clicking the save button. It confirms all changes done for metadata and hides both category and tag name controls.
-     *
-     * @param buttonType - The type of button clicked.
-     * @param event - The click event.
-     * @param group - The group associated with the action.
-     */
-    saveChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
-        event.stopPropagation();
-        this.toggleEditMode(buttonType, group);
+    onSaveGeneralInfoChanges(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.onSaveChanges();
+        this.cancelEditing();
+    }
+
+    onSaveTagsChanges(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.onSaveChanges();
+        this.cancelEditing();
+    }
+
+    onSaveCategoriesChanges(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.onSaveChanges();
+        this.cancelEditing();
+    }
+
+    onSaveGroupChanges(group: CardViewGroup, event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.onSaveChanges();
+        this.cancelEditing();
+
+        group.editable = false;
+    }
+
+    private onSaveChanges() {
         this._saving = true;
         this.tagNameControlVisible = false;
         this.categoryControlVisible = false;
+
         if (this.hasContentTypeChanged(this.changedProperties)) {
             this.contentMetadataService.openConfirmDialog(this.changedProperties).subscribe(() => {
                 this.updateNode();
             });
         } else {
             this.updateNode();
-        }
-    }
-
-    toggleEditMode(buttonType: ButtonType, group?: CardViewGroup) {
-        switch (buttonType) {
-            case ButtonType.GeneralInfo:
-                this.isEditingGeneralInfo = !this.isEditingGeneralInfo;
-                break;
-            case ButtonType.Tags:
-                this.isEditingTags = !this.isEditingTags;
-                this._assignedTags = [...this.tags];
-                break;
-            case ButtonType.Categories:
-                this.isEditingCategories = !this.isEditingCategories;
-                break;
-            case ButtonType.Group:
-                if (group) {
-                    group.editable = !group.editable;
-                }
-                break;
-            default:
-                break;
         }
     }
 
@@ -323,93 +315,124 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.categoryControlVisible = false;
     }
 
-    revertPanelChanges(node: Node, buttonType?: ButtonType) {
-        if (node) {
-            if (ButtonType.GeneralInfo === buttonType) {
-                this.basicProperties$ = this.getProperties(node);
-            }
-            if (ButtonType.Group === buttonType) {
-                this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
-            }
-            if (this.displayTags && ButtonType.Tags === buttonType) {
-                this.loadTagsForNode(node.id);
-            }
-            if (this.displayCategories && ButtonType.Categories === buttonType) {
-                this.loadCategoriesForNode(node.id);
-
-                const aspectNames = node.aspectNames || [];
-                if (!aspectNames.includes('generalclassifiable')) {
-                    this.categories = [];
-                    this.classifiableChangedSubject.next();
-                }
-            }
-        }
-    }
-
-    cancelChanges(buttonType: ButtonType, event: MouseEvent, group?: CardViewGroup) {
-        event.stopPropagation();
-        this.toggleEditMode(buttonType, group);
-        this.revertChanges();
-        this.revertPanelChanges(this.node, buttonType);
-    }
-
     // Returns the editing state of the panel
     isEditingPanel(): boolean {
         return (
-            (this.isEditingGeneralInfo || this.isEditingTags || this.isEditingCategories || this.editableGroup?.editable) && this.hasMetadataChanged
+            (this.isEditingGeneralInfo || this.isEditingTags || this.isEditingCategories || this.currentGroup?.editable) && this.hasMetadataChanged
         );
     }
 
-    toggleEdit(event: MouseEvent, group: CardViewGroup, buttonType: ButtonType): void {
-        event.stopPropagation();
+    onToggleGeneralInfoEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
         if (this.isEditingPanel()) {
             this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
             return;
         }
 
-        if (this.editableGroup && this.editableGroup.title !== group.title) {
-            this.editableGroup.editable = false;
+        const currentMode = this.isEditingGeneralInfo;
+        this.cancelEditing();
+        this.isEditingGeneralInfo = !currentMode;
+        this.isGeneralPanelExpanded = true;
+    }
+
+    onToggleTagsEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        if (this.isEditingPanel()) {
+            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            return;
         }
 
-        switch (buttonType) {
-            case ButtonType.GeneralInfo:
-                this.isEditingGeneralInfo = !this.isEditingGeneralInfo;
-                this.isGeneralPanelExpanded = true;
-                group.editable = false;
-                break;
-            case ButtonType.Tags:
-                this.isEditingTags = !this.isEditingTags;
-                this.isTagPanelExpanded = this.isEditingTags;
-                this.tagNameControlVisible = true;
-                group.editable = false;
-                break;
-            case ButtonType.Categories:
-                this.isEditingCategories = !this.isEditingCategories;
-                this.isCategoriesPanelExpanded = this.isEditingCategories;
-                this.categoryControlVisible = true;
-                group.editable = false;
-                break;
-            case ButtonType.Group:
-                group.editable = !group.editable;
-                this.editableGroup = group.editable ? group : null;
-                if (group.editable) {
-                    group.expanded = true;
-                }
-                break;
-            default:
-                break;
+        const currentValue = this.isEditingTags;
+        this.cancelEditing();
+        this.isEditingTags = !currentValue;
+        this.isTagPanelExpanded = this.isEditingTags;
+        this.tagNameControlVisible = true;
+    }
+
+    private cancelEditing() {
+        this.isEditingGeneralInfo = false;
+        this.isEditingCategories = false;
+        this.isEditingTags = false;
+        this.isEditingTags = false;
+    }
+
+    onCancelGeneralInfoEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.cancelEditing();
+        this.revertChanges();
+
+        this.basicProperties$ = this.getProperties(this.node);
+    }
+
+    onCancelCategoriesEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.cancelEditing();
+        this.revertChanges();
+
+        this.loadCategoriesForNode(this.node.id);
+
+        const aspectNames = this.node.aspectNames || [];
+        if (!aspectNames.includes('generalclassifiable')) {
+            this.categories = [];
+            this.classifiableChangedSubject.next();
+        }
+    }
+
+    onCancelTagsEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.cancelEditing();
+        this.revertChanges();
+
+        this.basicProperties$ = this.getProperties(this.node);
+        this.loadTagsForNode(this.node.id);
+    }
+
+    onCancelGroupEdit(group: CardViewGroup, event?: MouseEvent) {
+        event?.stopPropagation();
+
+        this.cancelEditing();
+        this.revertChanges();
+
+        group.editable = false;
+        this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(this.node, this.preset);
+    }
+
+    onToggleCategoriesEdit(event?: MouseEvent) {
+        event?.stopPropagation();
+
+        if (this.isEditingPanel()) {
+            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            return;
         }
 
-        if (buttonType !== ButtonType.GeneralInfo) {
-            this.isEditingGeneralInfo = false;
+        const currentValue = this.isEditingCategories;
+        this.cancelEditing();
+        this.isEditingCategories = !currentValue;
+        this.isCategoriesPanelExpanded = this.isEditingCategories;
+        this.categoryControlVisible = true;
+    }
+
+    onToggleGroupEdit(group: CardViewGroup, event?: MouseEvent) {
+        event?.stopPropagation();
+
+        if (this.isEditingPanel()) {
+            this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
+            return;
         }
 
-        if (buttonType !== ButtonType.Tags) {
-            this.isEditingTags = false;
+        if (this.currentGroup && this.currentGroup.title !== group.title) {
+            this.currentGroup.editable = false;
         }
 
-        if (buttonType !== ButtonType.Categories) {
-            this.isEditingCategories = false;
+        group.editable = !group.editable;
+        this.currentGroup = group.editable ? group : null;
+        if (group.editable) {
+            group.expanded = true;
         }
     }
 
@@ -421,15 +444,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return this.categories?.length === 0 && !this.isEditingCategories;
     }
 
-    get hasToggleEdit(): boolean {
+    get canEditGeneralInfo(): boolean {
         return !this.isEditingGeneralInfo && !this.readOnly && this.hasAllowableOperations;
     }
 
-    get hasTagsToggleEdit(): boolean {
+    get canEditTags(): boolean {
         return !this.isEditingTags && !this.readOnly && this.hasAllowableOperations;
     }
 
-    get hasCategoriesToggleEdit(): boolean {
+    get canEditCategories(): boolean {
         return !this.isEditingCategories && !this.readOnly && this.hasAllowableOperations;
     }
 
