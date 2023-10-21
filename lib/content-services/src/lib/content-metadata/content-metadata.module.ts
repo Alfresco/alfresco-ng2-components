@@ -38,7 +38,8 @@ import { ContentMetadataHeaderComponent } from './components/content-metadata/co
     ],
     exports: [
         ContentMetadataComponent,
-        ContentMetadataCardComponent
+        ContentMetadataCardComponent,
+        ContentMetadataHeaderComponent
     ],
     declarations: [
         ContentMetadataComponent,

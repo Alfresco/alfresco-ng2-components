@@ -336,7 +336,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             }
             if (this.displayCategories && ButtonType.Categories === buttonType) {
                 this.loadCategoriesForNode(node.id);
-                if (!this.node.aspectNames.includes('generalclassifiable')) {
+
+                const aspectNames = node.aspectNames || [];
+                if (!aspectNames.includes('generalclassifiable')) {
                     this.categories = [];
                     this.classifiableChangedSubject.next();
                 }
@@ -506,7 +508,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             }
             if (this.displayCategories) {
                 this.loadCategoriesForNode(node.id);
-                if (!this.node.aspectNames.includes('generalclassifiable')) {
+
+                const aspectNames = node.aspectNames || [];
+                if (!aspectNames.includes('generalclassifiable')) {
                     this.categories = [];
                     this.classifiableChangedSubject.next();
                 }
