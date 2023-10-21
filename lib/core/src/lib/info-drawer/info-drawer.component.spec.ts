@@ -87,7 +87,7 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     template: `
-        <adf-info-drawer [selectedIndex]="tabIndex" [nodeIcon]="nodeIcon" title="Fake Title Custom">
+        <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
             <adf-info-drawer-tab label="Tab1">
             </adf-info-drawer-tab>
             <adf-info-drawer-tab label="Tab2">
@@ -99,7 +99,7 @@ describe('InfoDrawerComponent', () => {
 })
 class CustomInfoDrawerComponent extends InfoDrawerComponent {
     tabIndex: number;
-    nodeIcon: string;
+    icon: string;
 }
 
 describe('Custom InfoDrawer', () => {
