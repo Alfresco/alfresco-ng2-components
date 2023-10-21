@@ -63,10 +63,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     node: Node;
 
-    /** Toggles the editing mode for the general info */
-    @Input()
-    editable: boolean = false;
-
     /** Toggles whether to display empty values in the card view */
     @Input()
     displayEmpty: boolean = false;
@@ -122,18 +118,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     readOnly = false;
 
     /**
-     * (optional) This flag toggles editable of categories content.
-     */
-    @Input()
-    editableCategories = false;
-
-    /**
-     * (optional) This flag toggles editable of tags content.
-     */
-    @Input()
-    editableTags = false;
-
-    /**
      * Group content state
      */
     @Input()
@@ -159,12 +143,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     categoryControlVisible = false;
     classifiableChanged = this.classifiableChangedSubject.asObservable();
-    isGeneralPanelExpanded: boolean = true;
+    isGeneralPanelExpanded = true;
     isTagPanelExpanded: boolean;
     isCategoriesPanelExpanded: boolean;
     hasAllowableOperations = false;
     editableGroup: CardViewGroup;
     buttonType = ButtonType;
+
+    isEditingGeneralInfo = false;
+    isEditingTags = false;
+    isEditingCategories = false;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -287,14 +275,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     toggleEditMode(buttonType: ButtonType, group?: CardViewGroup) {
         switch (buttonType) {
             case ButtonType.GeneralInfo:
-                this.editable = !this.editable;
+                this.isEditingGeneralInfo = !this.isEditingGeneralInfo;
                 break;
             case ButtonType.Tags:
-                this.editableTags = !this.editableTags;
+                this.isEditingTags = !this.isEditingTags;
                 this._assignedTags = [...this.tags];
                 break;
             case ButtonType.Categories:
-                this.editableCategories = !this.editableCategories;
+                this.isEditingCategories = !this.isEditingCategories;
                 break;
             case ButtonType.Group:
                 if (group) {
@@ -366,7 +354,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     // Returns the editing state of the panel
     isEditingPanel(): boolean {
         return (
-            (this.editable || this.editableTags || this.editableCategories || this.editableGroup?.editable) && this.hasMetadataChanged
+            (this.isEditingGeneralInfo || this.isEditingTags || this.isEditingCategories || this.editableGroup?.editable) && this.hasMetadataChanged
         );
     }
 
@@ -383,19 +371,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         switch (buttonType) {
             case ButtonType.GeneralInfo:
-                this.editable = !this.editable;
+                this.isEditingGeneralInfo = !this.isEditingGeneralInfo;
                 this.isGeneralPanelExpanded = true;
                 group.editable = false;
                 break;
             case ButtonType.Tags:
-                this.editableTags = !this.editableTags;
-                this.isTagPanelExpanded = this.editableTags;
+                this.isEditingTags = !this.isEditingTags;
+                this.isTagPanelExpanded = this.isEditingTags;
                 this.tagNameControlVisible = true;
                 group.editable = false;
                 break;
             case ButtonType.Categories:
-                this.editableCategories = !this.editableCategories;
-                this.isCategoriesPanelExpanded = this.editableCategories;
+                this.isEditingCategories = !this.isEditingCategories;
+                this.isCategoriesPanelExpanded = this.isEditingCategories;
                 this.categoryControlVisible = true;
                 group.editable = false;
                 break;
@@ -411,36 +399,36 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (buttonType !== ButtonType.GeneralInfo) {
-            this.editable = false;
+            this.isEditingGeneralInfo = false;
         }
 
         if (buttonType !== ButtonType.Tags) {
-            this.editableTags = false;
+            this.isEditingTags = false;
         }
 
         if (buttonType !== ButtonType.Categories) {
-            this.editableCategories = false;
+            this.isEditingCategories = false;
         }
     }
 
     showEmptyTagMessage(): boolean {
-        return this.tags?.length === 0 && !this.editableTags;
+        return this.tags?.length === 0 && !this.isEditingTags;
     }
 
     showEmptyCategoryMessage(): boolean {
-        return this.categories?.length === 0 && !this.editableCategories;
+        return this.categories?.length === 0 && !this.isEditingCategories;
     }
 
     get hasToggleEdit(): boolean {
-        return !this.editable && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingGeneralInfo && !this.readOnly && this.hasAllowableOperations;
     }
 
     get hasTagsToggleEdit(): boolean {
-        return !this.editableTags && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingTags && !this.readOnly && this.hasAllowableOperations;
     }
 
     get hasCategoriesToggleEdit(): boolean {
-        return !this.editableCategories && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingCategories && !this.readOnly && this.hasAllowableOperations;
     }
 
     hasGroupToggleEdit(group: CardViewGroup): boolean {

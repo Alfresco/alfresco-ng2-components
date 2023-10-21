@@ -114,14 +114,6 @@ describe('ContentMetadataCardComponent', () => {
         expect(contentMetadataComponent.displayEmpty).toBe(true);
     });
 
-    it('should pass through the editable to the underlying component', () => {
-        component.editable = true;
-        fixture.detectChanges();
-        const contentMetadataComponent = fixture.debugElement.query(By.directive(ContentMetadataComponent)).componentInstance;
-
-        expect(contentMetadataComponent.editable).toBe(true);
-    });
-
     it('should pass through the multi to the underlying component', () => {
         component.multi = true;
         fixture.detectChanges();

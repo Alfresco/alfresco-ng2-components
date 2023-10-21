@@ -18,7 +18,7 @@
                             class="adf-edit-icon-buttons">
                         <mat-icon>mode_edit</mat-icon>
                     </button>
-                    <div *ngIf="editable" class="adf-metadata-action-buttons">
+                    <div *ngIf="isEditingGeneralInfo" class="adf-metadata-action-buttons">
                         <button mat-icon-button
                                 [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                 (click)="cancelChanges(buttonType.GeneralInfo, $event, group)"
@@ -40,7 +40,7 @@
             <adf-card-view
                 (keydown)="keyDown($event)"
                 [properties]="basicProperties$ | async"
-                [editable]="editable"
+                [editable]="isEditingGeneralInfo"
                 [displayEmpty]="displayEmpty"
                 [copyToClipboardAction]="copyToClipboardAction"
                 [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
@@ -67,7 +67,7 @@
                                 <mat-icon>mode_edit</mat-icon>
                             </button>
                         </div>
-                        <div *ngIf="editableTags" class="adf-metadata-action-buttons">
+                        <div *ngIf="isEditingTags" class="adf-metadata-action-buttons">
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                     (click)="cancelChanges(buttonType.Tags, $event, group)"
@@ -86,13 +86,13 @@
                         </div>
                         </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!editableTags" class="adf-metadata-properties-tags">
+                <div *ngIf="!isEditingTags" class="adf-metadata-properties-tags">
                     <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
                 </div>
                 <div *ngIf="showEmptyTagMessage()" class="adf-metadata-no-item-added">
                     {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}
                 </div>
-                <div *ngIf="editableTags" class="adf-metadata-properties-tags">
+                <div *ngIf="isEditingTags" class="adf-metadata-properties-tags">
                     <adf-tags-creator
                         [(tagNameControlVisible)]="tagNameControlVisible"
                         (tagsChange)="storeTagsToAssign($event)"
@@ -123,7 +123,7 @@
                                 <mat-icon>mode_edit</mat-icon>
                             </button>
                         </div>
-                        <div *ngIf="editableCategories" class="adf-metadata-action-buttons">
+                        <div *ngIf="isEditingCategories" class="adf-metadata-action-buttons">
                             <button mat-icon-button
                                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                                     (click)="cancelChanges(buttonType.Categories, $event, group)"
@@ -142,13 +142,13 @@
                         </div>
                     </adf-content-metadata-header>
                 </mat-expansion-panel-header>
-                <div *ngIf="!editableCategories">
+                <div *ngIf="!isEditingCategories">
                     <p *ngFor="let category of categories" class="adf-metadata-categories">{{ category.name }}</p>
                 </div>
                 <div *ngIf="showEmptyCategoryMessage()" class="adf-metadata-no-item-added">
                     {{ 'CATEGORIES_MANAGEMENT.NO_CATEGORIES_ADDED' | translate }}
                 </div>
-                <div *ngIf="editableCategories" class="adf-metadata-categories-header">
+                <div *ngIf="isEditingCategories" class="adf-metadata-categories-header">
                     <adf-categories-management
                         [(categoryNameControlVisible)]="categoryControlVisible"
                         [disableRemoval]="saving"
@@ -163,7 +163,7 @@
 
         <mat-expansion-panel *ngFor="let customPanel of customPanels" [expanded]="canExpandTheCard(customPanel.panelTitle)">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ customPanel.panelTitle | translate }}</mat-panel-title>
+                <mat-panel-title class="adf-metadata-custom-panel-title">{{ customPanel.panelTitle | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
             <adf-dynamic-component [id]="customPanel.component" [data]="{ node }"></adf-dynamic-component>
         </mat-expansion-panel>

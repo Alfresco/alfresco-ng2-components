@@ -160,7 +160,7 @@ describe('Custom InfoDrawer', () => {
     });
 
     it('should render a icon with title', () => {
-        component.nodeIcon = '/assets/images/ft_ic_miscellaneous.svg';
+        component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
         const icon =  fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
         const srcAttribute = icon[0].nativeElement.getAttribute('src');
@@ -171,13 +171,13 @@ describe('Custom InfoDrawer', () => {
 
 @Component({
     template: `
-    <adf-info-drawer [showHeader]="showHeader" [nodeIcon]="nodeIcon" title="Fake Visibility Info Drawer Title">
+    <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title">
     </adf-info-drawer>
         `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;
-    nodeIcon: string;
+    icon: string;
 }
 
 describe('Header visibility InfoDrawer', () => {
@@ -200,7 +200,7 @@ describe('Header visibility InfoDrawer', () => {
     });
 
     it('should show info drawer header by default', () => {
-        component.nodeIcon = '/assets/images/ft_ic_miscellaneous.svg';
+        component.icon = '/assets/images/ft_ic_miscellaneous.svg';
         fixture.detectChanges();
         const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
         const icon = fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
