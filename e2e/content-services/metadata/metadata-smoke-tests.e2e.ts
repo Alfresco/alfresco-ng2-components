@@ -38,8 +38,7 @@ describe('Metadata component', () => {
         TITLE: 'Details',
         COMMENTS_TAB: 'Comments',
         PROPERTY_TAB: 'Properties',
-        DEFAULT_ASPECT: 'General info',
-        EDIT_BUTTON_TOOLTIP: 'Edit'
+        DEFAULT_ASPECT: 'General info'
     };
 
     const loginPage = new LoginPage();
@@ -125,8 +124,6 @@ describe('Metadata component', () => {
             expect(modifiedDate).toEqual(format(new Date(pngFileModel.createdAt), METADATA.DATA_FORMAT), pngFileModel.createdAt);
             expect(mimeTypeName).toEqual(pngFileModel.getContent().mimeTypeName);
             expect(size).toEqual(pngFileModel.getContent().getSizeInBytes());
-
-            await metadataViewPage.editIconIsDisplayed();
         });
 
         it('[C270952] Should be possible to open/close properties using info icon', async () => {
@@ -140,7 +137,6 @@ describe('Metadata component', () => {
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.COMMENTS_TAB);
             await metadataViewPage.clickOnPropertiesTab();
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-            await expect(await metadataViewPage.getEditIconTooltip()).toEqual(METADATA.EDIT_BUTTON_TOOLTIP);
         });
 
         it('[C245654] Should be possible edit the basic Metadata Info of a Document', async () => {
@@ -192,12 +188,9 @@ describe('Metadata component', () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
-            await metadataViewPage.editIconIsDisplayed();
 
             await expect(await viewerPage.getActiveTab()).toEqual(METADATA.PROPERTY_TAB);
-
             await metadataViewPage.clickMetadataGroup('EXIF');
-
             await metadataViewPage.editIconClick();
 
             await metadataViewPage.enterPropertyText('properties.exif:software', 'test custom text software');
