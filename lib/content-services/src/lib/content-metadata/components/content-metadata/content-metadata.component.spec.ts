@@ -520,27 +520,34 @@ describe('ContentMetadataComponent', () => {
     });
 ;
     describe('Permission', () => {
-        it('should hide the general info edit button if node does not have `update` permissions', () => {
+        beforeEach(() => {
             component.readOnly = false;
             component.node.allowableOperations = null;
-            fixture.detectChanges();
 
+            component.ngOnInit();
+        });
+
+        it('should hide the general info edit button if node does not have `update` permissions', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.readOnly).toBeTrue();
             expect(getToggleEditButton()).toBeNull();
         });
 
-        it('should hide the tags edit button if node does not have `update` permissions', () => {
-            component.readOnly = false;
-            component.node.allowableOperations = null;
+        it('should hide the tags edit button if node does not have `update` permissions', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
 
+            expect(component.readOnly).toBeTrue();
             expect(getTagsToggleEditButton()).toBeNull();
         });
 
-        it('should hide the categories edit button if node does not have `update` permissions', () => {
-            component.readOnly = false;
-            component.node.allowableOperations = null;
+        it('should hide the categories edit button if node does not have `update` permissions', async () => {
             fixture.detectChanges();
+            await fixture.whenStable();
 
+            expect(component.readOnly).toBeTrue();
             expect(getCategoriesToggleEditButton()).toBeNull();
         });
 
@@ -557,14 +564,12 @@ describe('ContentMetadataComponent', () => {
         it('should return true when editable is false, readOnly is false, and hasAllowableOperations is true', () => {
             component.isEditingGeneralInfo = false;
             component.readOnly = false;
-            component.hasAllowableOperations = true;
             expect(component.canEditGeneralInfo).toBe(true);
           });
 
         it('should return false when editable is true', () => {
             component.isEditingGeneralInfo = true;
             component.readOnly = false;
-            component.hasAllowableOperations = true;
             expect(component.canEditGeneralInfo).toBe(false);
         });
     });
@@ -573,16 +578,14 @@ describe('ContentMetadataComponent', () => {
         it('should have hasTagsToggleEdit property as expected', () => {
             component.isEditingTags = false;
             component.readOnly = false;
-            component.hasAllowableOperations = true;
             fixture.detectChanges();
             expect(component.canEditTags).toBe(true);
         });
     });
 
     describe('hasGroupToggleEdit', () => {
-        it('should return true when group is not editable, not read-only, and has allowable operations', () => {
+        it('should return true when group is not editable, not read-only', () => {
             component.readOnly = false;
-            component.hasAllowableOperations = true;
             const group: CardViewGroup = {
                 title: 'Group Title',
                 properties: [],
@@ -598,7 +601,6 @@ describe('ContentMetadataComponent', () => {
         it('should have hasCategoriesToggleEdit property as expected', () => {
             component.isEditingCategories = false;
             component.readOnly = false;
-            component.hasAllowableOperations = true;
             expect(component.canEditCategories).toBe(true);
         });
     });

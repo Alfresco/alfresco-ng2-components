@@ -139,7 +139,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     isGeneralPanelExpanded = true;
     isTagPanelExpanded: boolean;
     isCategoriesPanelExpanded: boolean;
-    hasAllowableOperations = false;
     currentGroup: CardViewGroup;
 
     isEditingGeneralInfo = false;
@@ -176,10 +175,16 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((node) => this.loadProperties(node));
 
         this.loadProperties(this.node);
-        this.hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
+        this.verifyAllowableOperations();
 
         if (this.displayAspect === 'Properties') {
             this.isGeneralPanelExpanded = true;
+        }
+    }
+
+    private verifyAllowableOperations() {
+        if (!this.node?.allowableOperations || !this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE)) {
+            this.readOnly = true;
         }
     }
 
@@ -445,19 +450,19 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     get canEditGeneralInfo(): boolean {
-        return !this.isEditingGeneralInfo && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingGeneralInfo && !this.readOnly;
     }
 
     get canEditTags(): boolean {
-        return !this.isEditingTags && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingTags && !this.readOnly;
     }
 
     get canEditCategories(): boolean {
-        return !this.isEditingCategories && !this.readOnly && this.hasAllowableOperations;
+        return !this.isEditingCategories && !this.readOnly;
     }
 
     hasGroupToggleEdit(group: CardViewGroup): boolean {
-        return !group.editable && !this.readOnly && this.hasAllowableOperations;
+        return !group.editable && !this.readOnly;
     }
 
     showGroup(group: CardViewGroup): boolean {
@@ -526,9 +531,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (node) {
             this.basicProperties$ = this.getProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+
             if (this.displayTags) {
                 this.loadTagsForNode(node.id);
             }
+
             if (this.displayCategories) {
                 this.loadCategoriesForNode(node.id);
 
