@@ -11,21 +11,8 @@
         line-height: 20px;
     }
 
-    .adf-property-value {
-        color: var(--theme-metadata-property-panel-text-color);
-
-        &.adf-property-value-editable {
-            background-color: var(--theme-metadata-buttons-background-color);
-            border-radius: 6px;
-        }
-    }
-
     .adf-property {
         padding-bottom: 12px;
-
-        .adf-empty-field {
-            padding: 0;
-        }
 
         .adf-property-field {
             width: 100%;
@@ -36,6 +23,10 @@
 
             .mat-input-element {
                 text-overflow: ellipsis;
+                color: var(--theme-metadata-property-panel-title-color);
+                margin-top: 32px;
+                padding: 6px 0;
+                line-height: 20px;
             }
 
             .mat-form-field-infix {
@@ -66,13 +57,6 @@
                 top: -1px;
             }
 
-            .mat-input-element.adf-property-normal-mode {
-                color: var(--theme-metadata-property-panel-title-color);
-                margin-top: 32px;
-                padding: 6px 0;
-                line-height: 20px;
-            }
-
             .mat-select.adf-property-select-edit-mode {
                 padding: 6px 0 6px 12px;
                 margin-top: 0;
@@ -84,6 +68,24 @@
                     color: var(--theme-metadata-property-panel-text-color);
                 }
             }
+        }
+    }
+
+    .adf-property-value {
+        color: var(--theme-metadata-property-panel-text-color);
+
+        &.adf-property-value-editable {
+            background-color: var(--theme-metadata-buttons-background-color);
+            border-radius: 6px;
+
+            &.mat-input-element {
+                padding: 6px 0 6px 12px;
+                margin: 32px 0 0;
+            }
+        }
+
+        &-has-error {
+            border: 1px solid var(--theme-warn-color);
         }
     }
 }

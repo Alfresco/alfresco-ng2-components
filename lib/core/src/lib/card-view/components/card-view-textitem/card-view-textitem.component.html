@@ -16,8 +16,7 @@
                 class="adf-property-value"
                 [ngClass]="{
                     'adf-property-value-editable': editable,
-                    'adf-property-normal-mode': !editable,
-                    'adf-property-field-has-error': isEditable && hasErrors
+                    'adf-property-vaalue-has-error': isEditable && hasErrors
                 }"
                 title="{{property.label | translate }}"
                 [placeholder]="property.default"
@@ -36,10 +35,7 @@
                 [cdkAutosizeMaxRows]="1"
                 [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
-                [ngClass]="{
-                    'adf-property-value-editable': editable,
-                    'adf-property-normal-mode':!editable
-                }"
+                [ngClass]="{'adf-property-value-editable': editable}"
                 [placeholder]="property.default"
                 [attr.aria-label]="property.label | translate"
                 [formControl]="textInput"
@@ -69,10 +65,7 @@
             [floatLabel]="'never'">
             <input matInput
                 class="adf-property-value"
-                [ngClass]="{
-                    'adf-property-value-editable': editable,
-                    'adf-property-normal-mode': !editable
-                }"
+                [ngClass]="{'adf-property-value-editable': editable}"
                 title="{{property.label | translate }}"
                 [placeholder]="editedValue ? '' : property.default | translate"
                 [attr.aria-label]="property.label | translate"
@@ -101,8 +94,7 @@
                 [ngClass]="{
                     'adf-property-value-editable': editable,
                     'adf-textitem-clickable-value': !isEditable,
-                    'adf-property-normal-mode':!editable,
-                    'adf-property-field-has-error': isEditable && hasErrors
+                    'adf-property-value-has-error': isEditable && hasErrors
                 }"
                 [placeholder]="property.default"
                 [attr.aria-label]="property.label | translate"
