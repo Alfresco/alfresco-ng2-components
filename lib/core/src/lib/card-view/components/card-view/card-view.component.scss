@@ -73,5 +73,12 @@
         &-has-error {
             border: 1px solid var(--theme-warn-color);
         }
+
+        &-input {
+            background-color: var(--theme-metadata-buttons-background-color);
+            border-radius: 6px;
+            padding: 6px 0;
+            margin: 0 !important;
+        }
     }
 }
