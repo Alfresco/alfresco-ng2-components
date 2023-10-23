@@ -65,7 +65,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
                 (notification: NotificationModel) => !notification.read
             ) || [];
-        this.badgeHidden = !this.isbadgeVisible();
+        this.badgeHidden = !this.isBadgeVisible();
     }
 
     ngAfterViewInit(): void {
@@ -83,7 +83,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     addNewNotification(notification: NotificationModel) {
-        this.badgeHidden = !this.isbadgeVisible();
+        this.badgeHidden = !this.isBadgeVisible();
         this.unreadNotifications.unshift(notification);
 
         if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
@@ -100,7 +100,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         });
 
         this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
-        this.badgeHidden = !this.isbadgeVisible();
+        this.badgeHidden = !this.isBadgeVisible();
     }
 
     onMenuOpened() {
@@ -123,7 +123,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             notification.read = true;
         });
 
-        this.badgeHidden = !this.isbadgeVisible();
+        this.badgeHidden = !this.isBadgeVisible();
         this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
         this.paginatedNotifications = [];
         this.createPagination();
@@ -157,7 +157,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
     }
 
-    isbadgeVisible(): boolean {
+    isBadgeVisible(): boolean {
         return this.unreadNotifications.length > 0;
     }
 }
