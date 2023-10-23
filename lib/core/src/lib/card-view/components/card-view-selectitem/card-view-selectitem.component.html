@@ -2,28 +2,24 @@
     <div
         [attr.data-automation-id]="'card-select-label-' + property.key"
         class="adf-property-label"
-        [ngClass]="{'adf-property-label-not-editable': isNonEditableField, 'adf-property-editable-property' : isEditable()}"
+        [ngClass]="{'adf-property-value-editable' : isEditable()}"
     >{{ property.label | translate }}</div>
     <div class="adf-property-field">
         <div
             *ngIf="!isEditable()"
-            class="adf-select-item-padding adf-property-value"
+            class="adf-property-value adf-property-read-only"
             [attr.data-automation-id]="'select-readonly-value-' + property.key"
             data-automation-class="read-only-value">{{ (property.displayValue | async) | translate }}
         </div>
         <div *ngIf="isEditable()">
-            <mat-form-field class="adf-select-item-padding-editable adf-property-value">
+            <mat-form-field class="adf-property-value" [ngClass]="{'adf-property-value-editable' : isEditable()}">
                 <mat-select
                     [(value)]="value"
                     panelClass="adf-select-filter"
-                    [ngClass]="{'adf-property-select-edit-mode' : isEditable(),'adf-property-normal-mode':!isEditable(),'adf-property-label-not-editable' : isNonEditableField}"
                     (selectionChange)="onChange($event)"
                     data-automation-class="select-box"
-                    [aria-label]="property.label | translate"
-                >
-
+                    [aria-label]="property.label | translate">
                     <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)"></adf-select-filter-input>
-
                     <mat-option *ngIf="showNoneOption()">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
                     <mat-option
                         *ngFor="let option of list$ | async"

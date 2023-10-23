@@ -1,16 +1,27 @@
-.mat-form-field-type-mat-select {
-    width: 100%;
-}
+.adf-card-view-selectitem {
+    .adf-property-value {
+        width: 100%;
+    }
 
-.adf-select-item-padding-editable {
-    padding: 6px 0;
-}
+    .adf-select-filter-input {
+        background: var(--adf-theme-background-card-color);
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
 
-.adf-select-filter-input {
-    background: var(--adf-theme-background-card-color);
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
+    .adf-property-value-editable {
+        mat-select {
+            padding: 6px 0 6px 12px;
+            margin-top: 0;
+            border-radius: 6px;
+        }
+    }
+
+    .adf-property-read-only {
+        padding: 6px 0;
+        border-bottom: 1px solid var(--theme-metadata-property-panel-border-color);
+    }
 }
