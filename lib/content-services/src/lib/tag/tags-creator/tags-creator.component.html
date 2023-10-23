@@ -10,7 +10,7 @@
                     placeholder="{{'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate}}"
             />
         </div>
-        <mat-error *ngIf="tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
+        <mat-error *ngIf="tagNameControl.invalid && tagNameControl.touched">{{ tagNameErrorMessageKey | translate }}</mat-error>
     </div>
     <p
        class="adf-no-tags-message"
