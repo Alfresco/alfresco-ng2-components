@@ -27,14 +27,14 @@
         border-radius: 6px;
         padding-left: 12px;
 
-        .mat-select-value { 
+        .mat-select-value {
             color: var(--theme-metadata-property-panel-text-color);
         }
 
         .adf-dateitem-editable {
             .adf-datepicker-toggle {
                 color: var(--theme-metadata-property-panel-text-color);
-            } 
+            }
         }
     }
 
@@ -43,7 +43,7 @@
             padding: 6px;
         }
     }
-    
+
     &-dateitem-chip-list-container.adf-property-field {
         margin-bottom: -7px !important;
         border-bottom: 0;
@@ -87,21 +87,6 @@
 
             .adf-datepicker-toggle {
                 flex: 1 0 auto;
-            }
-
-            mat-icon.adf-date-reset-icon {
-                line-height: 10px;
-                font-size: var(--theme-subheading-2-font-size);
-                width: 16px;
-                height: 16px;
-                position: relative;
-                top: 4px;
-                padding-left: 8px;
-                opacity: 0.3;
-            }
-
-            &:hover mat-icon.adf-date-reset-icon {
-                opacity: 1;
             }
         }
     }

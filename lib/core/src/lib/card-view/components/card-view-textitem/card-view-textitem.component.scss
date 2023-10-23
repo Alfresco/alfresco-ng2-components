@@ -2,7 +2,7 @@
     &-property-field .mat-form-field-underline {
         display: none;
     }
-    
+
     &-textitem-edit-icon.mat-icon {
         font-size: var(--theme-subheading-2-font-size);
         width: 16px;
@@ -161,45 +161,5 @@
 
     &-textitem-multiline {
         display: block;
-    }
-}
-
-.adf-property-field {
-    .adf-property-clear-value,
-    .adf-textitem-edit-value {
-        width: 30px;
-        height: 30px;
-    }
-}
-
-.mat-form-field:not(.adf-textitem-chip-list-input) {
-    .mat-form-field-suffix {
-        .adf-textitem-edit-icon {
-            display: block;
-        }
-
-        .adf-textitem-clear-icon {
-            display: none;
-        }
-
-        .adf-textitem-edit-icon,
-        .adf-textitem-clear-icon {
-            background: transparent;
-            border: none;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-
-        &:hover {
-            .adf-textitem-edit-icon {
-                display: none;
-            }
-
-            .adf-textitem-clear-icon {
-                display: block;
-            }
-        }
     }
 }

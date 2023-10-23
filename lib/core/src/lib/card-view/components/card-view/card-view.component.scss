@@ -1,4 +1,3 @@
-/* stylelint-disable no-descending-specificity */
 .adf-property-list {
     background: var(--adf-card-view-background);
     border: var(--adf-card-view-border);
@@ -6,7 +5,6 @@
     border-radius: var(--adf-card-view-border-radius);
 
     .adf-property {
-
         .adf-property-value-padding-top {
             display: flex;
             flex-direction: column;
@@ -20,14 +18,9 @@
 
         .adf-property-label-not-editable {
             color: var(--theme-metadata-property-panel-label-color);
-
-            .mat-tooltip-trigger {
-                padding-left: 12px;
-            }
         }
 
         .adf-property-editable-property {
-
             .adf-property-label {
                 color: var(--theme-metadata-property-panel-title-color);
             }
@@ -60,7 +53,7 @@
                 display: flex;
                 flex-direction: column;
                 height: 20px;
-                transform: translateY(-1.34373em) scale(1);
+                transform: translateY(-1.3437em) scale(1);
             }
 
             .mat-form-field-label-wrapper {
@@ -92,7 +85,7 @@
             .mat-input-element.adf-property-label-not-editable {
                 color: var(--theme-metadata-property-panel-label-color);
             }
-            
+
             .mat-select.adf-property-select-edit-mode {
                 padding: 6px 0 6px 12px;
                 margin-top: 0;
