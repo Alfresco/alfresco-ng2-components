@@ -186,7 +186,7 @@ and pass custom attributes, if your component supports them:
 
 -   [Search filter component](../components/search-filter.component.md)
 -   [Search check list component](../components/search-check-list.component.md)
--   [Search date range component](../components/search-date-range.component.md)
+-   [Search date range advanced tabbed component](../components/search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](../components/search-number-range.component.md)
 -   [Search radio component](../components/search-radio.component.md)
 -   [Search slider component](../components/search-slider.component.md)

@@ -63,7 +63,7 @@ details of how to use widgets in a search query.
 -   [Search filter chips component](search-filter-chips.component.md)
 -   [Search filter component](search-filter.component.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
+-   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)
 -   [Search slider component](search-slider.component.md)

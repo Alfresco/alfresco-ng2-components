@@ -36,7 +36,7 @@ to build and execute the query.
 -   [Search Sorting Picker Component](search-sorting-picker.component.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
+-   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
 -   [Search date range advanced component](search-date-range-advanced.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)

@@ -50,7 +50,7 @@ Represents an input with autocomplete options.
 -   [Search Filter Autocomplete Chips component](search-filter-autocomplete-chips.component.md)
 -   [Search Logical Filter component](search-logical-filter.component.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
+-   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)
 -   [Search slider component](search-slider.component.md)

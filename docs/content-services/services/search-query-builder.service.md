@@ -139,7 +139,7 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 -   [Search Form Component](../components/search-form.component.md)
 -   [Search Widget interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](../components/search-check-list.component.md)
--   [Search date range component](../components/search-date-range.component.md)
+-   [Search date range advanced tabbed component](../components/search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](../components/search-number-range.component.md)
 -   [Search radio component](../components/search-radio.component.md)
 -   [Search slider component](../components/search-slider.component.md)

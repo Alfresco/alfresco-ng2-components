@@ -70,7 +70,7 @@ here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-com
 -   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search Widget Interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
+-   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)
 -   [Search slider component](search-slider.component.md)

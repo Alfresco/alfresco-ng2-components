@@ -385,7 +385,7 @@ backend services have been tested with each released version of ADF.
 -   [Info drawer tab component](core/components/info-drawer-tab.component.md)
 -   [Node permission dialog service](content-services/services/node-permission-dialog.service.md)
 -   [Search check list component](content-services/components/search-check-list.component.md)
--   [Search date range component](content-services/components/search-date-range.component.md)
+-   Search date range component
 -   [Search filter service](content-services/services/search-filter.service.md)
 -   [Search number range component](content-services/components/search-number-range.component.md)
 -   [Search radio component](content-services/components/search-radio.component.md)

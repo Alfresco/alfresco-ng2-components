@@ -59,7 +59,7 @@ See the [Search Chip Autocomplete Input component](search-chip-autocomplete-inpu
 -   [Search Chip Autocomplete Input component](search-chip-autocomplete-input.component.md)
 -   [Search Chip Input component](search-chip-input.component.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range component](search-date-range.component.md)
+-   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)
 -   [Search slider component](search-slider.component.md)
