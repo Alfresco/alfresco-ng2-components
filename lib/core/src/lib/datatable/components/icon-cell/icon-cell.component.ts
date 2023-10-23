@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { takeUntil } from 'rxjs/operators';
@@ -37,14 +37,19 @@ import { takeUntil } from 'rxjs/operators';
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
     protected icon: string = '';
 
+    constructor(private changeDetectorRef: ChangeDetectorRef) {
+        super();
+    }
+
     ngOnInit(): void {
+        super.ngOnInit();
         this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
             this.icon = this.validateIconValue(value) ? value : '';
+            this.changeDetectorRef.detectChanges();
         });
-        super.ngOnInit();
     }
 
     private validateIconValue(value: any): boolean {
         return typeof value === 'string';
-    };
+    }
 }

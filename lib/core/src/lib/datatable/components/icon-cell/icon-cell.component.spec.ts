@@ -80,8 +80,11 @@ describe('IconCellComponent', () => {
     });
 
     describe('UI', () => {
-        it('should render icon element in case of non-empty string', () => {
+        it('should render icon element in case of non-empty string (icon name validation NOT included)', () => {
             renderAndCheckResult('group', true, 'group');
+            renderAndCheckResult('groupe', true, 'groupe');
+            renderAndCheckResult('0', true, '0');
+            renderAndCheckResult('false', true, 'false');
         });
 
         describe('should NOT render icon element in case of', () => {
