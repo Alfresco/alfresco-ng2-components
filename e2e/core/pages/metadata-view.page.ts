@@ -110,6 +110,7 @@ export class MetadataViewPage {
     }
 
     async clickEditIconGeneral(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.editIconGeneral);
         await BrowserActions.click(this.editIconGeneral);
     }
 
