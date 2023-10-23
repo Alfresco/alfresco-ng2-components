@@ -16,6 +16,7 @@
 
         &.adf-property-value-editable {
             background-color: var(--theme-metadata-buttons-background-color);
+            border-radius: 6px;
         }
     }
 
@@ -70,20 +71,6 @@
                 margin-top: 32px;
                 padding: 6px 0;
                 line-height: 20px;
-            }
-
-            .mat-input-element.adf-property-edit-mode {
-                padding: 6px 0 6px 12px;
-                margin-top: 32px;
-                line-height: 20px;
-                background-color: var(--theme-metadata-buttons-background-color);
-                color: var(--theme-metadata-property-panel-text-color);
-                border-radius: 6px;
-            }
-
-            .mat-chip-input.mat-input-element.adf-property-edit-mode {
-                margin-top: 6px;
-                margin-left: 0;
             }
 
             .mat-select.adf-property-select-edit-mode {

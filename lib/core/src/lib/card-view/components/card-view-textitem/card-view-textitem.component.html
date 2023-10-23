@@ -2,9 +2,7 @@
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
             [ngClass]="{
-                'adf-property-read-only': !isEditable,
-                'adf-property-editable-property': isEditable,
-                'adf-property-field-has-error mat-form-field-invalid': isEditable && hasErrors
+                'adf-property-read-only': !isEditable
             }"
             [floatLabel]="'always'"
             appearance="standard">
@@ -12,56 +10,56 @@
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
                 {{ property.label | translate }}
             </mat-label>
-                <input matInput
-                    *ngIf="!property.multiline"
-                    class="adf-property-value"
-                    [ngClass]="{
-                        'adf-property-value-editable': editable,
-                        'adf-property-edit-mode': editable,
-                        'adf-property-normal-mode': !editable
-                    }"
-                    title="{{property.label | translate }}"
-                    [placeholder]="property.default"
-                    [attr.aria-label]="property.label | translate"
-                    [formControl]="textInput"
-                    (dblclick)="copyToClipboard(property.displayValue)"
-                    matTooltipShowDelay="1000"
-                    [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-                    [matTooltipDisabled]="isEditable"
-                    [attr.data-automation-id]="'card-textitem-value-' + property.key"
-                    (keydown)="undoText($event)">
-                <textarea matInput
-                    *ngIf="property.multiline"
-                    title="{{property.label | translate }}"
-                    [cdkTextareaAutosize]="true"
-                    [cdkAutosizeMaxRows]="1"
-                    [cdkAutosizeMaxRows]="5"
-                    class="adf-property-value"
-                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable}"
-                    [placeholder]="property.default"
-                    [attr.aria-label]="property.label | translate"
-                    [formControl]="textInput"
-                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
-                </textarea>
 
+            <input matInput
+                *ngIf="!property.multiline"
+                class="adf-property-value"
+                [ngClass]="{
+                    'adf-property-value-editable': editable,
+                    'adf-property-normal-mode': !editable,
+                    'adf-property-field-has-error': isEditable && hasErrors
+                }"
+                title="{{property.label | translate }}"
+                [placeholder]="property.default"
+                [attr.aria-label]="property.label | translate"
+                [formControl]="textInput"
+                (dblclick)="copyToClipboard(property.displayValue)"
+                matTooltipShowDelay="1000"
+                [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                [matTooltipDisabled]="isEditable"
+                [attr.data-automation-id]="'card-textitem-value-' + property.key"
+                (keydown)="undoText($event)">
+            <textarea matInput
+                *ngIf="property.multiline"
+                title="{{property.label | translate }}"
+                [cdkTextareaAutosize]="true"
+                [cdkAutosizeMaxRows]="1"
+                [cdkAutosizeMaxRows]="5"
+                class="adf-property-value"
+                [ngClass]="{
+                    'adf-property-value-editable': editable,
+                    'adf-property-normal-mode':!editable
+                }"
+                [placeholder]="property.default"
+                [attr.aria-label]="property.label | translate"
+                [formControl]="textInput"
+                [attr.data-automation-id]="'card-textitem-value-' + property.key">
+            </textarea>
         </mat-form-field>
-        <mat-divider *ngIf="showDivider"></mat-divider>
     </div>
 
     <div *ngSwitchCase="'chipsTemplate'"
-         class="adf-property-field adf-textitem-chip-list-container"
-         [ngClass]="{'adf-property-editable-property' : isEditable}">
+        class="adf-property-field adf-textitem-chip-list-container"
+        [ngClass]="{'adf-property-read-only': !isEditable}">
         <mat-label *ngIf="showLabelForChips" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label">
             {{ property.label | translate }}
         </mat-label>
-        <mat-chip-list #chipList
-            class="adf-textitem-chip-list">
+        <mat-chip-list #chipList class="adf-textitem-chip-list">
             <mat-chip *ngFor="let propertyValue of editedValue; let idx = index"
                 [removable]="isEditable"
                 (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable"
-                    matChipRemove>cancel</mat-icon>
+                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
             </mat-chip>
         </mat-chip-list>
 
@@ -71,7 +69,10 @@
             [floatLabel]="'never'">
             <input matInput
                 class="adf-property-value"
-                [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable}"
+                [ngClass]="{
+                    'adf-property-value-editable': editable,
+                    'adf-property-normal-mode': !editable
+                }"
                 title="{{property.label | translate }}"
                 [placeholder]="editedValue ? '' : property.default | translate"
                 [attr.aria-label]="property.label | translate"
@@ -80,7 +81,6 @@
                 (matChipInputTokenEnd)="addValueToList($event)"
                 [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key">
         </mat-form-field>
-        <mat-divider *ngIf="showDivider"></mat-divider>
     </div>
 
     <div *ngSwitchCase="'clickableTemplate'"
@@ -98,7 +98,12 @@
                 [type]=property.inputType
                 class="adf-property-value"
                 title="{{property.label | translate }}"
-                [ngClass]="{'adf-textitem-clickable-value': !isEditable,'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable}"
+                [ngClass]="{
+                    'adf-property-value-editable': editable,
+                    'adf-textitem-clickable-value': !isEditable,
+                    'adf-property-normal-mode':!editable,
+                    'adf-property-field-has-error': isEditable && hasErrors
+                }"
                 [placeholder]="property.default"
                 [attr.aria-label]="property.label | translate"
                 [(ngModel)]="editedValue"

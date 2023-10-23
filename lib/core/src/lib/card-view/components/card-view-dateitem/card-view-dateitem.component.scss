@@ -9,11 +9,8 @@
             border-bottom: inherit;
         }
     }
-}
 
-/* stylelint-disable no-descending-specificity */
-.adf {
-    &-invisible-date-input {
+    .adf-invisible-date-input {
         height: 2px;
         width: 0;
         overflow: hidden;
@@ -24,7 +21,7 @@
         float: right;
     }
 
-    &-dateitem-chip-list-container.adf-property-field {
+    .adf-dateitem-chip-list-container.adf-property-field {
         margin-bottom: -7px !important;
         border-bottom: 0;
         cursor: pointer;
@@ -40,10 +37,11 @@
         }
     }
 
-    &-dateitem-editable {
+    .adf-dateitem-editable {
         cursor: pointer;
         padding: 0 12px;
 
+        /* stylelint-disable-next-line no-descending-specificity */
         &-controls {
             display: flex;
             align-items: center;

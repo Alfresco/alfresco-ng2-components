@@ -233,12 +233,4 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     get showLabelForChips(): boolean {
         return this.displayLabelForChips;
     }
-
-    get showDivider(): boolean {
-        return !this.editable && this.showProperty;
-    }
-
-    get isNonEditableField(): boolean {
-        return this.editable && !this.property.editable;
-    }
 }

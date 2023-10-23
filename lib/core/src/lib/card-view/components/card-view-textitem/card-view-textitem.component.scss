@@ -37,17 +37,32 @@
         cursor: pointer !important;
         padding-top: 3px;
 
-        &:hover .adf-textitem-action {
+        .adf-textitem-action:hover {
             color: var(--adf-theme-foreground-text-color);
         }
-    }
 
-    .adf-textitem-clickable-value {
-        cursor: pointer !important;
-        color: var(--theme-primary-color) !important;
+        &-value {
+            cursor: pointer !important;
+            color: var(--theme-primary-color) !important;
+        }
     }
 
     .adf-textitem-default-value {
         color: var(--adf-theme-foreground-text-color-054);
+    }
+
+    .adf-property-read-only {
+        border-bottom: 1px solid var(--theme-metadata-property-panel-border-color);
+    }
+
+    .adf-property-value-editable {
+        &.mat-input-element {
+            padding: 6px 0 6px 12px;
+            margin-top: 32px;
+        }
+    }
+
+    .adf-property-field-has-error {
+        border: 1px solid var(--theme-warn-color);
     }
 }
