@@ -1,16 +1,16 @@
 <div class="adf-tags-creation">
     <div *ngIf="tagNameControlVisible" class="adf-tag-name-field">
-        <mat-form-field class="adf-tag-search-field" appearance="fill">
+        <div class="adf-tag-search-field">
             <input #tagNameInput
-                    matInput 
+                    matInput
                     autocomplete="off"
                     [formControl]="tagNameControl"
                     (keyup.enter)="addTag()"
                     adf-auto-focus
-                    placeholder="{{'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate}}" 
+                    placeholder="{{'TAG.TAGS_CREATOR.TAG_SEARCH_PLACEHOLDER' | translate}}"
             />
-            <mat-error *ngIf="tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
-        </mat-form-field >
+        </div>
+        <mat-error *ngIf="tagNameControl.invalid">{{ tagNameErrorMessageKey | translate }}</mat-error>
     </div>
     <p
        class="adf-no-tags-message"

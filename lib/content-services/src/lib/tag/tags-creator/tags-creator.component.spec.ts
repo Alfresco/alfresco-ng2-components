@@ -326,8 +326,7 @@ describe('TagsCreatorComponent', () => {
             it('should return true when tags empty and non editable state', () => {
                 component.tags = [];
                 component.tagNameControlVisible = false;
-                const result = component.showEmptyTagMessage;
-                expect(result).toBeTrue();
+                expect(component.showEmptyTagMessage).toBeTrue();
             });
         });
 

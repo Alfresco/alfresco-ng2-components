@@ -27,39 +27,17 @@ adf-tags-creator {
 
     .adf-tag-name-field,
     .adf-tag-name-field[hidden] {
-        display: flex;
-        align-items: center;
-        min-height: 57px;
-
-        mat-form-field {
-            width: 100%;
-            box-sizing: border-box;
-            padding-right: 3px;
-            font-size: 14px;
-        }
-
-        .mat-form-field-appearance-fill .mat-form-field-flex {
-            background: none;
-        }
-
-        .mat-form-field-appearance-fill .mat-form-field-infix {
-            padding: 0;
-        }
+        padding-top: 10px;
     }
 
     .adf-tag-search-field {
         background: var(--theme-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
-        align-items: center;
-        display: flex;
 
-        .mat-form-field-underline {
-            display: none;
-        }
-
-        .mat-form-field-wrapper {
-            width: 100%;
+        input {
+            height: 100%;
+            padding-left: 8px;
         }
     }
 
