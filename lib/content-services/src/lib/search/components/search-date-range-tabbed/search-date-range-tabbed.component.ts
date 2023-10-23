@@ -17,12 +17,12 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SearchDateRangeAdvanced } from './search-date-range-advanced/search-date-range-advanced';
-import { DateRangeType } from './search-date-range-advanced/date-range-type';
+import { DateRangeType } from './search-date-range/date-range-type';
+import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { InLastDateType } from './search-date-range-advanced/in-last-date-type';
+import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
 import {
     endOfDay,
@@ -38,14 +38,14 @@ import {
 } from 'date-fns';
 
 @Component({
-  selector: 'adf-search-date-range-advanced-tabbed',
-  templateUrl: './search-date-range-advanced-tabbed.component.html',
+  selector: 'adf-search-date-range-tabbed',
+  templateUrl: './search-date-range-tabbed.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnInit {
+export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new Subject<string>();
     id: string;
-    startValue: SearchDateRangeAdvanced = {
+    startValue: SearchDateRange = {
         dateRangeType: DateRangeType.ANY,
         inLastValueType: InLastDateType.DAYS,
         inLastValue: undefined,
@@ -59,7 +59,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
     combinedQuery: string;
     combinedDisplayValue: string;
 
-    private value: { [key: string]: Partial<SearchDateRangeAdvanced> } = {};
+    private value: { [key: string]: Partial<SearchDateRange> } = {};
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
 
@@ -69,7 +69,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         this.fields = this.settings?.field.split(',').map(field => field.trim());
     }
 
-    getCurrentValue(): { [key: string]: Partial<SearchDateRangeAdvanced> } {
+    getCurrentValue(): { [key: string]: Partial<SearchDateRange> } {
         return this.value;
     }
 
@@ -86,7 +86,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         this.submitValues();
     }
 
-    setValue(value: { [key: string]: SearchDateRangeAdvanced }) {
+    setValue(value: { [key: string]: SearchDateRange }) {
         this.value = value;
     }
 
@@ -97,13 +97,13 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
             this.context.update();
         }
     }
-    onDateRangedValueChanged(value: Partial<SearchDateRangeAdvanced>, field: string) {
+    onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {
         this.value[field] = value;
         this.updateQuery(value, field);
         this.updateDisplayValue(value, field);
     }
 
-    private generateQuery(value: Partial<SearchDateRangeAdvanced>, field: string): string {
+    private generateQuery(value: Partial<SearchDateRange>, field: string): string {
         let query = '';
         let startDate: Date;
         let endDate: Date;
@@ -136,7 +136,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         return query;
     }
 
-    private generateDisplayValue(value: Partial<SearchDateRangeAdvanced>): string {
+    private generateDisplayValue(value: Partial<SearchDateRange>): string {
         let displayValue = '';
         if (value.dateRangeType === DateRangeType.IN_LAST && value.inLastValue) {
             displayValue = this.translateService.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${value.inLastValueType}`, {
@@ -148,7 +148,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         return displayValue;
     }
 
-    private updateQuery(value: Partial<SearchDateRangeAdvanced>, field: string) {
+    private updateQuery(value: Partial<SearchDateRange>, field: string) {
         this.combinedQuery = '';
         this.queryMapByField.set(field, this.generateQuery(value, field));
         this.queryMapByField.forEach((query: string) => {
@@ -158,7 +158,7 @@ export class SearchDateRangeAdvancedTabbedComponent implements SearchWidget, OnI
         });
     }
 
-    private updateDisplayValue(value: Partial<SearchDateRangeAdvanced>, field: string) {
+    private updateDisplayValue(value: Partial<SearchDateRange>, field: string) {
         this.combinedDisplayValue = '';
         this.displayValueMapByField.set(field, this.generateDisplayValue(value));
         this.displayValueMapByField.forEach((displayValue: string, fieldForDisplayLabel: string) => {

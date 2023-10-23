@@ -34,7 +34,7 @@ with the name input property being assigned the value of whatever name should be
 - [Search Widget Interface](../interfaces/search-widget.interface.md)
 - [Search check list component](search-check-list.component.md)
 - [Search date range component](search-date-range.component.md)
-- [Search date range advanced component](search-date-range-advanced.component.md)
+- [Search date range component](search-date-range.component.md)
 - [Search number range component](search-number-range.component.md)
 - [Search radio component](search-radio.component.md)
 - [Search slider component](search-slider.component.md)

@@ -52,8 +52,8 @@ import { SearchLogicalFilterComponent } from './components/search-logical-filter
 import { ResetSearchDirective } from './components/reset-search.directive';
 import { SearchPropertiesComponent } from './components/search-properties/search-properties.component';
 import { SearchFilterTabbedComponent } from './components/search-filter-tabbed/search-filter-tabbed.component';
-import { SearchDateRangeAdvancedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component';
-import { SearchDateRangeAdvancedTabbedComponent } from './components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component';
+import { SearchDateRangeComponent } from './components/search-date-range-tabbed/search-date-range/search-date-range.component';
+import { SearchDateRangeTabbedComponent } from './components/search-date-range-tabbed/search-date-range-tabbed.component';
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
@@ -96,8 +96,8 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         ResetSearchDirective,
         SearchPropertiesComponent,
         SearchFilterTabbedComponent,
-        SearchDateRangeAdvancedComponent,
-        SearchDateRangeAdvancedTabbedComponent,
+        SearchDateRangeComponent,
+        SearchDateRangeTabbedComponent,
         SearchFilterTabDirective,
         SearchFacetChipTabbedComponent,
         SearchFacetTabbedContentComponent
@@ -126,7 +126,8 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchFacetFieldComponent,
         SearchLogicalFilterComponent,
         SearchFilterTabbedComponent,
-        SearchDateRangeAdvancedComponent,
+        SearchDateRangeComponent,
+        SearchDateRangeTabbedComponent,
         ResetSearchDirective,
         SearchFacetChipTabbedComponent,
         SearchFacetTabbedContentComponent

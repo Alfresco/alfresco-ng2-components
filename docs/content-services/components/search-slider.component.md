@@ -73,7 +73,7 @@ or zero and the corresponsing query fragment is removed from the query.
 -   [Search filter chips component](search-filter-chips.component.md)
 -   [Search filter component](search-filter.component.md)
 -   [Search check list component](search-check-list.component.md)
--   [Search date range advanced tabbed component](search-date-range-advanced-tabbed.component.md)
+-   [Search date range tabbed component](search-date-range-tabbed.component.md)
 -   [Search number range component](search-number-range.component.md)
 -   [Search radio component](search-radio.component.md)
 -   [Search text component](search-text.component.md)

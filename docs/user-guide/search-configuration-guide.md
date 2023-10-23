@@ -297,7 +297,7 @@ a category:
 | [`Widget`](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) name | Selector | Description                                                                  |
 |----------------------------------------------------------------------------------------------| -------- |------------------------------------------------------------------------------|
 | [Check List](../content-services/components/search-check-list.component.md)                  | `check-list` | Toggles individual query fragments for the search                            |
-| [Date Range](../content-services/components/search-date-range-advanced.component.md)         | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
+| [Date Range](../content-services/components/search-date-range.component.md)         | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
 | [Number Range](../content-services/components/search-number-range.component.md)              | `number-range` | Specifies a range of numeric values that a field may contain                 |
 | [Radio List](../content-services/components/search-radio.component.md)                       | `radio` | Selects one query fragment from a list of options                            |
 | [Slider](../content-services/components/search-slider.component.md)                          | `slider` | Selects a single numeric value in a given range that a field may contain     |
@@ -589,7 +589,7 @@ then be added in each node entry response. An example partial response is shown 
 -   [Search Form Component](../content-services/components/search-form.component.md)
 -   [Search Widget interface](../interfaces/search-widget.interface.md)
 -   [Search check list component](../content-services/components/search-check-list.component.md)
--   [Search date range advanced tabbed component](../content-services/components/search-date-range-advanced-tabbed.component.md)
+-   [Search date range tabbed component](../content-services/components/search-date-range-tabbed.component.md)
 -   [Search number range component](../content-services/components/search-number-range.component.md)
 -   [Search radio component](../content-services/components/search-radio.component.md)
 -   [Search slider component](../content-services/components/search-slider.component.md)

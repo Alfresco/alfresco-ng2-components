@@ -1,16 +1,16 @@
 ---
-Title: Search date range advanced tabbed component
+Title: Search date range tabbed component
 Added: v6.2.0
 Status: Active
 Last reviewed: 2023-07-10
 ---
 
-# [Search date range advanced tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-advanced-tabbed/search-date-range-advanced-tabbed.component.ts "Defined in search-date-range-advanced-tabbed.component.ts")
+# [Search date range tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-tabbed/search-date-range-tabbed.component.ts "Defined in search-date-range-tabbed.component.ts")
 
 Represents a tabbed advanced date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for
 the [Search Filter component](search-filter.component.md).
 
-![Date Range Advanced Widget](../../docassets/images/search-date-range-advanced-tabbed.png)
+![Date Range Tabbed Widget](../../docassets/images/search-date-range-tabbed.png)
 
 ## Basic usage
 
@@ -23,7 +23,7 @@ the [Search Filter component](search-filter.component.md).
                 "name": "Date",
                 "enabled": true,
                 "component": {
-                    "selector": "date-range-advanced",
+                    "selector": "date-range",
                     "settings": {
                         "dateFormat": "dd-MMM-yy",
                         "maxDate": "today",
@@ -51,7 +51,7 @@ the [Search Filter component](search-filter.component.md).
 
 ## Details
 
-This component creates a tabbed layout where each tab consists of the [SearchDateRangeAdvanced](./search-date-range-advanced-tabbed.component.md) component, which allows user to create a query containing multiple date related queries in one go. 
+This component creates a tabbed layout where each tab consists of the [SearchDateRange](./search-date-range-tabbed.component.md) component, which allows user to create a query containing multiple date related queries in one go. 
 
 See the [Search filter component](search-filter.component.md) for full details of how to use widgets in a search query.
 
@@ -70,7 +70,7 @@ in the `dateFormat` and in the `maxDate` setting:
                 "name": "Date",
                 "enabled": true,
                 "component": {
-                    "selector": "date-range-advanced",
+                    "selector": "date-range",
                     "settings": {
                         "dateFormat": "dd-MMM-yy",
                         "maxDate": "02-May-23",
@@ -87,7 +87,7 @@ in the `dateFormat` and in the `maxDate` setting:
 }
 ```
 
-The [SearchDateRangeAdvanced](./search-date-range-advanced-tabbed.component.md) component allows 3 different kinds of date related operations to be performed.
+The [SearchDateRange](./search-date-range.component.md) component allows 3 different kinds of date related operations to be performed.
 Based on what information is provided to that component, this component will create different kinds of queries -
 
 - Anytime - No date filters are applied on the `field`. This option is selected by default

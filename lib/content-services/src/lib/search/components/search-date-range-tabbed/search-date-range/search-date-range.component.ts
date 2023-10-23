@@ -22,7 +22,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
-import { SearchDateRangeAdvanced } from './search-date-range-advanced';
+import { SearchDateRange } from './search-date-range';
 import { FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alfresco/adf-core';
@@ -30,17 +30,17 @@ import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alf
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-    selector: 'adf-search-date-range-advanced',
-    templateUrl: './search-date-range-advanced.component.html',
-    styleUrls: ['./search-date-range-advanced.component.scss'],
+    selector: 'adf-search-date-range',
+    templateUrl: './search-date-range.component.html',
+    styleUrls: ['./search-date-range.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: DateFnsAdapter, deps: [ MAT_DATE_LOCALE ] },
         { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None,
-    host: {class: 'adf-search-date-range-advanced'}
+    host: {class: 'adf-search-date-range'}
 })
-export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
+export class SearchDateRangeComponent implements OnInit, OnDestroy {
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
@@ -48,18 +48,18 @@ export class SearchDateRangeAdvancedComponent implements OnInit, OnDestroy {
     @Input()
     field: string;
     @Input()
-    set initialValue(value: SearchDateRangeAdvanced) {
+    set initialValue(value: SearchDateRange) {
         if (value) {
             this.form.patchValue(value);
         }
     }
 
     @Output()
-    changed = new EventEmitter<Partial<SearchDateRangeAdvanced>>();
+    changed = new EventEmitter<Partial<SearchDateRange>>();
     @Output()
     valid = new EventEmitter<boolean>();
 
-    form = this.formBuilder.group<SearchDateRangeAdvanced>({
+    form = this.formBuilder.group<SearchDateRange>({
         dateRangeType: DateRangeType.ANY,
         inLastValueType: InLastDateType.DAYS,
         inLastValue: undefined,

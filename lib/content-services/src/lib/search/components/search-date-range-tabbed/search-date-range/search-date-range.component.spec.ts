@@ -19,27 +19,27 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { ContentTestingModule } from '../../../../testing/content.testing.module';
-import { SearchDateRangeAdvancedComponent } from './search-date-range-advanced.component';
+import { SearchDateRangeComponent } from './search-date-range.component';
 import { addDays, endOfToday, format, parse, startOfYesterday, subDays } from 'date-fns';
 import { Validators } from '@angular/forms';
 
-describe('SearchDateRangeAdvancedComponent', () => {
-    let component: SearchDateRangeAdvancedComponent;
-    let fixture: ComponentFixture<SearchDateRangeAdvancedComponent>;
+describe('SearchDateRangeComponent', () => {
+    let component: SearchDateRangeComponent;
+    let fixture: ComponentFixture<SearchDateRangeComponent>;
 
     const startDateSampleValue = parse('05-Jun-23', 'dd-MMM-yy', new Date());
     const endDateSampleValue = parse('07-Jun-23', 'dd-MMM-yy', new Date());
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchDateRangeAdvancedComponent],
+            declarations: [SearchDateRangeComponent],
             imports: [
                 TranslateModule.forRoot(),
                 ContentTestingModule
             ]
         });
 
-        fixture = TestBed.createComponent(SearchDateRangeAdvancedComponent);
+        fixture = TestBed.createComponent(SearchDateRangeComponent);
         component = fixture.componentInstance;
         component.field   = 'test-field';
         component.dateFormat = 'dd-MMM-yy';

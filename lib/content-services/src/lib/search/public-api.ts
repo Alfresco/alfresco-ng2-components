@@ -62,7 +62,7 @@ export * from './components/search-filter-chips/search-filter-chips.component';
 export * from './components/search-filter-chips/search-filter-menu-card/search-filter-menu-card.component';
 export * from './components/search-facet-field/search-facet-field.component';
 export * from './components/search-logical-filter/search-logical-filter.component';
-export * from './components/search-date-range-advanced-tabbed/search-date-range-advanced/search-date-range-advanced.component';
+export * from './components/search-date-range-tabbed/search-date-range/search-date-range.component';
 export * from './components/search-filter-tabbed/search-filter-tabbed.component';
 export * from './components/reset-search.directive';
 export * from './components/search-chip-autocomplete-input/search-chip-autocomplete-input.component';
