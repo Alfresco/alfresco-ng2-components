@@ -1,165 +1,53 @@
-.adf {
-    &-property-field .mat-form-field-underline {
-        display: none;
+.adf-card-view-textitem {
+    mat-error {
+        font-size: var(--theme-caption-font-size);
+        padding-top: 6px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+
+            li {
+                margin: 0;
+                padding: 0;
+            }
+        }
     }
 
-    &-textitem-edit-icon.mat-icon {
-        font-size: var(--theme-subheading-2-font-size);
-        width: 16px;
-        height: 16px;
-        color: var(--adf-theme-foreground-text-color-025);
-    }
-
-    &-textitem-action.mat-icon-button {
+    .adf-textitem-action {
         width: 20px;
         height: 20px;
         line-height: 20px;
         color: var(--adf-theme-foreground-text-color-025);
-    }
 
-    &-textitem-action:hover,
-    &-textitem-action:focus {
-        color: var(--adf-theme-foreground-text-color);
-    }
-
-    &-update-icon {
-        padding-left: 13px;
-    }
-
-    &-textitem-readonly {
-        cursor: pointer !important;
-
-        &:hover .adf-textitem-action,
-        &:focus .adf-textitem-action {
+        &:hover,
+        &:focus {
             color: var(--adf-theme-foreground-text-color);
         }
     }
 
-    &-textitem-chip-list-container {
+    .adf-textitem-chip-list-container {
         .mat-form-field-label {
             margin-top: 6px;
         }
     }
 
-    &-textitem-clickable {
+    .adf-textitem-clickable {
         cursor: pointer !important;
         padding-top: 3px;
-
-        .adf-textitem-edit-icon.mat-icon {
-            line-height: 16px;
-        }
 
         &:hover .adf-textitem-action {
             color: var(--adf-theme-foreground-text-color);
         }
     }
 
-    &-textitem-clickable-value {
+    .adf-textitem-clickable-value {
         cursor: pointer !important;
         color: var(--theme-primary-color) !important;
     }
 
-    &-textitem-editable {
-        &-controls {
-            display: flex;
-            align-items: center;
-
-            mat-icon:not(.adf-button-disabled):hover {
-                color: var(--adf-theme-foreground-text-color);
-                cursor: pointer !important;
-            }
-
-            mat-form-field {
-                width: 100%;
-            }
-
-            input:focus,
-            textarea:focus {
-                border: 1px solid var(--theme-accent-color-a200);
-            }
-        }
-
-        &-error {
-            font-size: var(--theme-caption-font-size);
-            padding-top: 6px;
-
-            ul {
-                margin: 0;
-                padding: 0;
-                list-style-type: none;
-
-                li {
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-        }
-    }
-
-    &-textitem-default-value {
+    .adf-textitem-default-value {
         color: var(--adf-theme-foreground-text-color-054);
-    }
-
-    &-textitem-editable .mat-form-field-wrapper {
-        margin: 0;
-        padding-bottom: 0;
-    }
-
-    &-textitem-editable .mat-form-field-underline {
-        display: none;
-    }
-
-    &-textitem-editable .mat-form-field-infix {
-        padding: 0;
-        border-top: none;
-    }
-
-    &-textitem-editable .mat-form-field-label-wrapper {
-        padding-top: 2em;
-        position: static;
-    }
-
-    &-textitem-editable .mat-form-field-label {
-        top: 4px;
-    }
-
-    &-textitem-editable .mat-input-element {
-        font-family: inherit;
-        position: relative;
-        padding-top: 6px;
-    }
-
-    &-textitem-editable .mat-input-element:focus {
-        padding: 5px;
-        left: -6px;
-        top: 0;
-    }
-
-    &-textitem-editable input.mat-input-element {
-        margin-bottom: 2px;
-    }
-
-    &-textitem-editable input.mat-input-element:focus {
-        margin-bottom: -8px;
-    }
-
-    &-textitem-scroll {
-        overflow-x: auto;
-        white-space: nowrap;
-        display: block;
-
-        &::-webkit-scrollbar {
-            height: 5px;
-        }
-
-        &:hover::-webkit-scrollbar-thumb {
-            display: block;
-            background-color: var(--adf-theme-foreground-text-color-025);
-            border-radius: 2px;
-        }
-    }
-
-    &-textitem-multiline {
-        display: block;
     }
 }

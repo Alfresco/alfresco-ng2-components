@@ -29,6 +29,10 @@
         .adf-property-field {
             width: 100%;
 
+            .mat-form-field-underline {
+                display: none;
+            }
+
             .mat-input-element {
                 text-overflow: ellipsis;
             }

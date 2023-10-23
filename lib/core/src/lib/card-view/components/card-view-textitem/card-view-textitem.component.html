@@ -1,9 +1,14 @@
 <div [ngSwitch]="templateType">
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
-            [ngClass]="{ 'adf-property-read-only': !isEditable, 'adf-property-editable-property': isEditable, 'adf-property-field-has-error mat-form-field-invalid': isEditable && hasErrors }"
+            [ngClass]="{
+                'adf-property-read-only': !isEditable,
+                'adf-property-editable-property': isEditable,
+                'adf-property-field-has-error mat-form-field-invalid': isEditable && hasErrors
+            }"
             [floatLabel]="'always'"
             appearance="standard">
+
             <mat-label *ngIf="showProperty || isEditable" [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label"
                 [ngClass]="{'adf-property-label-not-editable' : isNonEditableField}">
                 {{ property.label | translate }}
@@ -11,7 +16,12 @@
                 <input matInput
                     *ngIf="!property.multiline"
                     class="adf-property-value"
-                    [ngClass]="{'adf-property-edit-mode' : editable,'adf-property-normal-mode':!editable, 'adf-property-label-not-editable' : isNonEditableField}"
+                    [ngClass]="{
+                        'adf-property-value-editable': editable,
+                        'adf-property-edit-mode': editable,
+                        'adf-property-normal-mode': !editable,
+                        'adf-property-label-not-editable' : isNonEditableField
+                    }"
                     title="{{property.label | translate }}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -116,9 +126,9 @@
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </div>
 
-    <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"
-               class="adf-textitem-editable-error"
-               *ngIf="isEditable && hasErrors">
+    <mat-error
+        *ngIf="isEditable && hasErrors"
+        [attr.data-automation-id]="'card-textitem-error-' + property.key">
         <ul>
             <li *ngFor="let error of errors">{{ error.message | translate: error }}</li>
         </ul>
