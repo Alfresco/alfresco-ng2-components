@@ -47,7 +47,6 @@ export * from './components/search.component';
 export * from './components/search-panel/search-panel.component';
 export * from './components/search-check-list/search-check-list.component';
 export * from './components/search-chip-list/search-chip-list.component';
-export * from './components/search-date-range/search-date-range.component';
 export * from './components/search-filter/search-filter.component';
 export * from './components/search-filter-container/search-filter-container.component';
 export * from './components/search-number-range/search-number-range.component';

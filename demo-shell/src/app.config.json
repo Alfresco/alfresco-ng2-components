@@ -311,19 +311,6 @@
         }
       },
       {
-        "id": "createdDateRange",
-        "name": "Created Date (range)",
-        "enabled": true,
-        "component": {
-          "selector": "date-range",
-          "settings": {
-            "field": "cm:created",
-            "dateFormat": "DD-MMM-YY",
-            "maxDate": "today"
-          }
-        }
-      },
-      {
         "id": "createdModifiedDateRange",
         "name": "Date",
         "enabled": true,
@@ -746,15 +733,17 @@
       {
         "id": "createdDateRange",
         "name": "SEARCH.SEARCH_HEADER.FILTERS.DATE.TITLE",
-        "columnKey": "createdAt",
         "enabled": true,
         "component": {
-          "selector": "date-range",
+          "selector": "date-range-advanced",
           "settings": {
             "allowUpdateOnChange": false,
+            "dateFormat": "dd-MMM-yy",
+            "maxDate": "today",
             "field": "cm:created",
-            "dateFormat": "DD-MMM-YY",
-            "maxDate": "today"
+            "displayedLabelsByField": {
+              "cm:created": "Created Date"
+            }
           }
         }
       }

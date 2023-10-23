@@ -21,7 +21,6 @@ import { SearchRadioComponent } from '../components/search-radio/search-radio.co
 import { SearchSliderComponent } from '../components/search-slider/search-slider.component';
 import { SearchNumberRangeComponent } from '../components/search-number-range/search-number-range.component';
 import { SearchCheckListComponent } from '../components/search-check-list/search-check-list.component';
-import { SearchDateRangeComponent } from '../components/search-date-range/search-date-range.component';
 import { SearchDatetimeRangeComponent } from '../components/search-datetime-range/search-datetime-range.component';
 import { SearchLogicalFilterComponent } from '../components/search-logical-filter/search-logical-filter.component';
 import { SearchFilterAutocompleteChipsComponent } from '../components/search-filter-autocomplete-chips/search-filter-autocomplete-chips.component';
@@ -45,7 +44,6 @@ export class SearchFilterService {
         properties: SearchPropertiesComponent,
         'number-range': SearchNumberRangeComponent,
         'check-list': SearchCheckListComponent,
-        'date-range': SearchDateRangeComponent,
         'datetime-range': SearchDatetimeRangeComponent,
         'logical-filter': SearchLogicalFilterComponent,
         'autocomplete-chips': SearchFilterAutocompleteChipsComponent,

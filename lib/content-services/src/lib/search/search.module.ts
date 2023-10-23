@@ -37,7 +37,6 @@ import { SearchSliderComponent } from './components/search-slider/search-slider.
 import { SearchNumberRangeComponent } from './components/search-number-range/search-number-range.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
-import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
 import { SearchQueryBuilderService } from './services/search-query-builder.service';
@@ -84,7 +83,6 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchNumberRangeComponent,
         SearchPanelComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
@@ -119,7 +117,6 @@ import { SearchFacetTabbedContentComponent } from './components/search-filter-ch
         SearchNumberRangeComponent,
         SearchPanelComponent,
         SearchCheckListComponent,
-        SearchDateRangeComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
