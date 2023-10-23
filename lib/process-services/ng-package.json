@@ -20,6 +20,9 @@
   ],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-process-services"
+    "flatModuleFile": "adf-process-services",
+    "styleIncludePaths": [
+      "../core/src/lib"
+    ]
   }
 }

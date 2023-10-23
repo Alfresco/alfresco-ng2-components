@@ -4,6 +4,9 @@
   "deleteDestPath": false,
   "lib": {
     "entryFile": "src/public-api.ts",
-    "flatModuleFile": "adf-extensions"
+    "flatModuleFile": "adf-extensions",
+    "styleIncludePaths": [
+      "../core/src/lib"
+    ]
   }
 }
