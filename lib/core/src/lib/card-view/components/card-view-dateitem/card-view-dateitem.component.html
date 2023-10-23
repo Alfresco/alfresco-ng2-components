@@ -43,8 +43,7 @@
                [matDatetimepicker]="datetimePicker"
                [value]="valueDate"
                (dateChange)="onDateChanged($event)"
-               [attr.id]="'card-view-dateitem-' + property.key"
-        >
+               [attr.id]="'card-view-dateitem-' + property.key">
 
         <mat-datetimepicker #datetimePicker
                             [type]="$any(property).type"
@@ -64,8 +63,7 @@
                       [removable]="isEditable()"
                       (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
-                <mat-icon *ngIf="isEditable()"
-                          matChipRemove>cancel</mat-icon>
+                <mat-icon *ngIf="isEditable()" matChipRemove>cancel</mat-icon>
             </mat-chip>
         </mat-chip-list>
 

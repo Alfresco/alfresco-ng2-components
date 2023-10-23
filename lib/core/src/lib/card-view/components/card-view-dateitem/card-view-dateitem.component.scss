@@ -49,7 +49,7 @@
             align-items: center;
             justify-content: space-between;
 
-            button.mat-icon-button {
+            .mat-icon-button {
                 line-height: 20px;
                 height: 20px;
                 width: 20px;
@@ -59,29 +59,21 @@
                 width: 16px;
                 height: 16px;
                 opacity: 0.5;
-            }
 
-            &:hover mat-icon {
-                opacity: 1;
+                &:hover {
+                    opacity: 1;
+                }
             }
 
             .adf-datepicker-toggle {
                 flex: 1 0 auto;
             }
 
-            mat-icon.adf-date-reset-icon {
+            .adf-date-reset-icon {
                 line-height: 10px;
-                font-size: var(--theme-subheading-2-font-size);
-                width: 16px;
-                height: 16px;
                 position: relative;
                 top: 4px;
-                padding-left: 8px;
-                opacity: 0.3;
-            }
-
-            &:hover mat-icon.adf-date-reset-icon {
-                opacity: 1;
+                padding: 0 8px;
             }
         }
     }
