@@ -5,27 +5,14 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        color: var(--theme-metadata-property-panel-text-color);
         background: var(--theme-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
         align-items: center;
 
-        mat-form-field {
-            width: 100%;
-        }
-
-        .mat-form-field-underline {
-            display: none;
-        }
-
-        .mat-form-field-appearance-fill {
-            .mat-form-field-flex {
-                background: none;
-            }
-
-            .mat-form-field-infix {
-                padding: 0;
-            }
+        input {
+            padding: 0 8px;
         }
     }
 
