@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
     CardViewItemProperties,
     CardViewItem,
@@ -26,10 +26,10 @@ import {
     CardViewDatetimeItemModel,
     CardViewIntItemModel,
     CardViewFloatItemModel,
-    LogService,
     MultiValuePipe,
     AppConfigService,
-    DecimalNumberPipe
+    DecimalNumberPipe,
+    NotificationService
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
@@ -51,10 +51,10 @@ export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT
     providedIn: 'root'
 })
 export class PropertyGroupTranslatorService {
+    private notificationService = inject(NotificationService);
     valueSeparator: string;
 
-    constructor(private logService: LogService,
-                private multiValuePipe: MultiValuePipe,
+    constructor(private multiValuePipe: MultiValuePipe,
                 private decimalNumberPipe: DecimalNumberPipe,
                 private appConfig: AppConfigService) {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
@@ -187,7 +187,7 @@ export class PropertyGroupTranslatorService {
 
     private checkECMTypeValidity(ecmPropertyType: string) {
         if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
-            this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
+            this.notificationService.showError(`Unknown type for mapping: ${ecmPropertyType}`);
         }
     }
 

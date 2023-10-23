@@ -17,10 +17,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
         background-color: var(--theme-card-background-color);
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-        & .mat-tab-labels {
-            padding: 0 32px;
-        }
-
         & .mat-tab-label {
             height: 32px;
             text-align: left;
@@ -52,7 +48,6 @@ $adf-info-drawer-icon-size-half: 24px !default;
                 color: var(--adf-theme-foreground-text-color-054);
 
                 & > div {
-                    width: 195px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
