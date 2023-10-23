@@ -1,12 +1,10 @@
 <label class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-     [ngClass]="{'adf-property-label-not-editable' : isNonEditableField, 'adf-property-editable-property': isEditable()}"
      *ngIf="showProperty() || isEditable()"
      [attr.for]="'card-view-dateitem-' + property.key">
     {{ property.label | translate }}
 </label>
-<div class="adf-property-value adf-property-value-padding-top"
-    [ngClass]="{'adf-property-dateitem-edit-mode' : editable, 'adf-property-label-not-editable' : isNonEditableField, 'adf-empty-field' : !showProperty()}">
+<div class="adf-property-value" [ngClass]="{'adf-property-value-editable': editable}">
     <span *ngIf="!isEditable() && !property.multivalued"
           [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span *ngIf="showProperty()"
@@ -15,8 +13,7 @@
               matTooltipShowDelay="1000"
               [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate">{{ property.displayValue}}</span>
     </span>
-    <div *ngIf="isEditable() && !property.multivalued"
-         class="adf-dateitem-editable">
+    <div *ngIf="isEditable() && !property.multivalued" class="adf-dateitem-editable">
         <div class="adf-dateitem-editable-controls">
             <span class="adf-datepicker-toggle"
                   [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
@@ -62,8 +59,7 @@
 
     <div *ngIf="property.multivalued"
          class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
-        <mat-chip-list #chipList
-                       class="adf-textitem-chip-list">
+        <mat-chip-list #chipList class="adf-textitem-chip-list">
             <mat-chip *ngFor="let propertyValue of property.displayValue; let idx = index"
                       [removable]="isEditable()"
                       (removed)="removeValueFromList(idx)">
@@ -100,4 +96,3 @@
         </mat-form-field>
     </div>
 </div>
-<mat-divider *ngIf="showDivider"></mat-divider>

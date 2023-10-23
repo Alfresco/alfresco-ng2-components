@@ -1,3 +1,16 @@
+.adf-card-view-dateitem {
+    .adf-property-value {
+        padding: 6px 0;
+        line-height: 20px;
+        border-bottom: 1px solid var(--theme-metadata-property-panel-border-color);
+
+        &.adf-property-value-editable {
+            border-radius: 6px;
+            border-bottom: inherit;
+        }
+    }
+}
+
 /* stylelint-disable no-descending-specificity */
 .adf {
     &-invisible-date-input {
@@ -9,39 +22,6 @@
         margin: 0;
         padding: 0;
         float: right;
-    }
-
-    &-property-label {
-        color: var(--theme-metadata-property-panel-text-color);
-        display: flex;
-        padding: 6px 0;
-        line-height: 20px;
-    }
-
-    &-property-editable-property {
-        color: var(--theme-metadata-property-panel-title-color);
-    }
-
-    &-property-dateitem-edit-mode {
-        background-color: var(--theme-metadata-buttons-background-color);
-        border-radius: 6px;
-        padding-left: 12px;
-
-        .mat-select-value {
-            color: var(--theme-metadata-property-panel-text-color);
-        }
-
-        .adf-dateitem-editable {
-            .adf-datepicker-toggle {
-                color: var(--theme-metadata-property-panel-text-color);
-            }
-        }
-    }
-
-    &-empty-field {
-        .adf-dateitem-editable-controls {
-            padding: 6px;
-        }
     }
 
     &-dateitem-chip-list-container.adf-property-field {
@@ -62,12 +42,12 @@
 
     &-dateitem-editable {
         cursor: pointer;
+        padding: 0 12px;
 
         &-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-left: 12px;
 
             button.mat-icon-button {
                 line-height: 20px;

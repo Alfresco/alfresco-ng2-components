@@ -157,12 +157,4 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     update() {
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
     }
-
-    get showDivider(): boolean {
-        return !this.editable && this.showProperty();
-    }
-
-    get isNonEditableField(): boolean {
-        return this.editable && !this.property.editable;
-    }
 }

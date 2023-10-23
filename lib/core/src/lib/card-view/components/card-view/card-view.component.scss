@@ -4,26 +4,26 @@
     border-color: var(--adf-card-view-border-color);
     border-radius: var(--adf-card-view-border-radius);
 
-    .adf-property {
-        .adf-property-value-padding-top {
-            display: flex;
-            flex-direction: column;
-            padding: 6px 0;
-            line-height: 20px;
+    .adf-property-label {
+        color: var(--theme-metadata-property-panel-text-color);
+        display: flex;
+        padding: 6px 0;
+        line-height: 20px;
+    }
+
+    .adf-property-value {
+        color: var(--theme-metadata-property-panel-text-color);
+
+        &.adf-property-value-editable {
+            background-color: var(--theme-metadata-buttons-background-color);
         }
+    }
+
+    .adf-property {
+        padding-bottom: 12px;
 
         .adf-empty-field {
             padding: 0;
-        }
-
-        .adf-property-label-not-editable {
-            color: var(--theme-metadata-property-panel-label-color);
-        }
-
-        .adf-property-editable-property {
-            .adf-property-label {
-                color: var(--theme-metadata-property-panel-title-color);
-            }
         }
 
         .adf-property-field {
@@ -80,10 +80,6 @@
             .mat-chip-input.mat-input-element.adf-property-edit-mode {
                 margin-top: 6px;
                 margin-left: 0;
-            }
-
-            .mat-input-element.adf-property-label-not-editable {
-                color: var(--theme-metadata-property-panel-label-color);
             }
 
             .mat-select.adf-property-select-edit-mode {
