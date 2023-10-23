@@ -232,7 +232,7 @@ describe('Notification History Component', () => {
         expect(component.unreadNotifications[0].read).toEqual(false);
     });
 
-    it('should return isbadgeVisibile as true when there are unread notifications', () => {
+    it('should return isBadgeVisible as true when there are unread notifications', () => {
         component.unreadNotifications = testNotifications;
 
         const result = component.isBadgeVisible();
@@ -242,7 +242,7 @@ describe('Notification History Component', () => {
         expect(matIconDebugElement.textContent).toContain('notifications');
     });
 
-    it('should return isbadgeVisibile as false when there are no unread notifications', () => {
+    it('should return isBadgeVisible as false when there are no unread notifications', () => {
         testNotifications.forEach((notification: NotificationModel) => {
             notification.read = true;
         });
