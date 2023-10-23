@@ -65,7 +65,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
                 (notification: NotificationModel) => !notification.read
             ) || [];
-        this.badgeHidden = !this.badgeVisibility();
+        this.badgeHidden = !this.isbadgeVisible();
     }
 
     ngAfterViewInit(): void {
@@ -83,7 +83,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     addNewNotification(notification: NotificationModel) {
-        this.badgeHidden = !this.badgeVisibility();
+        this.badgeHidden = !this.isbadgeVisible();
         this.unreadNotifications.unshift(notification);
 
         if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
@@ -100,7 +100,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         });
 
         this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
-        this.badgeHidden = !this.badgeVisibility();
+        this.badgeHidden = !this.isbadgeVisible();
     }
 
     onMenuOpened() {
@@ -120,11 +120,11 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     markAsRead() {
         this.unreadNotifications = [];
         this.notifications.forEach((notification: NotificationModel) => {
-            notification['read'] = true;
+            notification.read = true;
         });
 
-        this.badgeHidden = !this.badgeVisibility();
-        this.storageService.setItem('notification-history', JSON.stringify(this.notifications));
+        this.badgeHidden = !this.isbadgeVisible();
+        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
         this.paginatedNotifications = [];
         this.createPagination();
         this.trigger.closeMenu();
@@ -157,7 +157,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         }
     }
 
-    badgeVisibility(): boolean {
+    isbadgeVisible(): boolean {
         return this.unreadNotifications.length > 0;
     }
 }

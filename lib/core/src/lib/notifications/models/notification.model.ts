@@ -39,5 +39,5 @@ export interface NotificationModel {
     icon?: string;
     clickCallBack?: any;
     args?: any;
-    read: boolean;
+    read?: boolean;
 }

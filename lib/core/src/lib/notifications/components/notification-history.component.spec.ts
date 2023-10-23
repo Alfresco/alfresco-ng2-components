@@ -33,12 +33,17 @@ describe('Notification History Component', () => {
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
     let storage: StorageService;
+    let testNotifications: NotificationModel[];
 
     const openNotification = () => {
         fixture.detectChanges();
         const button = element.querySelector<HTMLButtonElement>('#adf-notification-history-open-button');
         button?.click();
         fixture.detectChanges();
+    };
+
+    const getMatBadgeElement = (fixture, matBadgeQuery) => {
+        return fixture.debugElement.query(By.css(matBadgeQuery)).nativeElement;
     };
 
     beforeEach(() => {
@@ -56,6 +61,25 @@ describe('Notification History Component', () => {
         notificationService = TestBed.inject(NotificationService);
         component.notifications = [];
         component.unreadNotifications = [];
+
+        testNotifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: false
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: false
+            }
+        ];
     });
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -90,7 +114,6 @@ describe('Notification History Component', () => {
                 markAllAsRead?.click();
                 fixture.detectChanges();
                 expect(component.unreadNotifications).toEqual([]);
-                expect(component.unreadNotifications.length).toBe(0);
                 done();
             });
         });
@@ -192,108 +215,44 @@ describe('Notification History Component', () => {
         expect(component.unreadNotifications).toEqual([]);
     });
 
-    it('should set unreadNotifications to an empty array when all notifcations are read', () => {
-        const notifications = [
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Moved 1 item.'],
-                read: true
-            },
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Copied 1 item.'],
-                read: true
-            }
-        ];
-        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(notifications));
+    it('should set unreadNotifications to an empty array when all notifications are read', () => {
+        testNotifications.forEach((notification: NotificationModel) => {
+            notification.read = true;
+        });
+        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
         fixture.detectChanges();
 
-        expect(component.unreadNotifications.length).toEqual(0);
         expect(component.unreadNotifications).toEqual([]);
     });
 
     it('should set unreadNotifications by filtering notifications where read is false', () => {
-        const notifications = [
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: '',
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Moved 1 item.'],
-                read: false
-            },
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Copied 1 item.'],
-                read: true
-            }
-        ];
-        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(notifications));
+        testNotifications[0].read = true;
+        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
         fixture.detectChanges();
 
         expect(component.unreadNotifications.length).toEqual(1);
         expect(component.unreadNotifications[0].read).toEqual(false);
     });
 
-    it('should return badgeVisibility true when there are unread notifications', () => {
-        component.unreadNotifications = [
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Moved 1 item.'],
-                read: false
-            },
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Copied 1 item.'],
-                read: false
-            }
-        ];
+    it('should return isbadgeVisibile as true when there are unread notifications', () => {
+        component.unreadNotifications = testNotifications;
 
-        const result = component.badgeVisibility();
-        const matIconDebugElement = fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
+        const result = component.isbadgeVisible();
+        const matIconDebugElement = getMatBadgeElement(fixture, '[matBadge]');
 
         expect(result).toBe(true);
         expect(matIconDebugElement.textContent).toContain('notifications');
     });
 
-    it('should return badgeVisibility false when there are no unread notifications', () => {
-        component.notifications = [
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Moved 1 item.'],
-                read: true
-            },
-            {
-                type: NOTIFICATION_TYPE.INFO,
-                icon: 'info',
-                datetime: new Date(),
-                initiator: { key: '*', displayName: 'SYSTEM' },
-                messages: ['Copied 1 item.'],
-                read: true
-            }
-        ];
+    it('should return isbadgeVisibile as false when there are no unread notifications', () => {
+        testNotifications.forEach((notification: NotificationModel) => {
+            notification.read = true;
+        });
+        component.notifications = testNotifications;
         fixture.detectChanges();
 
-        const result = component.badgeVisibility();
-        const matBadgeDebugElement = fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
+        const result = component.isbadgeVisible();
+        const matBadgeDebugElement = getMatBadgeElement(fixture, '[matBadge]');
 
         expect(component.unreadNotifications).toEqual([]);
         expect(result).toBe(false);
