@@ -121,6 +121,7 @@
 
     <mat-error
         *ngIf="isEditable && hasErrors"
+        class="adf-textitem-error"
         [attr.data-automation-id]="'card-textitem-error-' + property.key">
         <ul>
             <li *ngFor="let error of errors">{{ error.message | translate: error }}</li>

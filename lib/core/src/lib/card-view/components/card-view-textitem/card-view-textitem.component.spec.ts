@@ -555,7 +555,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            const errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage.textContent).toBe(expectedErrorMessages[0].message);
         });
 
@@ -564,13 +564,13 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            let errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            let errorMessage: HTMLElement = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage.textContent).toBe(expectedErrorMessages[0].message);
 
             component.editable = false;
             fixture.detectChanges();
 
-            errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-error');
             expect(errorMessage).toBeNull();
         });
 
