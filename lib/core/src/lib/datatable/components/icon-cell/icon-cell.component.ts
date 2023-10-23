@@ -16,11 +16,10 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { TypeofPipe } from '../../../pipes/typeof.pipe';
-import { DataTableService } from '../../services/datatable.service';
 
 @Component({
     standalone: true,
@@ -36,10 +35,6 @@ import { DataTableService } from '../../services/datatable.service';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
-    constructor(@Optional() dataTableService: DataTableService) {
-        super(dataTableService);
-    }
-
     ngOnInit(): void {
         super.ngOnInit();
     }
