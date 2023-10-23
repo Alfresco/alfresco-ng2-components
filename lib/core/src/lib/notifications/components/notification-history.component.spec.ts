@@ -42,8 +42,8 @@ describe('Notification History Component', () => {
         fixture.detectChanges();
     };
 
-    const getMatBadgeElement = (fixture, matBadgeQuery) => {
-        return fixture.debugElement.query(By.css(matBadgeQuery)).nativeElement;
+    const getMatBadgeElement = () => {
+        return fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
     };
 
     beforeEach(() => {
@@ -238,7 +238,7 @@ describe('Notification History Component', () => {
         component.unreadNotifications = testNotifications;
 
         const result = component.isbadgeVisible();
-        const matIconDebugElement = getMatBadgeElement(fixture, '[matBadge]');
+        const matIconDebugElement = getMatBadgeElement();
 
         expect(result).toBe(true);
         expect(matIconDebugElement.textContent).toContain('notifications');
@@ -252,7 +252,7 @@ describe('Notification History Component', () => {
         fixture.detectChanges();
 
         const result = component.isbadgeVisible();
-        const matBadgeDebugElement = getMatBadgeElement(fixture, '[matBadge]');
+        const matBadgeDebugElement = getMatBadgeElement();
 
         expect(component.unreadNotifications).toEqual([]);
         expect(result).toBe(false);
