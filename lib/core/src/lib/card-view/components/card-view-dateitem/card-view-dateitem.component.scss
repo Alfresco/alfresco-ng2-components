@@ -88,6 +88,21 @@
             .adf-datepicker-toggle {
                 flex: 1 0 auto;
             }
+
+            mat-icon.adf-date-reset-icon {
+                line-height: 10px;
+                font-size: var(--theme-subheading-2-font-size);
+                width: 16px;
+                height: 16px;
+                position: relative;
+                top: 4px;
+                padding-left: 8px;
+                opacity: 0.3;
+            }
+
+            &:hover mat-icon.adf-date-reset-icon {
+                opacity: 1;
+            }
         }
     }
 }

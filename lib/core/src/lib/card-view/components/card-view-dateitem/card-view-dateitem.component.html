@@ -26,6 +26,14 @@
                     {{ property.displayValue }}</span>
             </span>
 
+            <mat-icon *ngIf="showClearAction()"
+                      class="adf-date-reset-icon"
+                      (click)="onDateClear()"
+                      [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
+                      [attr.data-automation-id]="'datepicker-date-clear-' + property.key">
+                clear
+            </mat-icon>
+
             <mat-datetimepicker-toggle [attr.tabindex]="-1"
                                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                                        [attr.data-automation-id]="'datepickertoggle-' + property.key"
