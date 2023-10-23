@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild, OnDestroy, OnInit, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
-import { NotificationModel } from '../models/notification.model';
+import { NOTIFICATION_STORAGE, NotificationModel } from '../models/notification.model';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -33,7 +33,6 @@ import { PaginationModel } from '../../models/pagination.model';
 export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
 
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
-    public static NOTIFICATION_STORAGE = 'notification-history';
 
     @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
@@ -60,9 +59,9 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
     ngOnInit() {
-        this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];
+        this.notifications = JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE)) || [];
         this.unreadNotifications =
-            JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE))?.filter(
+            JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE))?.filter(
                 (notification: NotificationModel) => !notification.read
             ) || [];
         this.badgeHidden = !this.isBadgeVisible();
@@ -99,7 +98,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             this.notifications.push(notification);
         });
 
-        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
+        this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
         this.badgeHidden = !this.isBadgeVisible();
     }
 
@@ -124,7 +123,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         });
 
         this.badgeHidden = !this.isBadgeVisible();
-        this.storageService.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
+        this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
         this.paginatedNotifications = [];
         this.createPagination();
         this.trigger.closeMenu();

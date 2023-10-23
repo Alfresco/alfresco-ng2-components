@@ -22,7 +22,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
+import { NotificationModel, NOTIFICATION_TYPE, NOTIFICATION_STORAGE } from '../models/notification.model';
 import { By } from '@angular/platform-browser';
 
 describe('Notification History Component', () => {
@@ -85,7 +85,7 @@ describe('Notification History Component', () => {
     }));
 
     afterEach(() => {
-        storage.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
+        storage.removeItem(NOTIFICATION_STORAGE);
         fixture.destroy();
     });
 
@@ -171,7 +171,7 @@ describe('Notification History Component', () => {
         });
 
         it('should read notifications from local storage', (done) => {
-            storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify([{
+            storage.setItem(NOTIFICATION_STORAGE, JSON.stringify([{
                 messages: ['My new message'],
                 datetime: new Date(),
                 type: NOTIFICATION_TYPE.RECURSIVE
@@ -217,7 +217,7 @@ describe('Notification History Component', () => {
         testNotifications.forEach((notification: NotificationModel) => {
             notification.read = true;
         });
-        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
+        storage.setItem(NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
         fixture.detectChanges();
 
         expect(component.unreadNotifications).toEqual([]);
@@ -225,7 +225,7 @@ describe('Notification History Component', () => {
 
     it('should set unreadNotifications by filtering notifications where read is false', () => {
         testNotifications[0].read = true;
-        storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
+        storage.setItem(NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
         fixture.detectChanges();
 
         expect(component.unreadNotifications.length).toEqual(1);
