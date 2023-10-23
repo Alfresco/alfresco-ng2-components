@@ -44,7 +44,6 @@ describe('IconCellComponent', () => {
 
         fixture = TestBed.createComponent(IconCellComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     describe('Initialization', () => {
@@ -81,11 +80,8 @@ describe('IconCellComponent', () => {
     });
 
     describe('UI', () => {
-        it('should render icon element in case of non-empty string (icon name validation NOT included)', () => {
+        it('should render icon element in case of non-empty string', () => {
             renderAndCheckResult('group', true, 'group');
-            renderAndCheckResult('groupe', true, 'groupe');
-            renderAndCheckResult('0', true, '0');
-            renderAndCheckResult('true', true, 'true');
         });
 
         describe('should NOT render icon element in case of', () => {

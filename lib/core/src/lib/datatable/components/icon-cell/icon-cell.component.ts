@@ -19,23 +19,32 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { TypeofPipe } from '../../../pipes/typeof.pipe';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, MatIconModule, TypeofPipe],
+    imports: [CommonModule, MatIconModule],
     selector: 'adf-icon-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="value$ | async as value">
-            <mat-icon [title]="tooltip" *ngIf="(value | adfTypeof) === 'string'" aria-hidden="true">{{ value }}</mat-icon>
+        <ng-container *ngIf="icon">
+            <mat-icon [title]="tooltip" aria-hidden="true">{{ icon }}</mat-icon>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
+    protected icon: string = '';
+
     ngOnInit(): void {
+        this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
+            this.icon = this.validateIconValue(value) ? value : '';
+        });
         super.ngOnInit();
     }
+
+    private validateIconValue(value: any): boolean {
+        return typeof value === 'string';
+    };
 }
