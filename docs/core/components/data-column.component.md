@@ -11,18 +11,18 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 
 ## Contents
 
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [Conditional visibility](#conditional-visibility)
-    -   [Automatic column header translation](#automatic-column-header-translation)
-    -   [Custom tooltips](#custom-tooltips)
-    -   [Column Template](#column-template)
-    -   [Styling Techniques](#styling-techniques)
-    -   [Using the copyContent option](#using-the-copycontent-option)
-    -   [Example of column customData](#example-of-column-customdata)
--   [See also](#see-also)
+- [Basic Usage](#basic-usage)
+- [Class members](#class-members)
+  - [Properties](#properties)
+- [Details](#details)
+  - [Conditional visibility](#conditional-visibility)
+  - [Automatic column header translation](#automatic-column-header-translation)
+  - [Custom tooltips](#custom-tooltips)
+  - [Column Template](#column-template)
+  - [Styling Techniques](#styling-techniques)
+  - [Using the copyContent option](#using-the-copycontent-option)
+  - [Example of column customData](#example-of-column-customdata)
+- [See also](#see-also)
 
 ## Basic Usage
 
@@ -59,11 +59,21 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | sortingKey | `string` |  | When using server side sorting the column used by the api call where the sorting will be performed |
 | srTitle | `string` |  | Title to be used for screen readers. |
 | title | `string` | "" | Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically. |
-| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', 'json' and 'amount'. |
+| type | `string` | "text" | Value type for the column. Possible settings are 'text', 'boolean', 'icon', 'image', 'date', 'fileSize', 'location', 'json', 'amount' and 'number'. |
 | order | `number` |  | Sets position of column. |
 | currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
+| decimalConfig | `DecimalConfig` | [Default decimal config](#default-decimal-config) | Decimal configuration to customize the formatting and display of decimal values within the component. |
 
 ## Properties configuration
+
+### `type` Input
+
+The `type` input allows us to specify the type of hosted values for a given column. The complete array of possible values is outlined below:
+
+- `text` - The given values are represented as a strings (default option).
+- `boolean` - The column expects true / false (boolean values) and in addition accepts two strings - 'false' and 'true'. Other values are not recognized by the column, and the cell remains empty.
+- `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config),
+- `number` - This column is responsible for displaying numbers (integers and decimals). It expects numerals represented by a string or a number. This type comes with [`decimalConfig`](#default-decimal-config)
 
 ### `currencyConfig` Input
 
@@ -89,21 +99,25 @@ These properties offer flexibility in customizing how currency values are presen
 
 For more details on the possible use cases of the above properties, see the [official Angular documents](https://angular.io/api/common/CurrencyPipe).
 
-## Properties configuration
+### `decimalConfig` Input
 
-### `type` Input
+The `decimalConfig` input allows you to customize the formatting and display of decimal values within the component. It accepts an object of type `DecimalConfig` with optional properties for specifying the decimal precision and locale.
 
-The `type` input allows us to specify the type of hosted values for a given column. The complete array of possible values is outlined below:
+#### Properties
 
-- `text` - The given values are represented as a strings (default option).
-- `boolean` - The column expects true / false (boolean values) and in addition accepts two strings - 'false' and 'true'. Other values are not recognized by the column, and the cell remains empty.
-- `icon` - TODO
-- `image` - TODO
-- `date` - TODO
-- `fileSize` - TODO
-- `location` - TODO
-- `json` - TODO
-- `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config).
+- `digitsInfo` (optional): A string determining the number of decimal places and other formatting details.
+- `locale` (optional): A string indicating the locale or region-specific formatting to use for the currency.
+
+#### Default decimal config
+
+By default, the `decimalConfig` input is not required. If not provided, the component will use the following default values:
+
+- `digitsInfo`: undefined
+- `locale`: undefined
+
+These properties offer flexibility in customizing how decimal values are presented within the component.
+
+For more details on the possible use cases of the above properties, see the [official Angular documents](https://angular.io/api/common/DecimalPipe).
 
 ## Details
 
@@ -428,6 +442,6 @@ if (shouldPerformAction) { /* action */}
 
 ## See also
 
--   [Document list component](../../content-services/components/document-list.component.md)
--   [Datatable component](datatable.component.md)
--   [Task list component](../../process-services/components/task-list.component.md)
+- [Document list component](../../content-services/components/document-list.component.md)
+- [Datatable component](datatable.component.md)
+- [Task list component](../../process-services/components/task-list.component.md)
