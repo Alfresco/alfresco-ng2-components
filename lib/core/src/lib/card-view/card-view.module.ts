@@ -45,7 +45,6 @@ import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyva
 import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
 import { CardViewArrayItemComponent } from './components/card-view-arrayitem/card-view-arrayitem.component';
 import { SelectFilterInputComponent } from './components/card-view-selectitem/select-filter-input/select-filter-input.component';
-import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
     imports: [
@@ -67,8 +66,7 @@ import { MatDividerModule } from '@angular/material/divider';
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         MatSlideToggleModule,
-        MatTooltipModule,
-        MatDividerModule
+        MatTooltipModule
     ],
     declarations: [
         CardViewComponent,
