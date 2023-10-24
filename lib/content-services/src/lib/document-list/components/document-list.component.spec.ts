@@ -1273,7 +1273,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch trashcan fails', (done) => {
-        spyOn(customResourcesService.trashcanApi, 'listDeletedNodes').and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.trashcanApi, 'listDeletedNodes').and.returnValue(Promise.reject(new Error('error')));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1295,7 +1295,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch shared links fails', (done) => {
-        spyOn(customResourcesService.sharedLinksApi, 'listSharedLinks').and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.sharedLinksApi, 'listSharedLinks').and.returnValue(Promise.reject(new Error('error')));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1316,7 +1316,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch sites fails', (done) => {
-        spyGetSites.and.returnValue(Promise.reject('error'));
+        spyGetSites.and.returnValue(Promise.reject(new Error('error')));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1338,7 +1338,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch membership sites fails', (done) => {
-        spyOn(customResourcesService.sitesApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.sitesApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.reject(new Error('error')));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1359,7 +1359,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when fetch favorites fails', (done) => {
-        spyFavorite.and.returnValue(Promise.reject('error'));
+        spyFavorite.and.returnValue(Promise.reject(new Error('error')));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');

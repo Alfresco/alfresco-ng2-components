@@ -98,7 +98,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should remember when a membership request is not found for selected library', fakeAsync(() => {
-            getMembershipSpy.and.returnValue(Promise.reject());
+            getMembershipSpy.and.returnValue(Promise.reject(new Error('error')));
 
             const selection = { entry: testSiteEntry };
             const change = new SimpleChange(null, selection, true);

@@ -72,7 +72,7 @@ describe('LibraryFavoriteDirective', () => {
     });
 
     it('should mark selection not favorite', async () => {
-        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject(new Error('error')));
 
         delete selection.isFavorite;
 
@@ -84,7 +84,7 @@ describe('LibraryFavoriteDirective', () => {
     });
 
     it('should call addFavorite() on click event when selection is not a favorite', async () => {
-        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject());
+        spyOn(component.directive['favoritesApi'], 'getFavoriteSite').and.returnValue(Promise.reject(new Error('error')));
         spyOn(component.directive['favoritesApi'], 'createFavorite').and.returnValue(Promise.resolve(null));
 
         fixture.detectChanges();

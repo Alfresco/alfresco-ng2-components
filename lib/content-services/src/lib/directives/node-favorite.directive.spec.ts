@@ -266,7 +266,7 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should emit error event when removeFavoriteSite() fails', fakeAsync(() => {
-            removeFavoriteSpy.and.returnValue(Promise.reject('error'));
+            removeFavoriteSpy.and.returnValue(Promise.reject(new Error('error')));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -280,7 +280,7 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should emit error event when addFavorite() fails', fakeAsync(() => {
-            addFavoriteSpy.and.returnValue(Promise.reject('error'));
+            addFavoriteSpy.and.returnValue(Promise.reject(new Error('error')));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -352,7 +352,7 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should not process node as favorite', fakeAsync(() => {
-            spyOn(directive['favoritesApi'], 'getFavorite').and.returnValue(Promise.reject({}));
+            spyOn(directive['favoritesApi'], 'getFavorite').and.returnValue(Promise.reject(new Error('error')));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }

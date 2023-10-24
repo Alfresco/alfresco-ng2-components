@@ -97,7 +97,7 @@ export class WebscriptComponent implements OnChanges {
                 resolve();
             }, (error) => {
                 this.logService.log('Error' + error);
-                reject();
+                reject(error);
             });
         });
     }
