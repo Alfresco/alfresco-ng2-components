@@ -44,8 +44,11 @@ export class IconCellComponent extends DataTableCellComponent implements OnInit 
     ngOnInit(): void {
         super.ngOnInit();
         this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
-            this.icon = this.validateIconValue(value) ? value : '';
-            this.changeDetectorRef.detectChanges();
+            const newIcon = this.validateIconValue(value) ? value : '';
+            if (this.icon !== newIcon) {
+                this.icon = newIcon;
+                this.changeDetectorRef.detectChanges();
+            }
         });
     }
 
