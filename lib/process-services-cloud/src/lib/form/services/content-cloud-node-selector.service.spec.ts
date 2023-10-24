@@ -144,7 +144,7 @@ describe('ContentCloudNodeSelectorService', () => {
             await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
             fail('An error should have been thrown');
         } catch (error) {
-            expect(error).toEqual('Relative path does not exists');
+            expect(error.message).toEqual('Relative path does not exists');
             expect(service.sourceNodeNotFound).toBe(true);
         }
 
@@ -163,7 +163,7 @@ describe('ContentCloudNodeSelectorService', () => {
             await service.getNodeIdFromFolderVariableValue('mock-folder-id', '-my-');
             fail('An error should have been thrown');
         } catch (error) {
-            expect(error).toEqual('Folder does not exists');
+            expect(error.message).toEqual('Folder does not exists');
             expect(service.sourceNodeNotFound).toBe(true);
         }
 

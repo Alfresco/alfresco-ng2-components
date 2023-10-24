@@ -17,9 +17,9 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, forkJoin, throwError } from 'rxjs';
+import { Observable, from, forkJoin } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
     ResultListDataRepresentationUserProcessInstanceFilterRepresentation,
     UserFiltersApi
@@ -57,8 +57,7 @@ export class ProcessFilterService {
                         }
                     });
                     return filters;
-                }),
-                catchError((err) => this.handleProcessError(err))
+                })
             );
     }
 
@@ -72,8 +71,7 @@ export class ProcessFilterService {
     getProcessFilterById(filterId: number, appId?: number): Observable<FilterProcessRepresentationModel> {
         return from(this.callApiProcessFilters(appId))
             .pipe(
-                map((response: any) => response.data.find((filter) => filter.id === filterId)),
-                catchError((err) => this.handleProcessError(err))
+                map((response: any) => response.data.find((filter) => filter.id === filterId))
             );
     }
 
@@ -87,8 +85,7 @@ export class ProcessFilterService {
     getProcessFilterByName(filterName: string, appId?: number): Observable<FilterProcessRepresentationModel> {
         return from(this.callApiProcessFilters(appId))
             .pipe(
-                map((response: any) => response.data.find((filter) => filter.name === filterName)),
-                catchError((err) => this.handleProcessError(err))
+                map((response: any) => response.data.find((filter) => filter.name === filterName))
             );
     }
 
@@ -130,9 +127,6 @@ export class ProcessFilterService {
                     });
                     observer.next(filters);
                     observer.complete();
-                },
-                (err: any) => {
-                    this.handleProcessError(err);
                 });
         });
     }
@@ -175,8 +169,7 @@ export class ProcessFilterService {
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
         return from(this.userFiltersApi.createUserProcessInstanceFilter(filter))
             .pipe(
-                map((response: FilterProcessRepresentationModel) => response),
-                catchError((err) => this.handleProcessError(err))
+                map((response: FilterProcessRepresentationModel) => response)
             );
     }
 
@@ -214,9 +207,5 @@ export class ProcessFilterService {
             filter: { sort: 'created-desc', name: '', state: 'all' },
             index
         });
-    }
-
-    private handleProcessError(error: any) {
-        return throwError(error || 'Server error');
     }
 }

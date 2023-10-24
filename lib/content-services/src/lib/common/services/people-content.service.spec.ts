@@ -26,17 +26,14 @@ import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
     AuthenticationService,
-    CoreTestingModule,
-    LogService
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 
 describe('PeopleContentService', () => {
-
     let peopleContentService: PeopleContentService;
-    let logService: LogService;
     let authenticationService: AuthenticationService;
 
     beforeEach(() => {
@@ -52,7 +49,6 @@ describe('PeopleContentService', () => {
 
         authenticationService = TestBed.inject(AuthenticationService);
         peopleContentService = TestBed.inject(PeopleContentService);
-        logService = TestBed.inject(LogService);
     });
 
     it('should be able to fetch person details based on id', async () => {
@@ -111,12 +107,10 @@ describe('PeopleContentService', () => {
 
     it('should be able to throw an error if createPerson api failed', (done) => {
         spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.reject(new Error('failed to create new person')));
-        const logErrorSpy = spyOn(logService, 'error');
         peopleContentService.createPerson(createNewPersonMock).subscribe(
             () => {},
-            (error) => {
-                expect(logErrorSpy).toHaveBeenCalledWith('failed to create new person');
-                expect(error).toEqual('failed to create new person');
+            (error: Error) => {
+                expect(error.message).toEqual('failed to create new person');
                 done();
             }
         );

@@ -47,7 +47,7 @@ describe('Process filter', () => {
         let createFilter: jasmine.Spy;
 
         beforeEach(() => {
-            getFilters = spyOn(service['userFiltersApi'], 'getUserProcessInstanceFilters').and.returnValue(
+            getFilters = spyOn(service.userFiltersApi, 'getUserProcessInstanceFilters').and.returnValue(
                 Promise.resolve(fakeProcessFiltersResponse)
             );
 
@@ -211,7 +211,7 @@ describe('Process filter', () => {
 
         describe('add filter', () => {
             beforeEach(() => {
-                createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter').and.callFake(
+                createFilter = spyOn(service.userFiltersApi, 'createUserProcessInstanceFilter').and.callFake(
                     (processFilter) => Promise.resolve(processFilter)
                 );
             });
@@ -243,11 +243,11 @@ describe('Process filter', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                createFilter = createFilter.and.returnValue(Promise.reject(new Error('error')));
+                createFilter = createFilter.and.returnValue(Promise.reject(new Error('Server error')));
                 service.addProcessFilter(filter).subscribe(
                     () => {},
-                    (res) => {
-                        expect(res).toBe('Server error');
+                    (err) => {
+                        expect(err.message).toBe('Server error');
                         done();
                     }
                 );
