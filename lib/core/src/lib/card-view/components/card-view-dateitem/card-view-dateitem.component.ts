@@ -20,7 +20,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerComponent, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
-import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
@@ -41,7 +40,8 @@ import { isValid } from 'date-fns';
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
     @Input()
@@ -67,12 +67,10 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     constructor(
         private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,
-        private appConfig: AppConfigService,
         private clipboardService: ClipboardService,
         private translateService: TranslationService
     ) {
         super();
-        this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
 
     ngOnInit() {
@@ -91,7 +89,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             }
         } else {
             if (this.property.value && !Array.isArray(this.property.value)) {
-                this.valueDate = DateFnsUtils.localToUtc(DateFnsUtils.parseDate(this.property.value, this.dateFormat));
+                this.valueDate = DateFnsUtils.localToUtc(new Date(this.property.value));
             }
         }
     }
