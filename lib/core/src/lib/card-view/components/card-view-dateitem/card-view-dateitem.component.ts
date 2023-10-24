@@ -60,7 +60,6 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     public datepicker: MatDatetimepickerComponent<any>;
 
     valueDate: Date;
-    dateFormat: string;
 
     private onDestroy$ = new Subject<boolean>();
 
