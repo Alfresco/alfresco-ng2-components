@@ -5,9 +5,19 @@
         [versionId]="versionId"
         [showToolbar]="true"
         [allowRightSidebar]="true"
-        [showRightSidebar]="true"
         [sidebarRightTemplate]="sidebarRightTemplate">
     </adf-alfresco-viewer>
+</ng-container>
+
+<ng-container *ngIf="blobFile">
+    <adf-viewer
+        [blobFile]="blobFile"
+        [fileName]="fileName"
+        [showToolbar]="true"
+        [allowRightSidebar]="true"
+        (showViewerChange)="onViewerClosed()"
+        [sidebarRightTemplate]="sidebarRightTemplate">
+    </adf-viewer>
 </ng-container>
 
 <ng-template let-node="node" #sidebarRightTemplate>
@@ -111,15 +121,3 @@
         </adf-info-drawer-tab>
     </adf-info-drawer>
 </ng-template>
-
-<ng-container *ngIf="blobFile">
-    <adf-viewer
-        [blobFile]="blobFile"
-        [fileName]="fileName"
-        [showToolbar]="true"
-        [allowRightSidebar]="true"
-        [showRightSidebar]="true"
-        (showViewerChange)="onViewerClosed()"
-        [sidebarRightTemplate]="sidebarRightTemplate">
-    </adf-viewer>
-</ng-container>
