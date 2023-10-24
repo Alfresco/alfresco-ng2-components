@@ -8,7 +8,10 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["cd lib/cli && npm i && npm run dist"]
+        "commands": ["cd lib/cli && npm i && npm run dist"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       },
       "configurations": {
         "production": {
@@ -59,7 +62,10 @@
             "command": "npm publish --tag {args.tag}",
             "forwardAllArgs": true
           }
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     }
   }

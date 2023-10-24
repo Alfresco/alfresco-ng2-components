@@ -20,7 +20,10 @@
           }
         ],
         "compiler": "tsc",
-        "target": "node"
+        "target": "node",
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       },
       "configurations": {
         "production": {
@@ -75,7 +78,10 @@
             "command": "npm publish --tag {args.tag}",
             "forwardAllArgs": true
           }
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     }
   }

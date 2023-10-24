@@ -25,7 +25,10 @@
         "tsConfig": "lib/extensions/tsconfig.spec.json",
         "karmaConfig": "lib/extensions/karma.conf.js",
         "sourceMap": true,
-        "codeCoverage": true
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     },
     "lint": {
@@ -55,7 +58,10 @@
             "command": "npm publish --tag {args.tag}",
             "forwardAllArgs": true
           }
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     }
   }

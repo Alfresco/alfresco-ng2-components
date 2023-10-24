@@ -24,7 +24,7 @@
         "tsConfig": "tsconfig.dev.json",
         "polyfills": "demo-shell/src/polyfills.ts",
         "stylePreprocessorOptions": {
-          "includePaths": ["lib"]
+          "includePaths": ["lib", "lib/core/src/lib"]
         },
         "assets": [
           "demo-shell/src/assets",

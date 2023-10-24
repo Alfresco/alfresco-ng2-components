@@ -26,7 +26,10 @@
         "tsConfig": "lib/content-services/tsconfig.spec.json",
         "karmaConfig": "lib/content-services/karma.conf.js",
         "sourceMap": true,
-        "codeCoverage": true
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     },
     "lint": {
@@ -48,7 +51,10 @@
           "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
           "node_modules/pdfjs-dist/web/pdf_viewer.css"
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       },
       "configurations": {
         "ci": {
@@ -69,7 +75,10 @@
           "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
           "node_modules/pdfjs-dist/web/pdf_viewer.css"
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       },
       "configurations": {
         "ci": {
@@ -107,7 +116,10 @@
             "command": "npm publish --tag {args.tag}",
             "forwardAllArgs": true
           }
-        ]
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
       }
     }
   }
