@@ -1,7 +1,3 @@
-adf-file-uploading-dialog {
-    z-index: 1100;
-}
-
 .app-layout {
     display: flex;
     flex: 1;
@@ -12,25 +8,7 @@ adf-file-uploading-dialog {
         color: var(--theme-primary-color);
     }
 
-    .app-sidenav-link {
-        .mat-list-text {
-            font-size: 14px;
-            white-space: nowrap;
-            min-width: 120px;
-            padding: 0 10px;
-        }
-    }
-
     &-menu-spacer {
         flex: 1 1 auto;
-    }
-}
-
-mat-sidenav-content > div {
-    display: flex;
-    height: 100%;
-
-    > div {
-        flex: auto;
     }
 }

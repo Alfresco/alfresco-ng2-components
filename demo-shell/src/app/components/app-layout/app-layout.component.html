@@ -23,13 +23,13 @@
     </adf-sidenav-layout-header>
 
     <adf-sidenav-layout-navigation>
-        <ng-template let-isMenuMinimized="isMenuMinimized">
+        <ng-template>
             <mat-nav-list class="app-sidenav-linklist">
                 <ng-container *ngFor="let link of links">
                     <ng-container *ngIf="link.children">
                         <mat-list-item (click)="trigger.openMenu()" [attr.data-automation-id]="link.title | translate" class="app-sidenav-link">
                             <mat-icon matListIcon>{{link.icon}}</mat-icon>
-                            <span matLine *ngIf="!isMenuMinimized()">{{link.title | translate }}</span>
+                            <span matLine>{{link.title | translate }}</span>
                             <mat-icon class="app-sidenav-link__expand-button" [matMenuTriggerData]="{links: link.children}"
                                 rippleTrigger mat-icon-button #trigger="matMenuTrigger"
                                 [matMenuTriggerFor]="nestedMenu">arrow_right</mat-icon>
@@ -41,14 +41,14 @@
                             routerLinkActive="app-sidenav-link--active" [routerLinkActiveOptions]="{ exact: true }"
                             [attr.data-automation-id]="link.title | translate" class="app-sidenav-link">
                             <mat-icon matListIcon >{{link.icon}}</mat-icon>
-                            <span matLine *ngIf="!isMenuMinimized()">{{link.title | translate }}</span>
+                            <span matLine>{{link.title | translate }}</span>
                         </mat-list-item>
                     </ng-container>
                 </ng-container>
 
                 <mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout" class="app-sidenav-link" data-automation-id="Logout" >
                     <mat-icon matListIcon>exit_to_app</mat-icon>
-                    <span matLine *ngIf="!isMenuMinimized()">Logout</span>
+                    <span matLine>Logout</span>
                 </mat-list-item>
             </mat-nav-list>
 
