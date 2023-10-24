@@ -108,7 +108,6 @@
               }
             ],
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -306,7 +305,6 @@
             "configDir": "lib/core/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -332,7 +330,6 @@
             "outputDir": "dist/storybook/core",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -454,7 +451,6 @@
             "configDir": "lib/content-services/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -480,7 +476,6 @@
             "outputDir": "dist/storybook/content-services",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -648,7 +643,6 @@
             "configDir": "lib/process-services-cloud/.storybook",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -674,7 +668,6 @@
             "outputDir": "dist/storybook/process-services-cloud",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -1117,7 +1110,6 @@
               ]
             },
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
@@ -1138,7 +1130,6 @@
             "outputDir": "dist/storybook/stories",
             "compodoc": false,
             "styles": [
-              "demo-shell/src/assets/fonts/muli/muli.css",
               "demo-shell/src/styles.scss",
               "demo-shell/src/custom-style-dev.scss",
               "node_modules/cropperjs/dist/cropper.min.css",
