@@ -33,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
                 align-items: center;
                 flex: 1;
             }
+
             .adf-metadata-properties-title {
                 font-weight: 700;
                 font-size: 15px;
