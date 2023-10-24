@@ -30,16 +30,7 @@
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
-                <adf-toolbar-divider></adf-toolbar-divider>
-
                 <div class="app-document-action-buttons">
-                    <button
-                        mat-icon-button
-                        data-automation-id="document-list-grid-view"
-                        title="Toggle display mode"
-                        (click)="toggleGalleryView()">
-                        <mat-icon>list</mat-icon>
-                    </button>
                     <button
                         data-automation-id="create-new-folder"
                         mat-icon-button
@@ -79,11 +70,6 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="toggleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'">view_comfy</mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
-                        <span>Card view mode</span>
-                    </button>
                     <button mat-menu-item
                             (error)="openSnackMessageError($event)"
                             [adf-create-folder]="currentFolderId">

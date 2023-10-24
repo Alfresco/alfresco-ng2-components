@@ -28,7 +28,6 @@ import {
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NodeEntry, NodePaging, Pagination, Node, SiteEntry, SearchEntry } from '@alfresco/js-api';
@@ -218,7 +217,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         private uploadService: UploadService,
         private contentService: ContentService,
         private dialog: MatDialog,
-        private location: Location,
         private router: Router,
         private preference: UserPreferencesService,
         private preview: PreviewService,
@@ -486,13 +484,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.pagination.maxItems = event.maxItems;
         this.pagination.skipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
-    }
-
-    toggleGalleryView(): void {
-        this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
-        const url = this.router.createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode]).toString();
-
-        this.location.go(url);
     }
 
     onInfiniteScrolling(): void {
