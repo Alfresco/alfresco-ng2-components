@@ -56,8 +56,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    let pdfUploadedFile: NodeEntry;
-    let pngUploadedFile: NodeEntry;
     let folder: NodeEntry;
     let acsUser: UserModel;
     const folderName = StringUtil.generateRandomString(5);
@@ -71,8 +69,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         folder = await uploadActions.createFolder(folderName, '-my-');
 
-        pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
-        pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
+        await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
+        await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
 
         await settingsPage.setProviderEcmSso(
             browser.params.testConfig.appConfig.ecmHost,
