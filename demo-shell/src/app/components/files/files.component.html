@@ -126,40 +126,26 @@
                     <data-column
                         key="$thumbnail"
                         type="image"
-                        [sortable]="false"
-                        class="app-image-table-cell">
+                        [sortable]="false">
                     </data-column>
                     <data-column
-                        *ngIf="showNameColumn && hyperlinkNavigation"
-                        key="name"
-                        sortingKey="name"
-                        class="app-ellipsis-cell"
-                        title="Display name"
-                        [formatTooltip]="getNodeNameTooltip">
-                        <ng-template let-context>
-                            <adf-name-column key="name" [context]="context"></adf-name-column>
-                        </ng-template>
-                    </data-column>
-                    <data-column
-                        *ngIf="showNameColumn && !hyperlinkNavigation"
                         key="name"
                         sortingKey="name"
                         title="Display name"
-                        [formatTooltip]="getNodeNameTooltip"
-                        class="app-ellipsis-cell adf-expand-cell-5">
+                        class="adf-expand-cell-5">
                     </data-column>
                     <data-column
                         key="content.sizeInBytes"
                         title="Size"
                         type="fileSize"
                         sortingKey="sizeInBytes"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         *ngIf="searchTerm"
                         key="search"
                         title="Search"
-                        class="app-desktop-only adf-expand-cell-3">
+                        class="adf-expand-cell-3">
                         <ng-template let-entry="$implicit">
                             <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
                             </div>
@@ -178,7 +164,7 @@
                         key="lock"
                         [focus]="false"
                         [sortable]="false"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="app-lock-button">
                                 <mat-icon *ngIf="entry.row.getValue('isLocked')">lock</mat-icon>
@@ -190,7 +176,7 @@
                         title="Created by"
                         key="createdByUser.displayName"
                         sortingKey="createdByUser"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         title="Created"
@@ -198,7 +184,7 @@
                         sortingKey="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
 
                 </data-columns>
@@ -242,8 +228,6 @@
             </adf-document-list>
                 </div>
             <adf-pagination
-                #standardPagination
-                class="app-documentlist-pagination"
                 [target]="documentList"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
@@ -304,18 +288,6 @@
     </div>
 
     <div class="app-container">
-        <section>
-            <mat-slide-toggle [(ngModel)]="showNameColumn">
-                Show Name Column
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="hyperlinkNavigation">
-                Hyperlink navigation
-            </mat-slide-toggle>
-        </section>
-
         <section>
             <mat-slide-toggle data-automation-id="multiSelectToggle" [(ngModel)]="multiselect">
                 Multiselect (with checkboxes)

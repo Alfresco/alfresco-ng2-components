@@ -33,7 +33,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
 import {
     NotificationService,
-    DataRow,
     UserPreferencesService,
     PaginationComponent,
     DisplayMode,
@@ -143,9 +142,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     disableDragArea = false;
 
     @Input()
-    showNameColumn = true;
-
-    @Input()
     searchTerm = '';
 
     @Input()
@@ -191,7 +187,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     stickyHeader: boolean;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
-    hyperlinkNavigation = false;
 
     constructor(
         private notificationService: NotificationService,
@@ -406,13 +401,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     userHasPermissionToManageVersions(): boolean {
         const selection = this.documentList.selection;
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
-    }
-
-    getNodeNameTooltip(row: DataRow): string {
-        if (row) {
-            return row.getValue('name');
-        }
-        return null;
     }
 
     canEditFolder(selection: Array<NodeEntry>): boolean {

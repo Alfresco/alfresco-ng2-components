@@ -16,7 +16,7 @@
  */
 
 import { DropActions, BrowserActions, BrowserVisibility, DocumentListPage, DropdownPage, Logger } from '@alfresco/adf-testing';
-import { $$, browser, by, element, protractor, $ } from 'protractor';
+import { $$, browser, protractor, $ } from 'protractor';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 import * as path from 'path';
@@ -76,21 +76,6 @@ export class ContentServicesPage {
     async versionManagerContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.versionManagerAction);
-    }
-
-    async clickFileHyperlink(fileName: string): Promise<void> {
-        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
-        await BrowserActions.click(hyperlink);
-    }
-
-    async checkFileHyperlinkIsEnabled(fileName: string): Promise<void> {
-        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
-        await BrowserVisibility.waitUntilElementIsVisible(hyperlink);
-    }
-
-    async clickHyperlinkNavigationToggle(): Promise<void> {
-        const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
-        await BrowserActions.click(hyperlinkToggle);
     }
 
     async getElementsDisplayedId() {
@@ -248,10 +233,6 @@ export class ContentServicesPage {
 
     async checkUploadButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
-    }
-
-    async uploadButtonIsEnabled(): Promise<boolean> {
-        return this.uploadFileButton.isEnabled();
     }
 
     async enableMediumTimeFormat(): Promise<void> {

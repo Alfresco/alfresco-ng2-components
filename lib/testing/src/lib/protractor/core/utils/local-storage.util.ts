@@ -18,53 +18,27 @@
 import { browser } from 'protractor';
 
 export class LocalStorageUtil {
-
     static async getConfigField(field: string): Promise<any> {
-        return browser.executeScript(
-            'return window.adf ? window.adf.getConfigField(`' + field + '`) : null;'
-        );
+        return browser.executeScript('return window.adf ? window.adf.getConfigField(`' + field + '`) : null;');
     }
 
     static async setConfigField(field: string, value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
-        );
+        await browser.executeScript('window.adf.setConfigField(`' + field + '`, `' + value + '`);');
     }
 
     static async setStorageItem(field: string, value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
-        );
-    }
-
-    static async removeStorageItem(field: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.removeStorageItem(`' + field + '`);'
-        );
-    }
-
-    static async getStorageItem(field: string): Promise<any> {
-        return browser.executeScript(
-            'return window.adf ? window.adf.getStorageItem(`' + field + '`) : null;'
-        );
+        await browser.executeScript('window.adf.setStorageItem(`' + field + '`, `' + value + '`);');
     }
 
     static async setUserPreference(field: string, value: any): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setUserPreference(`' + field + '`, `' + value + '`);'
-        );
+        await browser.executeScript('window.adf.setUserPreference(`' + field + '`, `' + value + '`);');
     }
 
     static async clearStorage(): Promise<void> {
-        await browser.executeScript(
-            'window.adf.clearStorage();'
-        );
+        await browser.executeScript('window.adf.clearStorage();');
     }
 
     static async apiReset(): Promise<void> {
-        await browser.executeScript(
-            `window.adf.apiReset();`
-        );
+        await browser.executeScript(`window.adf.apiReset();`);
     }
-
 }

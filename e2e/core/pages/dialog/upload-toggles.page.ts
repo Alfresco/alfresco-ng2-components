@@ -27,7 +27,6 @@ export class UploadTogglesPage {
     versioningToggle = $('#adf-version-upload-switch');
     extensionAcceptedField = $('input[data-automation-id="accepted-files-type"]');
     maxSizeField = $('input[data-automation-id="max-files-size"]');
-    disableUploadCheckbox = $('[id="adf-disable-upload"]');
 
     async enableMultipleFileUpload(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
@@ -77,10 +76,6 @@ export class UploadTogglesPage {
 
     async disableVersioning(): Promise<void> {
         await this.togglePage.disableToggle(this.versioningToggle);
-    }
-
-    async clickCheckboxDisableUpload(): Promise<void> {
-        await BrowserActions.click(this.disableUploadCheckbox);
     }
 
     async addExtension(extension: string): Promise<void> {
