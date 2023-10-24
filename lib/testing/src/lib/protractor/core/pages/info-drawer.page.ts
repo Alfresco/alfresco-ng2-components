@@ -17,59 +17,23 @@
 
 import { ElementFinder, $ } from 'protractor';
 import { BrowserVisibility } from './../utils/browser-visibility';
-import { TabsPage } from './material/tabs.page';
 
+// TODO: cleanup once https://github.com/Alfresco/hxp-frontend-apps/pull/6582 is merged
 export class InfoDrawerPage {
-
     rootElement: ElementFinder;
-    infoDrawerHeader = ('adf-info-drawer-layout-header');
-    tabsPage: TabsPage = new TabsPage();
 
-    constructor(classLocator: string = 'adf-info-drawer') {
-        this.rootElement = $(`adf-info-drawer[class*='${classLocator}']`);
+    constructor() {
+        this.rootElement = $(`adf-info-drawer[class*='adf-info-drawer']`);
     }
 
+    // used in APA
     async isInfoDrawerDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
+            const infoDrawerElement = $(`adf-info-drawer[class*='adf-info-drawer']`);
+            await BrowserVisibility.waitUntilElementIsVisible(infoDrawerElement);
             return true;
         } catch (error) {
             return false;
         }
-    }
-
-    async isInfoDrawerNotDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async isInfoDrawerHeaderDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.$(this.infoDrawerHeader));
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async isInfoDrawerHeaderNotDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.$(this.infoDrawerHeader));
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async getNoOfTabs(): Promise<number> {
-        return this.tabsPage.getNoOfTabs();
-    }
-
-    async getTabsLabels(): Promise<string> {
-        return this.tabsPage.getTabsLabels();
     }
 }
