@@ -59,10 +59,6 @@ export class ContentServicesPage {
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
     siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
 
-    async pressContextMenuActionNamed(actionName: string): Promise<void> {
-        await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
-    }
-
     async isContextActionEnabled(actionName: string): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
@@ -71,12 +67,6 @@ export class ContentServicesPage {
 
     getDocumentList(): DocumentListPage {
         return this.contentList;
-    }
-
-    async checkDeleteIsDisabled(content: string): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        const disabledDelete = $(`button[data-automation-id='Delete'][disabled='true']`);
-        await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
     async deleteContent(content: string): Promise<void> {

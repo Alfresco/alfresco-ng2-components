@@ -38,7 +38,6 @@ export class MetadataViewPage {
     displayEmptySwitch = $(`#adf-metadata-empty`);
     readonlySwitch = $(`#adf-metadata-readonly`);
     multiSwitch = $(`#adf-metadata-multi`);
-    presetSwitch = $('#adf-toggle-custom-preset');
     defaultPropertiesSwitch = $('#adf-metadata-default-properties');
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
     displayAspect = $(`input[data-placeholder='Display Aspect']`);
@@ -143,23 +142,10 @@ export class MetadataViewPage {
         await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
-    async clickResetButton(): Promise<void> {
-        const clearPropertyIcon = $('button[data-automation-id="reset-metadata"]');
-        await BrowserActions.click(clearPropertyIcon);
-    }
-
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
         const textField = $('input[data-automation-id="card-textitem-value-' + propertyName + '"]');
         await BrowserActions.clearSendKeys(textField, text.toString());
         await textField.sendKeys(protractor.Key.ENTER);
-    }
-
-    async enterPresetText(text: string): Promise<void> {
-        const presetField = $('input[data-automation-id="adf-text-custom-preset"]');
-        await BrowserActions.clearSendKeys(presetField, text.toString());
-        await presetField.sendKeys(protractor.Key.ENTER);
-        const applyButton = $('button[id="adf-metadata-aplly"]');
-        await BrowserActions.click(applyButton);
     }
 
     async enterDescriptionText(text: string): Promise<void> {
@@ -203,13 +189,6 @@ export class MetadataViewPage {
     async checkMetadataGroupIsNotExpand(groupName: string): Promise<void> {
         const group = await this.getExpandedMetadataGroupLocator(groupName);
         await expect(await BrowserActions.getAttribute(group, 'class')).not.toContain('mat-expanded');
-    }
-
-    async getMetadataGroupTitle(groupName: string): Promise<string> {
-        const group = $(
-            'mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'
-        );
-        return BrowserActions.getText(group);
     }
 
     async checkPropertyIsVisible(propertyName: string, type: string): Promise<void> {
@@ -290,10 +269,6 @@ export class MetadataViewPage {
 
     async checkPropertyIsNotVisible(propertyName: string, type: string): Promise<void> {
         await TestElement.byCss('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]').waitNotVisible();
-    }
-
-    async clickCloseButton(): Promise<void> {
-        await BrowserActions.click(this.closeButton);
     }
 
     async typeAspectName(aspectName): Promise<void> {

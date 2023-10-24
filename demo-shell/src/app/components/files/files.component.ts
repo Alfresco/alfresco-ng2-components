@@ -59,7 +59,6 @@ import {
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
-import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
@@ -419,24 +418,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 this.openSnackMessageInfo('Node Aspects Updated');
             });
         });
-    }
-
-    onManageMetadata(event: any) {
-        const contentEntry = event.value.entry;
-        const displayEmptyMetadata = this.displayEmptyMetadata;
-
-        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
-            this.dialog.open(MetadataDialogAdapterComponent, {
-                data: {
-                    contentEntry,
-                    displayEmptyMetadata
-                },
-                panelClass: 'adf-metadata-manager-dialog',
-                width: '630px'
-            });
-        } else {
-            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
-        }
     }
 
     onSiteChange(site: SiteEntry) {
