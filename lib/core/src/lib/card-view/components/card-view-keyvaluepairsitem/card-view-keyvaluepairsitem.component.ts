@@ -22,10 +22,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BaseCardView } from '../base-card-view';
 
 @Component({
-    selector: 'adf-card-view-keyvaluepairsitem',
+    selector: 'adf-card-view-key-value-pairs-item',
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-card-view-key-value-pairs-item' }
 })
 
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {

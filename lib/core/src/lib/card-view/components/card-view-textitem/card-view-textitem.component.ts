@@ -39,7 +39,8 @@ const templateTypes = {
     selector: 'adf-card-view-textitem',
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
     @Input()

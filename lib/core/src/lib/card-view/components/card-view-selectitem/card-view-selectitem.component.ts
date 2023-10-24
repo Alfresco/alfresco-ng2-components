@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
@@ -27,7 +27,9 @@ import { takeUntil, map } from 'rxjs/operators';
 @Component({
     selector: 'adf-card-view-selectitem',
     templateUrl: './card-view-selectitem.component.html',
-    styleUrls: ['./card-view-selectitem.component.scss']
+    styleUrls: ['./card-view-selectitem.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-card-view-selectitem' }
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
     private appConfig = inject(AppConfigService);
