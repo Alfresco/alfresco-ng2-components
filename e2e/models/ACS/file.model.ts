@@ -22,6 +22,7 @@ import { CreatedByModel } from './created-by-model';
 import { StringUtil } from '@alfresco/adf-testing';
 
 export class FileModel {
+
     id = StringUtil.generateRandomString();
     name = StringUtil.generateRandomString();
     shortName = this.name;
@@ -29,6 +30,7 @@ export class FileModel {
     tooltip = this.name;
     version = '';
     firstPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text;
+    lastPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
     secondPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
     lastPageNumber = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
     createdAt: Date = null;
@@ -56,16 +58,52 @@ export class FileModel {
         return name + this.version + '.' + extension;
     }
 
+    getShortName() {
+        return this.shortName;
+    }
+
+    getLocation() {
+        return this.location;
+    }
+
+    getTooltip() {
+        return this.tooltip;
+    }
+
     getId() {
         return this.id;
+    }
+
+    getFirstPageText() {
+        return this.firstPageText;
+    }
+
+    getLastPageText() {
+        return this.lastPageText;
+    }
+
+    getSecondPageText() {
+        return this.secondPageText;
+    }
+
+    getLastPageNumber() {
+        return this.lastPageNumber;
     }
 
     getCreatedByUser(): CreatedByModel {
         return this.createdByUser;
     }
 
+    getModifiedByUser(): CreatedByModel {
+        return this.modifiedByUser;
+    }
+
     getContent(): ContentModel {
         return this.content;
+    }
+
+    getProperties(): ContentPropertiesModel {
+        return this.properties;
     }
 
     update(details) {

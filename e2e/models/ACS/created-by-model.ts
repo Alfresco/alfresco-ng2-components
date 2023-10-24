@@ -28,4 +28,9 @@ export class CreatedByModel {
     getId() {
         return this.id;
     }
+
+    getDisplayName() {
+        return this.displayName;
+    }
+
 }

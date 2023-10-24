@@ -18,6 +18,7 @@
 import { StringUtil } from '@alfresco/adf-testing';
 
 export class FolderModel {
+
     id = StringUtil.generateRandomString();
     name = StringUtil.generateRandomString();
     shortName = this.name;
@@ -33,7 +34,20 @@ export class FolderModel {
         return this.name;
     }
 
+    getShortName() {
+        return this.shortName;
+    }
+
+    getTooltip() {
+        return this.tooltip;
+    }
+
     getId() {
         return this.id;
     }
+
+    getLocation() {
+        return this.location;
+    }
+
 }
