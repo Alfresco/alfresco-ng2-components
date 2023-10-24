@@ -2,7 +2,7 @@ adf-tags-creator {
     display: block;
 
     .adf-label-with-icon-button {
-        background: var(--theme-metadata-buttons-background-color);
+        background: var(--adf-metadata-buttons-background-color);
         width: fit-content;
         height: 32px;
         display: inline-flex;
@@ -31,7 +31,7 @@ adf-tags-creator {
     }
 
     .adf-tag-search-field {
-        background: var(--theme-metadata-buttons-background-color);
+        background: var(--adf-metadata-buttons-background-color);
         height: 32px;
         border-radius: 12px;
 

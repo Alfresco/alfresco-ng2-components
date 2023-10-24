@@ -4,7 +4,7 @@ $panel-properties-height: 56px !default;
     &-metadata-properties {
         .mat-expansion-panel:not([class*='mat-elevation-z']) {
             box-shadow: none;
-            border: 1px solid var(--theme-metadata-property-panel-border-color);
+            border: 1px solid var(--adf-metadata-property-panel-border-color);
             border-radius: 12px;
             margin: 12px;
         }
@@ -16,7 +16,7 @@ $panel-properties-height: 56px !default;
 
             &.mat-expanded {
                 height: $panel-properties-height;
-                border-bottom: 1px solid var(--theme-metadata-property-panel-border-color);
+                border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
             }
 
             .mat-content {
@@ -47,7 +47,7 @@ $panel-properties-height: 56px !default;
             align-items: center;
             border-radius: 16px;
             width: fit-content;
-            background: var(--theme-metadata-buttons-background-color);
+            background: var(--adf-metadata-buttons-background-color);
             margin-top: 12px;
             padding: 6px 12px;
             justify-content: center;
@@ -90,7 +90,7 @@ $panel-properties-height: 56px !default;
         justify-content: space-evenly;
 
         &-clear {
-            color: var(--theme-metadata-action-button-clear-color);
+            color: var(--adf-metadata-action-button-clear-color);
         }
     }
 

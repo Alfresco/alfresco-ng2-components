@@ -5,7 +5,7 @@
     border-radius: var(--adf-card-view-border-radius);
 
     .adf-property-label {
-        color: var(--theme-metadata-property-panel-text-color);
+        color: var(--adf-metadata-property-panel-text-color);
         display: flex;
         padding: 6px 0;
         line-height: 20px;
@@ -21,7 +21,7 @@
 
             .mat-input-element {
                 text-overflow: ellipsis;
-                color: var(--theme-metadata-property-panel-title-color);
+                color: var(--adf-metadata-property-panel-title-color);
                 margin-top: 32px;
                 padding: 6px 0;
                 line-height: 20px;
@@ -58,10 +58,10 @@
     }
 
     .adf-property-value {
-        color: var(--theme-metadata-property-panel-text-color);
+        color: var(--adf-metadata-property-panel-text-color);
 
         &.adf-property-value-editable {
-            background-color: var(--theme-metadata-buttons-background-color);
+            background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
 
             &.mat-input-element {
@@ -75,7 +75,7 @@
         }
 
         &-input {
-            background-color: var(--theme-metadata-buttons-background-color);
+            background-color: var(--asd-metadata-buttons-background-color);
             border-radius: 6px;
             padding: 6px 0;
             margin: 0 !important;
