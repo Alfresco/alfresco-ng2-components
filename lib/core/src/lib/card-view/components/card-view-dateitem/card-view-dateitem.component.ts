@@ -41,7 +41,8 @@ import { isValid } from 'date-fns';
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
     @Input()
