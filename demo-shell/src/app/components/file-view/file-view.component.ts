@@ -17,16 +17,8 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
-import {
-    NotificationService
-} from '@alfresco/adf-core';
-import {
-    ContentService,
-    AllowableOperationsEnum,
-    PermissionsEnum,
-    NodesApiService,
-    FileUploadErrorEvent
-} from '@alfresco/adf-content-services';
+import { NotificationService } from '@alfresco/adf-core';
+import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService, FileUploadErrorEvent } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
@@ -36,7 +28,6 @@ import { PreviewService } from '../../services/preview.service';
     encapsulation: ViewEncapsulation.None
 })
 export class FileViewComponent implements OnInit {
-
     nodeId: string = null;
     versionId: string = null;
     displayEmptyMetadata = false;
@@ -46,36 +37,21 @@ export class FileViewComponent implements OnInit {
     isPreset = false;
     customPreset: string = null;
     displayDefaultProperties = true;
-    showToolbar = true;
-    urlFile = null;
-    allowGoBack = true;
-    openWith = false;
-    allowDownload = true;
-    allowPrint = true;
-    allowRightSidebar = true;
-    allowLeftSidebar = true;
-    moreActions = true;
-    moreActionsMenu = false;
-    fileUrlSwitch = false;
-    showLeftSidebar = null;
-    showRightSidebar = false;
-    customToolbar = false;
     isCommentEnabled = false;
-    showTabWithIcon = false;
-    showTabWithIconAndLabel = false;
     desiredAspect: string = null;
     showAspect: string = null;
     name: string;
     fileName: string;
     blobFile: Blob;
 
-    constructor(private router: Router,
-                private route: ActivatedRoute,
-                private nodeApiService: NodesApiService,
-                private contentServices: ContentService,
-                private preview: PreviewService,
-                private notificationService: NotificationService) {
-    }
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private nodeApiService: NodesApiService,
+        private contentServices: ContentService,
+        private preview: PreviewService,
+        private notificationService: NotificationService
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params) => {
@@ -85,7 +61,8 @@ export class FileViewComponent implements OnInit {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
                         if (node?.isFile) {
-                            this.isCommentEnabled = this.contentServices.hasPermissions(node, PermissionsEnum.NOT_CONSUMER) ||
+                            this.isCommentEnabled =
+                                this.contentServices.hasPermissions(node, PermissionsEnum.NOT_CONSUMER) ||
                                 this.contentServices.hasAllowableOperations(node, AllowableOperationsEnum.UPDATE);
                             this.nodeId = id;
                             return;
@@ -131,75 +108,11 @@ export class FileViewComponent implements OnInit {
         this.displayDefaultProperties = !this.displayDefaultProperties;
     }
 
-    toggleShowToolbar() {
-        this.showToolbar = !this.showToolbar;
-    }
-
-    toggleAllowGoBack() {
-        this.allowGoBack = !this.allowGoBack;
-    }
-
-    toggleOpenWith() {
-        this.openWith = !this.openWith;
-    }
-
-    toggleAllowDownload() {
-        this.allowDownload = !this.allowDownload;
-    }
-
-    toggleAllowPrint() {
-        this.allowPrint = !this.allowPrint;
-    }
-
-    toggleOpenMoreActions() {
-        this.moreActions = !this.moreActions;
-    }
-
-    toggleMoreActionsMenu() {
-        this.moreActionsMenu = !this.moreActionsMenu;
-    }
-
-    toggleShowRightSidebar() {
-        this.showRightSidebar = !this.showRightSidebar;
-    }
-
-    hideLeftSidebar() {
-        this.showLeftSidebar = false;
-    }
-
-    toggleAllowRightSidebar() {
-        this.allowRightSidebar = !this.allowRightSidebar;
-    }
-
-    toggleAllowLeftSidebar() {
-        this.allowLeftSidebar = !this.allowLeftSidebar;
-    }
-
-    toggleShowTabWithIcon() {
-        this.showTabWithIcon = !this.showTabWithIcon;
-    }
-
-    toggleShowTabWithIconAndLabel() {
-        this.showTabWithIconAndLabel = !this.showTabWithIconAndLabel;
-    }
-
-    toggleFileUrl() {
-        this.fileUrlSwitch = !this.fileUrlSwitch;
-
-        if (!this.fileUrlSwitch) {
-            this.urlFile = null;
-        }
-    }
-
     togglePreset() {
         this.isPreset = !this.isPreset;
         if (!this.isPreset) {
             this.customPreset = null;
         }
-    }
-
-    toggleToolbar() {
-        this.customToolbar = !this.customToolbar;
     }
 
     applyCustomPreset() {

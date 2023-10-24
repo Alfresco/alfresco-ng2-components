@@ -17,7 +17,6 @@
 
 import { BrowserActions } from '../utils/browser-actions';
 import { TabsPage } from './material/tabs.page';
-import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor, $, $$ } from 'protractor';
 import { Logger } from '../utils/logger';
@@ -26,12 +25,9 @@ const MAX_LOADING_TIME = 120000;
 
 export class ViewerPage {
     tabsPage = new TabsPage();
-    togglePage = new TogglePage();
-
     closeButton = $('button[data-automation-id="adf-toolbar-back"]');
     fileName = $('#adf-viewer-display-name');
     infoButton = $('button[data-automation-id="adf-toolbar-sidebar"]');
-    leftSideBarButton = $('button[data-automation-id="adf-toolbar-left-sidebar"]');
     previousPageButton = $('#viewer-previous-page-button');
     nextPageButton = $('#viewer-next-page-button');
     zoomInButton = $('#viewer-zoom-in-button');
@@ -49,51 +45,15 @@ export class ViewerPage {
     thumbnailsClose = $('button[data-automation-id="adf-thumbnails-close"]');
     secondThumbnail = $('adf-pdf-thumb > img[title="Page 2"]');
     lastThumbnailDisplayed = $$('adf-pdf-thumb').last();
-    passwordDialog = $('adf-pdf-viewer-password-dialog');
-    passwordSubmit = $('button[data-automation-id="adf-password-dialog-submit"]');
-    passwordDialogClose = $('button[data-automation-id="adf-password-dialog-close"]');
-    passwordSubmitDisabled = $('button[data-automation-id="adf-password-dialog-submit"][disabled]');
-    passwordInput = $('input[data-automation-id="adf-password-dialog-input"]');
-    passwordError = $('mat-error[data-automation-id="adf-password-dialog-error"]');
     infoSideBar = $('#adf-right-sidebar');
-    leftSideBar = $('#adf-left-sidebar');
     viewer = $('adf-viewer');
     imgViewer = $('adf-img-viewer');
     activeTab = $('div[class*="mat-tab-label-active"]');
-    toolbarSwitch = $('#adf-switch-toolbar');
     toolbar = $('#adf-viewer-toolbar');
-    lastButton = $$('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]').last();
-    goBackSwitch = $('#adf-switch-goback');
     canvasLayer = $$('.canvasWrapper > canvas').first();
 
-    openWithSwitch = $('#adf-switch-openwith');
-    openWith = $('#adf-viewer-openwith');
-
-    moreActionsMenuSwitch = $('#adf-switch-moreactionsmenu');
-    moreActionsMenu = $('button[data-automation-id="adf-toolbar-more-actions"]');
-
-    customToolbarToggle = $('#adf-toggle-custom-toolbar');
-    customToolbar = $('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]');
-
-    showRightSidebarSwitch = $('#adf-switch-showrightsidebar');
-    showLeftSidebarSwitch = $('#adf-switch-showleftsidebar');
-
-    moreActionsSwitch = $('#adf-switch-moreactions');
     pdfPageLoaded = $('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer');
-
-    downloadSwitch = $('#adf-switch-download');
     downloadButton = $('#adf-alfresco-viewer-download');
-
-    printSwitch = $('#adf-switch-print');
-    printButton = $('#adf-alfresco-viewer-print');
-
-    allowSidebarSwitch = $('#adf-switch-allowsidebar');
-    allowLeftSidebarSwitch = $('#adf-switch-allowLeftSidebar');
-
-    uploadButton = $('#adf-viewer-upload');
-    timeButton = $('#adf-viewer-time');
-    bugButton = $('#adf-viewer-bug');
-
     unknownFormat = $(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`);
 
     async viewFile(fileName: string): Promise<void> {
@@ -114,8 +74,7 @@ export class ViewerPage {
                 Logger.log('wait spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-spinner')));
                 await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-spinner')), MAX_LOADING_TIME);
-            } catch (error) {
-            }
+            } catch (error) {}
         }
     }
 
@@ -145,41 +104,19 @@ export class ViewerPage {
         await browser.executeScript(jsCode);
     }
 
-    async enterPassword(password: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.passwordInput, password);
-    }
-
     async checkFileIsLoaded(fileName?: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 60000, `${fileName} not loaded`);
-    }
-
-    async clickClosePasswordDialog(): Promise<void> {
-        await BrowserActions.click(this.passwordDialogClose);
     }
 
     async checkImgViewerIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.imgViewer);
     }
 
-    async checkPasswordErrorIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordError);
-    }
-
-    async checkPasswordInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordInput);
-    }
-
-    async checkPasswordSubmitDisabledIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordSubmitDisabled);
-    }
-
-    async checkPasswordDialogIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordDialog);
-    }
-
     async checkAllThumbnailsDisplayed(nbPages): Promise<void> {
         const defaultThumbnailHeight = 143;
-        await expect(await BrowserActions.getAttribute(this.thumbnailsContent, 'style')).toEqual('height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);');
+        await expect(await BrowserActions.getAttribute(this.thumbnailsContent, 'style')).toEqual(
+            'height: ' + nbPages * defaultThumbnailHeight + 'px; transform: translate(-50%, 0px);'
+        );
     }
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
@@ -213,24 +150,12 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
     }
 
-    async getLastButtonTitle(): Promise<string> {
-        return BrowserActions.getAttribute(this.lastButton, 'title');
-    }
-
-    async getMoreActionsMenuTitle(): Promise<string> {
-        return BrowserActions.getAttribute(this.moreActionsMenu, 'title');
-    }
-
     async checkDownloadButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.downloadButton);
     }
 
     async checkInfoButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.infoButton);
-    }
-
-    async checkInfoButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.infoButton);
     }
 
     async checkFileThumbnailIsDisplayed(): Promise<void> {
@@ -318,14 +243,6 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.infoSideBar);
     }
 
-    async checkLeftSideBarButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBarButton);
-    }
-
-    async checkLeftSideBarButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.leftSideBarButton);
-    }
-
     async clickInfoButton(): Promise<void> {
         await BrowserActions.click($('button[data-automation-id="adf-toolbar-sidebar"]'));
     }
@@ -335,24 +252,10 @@ export class ViewerPage {
     }
 
     async checkTabIsActive(tabName: string): Promise<void> {
-        const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        const tab = element(
+            by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName)
+        );
         await BrowserVisibility.waitUntilElementIsVisible(tab);
-    }
-
-    async clickLeftSidebarButton(): Promise<void> {
-        await BrowserActions.click(this.leftSideBarButton);
-    }
-
-    async checkLeftSideBarIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.leftSideBar);
-    }
-
-    async checkLeftSideBarIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.leftSideBar);
-    }
-
-    async clickPasswordSubmit(): Promise<void> {
-        await BrowserActions.click(this.passwordSubmit);
     }
 
     async clickSecondThumbnail(): Promise<void> {
@@ -411,157 +314,8 @@ export class ViewerPage {
         await this.tabsPage.clickTabByTitle('Comments');
     }
 
-    async disableToolbar(): Promise<void> {
-        await this.togglePage.disableToggle(this.toolbarSwitch);
-    }
-
-    async enableToolbar(): Promise<void> {
-        await this.togglePage.enableToggle(this.toolbarSwitch);
-    }
-
     async checkToolbarIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.toolbar);
-    }
-
-    async checkToolbarIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.toolbar);
-    }
-
-    async disableGoBack(): Promise<void> {
-        await this.togglePage.disableToggle(this.goBackSwitch);
-    }
-
-    async enableGoBack(): Promise<void> {
-        await this.togglePage.enableToggle(this.goBackSwitch);
-    }
-
-    async checkGoBackIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.closeButton);
-    }
-
-    async checkGoBackIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.closeButton);
-    }
-
-    async disableToolbarOptions(): Promise<void> {
-        await this.togglePage.disableToggle(this.openWithSwitch);
-    }
-
-    async enableToolbarOptions() {
-        await this.togglePage.enableToggle(this.openWithSwitch);
-    }
-
-    async checkToolbarOptionsIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.openWith);
-    }
-
-    async checkToolbarOptionsIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.openWith);
-    }
-
-    async disableDownload(): Promise<void> {
-        await this.togglePage.disableToggle(this.downloadSwitch);
-    }
-
-    async enableDownload(): Promise<void> {
-        await this.togglePage.enableToggle(this.openWithSwitch);
-    }
-
-    async checkDownloadButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.downloadButton);
-    }
-
-    async disablePrint(): Promise<void> {
-        await this.togglePage.disableToggle(this.printSwitch);
-    }
-
-    async enablePrint(): Promise<void> {
-        await this.togglePage.enableToggle(this.printSwitch);
-    }
-
-    async checkPrintButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.printButton);
-    }
-
-    async checkPrintButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.printButton);
-    }
-
-    async disableAllowSidebar(): Promise<void> {
-        await this.togglePage.disableToggle(this.allowSidebarSwitch);
-    }
-
-    async disableAllowLeftSidebar(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.allowLeftSidebarSwitch);
-        await this.togglePage.disableToggle(this.allowLeftSidebarSwitch);
-    }
-
-    async checkMoreActionsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.bugButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.timeButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadButton);
-    }
-
-    async checkMoreActionsIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.bugButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.timeButton);
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.uploadButton);
-    }
-
-    async checkPreviewFileDefaultOptionsAreDisplayed(): Promise<void> {
-        await this.checkToolbarIsDisplayed();
-        await this.checkMoreActionsDisplayed();
-        await this.checkPrintButtonIsDisplayed();
-        await this.checkDownloadButtonIsDisplayed();
-        await this.checkFullScreenButtonIsDisplayed();
-        await this.checkLeftSideBarButtonIsDisplayed();
-        await this.checkInfoButtonIsDisplayed();
-    }
-
-    async disableMoreActions(): Promise<void> {
-        await this.togglePage.disableToggle(this.moreActionsSwitch);
-    }
-
-    async enableMoreActions(): Promise<void> {
-        await this.togglePage.enableToggle(this.moreActionsSwitch);
-    }
-
-    async enableMoreActionsMenu(): Promise<void> {
-        await this.togglePage.enableToggle(this.moreActionsMenuSwitch);
-    }
-
-    async disableCustomToolbar(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
-        await this.togglePage.disableToggle(this.customToolbarToggle);
-    }
-
-    async enableCustomToolbar(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.customToolbarToggle);
-        await this.togglePage.enableToggle(this.customToolbarToggle);
-    }
-
-    async checkCustomToolbarIsDisplayed() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.customToolbar);
-    }
-
-    async clickToggleRightSidebar(): Promise<void> {
-        await BrowserActions.click(this.showRightSidebarSwitch);
-    }
-
-    async clickToggleLeftSidebar(): Promise<void> {
-        await BrowserActions.click(this.showLeftSidebarSwitch);
-    }
-
-    async disableOverlay(): Promise<void> {
-        await this.togglePage.disableToggle($('#adf-viewer-overlay'));
-    }
-
-    async checkOverlayViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-viewer-overlay-container"]'));
-    }
-
-    async checkInlineViewerIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($('div[class*="adf-viewer-inline-container"]'));
     }
 
     async checkUnknownFormatIsDisplayed(): Promise<void> {
