@@ -113,8 +113,7 @@ describe('PeopleContentService', () => {
         spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.reject(new Error('failed to create new person')));
         const logErrorSpy = spyOn(logService, 'error');
         peopleContentService.createPerson(createNewPersonMock).subscribe(
-            () => {
-            },
+            () => {},
             (error) => {
                 expect(logErrorSpy).toHaveBeenCalledWith('failed to create new person');
                 expect(error).toEqual('failed to create new person');
