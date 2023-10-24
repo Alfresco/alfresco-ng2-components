@@ -503,7 +503,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     onRowClick(row: DataRow, mouseEvent: MouseEvent) {
-        if (mouseEvent) {
+        if (mouseEvent && !(mouseEvent.target instanceof HTMLAnchorElement)) {
             mouseEvent.preventDefault();
         }
 
