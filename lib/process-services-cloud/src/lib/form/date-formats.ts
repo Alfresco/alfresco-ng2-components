@@ -26,10 +26,10 @@ import { MatDateFormats } from '@angular/material/core';
  */
 export const CLOUD_FORM_DATE_FORMATS: MatDateFormats = {
     parse: {
-        dateInput: 'dd-MM-yyyy'
+        dateInput: 'yyyy-MM-dd'
     },
     display: {
-        dateInput: 'dd-MM-yyyy',
+        dateInput: 'yyyy-MM-dd',
         monthLabel: 'LLL',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',

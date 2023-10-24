@@ -48,7 +48,7 @@ import { addDays, subDays } from 'date-fns';
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
-    readonly DATE_FORMAT = 'dd-MM-yyyy';
+    readonly DATE_FORMAT = 'yyyy-MM-dd';
 
     minDate: Date;
     maxDate: Date;
