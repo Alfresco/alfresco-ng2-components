@@ -75,11 +75,6 @@ export class ContentServicesPage {
         await this.checkContentIsNotDisplayed(content);
     }
 
-    async metadataContent(content: string): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        await BrowserActions.click(this.metadataAction);
-    }
-
     async versionManagerContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.versionManagerAction);
@@ -339,10 +334,6 @@ export class ContentServicesPage {
             `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
         );
         return BrowserActions.getText(elementSize);
-    }
-
-    async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
-        await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {
