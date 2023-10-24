@@ -1,11 +1,9 @@
 <mat-accordion displayMode="flat" [multi]="multi" class="adf-metadata-properties">
     <mat-expansion-panel
         *ngIf="displayDefaultProperties"
-        [expanded]="isGeneralPanelExpanded"
+        [(expanded)]="isGeneralPanelExpanded"
         [attr.data-automation-id]="'adf-metadata-group-properties'"
-        hideToggle
-        (opened)="isGeneralPanelExpanded = true"
-        (closed)="isGeneralPanelExpanded = false">
+        hideToggle>
         <mat-expansion-panel-header>
             <adf-content-metadata-header [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
                 <button *ngIf="canEditGeneralInfo"
@@ -48,11 +46,7 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="displayTags">
-        <mat-expansion-panel
-            (opened)="isTagPanelExpanded = true"
-            (closed)="isTagPanelExpanded = false"
-            hideToggle
-            [expanded]="isTagPanelExpanded">
+        <mat-expansion-panel hideToggle [(expanded)]="isTagPanelExpanded">
             <mat-expansion-panel-header>
                 <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="isTagPanelExpanded">
                     <div class="adf-tags-buttons">
@@ -104,11 +98,7 @@
     </ng-container>
 
     <ng-container *ngIf="displayCategories">
-        <mat-expansion-panel
-            (opened)="isCategoriesPanelExpanded = true"
-            (closed)="isCategoriesPanelExpanded = false"
-            hideToggle
-            [expanded]="isCategoriesPanelExpanded">
+        <mat-expansion-panel hideToggle [(expanded)]="isCategoriesPanelExpanded">
             <mat-expansion-panel-header>
                 <adf-content-metadata-header [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'" [expanded]="isCategoriesPanelExpanded">
                     <div class="adf-categories-button">
