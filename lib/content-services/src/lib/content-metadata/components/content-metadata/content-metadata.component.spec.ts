@@ -507,7 +507,7 @@ describe('ContentMetadataComponent', () => {
             expect(group.editable).toBe(true);
         });
     });
-;
+
     describe('Permission', () => {
         beforeEach(() => {
             component.readOnly = false;
@@ -554,7 +554,7 @@ describe('ContentMetadataComponent', () => {
             component.isEditingGeneralInfo = false;
             component.readOnly = false;
             expect(component.canEditGeneralInfo).toBe(true);
-          });
+        });
 
         it('should return false when editable is true', () => {
             component.isEditingGeneralInfo = true;
