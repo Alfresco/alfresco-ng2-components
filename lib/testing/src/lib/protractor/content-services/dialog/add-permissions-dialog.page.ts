@@ -38,7 +38,7 @@ export class AddPermissionsDialogPage {
     closeButton = $('#add-permission-dialog-close-button');
 
     getRoleDropdownOptions() {
-        return $$('.mat-option-text');
+        return $$('.mdc-list-item__primary-text');
     }
 
     async clickAddPermissionButton(): Promise<void> {

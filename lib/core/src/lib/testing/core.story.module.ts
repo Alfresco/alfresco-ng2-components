@@ -16,14 +16,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from '../core.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { provideTranslations } from '../translation/translation.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
-        TranslateModule.forRoot(),
-        CoreModule.forRoot()
+        HttpClientModule
     ],
     providers: [
         provideTranslations('adf-core', 'assets/adf-core')

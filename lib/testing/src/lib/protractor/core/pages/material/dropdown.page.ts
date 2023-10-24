@@ -35,7 +35,7 @@ export class DropdownPage {
 
     async selectOption(option: string): Promise<void> {
         Logger.log(`Select dropdown option ${option}`);
-        const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
+        const optionElement = element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first();
         await BrowserActions.click(optionElement);
         await browser.waitForAngular();
     }
@@ -85,11 +85,11 @@ export class DropdownPage {
     }
 
     async checkOptionIsDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first());
     }
 
     async checkOptionIsNotDisplayed(option: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
+        await BrowserVisibility.waitUntilElementIsNotVisible(element.all(by.cssContainingText('mat-option span.mdc-list-item__primary-text', option)).first());
     }
 
     async selectDropdownOption(option: string): Promise<void> {
