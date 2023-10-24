@@ -132,57 +132,39 @@ describe('DocumentList', () => {
             });
         };
 
-        it('should load -trashcan- preset', async () => {
-            documentList.currentFolderId = '-trashcan-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+        it('should load -trashcan- preset', () => {
+            documentList.presetColumn = '-trashcan-';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'archivedAt', 'archivedByUser.displayName']);
         });
 
         it('should load -sites- preset', async () => {
-            documentList.currentFolderId = '-sites-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = '-sites-';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'title', 'visibility']);
         });
 
         it('shuld load -mysites- preset', async () => {
-            documentList.currentFolderId = '-mysites-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = '-mysites-';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'title', 'visibility']);
         });
 
         it('should load -favorites- preset', async () => {
-            documentList.currentFolderId = '-favorites-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = '-favorites-';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'modifiedAt', 'modifiedByUser.displayName']);
         });
 
         it('should load -recent- preset', async () => {
-            documentList.currentFolderId = '-recent-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = '-recent-';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'name', 'path', 'content.sizeInBytes', 'modifiedAt']);
         });
 
         it('should load -sharedlinks- preset', async () => {
-            documentList.currentFolderId = '-sharedlinks-';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = '-sharedlinks-';
+            documentList.ngAfterContentInit();
             validatePreset([
                 '$thumbnail',
                 'name',
@@ -195,11 +177,8 @@ describe('DocumentList', () => {
         });
 
         it('should load default preset', async () => {
-            documentList.currentFolderId = 'f5dacdb9-6d07-4fe9-9f2a-dedc21bae603';
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            documentList.presetColumn = 'f5dacdb9-6d07-4fe9-9f2a-dedc21bae603';
+            documentList.ngAfterContentInit();
             validatePreset(['$thumbnail', 'name', 'content.sizeInBytes', 'modifiedAt', 'modifiedByUser.displayName']);
         });
     });

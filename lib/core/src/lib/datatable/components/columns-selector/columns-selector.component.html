@@ -43,6 +43,7 @@
                     class="adf-columns-selector-column-checkbox"
                     [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
                     [checked]="!column.isHidden"
+                    [disabled]="isCheckboxDisabled(column)"
                     (change)="changeColumnVisibility(column)">
                     <div class="adf-columns-selector-list-content">{{translatedTitle}}</div>
                 </mat-checkbox>

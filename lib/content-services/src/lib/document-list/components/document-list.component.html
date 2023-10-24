@@ -8,6 +8,7 @@
     [contextMenu]="contextMenuActions"
     [rowStyle]="rowStyle"
     [rowStyleClass]="rowStyleClass"
+    [showMainDatatableActions]="true"
     [loading]="loading"
     [display]="display"
     [noPermission]="noPermission"
@@ -71,5 +72,17 @@
             <ng-content select="adf-custom-loading-content-template"></ng-content>
         </ng-template>
     </adf-loading-content-template>
+
+    <adf-main-menu-datatable-template>
+        <ng-template let-mainMenuTrigger>
+            <adf-datatable-column-selector
+              [columns]="data.getColumns()"
+              [mainMenuTrigger]="mainMenuTrigger"
+              [columnsSorting]="false"
+              [maxColumnsVisible]="maxColumnsVisible"
+              (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
+            </adf-datatable-column-selector>
+        </ng-template>
+    </adf-main-menu-datatable-template>
 
 </adf-datatable>

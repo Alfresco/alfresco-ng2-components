@@ -49,7 +49,6 @@ export abstract class DataTableSchema<T = unknown> {
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
-
         if (!this.columns || this.columns.length === 0) {
             this.createColumns();
             this.columnsSchemaSubject$.next(true);
@@ -98,7 +97,7 @@ export abstract class DataTableSchema<T = unknown> {
     }
 
     public getSchemaFromConfig(presetColumn: string): DataColumn[] {
-        return presetColumn ? this.layoutPresets[presetColumn].map((col) => new ObjectDataColumn(col)) : [];
+        return presetColumn && this.layoutPresets[presetColumn] ? this.layoutPresets[presetColumn].map((col) => new ObjectDataColumn(col)) : [];
     }
 
     private getDefaultLayoutPreset(): DataColumn[] {
