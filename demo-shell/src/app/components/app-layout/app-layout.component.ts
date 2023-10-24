@@ -42,8 +42,7 @@ export class AppLayoutComponent {
             { href: '/form', icon: 'poll', title: 'Form' }
         ]},
         { href: '/login', icon: 'vpn_key', title: 'Login' },
-        { href: '/settings-layout', icon: 'settings', title: 'Settings' },
-        { href: '/treeview', icon: 'nature', title: 'Tree View' }
+        { href: '/settings-layout', icon: 'settings', title: 'Settings' }
     ];
 
     enableRedirect = true;
