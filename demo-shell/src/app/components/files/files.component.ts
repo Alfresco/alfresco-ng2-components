@@ -30,7 +30,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NodeEntry, NodePaging, Pagination, Node, SiteEntry, SearchEntry } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
 import {
     NotificationService,
     DataRow,
@@ -97,12 +97,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input()
     sortingMode: 'server' | 'client' = 'server';
-
-    @Input()
-    showRecentFiles = true;
-
-    @Input()
-    showSitePicker = true;
 
     @Input()
     showSettingsPanel = true;
@@ -416,10 +410,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 this.openSnackMessageInfo('Node Aspects Updated');
             });
         });
-    }
-
-    onSiteChange(site: SiteEntry) {
-        this.currentFolderId = site.entry.guid;
     }
 
     hasSelection(selection: Array<any>): boolean {
