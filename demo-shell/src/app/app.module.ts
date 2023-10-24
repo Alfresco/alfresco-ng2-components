@@ -28,7 +28,6 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FormComponent } from './components/form/form.component';
@@ -95,7 +94,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         LogoutComponent,
         AppLayoutComponent,
         UserInfoComponent,
-        HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
         ProcessServiceComponent,

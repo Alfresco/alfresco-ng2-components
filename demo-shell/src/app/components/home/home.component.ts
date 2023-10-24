@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
+    standalone: true,
     selector: 'app-home-view',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
