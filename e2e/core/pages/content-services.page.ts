@@ -51,13 +51,11 @@ export class ContentServicesPage {
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
     deleteContentElement = $('button[data-automation-id="Delete"]');
-    metadataAction = $('button[data-automation-id="Info"]');
     versionManagerAction = $('button[data-automation-id="Manage versions"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
-    siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
 
     async isContextActionEnabled(actionName: string): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);
@@ -256,19 +254,9 @@ export class ContentServicesPage {
         return this.uploadFileButton.isEnabled();
     }
 
-    async enableInfiniteScrolling(): Promise<void> {
-        const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
-        await BrowserActions.click(infiniteScrollButton);
-    }
-
     async enableMediumTimeFormat(): Promise<void> {
         const mediumTimeFormat = $('#enableMediumTimeFormat');
         await BrowserActions.click(mediumTimeFormat);
-    }
-
-    async enableThumbnails(): Promise<void> {
-        const thumbnailSlide = $('#adf-thumbnails-upload-switch');
-        await BrowserActions.click(thumbnailSlide);
     }
 
     async checkPaginationIsNotDisplayed(): Promise<void> {
@@ -322,11 +310,6 @@ export class ContentServicesPage {
 
     async checkEmptyFolderImageUrlToContain(url): Promise<void> {
         await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
-    }
-
-    async getRowIconImageUrl(fileName: string): Promise<string> {
-        const iconRow = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`);
-        return BrowserActions.getAttribute(iconRow, 'src');
     }
 
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {

@@ -9,7 +9,6 @@
                               [versioning]="versioning"
                               [adf-check-allowable-operation]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
-                              (beginUpload)="onBeginUpload($event)"
                               (updateFileVersion)="onUploadNewVersion($event)">
             <div *ngIf="errorMessage" class="app-error-message">
                 <button (click)="resetError()" mat-icon-button>
@@ -106,7 +105,6 @@
                 [sorting]="sorting"
                 [sortingMode]="sortingMode"
                 [showHeader]="showHeader"
-                [thumbnails]="thumbnails"
                 [stickyHeader]="stickyHeader"
                 [headerFilters]="headerFilters"
                 [filterValue]="paramValues"
@@ -129,8 +127,7 @@
                         key="$thumbnail"
                         type="image"
                         [sortable]="false"
-                        class="app-image-table-cell"
-                        [class.adf-cell-thumbnail]="thumbnails">
+                        class="app-image-table-cell">
                     </data-column>
                     <data-column
                         *ngIf="showNameColumn && hyperlinkNavigation"
@@ -246,7 +243,6 @@
                 </div>
             <adf-pagination
                 #standardPagination
-                *ngIf="!infiniteScrolling"
                 class="app-documentlist-pagination"
                 [target]="documentList"
                 (changePageSize)="onChangePageSize($event)"
@@ -254,12 +250,6 @@
                 (nextPage)="onNextPage($event)"
                 (prevPage)="onPrevPage($event)">
             </adf-pagination>
-            <adf-infinite-pagination
-                [hidden]="!infiniteScrolling"
-                [target]="documentList"
-                [loading]="documentList.loading">
-                {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
-            </adf-infinite-pagination>
         </adf-upload-drag-area>
 
         <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar">
@@ -277,7 +267,7 @@
                             <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                                 <adf-version-manager
                                     [node]="documentList.selection[0].entry"
-                                    [showComments]="showVersionComments"
+                                    [showComments]="true"
                                     [allowDownload]="allowVersionDownload">
                                 </adf-version-manager>
                             </ng-container>
@@ -357,38 +347,14 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-thumbnails-upload-switch" (click)="toggleThumbnails()">
-                Enable Thumbnails
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle id="adf-version-upload-switch" [(ngModel)]="versioning">
                 Enable versioning
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle (click)="onInfiniteScrolling()">
-                Enable Infinite Scrolling
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="showVersionComments">
-                Show comments on versions
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle [(ngModel)]="allowVersionDownload">
                 Enable version download
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="warnOnMultipleUploads">
-                Display warning for multiple uploads
             </mat-slide-toggle>
         </section>
 
@@ -437,8 +403,7 @@
                 [versioning]="versioning"
                 [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
-                (permissionEvent)="handlePermissionError($event)"
-                (beginUpload)="onBeginUpload($event)">
+                (permissionEvent)="handlePermissionError($event)">
             </adf-upload-button>
         </div>
         <div *ngIf="acceptedFilesTypeShow">

@@ -38,18 +38,14 @@ import {
     PaginationComponent,
     DisplayMode,
     ShowHeaderMode,
-    InfinitePaginationComponent,
     FormRenderingService
 } from '@alfresco/adf-core';
-
 import {
     ContentService,
     FolderCreatedEvent,
     UploadService,
     DocumentListComponent,
     PermissionStyleModel,
-    UploadFilesEvent,
-    ConfirmDialogComponent,
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
@@ -123,9 +119,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     maxSizeShow = false;
 
     @Input()
-    showVersionComments = true;
-
-    @Input()
     versioning = false;
 
     @Input()
@@ -194,14 +187,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent, { static: true })
-    infinitePaginationComponent: InfinitePaginationComponent;
-
     permissionsStyle: PermissionStyleModel[] = [];
-    infiniteScrolling: boolean;
     stickyHeader: boolean;
-    warnOnMultipleUploads = false;
-    thumbnails = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
@@ -225,11 +212,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (entry?.isFile) {
             this.preview.showResource(entry.id);
         }
-    }
-
-    toggleThumbnails() {
-        this.thumbnails = !this.thumbnails;
-        this.documentList.reload();
     }
 
     ngOnInit() {
@@ -390,7 +372,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onManageVersions(event: any) {
         const contentEntry = event.value.entry;
-        const showComments = this.showVersionComments;
+        const showComments = true;
         const allowDownload = this.allowVersionDownload;
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
@@ -476,37 +458,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedPreviousPage.emit(event);
     }
 
-    onInfiniteScrolling(): void {
-        this.infiniteScrolling = !this.infiniteScrolling;
-        this.infinitePaginationComponent.reset();
-    }
-
-    onBeginUpload(event: UploadFilesEvent) {
-        if (this.warnOnMultipleUploads && event) {
-            const files = event.files || [];
-            if (files.length > 1) {
-                event.pauseUpload();
-
-                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                    data: {
-                        title: 'Upload',
-                        message: `Are you sure you want to upload ${files.length} file(s)?`
-                    },
-                    minWidth: '250px'
-                });
-
-                dialogRef.afterClosed().subscribe((result) => {
-                    if (result === true) {
-                        event.resumeUpload();
-                    }
-                });
-            }
-        }
-    }
-
     onUploadNewVersion(ev) {
         const contentEntry = ev.detail.data.node.entry;
-        const showComments = this.showVersionComments;
+        const showComments = true;
         const allowDownload = this.allowVersionDownload;
         const newFileVersion = ev.detail.files[0].file;
 
