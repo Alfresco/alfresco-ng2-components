@@ -24,7 +24,7 @@ export class NavigationBarPage {
     processServicesNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="App"]');
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
     formButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Form"]');
-    logoutSection = $('div[data-automation-id="adf-logout-section"]');
+    logoutSection = $('[data-automation-id="adf-logout-section"]');
     personalFiles = $('div [title="Personal Files"]');
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
