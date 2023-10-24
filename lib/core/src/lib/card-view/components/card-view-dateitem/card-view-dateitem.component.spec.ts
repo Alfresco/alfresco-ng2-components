@@ -61,10 +61,6 @@ describe('CardViewDateItemComponent', () => {
 
     afterEach(() => fixture.destroy());
 
-    it('should pick date format from appConfigService', () => {
-        expect(component.dateFormat).toEqual('shortDate');
-    });
-
     it('should render the label and value', () => {
         fixture.detectChanges();
 
@@ -319,7 +315,6 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
-        component.dateFormat = 'M/d/yy, h:mm a';
         component.property.value = new Date('Jul 10 2017 00:01:00');
         const expectedDate = new Date('Jul 10 2018');
         fixture.detectChanges();
