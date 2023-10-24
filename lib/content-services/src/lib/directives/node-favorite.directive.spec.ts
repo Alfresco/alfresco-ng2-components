@@ -264,7 +264,8 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should emit error event when removeFavoriteSite() fails', fakeAsync(() => {
-            removeFavoriteSpy.and.returnValue(Promise.reject(new Error('error')));
+            const error = new Error('error');
+            removeFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -274,11 +275,12 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.error.emit).toHaveBeenCalledWith('error');
+            expect(directive.error.emit).toHaveBeenCalledWith(error);
         }));
 
         it('should emit error event when addFavorite() fails', fakeAsync(() => {
-            addFavoriteSpy.and.returnValue(Promise.reject(new Error('error')));
+            const error = new Error('error');
+            addFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -288,7 +290,7 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.error.emit).toHaveBeenCalledWith('error');
+            expect(directive.error.emit).toHaveBeenCalledWith(error);
         }));
 
         it('should set isFavorites items to false', fakeAsync(() => {
