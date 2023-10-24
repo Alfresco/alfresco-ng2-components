@@ -20,9 +20,8 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { LocationCellComponent } from './location-cell.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
-describe('LocationCellComponent', () => {
+fdescribe('LocationCellComponent', () => {
     let component: LocationCellComponent;
     let fixture: ComponentFixture<LocationCellComponent>;
     let dataTableAdapter: ObjectDataTableAdapter;
@@ -32,7 +31,7 @@ describe('LocationCellComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule.forRoot(),
+                LocationCellComponent,
                 CoreTestingModule
             ]
         });

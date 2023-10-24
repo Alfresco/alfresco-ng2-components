@@ -18,8 +18,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DataTableService } from '../../services/datatable.service';
+import { AsyncPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
+    standalone: true,
+    imports: [AsyncPipe, RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
@@ -30,7 +34,7 @@ import { DataTableService } from '../../services/datatable.service';
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-location-cell adf-datatable-content-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
