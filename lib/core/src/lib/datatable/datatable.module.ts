@@ -56,6 +56,7 @@ import { DataColumnModule } from './data-column/data-column.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 import { NumberCellComponent } from './components/number-cell/number-cell.component';
+import { LocalizedDatePipe } from '../pipes';
 
 @NgModule({
     imports: [
@@ -76,7 +77,9 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         BooleanCellComponent,
         AmountCellComponent,
         NumberCellComponent,
-        LocationCellComponent
+        LocationCellComponent,
+        DateCellComponent,
+        LocalizedDatePipe
     ],
     declarations: [
         DataTableComponent,
@@ -86,7 +89,6 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         EmptyListFooterDirective,
         DataTableCellComponent,
         DataTableRowComponent,
-        DateCellComponent,
         FileSizeCellComponent,
         JsonCellComponent,
         ColumnsSelectorComponent,
@@ -108,7 +110,6 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         EmptyListFooterDirective,
         DataTableCellComponent,
         DataTableRowComponent,
-        DateCellComponent,
         ColumnsSelectorComponent,
         FileSizeCellComponent,
         JsonCellComponent,

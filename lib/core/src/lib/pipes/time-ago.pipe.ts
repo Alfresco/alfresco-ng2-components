@@ -25,6 +25,7 @@ import { differenceInDays, formatDistance } from 'date-fns';
 import * as Locales from 'date-fns/locale';
 
 @Pipe({
+    standalone: true,
     name: 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {

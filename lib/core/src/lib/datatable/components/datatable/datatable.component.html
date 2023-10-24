@@ -253,7 +253,8 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
+                                    [tooltip]="getCellTooltip(row, col)"
+                                    [dateConfig]="col.dateConfig">
                                 </adf-date-cell>
                             </div>
                             <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"

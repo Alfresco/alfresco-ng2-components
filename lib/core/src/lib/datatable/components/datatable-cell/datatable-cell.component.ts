@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, inject } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -58,8 +58,6 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     row: DataRow;
 
-    value$ = new BehaviorSubject<any>('');
-
     /** Enables/disables a Clipboard directive to allow copying of the cell's content. */
     @Input()
     copyContent: boolean;
@@ -74,7 +72,8 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(@Optional() protected dataTableService: DataTableService) {}
+    protected dataTableService = inject(DataTableService, { optional: true });
+    value$ = new BehaviorSubject<any>('');
 
     ngOnInit() {
         this.updateValue();
