@@ -8,7 +8,7 @@
             (opened)="isGeneralPanelExpanded = true"
             (closed)="isGeneralPanelExpanded = false">
             <mat-expansion-panel-header>
-                <adf-content-metadata-header #generalInfoHeader [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
+                <adf-content-metadata-header [title]="'CORE.METADATA.BASIC.HEADER'" [expanded]="isGeneralPanelExpanded">
                     <button *ngIf="canEditGeneralInfo"
                             mat-icon-button
                             (click)="onToggleGeneralInfoEdit($event)"
