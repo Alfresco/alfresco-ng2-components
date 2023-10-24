@@ -102,8 +102,6 @@ describe('ContentMetadataComponent', () => {
     };
 
     const findTagsCreator = (): TagsCreatorComponent => fixture.debugElement.query(By.directive(TagsCreatorComponent))?.componentInstance;
-
-    const findShowingTagInputButton = (): HTMLButtonElement => fixture.debugElement.query(By.css('.adf-tags-buttons')).nativeElement;
     const getToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-general-info-edit"]'));
     const getTagsToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="showing-tag-input-button"]'));
     const getCategoriesToggleEditButton = () => fixture.debugElement.query(By.css('[data-automation-id="meta-data-categories-edit"]'));
@@ -125,15 +123,6 @@ describe('ContentMetadataComponent', () => {
      */
     function getCategoriesManagementComponent(): CategoriesManagementComponent {
         return fixture.debugElement.query(By.directive(CategoriesManagementComponent))?.componentInstance;
-    }
-
-    /**
-     * Get categories title button
-     *
-     * @returns native element
-     */
-    function getCategoriesButton(): HTMLButtonElement {
-        return fixture.debugElement.query(By.css('.adf-categories-button')).nativeElement;
     }
 
     /**
@@ -1277,17 +1266,7 @@ describe('ContentMetadataComponent', () => {
             expect(tagsCreator.tagNameControlVisible).toBeFalse();
         });
 
-        it('should show showing tag input button after emitting tagNameControlVisibleChange event with false', fakeAsync(() => {
-            tagsCreator.tagNameControlVisibleChange.emit(true);
-            fixture.detectChanges();
-            tick();
-            tagsCreator.tagNameControlVisibleChange.emit(false);
-            fixture.detectChanges();
-            tick(100);
-            expect(findShowingTagInputButton().hasAttribute('hidden')).toBeFalse();
-        }));
-
-        it('should have assigned correct mode', () => {
+        it('should load in create and assign mode by default', () => {
             expect(tagsCreator.mode).toBe(TagsCreatorMode.CREATE_AND_ASSIGN);
         });
 
@@ -1463,17 +1442,7 @@ describe('ContentMetadataComponent', () => {
             expect(categoriesManagementComponent.categoryNameControlVisible).toBeFalse();
         });
 
-        it('should show assign categories button when categoryNameControlVisible changes to false', fakeAsync(() => {
-            categoriesManagementComponent.categoryNameControlVisibleChange.emit(true);
-            fixture.detectChanges();
-            tick();
-            categoriesManagementComponent.categoryNameControlVisibleChange.emit(false);
-            fixture.detectChanges();
-            tick(100);
-            expect(getCategoriesButton().hasAttribute('hidden')).toBeFalse();
-        }));
-
-        it('should have correct mode', () => {
+        it('should load with assign mode by default', () => {
             expect(categoriesManagementComponent.managementMode).toBe(CategoriesManagementMode.ASSIGN);
         });
 
