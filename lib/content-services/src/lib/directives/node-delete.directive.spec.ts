@@ -111,10 +111,10 @@ describe('NodeDeleteDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
-        deleteNodeSpy = spyOn(component.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+        deleteNodeSpy = spyOn(component.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
 
-        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['trashcanApi'], 'deleteDeletedNode').and.returnValue(Promise.resolve());
+        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.trashcanApi, 'deleteDeletedNode').and.returnValue(Promise.resolve());
 
     });
 
