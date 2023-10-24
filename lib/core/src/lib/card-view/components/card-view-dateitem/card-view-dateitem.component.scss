@@ -25,16 +25,6 @@
         margin-bottom: -7px !important;
         border-bottom: 0;
         cursor: pointer;
-
-        .adf-dateitem-editable-controls {
-            margin-top: 15px;
-        }
-
-        .mat-datetimepicker-toggle {
-            position: absolute;
-            right: 0;
-            top: -20px;
-        }
     }
 
     .adf-dateitem-editable {
@@ -46,6 +36,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-bottom: 6px;
 
             .mat-icon-button {
                 line-height: 20px;

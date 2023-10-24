@@ -67,17 +67,13 @@
             </mat-chip>
         </mat-chip-list>
 
-        <mat-form-field *ngIf="isEditable()"
-                        class="adf-property-field adf-dateitem-editable-controls"
-                        [floatLabel]="'never'"
-                        (click)="showDatePicker()">
-            <input matInput
-                   class="adf-invisible-date-input"
-                   [attr.tabIndex]="-1"
-                   [matDatetimepicker]="datetimePicker"
-                   (dateChange)="addDateToList($event)"
-                   [attr.id]="'card-view-dateitem-' + property.key"
-            >
+        <div *ngIf="isEditable()" class="adf-property-field adf-dateitem-editable-controls" (click)="showDatePicker()">
+            <input
+                class="adf-invisible-date-input"
+                [attr.tabIndex]="-1"
+                [matDatetimepicker]="datetimePicker"
+                (dateChange)="addDateToList($event)"
+                [attr.id]="'card-view-dateitem-' + property.key">
             <mat-datetimepicker-toggle [attr.tabindex]="-1"
                                        matSuffix
                                        [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -91,6 +87,6 @@
                                 [attr.data-automation-id]="'datepicker-' + property.key"
                                 [startAt]="valueDate">
             </mat-datetimepicker>
-        </mat-form-field>
+        </div>
     </div>
 </div>
