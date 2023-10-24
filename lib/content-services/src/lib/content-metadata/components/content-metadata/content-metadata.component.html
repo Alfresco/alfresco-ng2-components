@@ -1,6 +1,7 @@
 <mat-accordion displayMode="flat" [multi]="multi" class="adf-metadata-properties">
     <mat-expansion-panel
         *ngIf="displayDefaultProperties"
+        class="adf-content-metadata-panel"
         [(expanded)]="isGeneralPanelExpanded"
         [attr.data-automation-id]="'adf-metadata-group-properties'"
         hideToggle>
@@ -46,7 +47,7 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="displayTags">
-        <mat-expansion-panel hideToggle [(expanded)]="isTagPanelExpanded">
+        <mat-expansion-panel hideToggle [(expanded)]="isTagPanelExpanded" class="adf-content-metadata-panel">
             <mat-expansion-panel-header>
                 <adf-content-metadata-header [title]="'METADATA.BASIC.TAGS'" [expanded]="isTagPanelExpanded">
                     <button *ngIf="canEditTags"
@@ -96,7 +97,7 @@
     </ng-container>
 
     <ng-container *ngIf="displayCategories">
-        <mat-expansion-panel hideToggle [(expanded)]="isCategoriesPanelExpanded">
+        <mat-expansion-panel hideToggle [(expanded)]="isCategoriesPanelExpanded" class="adf-content-metadata-panel">
             <mat-expansion-panel-header>
                 <adf-content-metadata-header [title]="'CATEGORIES_MANAGEMENT.CATEGORIES_TITLE'" [expanded]="isCategoriesPanelExpanded">
                     <button *ngIf="canEditCategories"
@@ -146,7 +147,10 @@
         </mat-expansion-panel>
     </ng-container>
 
-    <mat-expansion-panel *ngFor="let customPanel of customPanels" [expanded]="canExpandTheCard(customPanel.panelTitle)">
+    <mat-expansion-panel
+        *ngFor="let customPanel of customPanels"
+        [expanded]="canExpandTheCard(customPanel.panelTitle)"
+        class="adf-content-metadata-panel">
         <mat-expansion-panel-header>
             <mat-panel-title class="adf-metadata-custom-panel-title">{{ customPanel.panelTitle | translate }}</mat-panel-title>
         </mat-expansion-panel-header>
@@ -161,6 +165,7 @@
                 [expanded]="canExpandTheCard(group.title) || !displayDefaultProperties && first || group.expanded"
                 (opened)="group.expanded = true"
                 (closed)="group.expanded = false"
+                class="adf-content-metadata-panel"
                 hideToggle>
                 <mat-expansion-panel-header>
                     <adf-content-metadata-header [title]="group.title" [expanded]="group.expanded">

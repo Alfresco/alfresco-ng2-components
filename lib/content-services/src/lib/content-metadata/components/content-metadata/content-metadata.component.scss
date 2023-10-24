@@ -2,7 +2,7 @@ $panel-properties-height: 56px !default;
 
 .adf {
     &-metadata-properties {
-        .mat-expansion-panel:not([class*='mat-elevation-z']) {
+        .adf-content-metadata-panel {
             box-shadow: none;
             border: 1px solid var(--adf-metadata-property-panel-border-color);
             border-radius: 12px;
