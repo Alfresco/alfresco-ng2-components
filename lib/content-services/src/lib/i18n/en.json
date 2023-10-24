@@ -169,7 +169,6 @@
     "CATEGORIES_TITLE": "Categories",
     "NO_CATEGORIES_CREATED": "No Categories created",
     "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
-    "ASSIGN_CATEGORIES": "Assign Categories",
     "UNASSIGN_CATEGORY": "Unassign Category",
     "DELETE_CATEGORY": "Delete Category",
     "EXISTING_CATEGORIES": "Existing Categories:",
@@ -489,7 +488,6 @@
       "MODIFIED_DATE": "Modified Date",
       "CONTENT_TYPE": "Content Type",
       "TAGS": "Tags",
-      "ADD_TAG_TOOLTIP": "Add tag",
       "NO_TAGS_ADDED": "There are currently no tags added",
       "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
       "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
