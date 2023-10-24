@@ -30,20 +30,9 @@
 
         <adf-info-drawer-tab label="Properties">
             <adf-content-metadata
-                *ngIf="isPreset" [node]="node"
+                [node]="node"
                 [multi]="multi"
-                [preset]="customPreset"
-                [readOnly]="isReadOnly"
-                [displayAspect]="showAspect"
-                [displayDefaultProperties]="displayDefaultProperties"
-                [displayTags]="false"
-                [displayCategories]="false"
-                [displayEmpty]="displayEmptyMetadata">
-            </adf-content-metadata>
-
-            <adf-content-metadata
-                *ngIf="!isPreset" [node]="node"
-                [multi]="multi"
+                [preset]="isPreset ? customPreset : null"
                 [readOnly]="isReadOnly"
                 [displayAspect]="showAspect"
                 [displayDefaultProperties]="displayDefaultProperties"
