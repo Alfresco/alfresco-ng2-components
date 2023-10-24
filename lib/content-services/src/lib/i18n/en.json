@@ -159,8 +159,7 @@
         "CREATE_TAGS": "Error while creating the tags"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Delete tag",
-        "HIDE_INPUT": "Hide input"
+        "DELETE_TAG": "Delete tag"
       },
       "TAGS_LOADING": "Tags loading",
       "CREATE_TAGS_SUCCESS": "Tags created successfully"
@@ -179,7 +178,6 @@
     "GENERIC_CREATE": "Create: {{name}}",
     "NAME": "Category name",
     "LOADING": "Loading",
-    "HIDE_INPUT": "Hide input",
     "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "Categories not found",
