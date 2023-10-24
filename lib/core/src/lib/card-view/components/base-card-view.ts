@@ -18,7 +18,6 @@
 import { Input, OnDestroy, Directive, inject } from '@angular/core';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
-import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -33,9 +32,7 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
     protected destroy$ = new Subject<boolean>();
 
     constructor() {
-        this.cardViewUpdateService.updateItem$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((itemModel: CardViewBaseItemModel) => {
+        this.cardViewUpdateService.updateItem$.pipe(takeUntil(this.destroy$)).subscribe((itemModel) => {
             if (this.property.key === itemModel.key) {
                 this.property.value = itemModel.value;
             }
@@ -46,5 +43,4 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
         this.destroy$.next(true);
         this.destroy$.complete();
     }
-
 }
