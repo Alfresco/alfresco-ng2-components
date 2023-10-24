@@ -145,7 +145,7 @@ describe('ProcessService', () => {
         });
 
         it('should return a default error if no data is returned by the API', (done) => {
-            startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(null));
+            startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(new Error('error')));
             service.startProcess(processDefId, processName).subscribe(
                 () => {
                 },
@@ -191,7 +191,7 @@ describe('ProcessService', () => {
         });
 
         it('should return a default error if no data is returned by the API', (done) => {
-            deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(null));
+            deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(new Error('error')));
             service.cancelProcess(null).subscribe(
                 () => {
                 },
@@ -251,7 +251,7 @@ describe('ProcessService', () => {
         });
 
         it('should return a default error if no data is returned by the API', (done) => {
-            getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(null));
+            getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(new Error('error')));
             service.getProcessDefinitions().subscribe(
                 () => {
                 },
@@ -325,7 +325,7 @@ describe('ProcessService', () => {
         });
 
         it('should return a default error if no data is returned by the API', (done) => {
-            listTasks = listTasks.and.returnValue(Promise.reject(null));
+            listTasks = listTasks.and.returnValue(Promise.reject(new Error('error')));
             service.getProcessTasks(processId).subscribe(
                 () => {
                 },
@@ -379,7 +379,7 @@ describe('ProcessService', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(null));
+                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(new Error('error')));
                 service.getProcessInstanceVariables(null).subscribe(
                     () => {
                     },
@@ -418,7 +418,7 @@ describe('ProcessService', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(null));
+                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(new Error('error')));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
                     () => {
                     },
@@ -444,7 +444,7 @@ describe('ProcessService', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(null));
+                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(new Error('error')));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
                     () => {
                     },

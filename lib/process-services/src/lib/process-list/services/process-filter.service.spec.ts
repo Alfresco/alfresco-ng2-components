@@ -243,7 +243,7 @@ describe('Process filter', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                createFilter = createFilter.and.returnValue(Promise.reject(null));
+                createFilter = createFilter.and.returnValue(Promise.reject(new Error('error')));
                 service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {

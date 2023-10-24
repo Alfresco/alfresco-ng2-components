@@ -160,9 +160,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response of getProcessFilters', async () => {
-        const mockErrorFilterPromise = Promise.reject({
-            error: 'wrong request'
-        });
+        const mockErrorFilterPromise = Promise.reject(new Error('wrong request'));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = '1';
@@ -177,9 +175,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response of getDeployedApplicationsByName', async () => {
-        const mockErrorFilterPromise = Promise.reject({
-            error: 'wrong request'
-        });
+        const mockErrorFilterPromise = Promise.reject(new Error('wrong request'));
         spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = 'fake-app';
