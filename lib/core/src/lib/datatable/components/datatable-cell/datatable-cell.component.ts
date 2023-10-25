@@ -78,22 +78,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.updateValue();
-        if (this.dataTableService) {
-            this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
-                if (data?.id) {
-                    if (this.row.id === data.id) {
-                        if (this.row.obj && data.obj) {
-                            this.row.obj = data.obj;
-                            this.row['cache'][this.column.key] = this.column.key
-                                .split('.')
-                                .reduce((source, key) => (source ? source[key] : ''), data.obj);
-
-                            this.updateValue();
-                        }
-                    }
-                }
-            });
-        }
+        this.subscribeToRowUpdates();
     }
 
     protected updateValue() {
@@ -106,6 +91,24 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
                 this.tooltip = value;
             }
         }
+    }
+
+    protected subscribeToRowUpdates() {
+        if (!this.dataTableService) {
+            return;
+        }
+        this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
+            if (data?.id && this.row.id === data.id) {
+                if (this.row.obj && data.obj) {
+                    this.row.obj = data.obj;
+                    this.row['cache'][this.column.key] = this.column.key
+                        .split('.')
+                        .reduce((source, key) => (source ? source[key] : ''), data.obj);
+
+                    this.updateValue();
+                }
+            }
+        });
     }
 
     ngOnDestroy() {
