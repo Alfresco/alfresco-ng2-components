@@ -307,8 +307,8 @@ describe('Process filter', () => {
                 const duplicateRunningObservable = of(duplicateRunningFilter);
 
                 spyOn(service, 'getRunningFilterInstance').and.returnValue(runningFilter);
-                spyOn<any>(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
-                spyOn<any>(service, 'getAllFilterInstance').and.returnValue(allFilter);
+                spyOn(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
+                spyOn(service, 'getAllFilterInstance').and.returnValue(allFilter);
 
                 spyOn(service, 'addProcessFilter').and.returnValues(
                     runningObservable,

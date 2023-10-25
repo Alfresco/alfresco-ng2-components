@@ -185,7 +185,7 @@ export class ProcessFilterService {
         }
     }
 
-    private getCompletedFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
+    getCompletedFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             name: 'Completed',
             appId,
@@ -196,7 +196,7 @@ export class ProcessFilterService {
         });
     }
 
-    private getAllFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
+    getAllFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             name: 'All',
             appId,
