@@ -20,15 +20,14 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subject } from 'rxjs';
-import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils, ADF_DATE_FORMATS } from '@alfresco/adf-core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { CLOUD_FORM_DATE_FORMATS } from '../../../date-formats';
 import { addDays, subDays } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
     providers: [
-        { provide: MAT_DATE_FORMATS, useValue: CLOUD_FORM_DATE_FORMATS },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
     ],
     templateUrl: './date-cloud.widget.html',
