@@ -179,7 +179,9 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
 
     private create(): Observable<SiteEntry> {
-        const { title, id, description, visibility } = this;
+        let { title, id, description, visibility } = this;
+        // id = "";
+        // title = "";
         const siteBody = {
             id,
             title,
@@ -210,6 +212,9 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                 this.form.controls['id'].setErrors({
                     message: 'LIBRARY.ERRORS.CONFLICT'
                 });
+            }
+            else {
+                this.notificationService.showError(errorMessage);
             }
         } catch {
             this.notificationService.showError(errorMessage);
