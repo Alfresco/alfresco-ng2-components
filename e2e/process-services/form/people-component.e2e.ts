@@ -84,7 +84,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
 
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
@@ -99,7 +99,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
 
         await taskDetails.clickInvolvePeopleButton();
         await expect(await taskPage.taskDetails().getInvolvePeopleHeader()).toEqual('Add people and groups');
@@ -114,7 +114,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(processUserModel.firstName + ' ' + processUserModel.lastName);
         await taskDetails.noUserIsDisplayedInSearchInvolvePeople(processUserModel.firstName + ' ' + processUserModel.lastName);
@@ -126,7 +126,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
@@ -144,7 +144,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
         await taskPage.tasksListPage().selectRow(tasks[1]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
@@ -168,7 +168,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.tasksListPage().selectRow(tasks[2]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskPage.taskDetails().clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
@@ -179,7 +179,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
         await expect(await taskPage.taskDetails().getInvolvedPeopleTitle()).toEqual(peopleTitle + '(1)');
 
-        const taskDetails2 = await taskPage.taskDetails();
+        const taskDetails2 = taskPage.taskDetails();
         await taskDetails2.clickInvolvePeopleButton();
         await taskDetails2.typeUser(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
         await taskDetails2.selectUserToInvolve(secondAssigneeUserModel.firstName + ' ' + secondAssigneeUserModel.lastName);
@@ -196,7 +196,7 @@ describe('People component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await taskPage.tasksListPage().selectRow(tasks[3]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);

@@ -39,11 +39,11 @@ export class AddPermissionComponent implements OnInit {
 
     /** Emitted when the node is updated successfully. */
     @Output()
-    success: EventEmitter<Node> = new EventEmitter();
+    success = new EventEmitter<Node>();
 
     /** Emitted when an error occurs during the update. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter();
+    error = new EventEmitter<any>();
 
     selectedItems: NodeEntry[] = [];
     currentNode: Node;

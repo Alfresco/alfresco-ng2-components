@@ -75,7 +75,7 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed('Standalone task');
         await taskPage.taskDetails().noFormIsDisplayed();
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await taskDetails.checkCompleteTaskButtonIsDisplayed();
         await taskDetails.checkCompleteTaskButtonIsEnabled();
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
@@ -110,7 +110,7 @@ describe('Start Task - Task App', () => {
         await taskPage.formFields().noFormIsDisplayed();
         await taskPage.taskDetails().clickAttachFormButton();
 
-        const formFields = await taskPage.formFields();
+        const formFields = taskPage.formFields();
         await formFields.selectForm(app.formName);
         await formFields.clickOnAttachFormButton();
 
@@ -122,7 +122,7 @@ describe('Start Task - Task App', () => {
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
         const task = await taskPage.createNewTask();
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
         await task.addName('Remove form');
         await task.selectForm(app.formName);
         await task.clickStartButton();

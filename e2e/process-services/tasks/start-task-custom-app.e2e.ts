@@ -73,7 +73,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
 
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
 
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);

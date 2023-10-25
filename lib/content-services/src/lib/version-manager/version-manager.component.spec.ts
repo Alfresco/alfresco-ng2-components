@@ -48,7 +48,7 @@ describe('VersionManagerComponent', () => {
         component.node = node;
 
         nodesApiService = TestBed.inject(NodesApiService);
-        spyOnListVersionHistory = spyOn(component.versionListComponent['versionsApi'], 'listVersionHistory').and.callFake(() =>
+        spyOnListVersionHistory = spyOn(component.versionListComponent.versionsApi, 'listVersionHistory').and.callFake(() =>
             Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } }))
         );
     });
@@ -81,24 +81,25 @@ describe('VersionManagerComponent', () => {
         expect(versionCommentEl).toBeNull();
     });
 
-    it('should emit success event upon successful upload of a new version', async () => {
+    it('should emit success event upon successful upload of a new version', () => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node } };
-        await component.uploadSuccess.subscribe((event) => {
-            expect(event).toBe(node);
-        });
+        let lastValue: Node;
+        component.uploadSuccess.subscribe((event) => lastValue = event);
         component.onUploadSuccess(emittedData);
+        expect(lastValue).toBe(node);
     });
 
     it('should emit nodeUpdated event upon successful upload of a new version', () => {
         fixture.detectChanges();
-        nodesApiService.nodeUpdated.subscribe((res) => {
-            expect(res).toEqual(node);
-        });
+
+        let lastValue: Node;
+        nodesApiService.nodeUpdated.subscribe((res) => lastValue = res);
 
         const emittedData = { value: { entry: node } };
         component.onUploadSuccess(emittedData);
+        expect(lastValue).toEqual(node);
     });
 
     describe('Animation', () => {

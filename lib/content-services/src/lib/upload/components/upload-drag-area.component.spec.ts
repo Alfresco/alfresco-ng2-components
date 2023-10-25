@@ -22,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { mockUploadSuccessPromise, mockUploadErrorPromise } from '../../mock/upload.service.mock';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
+import { FileUploadErrorEvent } from '../../common/events/file.event';
 
 const getFakeShareDataRow = (allowableOperations = ['delete', 'update', 'create']) => ({
     obj: {
@@ -180,7 +181,7 @@ describe('UploadDragAreaComponent', () => {
 
             fixture.detectChanges();
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: { data: getFakeShareDataRow([]), files: [fakeItem] }
             });
             component.onUploadFiles(fakeCustomEvent);
@@ -255,7 +256,7 @@ describe('UploadDragAreaComponent', () => {
                 expect(fileList.options.path).toBe('pippo/');
             });
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -294,7 +295,7 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload a file when user has create permission on target folder', () => {
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -318,7 +319,7 @@ describe('UploadDragAreaComponent', () => {
                 }
             };
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakePngItem]
@@ -348,7 +349,7 @@ describe('UploadDragAreaComponent', () => {
                 }
             };
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeSuperItem]
@@ -368,7 +369,7 @@ describe('UploadDragAreaComponent', () => {
         it('should trigger updating the file version when we drop a file over another file', async () => {
             spyOn(component.updateFileVersion, 'emit');
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeFileShareRow(),
                     files: [fakeItem]
@@ -388,32 +389,33 @@ describe('UploadDragAreaComponent', () => {
         it('should raise an error if upload a file goes wrong', async () => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
                 }
             });
 
-            component.error.subscribe((error) => {
-                expect(error).not.toBeNull();
-            });
+            let lastValue: FileUploadErrorEvent;
+            component.error.subscribe((error) => lastValue = error);
 
             component.onUploadFiles(fakeCustomEvent);
+
             fixture.detectChanges();
             await fixture.whenStable();
+
+            expect(lastValue).not.toBeNull();
         });
 
-        it('should emit success if successful of upload a file', async () => {
+        it('should emit success if successful of upload a file', () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadSuccessPromise);
 
             fixture.detectChanges();
 
-            await component.success.subscribe((success) => {
-                expect(success).not.toBeNull();
-            });
+            let lastValue: any;
+            component.success.subscribe((success) => lastValue = success);
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -421,18 +423,18 @@ describe('UploadDragAreaComponent', () => {
             });
 
             component.onUploadFiles(fakeCustomEvent);
+            expect(lastValue).not.toBeNull();
         });
 
-        it('should emit error if upload errored', async () => {
+        it('should emit error if upload errored', () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
 
             fixture.detectChanges();
 
-            await component.error.subscribe((error) => {
-                expect(error).not.toBeNull();
-            });
+            let lastValue: FileUploadErrorEvent;
+            component.error.subscribe((error) => lastValue = error);
 
-            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            const fakeCustomEvent = new CustomEvent('CustomEvent', {
                 detail: {
                     data: getFakeShareDataRow(),
                     files: [fakeItem]
@@ -440,6 +442,7 @@ describe('UploadDragAreaComponent', () => {
             });
 
             component.onUploadFiles(fakeCustomEvent);
+            expect(lastValue).not.toBeNull();
         });
     });
 });

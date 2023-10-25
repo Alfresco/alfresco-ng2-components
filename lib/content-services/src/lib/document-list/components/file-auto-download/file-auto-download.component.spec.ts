@@ -56,7 +56,7 @@ describe('FileAutoDownloadComponent', () => {
         const waitButton = getButton('#cancelButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe('FileAutoDownloadComponent', () => {
         const waitButton = getButton('#downloadButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalled();

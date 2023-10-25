@@ -23,6 +23,7 @@ import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PermissionModel } from '../models/permissions.model';
 
 describe('DocumentActionsService', () => {
 
@@ -94,17 +95,18 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('delete')).toBeDefined();
     });
 
-    it('should not delete the file node if there are no permissions', async () => {
+    it('should not delete the file node if there are no permissions', () => {
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
-        await service.permissionEvent.subscribe((permission) => {
-            expect(permission).toBeDefined();
-            expect(permission.type).toEqual('content');
-            expect(permission.action).toEqual('delete');
-        });
+        let lastValue: PermissionModel;
+        service.permissionEvent.subscribe((permission) => lastValue = permission);
 
         const file = new FileNode();
         service.getHandler('delete')(file);
+
+        expect(lastValue).toBeDefined();
+        expect(lastValue.type).toEqual('content');
+        expect(lastValue.action).toEqual('delete');
    });
 
     it('should call the error on the returned Observable if there are no permissions', async () => {
@@ -132,20 +134,21 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
     });
 
-    it('should not delete the file node if there is no delete permission', async () => {
+    it('should not delete the file node if there is no delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
-        await service.permissionEvent.subscribe((permissionBack) => {
-            expect(permissionBack).toBeDefined();
-            expect(permissionBack.type).toEqual('content');
-            expect(permissionBack.action).toEqual('delete');
-        });
+        let lastValue: PermissionModel;
+        service.permissionEvent.subscribe((permissionBack) => lastValue = permissionBack);
 
         const permission = 'delete';
         const file = new FileNode();
         const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = ['create', 'update'];
         service.getHandler('delete')(fileWithPermission, null, permission);
+
+        expect(lastValue).toBeDefined();
+        expect(lastValue.type).toEqual('content');
+        expect(lastValue.action).toEqual('delete');
     });
 
     it('should delete the file node if there is the delete and others permission ', () => {
@@ -202,10 +205,9 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should emit success event upon node deletion', async () => {
-        await service.success.subscribe((message) => {
-            expect(message).toEqual('CORE.DELETE_NODE.SINGULAR');
-        });
+    it('should emit success event upon node deletion', () => {
+        let lastValue: string;
+        service.success.subscribe((message) => lastValue = message);
         spyOn(documentListService, 'deleteNode').and.returnValue(of(true));
 
         const target = jasmine.createSpyObj('obj', ['reload']);
@@ -214,5 +216,6 @@ describe('DocumentActionsService', () => {
         const fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
         service.getHandler('delete')(fileWithPermission, target, permission);
+        expect(lastValue).toEqual('CORE.DELETE_NODE.SINGULAR');
    });
 });

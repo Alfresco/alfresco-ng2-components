@@ -146,7 +146,7 @@ describe('UploadButtonComponent', () => {
         expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
     });
 
-    it('should create a folder and emit an File uploaded event', async () => {
+    it('should create a folder and emit an File uploaded event', () => {
         component.rootFolderId = '-my-';
 
         spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission.entry));
@@ -154,9 +154,8 @@ describe('UploadButtonComponent', () => {
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
 
-        await component.success.subscribe((e) => {
-            expect(e.value).toEqual('File uploaded');
-        });
+        let lastValue: any;
+        component.success.subscribe((res) => lastValue = res);
 
         spyOn(component, 'uploadFiles').and.callFake(() => {
             component.success.emit({
@@ -164,6 +163,7 @@ describe('UploadButtonComponent', () => {
             });
         });
         component.onDirectoryAdded(fakeEvent);
+        expect(lastValue.value).toEqual('File uploaded');
     });
 
     it('should by default the title of the button get from the JSON file', () => {
@@ -245,14 +245,14 @@ describe('UploadButtonComponent', () => {
             expect(addToQueueSpy.calls.mostRecent()).toBeUndefined();
         });
 
-        it('should output an error when you try to upload a file too big', async () => {
+        it('should output an error when you try to upload a file too big', () => {
             component.maxFilesSize = 100;
 
-            await component.error.subscribe((res) => {
-                expect(res).toBeDefined();
-            });
+            let lastValue: FileUploadErrorEvent;
+            component.error.subscribe((res) => lastValue = res);
 
             component.uploadFiles(files);
+            expect(lastValue).toBeDefined();
         });
 
         it('should not filter out files if max file size is not set', () => {
@@ -346,19 +346,19 @@ describe('UploadButtonComponent', () => {
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
         });
 
-        it('should emit an error message when getNode fails', async () => {
+        it('should emit an error message when getNode fails', () => {
             component.rootFolderId = 'nodeId';
 
             spyOn(nodesApiService, 'getNode').and.returnValue(throwError('error'));
 
-            await component.error.subscribe((value: FileUploadErrorEvent) => {
-                expect(value.error).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
-            });
+            let lastValue: FileUploadErrorEvent;
+            component.error.subscribe((value) => lastValue = value);
 
             component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
             fixture.detectChanges();
 
             component.onFilesAdded(fakeEvent);
+            expect(lastValue.error).toBe('FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR');
         });
 
         it('should not call uploadFiles for node with other permissions', () => {
@@ -394,13 +394,13 @@ describe('UploadButtonComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should emit error if upload errored', async () => {
+        it('should emit error if upload errored', () => {
             spyOn(uploadService, 'getUploadPromise').and.returnValue(mockUploadErrorPromise);
 
-            await component.error.subscribe((error) => {
-                expect(error).not.toBeNull();
-            });
+            let lastValue: FileUploadErrorEvent;
+            component.error.subscribe((error) => lastValue = error);
             component.onFilesAdded(fakeEvent);
+            expect(lastValue).not.toBeNull();
         });
     });
 });

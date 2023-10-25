@@ -72,26 +72,27 @@ describe('NodeAspectService', () => {
         expect(nodeApiService.updateNode).toHaveBeenCalledWith('fake-node-id', expectedParameters);
     });
 
-    it('should send and update node event once the node has been updated', async () => {
-        await nodeApiService.nodeUpdated.subscribe((nodeUpdated) => {
-            expect(nodeUpdated.id).toBe('fake-node-id');
-            expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
-        });
+    it('should send and update node event once the node has been updated', () => {
+        let lastValue: Node;
+        nodeApiService.nodeUpdated.subscribe((nodeUpdated) => lastValue = nodeUpdated);
         const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
+
         nodeAspectService.updateNodeAspects('fake-node-id');
+        expect(lastValue.id).toBe('fake-node-id');
+        expect(lastValue.aspectNames).toEqual(['a', 'b', 'c']);
     });
 
-    it('should send and update node aspect once the node has been updated', async () => {
-        await cardViewContentUpdateService.updatedAspect$.subscribe((nodeUpdated) => {
-            expect(nodeUpdated.id).toBe('fake-node-id');
-            expect(nodeUpdated.aspectNames).toEqual(['a', 'b', 'c']);
-        });
+    it('should send and update node aspect once the node has been updated', () => {
+        let lastValue: Node;
+        cardViewContentUpdateService.updatedAspect$.subscribe((nodeUpdated) => lastValue = nodeUpdated);
         const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
+        expect(lastValue.id).toBe('fake-node-id');
+        expect(lastValue.aspectNames).toEqual(['a', 'b', 'c']);
     });
 
     it('should call emit on refresh from TagService', () => {
