@@ -7,8 +7,7 @@ Last reviewed: 2023-07-10
 
 # [Search date range tabbed component](../../../lib/content-services/src/lib/search/components/search-date-range-tabbed/search-date-range-tabbed.component.ts "Defined in search-date-range-tabbed.component.ts")
 
-Represents a tabbed advanced date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for
-the [Search Filter component](search-filter.component.md).
+Represents a tabbed date range [search widget](../../../lib/content-services/src/lib/search/models/search-widget.interface.ts) for the [Search Filter component](search-filter.component.md).
 
 ![Date Range Tabbed Widget](../../docassets/images/search-date-range-tabbed.png)
 
@@ -51,7 +50,7 @@ the [Search Filter component](search-filter.component.md).
 
 ## Details
 
-This component creates a tabbed layout where each tab consists of the [SearchDateRange](./search-date-range-tabbed.component.md) component, which allows user to create a query containing multiple date related queries in one go. 
+This component creates a tabbed layout where each tab consists of the [SearchDateRange](./search-date-range.component.md) component, which allows user to create a query containing multiple date related queries in one go. 
 
 See the [Search filter component](search-filter.component.md) for full details of how to use widgets in a search query.
 

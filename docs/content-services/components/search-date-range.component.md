@@ -7,8 +7,7 @@ Last reviewed: 2023-07-10
 
 # [Search date range component](../../../lib/content-services/src/lib/search/components/search-date-range-tabbed/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
 
-Represents a date range component for
-the [SearchDateRangeTabbedComponent](search-date-range-tabbed.component.md).
+Represents a date range component for the [SearchDateRangeTabbedComponent](search-date-range-tabbed.component.md).
 
 ![Date Range Widget](../../docassets/images/search-date-range.png)
 

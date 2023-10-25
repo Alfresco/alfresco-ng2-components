@@ -296,12 +296,12 @@ a category:
 
 | [`Widget`](../../lib/content-services/src/lib/search/models/search-widget.interface.ts) name | Selector | Description                                                                  |
 |----------------------------------------------------------------------------------------------| -------- |------------------------------------------------------------------------------|
-| [Check List](../content-services/components/search-check-list.component.md)                  | `check-list` | Toggles individual query fragments for the search                            |
-| [Date Range](../content-services/components/search-date-range.component.md)         | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
-| [Number Range](../content-services/components/search-number-range.component.md)              | `number-range` | Specifies a range of numeric values that a field may contain                 |
-| [Radio List](../content-services/components/search-radio.component.md)                       | `radio` | Selects one query fragment from a list of options                            |
-| [Slider](../content-services/components/search-slider.component.md)                          | `slider` | Selects a single numeric value in a given range that a field may contain     |
-| [Text](../content-services/components/search-text.component.md)                              | `text` | Specifies a text value that a field may contain                              |
+| [Check List](../content-services/components/search-check-list.component.md) | `check-list` | Toggles individual query fragments for the search |
+| [Date Range](../content-services/components/search-date-range.component.md) | `date-range` | Specifies a varities of options for selecting dates that a field may contain |
+| [Number Range](../content-services/components/search-number-range.component.md) | `number-range` | Specifies a range of numeric values that a field may contain |
+| [Radio List](../content-services/components/search-radio.component.md) | `radio` | Selects one query fragment from a list of options |
+| [Slider](../content-services/components/search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
+| [Text](../content-services/components/search-text.component.md) | `text` | Specifies a text value that a field may contain |
 
 See the individual [Search Widget](../interfaces/search-widget.interface.md) pages for full details of their usage and settings.
 
