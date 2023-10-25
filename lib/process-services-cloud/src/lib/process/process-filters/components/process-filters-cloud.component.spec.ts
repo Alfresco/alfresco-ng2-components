@@ -108,21 +108,18 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
     });
 
-    it('should emit an error with a bad response', async () => {
-        const mockErrorFilterList = {
-            error: 'wrong request'
-        };
-        getProcessFiltersSpy.and.returnValue(throwError(mockErrorFilterList));
+    it('should emit an error with a bad response', () => {
+        getProcessFiltersSpy.and.returnValue(throwError('wrong request'));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        await component.error.subscribe((err) => {
-            expect(err).toBeDefined();
-        });
+        let lastValue: any;
+        component.error.subscribe((err) => lastValue = err);
 
         component.ngOnChanges({appName: change});
         fixture.detectChanges();
+        expect(lastValue).toBeDefined();
     });
 
     it('should emit success with the filters when filters are loaded', async () => {

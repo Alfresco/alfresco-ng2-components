@@ -112,21 +112,18 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         expect(filters[2].nativeElement.innerText).toContain('FakeMyServiceTasks2');
     });
 
-    it('should emit an error with a bad response', async () => {
-        const mockErrorFilterList = {
-            error: 'wrong request'
-        };
-        getTaskListFiltersSpy.and.returnValue(throwError(mockErrorFilterList));
+    it('should emit an error with a bad response', () => {
+        getTaskListFiltersSpy.and.returnValue(throwError('wrong request'));
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        await component.error.subscribe((err) => {
-            expect(err).toBeDefined();
-        });
+        let lastValue: any;
+        component.error.subscribe((err) => lastValue = err);
 
         component.ngOnChanges({ appName: change });
         fixture.detectChanges();
+        expect(lastValue).toBeDefined();
     });
 
     it('should not select any filter as default', async () => {

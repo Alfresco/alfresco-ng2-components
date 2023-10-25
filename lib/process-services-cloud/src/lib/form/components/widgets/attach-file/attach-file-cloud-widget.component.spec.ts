@@ -29,7 +29,8 @@ import {
     AppConfigService,
     UploadWidgetContentLinkModel,
     LocalizedDatePipe,
-    NotificationService
+    NotificationService,
+    ContentLinkModel
 } from '@alfresco/adf-core';
 import {
     allSourceParams,
@@ -578,11 +579,10 @@ describe('AttachFileCloudWidgetComponent', () => {
             });
         });
 
-        it('should preview file when show is clicked', async () => {
+        it('should preview file when show is clicked', () => {
             spyOn(processCloudContentService, 'getRawContentNode').and.returnValue(of(new Blob()));
-            await formService.formContentClicked.subscribe((fileClicked: any) => {
-                expect(fileClicked.nodeId).toBe('fake-properties');
-            });
+            let lastValue: ContentLinkModel;
+            formService.formContentClicked.subscribe((fileClicked) => lastValue = fileClicked);
 
             fixture.detectChanges();
             const menuButton = fixture.debugElement.query(By.css('#file-fake-properties-option-menu')).nativeElement as HTMLButtonElement;
@@ -590,6 +590,8 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
             const showOption = fixture.debugElement.query(By.css('#file-fake-properties-show-file')).nativeElement as HTMLButtonElement;
             showOption.click();
+
+            expect(lastValue.nodeId).toBe('fake-properties');
         });
 
         it('should request form to be updated with metadata when retrieve is clicked', async () => {

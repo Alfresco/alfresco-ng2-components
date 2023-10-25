@@ -16,9 +16,9 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
@@ -100,7 +100,7 @@ export class ProcessFilterCloudService {
         this.preferenceService
             .getPreferences(appName, key)
             .pipe(
-                switchMap((response: any) => {
+                switchMap((response) => {
                     const preferences = response?.list?.entries ? response.list.entries : [];
                     if (!this.hasPreferences(preferences)) {
                         return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
@@ -109,8 +109,7 @@ export class ProcessFilterCloudService {
                     } else {
                         return of(this.findFiltersByKeyInPreferences(preferences, key));
                     }
-                }),
-                catchError((err) => this.handleProcessError(err))
+                })
             )
             .subscribe((filters) => {
                 this.addFiltersToStream(filters);
@@ -138,15 +137,14 @@ export class ProcessFilterCloudService {
     getFilterById(appName: string, id: string): Observable<ProcessFilterCloudModel> {
         const key: string = this.prepareKey(appName);
         return this.getProcessFiltersByKey(appName, key).pipe(
-            switchMap((filters: ProcessFilterCloudModel[]) => {
+            switchMap((filters) => {
                 if (filters?.length === 0) {
                     return this.createProcessFilters(appName, key, this.defaultProcessFilters(appName));
                 } else {
                     return of(filters);
                 }
             }),
-            map((filters) => filters.filter((filter) => filter.id === id)[0]),
-            catchError((err) => this.handleProcessError(err))
+            map((filters) => filters.filter((filter) => filter.id === id)[0])
         );
     }
 
@@ -158,7 +156,7 @@ export class ProcessFilterCloudService {
      */
     addFilter(newFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
         const { appName, name } = newFilter;
-        const key: string = this.prepareKey(appName);
+        const key = this.prepareKey(appName);
 
         return this.getProcessFiltersByKey(appName, key).pipe(
             switchMap((filters) => {
@@ -174,11 +172,10 @@ export class ProcessFilterCloudService {
                     return this.preferenceService.updatePreference(appName, key, filters);
                 }
             }),
-            map((filters: ProcessFilterCloudModel[]) => {
+            map((filters) => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleProcessError(err))
+            })
         );
     }
 
@@ -189,7 +186,7 @@ export class ProcessFilterCloudService {
      * @returns Observable of process instance filters with updated filter
      */
     updateFilter(updatedFilter: ProcessFilterCloudModel): Observable<ProcessFilterCloudModel[]> {
-        const key: string = this.prepareKey(updatedFilter.appName);
+        const key = this.prepareKey(updatedFilter.appName);
         return this.getProcessFiltersByKey(updatedFilter.appName, key).pipe(
             switchMap((filters) => {
                 if (filters?.length === 0) {
@@ -203,8 +200,7 @@ export class ProcessFilterCloudService {
             map((updatedFilters) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
-            }),
-            catchError((err) => this.handleProcessError(err))
+            })
         );
     }
 
@@ -226,11 +222,10 @@ export class ProcessFilterCloudService {
                     return of([]);
                 }
             }),
-            map((filters: ProcessFilterCloudModel[]) => {
+            map((filters) => {
                 this.addFiltersToStream(filters);
                 return filters;
-            }),
-            catchError((err) => this.handleProcessError(err))
+            })
         );
     }
 
@@ -343,10 +338,6 @@ export class ProcessFilterCloudService {
 
     private addFiltersToStream(filters: ProcessFilterCloudModel[]) {
         this.filtersSubject.next(filters);
-    }
-
-    private handleProcessError(error: any) {
-        return throwError(error || 'Server error');
     }
 
     /**
