@@ -201,7 +201,7 @@ export class RenditionService {
                                 clearInterval(intervalId);
                                 return resolve(this.handleNodeRendition(nodeId, rendition.entry.content.mimeType, versionId));
                             }
-                        }, () => reject(new Error('error')));
+                        }, () => reject(new Error('Error geting version rendition')));
                     } else {
                         this.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
                             const status: string = rendition.entry.status.toString();
@@ -210,11 +210,11 @@ export class RenditionService {
                                 clearInterval(intervalId);
                                 return resolve(this.handleNodeRendition(nodeId, renditionId, versionId));
                             }
-                        }, () => reject(new Error('error')));
+                        }, () => reject(new Error('Error getting rendition')));
                     }
                 } else {
                     clearInterval(intervalId);
-                    return reject(new Error('error'));
+                    return reject(new Error('Error getting rendition'));
                 }
             }, this.TRY_TIMEOUT);
         });
