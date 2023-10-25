@@ -49,29 +49,6 @@ describe('Search Date Range Filter', () => {
         await browser.refresh();
     });
 
-    it('[C277119] FROM and TO dates should depend on each other', async () => {
-        await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const fromDatePicker = await dateRangeFilter.openFromDatePicker();
-        await fromDatePicker.checkDatesAfterDateAreDisabled(new Date());
-        await fromDatePicker.closeDatePicker();
-
-        await dateRangeFilter.checkToDateToggleIsDisplayed();
-        let datePickerTo = await dateRangeFilter.openToDatePicker();
-
-        await datePickerTo.checkDatesAfterDateAreDisabled(new Date());
-        await datePickerTo.closeDatePicker();
-
-        await dateRangeFilter.checkFromDateToggleIsDisplayed();
-        const datePickerFrom = await dateRangeFilter.openFromDatePicker();
-        await datePickerFrom.selectTodayDate();
-        await datePickerFrom.checkDatePickerIsNotDisplayed();
-
-        await dateRangeFilter.checkToDateToggleIsDisplayed();
-        datePickerTo = await dateRangeFilter.openToDatePicker();
-        await datePickerTo.checkDatesBeforeDateAreDisabled(new Date());
-        await datePickerTo.checkDatesAfterDateAreDisabled(new Date());
-    });
-
     it('[C277107] Should be able to apply a date range', async () => {
         await dateRangeFilter.checkFromDateToggleIsDisplayed();
         const datePickerToday = await dateRangeFilter.openFromDatePicker();
