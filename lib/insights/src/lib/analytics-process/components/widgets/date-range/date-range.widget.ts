@@ -24,7 +24,7 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
 import { isAfter } from 'date-fns';
 
-const FORMAT_DATE_ACTIVITI = 'dd-MM-yyyy';
+const FORMAT_DATE_ACTIVITI = 'yyyy-MM-dd';
 const DISPLAY_FORMAT = 'dd/MM/yyyy';
 
 interface DateRangeProps {
