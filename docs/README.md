@@ -263,8 +263,8 @@ for more information about installing and using the source code.
 
 ### Components
 
-| Name | Description                                                                                                                                                     | Source link |
-| ---- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------| ----------- |
+| Name | Description | Source link |
+| ---- |-------------| ----------- |
 | [Add Permission Dialog Component](content-services/components/add-permission-dialog.component.md) | Displays a dialog to search for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-dialog.component.ts) |
 | [Add Permission Panel Component](content-services/components/add-permission-panel.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission-panel.component.ts) |
 | [Add Permission Component](content-services/components/add-permission.component.md) | Searches for people or groups to add to the current node permissions. | [Source](../lib/content-services/src/lib/permission-manager/components/add-permission/add-permission.component.ts) |
