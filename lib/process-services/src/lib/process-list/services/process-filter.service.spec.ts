@@ -70,7 +70,7 @@ describe('Process filter', () => {
             });
 
             it('should return the task filter by id', (done) => {
-                service.getProcessFilterById(333).subscribe((processFilter: FilterProcessRepresentationModel) => {
+                service.getProcessFilterById(333).subscribe((processFilter) => {
                     expect(processFilter).toBeDefined();
                     expect(processFilter.id).toEqual(333);
                     expect(processFilter.name).toEqual('Running');
@@ -81,7 +81,7 @@ describe('Process filter', () => {
             });
 
             it('should return the task filter by name', (done) => {
-                service.getProcessFilterByName('Running').subscribe((res: FilterProcessRepresentationModel) => {
+                service.getProcessFilterByName('Running').subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual(333);
                     expect(res.name).toEqual('Running');
