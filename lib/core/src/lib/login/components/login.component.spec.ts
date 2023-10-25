@@ -469,7 +469,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject(new Error('login error')));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -484,7 +484,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject(new Error('login error')));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -500,7 +500,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return error with a wrong username and password', (done) => {
-            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject());
+            spyOn(alfrescoApiService.getInstance(), 'login').and.returnValue(Promise.reject(new Error('login error')));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();

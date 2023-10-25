@@ -69,7 +69,7 @@ describe('NodeFavoriteDirective', () => {
         });
 
         it('should reset favorites if selection is empty', fakeAsync(() => {
-            spyOn(directive['favoritesApi'], 'getFavorite').and.returnValue(Promise.resolve(null));
+            spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }
@@ -90,11 +90,10 @@ describe('NodeFavoriteDirective', () => {
     });
 
     describe('markFavoritesNodes()', () => {
-        let favoritesApiSpy;
+        let favoritesApiSpy: jasmine.Spy;
 
         beforeEach(() => {
-            favoritesApiSpy = spyOn(directive['favoritesApi'], 'getFavorite')
-                .and.returnValue(Promise.resolve(null));
+            favoritesApiSpy = spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
         });
 
         it('should check each selected node if it is a favorite', fakeAsync(() => {
@@ -108,7 +107,6 @@ describe('NodeFavoriteDirective', () => {
 
             tick();
             expect(favoritesApiSpy.calls.count()).toBe(2);
-
         }));
 
         it('should not check processed node when another is unselected', fakeAsync(() => {
@@ -170,12 +168,12 @@ describe('NodeFavoriteDirective', () => {
     });
 
     describe('toggleFavorite()', () => {
-        let removeFavoriteSpy;
-        let addFavoriteSpy;
+        let removeFavoriteSpy: jasmine.Spy;
+        let addFavoriteSpy: jasmine.Spy;
 
         beforeEach(() => {
-            removeFavoriteSpy = spyOn(directive['favoritesApi'], 'deleteFavorite').and.callThrough();
-            addFavoriteSpy = spyOn(directive['favoritesApi'], 'createFavorite').and.callThrough();
+            removeFavoriteSpy = spyOn(directive.favoritesApi, 'deleteFavorite').and.callThrough();
+            addFavoriteSpy = spyOn(directive.favoritesApi, 'createFavorite').and.callThrough();
         });
 
         afterEach(() => {
@@ -266,7 +264,8 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should emit error event when removeFavoriteSite() fails', fakeAsync(() => {
-            removeFavoriteSpy.and.returnValue(Promise.reject('error'));
+            const error = new Error('error');
+            removeFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -276,11 +275,12 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.error.emit).toHaveBeenCalledWith('error');
+            expect(directive.error.emit).toHaveBeenCalledWith(error);
         }));
 
         it('should emit error event when addFavorite() fails', fakeAsync(() => {
-            addFavoriteSpy.and.returnValue(Promise.reject('error'));
+            const error = new Error('error');
+            addFavoriteSpy.and.returnValue(Promise.reject(error));
             spyOn(directive.error, 'emit');
 
             directive.favorites = [
@@ -290,7 +290,7 @@ describe('NodeFavoriteDirective', () => {
             directive.toggleFavorite();
             tick();
 
-            expect(directive.error.emit).toHaveBeenCalledWith('error');
+            expect(directive.error.emit).toHaveBeenCalledWith(error);
         }));
 
         it('should set isFavorites items to false', fakeAsync(() => {
@@ -323,7 +323,7 @@ describe('NodeFavoriteDirective', () => {
     describe('getFavorite()', () => {
 
         it('should not hit server when using 6.x api', fakeAsync(() => {
-            spyOn(directive['favoritesApi'], 'getFavorite').and.callThrough();
+            spyOn(directive.favoritesApi, 'getFavorite').and.callThrough();
 
             const selection = [
                 { entry: { id: '1', name: 'name1', isFavorite: true } }
@@ -334,11 +334,11 @@ describe('NodeFavoriteDirective', () => {
             tick();
 
             expect(directive.favorites[0].entry.isFavorite).toBe(true);
-            expect(directive['favoritesApi'].getFavorite).not.toHaveBeenCalled();
+            expect(directive.favoritesApi.getFavorite).not.toHaveBeenCalled();
         }));
 
         it('should process node as favorite', fakeAsync(() => {
-            spyOn(directive['favoritesApi'], 'getFavorite').and.returnValue(Promise.resolve(null));
+            spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.resolve(null));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }
@@ -352,7 +352,7 @@ describe('NodeFavoriteDirective', () => {
         }));
 
         it('should not process node as favorite', fakeAsync(() => {
-            spyOn(directive['favoritesApi'], 'getFavorite').and.returnValue(Promise.reject({}));
+            spyOn(directive.favoritesApi, 'getFavorite').and.returnValue(Promise.reject(new Error('error')));
 
             const selection = [
                 { entry: { id: '1', name: 'name1' } }

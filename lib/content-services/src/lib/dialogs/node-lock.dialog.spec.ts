@@ -92,7 +92,7 @@ describe('NodeLockDialogComponent', () => {
         }));
 
         it('should call onError if submit fails', fakeAsync(() => {
-            spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.reject('error'));
+            spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.reject(new Error('error')));
             spyOn(component.data, 'onError');
 
             component.submit();

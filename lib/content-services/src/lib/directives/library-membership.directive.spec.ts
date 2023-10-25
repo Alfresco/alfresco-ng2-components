@@ -70,7 +70,7 @@ describe('LibraryMembershipDirective', () => {
 
     describe('markMembershipRequest', () => {
         beforeEach(() => {
-            getMembershipSpy = spyOn(directive['sitesApi'], 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
         });
 
         it('should not check membership requests if no entry is selected', fakeAsync(() => {
@@ -98,7 +98,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should remember when a membership request is not found for selected library', fakeAsync(() => {
-            getMembershipSpy.and.returnValue(Promise.reject());
+            getMembershipSpy.and.returnValue(Promise.reject(new Error('error')));
 
             const selection = { entry: testSiteEntry };
             const change = new SimpleChange(null, selection, true);
@@ -111,9 +111,9 @@ describe('LibraryMembershipDirective', () => {
     describe('toggleMembershipRequest', () => {
         beforeEach(() => {
             mockSupportedVersion = false;
-            getMembershipSpy = spyOn(directive['sitesApi'], 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
-            addMembershipSpy = spyOn(directive['sitesApi'], 'createSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
-            deleteMembershipSpy = spyOn(directive['sitesApi'], 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve());
+            getMembershipSpy = spyOn(directive.sitesApi, 'getSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            addMembershipSpy = spyOn(directive.sitesApi, 'createSiteMembershipRequestForPerson').and.returnValue(Promise.resolve({ entry: requestedMembershipResponse }));
+            deleteMembershipSpy = spyOn(directive.sitesApi, 'deleteSiteMembershipRequestForPerson').and.returnValue(Promise.resolve());
         });
 
         it('should do nothing if there is no selected library ', fakeAsync(() => {

@@ -20,22 +20,20 @@ import { AlfrescoApiService, LogService, TranslationService, ViewUtilService } f
 import { Rendition, RenditionEntry, RenditionPaging, RenditionsApi } from '@alfresco/js-api';
 import { RenditionService } from '@alfresco/adf-content-services';
 
-const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => {
-    return {
-        entry: {
-            id: 'pdf',
-            status: status,
-            content: { mimeType: 'application/pdf', mimeTypeName: 'application/pdf', sizeInBytes: 10 }
-        }
-    };
-};
-const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging =>  {
-    return {
-        list: {
-            entries: [getRenditionEntry(status)]
-        }
-    };
-};
+const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => ({
+    entry: {
+        id: 'pdf',
+        status,
+        content: { mimeType: 'application/pdf', mimeTypeName: 'application/pdf', sizeInBytes: 10 }
+    }
+});
+
+const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging =>  ({
+    list: {
+        entries: [getRenditionEntry(status)]
+    }
+});
+
 describe('RenditionService', () => {
     let renditionService: RenditionService;
     let renditionsApi: any;

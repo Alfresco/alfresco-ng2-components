@@ -47,7 +47,7 @@ describe('Process filter', () => {
         let createFilter: jasmine.Spy;
 
         beforeEach(() => {
-            getFilters = spyOn(service['userFiltersApi'], 'getUserProcessInstanceFilters').and.returnValue(
+            getFilters = spyOn(service.userFiltersApi, 'getUserProcessInstanceFilters').and.returnValue(
                 Promise.resolve(fakeProcessFiltersResponse)
             );
 
@@ -70,7 +70,7 @@ describe('Process filter', () => {
             });
 
             it('should return the task filter by id', (done) => {
-                service.getProcessFilterById(333).subscribe((processFilter: FilterProcessRepresentationModel) => {
+                service.getProcessFilterById(333).subscribe((processFilter) => {
                     expect(processFilter).toBeDefined();
                     expect(processFilter.id).toEqual(333);
                     expect(processFilter.name).toEqual('Running');
@@ -81,7 +81,7 @@ describe('Process filter', () => {
             });
 
             it('should return the task filter by name', (done) => {
-                service.getProcessFilterByName('Running').subscribe((res: FilterProcessRepresentationModel) => {
+                service.getProcessFilterByName('Running').subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual(333);
                     expect(res.name).toEqual('Running');
@@ -211,7 +211,7 @@ describe('Process filter', () => {
 
         describe('add filter', () => {
             beforeEach(() => {
-                createFilter = spyOn(service['userFiltersApi'], 'createUserProcessInstanceFilter').and.callFake(
+                createFilter = spyOn(service.userFiltersApi, 'createUserProcessInstanceFilter').and.callFake(
                     (processFilter) => Promise.resolve(processFilter)
                 );
             });
@@ -243,11 +243,11 @@ describe('Process filter', () => {
             });
 
             it('should return a default error if no data is returned by the API', (done) => {
-                createFilter = createFilter.and.returnValue(Promise.reject(null));
+                createFilter = createFilter.and.returnValue(Promise.reject(new Error('Server error')));
                 service.addProcessFilter(filter).subscribe(
                     () => {},
-                    (res) => {
-                        expect(res).toBe('Server error');
+                    (err) => {
+                        expect(err.message).toBe('Server error');
                         done();
                     }
                 );
@@ -307,8 +307,8 @@ describe('Process filter', () => {
                 const duplicateRunningObservable = of(duplicateRunningFilter);
 
                 spyOn(service, 'getRunningFilterInstance').and.returnValue(runningFilter);
-                spyOn<any>(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
-                spyOn<any>(service, 'getAllFilterInstance').and.returnValue(allFilter);
+                spyOn(service, 'getCompletedFilterInstance').and.returnValue(completedFilter);
+                spyOn(service, 'getAllFilterInstance').and.returnValue(allFilter);
 
                 spyOn(service, 'addProcessFilter').and.returnValues(
                     runningObservable,

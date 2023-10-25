@@ -99,7 +99,7 @@ describe('ContentCloudNodeSelectorService', () => {
     });
 
     it('should return defined alias nodeId if the relative path does not exist', async () => {
-        getNodeSpy.and.returnValues(Promise.reject('Relative does not exists'), Promise.resolve(aliasNodeResponseBody));
+        getNodeSpy.and.returnValues(Promise.reject(new Error('Relative does not exists')), Promise.resolve(aliasNodeResponseBody));
         const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
 
         expect(getNodeSpy).toHaveBeenCalledTimes(2);
@@ -114,7 +114,7 @@ describe('ContentCloudNodeSelectorService', () => {
     });
 
     it('should return default nodeId if the given folder does not exist', async () => {
-        getNodeSpy.and.returnValues(Promise.reject('Folder does not exists'), Promise.resolve(aliasNodeResponseBody));
+        getNodeSpy.and.returnValues(Promise.reject(new Error('Folder does not exists')), Promise.resolve(aliasNodeResponseBody));
         const aliasNodeId = await service.getNodeIdFromFolderVariableValue('mock-folder-id', '-my-');
 
         expect(getNodeSpy).toHaveBeenCalledTimes(2);
@@ -136,7 +136,7 @@ describe('ContentCloudNodeSelectorService', () => {
     });
 
     it('should show a warning notification if the relative path is invalid/deleted', async () => {
-        getNodeSpy.and.returnValue(Promise.reject('Relative path does not exists'));
+        getNodeSpy.and.returnValue(Promise.reject(new Error('Relative path does not exists')));
 
         try {
             expect(service.sourceNodeNotFound).toBe(false);
@@ -144,7 +144,7 @@ describe('ContentCloudNodeSelectorService', () => {
             await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
             fail('An error should have been thrown');
         } catch (error) {
-            expect(error).toEqual('Relative path does not exists');
+            expect(error.message).toEqual('Relative path does not exists');
             expect(service.sourceNodeNotFound).toBe(true);
         }
 
@@ -155,7 +155,7 @@ describe('ContentCloudNodeSelectorService', () => {
     });
 
     it('should show a warning notification if the defined folderVariable value is invalid/deleted', async () => {
-        getNodeSpy.and.returnValue(Promise.reject('Folder does not exists'));
+        getNodeSpy.and.returnValue(Promise.reject(new Error('Folder does not exists')));
 
         try {
             expect(service.sourceNodeNotFound).toBe(false);
@@ -163,7 +163,7 @@ describe('ContentCloudNodeSelectorService', () => {
             await service.getNodeIdFromFolderVariableValue('mock-folder-id', '-my-');
             fail('An error should have been thrown');
         } catch (error) {
-            expect(error).toEqual('Folder does not exists');
+            expect(error.message).toEqual('Folder does not exists');
             expect(service.sourceNodeNotFound).toBe(true);
         }
 

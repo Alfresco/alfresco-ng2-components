@@ -111,10 +111,10 @@ describe('NodeDeleteDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
 
-        deleteNodeSpy = spyOn(component.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
+        deleteNodeSpy = spyOn(component.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
 
-        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['nodesApi'], 'deleteNode').and.returnValue(Promise.resolve());
-        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective['trashcanApi'], 'deleteDeletedNode').and.returnValue(Promise.resolve());
+        deleteNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.nodesApi, 'deleteNode').and.returnValue(Promise.resolve());
+        purgeDeletedNodePermanentSpy = spyOn(componentWithPermanentDelete.deleteDirective.trashcanApi, 'deleteDeletedNode').and.returnValue(Promise.resolve());
 
     });
 
@@ -152,7 +152,7 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should notify failed node deletion', async () => {
-            deleteNodeSpy.and.returnValue(Promise.reject('error'));
+            deleteNodeSpy.and.returnValue(Promise.reject(new Error('error')));
 
             component.selection = [{ entry: { id: '1', name: 'name1' } }];
             fixture.detectChanges();
@@ -187,7 +187,7 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should notify failed nodes deletion', async () => {
-            deleteNodeSpy.and.returnValue(Promise.reject('error'));
+            deleteNodeSpy.and.returnValue(Promise.reject(new Error('error')));
 
             component.selection = [
                 { entry: { id: '1', name: 'name1' } },
@@ -209,7 +209,7 @@ describe('NodeDeleteDirective', () => {
         it('should notify partial deletion when only one node is successful', async () => {
             deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
-                    return Promise.reject('error');
+                    return Promise.reject(new Error('error'));
                 } else {
                     return Promise.resolve();
                 }
@@ -235,7 +235,7 @@ describe('NodeDeleteDirective', () => {
         it('should notify partial deletion when some nodes are successful', async () => {
             deleteNodeSpy.and.callFake((id) => {
                 if (id === '1') {
-                    return Promise.reject(null);
+                    return Promise.reject(new Error('error'));
                 }
 
                 return Promise.resolve();

@@ -101,7 +101,7 @@ module.exports = {
                 ],
                 '@typescript-eslint/member-ordering': 'off',
                 'prefer-arrow/prefer-arrow-functions': 'off',
-
+                'prefer-promise-reject-errors': 'error',
                 'brace-style': 'off',
                 '@typescript-eslint/brace-style': 'error',
                 'comma-dangle': 'error',

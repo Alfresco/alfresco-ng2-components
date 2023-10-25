@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, Observable, of, throwError } from 'rxjs';
-import { AlfrescoApiService, AuthenticationService, LogService } from '@alfresco/adf-core';
-import { catchError, map, tap } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { map, tap } from 'rxjs/operators';
 import { Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { ContentService } from './content.service';
@@ -59,7 +59,6 @@ export class PeopleContentService {
     constructor(
         private apiService: AlfrescoApiService,
         authenticationService: AuthenticationService,
-        private logService: LogService,
         private contentService: ContentService
     ) {
         authenticationService.onLogout.subscribe(() => {
@@ -76,8 +75,8 @@ export class PeopleContentService {
     getPerson(personId: string): Observable<EcmUserModel> {
         return from(this.peopleApi.getPerson(personId))
             .pipe(
-                map((personEntry) => new EcmUserModel(personEntry.entry)),
-                catchError((error) => this.handleError(error)));
+                map((personEntry) => new EcmUserModel(personEntry.entry))
+            );
     }
 
     getCurrentPerson(): Observable<EcmUserModel> {
@@ -130,8 +129,7 @@ export class PeopleContentService {
             map(response => ({
                 pagination: response.list.pagination,
                 entries: response.list.entries.map((person) => person.entry as EcmUserModel)
-            })),
-            catchError((err) => this.handleError(err))
+            }))
         );
     }
 
@@ -144,8 +142,7 @@ export class PeopleContentService {
      */
     createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
-            map((res) => res?.entry as EcmUserModel),
-            catchError((error) => this.handleError(error))
+            map((res) => res?.entry as EcmUserModel)
         );
     }
 
@@ -159,8 +156,7 @@ export class PeopleContentService {
      */
     updatePerson(personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(
-            map((res) => res?.entry as EcmUserModel),
-            catchError((error) => this.handleError(error))
+            map((res) => res?.entry as EcmUserModel)
         );
     }
 
@@ -176,10 +172,5 @@ export class PeopleContentService {
 
     private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
         return sorting?.orderBy && sorting?.direction ? [`${sorting.orderBy} ${sorting.direction.toUpperCase()}`] : [];
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }
