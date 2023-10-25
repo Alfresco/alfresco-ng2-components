@@ -16,11 +16,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, CoreModule } from '@alfresco/adf-core';
 import { DateRangeFilterComponent } from './date-range-filter/date-range-filter.component';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { DateRangeFilterService } from './date-range-filter/date-range-filter.service';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @NgModule({
     declarations: [ DateRangeFilterComponent ],
@@ -33,7 +34,9 @@ import { DateRangeFilterService } from './date-range-filter/date-range-filter.se
         DateRangeFilterComponent
     ],
     providers: [
-        DateRangeFilterService
+        DateRangeFilterService,
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
     ]
 })
 export class ProcessCommonModule {}

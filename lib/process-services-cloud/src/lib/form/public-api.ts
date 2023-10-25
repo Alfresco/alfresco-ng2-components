@@ -40,4 +40,3 @@ export * from './services/content-cloud-node-selector.service';
 export * from './services/process-cloud-content.service';
 
 export * from './form-cloud.module';
-export * from './date-formats';
