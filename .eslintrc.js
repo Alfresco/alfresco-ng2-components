@@ -78,6 +78,7 @@ module.exports = {
                         accessibility: 'explicit'
                     }
                 ],
+                '@typescript-eslint/await-thenable': 'error',
                 '@typescript-eslint/prefer-optional-chain': 'warn',
                 '@typescript-eslint/no-inferrable-types': 'off',
                 '@typescript-eslint/no-require-imports': 'off',

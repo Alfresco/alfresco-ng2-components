@@ -22,6 +22,7 @@ import { WidgetComponent } from './widget.component';
 import { CoreTestingModule } from '../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
+import { FormRulesEvent } from '../../events/form-rules.event';
 
 describe('WidgetComponent', () => {
 
@@ -69,40 +70,43 @@ describe('WidgetComponent', () => {
         expect(widget.hasField()).toBeTruthy();
     });
 
-    it('should send an event after view init', async () => {
+    it('should send an event after view init', () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;
 
-        await widget.fieldChanged.subscribe((field) => {
-            expect(field).not.toBe(null);
-            expect(field.id).toBe('fakeField');
-            expect(field.value).toBe('fakeValue');
-        });
+        let lastValue: FormFieldModel;
 
+        widget.fieldChanged.subscribe((field) => lastValue = field);
         widget.ngAfterViewInit();
+
+        expect(lastValue).not.toBe(null);
+        expect(lastValue.id).toBe('fakeField');
+        expect(lastValue.value).toBe('fakeValue');
     });
 
-    it('should send an event when a field is changed', async () => {
+    it('should send an event when a field is changed', () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
-        await widget.fieldChanged.subscribe((field) => {
-            expect(field).not.toBe(null);
-            expect(field.id).toBe('fakeField');
-            expect(field.value).toBe('fakeValue');
-        });
 
+        let lastValue: FormFieldModel;
+        widget.fieldChanged.subscribe((field) => lastValue = field);
         widget.onFieldChanged(fakeField);
+
+        expect(lastValue).not.toBe(null);
+        expect(lastValue.id).toBe('fakeField');
+        expect(lastValue.value).toBe('fakeValue');
     });
 
-    it('should send a rule event when a field is changed', async () => {
+    it('should send a rule event when a field is changed', () => {
         const fakeForm = new FormModel();
         const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
-        await widget.formService.formRulesEvent.subscribe((event) => {
-            expect(event.type).toEqual('fieldValueChanged');
-        });
+
+        let lastValue: FormRulesEvent;
+        widget.formService.formRulesEvent.subscribe((event) => lastValue = event);
 
         widget.onFieldChanged(fakeField);
+        expect(lastValue.type).toEqual('fieldValueChanged');
     });
 
     it('should eval isRequired state of the field', () => {

@@ -96,7 +96,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        await await taskPage.clickOnAddChecklistButton();
+        await taskPage.clickOnAddChecklistButton();
         await taskPage.checkChecklistDialogIsDisplayed();
         await expect(await taskPage.usingCheckListDialog().getDialogTitle()).toEqual('New Check');
         await expect(await taskPage.usingCheckListDialog().getNameFieldPlaceholder()).toEqual('Name');
@@ -125,7 +125,7 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.tasksListPage().selectRow(tasks[2]);
 
-        await await taskPage.clickOnAddChecklistButton();
+        await taskPage.clickOnAddChecklistButton();
         await taskPage.checkChecklistDialogIsDisplayed();
         await checklistDialog.addName(removeChecklist[0]);
         await checklistDialog.clickCreateChecklistButton();
