@@ -168,10 +168,7 @@ export class ProcessFilterService {
      * @returns The filter just added
      */
     addProcessFilter(filter: FilterProcessRepresentationModel): Observable<UserProcessInstanceFilterRepresentation> {
-        return from(this.userFiltersApi.createUserProcessInstanceFilter(filter))
-            .pipe(
-                map((response) => response)
-            );
+        return from(this.userFiltersApi.createUserProcessInstanceFilter(filter));
     }
 
     /**
