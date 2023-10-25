@@ -16,7 +16,7 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { from, of } from 'rxjs';
+import { from, of, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { AppsProcessService } from '../../app-list/services/apps-process.service';
 import { ProcessFilterService } from '../services/process-filter.service';
@@ -28,6 +28,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationStart, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -62,14 +63,8 @@ describe('ProcessFiltersComponent', () => {
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(filterList.filters).toBeDefined();
-            expect(filterList.filters.length).toEqual(3);
-            expect(filterList.filters[0].name).toEqual('FakeCompleted');
-            expect(filterList.filters[1].name).toEqual('FakeAll');
-            expect(filterList.filters[2].name).toEqual('Running');
-        });
+        let lastValue: ProcessInstanceFilterRepresentation[];
+        filterList.success.subscribe((res) => lastValue = res);
 
         spyOn(filterList, 'getFiltersByAppId').and.callThrough();
 
@@ -79,6 +74,14 @@ describe('ProcessFiltersComponent', () => {
         await fixture.whenStable();
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalled();
+
+        expect(lastValue).toBeDefined();
+        expect(lastValue).toEqual(filterList.filters);
+        expect(filterList.filters).toBeDefined();
+        expect(filterList.filters.length).toEqual(3);
+        expect(filterList.filters[0].name).toEqual('FakeCompleted');
+        expect(filterList.filters[1].name).toEqual('FakeAll');
+        expect(filterList.filters[2].name).toEqual('Running');
     });
 
     it('should select the Running process filter', async () => {
@@ -87,15 +90,13 @@ describe('ProcessFiltersComponent', () => {
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.success.subscribe(() => {
-            filterList.selectRunningFilter();
-            expect(filterList.currentFilter.name).toEqual('Running');
-        });
-
         filterList.ngOnChanges({ appId: change });
 
         fixture.detectChanges();
         await fixture.whenStable();
+
+        filterList.selectRunningFilter();
+        expect(filterList.currentFilter.name).toEqual('Running');
     });
 
     it('should emit the selected filter based on the filterParam input', async () => {
@@ -104,13 +105,14 @@ describe('ProcessFiltersComponent', () => {
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
-        await filterList.filterSelected.subscribe((filter) => {
-            expect(filter.name).toEqual('FakeCompleted');
-        });
+        let lastValue: UserProcessInstanceFilterRepresentation;
+        filterList.filterSelected.subscribe((filter) => lastValue = filter);
 
         filterList.ngOnChanges({ appId: change });
         fixture.detectChanges();
         await fixture.whenStable();
+
+        expect(lastValue.name).toEqual('FakeCompleted');
     });
 
     it('should filterClicked emit when a filter is clicked from the UI', async  () => {
@@ -143,50 +145,44 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.currentFilter).toBe(undefined);
     });
 
-    it('should return the filter task list, filtered By Name', async () => {
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
+    it('should return the filter task list, filtered By Name', () => {
+        const deployApp = spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(Promise.resolve({ id: 1 })));
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(of(fakeProcessFilters));
 
         const change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ appName: change });
 
-        await filterList.success.subscribe((res) => {
-            const deployApp: any = appsProcessService.getDeployedApplicationsByName;
-            expect(deployApp.calls.count()).toEqual(1);
-            expect(res).toBeDefined();
-        });
-
         fixture.detectChanges();
+        expect(deployApp.calls.count()).toEqual(1);
     });
 
-    it('should emit an error with a bad response of getProcessFilters', async () => {
-        const mockErrorFilterPromise = Promise.reject(new Error('wrong request'));
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
+    it('should emit an error with a bad response of getProcessFilters', () => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(throwError('error'));
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
+
+        let lastValue: any;
+        filterList.error.subscribe((err) => lastValue = err);
+
         filterList.ngOnChanges({ appId: change });
 
-        await filterList.error.subscribe((err) => {
-            expect(err).toBeDefined();
-        });
-
-        fixture.detectChanges();
+        expect(lastValue).toBeDefined();
     });
 
-    it('should emit an error with a bad response of getDeployedApplicationsByName', async () => {
-        const mockErrorFilterPromise = Promise.reject(new Error('wrong request'));
-        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(from(mockErrorFilterPromise));
+    it('should emit an error with a bad response of getDeployedApplicationsByName', () => {
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(throwError('wrong request'));
 
         const appId = 'fake-app';
         const change = new SimpleChange(null, appId, true);
+
+        let lastValue: any;
+        filterList.error.subscribe((err) => lastValue = err);
+
         filterList.ngOnChanges({ appName: change });
 
-        await filterList.error.subscribe((err) => {
-            expect(err).toBeDefined();
-        });
-
         fixture.detectChanges();
+        expect(lastValue).toBeDefined();
     });
 
     it('should emit an event when a filter is selected', async () => {
@@ -196,13 +192,13 @@ describe('ProcessFiltersComponent', () => {
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
-        await filterList.filterClicked.subscribe((filter) => {
-            expect(filter).toBeDefined();
-            expect(filter).toEqual(currentFilter);
-            expect(filterList.currentFilter).toEqual(currentFilter);
-        });
+        let lastValue: UserProcessInstanceFilterRepresentation;
+        filterList.filterClicked.subscribe((filter) => lastValue = filter);
 
         filterList.selectFilter(currentFilter);
+        expect(lastValue).toBeDefined();
+        expect(lastValue).toEqual(currentFilter);
+        expect(filterList.currentFilter).toEqual(currentFilter);
     });
 
     it('should reload filters by appId on binding changes', () => {

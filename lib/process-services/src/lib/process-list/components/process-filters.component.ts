@@ -127,16 +127,16 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
      */
     getFiltersByAppId(appId?: number) {
         this.processFilterService.getProcessFilters(appId).subscribe(
-            (res: ProcessInstanceFilterRepresentation[]) => {
+            (res) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.processFilterService.createDefaultFilters(appId).subscribe(
-                        (resDefault: ProcessInstanceFilterRepresentation[]) => {
+                        (resDefault) => {
                             this.resetFilter();
                             this.filters = resDefault;
                             this.selectProcessFilter(this.filterParam);
                             this.success.emit(resDefault);
                         },
-                        (errDefault: any) => {
+                        (errDefault) => {
                             this.error.emit(errDefault);
                         }
                     );
@@ -147,7 +147,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
                     this.success.emit(res);
                 }
             },
-            (err: any) => {
+            (err) => {
                 this.error.emit(err);
             }
         );
