@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, of } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { BarChart } from '../../diagram/models/chart/bar-chart.model';
@@ -27,12 +27,11 @@ import { HeatMapChart } from '../../diagram/models/chart/heat-map-chart.model';
 import { MultiBarChart } from '../../diagram/models/chart/multi-bar-chart.model';
 import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-
     private _reportApi: ReportApi;
     get reportApi(): ReportApi {
         this._reportApi = this._reportApi ?? new ReportApi(this.apiService.getInstance());
@@ -45,9 +44,7 @@ export class AnalyticsService {
         return this._processDefinitionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Retrieve all the Deployed app
@@ -56,20 +53,18 @@ export class AnalyticsService {
      * @returns list or report parameter models
      */
     getReportList(appId: number): Observable<ReportParametersModel[]> {
-        return from(this.reportApi.getReportList())
-            .pipe(
-                map((res: any) => {
-                    const reports: ReportParametersModel[] = [];
-                    res.forEach((report: ReportParametersModel) => {
-                        const reportModel = new ReportParametersModel(report);
-                        if (this.isReportValid(appId, report)) {
-                            reports.push(reportModel);
-                        }
-                    });
-                    return reports;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.getReportList()).pipe(
+            map((res) => {
+                const reports: ReportParametersModel[] = [];
+                res.forEach((report: ReportParametersModel) => {
+                    const reportModel = new ReportParametersModel(report);
+                    if (this.isReportValid(appId, report)) {
+                        reports.push(reportModel);
+                    }
+                });
+                return reports;
+            })
+        );
     }
 
     /**
@@ -79,19 +74,11 @@ export class AnalyticsService {
      * @returns report model
      */
     getReportByName(reportName: string): Observable<any> {
-        return from(this.reportApi.getReportList())
-            .pipe(
-                map((response: any) => response.find((report) => report.name === reportName)),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.getReportList()).pipe(map((response) => response.find((report) => report.name === reportName)));
     }
 
     getReportParams(reportId: string): Observable<ReportParametersModel> {
-        return from(this.reportApi.getReportParams(reportId))
-            .pipe(
-                map((res: any) => new ReportParametersModel(res)),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.getReportParams(reportId)).pipe(map((res) => new ReportParametersModel(res)));
     }
 
     getParamValuesByType(type: string, appId: number, reportId?: string, processDefinitionId?: string): Observable<ParameterValueModel[]> {
@@ -145,125 +132,85 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValuesNoApp(): Observable<ParameterValueModel[]> {
-        return from(this.reportApi.getProcessDefinitions())
-            .pipe(
-                map((res: any) => {
-                    const paramOptions: ParameterValueModel[] = [];
-                    res.forEach((opt) => {
-                        paramOptions.push(new ParameterValueModel(opt));
-                    });
-                    return paramOptions;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.getProcessDefinitions()).pipe(
+            map((res) => {
+                const paramOptions: ParameterValueModel[] = [];
+                res.forEach((opt) => {
+                    paramOptions.push(new ParameterValueModel(opt));
+                });
+                return paramOptions;
+            })
+        );
     }
 
     getProcessDefinitionsValues(appId: number): Observable<ParameterValueModel[]> {
         const options = { appDefinitionId: appId };
-        return from(this.processDefinitionsApi.getProcessDefinitions(options))
-            .pipe(
-                map((res: any) => {
-                    const paramOptions: ParameterValueModel[] = [];
-                    res.data.forEach((opt) => {
-                        paramOptions.push(new ParameterValueModel(opt));
-                    });
-                    return paramOptions;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.processDefinitionsApi.getProcessDefinitions(options)).pipe(
+            map((res) => {
+                const paramOptions: ParameterValueModel[] = [];
+                res.data.forEach((opt) => {
+                    paramOptions.push(new ParameterValueModel(opt));
+                });
+                return paramOptions;
+            })
+        );
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<ParameterValueModel[]> {
-        return from(this.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
-            .pipe(
-                map((res: any) => {
-                    const paramOptions: ParameterValueModel[] = [];
-                    res.forEach((opt) => {
-                        paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
-                    });
-                    return paramOptions;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId)).pipe(
+            map((res) => {
+                const paramOptions: ParameterValueModel[] = [];
+                res.forEach((opt) => {
+                    paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
+                });
+                return paramOptions;
+            })
+        );
     }
 
     getReportsByParams(reportId: string, paramsQuery: any): Observable<Chart[]> {
-        return from(this.reportApi.getReportsByParams(reportId, paramsQuery))
-            .pipe(
-                map((res: any) => {
-                    const elements: Chart[] = [];
-                    res.elements.forEach((chartData) => {
-                        if (chartData.type === 'pieChart') {
-                            elements.push(new PieChart(chartData));
-                        } else if (chartData.type === 'table') {
-                            elements.push(new TableChart(chartData));
-                        } else if (chartData.type === 'processDefinitionHeatMap') {
-                            elements.push(new HeatMapChart(chartData));
-                        } else if (chartData.type === 'masterDetailTable') {
-                            elements.push(new DetailsTableChart(chartData));
-                        } else if (chartData.type === 'barChart') {
-                            elements.push(new BarChart(chartData));
-                        } else if (chartData.type === 'multiBarChart') {
-                            elements.push(new MultiBarChart(chartData));
-                        }
-                    });
+        return from(this.reportApi.getReportsByParams(reportId, paramsQuery)).pipe(
+            map((res: any) => {
+                const elements: Chart[] = [];
+                res.elements.forEach((chartData) => {
+                    if (chartData.type === 'pieChart') {
+                        elements.push(new PieChart(chartData));
+                    } else if (chartData.type === 'table') {
+                        elements.push(new TableChart(chartData));
+                    } else if (chartData.type === 'processDefinitionHeatMap') {
+                        elements.push(new HeatMapChart(chartData));
+                    } else if (chartData.type === 'masterDetailTable') {
+                        elements.push(new DetailsTableChart(chartData));
+                    } else if (chartData.type === 'barChart') {
+                        elements.push(new BarChart(chartData));
+                    } else if (chartData.type === 'multiBarChart') {
+                        elements.push(new MultiBarChart(chartData));
+                    }
+                });
 
-                    return elements;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+                return elements;
+            })
+        );
     }
 
     createDefaultReports(): Observable<any> {
-        return from(this.reportApi.createDefaultReports())
-            .pipe(
-                map(res => res || {}),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.createDefaultReports()).pipe(map((res) => res || {}));
     }
 
     updateReport(reportId: string, name: string): Observable<any> {
-        return from(this.reportApi.updateReport(reportId, name))
-            .pipe(
-                map(() => this.logService.info('upload')),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.updateReport(reportId, name));
     }
 
     exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
-        return from(this.reportApi.exportToCsv(reportId, paramsQuery))
-            .pipe(
-                map((res: any) => {
-                    this.logService.info('export');
-                    return res;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.exportToCsv(reportId, paramsQuery));
     }
 
     saveReport(reportId: string, paramsQuery: any): Observable<any> {
-        return from(this.reportApi.saveReport(reportId, paramsQuery))
-            .pipe(
-                map(() => {
-                    this.logService.info('save');
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.reportApi.saveReport(reportId, paramsQuery));
     }
 
     deleteReport(reportId: string): Observable<any> {
-        return from(this.reportApi.deleteReport(reportId))
-            .pipe(
-                map(() => {
-                    this.logService.info('delete');
-                }),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.reportApi.deleteReport(reportId));
     }
 
     private isReportValid(appId: number, report: ReportParametersModel) {
