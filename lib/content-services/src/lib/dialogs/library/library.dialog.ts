@@ -180,8 +180,6 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     private create(): Observable<SiteEntry> {
         let { title, id, description, visibility } = this;
-        // id = "";
-        // title = "";
         const siteBody = {
             id,
             title,
