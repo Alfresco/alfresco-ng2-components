@@ -75,8 +75,8 @@ describe('DateRangeWidgetComponent', () => {
 
         widget.onGroupValueChanged();
 
-        expect(emitted.startDate).toBe('2023-03-13T00:00:00.000Z');
-        expect(emitted.endDate).toBe('2023-04-14T00:00:00.000Z');
+        expect(emitted.startDate).toBe('13/03/2023T00:00:00.000Z');
+        expect(emitted.endDate).toBe('14/04/2023T00:00:00.000Z');
     });
 
     it('should validate date range', async () => {
