@@ -210,8 +210,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                 this.form.controls['id'].setErrors({
                     message: 'LIBRARY.ERRORS.CONFLICT'
                 });
-            }
-            else {
+            } else {
                 this.notificationService.showError(errorMessage);
             }
         } catch {
