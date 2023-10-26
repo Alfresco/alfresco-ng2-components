@@ -23,7 +23,7 @@
                         color="primary"
                         data-automation-id="adf-expire-toggle"
                         aria-label="{{ 'SHARE.EXPIRES' | translate }}"
-                        [checked]="time.value"
+                        [checked]="!!time.value"
                         (change)="onToggleExpirationDate($event)">
                     </mat-slide-toggle>
                 </div>
