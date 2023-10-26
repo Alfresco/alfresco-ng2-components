@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <a href="" [title]="tooltip" [routerLink]="link">
+            <a [title]="tooltip" [routerLink]="link">
                 {{ value$ | async }}
             </a>
         </ng-container>
@@ -44,8 +44,12 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
         super(dataTableService);
     }
 
-    /** @override */
     ngOnInit() {
+        super.ngOnInit();
+    }
+
+    /** @override */
+    protected updateValue(): void {
         if (this.column?.key && this.row && this.data) {
             const path: any = this.data.getValue(this.row, this.column, this.resolverFn);
 
