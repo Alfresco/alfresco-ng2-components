@@ -20,10 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter-cloud.component';
@@ -59,10 +58,6 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
         EditServiceTaskFilterCloudComponent
-    ],
-    providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
     ]
 })
 export class TaskFiltersCloudModule { }
