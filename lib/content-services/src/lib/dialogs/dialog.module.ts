@@ -25,7 +25,6 @@ import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
-import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 import { LibraryDialogComponent } from './library/library.dialog';
 import { ContentDirectiveModule } from '../directives';
 import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
@@ -37,7 +36,6 @@ import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.modu
         CoreModule,
         FormsModule,
         ReactiveFormsModule,
-        MatMomentDatetimeModule,
         MatDatetimepickerModule,
         ContentDirectiveModule,
         DownloadZipDialogModule
