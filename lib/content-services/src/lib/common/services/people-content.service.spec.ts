@@ -126,7 +126,7 @@ describe('PeopleContentService', () => {
 
         await peopleContentService.getCurrentUserInfo().toPromise();
 
-        expect(await peopleContentService.isCurrentUserAdmin()).toBe(true);
+        expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
     });
 

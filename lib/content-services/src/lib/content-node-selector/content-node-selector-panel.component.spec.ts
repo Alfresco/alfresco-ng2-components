@@ -127,14 +127,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.currentFolderId = 'fake-starting-folder';
             });
 
-            it('should trigger siteChange event on init with parent site Title of start folder', async () => {
-                await component.siteChange.subscribe((siteTitle: string) => {
-                    expect(siteTitle).toBe('fake-site');
-                });
+            it('should trigger siteChange event on init with parent site Title of start folder', () => {
+                let lastValue: string;
+                component.siteChange.subscribe((siteTitle: string) => lastValue = siteTitle);
 
                 component.ngOnInit();
                 fixture.detectChanges();
                 expect(component.startSiteGuid).toBe('fake-site');
+                expect(lastValue).toBe('fake-site');
             });
 
             it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
@@ -142,12 +142,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                await component.siteChange.subscribe((siteTitle: string) => {
-                    expect(siteTitle).toBe('fake-new-site');
-                });
+                let lastValue: string;
+                component.siteChange.subscribe((siteTitle: string) => lastValue = siteTitle);
 
                 const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
                 sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
+                expect(lastValue).toBe('fake-new-site');
             });
         });
 
@@ -177,14 +177,14 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(component.documentList.sortingMode).toBe('server');
             });
 
-            it('should trigger the select event when selection has been made', async () => {
+            it('should trigger the select event when selection has been made', () => {
                 const expectedNode = { id: 'fakeid' } as Node;
-                await component.select.subscribe((nodes) => {
-                    expect(nodes.length).toBe(1);
-                    expect(nodes[0]).toBe(expectedNode);
-                });
+                let lastValue: Node[];
+                component.select.subscribe((nodes) => lastValue = nodes);
 
                 component.chosenNode = [expectedNode];
+                expect(lastValue.length).toBe(1);
+                expect(lastValue[0]).toBe(expectedNode);
             });
 
             it('should be able to filter out the exclude site content', () => {

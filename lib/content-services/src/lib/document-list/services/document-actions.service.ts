@@ -31,9 +31,9 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
 })
 export class DocumentActionsService {
 
-    permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();
-    error: Subject<Error> = new Subject<Error>();
-    success: Subject<string> = new Subject<string>();
+    permissionEvent = new Subject<PermissionModel>();
+    error = new Subject<Error>();
+    success = new Subject<string>();
 
     private handlers: { [id: string]: ContentActionHandler } = {};
 
@@ -113,7 +113,7 @@ export class DocumentActionsService {
         return actionObservable;
     }
 
-    private prepareHandlers(actionObservable): void {
+    private prepareHandlers(actionObservable: Subject<string>): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
                 this.success.next(fileOperationMessage);

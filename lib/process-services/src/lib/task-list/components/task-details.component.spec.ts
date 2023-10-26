@@ -19,14 +19,7 @@ import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import {
-    FormModel,
-    FormOutcomeEvent,
-    FormOutcomeModel,
-    LogService,
-    CommentModel,
-    User
-} from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
@@ -60,7 +53,6 @@ const fakeTaskAssignResponse = new TaskDetailsModel({
 });
 
 describe('TaskDetailsComponent', () => {
-
     let taskListService: TaskListService;
     let taskService: TaskService;
     let taskFormService: TaskFormService;
@@ -70,7 +62,6 @@ describe('TaskDetailsComponent', () => {
     let getCommentsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
-    let logService: LogService;
     let taskCommentsService: TaskCommentsService;
     let peopleProcessService: PeopleProcessService;
 
@@ -82,7 +73,6 @@ describe('TaskDetailsComponent', () => {
             ],
             schemas: [NO_ERRORS_SCHEMA]
         });
-        logService = TestBed.inject(LogService);
         peopleProcessService = TestBed.inject(PeopleProcessService);
 
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));
@@ -130,14 +120,14 @@ describe('TaskDetailsComponent', () => {
         expect(getTaskDetailsSpy).not.toHaveBeenCalled();
     });
 
-    it('should send a claim task event when a task is claimed', async () => {
-        await component.claimedTask.subscribe((taskId) => {
-            expect(taskId).toBe('FAKE-TASK-CLAIM');
-        });
+    it('should send a claim task event when a task is claimed', () => {
+        let lastValue: string;
+        component.claimedTask.subscribe((taskId) => lastValue = taskId);
         component.onClaimAction('FAKE-TASK-CLAIM');
+        expect(lastValue).toBe('FAKE-TASK-CLAIM');
     });
 
-    it('should send a unclaim task event when a task is unclaimed', async () => {
+    it('should send a unclaim task event when a task is unclaimed', () => {
         const taskUnclaimedSpy = spyOn(component.unClaimedTask, 'emit');
         component.onUnclaimAction('FAKE-TASK-UNCLAIM');
 
@@ -397,7 +387,7 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should return an observable with user search results', async () => {
+        it('should return an observable with user search results', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([{
                 id: 1,
                 firstName: 'fake-test-1',
@@ -410,32 +400,25 @@ describe('TaskDetailsComponent', () => {
                 email: 'fake-test-2@test.com'
             }]));
 
-            await component.peopleSearch.subscribe((users) => {
-                expect(users.length).toBe(2);
-                expect(users[0].firstName).toBe('fake-test-1');
-                expect(users[0].lastName).toBe('fake-last-1');
-                expect(users[0].email).toBe('fake-test-1@test.com');
-                expect(users[0].id).toBe(1);
-            });
+            let lastValue: UserProcessModel[];
+            component.peopleSearch.subscribe((users) => lastValue = users);
             component.searchUser('fake-search-word');
+
+            expect(lastValue.length).toBe(2);
+            expect(lastValue[0].firstName).toBe('fake-test-1');
+            expect(lastValue[0].lastName).toBe('fake-last-1');
+            expect(lastValue[0].email).toBe('fake-test-1@test.com');
+            expect(lastValue[0].id).toBe(1);
         });
 
-        it('should return an empty list for not valid search', async () => {
+        it('should return an empty list for not valid search', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
-            await component.peopleSearch.subscribe((users) => {
-                expect(users.length).toBe(0);
-            });
+            let lastValue: UserProcessModel[];
+            component.peopleSearch.subscribe((users) => lastValue = users);
             component.searchUser('fake-search-word');
-        });
 
-        it('should log error message when search fails', async () => {
-            const logServiceErrorSpy = spyOn(logService, 'error');
-
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError('fake-error'));
-            component.searchUser('fake-search');
-
-            expect(logServiceErrorSpy).toHaveBeenCalledWith('Could not load users');
+            expect(lastValue.length).toBe(0);
         });
 
         it('should assign task to user', () => {

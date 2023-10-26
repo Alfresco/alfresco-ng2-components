@@ -53,7 +53,7 @@ describe('DownloadPromptDialogComponent', () => {
         const waitButton = getButton('#waitButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalledWith(DownloadPromptActions.WAIT);
@@ -63,7 +63,7 @@ describe('DownloadPromptDialogComponent', () => {
         const waitButton = getButton('#downloadButton');
         waitButton.dispatchEvent(new Event('click'));
 
-        await fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(matDialogRef.close).toHaveBeenCalledWith(DownloadPromptActions.DOWNLOAD);

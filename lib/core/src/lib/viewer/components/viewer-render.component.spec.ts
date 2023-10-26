@@ -92,7 +92,7 @@ describe('ViewerComponent', () => {
         it('should not reload the content of all the viewer after type change', async () => {
             const fixtureDouble = TestBed.createComponent(DoubleViewerComponent);
 
-            await fixtureDouble.detectChanges();
+            fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
             fixtureDouble.componentInstance.urlFileViewer1 = 'fake-test-file.pdf';
@@ -101,7 +101,7 @@ describe('ViewerComponent', () => {
             fixtureDouble.componentInstance.viewer1.ngOnChanges();
             fixtureDouble.componentInstance.viewer2.ngOnChanges();
 
-            await fixtureDouble.detectChanges();
+            fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
             expect(fixtureDouble.componentInstance.viewer1.viewerType).toBe('pdf');
@@ -110,7 +110,7 @@ describe('ViewerComponent', () => {
             fixtureDouble.componentInstance.urlFileViewer1 = 'fake-test-file.pdf';
             fixtureDouble.componentInstance.urlFileViewer2 = 'fake-test-file-two.png';
 
-            await fixtureDouble.detectChanges();
+            fixtureDouble.detectChanges();
             await fixtureDouble.whenStable();
 
             fixtureDouble.componentInstance.viewer1.ngOnChanges();

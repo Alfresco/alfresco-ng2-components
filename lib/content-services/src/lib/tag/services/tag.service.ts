@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, UserPreferencesService } from '@alfresco/adf-core';
+import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { from, Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TagService {
-
     private _tagsApi: TagsApi;
     get tagsApi(): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
@@ -36,10 +35,7 @@ export class TagService {
     @Output()
     refresh = new EventEmitter();
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private userPreferencesService: UserPreferencesService) {
-    }
+    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
 
     /**
      * Gets a list of tags added to a node.
@@ -48,9 +44,7 @@ export class TagService {
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getTagsByNodeId(nodeId: string): Observable<TagPaging> {
-        return from(this.tagsApi.listTagsForNode(nodeId)).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.tagsApi.listTagsForNode(nodeId));
     }
 
     /**
@@ -61,10 +55,12 @@ export class TagService {
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getAllTheTags(opts?: any, includedCounts?: boolean): Observable<TagPaging> {
-        return from(this.tagsApi.listTags({
-            include: includedCounts ? ['count'] : undefined,
-            ...opts
-        })).pipe(catchError((err) => this.handleError(err)));
+        return from(
+            this.tagsApi.listTags({
+                include: includedCounts ? ['count'] : undefined,
+                ...opts
+            })
+        );
     }
 
     /**
@@ -78,15 +74,7 @@ export class TagService {
         const tagBody = new TagBody();
         tagBody.tag = tagName;
 
-        const observableAdd = from(this.tagsApi.createTagForNode(nodeId, [tagBody]));
-
-        observableAdd.subscribe((tagEntry: TagEntry) => {
-            this.refresh.emit(tagEntry);
-        }, (err) => {
-            this.handleError(err);
-        });
-
-        return observableAdd;
+        return from(this.tagsApi.createTagForNode(nodeId, [tagBody])).pipe(tap((tagEntry) => this.refresh.emit(tagEntry)));
     }
 
     /**
@@ -97,15 +85,7 @@ export class TagService {
      * @returns Null object when the operation completes
      */
     removeTag(nodeId: string, tag: string): Observable<void> {
-        const observableRemove = from(this.tagsApi.deleteTagFromNode(nodeId, tag));
-
-        observableRemove.subscribe(() => {
-            this.refresh.emit();
-        }, (err) => {
-            this.handleError(err);
-        });
-
-        return observableRemove;
+        return from(this.tagsApi.deleteTagFromNode(nodeId, tag)).pipe(tap(() => this.refresh.emit()));
     }
 
     /**
@@ -115,12 +95,7 @@ export class TagService {
      * @returns Created tags.
      */
     createTags(tags: TagBody[]): Observable<TagEntry[]> {
-        const observableAdd$: Observable<TagEntry[]> = from(this.tagsApi.createTags(tags));
-        observableAdd$.subscribe(
-            (tagsEntries: TagEntry[]) => this.refresh.emit(tagsEntries),
-            (err) => this.handleError(err)
-        );
-        return observableAdd$;
+        return from(this.tagsApi.createTags(tags)).pipe(tap((tagEntries) => this.refresh.emit(tagEntries)));
     }
 
     /**
@@ -131,12 +106,7 @@ export class TagService {
      * @returns Updated tag.
      */
     updateTag(tagId: string, tagBody: TagBody): Observable<TagEntry> {
-        const observableUpdate$: Observable<TagEntry> = from(this.tagsApi.updateTag(tagId, tagBody));
-        observableUpdate$.subscribe(
-            (tagEntry: TagEntry) => this.refresh.emit(tagEntry),
-            (err) => this.handleError(err)
-        );
-        return observableUpdate$;
+        return from(this.tagsApi.updateTag(tagId, tagBody)).pipe(tap((tagEntry) => this.refresh.emit(tagEntry)));
     }
 
     /**
@@ -150,16 +120,24 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(name: string, sorting = { orderBy: 'tag', direction: 'asc' },
-               includedCounts?: boolean, skipCount = 0, maxItems?: number): Observable<TagPaging> {
+    searchTags(
+        name: string,
+        sorting = { orderBy: 'tag', direction: 'asc' },
+        includedCounts?: boolean,
+        skipCount = 0,
+        maxItems?: number
+    ): Observable<TagPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
-        return this.getAllTheTags({
-            tag: `*${name}*`,
-            skipCount,
-            maxItems,
-            sorting,
-            matching: true
-        }, includedCounts).pipe(catchError((err) => this.handleError(err)));
+        return this.getAllTheTags(
+            {
+                tag: `*${name}*`,
+                skipCount,
+                maxItems,
+                sorting,
+                matching: true
+            },
+            includedCounts
+        );
     }
 
     /**
@@ -169,10 +147,7 @@ export class TagService {
      * @returns Found tag which name matches exactly to passed name.
      */
     findTagByName(name: string): Observable<TagEntry> {
-        return this.getAllTheTags({ tag: name }).pipe(
-            map((result) => result.list.entries[0]),
-            catchError((error) => this.handleError(error))
-        );
+        return this.getAllTheTags({ tag: name }).pipe(map((result) => result.list.entries[0]));
     }
 
     /**
@@ -184,9 +159,7 @@ export class TagService {
      * @returns Null object when the operation completes
      */
     deleteTag(tagId: string): Observable<void> {
-        return from(this.tagsApi.deleteTag(tagId)).pipe(
-            tap((data) => this.refresh.emit(data))
-        );
+        return from(this.tagsApi.deleteTag(tagId)).pipe(tap(() => this.refresh.emit()));
     }
 
     /**
@@ -197,13 +170,6 @@ export class TagService {
      * @returns Just linked tags to node or single tag if linked only one tag.
      */
     assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
-        return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(
-            tap((data) => this.refresh.emit(data))
-        );
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(tap((data) => this.refresh.emit(data)));
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LogService, UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -25,8 +25,8 @@ import { Pagination, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@a
 
 describe('TagService', () => {
     let service: TagService;
-    let logService: LogService;
     let userPreferencesService: UserPreferencesService;
+    let tagEntry: TagEntry;
 
     const mockTagPaging = (): TagPaging => {
         const tagPaging = new TagPaging();
@@ -45,17 +45,19 @@ describe('TagService', () => {
             imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         service = TestBed.inject(TagService);
-        logService = TestBed.inject(LogService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
 
+        tagEntry = new TagEntry({ entry: { id: '1', tag: 'test-tag' } });
+
         spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(Promise.resolve());
-        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(Promise.resolve(new TagEntry({})));
+        spyOn(service.tagsApi, 'createTagForNode').and.returnValue(Promise.resolve(tagEntry));
+        spyOn(service.tagsApi, 'deleteTag').and.returnValue(Promise.resolve());
     });
 
     describe('Content tests', () => {
         it('should catch errors on getTagsByNodeId  call', async () => {
             spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({ error: 'error' }));
-            await service.getTagsByNodeId('fake-node-id').subscribe(
+            service.getTagsByNodeId('fake-node-id').subscribe(
                 () => {
                     throwError('This call should fail');
                 },
@@ -66,31 +68,28 @@ describe('TagService', () => {
         });
 
         it('should trigger a refresh event on removeTag() call', async () => {
-            await service.refresh.subscribe(() => {
-                expect(service.tagsApi.deleteTagFromNode).toHaveBeenCalledWith('fake-node-id', 'fake-tag');
-            });
-
             service.removeTag('fake-node-id', 'fake-tag');
+            expect(service.tagsApi.deleteTagFromNode).toHaveBeenCalledWith('fake-node-id', 'fake-tag');
         });
 
         it('should trigger a refresh event on addTag() call', async () => {
-            await service.refresh.subscribe((res) => {
-                expect(res).toBeDefined();
-            });
+            let lastValue: any;
+            service.refresh.subscribe((res) => lastValue = res);
 
-            service.addTag('fake-node-id', 'fake-tag');
+            await service.addTag('fake-node-id', 'fake-tag').toPromise();
+            expect(lastValue).toBe(tagEntry);
         });
 
         it('should trigger a refresh event on deleteTag() call', async () => {
-            await service.refresh.subscribe((res) => {
-                expect(res).toBeDefined();
-            });
+            let lastValue = false;
+            service.refresh.subscribe(() => lastValue = true);
 
-            service.deleteTag('fake-tag-id');
+            await service.deleteTag('fake-tag-id').toPromise();
+            expect(lastValue).toBeTrue();
         });
 
         describe('createTags', () => {
-            it('should call createTags on tagsApi', (done) => {
+            it('should call createTags on tagsApi', () => {
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve([]));
                 const tag1 = new TagBody();
                 tag1.tag = 'Some tag 1';
@@ -100,10 +99,9 @@ describe('TagService', () => {
                 service.createTags(tags);
 
                 expect(service.tagsApi.createTags).toHaveBeenCalledWith(tags);
-                done();
             });
 
-            it('should emit refresh when tags creation is success', fakeAsync(() => {
+            it('should emit refresh when tags creation is success', async () => {
                 const tags: TagEntry[] = [
                     {
                         entry: {
@@ -114,19 +112,10 @@ describe('TagService', () => {
                 ];
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.resolve(tags));
-                service.createTags([]);
-                tick();
-                expect(service.refresh.emit).toHaveBeenCalledWith(tags);
-            }));
 
-            it('should call error on logService when error occurs during tags creation', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error = 'Some error';
-                spyOn(service.tagsApi, 'createTags').and.returnValue(Promise.reject(error));
-                service.createTags([]);
-                tick();
-                expect(logService.error).toHaveBeenCalledWith(error);
-            }));
+                await service.createTags([]).toPromise();
+                expect(service.refresh.emit).toHaveBeenCalledWith(tags);
+            });
         });
 
         describe('getAllTheTags', () => {
@@ -173,18 +162,6 @@ describe('TagService', () => {
 
                 service.getAllTheTags().subscribe((tagsResult) => {
                     expect(tagsResult).toEqual(result);
-                });
-                tick();
-            }));
-
-            it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error: string = 'Some error';
-                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
-                service.getAllTheTags().subscribe({
-                    error: () => {
-                        expect(logService.error).toHaveBeenCalledWith(error);
-                    }
                 });
                 tick();
             }));
@@ -247,18 +224,6 @@ describe('TagService', () => {
                 });
                 tick();
             }));
-
-            it('should call error on logService when error occurs during fetching paging object for tags', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error: string = 'Some error';
-                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
-                service.searchTags('test').subscribe({
-                    error: () => {
-                        expect(logService.error).toHaveBeenCalledWith(error);
-                    }
-                });
-                tick();
-            }));
         });
 
         describe('updateTag', () => {
@@ -283,22 +248,12 @@ describe('TagService', () => {
                 expect(service.tagsApi.updateTag).toHaveBeenCalledWith(tag.entry.id, tagBody);
             });
 
-            it('should emit refresh when tag updated successfully', fakeAsync(() => {
+            it('should emit refresh when tag updated successfully',  async () => {
                 spyOn(service.refresh, 'emit');
                 spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.resolve(updatedTag));
-                service.updateTag(tag.entry.id, tagBody);
-                tick();
+                await service.updateTag(tag.entry.id, tagBody).toPromise();
                 expect(service.refresh.emit).toHaveBeenCalledWith(updatedTag);
-            }));
-
-            it('should call error on logService when error occurs during tag update', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error = 'Some error';
-                spyOn(service.tagsApi, 'updateTag').and.returnValue(Promise.reject(error));
-                service.updateTag(tag.entry.id, tagBody);
-                tick();
-                expect(logService.error).toHaveBeenCalledWith(error);
-            }));
+            });
         });
 
         describe('findTagByName', () => {
@@ -334,19 +289,6 @@ describe('TagService', () => {
                     done();
                 });
             });
-
-            it('should call error on logService when error occurs during fetching tag for name', fakeAsync(() => {
-                spyOn(logService, 'error');
-                const error = 'Some error';
-                spyOn(service.tagsApi, 'listTags').and.returnValue(Promise.reject(error));
-
-                service.findTagByName(tagName).subscribe({
-                    error: () => {
-                        expect(logService.error).toHaveBeenCalledWith(error);
-                    }
-                });
-                tick();
-            }));
         });
 
         describe('assignTagsToNode', () => {

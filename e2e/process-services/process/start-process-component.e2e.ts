@@ -463,7 +463,7 @@ describe('Start Process Component', () => {
                 await processInstanceTasksPage.clickOnStartForm();
                 await processInstanceTasksPage.checkStartProcessDialogIsDisplayed();
                 await expect(await processInstanceTasksPage.getTitle()).toBe('Start Form');
-                await expect(await (await widget.dateWidget()).getDateInput('testdate')).toBe('15-7-2019');
+                await expect(await widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
                 await processInstanceTasksPage.clickCloseButton();
                 await processInstanceTasksPage.checkStartProcessDialogIsNotDisplayed();
             });

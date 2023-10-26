@@ -80,7 +80,7 @@ describe('Start Task - Task App', () => {
         await task.selectForm(app.formName);
         await task.clickStartButton();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
-        const taskDetails = await taskPage.taskDetails();
+        const taskDetails = taskPage.taskDetails();
 
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
@@ -126,7 +126,7 @@ describe('Start Task - Task App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
 
-        const formFields = await taskPage.formFields();
+        const formFields = taskPage.formFields();
         const formFieldValue = 'First value ';
         await formFields.setFieldValue(formTextField, formFieldValue);
 

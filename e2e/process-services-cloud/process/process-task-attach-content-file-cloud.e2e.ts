@@ -133,7 +133,7 @@ describe('Process Task - Attach content file', () => {
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible(uploadWidgetId);
-        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(uploadWidgetId);
+        const contentUploadFileWidget = processCloudWidget.attachFileWidgetCloud(uploadWidgetId);
         await contentUploadFileWidget.clickAttachContentFile(uploadWidgetId);
 
         await contentNodeSelectorDialog.attachFileFromContentNode(folderName, pdfFileOne.name);

@@ -16,22 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, of } from 'rxjs';
-import { AlfrescoApiService, LogService, GroupModel } from '@alfresco/adf-core';
+import { Observable, from, of } from 'rxjs';
+import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { UserProcessModel } from '../models/user-process.model';
-import { catchError, combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
-import {
-    TaskActionsApi,
-    UsersApi,
-    ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi, UserProfileApi
-} from '@alfresco/js-api';
+import { combineAll, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
+import { TaskActionsApi, UsersApi, ResultListDataRepresentationLightUserRepresentation, ActivitiGroupsApi, UserProfileApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleProcessService {
-
     private _taskActionsApi: TaskActionsApi;
     get taskActionsApi(): TaskActionsApi {
         this._taskActionsApi = this._taskActionsApi ?? new TaskActionsApi(this.apiService.getInstance());
@@ -56,9 +51,7 @@ export class PeopleProcessService {
         return this._profileApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets information about the current user.
@@ -66,11 +59,7 @@ export class PeopleProcessService {
      * @returns User information object
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return from(this.profileApi.getProfile())
-            .pipe(
-                map((userRepresentation) => new BpmUserModel(userRepresentation)),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.profileApi.getProfile()).pipe(map((userRepresentation) => new BpmUserModel(userRepresentation)));
     }
 
     /**
@@ -94,11 +83,7 @@ export class PeopleProcessService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return from(this.groupsApi.getGroups(option))
-            .pipe(
-                map((response: any) => response.data || []),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.groupsApi.getGroups(option)).pipe(map((response: any) => response.data || []));
     }
 
     /**
@@ -112,17 +97,15 @@ export class PeopleProcessService {
     getWorkflowUsers(taskId?: string, searchWord?: string, groupId?: string): Observable<UserProcessModel[]> {
         const option = { excludeTaskId: taskId, filter: searchWord, groupId };
 
-        return from(this.getWorkflowUserApi(option))
-            .pipe(
-                switchMap(response => response.data as UserProcessModel[] || []),
-                map((user) => {
-                    user.userImage = this.getUserProfileImageApi(user.id.toString());
-                    return of(user);
-                }),
-                combineAll(),
-                defaultIfEmpty([]),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.getWorkflowUserApi(option)).pipe(
+            switchMap((response) => (response.data as UserProcessModel[]) || []),
+            map((user) => {
+                user.userImage = this.getUserProfileImageApi(user.id.toString());
+                return of(user);
+            }),
+            combineAll(),
+            defaultIfEmpty([])
+        );
     }
     /**
      * Gets the profile picture URL for the specified user.
@@ -142,11 +125,7 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
-        const node = { userId: idToInvolve };
-        return from(this.involveUserToTaskApi(taskId, node))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.involveUserToTaskApi(taskId, { userId: idToInvolve }));
     }
 
     /**
@@ -157,11 +136,7 @@ export class PeopleProcessService {
      * @returns Empty response when the update completes
      */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
-        const node = { userId: idToRemove };
-        return from(this.removeInvolvedUserFromTaskApi(taskId, node))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.removeInvolvedUserFromTaskApi(taskId, { userId: idToRemove }));
     }
 
     private getWorkflowUserApi(options: any): Promise<ResultListDataRepresentationLightUserRepresentation> {
@@ -178,10 +153,5 @@ export class PeopleProcessService {
 
     private getUserProfileImageApi(userId: string): string {
         return this.userApi.getUserProfilePictureUrl(userId);
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }
