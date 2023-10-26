@@ -74,6 +74,7 @@ The `type` input allows us to specify the type of hosted values for a given colu
 - `boolean` - The column expects true / false (boolean values) and in addition accepts two strings - 'false' and 'true'. Other values are not recognized by the column, and the cell remains empty.
 - `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config),
 - `number` - This column is responsible for displaying numbers (integers and decimals). It expects numerals represented by a string or a number. This type comes with [`decimalConfig`](#default-decimal-config)
+- `location` - This column displays a clickable location link pointing to the parent path of the node. **Note:** This type is strongly related to the document list component ([document-list.component.md](../../content-services/components/document-list.component.md)).
 
 ### `currencyConfig` Input
 
