@@ -16,14 +16,15 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import moment, { Moment } from 'moment';
+
+declare let moment: any;
 
 /**
  * @deprecated this pipe is deprecated and should no longer be used
  */
 @Pipe({ name: 'adfMomentDate' })
 export class MomentDatePipe implements PipeTransform {
-    transform(value: moment.MomentInput, dateFormat: string): Moment {
+    transform(value: any, dateFormat: string): any {
         return moment(value, dateFormat);
     }
 }

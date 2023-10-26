@@ -60,8 +60,8 @@ export class DateRangeWidgetComponent implements OnInit {
     constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
-        const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
-        momentDateAdapter.displayFormat = DISPLAY_FORMAT;
+        const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        dateAdapter.displayFormat = DISPLAY_FORMAT;
 
         if (this.field) {
             if (this.field.value?.startDate) {

@@ -17,8 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import moment, { isMoment, Moment } from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+
+// Stub for the moment.js integration.
+// While this dependency is no longer used by the libraries, the moment adapter can still discover the moment.js linked to the application
+declare let moment: any;
+type Moment = any;
 
 /**
  * @deprecated this class is deprecated and should not be used.
@@ -183,7 +187,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         if (first == null) {
             // same if both null
             return second == null;
-        } else if (isMoment(first)) {
+        } else if (moment.isMoment(first)) {
             return first.isSame(second);
         } else {
             const isSame = super.sameDate(first, second);

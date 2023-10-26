@@ -19,7 +19,6 @@
     "@alfresco/adf-core": ">=6.3.0",
     "@ngx-translate/core": ">=14.0.0",
     "chart.js": "^4.3.0",
-    "moment": ">=2.22.2",
     "ng2-charts": "^4.1.1",
     "raphael": ">=2.3.0"
   },
