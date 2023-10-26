@@ -21,6 +21,8 @@ import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/pro
 import { FormGroup, FormControl } from '@angular/forms';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '@alfresco/adf-core';
 
 interface DateRangeFormProps {
     from: FormControl<Date>;
@@ -30,7 +32,11 @@ interface DateRangeFormProps {
 @Component({
     selector: 'adf-cloud-date-range-filter',
     styleUrls: ['./date-range-filter.component.scss'],
-    templateUrl: './date-range-filter.component.html'
+    templateUrl: './date-range-filter.component.html',
+    providers: [
+        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
+    ]
 })
 export class DateRangeFilterComponent implements OnInit {
     @Input()
