@@ -54,8 +54,8 @@ export class DateEditorComponent implements OnInit {
     constructor(private dateAdapter: DateAdapter<Date>) {}
 
     ngOnInit() {
-        const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
-        momentDateAdapter.displayFormat = this.DATE_FORMAT;
+        const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
+        dateAdapter.displayFormat = this.DATE_FORMAT;
 
         this.value = this.table.getCellValue(this.row, this.column) as Date;
     }

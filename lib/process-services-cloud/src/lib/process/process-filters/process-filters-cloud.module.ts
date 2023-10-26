@@ -20,12 +20,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { CoreModule, MomentDateAdapter, MOMENT_DATE_FORMATS } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 
@@ -42,10 +41,6 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         PeopleCloudModule
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    providers: [
-        { provide: DateAdapter, useClass: MomentDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
-    ]
+    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
 })
 export class ProcessFiltersCloudModule { }

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Moment } from 'moment';
-
 export interface FormContent {
     formRepresentation: FormRepresentation;
 }
@@ -109,7 +107,7 @@ export interface VisibilityCondition {
     leftType: string;
     leftValue: string;
     operator: string;
-    rightValue: string | number | Date | Moment;
+    rightValue: string | number | Date;
     rightType: string;
     nextConditionOperator?: string;
     nextCondition?: VisibilityCondition;
