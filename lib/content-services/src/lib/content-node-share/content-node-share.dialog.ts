@@ -18,17 +18,20 @@
 import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
-import { SharedLinkBodyCreate, SharedLinkEntry } from '@alfresco/js-api';
+import { SharedLinkBodyCreate } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { format, add, endOfDay, isBefore } from 'date-fns';
 
-type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
+interface SharedDialogFormProps {
+    sharedUrl: FormControl<string>;
+    time: FormControl<Date>;
+}
 
 @Component({
     selector: 'adf-share-dialog',
@@ -38,7 +41,7 @@ type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
     encapsulation: ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
-    private minDateValidator = (control: AbstractControl): any =>
+    private minDateValidator = (control: FormControl<Date>): any =>
         isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
 
     minDate = add(new Date(), { days: 1 });
@@ -48,19 +51,14 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isFileShared = false;
     isDisabled = false;
     isLinkWithExpiryDate = false;
-    form: FormGroup = new FormGroup({
+    form = new FormGroup<SharedDialogFormProps>({
         sharedUrl: new FormControl(''),
-        time: new FormControl({ value: '', disabled: true }, [Validators.required, this.minDateValidator])
+        time: new FormControl({ value: null, disabled: true }, [Validators.required, this.minDateValidator])
     });
-    type: DatePickerType = 'date';
-    maxDebounceTime = 500;
     isExpiryDateToggleChecked: boolean;
 
     @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
-
-    @ViewChild('datePickerInput', { static: true })
-    datePickerInput;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -99,7 +97,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    get time(): AbstractControl {
+    get time(): FormControl<Date> {
         return this.form.controls['time'];
     }
 
@@ -177,7 +175,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.isDisabled = true;
 
         this.sharedLinksApiService.createSharedLinks(nodeId, sharedLinkWithExpirySettings).subscribe(
-            (sharedLink: SharedLinkEntry) => {
+            (sharedLink) => {
                 if (sharedLink.entry) {
                     this.sharedId = sharedLink.entry.id;
                     if (this.data.node.entry.properties) {
@@ -267,11 +265,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     private updateNode(date: Date) {
         let expiryDate: Date | string;
         if (date) {
-            if (this.type === 'date') {
-                expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
-            } else {
-                expiryDate = format(new Date(date), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
-            }
+            expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
         } else {
             expiryDate = null;
         }

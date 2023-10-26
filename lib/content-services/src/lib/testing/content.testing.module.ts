@@ -40,8 +40,8 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule,
-        CoreModule,
-        ContentModule,
+        CoreModule.forRoot(),
+        ContentModule.forRoot(),
         MatIconTestingModule
     ],
     providers: [
