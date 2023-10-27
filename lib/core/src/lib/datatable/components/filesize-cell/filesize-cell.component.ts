@@ -29,6 +29,11 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
     host: { class: 'adf-filesize-cell' }
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
+
+    constructor() {
+        super();
+    }
+
     ngOnInit(): void {
         super.ngOnInit();
     }
