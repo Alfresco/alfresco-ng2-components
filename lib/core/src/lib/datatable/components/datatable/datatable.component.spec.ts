@@ -1229,6 +1229,17 @@ describe('DataTable', () => {
         expect(rows[1].getValue('fuel_consumption')).toBe(6);
         expect(rows[2].getValue('fuel_consumption')).toBe(4.9);
     });
+
+    it('should be able to display column of type date', () => {
+        dataTable.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
+
+        fixture.detectChanges();
+        const rows = dataTable.data.getRows();
+
+        expect(rows[0].getValue('production_start')).toBe('1972-04-23');
+        expect(rows[1].getValue('production_start')).toBe('1998-06-25T12:25:20');
+        expect(rows[2].getValue('production_start')).toBe('2004-02-10T12:25:43.511Z');
+    });
 });
 
 describe('Accesibility', () => {

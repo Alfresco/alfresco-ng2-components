@@ -1,6 +1,6 @@
 <ng-container *ngIf="value$ | async as date">
     <span
-        [title]="tooltip | adfLocalizedDate: dateConfig.tooltipFormat"
+        [title]="tooltip | adfLocalizedDate: dateConfig.tooltipFormat: dateConfig.locale"
         class="adf-datatable-cell-value"
         *ngIf="dateConfig.format === 'timeAgo'; else standard_date">
             {{ date | adfTimeAgo: dateConfig.locale }}
@@ -8,8 +8,8 @@
     <ng-template #standard_date>
         <span
             class="adf-datatable-cell-value"
-            [title]="tooltip | adfLocalizedDate: dateConfig.tooltipFormat">
-                {{ date | adfLocalizedDate: dateConfig.format }}
+            [title]="tooltip | adfLocalizedDate: dateConfig.tooltipFormat: dateConfig.locale">
+                {{ date | adfLocalizedDate: dateConfig.format: dateConfig.locale }}
         </span>
     </ng-template>
 </ng-container>
