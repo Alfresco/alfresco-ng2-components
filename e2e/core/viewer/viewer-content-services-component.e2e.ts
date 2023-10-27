@@ -16,14 +16,7 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
-import { createApiService,
-    BrowserActions,
-    LoginPage,
-    UploadActions,
-    UserModel,
-    UsersActions,
-    ViewerPage
-} from '@alfresco/adf-testing';
+import { createApiService, BrowserActions, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -271,19 +264,6 @@ describe('Content Services Viewer', () => {
             await viewerPage.clickCloseButton();
         });
 
-        it('[C291903] Should display the buttons in order in the adf viewer toolbar', async () => {
-            await contentServicesPage.doubleClickRow(pdfFile.name);
-            await viewerPage.waitTillContentLoaded();
-
-            await viewerPage.checkLeftSideBarIsNotDisplayed();
-            await viewerPage.clickLeftSidebarButton();
-            await viewerPage.checkLeftSideBarIsDisplayed();
-            await viewerPage.enableMoreActionsMenu();
-            await viewerPage.checkToolbarIsDisplayed();
-            await expect(await viewerPage.getLastButtonTitle()).toEqual(await viewerPage.getMoreActionsMenuTitle());
-            await viewerPage.clickCloseButton();
-        });
-
         it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', async () => {
             await contentServicesPage.doubleClickRow(docxFile.name);
             await viewerPage.waitTillContentLoaded();
@@ -318,7 +298,7 @@ describe('Content Services Viewer', () => {
 
             await viewerPage.checkZoomInButtonIsNotDisplayed();
             await viewerPage.checkUnknownFormatIsDisplayed();
-            await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
+            await expect(await viewerPage.getUnknownFormatMessage()).toBe("Couldn't load preview. Unknown format.");
 
             await viewerPage.clickCloseButton();
         });
@@ -434,7 +414,7 @@ describe('Content Services Viewer', () => {
         await contentServicesPage.doubleClickRow(unsupportedFileName);
         await viewerPage.waitTillContentLoaded();
         await viewerPage.checkUnknownFormatIsDisplayed();
-        await expect(await viewerPage.getUnknownFormatMessage()).toBe('Couldn\'t load preview. Unknown format.');
+        await expect(await viewerPage.getUnknownFormatMessage()).toBe("Couldn't load preview. Unknown format.");
         await viewerPage.clickCloseButton();
     }
 

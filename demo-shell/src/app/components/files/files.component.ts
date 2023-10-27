@@ -28,29 +28,23 @@ import {
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NodeEntry, NodePaging, Pagination, Node, SiteEntry, SearchEntry } from '@alfresco/js-api';
+import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
 import {
     NotificationService,
-    DataRow,
     UserPreferencesService,
     PaginationComponent,
     DisplayMode,
     ShowHeaderMode,
-    InfinitePaginationComponent,
     FormRenderingService
 } from '@alfresco/adf-core';
-
 import {
     ContentService,
     FolderCreatedEvent,
     UploadService,
     DocumentListComponent,
     PermissionStyleModel,
-    UploadFilesEvent,
-    ConfirmDialogComponent,
     ContentMetadataService,
     FilterSearch,
     DialogAspectListService,
@@ -59,7 +53,6 @@ import {
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
-import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
@@ -101,12 +94,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     sortingMode: 'server' | 'client' = 'server';
 
     @Input()
-    showRecentFiles = true;
-
-    @Input()
-    showSitePicker = true;
-
-    @Input()
     showSettingsPanel = true;
 
     @Input()
@@ -131,9 +118,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     maxSizeShow = false;
 
     @Input()
-    showVersionComments = true;
-
-    @Input()
     versioning = false;
 
     @Input()
@@ -156,9 +140,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input()
     disableDragArea = false;
-
-    @Input()
-    showNameColumn = true;
 
     @Input()
     searchTerm = '';
@@ -202,24 +183,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent, { static: true })
-    infinitePaginationComponent: InfinitePaginationComponent;
-
     permissionsStyle: PermissionStyleModel[] = [];
-    infiniteScrolling: boolean;
     stickyHeader: boolean;
-    warnOnMultipleUploads = false;
-    thumbnails = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
-    hyperlinkNavigation = false;
 
     constructor(
         private notificationService: NotificationService,
         private uploadService: UploadService,
         private contentService: ContentService,
         private dialog: MatDialog,
-        private location: Location,
         private router: Router,
         private preference: UserPreferencesService,
         private preview: PreviewService,
@@ -234,11 +207,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         if (entry?.isFile) {
             this.preview.showResource(entry.id);
         }
-    }
-
-    toggleThumbnails() {
-        this.thumbnails = !this.thumbnails;
-        this.documentList.reload();
     }
 
     ngOnInit() {
@@ -399,7 +367,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onManageVersions(event: any) {
         const contentEntry = event.value.entry;
-        const showComments = this.showVersionComments;
+        const showComments = true;
         const allowDownload = this.allowVersionDownload;
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
@@ -421,28 +389,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    onManageMetadata(event: any) {
-        const contentEntry = event.value.entry;
-        const displayEmptyMetadata = this.displayEmptyMetadata;
-
-        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
-            this.dialog.open(MetadataDialogAdapterComponent, {
-                data: {
-                    contentEntry,
-                    displayEmptyMetadata
-                },
-                panelClass: 'adf-metadata-manager-dialog',
-                width: '630px'
-            });
-        } else {
-            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
-        }
-    }
-
-    onSiteChange(site: SiteEntry) {
-        this.currentFolderId = site.entry.guid;
-    }
-
     hasSelection(selection: Array<any>): boolean {
         return selection && selection.length > 0;
     }
@@ -455,13 +401,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     userHasPermissionToManageVersions(): boolean {
         const selection = this.documentList.selection;
         return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
-    }
-
-    getNodeNameTooltip(row: DataRow): string {
-        if (row) {
-            return row.getValue('name');
-        }
-        return null;
     }
 
     canEditFolder(selection: Array<NodeEntry>): boolean {
@@ -507,44 +446,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedPreviousPage.emit(event);
     }
 
-    toggleGalleryView(): void {
-        this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
-        const url = this.router.createUrlTree(['/files', this.currentFolderId, 'display', this.displayMode]).toString();
-
-        this.location.go(url);
-    }
-
-    onInfiniteScrolling(): void {
-        this.infiniteScrolling = !this.infiniteScrolling;
-        this.infinitePaginationComponent.reset();
-    }
-
-    onBeginUpload(event: UploadFilesEvent) {
-        if (this.warnOnMultipleUploads && event) {
-            const files = event.files || [];
-            if (files.length > 1) {
-                event.pauseUpload();
-
-                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                    data: {
-                        title: 'Upload',
-                        message: `Are you sure you want to upload ${files.length} file(s)?`
-                    },
-                    minWidth: '250px'
-                });
-
-                dialogRef.afterClosed().subscribe((result) => {
-                    if (result === true) {
-                        event.resumeUpload();
-                    }
-                });
-            }
-        }
-    }
-
     onUploadNewVersion(ev) {
         const contentEntry = ev.detail.data.node.entry;
-        const showComments = this.showVersionComments;
+        const showComments = true;
         const allowDownload = this.allowVersionDownload;
         const newFileVersion = ev.detail.files[0].file;
 

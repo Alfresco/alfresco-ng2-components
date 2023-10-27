@@ -15,18 +15,8 @@
  * limitations under the License.
  */
 
-import * as path from 'path';
-import * as fs from 'fs';
-
 import { browser } from 'protractor';
-import {
-    UserProfileApi,
-    AdminUsersApi,
-    AdminTenantsApi,
-    PeopleApi,
-    ImageUploadRepresentation,
-    UserRepresentation
-} from '@alfresco/js-api';
+import { UserProfileApi, AdminUsersApi, AdminTenantsApi, PeopleApi, UserRepresentation } from '@alfresco/js-api';
 import { IdentityService } from './identity/identity.service';
 import { UserModel } from '../models/user.model';
 import { ApiService } from '../../../shared/api/api.service';
@@ -34,7 +24,6 @@ import { Logger } from '../utils/logger';
 import { Tenant } from '../models/tenant';
 
 export class UsersActions {
-
     api: ApiService;
     identityService: IdentityService;
     peopleApi: PeopleApi;
@@ -61,7 +50,7 @@ export class UsersActions {
         const user = new UserModel({ ...(userModel ? userModel : {}) });
 
         try {
-            if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+            if (this.api.apiService.isEcmConfiguration() || this.api.apiService.isEcmBpmConfiguration()) {
                 Logger.log(`Create user ECM ${user.email}`);
                 await this.peopleApi.createPerson({
                     id: user.username,
@@ -80,7 +69,7 @@ export class UsersActions {
         }
 
         try {
-            if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+            if (this.api.apiService.isBpmConfiguration() || this.api.apiService.isEcmBpmConfiguration()) {
                 Logger.log('Create user BPM');
                 if (user.tenantId) {
                     const apsUser = await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
@@ -117,11 +106,6 @@ export class UsersActions {
         return user;
     }
 
-    async createUserWithName(firstName: string, lastName: string): Promise<UserModel> {
-        const user = new UserModel({ firstName, lastName });
-        return this.createUser(user);
-    }
-
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.adminTenantsApi.createTenant(new Tenant());
 
@@ -137,7 +121,6 @@ export class UsersActions {
     }
 
     async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
-
         const user = new UserModel({
             tenantId,
             email,
@@ -147,13 +130,6 @@ export class UsersActions {
         });
 
         return this.adminUsersApi.createNewUser(user.getAPSModel());
-    }
-
-    async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
-        const file = fs.createReadStream(pathFile);
-
-        return this.userProfileApi.uploadProfilePicture(file);
     }
 
     async deleteTenant(tenantId: number) {

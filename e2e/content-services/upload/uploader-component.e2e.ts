@@ -17,14 +17,7 @@
 
 import { browser, by, element } from 'protractor';
 
-import { createApiService,
-    DropActions,
-    LoginPage,
-    StringUtil,
-    UploadActions,
-    UserModel,
-    UsersActions
-} from '@alfresco/adf-testing';
+import { createApiService, DropActions, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
@@ -32,7 +25,6 @@ import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Upload component', () => {
-
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
@@ -93,8 +85,7 @@ describe('Upload component', () => {
             for (const node of nodeList) {
                 try {
                     await uploadActions.deleteFileOrFolder(node);
-                } catch (error) {
-                }
+                } catch (error) {}
             }
         });
 
@@ -225,14 +216,6 @@ describe('Upload component', () => {
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
             await contentServicesPage.checkContentIsDisplayed(fileWithSpecificSize.name);
-        });
-
-        it('[C91318] Should Enable/Disable upload button when change the disable property', async () => {
-            await uploadToggles.clickCheckboxDisableUpload();
-            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(false, 'Upload button is enabled');
-
-            await uploadToggles.clickCheckboxDisableUpload();
-            await expect(await contentServicesPage.uploadButtonIsEnabled()).toBe(true, 'Upload button not enabled');
         });
     });
 

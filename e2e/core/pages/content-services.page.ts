@@ -16,7 +16,7 @@
  */
 
 import { DropActions, BrowserActions, BrowserVisibility, DocumentListPage, DropdownPage, Logger } from '@alfresco/adf-testing';
-import { $$, browser, by, element, protractor, $ } from 'protractor';
+import { $$, browser, protractor, $ } from 'protractor';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 import * as path from 'path';
@@ -51,17 +51,11 @@ export class ContentServicesPage {
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
     deleteContentElement = $('button[data-automation-id="Delete"]');
-    metadataAction = $('button[data-automation-id="Info"]');
     versionManagerAction = $('button[data-automation-id="Manage versions"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
     multiSelectToggle = $('[data-automation-id="multiSelectToggle"]');
     selectionModeDropdown = $('.mat-select[placeholder="Selection Mode"]');
-    siteListDropdown = new DropdownPage($(`mat-select[data-automation-id='site-my-files-option']`));
-
-    async pressContextMenuActionNamed(actionName: string): Promise<void> {
-        await BrowserActions.clickExecuteScript(`button[data-automation-id="context-${actionName}"]`);
-    }
 
     async isContextActionEnabled(actionName: string): Promise<boolean> {
         const actionButton = $(`button[data-automation-id="context-${actionName}"`);
@@ -73,41 +67,15 @@ export class ContentServicesPage {
         return this.contentList;
     }
 
-    async checkDeleteIsDisabled(content: string): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        const disabledDelete = $(`button[data-automation-id='Delete'][disabled='true']`);
-        await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
-    }
-
     async deleteContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.deleteContentElement);
         await this.checkContentIsNotDisplayed(content);
     }
 
-    async metadataContent(content: string): Promise<void> {
-        await this.contentList.clickOnActionMenu(content);
-        await BrowserActions.click(this.metadataAction);
-    }
-
     async versionManagerContent(content: string): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await BrowserActions.click(this.versionManagerAction);
-    }
-
-    async clickFileHyperlink(fileName: string): Promise<void> {
-        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
-        await BrowserActions.click(hyperlink);
-    }
-
-    async checkFileHyperlinkIsEnabled(fileName: string): Promise<void> {
-        const hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
-        await BrowserVisibility.waitUntilElementIsVisible(hyperlink);
-    }
-
-    async clickHyperlinkNavigationToggle(): Promise<void> {
-        const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
-        await BrowserActions.click(hyperlinkToggle);
     }
 
     async getElementsDisplayedId() {
@@ -267,23 +235,9 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
     }
 
-    async uploadButtonIsEnabled(): Promise<boolean> {
-        return this.uploadFileButton.isEnabled();
-    }
-
-    async enableInfiniteScrolling(): Promise<void> {
-        const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
-        await BrowserActions.click(infiniteScrollButton);
-    }
-
     async enableMediumTimeFormat(): Promise<void> {
         const mediumTimeFormat = $('#enableMediumTimeFormat');
         await BrowserActions.click(mediumTimeFormat);
-    }
-
-    async enableThumbnails(): Promise<void> {
-        const thumbnailSlide = $('#adf-thumbnails-upload-switch');
-        await BrowserActions.click(thumbnailSlide);
     }
 
     async checkPaginationIsNotDisplayed(): Promise<void> {
@@ -339,20 +293,11 @@ export class ContentServicesPage {
         await expect(await BrowserActions.getAttribute(this.emptyFolderImage, 'src')).toContain(url);
     }
 
-    async getRowIconImageUrl(fileName: string): Promise<string> {
-        const iconRow = $(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`);
-        return BrowserActions.getAttribute(iconRow, 'src');
-    }
-
     async getAttributeValueForElement(elementName: string, propertyName: string): Promise<string> {
         const elementSize = $(
             `.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"] span`
         );
         return BrowserActions.getText(elementSize);
-    }
-
-    async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
-        await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
     async clickDownloadButton(): Promise<void> {

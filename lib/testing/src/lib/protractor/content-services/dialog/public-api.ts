@@ -16,4 +16,3 @@
  */
 
 export * from './content-node-selector-dialog.page';
-export * from './add-permissions-dialog.page';

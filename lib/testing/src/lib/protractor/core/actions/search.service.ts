@@ -19,7 +19,6 @@ import { ApiService } from '../../../shared/api/api.service';
 import { ResultSetPaging, SearchApi } from '@alfresco/js-api';
 import { Logger } from '../utils/logger';
 import { ApiUtil } from '../../../shared/api/api.util';
-import { UserModel } from '../models/user.model';
 
 export class SearchService {
     apiService: ApiService;
@@ -50,45 +49,12 @@ export class SearchService {
         return ApiUtil.waitForApi(apiCall, predicate);
     }
 
-    async isUserSearchable(user: UserModel): Promise<any> {
-        const query = this.createUserSearchQuery(user);
-
-        const predicate = (result: ResultSetPaging) => result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.properties['cm:email'] === user.email);
-
-        return this.performSearch(query, predicate, 'Failed to search user');
-    }
-
-    private createUserSearchQuery(user: UserModel) {
-        return {
-            query: {
-                query: `email:*${user.email}* OR firstName:*${user.firstName}* OR lastName:*${user.lastName}*`
-            },
-            include: [
-                'aspectNames',
-                'properties'
-            ],
-            paging: {
-                maxItems: 1,
-                skipCount: 0
-            },
-            filterQueries: [
-                {
-                    query: `TYPE:'cm:authority'`
-                }
-            ]
-        };
-    }
-
     private createSearchQuery(name: string) {
         return {
             query: {
                 query: `${name}*`
             },
-            include: [
-                'path',
-                'allowableOperations',
-                'properties'
-            ],
+            include: ['path', 'allowableOperations', 'properties'],
             paging: {
                 maxItems: 20,
                 skipCount: 0
@@ -102,9 +68,7 @@ export class SearchService {
                 }
             ],
             scope: {
-                locations: [
-                    'nodes'
-                ]
+                locations: ['nodes']
             }
         };
     }

@@ -25,7 +25,6 @@ export { LoginPage as LoginSSOPage } from './login.page';
 
 export * from './data-table-component.page';
 export * from './pagination.page';
-export * from './error.page';
 export * from './form/public-api';
 export * from './material/public-api';
 export * from './card-view/public-api';
@@ -34,4 +33,3 @@ export * from './config-editor-page';
 export * from './snackbar.page';
 export * from './data-table/public-api';
 export * from './context-menu.page';
-export * from './info-drawer.page';

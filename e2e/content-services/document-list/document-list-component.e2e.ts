@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { createApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { NodeEntry } from '@alfresco/js-api';
@@ -343,33 +343,6 @@ describe('Document List Component', () => {
             await loginPage.login(acsUser.username, acsUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
-        });
-    });
-
-    describe('Column Template', () => {
-        const file0BytesModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
-        });
-
-        let file: NodeEntry;
-        const viewer = new ViewerPage();
-
-        beforeAll(async () => {
-            await apiService.loginWithProfile('admin');
-            acsUser = await usersActions.createUser();
-            await apiService.login(acsUser.username, acsUser.password);
-            file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
-
-            await loginPage.login(acsUser.username, acsUser.password);
-            await contentServicesPage.goToDocumentList();
-        });
-
-        it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {
-            await contentServicesPage.clickHyperlinkNavigationToggle();
-            await contentServicesPage.checkFileHyperlinkIsEnabled(file.entry.name);
-            await contentServicesPage.clickFileHyperlink(file.entry.name);
-            await viewer.checkFileIsLoaded();
         });
     });
 });

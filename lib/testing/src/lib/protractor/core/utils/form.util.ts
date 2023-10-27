@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { ApiService } from '../../../shared/api/api.service';
 import { FormModelsApi, FormRepresentation } from '@alfresco/js-api';
 
 export class FormUtil {
-
     api: ApiService;
     editorApi: FormModelsApi;
 
@@ -29,18 +27,6 @@ export class FormUtil {
             this.api = apiService;
             this.editorApi = new FormModelsApi(apiService.getInstance());
         }
-    }
-
-    static async setForm(value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setFormInEditor(`' + value + '`);'
-        );
-    }
-
-    static async setCloudForm(value: string): Promise<void> {
-        await browser.executeScript(
-            'window.adf.setCloudFormInEditor(`' + value + '`);'
-        );
     }
 
     async getFormByName(name: string): Promise<FormRepresentation> {

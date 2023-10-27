@@ -1,9 +1,4 @@
 <div class="app-container">
-    <div *ngIf="showSitePicker" class="app-site-container-style" id="site-container">
-        <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">
-        </adf-sites-dropdown>
-    </div>
-
     <div
         id="document-list-container"
         class="app-document-list-container">
@@ -14,7 +9,6 @@
                               [versioning]="versioning"
                               [adf-check-allowable-operation]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
-                              (beginUpload)="onBeginUpload($event)"
                               (updateFileVersion)="onUploadNewVersion($event)">
             <div *ngIf="errorMessage" class="app-error-message">
                 <button (click)="resetError()" mat-icon-button>
@@ -30,16 +24,7 @@
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
-                <adf-toolbar-divider></adf-toolbar-divider>
-
                 <div class="app-document-action-buttons">
-                    <button
-                        mat-icon-button
-                        data-automation-id="document-list-grid-view"
-                        title="Toggle display mode"
-                        (click)="toggleGalleryView()">
-                        <mat-icon>list</mat-icon>
-                    </button>
                     <button
                         data-automation-id="create-new-folder"
                         mat-icon-button
@@ -79,11 +64,6 @@
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="toggleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'">view_comfy</mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
-                        <span>Card view mode</span>
-                    </button>
                     <button mat-menu-item
                             (error)="openSnackMessageError($event)"
                             [adf-create-folder]="currentFolderId">
@@ -125,7 +105,6 @@
                 [sorting]="sorting"
                 [sortingMode]="sortingMode"
                 [showHeader]="showHeader"
-                [thumbnails]="thumbnails"
                 [stickyHeader]="stickyHeader"
                 [headerFilters]="headerFilters"
                 [filterValue]="paramValues"
@@ -147,41 +126,26 @@
                     <data-column
                         key="$thumbnail"
                         type="image"
-                        [sortable]="false"
-                        class="app-image-table-cell"
-                        [class.adf-cell-thumbnail]="thumbnails">
+                        [sortable]="false">
                     </data-column>
                     <data-column
-                        *ngIf="showNameColumn && hyperlinkNavigation"
-                        key="name"
-                        sortingKey="name"
-                        class="app-ellipsis-cell"
-                        title="Display name"
-                        [formatTooltip]="getNodeNameTooltip">
-                        <ng-template let-context>
-                            <adf-name-column key="name" [context]="context"></adf-name-column>
-                        </ng-template>
-                    </data-column>
-                    <data-column
-                        *ngIf="showNameColumn && !hyperlinkNavigation"
                         key="name"
                         sortingKey="name"
                         title="Display name"
-                        [formatTooltip]="getNodeNameTooltip"
-                        class="app-ellipsis-cell adf-expand-cell-5">
+                        class="adf-expand-cell-5">
                     </data-column>
                     <data-column
                         key="content.sizeInBytes"
                         title="Size"
                         type="fileSize"
                         sortingKey="sizeInBytes"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         *ngIf="searchTerm"
                         key="search"
                         title="Search"
-                        class="app-desktop-only adf-expand-cell-3">
+                        class="adf-expand-cell-3">
                         <ng-template let-entry="$implicit">
                             <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
                             </div>
@@ -200,7 +164,7 @@
                         key="lock"
                         [focus]="false"
                         [sortable]="false"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <button mat-icon-button [adf-node-lock]="entry.row.node.entry" class="app-lock-button">
                                 <mat-icon *ngIf="entry.row.getValue('isLocked')">lock</mat-icon>
@@ -212,7 +176,7 @@
                         title="Created by"
                         key="createdByUser.displayName"
                         sortingKey="createdByUser"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
                     <data-column
                         title="Created"
@@ -220,7 +184,7 @@
                         sortingKey="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="app-desktop-only adf-ellipsis-cell">
+                        class="adf-ellipsis-cell">
                     </data-column>
 
                 </data-columns>
@@ -239,11 +203,6 @@
                         (permissionEvent)="handlePermissionError($event)"
                         (success)="onDeleteActionSuccess($event)"
                         handler="delete">
-                    </content-action>
-                    <content-action
-                        icon="info"
-                        title="Info"
-                        (execute)="onManageMetadata($event)">
                     </content-action>
                     <content-action
                         icon="supervisor_account"
@@ -269,21 +228,12 @@
             </adf-document-list>
                 </div>
             <adf-pagination
-                #standardPagination
-                *ngIf="!infiniteScrolling"
-                class="app-documentlist-pagination"
                 [target]="documentList"
                 (changePageSize)="onChangePageSize($event)"
                 (changePageNumber)="onChangePageNumber($event)"
                 (nextPage)="onNextPage($event)"
                 (prevPage)="onPrevPage($event)">
             </adf-pagination>
-            <adf-infinite-pagination
-                [hidden]="!infiniteScrolling"
-                [target]="documentList"
-                [loading]="documentList.loading">
-                {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
-            </adf-infinite-pagination>
         </adf-upload-drag-area>
 
         <adf-info-drawer-layout *ngIf="showVersions" class="app-manage-versions-sidebar">
@@ -301,7 +251,7 @@
                             <ng-container *ngIf="userHasPermissionToManageVersions(); else no_permission_to_versions">
                                 <adf-version-manager
                                     [node]="documentList.selection[0].entry"
-                                    [showComments]="showVersionComments"
+                                    [showComments]="true"
                                     [allowDownload]="allowVersionDownload">
                                 </adf-version-manager>
                             </ng-container>
@@ -339,18 +289,6 @@
 
     <div class="app-container">
         <section>
-            <mat-slide-toggle [(ngModel)]="showNameColumn">
-                Show Name Column
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="hyperlinkNavigation">
-                Hyperlink navigation
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle data-automation-id="multiSelectToggle" [(ngModel)]="multiselect">
                 Multiselect (with checkboxes)
             </mat-slide-toggle>
@@ -381,38 +319,14 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-thumbnails-upload-switch" (click)="toggleThumbnails()">
-                Enable Thumbnails
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle id="adf-version-upload-switch" [(ngModel)]="versioning">
                 Enable versioning
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle (click)="onInfiniteScrolling()">
-                Enable Infinite Scrolling
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="showVersionComments">
-                Show comments on versions
-            </mat-slide-toggle>
-        </section>
-
-        <section>
             <mat-slide-toggle [(ngModel)]="allowVersionDownload">
                 Enable version download
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle [(ngModel)]="warnOnMultipleUploads">
-                Display warning for multiple uploads
             </mat-slide-toggle>
         </section>
 
@@ -461,8 +375,7 @@
                 [versioning]="versioning"
                 [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
-                (permissionEvent)="handlePermissionError($event)"
-                (beginUpload)="onBeginUpload($event)">
+                (permissionEvent)="handlePermissionError($event)">
             </adf-upload-button>
         </div>
         <div *ngIf="acceptedFilesTypeShow">

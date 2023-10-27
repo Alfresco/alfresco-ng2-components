@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { createApiService,
+import {
+    createApiService,
     BrowserActions,
     LocalStorageUtil,
     LoginPage,
-    StringUtil,
     UploadActions,
     UserModel,
     UsersActions,
@@ -33,7 +33,6 @@ import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { format } from 'date-fns';
 
 describe('Metadata component', () => {
-
     const METADATA = {
         DATA_FORMAT: 'PP',
         TITLE: 'Details',
@@ -54,8 +53,6 @@ describe('Metadata component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     let acsUser: UserModel;
-
-    const folderName = StringUtil.generateRandomString();
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -80,13 +77,16 @@ describe('Metadata component', () => {
             await loginPage.login(acsUser.username, acsUser.password);
             await navigationBarPage.navigateToContentServices();
             await contentServicesPage.waitForTableBody();
-            await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
-                presets: {
-                    default: {
-                        'exif:exif': '*'
+            await LocalStorageUtil.setConfigField(
+                'content-metadata',
+                JSON.stringify({
+                    presets: {
+                        default: {
+                            'exif:exif': '*'
+                        }
                     }
-                }
-            }));
+                })
+            );
         });
 
         afterAll(async () => {
@@ -103,7 +103,7 @@ describe('Metadata component', () => {
             await contentServicesPage.waitForTableBody();
         });
 
-        it('[C245652] Should be possible to display a file\'s properties', async () => {
+        it("[C245652] Should be possible to display a file's properties", async () => {
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
             await metadataViewPage.clickOnPropertiesTab();
@@ -188,7 +188,9 @@ describe('Metadata component', () => {
 
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText');
             await metadataViewPage.clickResetMetadata();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(
+                browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+            );
 
             await metadataViewPage.enterPropertyText('properties.cm:name', 'exampleText.png');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
@@ -214,7 +216,9 @@ describe('Metadata component', () => {
 
             await metadataViewPage.editIconClick();
             await metadataViewPage.enterPropertyText('properties.cm:name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(
+                browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+            );
             await metadataViewPage.clickSaveMetadata();
         });
 
@@ -240,48 +244,6 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.exif:isoSpeedRatings')).toEqual('test custom text isoSpeedRatings');
             await expect(await metadataViewPage.getPropertyText('properties.exif:software')).toEqual('test custom text software');
             await expect(await metadataViewPage.getPropertyText('properties.exif:fNumber')).toEqual('22');
-        });
-    });
-
-    describe('Folder metadata', () => {
-
-        beforeAll(async () => {
-            await apiService.login(acsUser.username, acsUser.password);
-            await loginPage.login(acsUser.username, acsUser.password);
-
-            await uploadActions.createFolder(folderName, '-my-');
-            await navigationBarPage.navigateToContentServices();
-            await contentServicesPage.waitForTableBody();
-        });
-
-        afterAll(async () => {
-            await navigationBarPage.clickLogoutButton();
-        });
-
-        it('[C261157] Should be possible use the metadata component When the node is a Folder', async () => {
-            await contentServicesPage.metadataContent(folderName);
-
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
-            await expect(await metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(`${acsUser.firstName} ${acsUser.lastName}`);
-            await BrowserActions.closeMenuAndDialogs();
-        });
-
-        it('[C261158] Should be possible edit the metadata When the node is a Folder', async () => {
-            await contentServicesPage.metadataContent(folderName);
-
-            await metadataViewPage.editIconClick();
-
-            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
-            await metadataViewPage.clickResetButton();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
-
-            await metadataViewPage.enterPropertyText('properties.cm:name', 'newnameFolder');
-            await metadataViewPage.clickSaveMetadata();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual('newnameFolder');
-
-            await metadataViewPage.enterPropertyText('properties.cm:name', folderName);
-            await metadataViewPage.clickSaveMetadata();
-            await expect(await metadataViewPage.getPropertyText('properties.cm:name')).toEqual(folderName);
         });
     });
 

@@ -18,7 +18,8 @@
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { createApiService,
+import {
+    createApiService,
     FileBrowserUtil,
     IdentityService,
     LoginPage,
@@ -33,7 +34,6 @@ import { FileModel } from '../../models/ACS/file.model';
 import { NodeEntry } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
-
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
@@ -56,8 +56,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    let pdfUploadedFile: NodeEntry;
-    let pngUploadedFile: NodeEntry;
     let folder: NodeEntry;
     let acsUser: UserModel;
     const folderName = StringUtil.generateRandomString(5);
@@ -71,12 +69,17 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         folder = await uploadActions.createFolder(folderName, '-my-');
 
-        pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
-        pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
+        await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
+        await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
 
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
+        await settingsPage.setProviderEcmSso(
+            browser.params.testConfig.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+            browser.params.testConfig.appConfig.identityHost,
+            false,
+            true,
+            browser.params.testConfig.appConfig.oauth2.clientId
+        );
 
         await loginSsoPage.loginSSOIdentityService(acsUser.username, acsUser.password);
 
@@ -91,15 +94,13 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(folder.entry.id);
             await identityService.deleteIdentityUser(acsUser.email);
-        } catch (error) {
-        }
+        } catch (error) {}
         await apiService.getInstance().logout();
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');
     });
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
-
         afterEach(async () => {
             await browser.refresh();
             await contentListPage.waitForTableBody();
@@ -135,16 +136,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await contentListPage.dataTablePage().checkRowIsChecked('Display name', firstPdfFileModel.name);
             await contentServicesPage.clickDownloadButton();
             await FileBrowserUtil.isFileDownloaded('archive.zip');
-        });
-
-        it('[C291940] Should be able to view thumbnails when enabled', async () => {
-            await contentServicesPage.enableThumbnails();
-            await contentServicesPage.checkAcsContainer();
-            await contentListPage.waitForTableBody();
-            const filePdfIconUrl = await contentServicesPage.getRowIconImageUrl(firstPdfFileModel.name);
-            await expect(filePdfIconUrl).toContain(`/versions/1/nodes/${pdfUploadedFile.entry.id}/renditions`);
-            const filePngIconUrl = await contentServicesPage.getRowIconImageUrl(pngFileModel.name);
-            await expect(filePngIconUrl).toContain(`/versions/1/nodes/${pngUploadedFile.entry.id}/renditions`);
         });
     });
 });

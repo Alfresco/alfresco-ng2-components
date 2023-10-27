@@ -11,7 +11,3 @@ router-outlet[name='overlay'] + * {
     height: 100%;
     width: 100%;
 }
-
-[dir='rtl'] .mat-icon {
-    transform: scale(-1, 1);
-}

@@ -22,20 +22,12 @@ import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-    AppConfigService,
-    DebugAppConfigService,
-    CoreModule,
-    CoreAutomationService,
-    AuthModule,
-    provideTranslations
-} from '@alfresco/adf-core';
+import { AppConfigService, DebugAppConfigService, CoreModule, CoreAutomationService, AuthModule, provideTranslations } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { HomeComponent } from './components/home/home.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FormComponent } from './components/form/form.component';
@@ -46,7 +38,6 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
-import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
@@ -103,7 +94,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         LogoutComponent,
         AppLayoutComponent,
         UserInfoComponent,
-        HomeComponent,
         SearchBarComponent,
         SearchResultComponent,
         ProcessServiceComponent,
@@ -114,7 +104,6 @@ import { UserInfoComponent } from './components/app-layout/user-info/user-info.c
         FilesComponent,
         FormComponent,
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
         DemoPermissionComponent,

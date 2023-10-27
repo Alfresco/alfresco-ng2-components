@@ -2,16 +2,6 @@
     margin: 10px !important;
 }
 
-@media screen and (max-width: 599px) {
-    .app-container {
-        margin: 0;
-    }
-
-    .app-show-versions-button.mat-icon-button {
-        display: none;
-    }
-}
-
 .app-error-message {
     text-align: left;
 }
@@ -37,18 +27,6 @@
         .app-document-action-buttons {
             flex: 0 0 auto;
         }
-
-        @media screen and (max-width: 600px) {
-            adf-breadcrumb, .app-document-action-buttons {
-                display: none;
-            }
-        }
-
-        @media screen and (min-width: 600px) {
-            adf-dropdown-breadcrumb, .app-toolbar-divider-before-more-menu, .app-toolbar-more-menu-button {
-                display: none;
-            }
-        }
     }
 
     &:not(.app-document-list-container-in-upload-drag-area) {
@@ -62,13 +40,6 @@
 .adf-datatable-card .app-lock-button {
     top: -10px;
     position: absolute;
-}
-
-.app-site-container-style {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    min-width: 200px;
 }
 
 .app-content-service-settings {
