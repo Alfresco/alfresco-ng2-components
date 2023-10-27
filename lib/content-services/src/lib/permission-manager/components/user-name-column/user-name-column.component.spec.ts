@@ -104,6 +104,21 @@ describe('UserNameColumnComponent', () => {
             expect(element.querySelector('[title="fake authority"]').textContent.trim()).toBe('fake authority');
         });
 
+        it('should display group id when display name is not provided', () => {
+            component.context = {
+                row: {
+                    obj: {
+                        entry: {
+                            group: { id: 'fake_group_id' }
+                        }
+                    }
+                }
+            };
+            component.ngOnInit();
+            fixture.detectChanges();
+            expect(element.querySelector('[title="fake_group_id"]').textContent.trim()).toBe('fake_group_id');
+        });
+
         it('should render group for authorityId', () => {
             component.context = {
                 row: {

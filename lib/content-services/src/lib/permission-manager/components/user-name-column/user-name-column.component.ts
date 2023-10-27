@@ -72,7 +72,7 @@ export class UserNameColumnComponent implements OnInit {
 
     private updateGroup(group: Group) {
         if (group) {
-            this.displayText$.next(group.displayName);
+            group.displayName ? this.displayText$.next(group.displayName) : this.displayText$.next(group.id);
         }
     }
 }
