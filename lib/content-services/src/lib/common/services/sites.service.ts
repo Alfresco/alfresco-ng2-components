@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, Observable, throwError } from 'rxjs';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { from, Observable } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import {
     Node,
     SiteBodyCreate,
@@ -32,7 +32,6 @@ import {
     SitePaging,
     SitesApi
 } from '@alfresco/js-api';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +43,7 @@ export class SitesService {
         return this._sitesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Create a site
@@ -53,7 +52,7 @@ export class SitesService {
      * @returns site SiteEntry
      */
     createSite(siteBody: SiteBodyCreate): Observable<SiteEntry> {
-        return from(this.sitesApi.createSite(siteBody)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.createSite(siteBody));
     }
 
     /**
@@ -68,7 +67,7 @@ export class SitesService {
             include: ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.sitesApi.listSites(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.listSites(queryOptions));
     }
 
     /**
@@ -79,7 +78,7 @@ export class SitesService {
      * @returns Information about the site
      */
     getSite(siteId: string, opts?: any): Observable<SiteEntry | any> {
-        return from(this.sitesApi.getSite(siteId, opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.getSite(siteId, opts));
     }
 
     /**
@@ -92,7 +91,7 @@ export class SitesService {
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         const options: any = {};
         options.permanent = permanentFlag;
-        return from(this.sitesApi.deleteSite(siteId, options)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.deleteSite(siteId, options));
     }
 
     /**
@@ -149,7 +148,7 @@ export class SitesService {
      * @returns Site membership requests
      */
     getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
-        return from(this.sitesApi.getSiteMembershipRequests(opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.getSiteMembershipRequests(opts));
     }
 
     /**
@@ -161,7 +160,7 @@ export class SitesService {
      * @returns Observable<SiteMemberEntry>
      */
     createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry> {
-        return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts));
     }
 
     /**
@@ -179,9 +178,7 @@ export class SitesService {
         siteMembershipBodyUpdate: SiteMembershipBodyUpdate,
         opts?: any
     ): Observable<SiteMemberEntry> {
-        return from(this.sitesApi.updateSiteMembership(siteId, personId, siteMembershipBodyUpdate, opts)).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(this.sitesApi.updateSiteMembership(siteId, personId, siteMembershipBodyUpdate, opts));
     }
 
     /**
@@ -192,7 +189,7 @@ export class SitesService {
      * @returns Null response notifying when the operation is complete
      */
     deleteSiteMembership(siteId: string, personId: string): Observable<void> {
-        return from(this.sitesApi.deleteSiteMembership(siteId, personId)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.deleteSiteMembership(siteId, personId));
     }
 
     /**
@@ -204,7 +201,7 @@ export class SitesService {
      * @returns  Null response notifying when the operation is complete
      */
     approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
-        return from(this.sitesApi.approveSiteMembershipRequest(siteId, inviteeId, opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.approveSiteMembershipRequest(siteId, inviteeId, opts));
     }
 
     /**
@@ -216,7 +213,7 @@ export class SitesService {
      * @returns  Null response notifying when the operation is complete
      */
     rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
-        return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts));
     }
 
     /**
@@ -227,7 +224,7 @@ export class SitesService {
      * @returns  Observable<SiteGroupPaging>
      */
     listSiteGroups(siteId: string, opts?: any): Observable<SiteGroupPaging> {
-        return from(this.sitesApi.listSiteGroups(siteId, opts)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.listSiteGroups(siteId, opts));
     }
 
     /**
@@ -238,7 +235,7 @@ export class SitesService {
      * @returns Observable<SiteGroupEntry>
      */
     createSiteGroupMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate): Observable<SiteGroupEntry> {
-        return from(this.sitesApi.createSiteGroupMembership(siteId, siteMembershipBodyCreate)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.createSiteGroupMembership(siteId, siteMembershipBodyCreate));
     }
 
     /**
@@ -249,7 +246,7 @@ export class SitesService {
      * @returns Observable<SiteGroupEntry>
      */
     getSiteGroupMembership(siteId: string, groupId: string): Observable<SiteGroupEntry> {
-        return from(this.sitesApi.getSiteGroupMembership(siteId, groupId)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.sitesApi.getSiteGroupMembership(siteId, groupId));
     }
 
     /**
@@ -261,9 +258,7 @@ export class SitesService {
      * @returns Observable<SiteGroupEntry>
      */
     updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate): Observable<SiteGroupEntry> {
-        return from(this.sitesApi.updateSiteGroupMembership(siteId, groupId, siteMembershipBodyUpdate)).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(this.sitesApi.updateSiteGroupMembership(siteId, groupId, siteMembershipBodyUpdate));
     }
 
     /**
@@ -274,11 +269,6 @@ export class SitesService {
      * @returns Observable<void>
      */
     deleteSiteGroupMembership(siteId: string, groupId: string): Observable<void> {
-        return from(this.sitesApi.deleteSiteGroupMembership(siteId, groupId)).pipe(catchError((err: any) => this.handleError(err)));
-    }
-
-    private handleError(error: any): Observable<never> {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.sitesApi.deleteSiteGroupMembership(siteId, groupId));
     }
 }
