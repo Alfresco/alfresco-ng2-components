@@ -45,13 +45,7 @@ export class NumberCellComponent extends DataTableCellComponent implements OnIni
         locale: undefined
     };
 
-    constructor() {
-        super();
-    }
-
     ngOnInit() {
-        if (this.column?.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
-        }
+        super.ngOnInit();
     }
 }

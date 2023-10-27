@@ -49,15 +49,11 @@ export class AmountCellComponent extends DataTableCellComponent implements OnIni
         locale: undefined
     };
 
-    constructor(
-        @Inject(DEFAULT_CURRENCY_CODE) private readonly defaultCurrencyCode: string
-    ) {
+    constructor(@Inject(DEFAULT_CURRENCY_CODE) private readonly defaultCurrencyCode: string) {
         super();
     }
 
     ngOnInit() {
-        if (this.column?.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
-        }
+        super.ngOnInit();
     }
 }

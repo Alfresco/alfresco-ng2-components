@@ -71,8 +71,8 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
     protected onDestroy$ = new Subject<boolean>();
-
     protected dataTableService = inject(DataTableService, { optional: true });
+
     value$ = new BehaviorSubject<any>('');
 
     ngOnInit() {

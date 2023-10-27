@@ -15,24 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 
 @Component({
     selector: 'adf-filesize-cell',
     template: `
         <ng-container *ngIf="(value$ | async | adfFileSize) as fileSize">
-            <span
-                [title]="tooltip"
-                >{{ fileSize }}</span
-            >
+            <span [title]="tooltip">{{ fileSize }}</span>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-filesize-cell' }
 })
-export class FileSizeCellComponent extends DataTableCellComponent {
-    constructor() {
-        super();
+export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
+    ngOnInit(): void {
+        super.ngOnInit();
     }
 }
