@@ -87,30 +87,16 @@ describe('IconCellComponent', () => {
             renderAndCheckResult('false', true, 'false');
         });
 
-        describe('should NOT render icon element in case of', () => {
-            it('empty string', () => {
-                renderAndCheckResult('', false);
-            });
+        it('should NOT render icon element in case of empty string', () => {
+            renderAndCheckResult('', false);
+        });
 
-            it('number', () => {
-                renderAndCheckResult(0, false);
-            });
-
-            it('object', () => {
-                renderAndCheckResult({}, false);
-            });
-
-            it('null', () => {
-                renderAndCheckResult(null, false);
-            });
-
-            it('undefined', () => {
-                renderAndCheckResult(undefined, false);
-            });
-
-            it('NaN', () => {
-                renderAndCheckResult(NaN, false);
-            });
+        it('should NOT render icon element in case of type different than string', () => {
+            renderAndCheckResult(0, false);
+            renderAndCheckResult({}, false);
+            renderAndCheckResult(null, false);
+            renderAndCheckResult(undefined, false);
+            renderAndCheckResult(NaN, false);
         });
     });
 });
