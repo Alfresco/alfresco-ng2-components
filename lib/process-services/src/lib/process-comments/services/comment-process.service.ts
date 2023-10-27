@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { CommentModel, AlfrescoApiService, LogService, CommentsService, User } from '@alfresco/adf-core';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { CommentModel, AlfrescoApiService, CommentsService, User } from '@alfresco/adf-core';
+import { map } from 'rxjs/operators';
 import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 import { UserProcessModel } from '../../common/models/user-process.model';
@@ -27,18 +27,13 @@ import { UserProcessModel } from '../../common/models/user-process.model';
     providedIn: 'root'
 })
 export class CommentProcessService implements CommentsService {
-
     private _commentsApi: ActivitiCommentsApi;
     get commentsApi(): ActivitiCommentsApi {
         this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private peopleProcessService: PeopleProcessService
-                ) {
-    }
+    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
 
     /**
      * Gets all comments that have been added to a process instance.
@@ -47,23 +42,23 @@ export class CommentProcessService implements CommentsService {
      * @returns Details for each comment
      */
     get(id: string): Observable<CommentModel[]> {
-        return from(this.commentsApi.getProcessInstanceComments(id))
-            .pipe(
-                map((response) => {
-                    const comments: CommentModel[] = [];
-                    response.data.forEach((comment) => {
-                        const user = new UserProcessModel(comment.createdBy);
-                        comments.push(new CommentModel({
+        return from(this.commentsApi.getProcessInstanceComments(id)).pipe(
+            map((response) => {
+                const comments: CommentModel[] = [];
+                response.data.forEach((comment) => {
+                    const user = new UserProcessModel(comment.createdBy);
+                    comments.push(
+                        new CommentModel({
                             id: comment.id,
                             message: comment.message,
                             created: comment.created,
                             createdBy: new User(user)
-                        }));
-                    });
-                    return comments;
-                }),
-                catchError((err: any) => this.handleError(err))
-            );
+                        })
+                    );
+                });
+                return comments;
+            })
+        );
     }
 
     /**
@@ -74,22 +69,17 @@ export class CommentProcessService implements CommentsService {
      * @returns Details of the comment added
      */
     add(id: string, message: string): Observable<CommentModel> {
-        return from(
-            this.commentsApi.addProcessInstanceComment({ message }, id)
-        ).pipe(
-            map((response) => new CommentModel({
-                id: response.id,
-                message: response.message,
-                created: response.created,
-                createdBy: new User(response.createdBy)
-            })),
-            catchError((err: any) => this.handleError(err))
+        return from(this.commentsApi.addProcessInstanceComment({ message }, id)).pipe(
+            map(
+                (response) =>
+                    new CommentModel({
+                        id: response.id,
+                        message: response.message,
+                        created: response.created,
+                        createdBy: new User(response.createdBy)
+                    })
+            )
         );
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 
     getUserImage(user: UserProcessModel): string {

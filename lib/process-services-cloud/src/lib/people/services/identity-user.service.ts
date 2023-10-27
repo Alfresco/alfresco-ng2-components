@@ -16,13 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    AppConfigService,
-    JwtHelperService,
-    OAuth2Service
-} from '@alfresco/adf-core';
-import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { AppConfigService, JwtHelperService, OAuth2Service } from '@alfresco/adf-core';
+import { EMPTY, Observable } from 'rxjs';
 import { IdentityUserServiceInterface } from './identity-user.service.interface';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserFilterInterface } from './identity-user-filter.interface';
@@ -33,15 +28,9 @@ const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
     providedIn: 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
-
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        private oAuth2Service: OAuth2Service,
-        private appConfigService: AppConfigService) {
-
-    }
+    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     /**
      * Gets the name and other basic details of the current user.
@@ -80,33 +69,25 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     private searchUsersByName(name: string): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name);
 
-        return this.invokeIdentityUserApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityUserApi();
     }
 
-    private searchUsersWithGlobalRoles(name: string, roles: string []): Observable<IdentityUserModel[]> {
-        this.buildQueryParam(name, {roles});
+    private searchUsersWithGlobalRoles(name: string, roles: string[]): Observable<IdentityUserModel[]> {
+        this.buildQueryParam(name, { roles });
 
-        return this.invokeIdentityUserApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityUserApi();
     }
 
-    private searchUsersWithinApp(name: string, withinApplication: string, roles?: string []): Observable<IdentityUserModel[]> {
-        this.buildQueryParam(name, {roles, withinApplication});
+    private searchUsersWithinApp(name: string, withinApplication: string, roles?: string[]): Observable<IdentityUserModel[]> {
+        this.buildQueryParam(name, { roles, withinApplication });
 
-        return this.invokeIdentityUserApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityUserApi();
     }
 
     private searchUsersWithGroups(name: string, filters: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name, filters);
 
-        return this.invokeIdentityUserApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityUserApi();
     }
 
     private invokeIdentityUserApi(): Observable<any> {
@@ -121,7 +102,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         this.addOptionalCommaValueToQueryParam('group', filters?.groups);
     }
 
-    private addOptionalCommaValueToQueryParam(key: string, values: string []) {
+    private addOptionalCommaValueToQueryParam(key: string, values: string[]) {
         if (values?.length > 0) {
             const valuesNotEmpty = this.filterOutEmptyValue(values);
             if (valuesNotEmpty?.length > 0) {
@@ -136,15 +117,11 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         }
     }
 
-    private filterOutEmptyValue(values: string []): string [] {
-        return values.filter( value => value.trim() ? true : false);
+    private filterOutEmptyValue(values: string[]): string[] {
+        return values.filter((value) => (value.trim() ? true : false));
     }
 
     private get identityHost(): string {
         return `${this.appConfigService.get('bpmHost')}`;
-    }
-
-    private handleError(error: any) {
-        return throwError(error || 'Server error');
     }
 }

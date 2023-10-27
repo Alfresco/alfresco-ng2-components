@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, from, throwError } from 'rxjs';
+import { Observable, forkJoin, from } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskFilterService {
-
     private _userFiltersApi: UserFiltersApi;
     get userFiltersApi(): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
         return this._userFiltersApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Creates and returns the default filters for a process app.
@@ -57,50 +54,48 @@ export class TaskFilterService {
         const completeObservable = this.addFilter(completedTasksFilter);
 
         return new Observable((observer) => {
-            forkJoin([
-                    myTaskObservable,
-                    involvedObservable,
-                    queuedObservable,
-                    completeObservable
-                ]
-            ).subscribe(
-                (res) => {
-                    const filters: FilterRepresentationModel[] = [];
-                    res.forEach((filter) => {
-                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                            if (filter.name === involvedTasksFilter.name) {
-                                filters.push(new FilterRepresentationModel({
+            forkJoin([myTaskObservable, involvedObservable, queuedObservable, completeObservable]).subscribe((res) => {
+                const filters: FilterRepresentationModel[] = [];
+                res.forEach((filter) => {
+                    if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                        if (filter.name === involvedTasksFilter.name) {
+                            filters.push(
+                                new FilterRepresentationModel({
                                     ...filter,
                                     filter: involvedTasksFilter.filter,
                                     appId
-                                }));
-                            } else if (filter.name === myTasksFilter.name) {
-                                filters.push(new FilterRepresentationModel({
+                                })
+                            );
+                        } else if (filter.name === myTasksFilter.name) {
+                            filters.push(
+                                new FilterRepresentationModel({
                                     ...filter,
                                     filter: myTasksFilter.filter,
                                     appId
-                                }));
-                            } else if (filter.name === queuedTasksFilter.name) {
-                                filters.push(new FilterRepresentationModel({
+                                })
+                            );
+                        } else if (filter.name === queuedTasksFilter.name) {
+                            filters.push(
+                                new FilterRepresentationModel({
                                     ...filter,
                                     filter: queuedTasksFilter.filter,
                                     appId
-                                }));
-                            } else if (filter.name === completedTasksFilter.name) {
-                                filters.push(new FilterRepresentationModel({
+                                })
+                            );
+                        } else if (filter.name === completedTasksFilter.name) {
+                            filters.push(
+                                new FilterRepresentationModel({
                                     ...filter,
                                     filter: completedTasksFilter.filter,
                                     appId
-                                }));
-                            }
+                                })
+                            );
                         }
-                    });
-                    observer.next(filters);
-                    observer.complete();
-                },
-                (err: any) => {
-                    this.logService.error(err);
+                    }
                 });
+                observer.next(filters);
+                observer.complete();
+            });
         });
     }
 
@@ -111,20 +106,18 @@ export class TaskFilterService {
      * @returns Array of task filter details
      */
     getTaskListFilters(appId?: number): Observable<FilterRepresentationModel[]> {
-        return from(this.callApiTaskFilters(appId))
-            .pipe(
-                map((response: any) => {
-                    const filters: FilterRepresentationModel[] = [];
-                    response.data.forEach((filter: FilterRepresentationModel) => {
-                        if (!this.isFilterAlreadyExisting(filters, filter.name)) {
-                            const filterModel = new FilterRepresentationModel(filter);
-                            filters.push(filterModel);
-                        }
-                    });
-                    return filters;
-                }),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.callApiTaskFilters(appId)).pipe(
+            map((response) => {
+                const filters: FilterRepresentationModel[] = [];
+                response.data.forEach((filter: FilterRepresentationModel) => {
+                    if (!this.isFilterAlreadyExisting(filters, filter.name)) {
+                        const filterModel = new FilterRepresentationModel(filter);
+                        filters.push(filterModel);
+                    }
+                });
+                return filters;
+            })
+        );
     }
 
     /**
@@ -146,10 +139,7 @@ export class TaskFilterService {
      * @returns Details of task filter
      */
     getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
-        return from(this.callApiTaskFilters(appId)).pipe(
-            map((response) => response.data.find((filter) => filter.id === filterId)),
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.id === filterId)));
     }
 
     /**
@@ -160,10 +150,7 @@ export class TaskFilterService {
      * @returns Details of task filter
      */
     getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
-        return from(this.callApiTaskFilters(appId)).pipe(
-            map((response) => response.data.find((filter) => filter.name === taskName)),
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.name === taskName)));
     }
 
     /**
@@ -173,11 +160,7 @@ export class TaskFilterService {
      * @returns Details of task filter just added
      */
     addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return from(this.userFiltersApi.createUserTaskFilter(filter))
-            .pipe(
-                map((response: FilterRepresentationModel) => response),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.userFiltersApi.createUserTaskFilter(filter)).pipe(map((response: FilterRepresentationModel) => response));
     }
 
     /**
@@ -269,10 +252,5 @@ export class TaskFilterService {
             filter: { sort: 'created-desc', name: '', state: 'completed', assignment: 'involved' },
             index
         });
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

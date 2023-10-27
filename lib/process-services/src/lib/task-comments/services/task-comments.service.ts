@@ -18,97 +18,77 @@
 import { AlfrescoApiService, CommentModel, CommentsService, User } from '@alfresco/adf-core';
 import { ActivitiCommentsApi, CommentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { from, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { UserProcessModel } from '../../common/models/user-process.model';
 import { PeopleProcessService } from '../../common/services/people-process.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TaskCommentsService implements CommentsService {
+    private _commentsApi: ActivitiCommentsApi;
+    get commentsApi(): ActivitiCommentsApi {
+        this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
+        return this._commentsApi;
+    }
 
-  private _commentsApi: ActivitiCommentsApi;
-  get commentsApi(): ActivitiCommentsApi {
-      this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
-      return this._commentsApi;
-  }
+    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
 
-  constructor(
-    private apiService: AlfrescoApiService,
-    private peopleProcessService: PeopleProcessService
-  ) {}
+    /**
+     * Gets all comments that have been added to a task.
+     *
+     * @param id ID of the target task
+     * @returns Details for each comment
+     */
+    get(id: string): Observable<CommentModel[]> {
+        return from(this.commentsApi.getTaskComments(id)).pipe(
+            map((response) => {
+                const comments: CommentModel[] = [];
 
-  /**
-   * Gets all comments that have been added to a task.
-   *
-   * @param id ID of the target task
-   * @returns Details for each comment
-   */
-  get(id: string): Observable<CommentModel[]> {
-    return from(this.commentsApi.getTaskComments(id))
-    .pipe(
-        map((response) => {
-            const comments: CommentModel[] = [];
+                response.data.forEach((comment) => {
+                    this.addToComments(comments, comment);
+                });
 
-            response.data.forEach((comment: CommentRepresentation) => {
-              this.addToComments(comments, comment);
-            });
+                return comments;
+            })
+        );
+    }
 
-            return comments;
-        }),
-        catchError(
-          (err: any) => this.handleError(err)
-        )
-    );
-  }
+    /**
+     * Adds a comment to a task.
+     *
+     * @param id ID of the target task
+     * @param message Text for the comment
+     * @returns Details about the comment
+     */
+    add(id: string, message: string): Observable<CommentModel> {
+        return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => this.newCommentModel(response)));
+    }
 
-  /**
-   * Adds a comment to a task.
-   *
-   * @param id ID of the target task
-   * @param message Text for the comment
-   * @returns Details about the comment
-   */
-  add(id: string, message: string): Observable<CommentModel> {
-    return from(this.commentsApi.addTaskComment({ message }, id))
-      .pipe(
-          map(
-            (response: CommentRepresentation) => this.newCommentModel(response)
-          ),
-          catchError(
-            (err: any) => this.handleError(err)
-          )
-      );
-  }
+    private addToComments(comments: CommentModel[], comment: CommentRepresentation): void {
+        const user = new UserProcessModel(comment.createdBy);
 
-  private addToComments(comments: CommentModel[], comment: CommentRepresentation): void {
-    const user = new UserProcessModel(comment.createdBy);
+        const newComment: CommentRepresentation = {
+            id: comment.id,
+            message: comment.message,
+            created: comment.created,
+            createdBy: user
+        };
 
-    const newComment: CommentRepresentation = {
-      id: comment.id,
-      message: comment.message,
-      created: comment.created,
-      createdBy: user
-    };
+        comments.push(this.newCommentModel(newComment));
+    }
 
-    comments.push(this.newCommentModel(newComment));
-  }
+    private newCommentModel(representation: CommentRepresentation): CommentModel {
+        return new CommentModel({
+            id: representation.id,
+            message: representation.message,
+            created: representation.created,
+            createdBy: new User(representation.createdBy)
+        });
+    }
 
-  private newCommentModel(representation: CommentRepresentation): CommentModel {
-    return new CommentModel({
-      id: representation.id,
-      message: representation.message,
-      created: representation.created,
-      createdBy: new User(representation.createdBy)
-    });
-  }
-
-  private handleError(error: any) {
-    return throwError(error || 'Server error');
-  }
-
-  getUserImage(user: UserProcessModel): string {
-    return this.peopleProcessService.getUserImage(user);
-  }
+    getUserImage(user: UserProcessModel): string {
+        return this.peopleProcessService.getUserImage(user);
+    }
 }

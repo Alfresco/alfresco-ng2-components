@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { RatingEntry, RatingBody, RatingsApi } from '@alfresco/js-api';
-import { from, throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 import { RatingServiceInterface } from './rating.service.interface';
 
 @Injectable({
@@ -33,7 +32,7 @@ export class RatingService implements RatingServiceInterface {
         return this._ratingsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -44,10 +43,7 @@ export class RatingService implements RatingServiceInterface {
      * @returns The rating value
      */
     getRating(nodeId: string, ratingType: any): Observable<RatingEntry | any> {
-        return from(this.ratingsApi.getRating(nodeId, ratingType))
-            .pipe(
-                catchError(this.handleError)
-            );
+        return from(this.ratingsApi.getRating(nodeId, ratingType));
     }
 
     /**
@@ -63,10 +59,7 @@ export class RatingService implements RatingServiceInterface {
             id: ratingType,
             myRating: vote
         });
-        return from(this.ratingsApi.createRating(nodeId, ratingBody))
-            .pipe(
-                catchError(this.handleError)
-            );
+        return from(this.ratingsApi.createRating(nodeId, ratingBody));
     }
 
     /**
@@ -77,14 +70,6 @@ export class RatingService implements RatingServiceInterface {
      * @returns Null response indicating that the operation is complete
      */
     deleteRating(nodeId: string, ratingType: any): Observable<any> {
-        return from(this.ratingsApi.deleteRating(nodeId, ratingType))
-            .pipe(
-                catchError(this.handleError)
-            );
-    }
-
-    private handleError(error: any): any {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.ratingsApi.deleteRating(nodeId, ratingType));
     }
 }
