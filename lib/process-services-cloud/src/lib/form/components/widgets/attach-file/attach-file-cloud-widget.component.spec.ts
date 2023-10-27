@@ -877,7 +877,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             notificationService = TestBed.inject(NotificationService);
             newVersionUploaderService = TestBed.inject(NewVersionUploaderService);
             spyOnOpenUploadNewVersionDialog = spyOn(newVersionUploaderService, 'openUploadNewVersionDialog').and.returnValue(
-                of({ action: NewVersionUploaderDataAction.refresh })
+                of({ action: NewVersionUploaderDataAction.refresh } as any)
             );
             spyOnReplaceOldFileVersionWithNew = spyOn(widget, 'replaceOldFileVersionWithNew');
             spyOnShowError = spyOn(notificationService, 'showError');
