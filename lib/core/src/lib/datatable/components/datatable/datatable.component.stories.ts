@@ -68,6 +68,7 @@ export default {
                     dateCol: new Date(),
                     fileSizeCol: '536870912',
                     locationCol: '/path/to/location-link',
+                    booleanCol: true,
                     jsonCol: {
                         id: 1,
                         textCol: 'Text 1',
@@ -86,6 +87,7 @@ export default {
                     dateCol: new Date(),
                     fileSizeCol: '524288',
                     locationCol: { name: '/path/to/location-link' },
+                    booleanCol: false,
                     jsonCol: {
                         id: 2,
                         textCol: 'Text 2',
@@ -104,6 +106,7 @@ export default {
                     dateCol: new Date(),
                     fileSizeCol: '10737418240B',
                     locationCol: '/path/to/location-link',
+                    booleanCol: 'true',
                     jsonCol: {
                         id: 3,
                         textCol: 'Text 3',
@@ -122,6 +125,7 @@ export default {
                     dateCol: new Date(),
                     fileSizeCol: '512B',
                     locationCol: '/path/to/location-link',
+                    booleanCol: 'false',
                     jsonCol: {
                         id: 4,
                         textCol: 'Text 4',
@@ -140,6 +144,7 @@ export default {
                     dateCol: new Date(),
                     fileSizeCol: '1073741824B',
                     locationCol: '/path/to/location-link',
+                    booleanCol: 'false',
                     jsonCol: {
                         id: 5,
                         textCol: 'Text 5',
@@ -179,6 +184,7 @@ export default {
                 { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'location', format: '/somewhere', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
             table: {
@@ -383,7 +389,7 @@ export default {
             table: { category: 'Actions' }
         }
     }
-} as Meta;
+} as Meta<DataTableComponent>;
 
 const insertContentToTemplate = (content: string): string => (
     `<adf-datatable
