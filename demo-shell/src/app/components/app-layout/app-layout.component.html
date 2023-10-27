@@ -29,7 +29,7 @@
                     <ng-container *ngIf="link.children">
                         <mat-list-item (click)="trigger.openMenu()" [attr.data-automation-id]="link.title | translate" class="app-sidenav-link">
                             <mat-icon matListIcon>{{link.icon}}</mat-icon>
-                            <span matLine>{{link.title | translate }}</span>
+                            <span matLine>{{ link.title | translate }}</span>
                             <mat-icon class="app-sidenav-link__expand-button" [matMenuTriggerData]="{links: link.children}"
                                 rippleTrigger mat-icon-button #trigger="matMenuTrigger"
                                 [matMenuTriggerFor]="nestedMenu">arrow_right</mat-icon>
