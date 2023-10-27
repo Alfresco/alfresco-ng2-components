@@ -230,7 +230,7 @@ export class DataTableComponentPage {
         let columnValues: string[] = [];
         const columnLocator = $$(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title="${column}"] span`);
 
-        await BrowserVisibility.waitUntilElementIsPresent(await columnLocator.first(), 1000);
+        await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
         try {
             await BrowserVisibility.waitUntilElementIsPresent(columnLocator.first(), 1000);
             columnValues = await columnLocator
@@ -461,7 +461,7 @@ export class DataTableComponentPage {
 
     async clickRowByContentCheckbox(name: string): Promise<void> {
         const resultElement = this.rootElement.$$(`div[data-automation-id='${name}']`).first().element(by.xpath(`ancestor::adf-datatable-row/label/mat-checkbox`));
-        await browser.actions().mouseMove(resultElement);
+        browser.actions().mouseMove(resultElement);
         await BrowserActions.click(resultElement);
     }
 
