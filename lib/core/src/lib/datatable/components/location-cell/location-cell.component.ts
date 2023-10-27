@@ -20,6 +20,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import { DataTableService } from '../../services/datatable.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { PathInfo } from '@alfresco/js-api';
 
 @Component({
     standalone: true,
@@ -50,10 +51,10 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
 
     /** @override */
     protected updateValue(): void {
-        if (this.column?.key && this.row && this.data) {
-            const path: any = this.data.getValue(this.row, this.column, this.resolverFn);
+        if (this.column?.key && this.column?.format && this.row && this.data) {
+            const path: PathInfo = this.data.getValue(this.row, this.column, this.resolverFn);
 
-            if (path?.name && path.elements) {
+            if (path?.name && path?.elements) {
                 this.value$.next(path.name.split('/').pop());
 
                 if (!this.tooltip) {

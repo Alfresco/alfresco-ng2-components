@@ -44,15 +44,15 @@ describe('LocationCellComponent', () => {
             name: '1',
             path: {
                 elements: [
-                    { id: '1', name: 'path' },
-                    { id: '2', name: 'to' },
-                    { id: '3', name: 'location' }
+                    { id: '1', name: 'User files', nodeType: 'folder' },
+                    { id: '2', name: 'Favorite', nodeType: 'folder' },
+                    { id: '3', name: 'Movies', nodeType: 'folder' }
                 ],
-                name: '/path/to/location'
+                name: '/User files/Favorite/Movies'
             }
         };
 
-        columnData = { format: '/somewhere', type: 'location', key: 'path'};
+        columnData = { format: '/files', type: 'location', key: 'path'};
 
         dataTableAdapter = new ObjectDataTableAdapter(
             [rowData],
@@ -79,6 +79,13 @@ describe('LocationCellComponent', () => {
         fixture.detectChanges();
 
         expect(component.link).toEqual([ columnData.format , rowData.path.elements[2].id ]);
+    });
+
+    it('should NOT set router link when format NOT provided', () => {
+        component.column.format = undefined;
+        fixture.detectChanges();
+
+        expect(component.link).toEqual([]);
     });
 
     it('should not setup cell when path has no data', (done) => {
