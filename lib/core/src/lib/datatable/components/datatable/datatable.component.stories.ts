@@ -22,6 +22,7 @@ import { DataTableModule } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { mockPathInfos } from '../mocks/datatable.mock';
 
 export default {
     component: DataTableComponent,
@@ -67,7 +68,7 @@ export default {
                     iconCol: 'folder_open',
                     dateCol: new Date(),
                     fileSizeCol: '536870912',
-                    locationCol: '/path/to/location-link',
+                    locationCol: mockPathInfos[0],
                     booleanCol: true,
                     jsonCol: {
                         id: 1,
@@ -86,7 +87,7 @@ export default {
                     iconCol: 'cloud_outline',
                     dateCol: new Date(),
                     fileSizeCol: '524288',
-                    locationCol: { name: '/path/to/location-link' },
+                    locationCol: mockPathInfos[1],
                     booleanCol: false,
                     jsonCol: {
                         id: 2,
@@ -105,7 +106,7 @@ export default {
                     iconCol: 'save',
                     dateCol: new Date(),
                     fileSizeCol: '10737418240B',
-                    locationCol: '/path/to/location-link',
+                    locationCol: mockPathInfos[1],
                     booleanCol: 'true',
                     jsonCol: {
                         id: 3,
@@ -124,7 +125,7 @@ export default {
                     iconCol: 'delete',
                     dateCol: new Date(),
                     fileSizeCol: '512B',
-                    locationCol: '/path/to/location-link',
+                    locationCol: mockPathInfos[2],
                     booleanCol: 'false',
                     jsonCol: {
                         id: 4,
@@ -143,7 +144,7 @@ export default {
                     iconCol: 'person_outline',
                     dateCol: new Date(),
                     fileSizeCol: '1073741824B',
-                    locationCol: '/path/to/location-link',
+                    locationCol: mockPathInfos[0],
                     booleanCol: 'false',
                     jsonCol: {
                         id: 5,
@@ -183,7 +184,7 @@ export default {
                 { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'location', format: '/somewhere', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
