@@ -99,7 +99,7 @@ export class Project {
   }
 
   async import(projectFilePath: string): Promise<NodeEntry> {
-    const fileContent = await fs.createReadStream(projectFilePath);
+    const fileContent = fs.createReadStream(projectFilePath);
     const requestOptions: E2eRequestApiHelperOptions = {
       formParams: { file: fileContent },
       contentTypes: ['multipart/form-data']
