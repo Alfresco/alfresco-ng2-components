@@ -35,7 +35,7 @@ import { takeUntil } from 'rxjs/operators';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
-    protected icon: string = '';
+    icon: string = '';
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {
         super();
