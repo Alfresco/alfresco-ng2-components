@@ -203,7 +203,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
-        infrastructure: { connectors: { restconnector: {} }, bridges: {} }
+        infrastructure: { connectors: { restconnector: {} }, bridges: {} },
+        enableLocalDevelopment: true
     },
     UAT_BE_DEFAULT_APP: {
         name: 'uat-be-default-app',
