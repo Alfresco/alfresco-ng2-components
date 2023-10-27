@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, PaginationModel } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-
 import { Injectable } from '@angular/core';
 import { Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { Observable, from, throwError, forkJoin } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, from, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
 
@@ -41,7 +40,6 @@ export class DocumentListService implements DocumentListLoader {
     constructor(
         private nodesApiService: NodesApiService,
         private apiService: AlfrescoApiService,
-        private logService: LogService,
         private customResourcesService: CustomResourcesService
     ) {}
 
@@ -63,7 +61,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the copied node
      */
     copyNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.nodes.copyNode(nodeId, { targetParentId })).pipe(catchError((err) => this.handleError(err)));
+        return from(this.nodes.copyNode(nodeId, { targetParentId }));
     }
 
     /**
@@ -74,7 +72,7 @@ export class DocumentListService implements DocumentListLoader {
      * @returns NodeEntry for the moved node
      */
     moveNode(nodeId: string, targetParentId: string): Observable<NodeEntry> {
-        return from(this.nodes.moveNode(nodeId, { targetParentId })).pipe(catchError((err) => this.handleError(err)));
+        return from(this.nodes.moveNode(nodeId, { targetParentId }));
     }
 
     /**
@@ -119,7 +117,7 @@ export class DocumentListService implements DocumentListLoader {
             }
         }
 
-        return from(this.nodes.listNodeChildren(rootNodeId, params)).pipe(catchError((err) => this.handleError(err)));
+        return from(this.nodes.listNodeChildren(rootNodeId, params));
     }
 
     /**
@@ -159,10 +157,10 @@ export class DocumentListService implements DocumentListLoader {
             include: includeFieldsRequest
         };
 
-        return from(this.nodes.getNode(nodeId, opts)).pipe(catchError((err) => this.handleError(err)));
+        return from(this.nodes.getNode(nodeId, opts));
     }
 
-    isCustomSourceService(nodeId): boolean {
+    isCustomSourceService(nodeId: string): boolean {
         return this.customResourcesService.isCustomSource(nodeId);
     }
 
@@ -213,10 +211,5 @@ export class DocumentListService implements DocumentListLoader {
                 includeFields
             )
         ]).pipe(map((results) => new DocumentLoaderNode(results[0], results[1])));
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }
