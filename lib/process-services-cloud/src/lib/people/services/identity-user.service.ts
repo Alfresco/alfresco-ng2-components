@@ -118,7 +118,7 @@ export class IdentityUserService implements IdentityUserServiceInterface {
     }
 
     private filterOutEmptyValue(values: string[]): string[] {
-        return values.filter((value) => (value.trim() ? true : false));
+        return values.filter((value) => value.trim());
     }
 
     private get identityHost(): string {

@@ -39,7 +39,7 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
-        return from(this.appsApi.getAppDefinitions()).pipe(map((response: any) => response.data));
+        return from(this.appsApi.getAppDefinitions()).pipe(map((response) => response.data));
     }
 
     /**
@@ -49,7 +49,7 @@ export class AppsProcessService {
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByName(name: string): Observable<AppDefinitionRepresentation> {
-        return from(this.appsApi.getAppDefinitions()).pipe(map((response: any) => response.data.find((app) => app.name === name)));
+        return from(this.appsApi.getAppDefinitions()).pipe(map((response) => response.data.find((app) => app.name === name)));
     }
 
     /**
@@ -59,6 +59,6 @@ export class AppsProcessService {
      * @returns Details of the app
      */
     getApplicationDetailsById(appId: number): Observable<AppDefinitionRepresentation> {
-        return from(this.appsApi.getAppDefinitions()).pipe(map((response: any) => response.data.find((app) => app.id === appId)));
+        return from(this.appsApi.getAppDefinitions()).pipe(map((response) => response.data.find((app) => app.id === appId)));
     }
 }
