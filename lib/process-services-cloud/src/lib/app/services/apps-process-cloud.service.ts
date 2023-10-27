@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { AppConfigService, LogService } from '@alfresco/adf-core';
+import { Observable, from, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppConfigService } from '@alfresco/adf-core';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { Environment } from '../../common/interface/environment.interface';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
@@ -26,13 +26,9 @@ import { RequestOptions } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AppsProcessCloudService {
-
     deployedApps: ApplicationInstanceModel[];
 
-    constructor(
-        private adfHttpClient: AdfHttpClient,
-        private logService: LogService,
-        private appConfigService: AppConfigService) {
+    constructor(private adfHttpClient: AdfHttpClient, private appConfigService: AppConfigService) {
         this.loadApps();
     }
 
@@ -76,7 +72,7 @@ export class AppsProcessCloudService {
         }
         const path = this.getApplicationUrl();
         const pathParams = {};
-        const queryParams = { status, roles : role, sort: 'name' };
+        const queryParams = { status, roles: role, sort: 'name' };
         const httpMethod = 'GET';
         const headerParams = {};
         const formParams = {};
@@ -95,19 +91,12 @@ export class AppsProcessCloudService {
             httpMethod
         };
 
-        return from(this.adfHttpClient.request(path, requestOptions))
-            .pipe(
-                map((applications: any) => applications.list.entries.map((application) => application.entry)),
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.adfHttpClient.request(path, requestOptions)).pipe(
+            map((applications) => applications.list.entries.map((application) => application.entry))
+        );
     }
 
     private getApplicationUrl(): string {
         return `${this.appConfigService.get('bpmHost')}/deployment-service/v1/applications`;
-    }
-
-    private handleError(error?: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

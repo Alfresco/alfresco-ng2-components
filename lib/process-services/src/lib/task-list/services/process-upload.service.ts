@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService} from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { DiscoveryApiService, UploadService } from '@alfresco/adf-content-services';
-import { ActivitiContentApi } from '@alfresco/js-api';
+import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessUploadService extends UploadService {
-
     private _contentApi: ActivitiContentApi;
     get contentApi(): ActivitiContentApi {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
@@ -36,20 +34,11 @@ export class ProcessUploadService extends UploadService {
         super(apiService, appConfigService, discoveryApiService);
     }
 
-    getUploadPromise(file: any): any {
+    getUploadPromise(file: any): Promise<RelatedContentRepresentation> {
         const opts = {
             isRelatedContent: true
         };
         const processInstanceId = file.options.parentId;
-        const promise = this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
-
-        promise.catch((err) => this.handleError(err));
-
-        return promise;
+        return this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
     }
-
-    private handleError(error: any) {
-        return throwError(error || 'Server error');
-    }
-
 }

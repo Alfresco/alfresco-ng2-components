@@ -17,8 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfigService, OAuth2Service } from '@alfresco/adf-core';
-import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
 import { IdentityGroupServiceInterface } from './identity-group.service.interface';
 import { IdentityGroupFilterInterface } from './identity-group-filter.interface';
 import { IdentityGroupModel } from '../models/identity-group.model';
@@ -50,25 +49,19 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     private searchGroupsByName(name: string): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name);
 
-        return this.invokeIdentityGroupApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityGroupApi();
     }
 
     private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles);
 
-        return this.invokeIdentityGroupApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityGroupApi();
     }
 
     private searchGroupsWithinApp(name: string, applicationName: string, roles?: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles, applicationName);
 
-        return this.invokeIdentityGroupApi().pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return this.invokeIdentityGroupApi();
     }
 
     private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
@@ -99,10 +92,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     private filterOutEmptyValue(roles: string []): string [] {
         return roles.filter( role => role.trim() ? true : false);
-    }
-
-    private handleError(error: any) {
-        return throwError(error || 'Server error');
     }
 
     private get identityHost(): string {

@@ -15,41 +15,26 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
 import { ModelJsonBpmnApi } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class DiagramsService {
-
     private _modelJsonBpmnApi: ModelJsonBpmnApi;
     get modelJsonBpmnApi(): ModelJsonBpmnApi {
         this._modelJsonBpmnApi = this._modelJsonBpmnApi ?? new ModelJsonBpmnApi(this.apiService.getInstance());
         return this._modelJsonBpmnApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
+        return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId));
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
-        return from(this.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId));
     }
 }

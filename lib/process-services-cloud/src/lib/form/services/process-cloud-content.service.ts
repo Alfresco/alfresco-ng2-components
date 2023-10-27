@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { throwError, Observable, from } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { AlfrescoApiService, LogService, DownloadService } from '@alfresco/adf-core';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AlfrescoApiService, DownloadService } from '@alfresco/adf-core';
 import { ContentService, NodesApiService } from '@alfresco/adf-content-services';
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
@@ -40,7 +40,6 @@ export class ProcessCloudContentService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private logService: LogService,
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private downloadService: DownloadService
@@ -51,8 +50,7 @@ export class ProcessCloudContentService {
             map((res: any) => ({
                 ...res.entry,
                 nodeId: res.entry.id
-            })),
-            catchError((err) => this.handleError(err))
+            }))
         );
     }
 
@@ -74,10 +72,5 @@ export class ProcessCloudContentService {
     async getAuthTicket(): Promise<string> {
         const ticket = await this.authenticationApi.getTicket();
         return ticket?.entry?.id || '';
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging, QueriesApi, SearchRequest, ResultSetPaging, SearchApi } from '@alfresco/js-api';
-import { Observable, Subject, from, throwError } from 'rxjs';
+import { Observable, Subject, from } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { SearchConfigurationService } from './search-configuration.service';
 
@@ -25,7 +25,7 @@ import { SearchConfigurationService } from './search-configuration.service';
     providedIn: 'root'
 })
 export class SearchService {
-    dataLoaded: Subject<ResultSetPaging> = new Subject();
+    dataLoaded = new Subject<ResultSetPaging>();
 
     private _queriesApi: QueriesApi;
     get queriesApi(): QueriesApi {
@@ -54,8 +54,7 @@ export class SearchService {
         promise
             .then((nodePaging) => {
                 this.dataLoaded.next(nodePaging);
-            })
-            .catch((err) => this.handleError(err));
+            });
 
         return from(promise);
     }
@@ -75,8 +74,7 @@ export class SearchService {
         promise
             .then((nodePaging) => {
                 this.dataLoaded.next(nodePaging);
-            })
-            .catch((err) => this.handleError(err));
+            });
 
         return from(promise);
     }
@@ -93,14 +91,9 @@ export class SearchService {
         promise
             .then((nodePaging) => {
                 this.dataLoaded.next(nodePaging);
-            })
-            .catch((err) => this.handleError(err));
+            });
 
         return from(promise);
-    }
-
-    private handleError(error: any): Observable<any> {
-        return throwError(error || 'Server error');
     }
 }
 

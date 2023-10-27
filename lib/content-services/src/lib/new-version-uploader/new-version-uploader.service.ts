@@ -29,18 +29,13 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     providedIn: 'root'
 })
 export class NewVersionUploaderService {
-
     private _versionsApi: VersionsApi;
     get versionsApi(): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private dialog: MatDialog,
-        private overlayContainer: OverlayContainer
-    ) { }
+    constructor(private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) {}
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:
@@ -53,7 +48,11 @@ export class NewVersionUploaderService {
      * @param selectorAutoFocusedOnClose element's selector which should be autofocused after closing modal
      * @returns an Observable represents the triggered dialog action or an error in case of an error condition
      */
-    openUploadNewVersionDialog(data: NewVersionUploaderDialogData, config?: MatDialogConfig, selectorAutoFocusedOnClose?: string) {
+    openUploadNewVersionDialog(
+        data: NewVersionUploaderDialogData,
+        config?: MatDialogConfig,
+        selectorAutoFocusedOnClose?: string
+    ): Observable<NewVersionUploaderData> {
         const { file, node, showVersionsOnly } = data;
         const showComments = true;
         const allowDownload = true;
@@ -66,11 +65,10 @@ export class NewVersionUploaderService {
                     width: '630px',
                     ...(config && Object.keys(config).length > 0 && config)
                 });
-                dialogRef.componentInstance.dialogAction.asObservable()
-                    .subscribe((newVersionUploaderData: NewVersionUploaderData) => {
-                        observer.next(newVersionUploaderData);
-                    });
-                dialogRef.componentInstance.uploadError.asObservable().subscribe(error => {
+                dialogRef.componentInstance.dialogAction.asObservable().subscribe((newVersionUploaderData) => {
+                    observer.next(newVersionUploaderData);
+                });
+                dialogRef.componentInstance.uploadError.asObservable().subscribe((error) => {
                     observer.error(error);
                 });
                 dialogRef.afterClosed().subscribe(() => {
@@ -80,7 +78,6 @@ export class NewVersionUploaderService {
                 this.overlayContainer.getContainerElement().setAttribute('role', 'main');
             });
         });
-
     }
 
     private composePanelClass(showVersionsOnly: boolean): string | string[] {
@@ -90,7 +87,7 @@ export class NewVersionUploaderService {
 
     private static focusOnClose(selectorAutoFocusedOnClose: string): void {
         if (selectorAutoFocusedOnClose) {
-            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
+            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose)?.focus();
         }
     }
 }

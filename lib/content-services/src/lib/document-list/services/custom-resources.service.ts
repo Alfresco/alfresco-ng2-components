@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
+import { AlfrescoApiService, PaginationModel } from '@alfresco/adf-core';
 import {
-    NodePaging,
     DeletedNodesPaging,
     SearchRequest,
     SharedLinkPaging,
@@ -30,11 +29,13 @@ import {
     FavoritesApi,
     SharedlinksApi,
     TrashcanApi,
-    NodesApi
+    NodesApi,
+    SitePaging,
+    ResultSetPaging
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const CREATE_PERMISSION: string = 'create';
 
@@ -83,7 +84,7 @@ export class CustomResourcesService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -94,7 +95,7 @@ export class CustomResourcesService {
      * @param filters Specifies additional filters to apply (joined with **AND**)
      * @returns List of nodes for the recently used files
      */
-    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<NodePaging> {
+    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
         const defaultFilter = [
             'TYPE:"content"',
             '-PNAME:"0/wiki"',
@@ -165,7 +166,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError((err) => this.handleError(err)));
+        });
     }
 
     /**
@@ -176,7 +177,7 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of favorite files
      */
-    loadFavorites(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<NodePaging> {
+    loadFavorites(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<FavoritePaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
         const defaultPredicate = '(EXISTS(target/file) OR EXISTS(target/folder))';
 
@@ -189,7 +190,7 @@ export class CustomResourcesService {
 
         return new Observable((observer) => {
             this.favoritesApi.listFavorites('-me-', options)
-                .then((result: FavoritePaging) => {
+                .then((result) => {
                         const page: FavoritePaging = {
                             list: {
                                 entries: result.list.entries
@@ -218,7 +219,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError((err) => this.handleError(err)));
+        });
     }
 
     /**
@@ -260,7 +261,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError((err) => this.handleError(err)));
+        });
     }
 
     /**
@@ -270,7 +271,7 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
      */
-    loadSites(pagination: PaginationModel, where?: string): Observable<NodePaging> {
+    loadSites(pagination: PaginationModel, where?: string): Observable<SitePaging> {
         const options = {
             include: ['properties', 'aspectNames'],
             maxItems: pagination.maxItems,
@@ -296,7 +297,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError((err) => this.handleError(err)));
+        });
     }
 
     /**
@@ -315,9 +316,7 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return from(this.trashcanApi.listDeletedNodes(options))
-            .pipe(catchError((err) => this.handleError(err)));
-
+        return from(this.trashcanApi.listDeletedNodes(options));
     }
 
     /**
@@ -338,8 +337,7 @@ export class CustomResourcesService {
             where
         };
 
-        return from(this.sharedLinksApi.listSharedLinks(options))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.sharedLinksApi.listSharedLinks(options));
     }
 
     /**
@@ -457,10 +455,5 @@ export class CustomResourcesService {
     private getIncludesFields(includeFields: string[]): string[] {
         return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
-    }
-
-    private handleError(error: Response) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

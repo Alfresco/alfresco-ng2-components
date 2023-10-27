@@ -17,9 +17,8 @@
 
 import { DownloadEntry, DownloadBodyCreate, DownloadsApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import { catchError } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -32,8 +31,7 @@ export class DownloadZipService {
         return this._downloadsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -43,9 +41,7 @@ export class DownloadZipService {
      * @returns Status object for the download
      */
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
-        return from(this.downloadsApi.createDownload(payload)).pipe(
-            catchError((err) => this.handleError(err))
-        );
+        return from(this.downloadsApi.createDownload(payload));
     }
 
     /**
@@ -65,10 +61,5 @@ export class DownloadZipService {
      */
     cancelDownload(downloadId: string) {
         this.downloadsApi.cancelDownload(downloadId);
-    }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
     }
 }

@@ -16,10 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import { AuditApi, AuditAppPaging, AuditAppEntry, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
-import { catchError } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AuditApi, AuditAppPaging, AuditApp, AuditBodyUpdate, AuditEntryPaging, AuditEntryEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +30,7 @@ export class AuditService {
         return this._auditApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Gets a list of audit applications.
@@ -44,7 +43,7 @@ export class AuditService {
             skipCount: 0
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditApps(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.auditApi.listAuditApps(queryOptions));
     }
 
     /**
@@ -54,12 +53,12 @@ export class AuditService {
      * @param opts Options.
      * @returns status of an audit application.
      */
-    getAuditApp(auditApplicationId: string, opts?: any): Observable<AuditAppEntry> {
+    getAuditApp(auditApplicationId: string, opts?: any): Observable<AuditApp> {
         const defaultOptions = {
             auditApplicationId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.getAuditApp(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.auditApi.getAuditApp(queryOptions));
     }
 
     /**
@@ -73,9 +72,7 @@ export class AuditService {
     updateAuditApp(auditApplicationId: string, auditAppBodyUpdate: boolean, opts?: any): Observable<AuditApp | any> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions)).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(this.auditApi.updateAuditApp(auditApplicationId, new AuditBodyUpdate({ isEnabled: auditAppBodyUpdate }), queryOptions));
     }
 
     /**
@@ -91,9 +88,7 @@ export class AuditService {
             maxItems: 100
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditEntriesForAuditApp(auditApplicationId, queryOptions)).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(this.auditApi.listAuditEntriesForAuditApp(auditApplicationId, queryOptions));
     }
 
     /**
@@ -107,9 +102,7 @@ export class AuditService {
     getAuditEntry(auditApplicationId: string, auditEntryId: string, opts?: any): Observable<AuditEntryEntry> {
         const defaultOptions = {};
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.getAuditEntry(auditApplicationId, auditEntryId, queryOptions)).pipe(
-            catchError((err: any) => this.handleError(err))
-        );
+        return from(this.auditApi.getAuditEntry(auditApplicationId, auditEntryId, queryOptions));
     }
 
     /**
@@ -124,7 +117,7 @@ export class AuditService {
             nodeId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditEntriesForNode(queryOptions)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.auditApi.listAuditEntriesForNode(queryOptions));
     }
 
     /**
@@ -135,7 +128,7 @@ export class AuditService {
      * @returns void operation
      */
     deleteAuditEntries(auditApplicationId: string, where: string): Observable<any> {
-        return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where)).pipe(catchError((err: any) => this.handleError(err)));
+        return from(this.auditApi.deleteAuditEntriesForAuditApp(auditApplicationId, where));
     }
 
     /**
@@ -146,11 +139,6 @@ export class AuditService {
      * @returns void operation
      */
     deleteAuditEntry(auditApplicationId: string, auditEntryId: string): Observable<any> {
-        return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId)).pipe(catchError((err: any) => this.handleError(err)));
-    }
-
-    private handleError(error: any): any {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return from(this.auditApi.deleteAuditEntry(auditApplicationId, auditEntryId));
     }
 }
