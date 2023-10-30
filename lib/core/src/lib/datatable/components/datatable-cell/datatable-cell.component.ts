@@ -93,22 +93,22 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         }
     }
 
-    protected subscribeToRowUpdates() {
-        if (!this.dataTableService) {
+    private subscribeToRowUpdates() {
+        if (!this.dataTableService || !this.row.obj) {
             return;
         }
         this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
-            if (data?.id && this.row.id === data.id) {
-                if (this.row.obj && data.obj) {
-                    this.row.obj = data.obj;
-                    this.row['cache'][this.column.key] = this.column.key
-                        .split('.')
-                        .reduce((source, key) => (source ? source[key] : ''), data.obj);
+            if (data?.id === this.row?.id && data.obj) {
+                this.row.obj = data.obj;
+                this.row['cache'][this.column.key] = this.getNestedPropertyValue(data.obj, this.column.key);
 
-                    this.updateValue();
-                }
+                this.updateValue();
             }
         });
+    }
+
+    private getNestedPropertyValue(obj: any, path: string) {
+        return path.split('.').reduce((source, key) => (source ? source[key] : ''), obj);
     }
 
     ngOnDestroy() {

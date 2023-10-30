@@ -35,7 +35,7 @@ import { PathInfo } from '@alfresco/js-api';
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    host: { class: 'adf-location-cell adf-datatable-content-cell' }
 })
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
