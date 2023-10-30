@@ -30,10 +30,6 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 })
 export class FileSizeCellComponent extends DataTableCellComponent implements OnInit {
 
-    constructor() {
-        super();
-    }
-
     ngOnInit(): void {
         super.ngOnInit();
     }

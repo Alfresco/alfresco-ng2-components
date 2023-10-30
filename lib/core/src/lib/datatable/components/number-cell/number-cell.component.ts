@@ -40,10 +40,6 @@ export class NumberCellComponent extends DataTableCellComponent implements OnIni
     @Input()
     decimalConfig: DecimalConfig;
 
-    constructor() {
-        super();
-    }
-
     readonly defaultDecimalConfig: DecimalConfig = {
         digitsInfo: undefined,
         locale: undefined

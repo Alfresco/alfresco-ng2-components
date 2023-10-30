@@ -37,10 +37,6 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
 
-    constructor() {
-        super();
-    }
-
     ngOnInit() {
         super.ngOnInit();
     }
