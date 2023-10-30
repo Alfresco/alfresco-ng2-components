@@ -240,7 +240,7 @@ export default {
         },
         type: {
             description:
-                'Value type for the column. Possible settings are `text`, `image`, `date`, `fileSize`, `location`, and `json`.',
+                'Value type for the column. Possible settings are: `text`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
             control: { disable: true },
             table: {
                 category: 'Component Inputs',
@@ -381,8 +381,7 @@ locationColumn.args = {
     columns: data.locationColumns,
     rows: data.locationRows,
     key: 'id',
-    type: 'location',
-    title: 'Location Column'
+    type: 'location'
 };
 
 export const jsonColumn = template.bind({});

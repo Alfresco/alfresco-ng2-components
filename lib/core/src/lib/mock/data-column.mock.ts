@@ -63,17 +63,17 @@ export const locationRows = [
     {
         path: {
             elements: [
-                { id: '1', name: 'path' },
-                { id: '2', name: 'to' },
-                { id: '3', name: 'location' }
+                { id: '1', name: 'User files', nodeType: 'folder' },
+                { id: '2', name: 'Favorite', nodeType: 'folder' },
+                { id: '3', name: 'Movies', nodeType: 'folder' }
             ],
-            name: '/path/to/location-link'
+            name: '/User files/Favorite/Movies'
         }
     }
 ];
 
 export const locationColumns = [
-    { format: '/somewhere', type: 'location', key: 'path', title: 'Location' }
+    { format: '/files', type: 'location', key: 'path', title: 'Location' }
 ];
 
 export const dataIcon = new ObjectDataTableAdapter([
