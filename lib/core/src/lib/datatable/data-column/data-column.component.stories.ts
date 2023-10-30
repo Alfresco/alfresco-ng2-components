@@ -296,35 +296,34 @@ export default {
 const formatCustomTooltip = (row: DataRow): string =>
     row ? row.getValue('id') + ' by formatCustomTooltip' : null;
 
-const template: Story<DataColumnComponent> = (
-    args: DataColumnComponent & { columns: any; rows: any; data: any }
-) => ({
+const template: Story<DataColumnComponent> = (args: DataColumnComponent & { columns: any; rows: any; data: any }) => ({
     props: args,
     template: `
         ${
             args.columns && args.rows
-                ? '<adf-datatable [columns]="columns' +
-                  (args.type === 'date' ? '()' : '') +
-                  '" [rows]="rows">'
+                ? '<adf-datatable [columns]="columns' + (args.type === 'date' ? '()' : '') + '" [rows]="rows">'
                 : '<adf-datatable [data]="data">'
         }
         <data-columns>
-            <data-column [key]="key" [type]="type"
-            title="${args.title}"
-            [editable]="${args.editable}"
-            [sortable]="${args.sortable}"
-            [draggable]="${args.draggable}"
-            [copyContent]="${args.copyContent}"
-            format="${args.format}"
-            [isHidden]="${args.isHidden}"
-            class="${args.cssClass}"
-            sr-title="${args.srTitle}"
-            [formatTooltip]="formatTooltip">
+            <data-column 
+                [key]="key" 
+                [type]="type"
+                title="${args.title}"
+                [editable]="${args.editable}"
+                [sortable]="${args.sortable}"
+                [draggable]="${args.draggable}"
+                [copyContent]="${args.copyContent}"
+                format="${args.format}"
+                [isHidden]="${args.isHidden}"
+                class="${args.cssClass}"
+                sr-title="${args.srTitle}"
+                [formatTooltip]="formatTooltip">
             </data-column>
         </data-columns>
     </adf-datatable>`
 });
 
+// Text Column
 export const textColumn = template.bind({});
 textColumn.args = {
     data: 'textMap',
@@ -333,6 +332,7 @@ textColumn.args = {
     title: 'Text Column'
 };
 
+// Icon Column
 export const iconColumn = template.bind({});
 iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
@@ -344,6 +344,7 @@ iconColumn.args = {
     title: 'Icon Column'
 };
 
+// Date Column
 export const dateColumn = template.bind({});
 dateColumn.argTypes = {
     format: { control: { disable: false } },
@@ -364,6 +365,7 @@ dateColumn.args = {
     type: 'date'
 };
 
+// File Size Column
 export const fileColumn = template.bind({});
 fileColumn.argTypes = {
     copyContent: { control: { disable: true } }
@@ -375,6 +377,7 @@ fileColumn.args = {
     title: 'File Column'
 };
 
+// Location Column
 export const locationColumn = template.bind({});
 locationColumn.argTypes = {
     copyContent: { control: { disable: true } }
@@ -387,6 +390,7 @@ locationColumn.args = {
     title: 'Location Column'
 };
 
+// Boolean Column
 export const booleanColumn = template.bind({});
 booleanColumn.argTypes = {
     copyContent: { control: { disable: true } }
@@ -398,6 +402,7 @@ booleanColumn.args = {
     title: 'Boolean Column'
 };
 
+// Json Column
 export const jsonColumn = template.bind({});
 jsonColumn.argTypes = {
     editable: { control: { disable: false } },
@@ -410,6 +415,7 @@ jsonColumn.args = {
     title: 'JSON Column'
 };
 
+// Custom Tooltip Column
 export const customTooltipColumn = template.bind({});
 customTooltipColumn.args = {
     data: 'textMap',
