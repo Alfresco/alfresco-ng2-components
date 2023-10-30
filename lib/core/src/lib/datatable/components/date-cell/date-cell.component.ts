@@ -34,7 +34,9 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
 
     @Input()
-    dateConfig: DateConfig = {};
+    dateConfig: DateConfig;
+
+    config: DateConfig = {};
 
     readonly defaultDateConfig: DateConfig = {
         format: 'medium',
@@ -53,11 +55,11 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     private setDefaultConfig(): void {
         if (this.dateConfig) {
-            this.dateConfig.format = this.dateConfig?.format ?? (this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format));
-            this.dateConfig.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
-            this.dateConfig.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
+            this.config.format = this.dateConfig?.format ?? (this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format));
+            this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
+            this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
         } else {
-            this.dateConfig = this.defaultDateConfig;
+            this.config = this.defaultDateConfig;
         }
     }
 
