@@ -57,7 +57,7 @@ backend services have been tested with each released version of ADF.
 <!--v620 start-->
 
 -   [Search Properties component](content-services/components/search-properties.component.md)
--   [Search Date Range Advanced Component](content-services/components/search-date-range.component.md)
+-   [Search Date Range Component](content-services/components/search-date-range.component.md)
 -   [Search Date Range Tabbed Component](content-services/components/search-date-range-tabbed.component.md)
 -   [Search Filter Tabbed Component](content-services/components/search-filter-tabbed.component.md)
 -   [Search Facet Chip Tabbed Component](content-services/components/search-facet-chip-tabbed.md)

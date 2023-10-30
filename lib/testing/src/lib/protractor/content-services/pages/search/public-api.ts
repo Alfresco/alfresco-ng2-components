@@ -16,7 +16,6 @@
  */
 
 export * from './search-categories.page';
-export * from './date-range-filter.page';
 export * from './number-range-filter.page';
 export * from './search-check-list.page';
 export * from './search-radio.page';

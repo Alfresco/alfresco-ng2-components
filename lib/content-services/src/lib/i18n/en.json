@@ -319,9 +319,7 @@
         "FROM": "From",
         "TO": "To",
         "FROM-DATE": "From",
-        "TO-DATE": "To",
-        "SELECT-FROM-DATE": "Select From Date",
-        "SELECT-TO-DATE": "Select To Date"
+        "TO-DATE": "To"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Required value",
@@ -378,14 +376,14 @@
       }
     },
     "UNKNOWN_CONFIGURATION": "Unknown Configuration",
-    "SEARCH_HEADER" : {
-      "TITLE":"Filter",
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
       "TYPE": "Type",
       "FILTER_BY": "Filter by {{ category }}",
       "CLEAR": "Clear",
       "APPLY": "Apply",
-      "FILTERS" : {
-        "NAME" : {
+      "FILTERS": {
+        "NAME": {
           "TITLE": "Name",
           "PLACEHOLDER": "Enter the name"
         },
@@ -395,14 +393,14 @@
           "DOCUMENT": "Document"
         },
         "SIZE": {
-          "TITLE" : "Content Size (range)",
+          "TITLE": "Content Size (range)",
           "SMALL": "Small",
           "MEDIUM": "Medium",
           "LARGE": "Large",
           "HUGE": "Huge"
         },
-        "DATE" :{
-          "TITLE" : "Created Date (range)"
+        "DATE": {
+          "TITLE": "Created Date (range)"
         }
       }
     },
@@ -493,15 +491,15 @@
       "ADD_TAG_TOOLTIP": "Add tag"
     },
     "CONTENT_TYPE": {
-      "DIALOG" :{
-        "TITLE" : "Change content type",
+      "DIALOG": {
+        "TITLE": "Change content type",
         "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
         "CONFIRM": "Are you sure you want to change the content type?",
         "CANCEL": "CANCEL",
         "APPLY": "SAVE CHANGES",
         "VIEW_DETAILS": "View details",
-        "PROPERTY" :{
-          "NAME" : "Name",
+        "PROPERTY": {
+          "NAME": "Name",
           "DESCRIPTION": "Description",
           "DATA_TYPE": "Data type"
         }
@@ -524,7 +522,7 @@
     "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
     "EXPIRES": "Expires on",
     "LINK-EXPIRY-DATE": "Link Expiry Date",
-    "EXPIRATION-LABEL" : "Expiration Date",
+    "EXPIRATION-LABEL": "Expiration Date",
     "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
     "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
     "CLOSE": "Close",
@@ -666,19 +664,19 @@
       "ARIA_LABEL": "Open {{ name }}"
     }
   },
-  "ADF-ASPECT-LIST" : {
+  "ADF-ASPECT-LIST": {
     "PROPERTY_NAME": "Property Name",
     "DESCRIPTION": "Description",
     "DATA_TYPE": "Data Type",
-    "DIALOG" : {
-       "TITLE" : "Customize Properties",
-       "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
-       "RESET": "Reset",
-       "CLEAR": "Clear",
-       "CANCEL": "Cancel",
-       "APPLY": "Apply",
-       "OVER-TABLE-MESSAGE" : "Select property aspects",
-       "SELECTED": "Selected"
+    "DIALOG": {
+      "TITLE": "Customize Properties",
+      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
+      "RESET": "Reset",
+      "CLEAR": "Clear",
+      "CANCEL": "Cancel",
+      "APPLY": "Apply",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Selected"
     }
   },
   "NODE_COUNTER": {
