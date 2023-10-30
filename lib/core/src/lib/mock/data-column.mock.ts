@@ -87,6 +87,12 @@ export const dataIcon = new ObjectDataTableAdapter([
     { icon: 'accessibility' }
 ]);
 
+export const dataImage = new ObjectDataTableAdapter([
+    { image: 'material-icons://image' },
+    { image: 'material-icons://image' },
+    { image: 'material-icons://image' }
+]);
+
 export const dataSizeInBytes = new ObjectDataTableAdapter([
     { size: 12313 },
     { size: 23 },

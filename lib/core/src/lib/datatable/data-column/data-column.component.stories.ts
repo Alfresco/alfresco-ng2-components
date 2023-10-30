@@ -240,7 +240,7 @@ export default {
         },
         type: {
             description:
-                'Value type for the column. Possible settings are: `text`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
+                'Value type for the column. Possible settings are: `text`, `icon`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
             control: { disable: true },
             table: {
                 category: 'Component Inputs',
@@ -259,6 +259,7 @@ export default {
             mapping: {
                 textMap: data.dataText,
                 iconMap: data.dataIcon,
+                imageMap: data.dataImage,
                 fileSizeMap: data.dataSizeInBytes,
                 booleanMap: data.dataBoolean,
                 locationMap: data.dataLocation
@@ -344,6 +345,18 @@ iconColumn.args = {
     title: 'Icon Column'
 };
 
+// Image Column
+export const imageColumn = template.bind({});
+imageColumn.argTypes = {
+    copyContent: { control: { disable: true } }
+};
+imageColumn.args = {
+    data: 'imageMap',
+    key: 'image',
+    type: 'image',
+    title: 'Image Column'
+};
+
 // Date Column
 export const dateColumn = template.bind({});
 dateColumn.argTypes = {
@@ -374,7 +387,7 @@ fileColumn.args = {
     data: 'fileSizeMap',
     key: 'size',
     type: 'fileSize',
-    title: 'File Column'
+    title: 'File Size Column'
 };
 
 // Location Column
