@@ -257,9 +257,11 @@ export default {
             description: 'Provides data for DataTable component',
             control: { disable: true },
             mapping: {
-                text: data.dataText,
-                icon: data.dataIcon,
-                file: data.dataSizeInBytes
+                textMap: data.dataText,
+                iconMap: data.dataIcon,
+                fileSizeMap: data.dataSizeInBytes,
+                booleanMap: data.dataBoolean,
+                locationMap: data.dataLocation
             },
             table: {
                 category: 'Components data',
@@ -325,7 +327,7 @@ const template: Story<DataColumnComponent> = (
 
 export const textColumn = template.bind({});
 textColumn.args = {
-    data: 'text',
+    data: 'textMap',
     key: 'id',
     type: 'text',
     title: 'Text Column'
@@ -336,7 +338,7 @@ iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 iconColumn.args = {
-    data: 'icon',
+    data: 'iconMap',
     key: 'icon',
     type: 'icon',
     title: 'Icon Column'
@@ -367,7 +369,7 @@ fileColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 fileColumn.args = {
-    data: 'file',
+    data: 'fileSizeMap',
     key: 'size',
     type: 'fileSize',
     title: 'File Column'
@@ -378,10 +380,22 @@ locationColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 locationColumn.args = {
-    columns: data.locationColumns,
-    rows: data.locationRows,
-    key: 'id',
-    type: 'location'
+    data: 'locationMap',
+    format: '/files',
+    key: 'path',
+    type: 'location',
+    title: 'Location Column'
+};
+
+export const booleanColumn = template.bind({});
+booleanColumn.argTypes = {
+    copyContent: { control: { disable: true } }
+};
+booleanColumn.args = {
+    data: 'booleanMap',
+    key: 'bool',
+    type: 'boolean',
+    title: 'Boolean Column'
 };
 
 export const jsonColumn = template.bind({});
@@ -390,7 +404,7 @@ jsonColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 jsonColumn.args = {
-    data: 'text',
+    data: 'textMap',
     key: 'id',
     type: 'json',
     title: 'JSON Column'
@@ -398,7 +412,7 @@ jsonColumn.args = {
 
 export const customTooltipColumn = template.bind({});
 customTooltipColumn.args = {
-    data: 'text',
+    data: 'textMap',
     key: 'id',
     type: 'text',
     title: 'Custom Tooltip Column',

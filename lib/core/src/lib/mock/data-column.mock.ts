@@ -17,6 +17,7 @@
 
 import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
 import { DataColumn } from '../datatable/data/data-column.model';
+import { mockPathInfos } from '../datatable/components/mocks/datatable.mock';
 
 export const getDataColumnMock = <T = unknown>(
     column: Partial<DataColumn<T>> = {}
@@ -61,20 +62,24 @@ export const dateColumns = {
 
 export const locationRows = [
     {
-        path: {
-            elements: [
-                { id: '1', name: 'User files', nodeType: 'folder' },
-                { id: '2', name: 'Favorite', nodeType: 'folder' },
-                { id: '3', name: 'Movies', nodeType: 'folder' }
-            ],
-            name: '/User files/Favorite/Movies'
-        }
+        path: mockPathInfos[0]
+    },
+    {
+        path: mockPathInfos[1]
+    },
+    {
+        path: mockPathInfos[2]
     }
 ];
 
-export const locationColumns = [
-    { format: '/files', type: 'location', key: 'path', title: 'Location' }
-];
+export const dataLocation = new ObjectDataTableAdapter(locationRows);
+
+export const dataBoolean = new ObjectDataTableAdapter([
+    { bool: 'true' },
+    { bool: 'false' },
+    { bool: true },
+    { bool: false }
+]);
 
 export const dataIcon = new ObjectDataTableAdapter([
     { icon: 'alarm' },
