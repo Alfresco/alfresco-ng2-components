@@ -8,6 +8,7 @@
     <header class="adf-upload-dialog__header">
         <button
             mat-button
+            [attr.data-automation-id]="'adf-upload-dialog__toggle-minimize'"
             [attr.aria-label]="(isDialogMinimized ?
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MAXIMIZE':
                 'ADF_FILE_UPLOAD.ARIA-LABEL.DIALOG_MINIMIZE') | translate"
