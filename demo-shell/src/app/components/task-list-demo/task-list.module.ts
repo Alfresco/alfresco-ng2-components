@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { TaskListDemoComponent } from './task-list-demo.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessModule } from '@alfresco/adf-process-services';
 
 const routes: Routes = [
@@ -38,7 +38,8 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
-        ProcessModule.forChild()
+        ProcessModule.forChild(),
+        LocalizedDatePipe
     ],
     declarations: [TaskListDemoComponent]
 })
