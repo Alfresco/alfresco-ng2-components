@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
@@ -28,7 +28,7 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
     selector: 'adf-date-cell',
     templateUrl: './date-cell.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-date-cell adf-datatable-content-cell' },
+    host: { class: 'adf-datatable-content-cell' },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
@@ -38,15 +38,13 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     config: DateConfig = {};
 
+    private readonly appConfig: AppConfigService = inject(AppConfigService);
+
     readonly defaultDateConfig: DateConfig = {
         format: 'medium',
         tooltipFormat: 'medium',
         locale: undefined
     };
-
-    constructor(private readonly appConfig: AppConfigService) {
-        super();
-    }
 
     ngOnInit(): void {
         super.ngOnInit();
@@ -54,13 +52,14 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     }
 
     private setDefaultConfig(): void {
-        if (this.dateConfig) {
-            this.config.format = this.dateConfig?.format ?? (this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format));
-            this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
-            this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
-        } else {
+        if (!this.dateConfig) {
             this.config = this.defaultDateConfig;
+            return;
         }
+
+        this.config.format = this.dateConfig?.format ?? (this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format));
+        this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
+        this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
     }
 
     private getAppConfigPropertyValue(key: string, defaultValue: string): string {
