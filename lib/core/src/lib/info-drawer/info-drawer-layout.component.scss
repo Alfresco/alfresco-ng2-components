@@ -20,13 +20,8 @@ $adf-info-drawer-icon-size-half: 24px !default;
         & .mat-tab-label {
             font-weight: bold;
             text-align: left;
-            color: var(--theme-accent-color);
             text-transform: uppercase;
             opacity: 1;
-
-            &-active {
-                color: var(--theme-primary-color);
-            }
         }
 
         &-header {
