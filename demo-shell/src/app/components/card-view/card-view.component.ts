@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
     CardViewTextItemModel,
     CardViewDateItemModel,
@@ -39,9 +39,6 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./card-view.component.scss']
 })
 export class CardViewComponent implements OnInit, OnDestroy {
-
-    @ViewChild('console', { static: true }) console: ElementRef;
-
     isEditable = true;
     properties: any;
     logs: string[];
@@ -51,8 +48,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private cardViewUpdateService: CardViewUpdateService,
-                private decimalNumberPipe: DecimalNumberPipe) {
+    constructor(private cardViewUpdateService: CardViewUpdateService, private decimalNumberPipe: DecimalNumberPipe) {
         this.logs = [];
         this.createCard();
     }
@@ -62,9 +58,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.cardViewUpdateService.itemUpdated$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.onItemChange.bind(this));
+        this.cardViewUpdateService.itemUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(this.onItemChange.bind(this));
     }
 
     ngOnDestroy() {
@@ -192,20 +186,29 @@ export class CardViewComponent implements OnInit, OnDestroy {
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',
-                value: [{ name: 'hey', value: 'you' }, { name: 'hey', value: 'you' }],
+                value: [
+                    { name: 'hey', value: 'you' },
+                    { name: 'hey', value: 'you' }
+                ],
                 key: 'key-value-pairs',
                 editable: this.isEditable
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',
-                value: [{ name: 'hey', value: 'you' }, { name: 'hey', value: 'you' }],
+                value: [
+                    { name: 'hey', value: 'you' },
+                    { name: 'hey', value: 'you' }
+                ],
                 key: 'key-value-pairs',
                 editable: false
             }),
             new CardViewSelectItemModel({
                 label: 'CardView Select Item',
                 value: 'one',
-                options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
+                options$: of([
+                    { key: 'one', label: 'One' },
+                    { key: 'two', label: 'Two' }
+                ]),
                 key: 'select',
                 editable: this.isEditable
             }),
@@ -253,7 +256,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
         }
 
         this.logs.push(`[${notification.target.label}] - ${value}`);
-        this.console.nativeElement.scrollTop = this.console.nativeElement.scrollHeight;
     }
 
     toggleEditable() {

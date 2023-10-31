@@ -1,17 +1,15 @@
 <div class="app-main-content">
     <h1>CardView Component</h1>
 
-    <mat-card class="app-card-view">
-        <adf-card-view
-            [properties]="properties"
-            [editable]="isEditable"
-            [displayClearAction]="showClearDateAction"
-            [displayNoneOption]="showNoneOption"
-            [displayLabelForChips]="showLabelForChips">
-        </adf-card-view>
-    </mat-card>
+    <adf-card-view
+        [properties]="properties"
+        [editable]="isEditable"
+        [displayClearAction]="showClearDateAction"
+        [displayNoneOption]="showNoneOption"
+        [displayLabelForChips]="showLabelForChips">
+    </adf-card-view>
 
-    <div class="app-console" #console>
+    <div class="app-console">
         <h3>Changes log:</h3>
         <p *ngFor="let log of logs">{{ log }}</p>
     </div>
