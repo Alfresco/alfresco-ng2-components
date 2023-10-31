@@ -114,23 +114,9 @@ export default {
         },
         format: {
             description:
-                'Value format (if supported by the parent component), for example format of the date.',
-            control: { type: 'select', disable: true },
-            options: [
-                'medium',
-                'short',
-                'long',
-                'full',
-                'shortDate',
-                'mediumDate',
-                'longDate',
-                'fullDate',
-                'shortTime',
-                'mediumTime',
-                'longTime',
-                'fullTime',
-                'timeAgo'
-            ],
+                'Used for location type. Setups root path for router navigation.',
+            control: { type: 'text', disable: false },
+            if: { arg: 'type', eq: 'location' },
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -241,7 +227,19 @@ export default {
         type: {
             description:
                 'Value type for the column. Possible settings are: `text`, `icon`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
-            control: { disable: true },
+            control: { type: 'select', disable: false },
+            options: [
+                'text',
+                'icon',
+                'image',
+                'date',
+                'fileSize',
+                'location',
+                'boolean',
+                'amount',
+                'number',
+                'json'
+            ],
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -350,15 +348,15 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
             <data-column 
                 [key]="key" 
                 [type]="type"
-                title="${args.title}"
-                [editable]="${args.editable}"
-                [sortable]="${args.sortable}"
-                [draggable]="${args.draggable}"
-                [copyContent]="${args.copyContent}"
-                format="${args.format}"
-                [isHidden]="${args.isHidden}"
-                class="${args.cssClass}"
-                sr-title="${args.srTitle}"
+                [title]="title"
+                [editable]="editable"
+                [sortable]="sortable"
+                [draggable]="draggable"
+                [copyContent]="copyContent"
+                [format]="format"
+                [isHidden]="isHidden"
+                [class]="cssClass"
+                [sr-title]="srTitle"
                 [currencyConfig]="currencyConfig"
                 [decimalConfig]="decimalConfig"
                 [formatTooltip]="formatTooltip">
@@ -368,7 +366,7 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
 });
 
 // Text Column
-export const textColumn = template.bind({});
+export const textColumn: Story = template.bind({});
 textColumn.args = {
     data: 'textMap',
     key: 'id',
@@ -377,7 +375,7 @@ textColumn.args = {
 };
 
 // Icon Column
-export const iconColumn = template.bind({});
+export const iconColumn: Story = template.bind({});
 iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -389,7 +387,7 @@ iconColumn.args = {
 };
 
 // Image Column
-export const imageColumn = template.bind({});
+export const imageColumn: Story = template.bind({});
 imageColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -401,7 +399,7 @@ imageColumn.args = {
 };
 
 // Date Column
-export const dateColumn = template.bind({});
+export const dateColumn: Story = template.bind({});
 dateColumn.argTypes = {
     format: { control: { disable: false } },
     title: { control: { disable: true } },
@@ -422,7 +420,7 @@ dateColumn.args = {
 };
 
 // File Size Column
-export const fileColumn = template.bind({});
+export const fileColumn: Story = template.bind({});
 fileColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -434,7 +432,7 @@ fileColumn.args = {
 };
 
 // Location Column
-export const locationColumn = template.bind({});
+export const locationColumn: Story = template.bind({});
 locationColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -447,7 +445,7 @@ locationColumn.args = {
 };
 
 // Boolean Column
-export const booleanColumn = template.bind({});
+export const booleanColumn: Story = template.bind({});
 booleanColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -459,7 +457,7 @@ booleanColumn.args = {
 };
 
 // Json Column
-export const jsonColumn = template.bind({});
+export const jsonColumn: Story = template.bind({});
 jsonColumn.argTypes = {
     editable: { control: { disable: false } },
     copyContent: { control: { disable: true } }
@@ -472,7 +470,7 @@ jsonColumn.args = {
 };
 
 // Custom Tooltip Column
-export const customTooltipColumn = template.bind({});
+export const customTooltipColumn: Story = template.bind({});
 customTooltipColumn.args = {
     data: 'textMap',
     key: 'id',
@@ -482,7 +480,7 @@ customTooltipColumn.args = {
 };
 
 // Amount Column
-export const amountColumn = template.bind({});
+export const amountColumn: Story = template.bind({});
 amountColumn.args = {
     data: 'amountMap',
     key: 'price',
@@ -491,7 +489,7 @@ amountColumn.args = {
 };
 
 // Number Column
-export const numberColumn = template.bind({});
+export const numberColumn: Story = template.bind({});
 numberColumn.args = {
     data: 'amountMap',
     key: 'price',
