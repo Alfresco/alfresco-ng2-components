@@ -245,13 +245,34 @@ export default {
             table: {
                 category: 'Component Inputs',
                 type: {
-                    summary: 'string'
+                    summary: 'DataColumnType'
                 },
                 defaultValue: {
                     summary: 'text'
                 }
             },
             defaultValue: 'text'
+        },
+        currencyConfig: {
+            description:
+                `The currencyConfig input allows you to customize the formatting and display of currency values within the component.`,
+            control: { type: 'object', disable: false },
+            if: { arg: 'type', eq: 'amount' },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'CurrencyConfig'
+                },
+                defaultValue: {
+                    summary: `{ code: "USD", display: "symbol" }`
+                }
+            },
+            defaultValue: {
+                code: 'USD',
+                display: 'symbol',
+                digitsInfo: undefined,
+                locale: undefined
+            }
         },
         data: {
             description: 'Provides data for DataTable component',
@@ -262,7 +283,8 @@ export default {
                 imageMap: data.dataImage,
                 fileSizeMap: data.dataSizeInBytes,
                 booleanMap: data.dataBoolean,
-                locationMap: data.dataLocation
+                locationMap: data.dataLocation,
+                amountMap: data.dataAmount
             },
             table: {
                 category: 'Components data',
@@ -318,6 +340,7 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
                 [isHidden]="${args.isHidden}"
                 class="${args.cssClass}"
                 sr-title="${args.srTitle}"
+                [currencyConfig]="currencyConfig"
                 [formatTooltip]="formatTooltip">
             </data-column>
         </data-columns>
@@ -437,3 +460,13 @@ customTooltipColumn.args = {
     title: 'Custom Tooltip Column',
     formatTooltip: formatCustomTooltip
 };
+
+// Amount Column
+export const amountColumn = template.bind({});
+amountColumn.args = {
+    data: 'amountMap',
+    key: 'price',
+    type: 'amount',
+    title: 'Amount Column'
+};
+

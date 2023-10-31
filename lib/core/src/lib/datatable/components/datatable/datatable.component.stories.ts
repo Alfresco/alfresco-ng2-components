@@ -70,6 +70,7 @@ export default {
                     fileSizeCol: '536870912',
                     locationCol: mockPathInfos[0],
                     booleanCol: true,
+                    amountCol: 100.55,
                     jsonCol: {
                         id: 1,
                         textCol: 'Text 1',
@@ -89,6 +90,7 @@ export default {
                     fileSizeCol: '524288',
                     locationCol: mockPathInfos[1],
                     booleanCol: false,
+                    amountCol: 1020.123,
                     jsonCol: {
                         id: 2,
                         textCol: 'Text 2',
@@ -108,6 +110,7 @@ export default {
                     fileSizeCol: '10737418240B',
                     locationCol: mockPathInfos[1],
                     booleanCol: 'true',
+                    amountCol: -2020,
                     jsonCol: {
                         id: 3,
                         textCol: 'Text 3',
@@ -127,6 +130,7 @@ export default {
                     fileSizeCol: '512B',
                     locationCol: mockPathInfos[2],
                     booleanCol: 'false',
+                    amountCol: 230.76,
                     jsonCol: {
                         id: 4,
                         textCol: 'Text 4',
@@ -146,6 +150,7 @@ export default {
                     fileSizeCol: '1073741824B',
                     locationCol: mockPathInfos[0],
                     booleanCol: 'false',
+                    amountCol: 0.444,
                     jsonCol: {
                         id: 5,
                         textCol: 'Text 5',
@@ -186,6 +191,7 @@ export default {
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
             table: {

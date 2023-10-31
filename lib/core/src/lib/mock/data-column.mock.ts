@@ -98,3 +98,11 @@ export const dataSizeInBytes = new ObjectDataTableAdapter([
     { size: 23 },
     { size: 42421412421 }
 ]);
+
+export const dataAmount = new ObjectDataTableAdapter([
+    { price: 1230 },
+    { price: 422.55 },
+    { price: 50000.7855332 },
+    { price: 0.123 },
+    { price: -2022.3321 }
+]);
