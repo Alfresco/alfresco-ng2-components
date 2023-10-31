@@ -54,10 +54,7 @@ describe('SearchFilterContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             providers: [
                 { provide: SearchService, useValue: searchMock },
                 { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
@@ -66,7 +63,7 @@ describe('SearchFilterContainerComponent', () => {
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
-        component.col = {key: '123', type: 'text'};
+        component.col = { key: '123', type: 'text' };
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
     });
@@ -75,6 +72,8 @@ describe('SearchFilterContainerComponent', () => {
         queryBuilder.removeActiveFilter(mockCategory.columnKey);
         fixture.destroy();
     });
+
+    const getMenuButton = () => fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]') as HTMLButtonElement;
 
     it('should show the filter when a category is found', async () => {
         await fixture.whenStable();
@@ -86,7 +85,7 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should set/update the active filter after the Apply button is clicked', async () => {
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+        const menuButton = getMenuButton();
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -113,7 +112,7 @@ describe('SearchFilterContainerComponent', () => {
 
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('name', 'searchText');
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+        const menuButton = getMenuButton();
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -133,7 +132,7 @@ describe('SearchFilterContainerComponent', () => {
         component.filterChange.subscribe(() => {
             eventRaised = true;
         });
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+        const menuButton = getMenuButton();
         menuButton.click();
 
         fixture.detectChanges();
@@ -141,7 +140,7 @@ describe('SearchFilterContainerComponent', () => {
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
+        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -153,13 +152,13 @@ describe('SearchFilterContainerComponent', () => {
         const badge: HTMLElement = fixture.nativeElement.querySelector(`[data-automation-id="filter-menu-button"] .mat-badge-content`);
         expect(window.getComputedStyle(badge).display).toBe('none');
 
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+        const menuButton = getMenuButton();
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
+        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(window.getComputedStyle(badge).display).not.toBe('none');
@@ -176,11 +175,10 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     describe('Accessibility', () => {
-
         it('should set up a focus trap on the filter when the menu is opened', async () => {
             expect(component.focusTrap).toBeUndefined();
 
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+            const menuButton = getMenuButton();
             menuButton.click();
             fixture.detectChanges();
 
@@ -190,7 +188,7 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should focus the input element when the menu is opened', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+            const menuButton = getMenuButton();
             menuButton.click();
 
             fixture.detectChanges();
@@ -198,11 +196,10 @@ describe('SearchFilterContainerComponent', () => {
 
             const inputElement = fixture.debugElement.query(By.css('.mat-input-element'));
             expect(document.activeElement).toBe(inputElement.nativeElement);
-
         });
 
         it('should focus the menu trigger when the menu is closed', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
+            const menuButton = getMenuButton();
             menuButton.click();
 
             fixture.detectChanges();
