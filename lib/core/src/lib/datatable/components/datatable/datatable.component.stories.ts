@@ -71,6 +71,7 @@ export default {
                     locationCol: mockPathInfos[0],
                     booleanCol: true,
                     amountCol: 100.55,
+                    numberCol: 10000.31,
                     jsonCol: {
                         id: 1,
                         textCol: 'Text 1',
@@ -91,6 +92,7 @@ export default {
                     locationCol: mockPathInfos[1],
                     booleanCol: false,
                     amountCol: 1020.123,
+                    numberCol: 240.3,
                     jsonCol: {
                         id: 2,
                         textCol: 'Text 2',
@@ -111,6 +113,7 @@ export default {
                     locationCol: mockPathInfos[1],
                     booleanCol: 'true',
                     amountCol: -2020,
+                    numberCol: 120,
                     jsonCol: {
                         id: 3,
                         textCol: 'Text 3',
@@ -131,6 +134,7 @@ export default {
                     locationCol: mockPathInfos[2],
                     booleanCol: 'false',
                     amountCol: 230.76,
+                    numberCol: 3.032,
                     jsonCol: {
                         id: 4,
                         textCol: 'Text 4',
@@ -151,6 +155,7 @@ export default {
                     locationCol: mockPathInfos[0],
                     booleanCol: 'false',
                     amountCol: 0.444,
+                    numberCol: 2000,
                     jsonCol: {
                         id: 5,
                         textCol: 'Text 5',
@@ -192,6 +197,7 @@ export default {
                 { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'number', key: 'numberCol', title: 'Number Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
             table: {

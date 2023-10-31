@@ -274,6 +274,25 @@ export default {
                 locale: undefined
             }
         },
+        decimalConfig: {
+            description:
+                `The decimalConfig input allows you to customize the formatting and display of decimal values within the component.`,
+            control: { type: 'object', disable: false },
+            if: { arg: 'type', eq: 'number' },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'DecimalConfig'
+                },
+                defaultValue: {
+                    summary: `{ digitsInfo: 'undefined', locale: 'undefined' }`
+                }
+            },
+            defaultValue: {
+                digitsInfo: undefined,
+                locale: undefined
+            }
+        },
         data: {
             description: 'Provides data for DataTable component',
             control: { disable: true },
@@ -341,6 +360,7 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
                 class="${args.cssClass}"
                 sr-title="${args.srTitle}"
                 [currencyConfig]="currencyConfig"
+                [decimalConfig]="decimalConfig"
                 [formatTooltip]="formatTooltip">
             </data-column>
         </data-columns>
@@ -468,5 +488,14 @@ amountColumn.args = {
     key: 'price',
     type: 'amount',
     title: 'Amount Column'
+};
+
+// Number Column
+export const numberColumn = template.bind({});
+numberColumn.args = {
+    data: 'amountMap',
+    key: 'price',
+    type: 'number',
+    title: 'Number Column'
 };
 
