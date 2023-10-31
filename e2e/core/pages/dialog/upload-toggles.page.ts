@@ -42,16 +42,6 @@ export class UploadTogglesPage {
         await this.togglePage.enableToggle(this.uploadFolderToggle);
     }
 
-    async checkMaxSizeToggleIsEnabled(): Promise<void> {
-        const enabledToggle = $('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]');
-        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-    }
-
-    async checkVersioningToggleIsEnabled(): Promise<void> {
-        const enabledToggle = $('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]');
-        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-    }
-
     async enableExtensionFilter(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         await this.togglePage.enableToggle(this.extensionFilterToggle);
