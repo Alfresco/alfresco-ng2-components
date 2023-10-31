@@ -4,7 +4,11 @@ app-cloud-settings {
     display: flex;
     flex: 1;
 
-    mat-form-field {
+    .app-cloud-actions {
+        background-color: white;
+    }
+
+    .adf-cloud-settings-selection-mode {
         max-width: 200px;
     }
 
@@ -13,13 +17,9 @@ app-cloud-settings {
         place-content: center space-around;
         align-items: center;
 
-        mat-form-field {
+        .app-cloud-settings-form-input {
             flex: 1 1 100%;
             max-width: 23%;
-        }
-
-        mat-form-field, mat-checkbox {
-            margin-right: 20px;
         }
     }
 }
