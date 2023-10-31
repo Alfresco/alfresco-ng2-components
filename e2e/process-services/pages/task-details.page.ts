@@ -73,7 +73,7 @@ export class TaskDetailsPage {
     }
 
     async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
-        const dueDatePickerButton = $('mat-datetimepicker-toggle[data-automation-id="datepickertoggle-dueDate"]');
+        const dueDatePickerButton = $('[data-automation-id="datepickertoggle-dueDate"]');
         await BrowserVisibility.waitUntilElementIsNotVisible(dueDatePickerButton);
     }
 

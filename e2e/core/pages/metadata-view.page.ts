@@ -46,9 +46,9 @@ export class MetadataViewPage {
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
-        $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"]`);
+        $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
     private getExpandedMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
-        $(`mat-expansion-panel[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
+        $(`[data-automation-id="adf-metadata-group-${groupName}"] > mat-expansion-panel-header`);
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);

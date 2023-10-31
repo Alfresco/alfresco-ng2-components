@@ -19,7 +19,6 @@ import { ElementFinder, protractor, $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, TestElement } from '@alfresco/adf-testing';
 
 export class SearchBarPage {
-
     searchIcon = $(`button[class*='adf-search-button']`);
     searchBar = $(`adf-search-control input`);
     searchBarExpanded: TestElement = TestElement.byCss(`adf-search-control mat-form-field[class*="mat-focused"] input`);
@@ -29,7 +28,7 @@ export class SearchBarPage {
     highlightName = `.adf-highlight`;
     searchBarPage = $(`mat-list[id='autocomplete-search-result-list']`);
 
-    getRowByRowName = (name: string): ElementFinder => $(`mat-list-item[data-automation-id='autocomplete_for_${name}']`);
+    getRowByRowName = (name: string): ElementFinder => $(`[data-automation-id='autocomplete_for_${name}']`);
 
     async clickOnSearchIcon(): Promise<void> {
         await BrowserActions.click(this.searchIcon);
