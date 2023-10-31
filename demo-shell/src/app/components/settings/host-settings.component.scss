@@ -3,9 +3,24 @@
     min-height: 100%;
     align-items: center;
 
+    .adf-host-settings-actions {
+        text-align: end;
+    }
+
     .adf-authentication-type {
         margin-bottom: 20px;
         margin-top: 10px;
+    }
+
+    .adf-authentication-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+        align-items: flex-start;
+    }
+
+    .adf-authentication-radio-button {
+        margin: 5px;
     }
 
     .adf-setting-container {
