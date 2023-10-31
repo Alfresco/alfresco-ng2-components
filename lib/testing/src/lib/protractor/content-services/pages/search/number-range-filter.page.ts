@@ -20,15 +20,14 @@ import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class NumberRangeFilterPage {
-
-    fromInput = 'input[data-automation-id="number-range-from-input"]';
-    toInput = 'input[data-automation-id="number-range-to-input"]';
-    applyButton = 'button[data-automation-id="number-range-btn-apply"]';
-    clearButton = 'button[data-automation-id="number-range-btn-clear"]';
-    fromErrorInvalid = 'mat-error[data-automation-id="number-range-from-error-invalid"]';
-    fromErrorRequired = 'mat-error[data-automation-id="number-range-from-error-required"]';
-    toErrorInvalid = 'mat-error[data-automation-id="number-range-to-error-invalid"]';
-    toErrorRequired = 'mat-error[data-automation-id="number-range-to-error-required"]';
+    fromInput = '[data-automation-id="number-range-from-input"]';
+    toInput = '[data-automation-id="number-range-to-input"]';
+    applyButton = '[data-automation-id="number-range-btn-apply"]';
+    clearButton = '[data-automation-id="number-range-btn-clear"]';
+    fromErrorInvalid = '[data-automation-id="number-range-from-error-invalid"]';
+    fromErrorRequired = '[data-automation-id="number-range-from-error-required"]';
+    toErrorInvalid = '[data-automation-id="number-range-to-error-invalid"]';
+    toErrorRequired = '[data-automation-id="number-range-to-error-required"]';
     filter: ElementFinder;
 
     constructor(filter: ElementFinder) {

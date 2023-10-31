@@ -94,7 +94,7 @@ describe('FileUploadingListRowComponent', () => {
         await fixture.whenStable();
 
         const cancelButton = getCancelButton();
-        expect(cancelButton).toBeNull();
+        expect(cancelButton).toBeUndefined();
     });
 
     it('should provide tooltip for the cancel button', async () => {
