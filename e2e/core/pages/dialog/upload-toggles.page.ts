@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { $, browser } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 
 export class UploadTogglesPage {
@@ -29,12 +29,10 @@ export class UploadTogglesPage {
     maxSizeField = $('input[data-automation-id="max-files-size"]');
 
     async enableMultipleFileUpload(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         await this.togglePage.enableToggle(this.multipleFileUploadToggle);
     }
 
     async disableMultipleFileUpload(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         await this.togglePage.disableToggle(this.multipleFileUploadToggle);
     }
 
@@ -43,12 +41,10 @@ export class UploadTogglesPage {
     }
 
     async enableExtensionFilter(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         await this.togglePage.enableToggle(this.extensionFilterToggle);
     }
 
     async disableExtensionFilter(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         await this.togglePage.disableToggle(this.extensionFilterToggle);
     }
 
