@@ -112,7 +112,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      */
     async executeLogin(username: string, password: string): Promise<any> {
         if (!this.isCredentialValid(username) || !this.isCredentialValid(password)) {
-            return Promise.reject('missing username or password');
+            return Promise.reject(new Error('missing username or password'));
         }
 
         if (username) {
@@ -136,7 +136,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         } else if (this.isALLProvider()) {
             return this.loginBPMECM(username, password);
         } else {
-            return Promise.reject('Unknown configuration');
+            return Promise.reject(new Error('Unknown configuration'));
         }
 
     }

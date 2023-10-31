@@ -288,7 +288,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(res[2].status).toEqual('COMPLETED');
             expect(getPreferencesSpy).toHaveBeenCalled();
 
-            const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${identityUserMock.username}`));
+            const localData = JSON.parse(storageService.getItem(`task-filters-${appName}-${identityUserMock.username}`));
             expect(localData.length).toEqual(3);
 
             expect(localData[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
