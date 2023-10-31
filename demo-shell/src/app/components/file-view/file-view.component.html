@@ -110,14 +110,10 @@
         </adf-info-drawer-tab>
 
         <adf-info-drawer-tab label="Versions">
-            <mat-card>
-                <mat-card-content>
-                    <adf-version-manager [node]="node"
-                                         (uploadError)="onUploadError($event)"
-                                         (viewVersion)="onViewVersion($event)">
-                    </adf-version-manager>
-                </mat-card-content>
-            </mat-card>
+            <adf-version-manager [node]="node"
+                                 (uploadError)="onUploadError($event)"
+                                 (viewVersion)="onViewVersion($event)">
+            </adf-version-manager>
         </adf-info-drawer-tab>
     </adf-info-drawer>
 </ng-template>
