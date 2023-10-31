@@ -48,19 +48,13 @@ export const dataText = new ObjectDataTableAdapter([
     { id: '3 third' }
 ]);
 
-export const dateRows = [
+export const dataDate = new ObjectDataTableAdapter([
     { createdOn: new Date(2016, 6, 1, 11, 8, 4) },
     { createdOn: new Date(2018, 4, 3, 12, 8, 4) },
     { createdOn: new Date(2021, 2, 3, 9, 8, 4) }
-];
+]);
 
-export const dateColumns = {
-    type: 'date',
-    key: 'createdOn',
-    title: 'Created On'
-};
-
-export const locationRows = [
+export const dataLocation = new ObjectDataTableAdapter([
     {
         path: mockPathInfos[0]
     },
@@ -70,9 +64,7 @@ export const locationRows = [
     {
         path: mockPathInfos[2]
     }
-];
-
-export const dataLocation = new ObjectDataTableAdapter(locationRows);
+]);
 
 export const dataBoolean = new ObjectDataTableAdapter([
     { bool: 'true' },
@@ -105,4 +97,10 @@ export const dataAmount = new ObjectDataTableAdapter([
     { price: 50000.7855332 },
     { price: 0.123 },
     { price: -2022.3321 }
+]);
+
+export const dataJson = new ObjectDataTableAdapter([
+    { rowInfo: { id: 1, name: 'row1'} },
+    { rowInfo: { id: 2, name: 'row2'} },
+    { rowInfo: { id: 3, name: 'row3'} }
 ]);

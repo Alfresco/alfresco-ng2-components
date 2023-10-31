@@ -113,10 +113,10 @@ export default {
             }
         },
         format: {
+            name: 'format (reload required)',
             description:
                 'Used for location type. Setups root path for router navigation.',
-            control: { type: 'text', disable: false },
-            if: { arg: 'type', eq: 'location' },
+            control: { type: 'text', disable: true },
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -148,6 +148,7 @@ export default {
             }
         },
         isHidden: {
+            name: 'isHidden (reload required)',
             description: 'Hides columns',
             control: { type: 'boolean' },
             defaultValue: false,
@@ -254,8 +255,7 @@ export default {
         currencyConfig: {
             description:
                 `The currencyConfig input allows you to customize the formatting and display of currency values within the component.`,
-            control: { type: 'object', disable: false },
-            if: { arg: 'type', eq: 'amount' },
+            control: { type: 'object', disable: true },
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -275,8 +275,7 @@ export default {
         decimalConfig: {
             description:
                 `The decimalConfig input allows you to customize the formatting and display of decimal values within the component.`,
-            control: { type: 'object', disable: false },
-            if: { arg: 'type', eq: 'number' },
+            control: { type: 'object', disable: true },
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -287,7 +286,7 @@ export default {
                 }
             },
             defaultValue: {
-                digitsInfo: undefined,
+                digitsInfo: '2.4-5',
                 locale: undefined
             }
         },
@@ -301,7 +300,9 @@ export default {
                 fileSizeMap: data.dataSizeInBytes,
                 booleanMap: data.dataBoolean,
                 locationMap: data.dataLocation,
-                amountMap: data.dataAmount
+                amountMap: data.dataAmount,
+                jsonMap: data.dataJson,
+                dateMap: data.dataDate
             },
             table: {
                 category: 'Components data',
@@ -341,7 +342,7 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
     template: `
         ${
             args.columns && args.rows
-                ? '<adf-datatable [columns]="columns' + (args.type === 'date' ? '()' : '') + '" [rows]="rows">'
+                ? '<adf-datatable [columns]="columns" [rows]="rows">'
                 : '<adf-datatable [data]="data">'
         }
         <data-columns>
@@ -374,6 +375,19 @@ textColumn.args = {
     title: 'Text Column'
 };
 
+// Text Column With Custom Tooltip
+export const textColumnWithCustomTooltip: Story = template.bind({});
+textColumnWithCustomTooltip.argTypes = {
+    formatTooltip: { control: { disable: false } }
+};
+textColumnWithCustomTooltip.args = {
+    data: 'textMap',
+    key: 'id',
+    type: 'text',
+    title: 'Custom Tooltip Column',
+    formatTooltip: formatCustomTooltip
+};
+
 // Icon Column
 export const iconColumn: Story = template.bind({});
 iconColumn.argTypes = {
@@ -401,30 +415,21 @@ imageColumn.args = {
 // Date Column
 export const dateColumn: Story = template.bind({});
 dateColumn.argTypes = {
-    format: { control: { disable: false } },
-    title: { control: { disable: true } },
-    copyContent: { control: { disable: true } },
-    sortable: { control: { disable: true } },
-    draggable: { control: { disable: true } },
-    isHidden: { control: { disable: true } }
+    copyContent: { control: { disable: true } }
 };
 dateColumn.args = {
-    data: undefined,
-    format: 'medium',
-    columns() {
-        return [{ ...data.dateColumns, format: this.format }];
-    },
-    rows: data.dateRows,
-    key: 'id',
-    type: 'date'
+    data: 'dateMap',
+    key: 'createdOn',
+    type: 'date',
+    title: 'Date Column'
 };
 
 // File Size Column
-export const fileColumn: Story = template.bind({});
-fileColumn.argTypes = {
+export const fileSizeColumn: Story = template.bind({});
+fileSizeColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-fileColumn.args = {
+fileSizeColumn.args = {
     data: 'fileSizeMap',
     key: 'size',
     type: 'fileSize',
@@ -434,7 +439,9 @@ fileColumn.args = {
 // Location Column
 export const locationColumn: Story = template.bind({});
 locationColumn.argTypes = {
-    copyContent: { control: { disable: true } }
+    copyContent: { control: { disable: true } },
+    format: { control: { disable: false }},
+    sortable: { control: { disable: true }}
 };
 locationColumn.args = {
     data: 'locationMap',
@@ -463,24 +470,18 @@ jsonColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 jsonColumn.args = {
-    data: 'textMap',
-    key: 'id',
+    data: 'jsonMap',
+    key: 'rowInfo',
     type: 'json',
     title: 'JSON Column'
 };
 
-// Custom Tooltip Column
-export const customTooltipColumn: Story = template.bind({});
-customTooltipColumn.args = {
-    data: 'textMap',
-    key: 'id',
-    type: 'text',
-    title: 'Custom Tooltip Column',
-    formatTooltip: formatCustomTooltip
-};
-
 // Amount Column
 export const amountColumn: Story = template.bind({});
+amountColumn.argTypes = {
+    copyContent: { control: { disable: true } },
+    currencyConfig: { control: { disable: false } }
+};
 amountColumn.args = {
     data: 'amountMap',
     key: 'price',
@@ -490,6 +491,10 @@ amountColumn.args = {
 
 // Number Column
 export const numberColumn: Story = template.bind({});
+numberColumn.argTypes = {
+    decimalConfig: { control: { disable: false } },
+    copyContent: { control: { disable: true } }
+};
 numberColumn.args = {
     data: 'amountMap',
     key: 'price',
