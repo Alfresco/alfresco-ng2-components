@@ -15,29 +15,38 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility, DateRangeFilterPage, NumberRangeFilterPage, SearchCategoriesPage, SearchCheckListPage, SearchRadioPage, SearchSliderPage, SearchTextPage } from '@alfresco/adf-testing';
+import {
+    BrowserVisibility,
+    DateRangeFilterPage,
+    NumberRangeFilterPage,
+    SearchCategoriesPage,
+    SearchCheckListPage,
+    SearchRadioPage,
+    SearchSliderPage,
+    SearchTextPage
+} from '@alfresco/adf-testing';
 import { $, by } from 'protractor';
 
 export class SearchFiltersPage {
-
     searchCategoriesPage: SearchCategoriesPage = new SearchCategoriesPage();
 
     searchFilters = $('adf-search-filter');
-    fileTypeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]');
-    creatorFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FILTER.PEOPLE"]');
-    fileSizeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]');
-    nameFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Name"]');
-    checkListFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]');
-    createdDateRangeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]');
-    typeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Type"]');
-    sizeRangeFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]');
-    sizeSliderFilter = $('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]');
-    facetQueriesDefaultGroup = $('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
-        'mat-expansion-panel[data-automation-id="expansion-panel-My facet queries"]');
-    facetQueriesTypeGroup = $('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]');
-    facetQueriesSizeGroup = $('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]');
-    facetIntervalsByCreated = $('mat-expansion-panel[data-automation-id="expansion-panel-The Created"]');
-    facetIntervalsByModified = $('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]');
+    fileTypeFilter = $('[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]');
+    creatorFilter = $('[data-automation-id="expansion-panel-SEARCH.FILTER.PEOPLE"]');
+    fileSizeFilter = $('[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]');
+    nameFilter = $('[data-automation-id="expansion-panel-Name"]');
+    checkListFilter = $('[data-automation-id="expansion-panel-Check List"]');
+    createdDateRangeFilter = $('[data-automation-id="expansion-panel-Created Date (range)"]');
+    typeFilter = $('[data-automation-id="expansion-panel-Type"]');
+    sizeRangeFilter = $('[data-automation-id="expansion-panel-Content Size (range)"]');
+    sizeSliderFilter = $('[data-automation-id="expansion-panel-Content Size"]');
+    facetQueriesDefaultGroup = $(
+        '[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' + '[data-automation-id="expansion-panel-My facet queries"]'
+    );
+    facetQueriesTypeGroup = $('[data-automation-id="expansion-panel-Type facet queries"]');
+    facetQueriesSizeGroup = $('[data-automation-id="expansion-panel-Size facet queries"]');
+    facetIntervalsByCreated = $('[data-automation-id="expansion-panel-The Created"]');
+    facetIntervalsByModified = $('[data-automation-id="expansion-panel-TheModified"]');
 
     async checkSearchFiltersIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchFilters);
@@ -72,7 +81,7 @@ export class SearchFiltersPage {
     }
 
     async checkCustomFacetFieldLabelIsDisplayed(fieldLabel: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible($(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`));
+        await BrowserVisibility.waitUntilElementIsVisible($(`[data-automation-id="expansion-panel-${fieldLabel}"]`));
     }
 
     sizeSliderFilterPage(): SearchSliderPage {
@@ -234,5 +243,4 @@ export class SearchFiltersPage {
     async checkFileTypeFacetLabelIsNotDisplayed(fileType: string | RegExp): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
     }
-
 }
