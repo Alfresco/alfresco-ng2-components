@@ -72,15 +72,7 @@ export default {
                     booleanCol: true,
                     amountCol: 100.55,
                     numberCol: 10000.31,
-                    jsonCol: {
-                        id: 1,
-                        textCol: 'Text 1',
-                        imageCol: 'material-icons://folder_open',
-                        iconCol: 'folder_open',
-                        dateCol: new Date(),
-                        fileSizeCol: '536870912',
-                        locationCol: '/path/to/location-link'
-                    }
+                    jsonCol: mockPathInfos[0]
                 },
                 {
                     id: 2,
@@ -93,15 +85,7 @@ export default {
                     booleanCol: false,
                     amountCol: 1020.123,
                     numberCol: 240.3,
-                    jsonCol: {
-                        id: 2,
-                        textCol: 'Text 2',
-                        imageCol: 'material-icons://cloud_outline',
-                        iconCol: 'cloud_outline',
-                        dateCol: new Date(),
-                        fileSizeCol: '524288',
-                        locationCol: '/path/to/location-link'
-                    }
+                    jsonCol: mockPathInfos[1]
                 },
                 {
                     id: 3,
@@ -114,15 +98,7 @@ export default {
                     booleanCol: 'true',
                     amountCol: -2020,
                     numberCol: 120,
-                    jsonCol: {
-                        id: 3,
-                        textCol: 'Text 3',
-                        imageCol: 'material-icons://save',
-                        iconCol: 'save',
-                        dateCol: new Date(),
-                        fileSizeCol: '10737418240B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    jsonCol: mockPathInfos[1]
                 },
                 {
                     id: 4,
@@ -135,15 +111,7 @@ export default {
                     booleanCol: 'false',
                     amountCol: 230.76,
                     numberCol: 3.032,
-                    jsonCol: {
-                        id: 4,
-                        textCol: 'Text 4',
-                        imageCol: 'material-icons://delete',
-                        iconCol: 'delete',
-                        dateCol: new Date(),
-                        fileSizeCol: '512B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    jsonCol: mockPathInfos[2]
                 },
                 {
                     id: 5,
@@ -156,15 +124,7 @@ export default {
                     booleanCol: 'false',
                     amountCol: 0.444,
                     numberCol: 2000,
-                    jsonCol: {
-                        id: 5,
-                        textCol: 'Text 5',
-                        imageCol: 'material-icons://person_outline',
-                        iconCol: 'person_outline',
-                        dateCol: new Date(),
-                        fileSizeCol: '1073741824B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    jsonCol: mockPathInfos[0]
                 }
             ],
             table: {
