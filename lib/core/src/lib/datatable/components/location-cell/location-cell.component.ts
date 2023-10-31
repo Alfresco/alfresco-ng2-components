@@ -18,13 +18,18 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { DataTableService } from '../../services/datatable.service';
+import { AsyncPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PathInfo } from '@alfresco/js-api';
 
 @Component({
+    standalone: true,
+    imports: [AsyncPipe, RouterModule],
     selector: 'adf-location-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <a href="" [title]="tooltip" [routerLink]="link">
+            <a [title]="tooltip" [routerLink]="link">
                 {{ value$ | async }}
             </a>
         </ng-container>
@@ -40,12 +45,16 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
         super(dataTableService);
     }
 
-    /** @override */
     ngOnInit() {
-        if (this.column?.key && this.row && this.data) {
-            const path: any = this.data.getValue(this.row, this.column, this.resolverFn);
+        super.ngOnInit();
+    }
 
-            if (path?.name && path.elements) {
+    /** @override */
+    protected updateValue(): void {
+        if (this.column?.key && this.column?.format && this.row && this.data) {
+            const path: PathInfo = this.data.getValue(this.row, this.column, this.resolverFn);
+
+            if (path?.name && path?.elements) {
                 this.value$.next(path.name.split('/').pop());
 
                 if (!this.tooltip) {

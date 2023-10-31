@@ -75,7 +75,8 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         DataColumnModule,
         BooleanCellComponent,
         AmountCellComponent,
-        NumberCellComponent
+        NumberCellComponent,
+        LocationCellComponent
     ],
     declarations: [
         DataTableComponent,
@@ -87,7 +88,6 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         DataTableRowComponent,
         DateCellComponent,
         FileSizeCellComponent,
-        LocationCellComponent,
         JsonCellComponent,
         ColumnsSelectorComponent,
         NoContentTemplateDirective,
@@ -111,7 +111,6 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
         DateCellComponent,
         ColumnsSelectorComponent,
         FileSizeCellComponent,
-        LocationCellComponent,
         JsonCellComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
