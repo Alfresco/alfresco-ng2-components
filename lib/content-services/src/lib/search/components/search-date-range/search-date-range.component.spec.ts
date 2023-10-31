@@ -32,16 +32,16 @@ describe('SearchDateRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchDateRangeComponent);
         component = fixture.componentInstance;
     });
 
     afterEach(() => fixture.destroy());
+
+    const getFromInput = () => fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+    const getToInput = () => fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
 
     it('should setup form elements on init', () => {
         fixture.detectChanges();
@@ -74,7 +74,6 @@ describe('SearchDateRangeComponent', () => {
     });
 
     it('should reset form', () => {
-
         fixture.detectChanges();
         component.form.setValue({ from: fromDate, to: toDate });
 
@@ -129,10 +128,13 @@ describe('SearchDateRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         fixture.detectChanges();
-        component.apply({
-            from: fromDate,
-            to: toDate
-        }, true);
+        component.apply(
+            {
+                from: fromDate,
+                to: toDate
+            },
+            true
+        );
 
         const startDate = startOfDay(fromDate).toISOString();
         const endDate = endOfDay(toDate).toISOString();
@@ -146,7 +148,7 @@ describe('SearchDateRangeComponent', () => {
     it('should show date-format error when Invalid found', async () => {
         fixture.detectChanges();
 
-        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const input = getFromInput();
         input.value = '10-f-18';
         input.dispatchEvent(new Event('input'));
 
@@ -159,7 +161,7 @@ describe('SearchDateRangeComponent', () => {
     it('should hide date-format error when correcting input', async () => {
         fixture.detectChanges();
 
-        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const input = getFromInput();
         input.value = '10-f-18';
         input.dispatchEvent(new Event('input'));
 
@@ -181,7 +183,7 @@ describe('SearchDateRangeComponent', () => {
         component.settings = { field: 'cm:created', maxDate: 'today' };
         fixture.detectChanges();
 
-        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const input = getFromInput();
         input.value = format(addDays(new Date(), 1), 'dd-MM-yyyy');
         input.dispatchEvent(new Event('input'));
 
@@ -194,11 +196,11 @@ describe('SearchDateRangeComponent', () => {
     it('should show error for required constraint', async () => {
         fixture.detectChanges();
 
-        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const fromInput = getFromInput();
         fromInput.value = '';
         fromInput.dispatchEvent(new Event('input'));
 
-        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        const toInput = getToInput();
         toInput.value = '';
         toInput.dispatchEvent(new Event('input'));
 
@@ -212,11 +214,11 @@ describe('SearchDateRangeComponent', () => {
     it('should show error for incorrect date range', async () => {
         fixture.detectChanges();
 
-        const fromInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const fromInput = getFromInput();
         fromInput.value = '11-10-2018';
         fromInput.dispatchEvent(new Event('input'));
 
-        const toInput = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-to-input"]');
+        const toInput = getToInput();
         toInput.value = '10-10-2018';
         toInput.dispatchEvent(new Event('input'));
 
@@ -230,7 +232,7 @@ describe('SearchDateRangeComponent', () => {
     it('should not show date-format error when valid found', async () => {
         fixture.detectChanges();
 
-        const input = fixture.debugElement.nativeElement.querySelector('[data-automation-id="date-range-from-input"]');
+        const input = getFromInput();
         input.value = '10-10-2018';
         input.dispatchEvent(new Event('input'));
 
