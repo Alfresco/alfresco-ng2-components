@@ -25,8 +25,8 @@ export class UploadTogglesPage {
     extensionFilterToggle = $('#adf-extension-filter-upload-switch');
     maxSizeToggle = $('#adf-max-size-filter-upload-switch');
     versioningToggle = $('#adf-version-upload-switch');
-    extensionAcceptedField = $('input[data-automation-id="accepted-files-type"]');
-    maxSizeField = $('input[data-automation-id="max-files-size"]');
+    extensionAcceptedField = $('[data-automation-id="accepted-files-type"]');
+    maxSizeField = $('[data-automation-id="max-files-size"]');
 
     async enableMultipleFileUpload(): Promise<void> {
         await this.togglePage.enableToggle(this.multipleFileUploadToggle);
