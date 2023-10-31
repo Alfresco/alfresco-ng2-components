@@ -61,6 +61,17 @@ describe('DataTableCellComponent', () => {
     });
 
     it('should display text and tooltip', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => true,
+            getValue: () => 'hello world',
+            obj: 'Initial Value',
+            cache: []
+        };
+
+        component.row = row;
+
         renderTextCell('hello world', 'hello world tooltip');
 
         checkDisplayedText('hello world');

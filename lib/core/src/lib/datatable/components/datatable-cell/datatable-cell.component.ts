@@ -96,6 +96,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         if (!this.dataTableService || !this.row.obj) {
             return;
         }
+
         this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
             if (data?.id === this.row?.id && data.obj) {
                 this.row.obj = data.obj;
