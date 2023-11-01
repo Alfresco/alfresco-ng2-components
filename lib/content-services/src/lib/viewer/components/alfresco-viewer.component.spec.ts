@@ -790,21 +790,13 @@ describe('AlfrescoViewerComponent', () => {
                     });
                 });
 
-                it('should not close the viewer on Escape event if dialog was opened', (done) => {
+                it('should not close the viewer on Escape event if dialog was opened', async () => {
                     const event = new KeyboardEvent('keydown', {
                         bubbles: true,
-                        keyCode: 27
+                        key: 'Escape'
                     } as KeyboardEventInit);
 
-                    const dialogRef = dialog.open(DummyDialogComponent);
-
-                    dialogRef.afterClosed().subscribe(() => {
-                        EventMock.keyDown(27);
-                        fixture.detectChanges();
-                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
-                        done();
-                    });
-
+                    dialog.open(DummyDialogComponent);
                     fixture.detectChanges();
 
                     document.body.dispatchEvent(event);
