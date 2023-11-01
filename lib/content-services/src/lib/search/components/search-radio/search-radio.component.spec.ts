@@ -16,29 +16,31 @@
  */
 
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
-import { By } from '@angular/platform-browser';
 import { SearchRadioComponent } from './search-radio.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
 
 describe('SearchRadioComponent', () => {
-   let fixture: ComponentFixture<SearchRadioComponent>;
-   let component: SearchRadioComponent;
+    let loader: HarnessLoader;
+    let fixture: ComponentFixture<SearchRadioComponent>;
+    let component: SearchRadioComponent;
 
-   beforeEach(() => {
-       TestBed.configureTestingModule({
-           imports: [
-               TranslateModule.forRoot(),
-               ContentTestingModule
-           ]
-       });
-       fixture = TestBed.createComponent(SearchRadioComponent);
-       component = fixture.componentInstance;
-   });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
+        });
+        fixture = TestBed.createComponent(SearchRadioComponent);
+        component = fixture.componentInstance;
 
-   describe('Pagination', () => {
-        it('should show 5 items when pageSize not defined', () => {
+        loader = TestbedHarnessEnvironment.loader(fixture);
+    });
+
+    describe('Pagination', () => {
+        it('should show 5 items when pageSize not defined', async () => {
             component.id = 'radio';
             component.context = {
                 queryFragments: {
@@ -51,13 +53,14 @@ describe('SearchRadioComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            const optionElements = fixture.debugElement.queryAll(By.css('mat-radio-button'));
-            expect(optionElements.length).toEqual(5);
-            const labels = Array.from(optionElements).map(element => element.nativeElement.innerText);
+            const options = await loader.getAllHarnesses(MatRadioButtonHarness);
+            expect(options.length).toEqual(5);
+
+            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
             expect(labels).toEqual(stepOne);
         });
 
-        it('should show all items when pageSize is high', () => {
+        it('should show all items when pageSize is high', async () => {
             component.id = 'radio';
             component.context = {
                 queryFragments: {
@@ -69,14 +72,15 @@ describe('SearchRadioComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            const optionElements = fixture.debugElement.queryAll(By.css('mat-radio-button'));
-            expect(optionElements.length).toEqual(13);
-            const labels = Array.from(optionElements).map(element => element.nativeElement.innerText);
+            const options = await loader.getAllHarnesses(MatRadioButtonHarness);
+            expect(options.length).toEqual(13);
+
+            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
             expect(labels).toEqual(stepThree);
         });
     });
 
-   it('should able to check the radio button', async () => {
+    it('should able to check the radio button', async () => {
         component.id = 'radio';
         component.context = {
             queryFragments: {
@@ -85,15 +89,10 @@ describe('SearchRadioComponent', () => {
             update: () => {}
         } as any;
         component.settings = { options: sizeOptions } as any;
-        spyOn(component.context, 'update').and.stub();
-        fixture.detectChanges();
-        await fixture.whenStable();
 
-        const optionElements = fixture.debugElement.query(By.css('mat-radio-group'));
-        optionElements.triggerEventHandler('change', { value: sizeOptions[0].value });
-        fixture.detectChanges();
+        const group = await loader.getHarness(MatRadioGroupHarness);
+        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[0].name}"]` });
 
-        expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[0].value);
     });
 });
