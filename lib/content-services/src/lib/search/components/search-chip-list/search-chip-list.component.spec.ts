@@ -21,15 +21,13 @@ import { By } from '@angular/platform-browser';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipRemoveHarness } from '@angular/material/chips/testing';
 
 @Component({
     selector: 'adf-test-component',
-    template: `
-        <adf-search-chip-list
-            [searchFilter]="searchFilter"
-            [clearAll]="allowClear">
-        </adf-search-chip-list>
-    `
+    template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear"> </adf-search-chip-list> `
 })
 class TestComponent {
     allowClear = true;
@@ -40,23 +38,22 @@ class TestComponent {
 }
 
 describe('SearchChipListComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
     let searchFacetFiltersService: SearchFacetFiltersService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
+
+        fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should display clear button only when entries present', () => {
@@ -65,24 +62,26 @@ describe('SearchChipListComponent', () => {
         let clearButton = fixture.debugElement.query(By.css(`[data-automation-id="reset-filter"]`));
         expect(clearButton).toBeNull();
 
-        searchFacetFiltersService.selectedBuckets = [{
-            bucket: {
-                count: 1,
-                label: 'test',
-                filterQuery: 'query'
-            },
-            field: null
-        }];
+        searchFacetFiltersService.selectedBuckets = [
+            {
+                bucket: {
+                    count: 1,
+                    label: 'test',
+                    filterQuery: 'query'
+                },
+                field: null
+            }
+        ];
         fixture.detectChanges();
         clearButton = fixture.debugElement.query(By.css(`[data-automation-id="reset-filter"]`));
         expect(clearButton).toBeDefined();
     });
 
-    it('should reflect changes in the search filter', () => {
+    it('should reflect changes in the search filter', async () => {
         const selectedBuckets = searchFacetFiltersService.selectedBuckets;
         fixture.detectChanges();
 
-        let chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"]`));
+        let chips = await loader.getAllHarnesses(MatChipHarness.with({ selector: '[data-automation-id="chip-list-entry"]' }));
         expect(chips.length).toBe(0);
 
         selectedBuckets.push({
@@ -95,7 +94,7 @@ describe('SearchChipListComponent', () => {
         });
 
         fixture.detectChanges();
-        chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"]`));
+        chips = await loader.getAllHarnesses(MatChipHarness.with({ selector: '[data-automation-id="chip-list-entry"]' }));
         expect(chips.length).toBe(1);
     });
 
@@ -115,32 +114,30 @@ describe('SearchChipListComponent', () => {
 
         fixture.detectChanges();
 
-        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-chip-remove`));
-        chips[0].nativeElement.click();
+        const removeButton = await loader.getHarness(MatChipRemoveHarness.with({ ancestor: `[data-automation-id="chip-list-entry"]` }));
+        await removeButton.click();
 
         await fixture.whenStable();
         expect(searchFacetFiltersService.unselectFacetBucket).toHaveBeenCalled();
     });
 
-    it('should remove items from the search filter on clear button click', () => {
+    it('should remove items from the search filter on clear button click', async () => {
         spyOn(searchFacetFiltersService, 'unselectFacetBucket').and.stub();
 
-        const selectedBucket1: any = { field: { id: 1 }, bucket: {label: 'bucket1'} };
-        const selectedBucket2: any = { field: { id: 2 }, bucket: {label: 'bucket2'} };
+        const selectedBucket1: any = { field: { id: 1 }, bucket: { label: 'bucket1' } };
+        const selectedBucket2: any = { field: { id: 2 }, bucket: { label: 'bucket2' } };
         searchFacetFiltersService.selectedBuckets = [selectedBucket1, selectedBucket2];
 
         fixture.detectChanges();
 
-        const closeButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-chip-remove');
+        const closeButtons = await loader.getAllHarnesses(MatChipRemoveHarness);
         expect(closeButtons.length).toBe(2);
-
-        closeButtons[0].click();
-        fixture.detectChanges();
+        await closeButtons[0].click();
 
         expect(searchFacetFiltersService.unselectFacetBucket).toHaveBeenCalledWith(selectedBucket1.field, selectedBucket1.bucket);
     });
 
-    it('should disable clear mode via input properties', () => {
+    it('should disable clear mode via input properties', async () => {
         spyOn(component.searchFilter, 'unselectFacetBucket').and.callThrough();
 
         component.allowClear = false;
@@ -157,10 +154,10 @@ describe('SearchChipListComponent', () => {
 
         fixture.detectChanges();
 
-        const chips = fixture.debugElement.queryAll(By.css(`[data-automation-id="chip-list-entry"] .mat-chip-remove`));
-        expect(chips.length).toBe(1);
+        const closeButtons = await loader.getAllHarnesses(MatChipRemoveHarness.with({ ancestor: `[data-automation-id="chip-list-entry"]` }));
+        expect(closeButtons.length).toBe(1);
 
-        const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="reset-filter"]`));
-        expect(clearButton).toBeNull();
+        const hasClearButton = await loader.hasHarness(MatChipRemoveHarness.with({ selector: `[data-automation-id="reset-filter"]` }));
+        expect(hasClearButton).toBe(false);
     });
 });

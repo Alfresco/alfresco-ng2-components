@@ -197,15 +197,8 @@ describe('EditProcessFilterCloudComponent', () => {
         const title = nativeElement.querySelector<HTMLElement>('#adf-edit-process-filter-title-id');
         const subTitle = nativeElement.querySelector<HTMLElement>('#adf-edit-process-filter-sub-title-id');
 
-        let spinner: MatProgressSpinnerHarness;
-
-        try {
-            spinner = await loader.getHarness(MatProgressSpinnerHarness);
-        } catch {
-            spinner = undefined;
-        }
-
-        expect(spinner).toBeUndefined();
+        const hasSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+        expect(hasSpinner).toBe(false);
         expect(title).toBeDefined();
         expect(subTitle).toBeDefined();
         expect(title.innerText).toEqual('FakeRunningProcess');
@@ -222,8 +215,8 @@ describe('EditProcessFilterCloudComponent', () => {
         component.isLoading = true;
         fixture.detectChanges();
 
-        const spinner = await loader.getHarness(MatProgressSpinnerHarness);
-        expect(spinner).toBeDefined();
+        const hasSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+        expect(hasSpinner).toBe(true);
     });
 
     describe('EditProcessFilter form', () => {

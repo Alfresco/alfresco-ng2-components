@@ -248,7 +248,7 @@ describe('EditTaskFilterCloudComponent', () => {
         expect(title).toBeNull();
     });
 
-    it('should not display spinner if isloading set to false', async () => {
+    it('should not display spinner if isLoading set to false', async () => {
         component.ngOnChanges({ id: mockTaskFilterIdChange });
 
         fixture.detectChanges();
@@ -257,20 +257,13 @@ describe('EditTaskFilterCloudComponent', () => {
         const title = nativeElement.querySelector<HTMLElement>('#adf-edit-task-filter-title-id');
         const subTitle = nativeElement.querySelector<HTMLElement>('#adf-edit-task-filter-sub-title-id');
 
-        let spinner: MatProgressSpinnerHarness;
-
-        try {
-            spinner = await loader.getHarness(MatProgressSpinnerHarness);
-        } catch {
-            spinner = undefined;
-        }
-
-        expect(spinner).toBeUndefined();
+        const hasSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+        expect(hasSpinner).toBe(false);
         expect(title.innerText).toEqual('FakeInvolvedTasks');
         expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_TASK_FILTER.TITLE');
     });
 
-    it('should display spinner if isloading set to true', async () => {
+    it('should display spinner if isLoading set to true', async () => {
         component.isLoading = true;
         component.ngOnChanges({ id: mockTaskFilterIdChange });
 
@@ -280,8 +273,8 @@ describe('EditTaskFilterCloudComponent', () => {
         component.isLoading = true;
         fixture.detectChanges();
 
-        const spinner = await loader.getHarness(MatProgressSpinnerHarness);
-        expect(spinner).toBeDefined();
+        const hasSpinner = await loader.hasHarness(MatProgressSpinnerHarness);
+        expect(hasSpinner).toBe(true);
     });
 
     describe('EditTaskFilter form', () => {
