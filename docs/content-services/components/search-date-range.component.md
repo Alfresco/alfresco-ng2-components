@@ -11,7 +11,7 @@ Represents a date range component for the [SearchDateRangeTabbedComponent](searc
 
 ![Date Range Widget](../../docassets/images/search-date-range.png)
 
-NOTE: As of v6.4.0, the settings configuration for the SearchDateRangeComponent have changed. If you have been using this component since
+NOTE: As of v6.5.0, the settings configuration for the original SearchDateRangeComponent have changed. If you have been using this component since
 before that release, please ensure that your component configuration is updated according to the new settings listed below. 
 
 ## Basic usage
