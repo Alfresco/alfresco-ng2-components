@@ -20,22 +20,26 @@ import { SearchFilterList } from '../../models/search-filter-list.model';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader, TestKey } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { By } from '@angular/platform-browser';
 
 describe('SearchCheckListComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchCheckListComponent>;
     let component: SearchCheckListComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;
+
+        fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should setup options from settings', () => {
@@ -49,7 +53,7 @@ describe('SearchCheckListComponent', () => {
         expect(component.options.items).toEqual(options);
     });
 
-    it('should handle enter key as click on checkboxes', () => {
+    it('should handle enter key as click on checkboxes', async () => {
         component.options = new SearchFilterList<SearchListOption>([
             { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
             { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
@@ -58,13 +62,12 @@ describe('SearchCheckListComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        const optionElements = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+        const options = await loader.getAllHarnesses(MatCheckboxHarness);
+        await (await options[0].host()).sendKeys(TestKey.ENTER);
+        expect(await options[0].isChecked()).toBe(true);
 
-        optionElements[0].triggerEventHandler('keydown.enter', {});
-        expect(component.options.items[0].checked).toBeTruthy();
-
-        optionElements[0].triggerEventHandler('keydown.enter', {});
-        expect(component.options.items[0].checked).toBeFalsy();
+        await (await options[0].host()).sendKeys(TestKey.ENTER);
+        expect(await options[0].isChecked()).toBe(false);
     });
 
     it('should setup operator from the settings', () => {
@@ -95,21 +98,13 @@ describe('SearchCheckListComponent', () => {
 
         spyOn(component.context, 'update').and.stub();
 
-        component.changeHandler(
-            { checked: true } as any,
-            component.options.items[0]
-        );
+        component.changeHandler({ checked: true } as any, component.options.items[0]);
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder'`);
 
-        component.changeHandler(
-            { checked: true } as any,
-            component.options.items[1]
-        );
+        component.changeHandler({ checked: true } as any, component.options.items[1]);
 
-        expect(component.context.queryFragments[component.id]).toEqual(
-            `TYPE:'cm:folder' OR TYPE:'cm:content'`
-        );
+        expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder' OR TYPE:'cm:content'`);
     });
 
     it('should reset selected boxes', () => {
@@ -147,7 +142,7 @@ describe('SearchCheckListComponent', () => {
     });
 
     describe('Pagination', () => {
-        it('should show 5 items when pageSize not defined', () => {
+        it('should show 5 items when pageSize not defined', async () => {
             component.id = 'checklist';
             component.context = {
                 queryFragments: {
@@ -160,13 +155,14 @@ describe('SearchCheckListComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            const optionElements = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            expect(optionElements.length).toEqual(5);
-            const labels = Array.from(optionElements).map(element => element.nativeElement.innerText);
+            const options = await loader.getAllHarnesses(MatCheckboxHarness);
+            expect(options.length).toEqual(5);
+
+            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
             expect(labels).toEqual(stepOne);
         });
 
-        it('should show all items when pageSize is high', () => {
+        it('should show all items when pageSize is high', async () => {
             component.id = 'checklist';
             component.context = {
                 queryFragments: {
@@ -178,14 +174,15 @@ describe('SearchCheckListComponent', () => {
             component.ngOnInit();
             fixture.detectChanges();
 
-            const optionElements = fixture.debugElement.queryAll(By.css('mat-checkbox'));
-            expect(optionElements.length).toEqual(13);
-            const labels = Array.from(optionElements).map(element => element.nativeElement.innerText);
+            const options = await loader.getAllHarnesses(MatCheckboxHarness);
+            expect(options.length).toEqual(13);
+
+            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
             expect(labels).toEqual(stepThree);
         });
     });
 
-    it('should able to check/reset the checkbox', () => {
+    it('should able to check/reset the checkbox', async () => {
         component.id = 'checklist';
         component.context = {
             queryFragments: {
@@ -198,16 +195,15 @@ describe('SearchCheckListComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
 
-        const optionElements = fixture.debugElement.query(By.css('mat-checkbox'));
-        optionElements.triggerEventHandler('change', { checked: true });
+        const checkbox = await loader.getHarness(MatCheckboxHarness);
+        await checkbox.check();
 
         expect(component.submitValues).toHaveBeenCalled();
 
         const clearAllElement = fixture.debugElement.query(By.css('button[title="SEARCH.FILTER.ACTIONS.CLEAR-ALL"]'));
-        clearAllElement.triggerEventHandler('click', {} );
+        clearAllElement.triggerEventHandler('click', {});
         fixture.detectChanges();
 
-        const selectedElements = fixture.debugElement.queryAll(By.css('.mat-checkbox-checked'));
-        expect(selectedElements.length).toBe(0);
+        expect(await checkbox.isChecked()).toBe(false);
     });
 });
