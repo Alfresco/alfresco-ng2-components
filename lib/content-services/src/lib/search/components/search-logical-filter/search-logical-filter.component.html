@@ -1,6 +1,6 @@
 <div class="adf-search-logical-filter-container">
     <div *ngFor="let field of fields" class="adf-search-input">
-        <mat-label>{{('SEARCH.LOGICAL_SEARCH.' + field + '_LABEL') | translate}}</mat-label>
+        <mat-label data-automation-id="adf-search-input-label">{{('SEARCH.LOGICAL_SEARCH.' + field + '_LABEL') | translate}}</mat-label>
         <input type="text"
             [(ngModel)]="searchCondition[LogicalSearchFields[field]]"
             placeholder="{{ ('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate }}"
