@@ -71,17 +71,8 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                TaskFiltersCloudModule,
-                PeopleCloudModule,
-                MatIconTestingModule
-            ],
-            providers: [
-                MatDialog,
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
+            providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
@@ -92,7 +83,7 @@ describe('EditTaskFilterCloudComponent', () => {
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
         const dialogRefMock: any = {
-            afterClosed: () =>  afterClosedSubject
+            afterClosed: () => afterClosedSubject
         };
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mockAlfrescoApi);
@@ -102,6 +93,11 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     afterEach(() => fixture.destroy());
+
+    const getFilterActionButton = (action: string) =>
+        nativeElement.querySelector<HTMLButtonElement>(`[data-automation-id="adf-filter-action-${action}"]`);
+
+    const getTaskProperty = (name: string) => nativeElement.querySelector<HTMLElement>(`[data-automation-id="adf-cloud-edit-task-property-${name}"]`);
 
     const clickExpansionPanel = async () => {
         const expansionPanel = nativeElement.querySelector<HTMLElement>('mat-expansion-panel-header');
@@ -125,7 +121,6 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('processInstanceId filter', () => {
-
         const cssSelector = {
             processInstanceIdInput: '[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'
         };
@@ -133,7 +128,7 @@ describe('EditTaskFilterCloudComponent', () => {
         /**
          * expand filter panel
          */
-        function expandFilterPanel(){
+        function expandFilterPanel() {
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -144,14 +139,14 @@ describe('EditTaskFilterCloudComponent', () => {
          *
          * @returns native element
          */
-        function getProcessInstanceIdInputElement(){
+        function getProcessInstanceIdInputElement() {
             return fixture.debugElement.query(By.css(cssSelector.processInstanceIdInput)).nativeElement;
         }
 
         it('should set processInstanceId filter when id changes', async () => {
             getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
             component.processInstanceId = 'fakeProcessInstanceId';
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            component.filterProperties = ['appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -163,7 +158,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should processInstanceId filter be empty string if processInstanceId is null', async () => {
             getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponseWithProcessInstanceIdNull));
             component.processInstanceId = null;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            component.filterProperties = ['appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -175,7 +170,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should processInstanceId filter be empty string if processInstanceId is undefined', async () => {
             getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponseWithProcessInstanceIdNull));
             component.processInstanceId = undefined;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            component.filterProperties = ['appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -187,7 +182,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should processInstanceId filter be set with the processInstanceId from response if processInstanceId input is null', async () => {
             getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
             component.processInstanceId = null;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            component.filterProperties = ['appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -199,7 +194,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should processInstanceId filter be set with the processInstanceId from response if processInstanceId input is undefined', async () => {
             getTaskFilterSpy.and.returnValue(of(mockTaskFilterResponse));
             component.processInstanceId = undefined;
-            component.filterProperties = [ 'appName', 'processInstanceId', 'sort', 'order'];
+            component.filterProperties = ['appName', 'processInstanceId', 'sort', 'order'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -207,11 +202,12 @@ describe('EditTaskFilterCloudComponent', () => {
             expandFilterPanel();
             expect(getProcessInstanceIdInputElement().value).toEqual('fakeProcessInstanceIdFromResponse');
         });
-
     });
 
     it('should fetch process definitions when processDefinitionName filter property is set', async () => {
-        const processSpy = spyOn(taskService, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
+        const processSpy = spyOn(taskService, 'getProcessDefinitions').and.returnValue(
+            of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })])
+        );
         fixture.detectChanges();
         component.filterProperties = ['processDefinitionName'];
         fixture.detectChanges();
@@ -276,7 +272,6 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('EditTaskFilter form', () => {
-
         beforeEach(() => {
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
@@ -308,9 +303,9 @@ describe('EditTaskFilterCloudComponent', () => {
                 component.toggleFilterActions = true;
                 await clickExpansionPanel();
 
-                const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
+                const saveButton = getFilterActionButton('save');
                 expect(saveButton.disabled).toBe(true);
-                const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+                const deleteButton = getFilterActionButton('delete');
                 expect(deleteButton.disabled).toBe(true);
             });
 
@@ -321,9 +316,9 @@ describe('EditTaskFilterCloudComponent', () => {
                 component.toggleFilterActions = true;
                 await clickExpansionPanel();
 
-                const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
+                const saveButton = getFilterActionButton('save');
                 expect(saveButton.disabled).toBe(true);
-                const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+                const deleteButton = getFilterActionButton('delete');
                 expect(deleteButton.disabled).toBe(false);
             });
 
@@ -336,16 +331,16 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
-                component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(500))
-                    .subscribe(() => {
-                        const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
-                        fixture.detectChanges();
-                        expect(saveButton.disabled).toBe(false);
-                        done();
-                    });
+                component.editTaskFilterForm.valueChanges.pipe(debounceTime(500)).subscribe(() => {
+                    const saveButton = getFilterActionButton('save');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toBe(false);
+                    done();
+                });
 
-                const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                const stateElement = nativeElement.querySelector<HTMLElement>(
+                    '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+                );
                 stateElement.click();
                 fixture.detectChanges();
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
@@ -357,7 +352,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 component.toggleFilterActions = true;
                 await clickExpansionPanel();
 
-                const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
+                const saveButton = getFilterActionButton('save');
                 expect(saveButton.disabled).toBe(true);
             });
         });
@@ -371,7 +366,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 component.toggleFilterActions = true;
                 await clickExpansionPanel();
 
-                const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
+                const saveButton = getFilterActionButton('save');
                 expect(saveButton.disabled).toEqual(true);
             });
 
@@ -379,7 +374,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 component.toggleFilterActions = true;
                 await clickExpansionPanel();
 
-                const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
+                const saveButton = getFilterActionButton('saveAs');
                 expect(saveButton.disabled).toEqual(true);
             });
 
@@ -394,16 +389,16 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
-                component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(500))
-                    .subscribe(() => {
-                        const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
-                        fixture.detectChanges();
-                        expect(saveButton.disabled).toEqual(false);
-                        done();
-                    });
+                component.editTaskFilterForm.valueChanges.pipe(debounceTime(500)).subscribe(() => {
+                    const saveButton = getFilterActionButton('saveAs');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
 
-                const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                const stateElement = nativeElement.querySelector<HTMLElement>(
+                    '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+                );
                 stateElement.click();
                 fixture.detectChanges();
 
@@ -418,16 +413,16 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
-                component.editTaskFilterForm.valueChanges
-                    .pipe(debounceTime(500))
-                    .subscribe(() => {
-                        const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
-                        fixture.detectChanges();
-                        expect(saveButton.disabled).toEqual(false);
-                        done();
-                    });
+                component.editTaskFilterForm.valueChanges.pipe(debounceTime(500)).subscribe(() => {
+                    const saveButton = getFilterActionButton('saveAs');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
 
-                const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                const stateElement = nativeElement.querySelector<HTMLElement>(
+                    '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+                );
                 stateElement.click();
                 fixture.detectChanges();
 
@@ -443,10 +438,10 @@ describe('EditTaskFilterCloudComponent', () => {
 
             await clickExpansionPanel();
 
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-status"]');
-            const assigneeElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-assignee"]');
-            const sortElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"]');
-            const orderElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-order"]');
+            const stateElement = getTaskProperty('status');
+            const assigneeElement = getTaskProperty('assignee');
+            const sortElement = getTaskProperty('sort');
+            const orderElement = getTaskProperty('order');
             expect(assigneeElement).toBeDefined();
             expect(stateElement.textContent.trim()).toBe('ADF_CLOUD_TASK_FILTERS.STATUS.CREATED');
             expect(sortElement.textContent.trim()).toBe('id');
@@ -456,7 +451,7 @@ describe('EditTaskFilterCloudComponent', () => {
         it('should display all the statuses that are defined in the task filter', async () => {
             await clickExpansionPanel();
 
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-status"]');
+            const stateElement = getTaskProperty('status');
             stateElement.click();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -475,7 +470,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            const sortElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"]');
+            const sortElement = getTaskProperty('sort');
             sortElement.click();
 
             fixture.detectChanges();
@@ -489,7 +484,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            const orderElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-order"]');
+            const orderElement = getTaskProperty('order');
             orderElement.click();
 
             fixture.detectChanges();
@@ -540,10 +535,12 @@ describe('EditTaskFilterCloudComponent', () => {
             await fixture.whenStable();
 
             expect(appController).toBeDefined();
-            expect(JSON.stringify(appController.value)).toBe(JSON.stringify({
-                id: 'mock-id',
-                username: 'testCompletedByUser'
-            }));
+            expect(JSON.stringify(appController.value)).toBe(
+                JSON.stringify({
+                    id: 'mock-id',
+                    username: 'testCompletedByUser'
+                })
+            );
         });
 
         it('should show completedBy filter', async () => {
@@ -606,7 +603,9 @@ describe('EditTaskFilterCloudComponent', () => {
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
 
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-process-property-dueDateRange"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-process-property-dueDateRange"] .mat-select-trigger'
+            );
             stateElement.click();
             fixture.detectChanges();
 
@@ -755,7 +754,6 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('assignment type change', () => {
-
         beforeEach(() => {
             component.appName = 'fake';
             component.filterProperties = ['assignment', 'status'];
@@ -800,12 +798,11 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('sort properties', () => {
-
         it('should display default sort properties', async () => {
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
             await clickExpansionPanel();
-            const sortElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"]');
+            const sortElement = getTaskProperty('sort');
             sortElement.click();
 
             fixture.detectChanges();
@@ -819,18 +816,20 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should display sort properties when sort properties are specified', async () => {
             component.sortProperties = ['id', 'name', 'processInstanceId'];
-            getTaskFilterSpy.and.returnValue(of({
-                sort: 'my-custom-sort',
-                processInstanceId: 'process-instance-id',
-                priority: '12'
-            }));
+            getTaskFilterSpy.and.returnValue(
+                of({
+                    sort: 'my-custom-sort',
+                    processInstanceId: 'process-instance-id',
+                    priority: '12'
+                })
+            );
             fixture.detectChanges();
 
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
 
             await clickExpansionPanel();
-            const sortElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"]');
+            const sortElement = getTaskProperty('sort');
             sortElement.click();
 
             fixture.detectChanges();
@@ -849,7 +848,7 @@ describe('EditTaskFilterCloudComponent', () => {
             component.sortProperties = [];
             fixture.detectChanges();
             await clickExpansionPanel();
-            const sortElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"]');
+            const sortElement = getTaskProperty('sort');
             sortElement.click();
 
             fixture.detectChanges();
@@ -863,17 +862,16 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('filter actions', () => {
-
         it('should display default filter actions', async () => {
             component.toggleFilterActions = true;
             component.ngOnChanges({ id: mockTaskFilterIdChange });
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            const saveAsButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
-            const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
-            const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
-            expect(component.taskFilterActions.map(action => action.actionType)).toEqual(['save', 'saveAs', 'delete']);
+            const saveAsButton = getFilterActionButton('saveAs');
+            const saveButton = getFilterActionButton('save');
+            const deleteButton = getFilterActionButton('delete');
+            expect(component.taskFilterActions.map((action) => action.actionType)).toEqual(['save', 'saveAs', 'delete']);
             expect(component.taskFilterActions.length).toBe(3);
             expect(saveButton.disabled).toBe(true);
             expect(saveAsButton.disabled).toBe(true);
@@ -891,12 +889,12 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
-            expect(component.taskFilterActions.map(action => action.actionType)).toEqual(['save']);
+            const saveButton = getFilterActionButton('save');
+            expect(component.taskFilterActions.map((action) => action.actionType)).toEqual(['save']);
             expect(component.taskFilterActions.length).toBe(1);
             expect(saveButton.disabled).toBeTruthy();
-            const saveAsButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
-            const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+            const saveAsButton = getFilterActionButton('saveAs');
+            const deleteButton = getFilterActionButton('delete');
             expect(saveAsButton).toBeFalsy();
             expect(deleteButton).toBeFalsy();
         });
@@ -928,7 +926,6 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     describe('edit filter actions', () => {
-
         beforeEach(() => {
             component.changedTaskFilter = { name: 'mock-filter-name' } as TaskFilterCloudModel;
             component.ngOnChanges({ id: mockTaskFilterIdChange } as SimpleChanges);
@@ -944,16 +941,20 @@ describe('EditTaskFilterCloudComponent', () => {
             expansionPanel.click();
             fixture.detectChanges();
             tick();
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+            );
             stateElement.click();
             fixture.detectChanges();
             tick();
-            const sortOptions = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-edit-task-property-options-sort"] .mat-option-ripple'));
+            const sortOptions = fixture.debugElement.queryAll(
+                By.css('[data-automation-id="adf-cloud-edit-task-property-options-sort"] .mat-option-ripple')
+            );
             sortOptions[3].nativeElement.click();
             fixture.detectChanges();
             tick(550);
 
-            const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-save"]');
+            const saveButton = getFilterActionButton('save');
             saveButton.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             tick();
@@ -966,13 +967,15 @@ describe('EditTaskFilterCloudComponent', () => {
             spyOn(service, 'deleteFilter').and.returnValue(of(null));
             fixture.detectChanges();
             await clickExpansionPanel();
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+            );
             stateElement.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+            const deleteButton = getFilterActionButton('delete');
             expect(deleteButton.getAttribute('disabled')).toBeNull();
             deleteButton.click();
             expect(service.deleteFilter).toHaveBeenCalled();
@@ -984,16 +987,20 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+            );
             stateElement.click();
             fixture.detectChanges();
 
-            const sortOptions = fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-edit-task-property-options-sort"] .mat-option-ripple'));
+            const sortOptions = fixture.debugElement.queryAll(
+                By.css('[data-automation-id="adf-cloud-edit-task-property-options-sort"] .mat-option-ripple')
+            );
             sortOptions[3].nativeElement.click();
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const saveButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-saveAs"]');
+            const saveButton = getFilterActionButton('saveAs');
             saveButton.dispatchEvent(new Event('click'));
             fixture.detectChanges();
             afterClosedSubject.next({
@@ -1013,13 +1020,15 @@ describe('EditTaskFilterCloudComponent', () => {
             const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
             fixture.detectChanges();
             await clickExpansionPanel();
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+            );
             stateElement.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+            const deleteButton = getFilterActionButton('delete');
             expect(deleteButton.disabled).toBe(false);
             deleteButton.click();
             expect(service.deleteFilter).toHaveBeenCalled();
@@ -1032,13 +1041,15 @@ describe('EditTaskFilterCloudComponent', () => {
             const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
             fixture.detectChanges();
             await clickExpansionPanel();
-            const stateElement = nativeElement.querySelector<HTMLElement>('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            const stateElement = nativeElement.querySelector<HTMLElement>(
+                '[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger'
+            );
             stateElement.click();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const deleteButton = nativeElement.querySelector<HTMLButtonElement>('[data-automation-id="adf-filter-action-delete"]');
+            const deleteButton = getFilterActionButton('delete');
             expect(deleteButton.disabled).toBe(false);
             deleteButton.click();
             expect(service.deleteFilter).toHaveBeenCalled();
