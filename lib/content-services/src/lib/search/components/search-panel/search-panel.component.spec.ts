@@ -158,7 +158,7 @@ describe('SearchCheckListComponent', () => {
             const options = await loader.getAllHarnesses(MatCheckboxHarness);
             expect(options.length).toEqual(5);
 
-            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
+            const labels = await Promise.all(Array.from(options).map(async (element) => element.getLabelText()));
             expect(labels).toEqual(stepOne);
         });
 
@@ -177,7 +177,7 @@ describe('SearchCheckListComponent', () => {
             const options = await loader.getAllHarnesses(MatCheckboxHarness);
             expect(options.length).toEqual(13);
 
-            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
+            const labels = await Promise.all(Array.from(options).map(async (element) => element.getLabelText()));
             expect(labels).toEqual(stepThree);
         });
     });

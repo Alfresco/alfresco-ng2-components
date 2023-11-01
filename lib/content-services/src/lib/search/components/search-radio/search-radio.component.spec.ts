@@ -56,7 +56,7 @@ describe('SearchRadioComponent', () => {
             const options = await loader.getAllHarnesses(MatRadioButtonHarness);
             expect(options.length).toEqual(5);
 
-            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
+            const labels = await Promise.all(Array.from(options).map(async (element) => element.getLabelText()));
             expect(labels).toEqual(stepOne);
         });
 
@@ -75,7 +75,7 @@ describe('SearchRadioComponent', () => {
             const options = await loader.getAllHarnesses(MatRadioButtonHarness);
             expect(options.length).toEqual(13);
 
-            const labels = await Promise.all(Array.from(options).map(async (element) => await element.getLabelText()));
+            const labels = await Promise.all(Array.from(options).map(async (element) => element.getLabelText()));
             expect(labels).toEqual(stepThree);
         });
     });
