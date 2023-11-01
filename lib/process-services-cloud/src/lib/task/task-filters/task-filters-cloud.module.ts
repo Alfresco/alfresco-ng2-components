@@ -31,6 +31,7 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
 import { GroupCloudModule } from '../../group/group-cloud.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         CoreModule,
         GroupCloudModule,
         ProcessCommonModule,
-        PeopleCloudModule
+        PeopleCloudModule,
+        MatProgressSpinnerModule
     ],
     declarations: [
         TaskFiltersCloudComponent,
@@ -53,11 +55,6 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         TaskFilterDialogCloudComponent,
         TaskAssignmentFilterCloudComponent
     ],
-    exports: [
-        TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent,
-        EditTaskFilterCloudComponent,
-        EditServiceTaskFilterCloudComponent
-    ]
+    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
 })
-export class TaskFiltersCloudModule { }
+export class TaskFiltersCloudModule {}
