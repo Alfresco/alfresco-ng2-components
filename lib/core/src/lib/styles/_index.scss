@@ -113,7 +113,7 @@
     @include mat-datetimepicker-theme($theme);
     @include adf-snackbar-theme;
     @include adf-material-theme;
-    @include adf-components-variables;
+    @include adf-components-variables($theme);
 }
 
 $adf-custom-theme-sizes: (

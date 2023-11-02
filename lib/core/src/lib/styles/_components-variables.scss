@@ -1,6 +1,10 @@
 @use './reference-variables' as *;
+@use '@angular/material' as mat;
 
-@mixin adf-components-variables() {
+@mixin adf-components-variables($theme) {
+    $accent: map-get($theme, accent);
+    $test: mat.get-color-from-palette($accent);
+
     $defaults: (
         --adf-card-view-background: $adf-ref-card-background,
         --adf-card-view-border: $adf-ref-card-border,
