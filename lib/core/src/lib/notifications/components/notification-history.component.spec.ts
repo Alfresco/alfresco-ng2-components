@@ -23,7 +23,6 @@ import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationModel, NOTIFICATION_TYPE, NOTIFICATION_STORAGE } from '../models/notification.model';
-import { By } from '@angular/platform-browser';
 
 describe('Notification History Component', () => {
 
@@ -41,8 +40,6 @@ describe('Notification History Component', () => {
         button?.click();
         fixture.detectChanges();
     };
-
-    const getMatBadgeElement = (): HTMLElement => fixture.debugElement.query(By.css('[matBadge]')).nativeElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -230,30 +227,5 @@ describe('Notification History Component', () => {
 
         expect(component.unreadNotifications.length).toEqual(1);
         expect(component.unreadNotifications[0].read).toEqual(false);
-    });
-
-    it('should return isBadgeVisible as true when there are unread notifications', () => {
-        component.unreadNotifications = testNotifications;
-
-        const result = component.isBadgeVisible();
-        const matIconDebugElement = getMatBadgeElement();
-
-        expect(result).toBe(true);
-        expect(matIconDebugElement.textContent).toContain('notifications');
-    });
-
-    it('should return isBadgeVisible as false when there are no unread notifications', () => {
-        testNotifications.forEach((notification: NotificationModel) => {
-            notification.read = true;
-        });
-        component.notifications = testNotifications;
-        fixture.detectChanges();
-
-        const result = component.isBadgeVisible();
-        const matBadgeDebugElement = getMatBadgeElement();
-
-        expect(component.unreadNotifications).toEqual([]);
-        expect(result).toBe(false);
-        expect(matBadgeDebugElement.textContent).toContain('');
     });
 });

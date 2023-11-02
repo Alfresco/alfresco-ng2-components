@@ -54,7 +54,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     paginatedNotifications: NotificationModel[] = [];
     unreadNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
-    badgeHidden: boolean;
 
     constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
@@ -64,7 +63,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             JSON.parse(this.storageService.getItem(NOTIFICATION_STORAGE))?.filter(
                 (notification: NotificationModel) => !notification.read
             ) || [];
-        this.badgeHidden = !this.isBadgeVisible();
     }
 
     ngAfterViewInit(): void {
@@ -82,7 +80,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     addNewNotification(notification: NotificationModel) {
-        this.badgeHidden = !this.isBadgeVisible();
         this.unreadNotifications.unshift(notification);
 
         if (this.unreadNotifications.length > NotificationHistoryComponent.MAX_NOTIFICATION_STACK_LENGTH) {
@@ -99,7 +96,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
         });
 
         this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
-        this.badgeHidden = !this.isBadgeVisible();
     }
 
     onMenuOpened() {
@@ -122,7 +118,6 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             notification.read = true;
         });
 
-        this.badgeHidden = !this.isBadgeVisible();
         this.storageService.setItem(NOTIFICATION_STORAGE, JSON.stringify(this.notifications));
         this.paginatedNotifications = [];
         this.createPagination();
@@ -154,9 +149,5 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
             notification.clickCallBack(notification.args);
             this.trigger.closeMenu();
         }
-    }
-
-    isBadgeVisible(): boolean {
-        return this.unreadNotifications.length > 0;
     }
 }
