@@ -4,7 +4,6 @@
 @mixin adf-components-variables($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
-    $test: mat.get-color-from-palette($accent);
 
     $defaults: (
         --adf-card-view-background: $adf-ref-card-background,
