@@ -23,11 +23,14 @@ import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
-import { By } from '@angular/platform-browser';
 import { DateFieldValidator, DateTimeFieldValidator } from '../core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('DateTimeWidgetComponent', () => {
-
+    let loader: HarnessLoader;
     let widget: DateTimeWidgetComponent;
     let fixture: ComponentFixture<DateTimeWidgetComponent>;
     let element: HTMLElement;
@@ -35,11 +38,7 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatTooltipModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatTooltipModule]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
@@ -47,7 +46,8 @@ describe('DateTimeWidgetComponent', () => {
         widget = fixture.componentInstance;
 
         form = new FormModel();
-        form.fieldValidators = [new DateFieldValidator(), new DateTimeFieldValidator() ];
+        form.fieldValidators = [new DateFieldValidator(), new DateTimeFieldValidator()];
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -238,7 +238,6 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DATETIME,
@@ -248,35 +247,26 @@ describe('DateTimeWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const dateTimeInput = fixture.nativeElement.querySelector('input');
-            dateTimeInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
 
         it('should hide tooltip', async () => {
-            const dateTimeInput = fixture.nativeElement.querySelector('input');
-            dateTimeInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
 
-            dateTimeInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.DATETIME,
                 required: true
             });
@@ -304,7 +294,6 @@ describe('DateTimeWidgetComponent', () => {
     });
 
     describe('template check', () => {
-
         it('should show visible date widget', async () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
@@ -316,9 +305,8 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement).not.toBeNull();
-            expect(dateElement?.value).toBe('30-11-9999 10:30 AM');
+            const input = await loader.getHarness(MatInputHarness);
+            expect(await input.getValue()).toBe('30-11-9999 10:30 AM');
         });
 
         it('should show the correct format type', async () => {
@@ -333,9 +321,8 @@ describe('DateTimeWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement).not.toBeNull();
-            expect(dateElement?.value).toContain('12-30-9999 10:30 AM');
+            const input = await loader.getHarness(MatInputHarness);
+            expect(await input.getValue()).toBe('12-30-9999 10:30 AM');
         });
 
         it('should disable date button when is readonly', () => {
@@ -374,9 +361,8 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-        expect(dateElement).not.toBeNull();
-        expect(dateElement?.value).toContain('12-30-9999 10:30 AM');
+        const input = await loader.getHarness(MatInputHarness);
+        expect(await input.getValue()).toBe('12-30-9999 10:30 AM');
 
         widget.field.value = '2020-03-02T00:00:00.000Z';
 
@@ -384,11 +370,10 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(dateElement?.value).toContain('03-02-2020 00:00 AM');
+        expect(await input.getValue()).toBe('03-02-2020 00:00 AM');
     });
 
     describe('when form model has left labels', () => {
-
         it('should have left labels classes on leftLabels true', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'datetime-id',
