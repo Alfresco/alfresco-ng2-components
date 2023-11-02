@@ -77,8 +77,8 @@
 
     $color50: color.mix($light, $color, 88%);
     $color100: color.mix($light, $color, 70%);
-    $color200: color.mix($light, $color, 50%);
-    $color300: color.mix($light, $color, 30%);
+    $color200: color.mix($light, $color, 65%);
+    $color300: color.mix($light, $color, 60%);
     $color400: color.mix($light, $color, 15%);
     $color500: color.mix($light, $color, 0%);
     $color600: color.mix($dark, $color, 13%);
@@ -113,9 +113,9 @@
 
     $palette: (
         50: $color50,
-        100: $color50,
-        200: $color50,
-        300: $color50,
+        100: $color100,
+        200: $color200,
+        300: $color300,
         400: $color400,
         500: $color500,
         600: $color600,
