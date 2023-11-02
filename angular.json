@@ -1019,11 +1019,10 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@nrwl/workspace:run-commands",
+          "builder": "nx:run-commands",
           "options": {
-            "commands": [
-              "cd lib/cli && npm i && npm run dist"
-            ],
+            "command":
+              "cd lib/cli && npm i && npm run dist",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "lib", "lib/core/src/lib"
