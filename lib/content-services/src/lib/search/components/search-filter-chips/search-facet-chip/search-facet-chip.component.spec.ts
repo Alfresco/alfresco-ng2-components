@@ -27,7 +27,7 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 
-fdescribe('SearchFacetChipComponent', () => {
+describe('SearchFacetChipComponent', () => {
     let loader: HarnessLoader;
     let component: SearchFacetChipComponent;
     let fixture: ComponentFixture<SearchFacetChipComponent>;
