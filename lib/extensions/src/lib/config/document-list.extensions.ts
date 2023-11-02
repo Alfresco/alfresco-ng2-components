@@ -35,18 +35,18 @@ export interface DataColumnTypes {
 export type DataColumnType = keyof DataColumnTypes;
 
 export interface DocumentListPresetRef extends ExtensionElement {
-  key: string;
-  type: DataColumnType;
-  title?: string;
-  format?: string;
-  class?: string;
-  sortable: boolean;
-  template: string;
-  desktopOnly: boolean;
-  sortingKey: string;
-  isHidden?: boolean;
-  rules?: {
-    [key: string]: string;
-    visible?: string;
-  };
+    key: string;
+    type: DataColumnType;
+    title?: string;
+    format?: string;
+    class?: string;
+    sortable: boolean;
+    template: string;
+    desktopOnly: boolean;
+    sortingKey: string;
+    isHidden?: boolean;
+    rules?: {
+        [key: string]: string;
+        visible?: string;
+    };
 }
