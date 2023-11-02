@@ -23,25 +23,26 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('AmountWidgetComponent', () => {
-
+    let loader: HarnessLoader;
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should setup currency from field', () => {
@@ -81,7 +82,6 @@ describe('AmountWidgetComponent', () => {
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.AMOUNT,
@@ -91,57 +91,45 @@ describe('AmountWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const amountInput = fixture.nativeElement.querySelector('input');
-            amountInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
 
         it('should hide tooltip', async () => {
-            const amountInput = fixture.nativeElement.querySelector('input');
-            amountInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
 
-            amountInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.AMOUNT,
                 required: true
             });
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const amount = fixture.nativeElement.querySelector('input');
+            const input = await loader.getHarness(MatInputHarness);
+            const host = await input.host();
+
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
-
-            amount.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
+            await host.blur();
+            expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = element.querySelector('.adf-asterisk');
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -150,25 +138,22 @@ describe('AmountWidgetComponent', () => {
 });
 
 describe('AmountWidgetComponent - rendering', () => {
-
+    let loader: HarnessLoader;
     let widget: AmountWidgetComponent;
     let fixture: ComponentFixture<AmountWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('[C289915] - Should be able to display different currency icons', () => {
+    it('[C289915] - Should be able to display different currency icons', async () => {
         widget.field = new FormFieldModel(new FormModel(), {
             id: 'TestAmount1',
             name: 'Test Amount',
@@ -177,22 +162,20 @@ describe('AmountWidgetComponent - rendering', () => {
         });
         fixture.detectChanges();
 
-        let widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent.trim()).toBe('$');
+        const field = await loader.getHarness(MatFormFieldHarness);
+        expect(await field.getPrefixText()).toBe('$');
 
         widget.field.currency = '£';
         widget.ngOnInit();
         fixture.detectChanges();
 
-        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent.trim()).toBe('£');
+        expect(await field.getPrefixText()).toBe('£');
 
         widget.field.currency = '€';
         widget.ngOnInit();
         fixture.detectChanges();
 
-        widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent.trim()).toBe('€');
+        expect(await field.getPrefixText()).toBe('€');
     });
 
     it('[C309692] - Should be possible to set the General Properties for Amount Widget', async () => {
@@ -216,28 +199,21 @@ describe('AmountWidgetComponent - rendering', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const widgetPlaceholder = fixture.nativeElement.querySelector('label.mat-form-field-label');
-        expect(widgetPlaceholder.textContent).toBe('Check Placeholder Text');
+        const field = await loader.getHarness(MatFormFieldHarness);
+        expect(await field.getLabel()).toBe('Check Placeholder Text');
+        expect(await field.getPrefixText()).toBe('$');
+
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
-        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent.trim()).toBe('$');
         expect(widget.field.isValid).toBe(false);
-        const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
-        expect(widgetById).toBeDefined();
-        expect(widgetById).not.toBeNull();
 
-        widgetById.value = '90';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(true, 'amount widget with a valid field');
+        const input = await loader.getHarness(MatInputHarness);
+        await input.setValue('90');
+        expect(widget.field.isValid).toBe(true);
 
-        widgetById.value = 'gdfgdf';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(false, 'amount widget with an invalid field');
+        await input.setValue('gdfgdf');
+        expect(widget.field.isValid).toBe(false);
+
         const errorWidget = fixture.nativeElement.querySelector('error-widget .adf-error-text');
         expect(errorWidget.textContent).toBe('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
@@ -265,52 +241,37 @@ describe('AmountWidgetComponent - rendering', () => {
 
         const widgetLabel = fixture.nativeElement.querySelector('label.adf-label');
         expect(widgetLabel.textContent).toBe('Test Amount*');
-        const widgetPrefix = fixture.nativeElement.querySelector('div.mat-form-field-prefix');
-        expect(widgetPrefix.textContent.trim()).toBe('£');
-        expect(widget.field.isValid).toBe(false);
-        const widgetById: HTMLInputElement = fixture.nativeElement.querySelector('#TestAmount1');
-        expect(widgetById).toBeDefined();
-        expect(widgetById).not.toBeNull();
 
-        widgetById.value = '8';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
-        let errorMessage: HTMLElement = fixture.nativeElement.querySelector('.adf-error-text');
+        const field = await loader.getHarness(MatFormFieldHarness);
+        expect(await field.getPrefixText()).toBe('£');
+
+        expect(widget.field.isValid).toBe(false);
+
+        const input = await loader.getHarness(MatInputHarness);
+        await input.setValue('8');
+        expect(widget.field.isValid).toBe(false);
+
+        let errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
 
-        widgetById.value = '99';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
+        await input.setValue('99');
+        expect(widget.field.isValid).toBe(false);
         errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
 
-        widgetById.value = '80';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(true, 'amount widget field is invalid');
+        await input.setValue('80');
+        expect(widget.field.isValid).toBe(true);
 
-        widgetById.value = '80.67';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(true, 'amount widget field is invalid');
+        await input.setValue('80.67');
+        expect(widget.field.isValid).toBe(true);
 
-        widgetById.value = 'incorrect format';
-        widgetById.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(widget.field.isValid).toBe(false, 'amount widget field is valid');
+        await input.setValue('incorrect format');
+        expect(widget.field.isValid).toBe(false);
         errorMessage = fixture.nativeElement.querySelector('.adf-error-text');
         expect(errorMessage.textContent.trim()).toContain('FORM.FIELD.VALIDATOR.INVALID_NUMBER');
     });
 
     describe('when form model has left labels', () => {
-
         it('should have left labels classes on leftLabels true', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'amount-id',
@@ -379,11 +340,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule
-            ],
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,
