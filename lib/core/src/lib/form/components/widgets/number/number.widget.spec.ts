@@ -19,39 +19,32 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('NumberWidgetComponent', () => {
-
+    let loader: HarnessLoader;
     let widget: NumberWidgetComponent;
     let fixture: ComponentFixture<NumberWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatInputModule,
-                FormsModule,
-                MatIconModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-    });
-
-    it('should exist', () => {
-        expect(widget).toBeDefined();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.NUMBER,
@@ -61,57 +54,43 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const numberInput = fixture.nativeElement.querySelector('input');
-            numberInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
 
         it('should hide tooltip', async () => {
-            const numberInput = fixture.nativeElement.querySelector('input');
-            numberInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
 
-            numberInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.NUMBER,
                 required: true
             });
+            fixture.detectChanges();
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const numberInput = fixture.nativeElement.querySelector('input');
+            const input = await loader.getHarness(MatInputHarness);
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
 
-            numberInput.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await (await input.host()).blur();
 
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = element.querySelector('.adf-asterisk');
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -119,7 +98,6 @@ describe('NumberWidgetComponent', () => {
     });
 
     describe('when form model has left labels', () => {
-
         it('should have left labels classes on leftLabels true', async () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'number-id',
