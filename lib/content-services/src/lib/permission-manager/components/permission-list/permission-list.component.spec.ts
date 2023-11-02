@@ -39,7 +39,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('PermissionListComponent', () => {
     let loader: HarnessLoader;
@@ -270,10 +269,9 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const deleteButton = await loader.getHarness(
-                MatButtonHarness.with({ selector: `[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]` })
-            );
-            await deleteButton.click();
+            const deleteButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
+            deleteButton.click();
+            fixture.detectChanges();
 
             expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [] } });
         });
