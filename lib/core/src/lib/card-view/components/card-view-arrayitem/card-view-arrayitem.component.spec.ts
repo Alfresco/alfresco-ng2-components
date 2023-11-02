@@ -23,8 +23,14 @@ import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-vie
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('CardViewArrayItemComponent', () => {
+    let loader: HarnessLoader;
     let component: CardViewArrayItemComponent;
     let fixture: ComponentFixture<CardViewArrayItemComponent>;
     let service: CardViewUpdateService;
@@ -52,6 +58,7 @@ describe('CardViewArrayItemComponent', () => {
         service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewArrayItemModel(mockDefaultProps);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -69,23 +76,25 @@ describe('CardViewArrayItemComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should call service on chip click', () => {
-            const chip: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"]');
-            chip.dispatchEvent(new Event('click'));
+        it('should call service on chip click', async () => {
+            const chip = await loader.getHarness(MatChipHarness);
+            await (await chip.host()).click();
 
             expect(serviceSpy).toHaveBeenCalled();
         });
 
-        it('should call service on edit icon click', () => {
-            const editIcon: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
-            editIcon.dispatchEvent(new Event('click'));
+        it('should call service on edit icon click', async () => {
+            const button = await loader.getHarness(
+                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
+            );
+            await button.click();
 
             expect(serviceSpy).toHaveBeenCalled();
         });
 
-        it('should NOT call service on chip list container click', () => {
-            const chipListContainer: HTMLElement = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-list-container"]');
-            chipListContainer.dispatchEvent(new Event('click'));
+        it('should NOT call service on chip list container click', async () => {
+            const chipList = await loader.getHarness(MatChipListHarness);
+            await (await chipList.host()).click();
 
             expect(serviceSpy).not.toHaveBeenCalled();
         });
@@ -116,7 +125,7 @@ describe('CardViewArrayItemComponent', () => {
             expect(chip2.innerText).toEqual('Lionel Messi');
         });
 
-        it('should render chip with defined icon', () => {
+        it('should render chip with defined icon', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
                 editable: true
@@ -125,15 +134,16 @@ describe('CardViewArrayItemComponent', () => {
 
             const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
             const chip1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] span');
-            const chip1Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Zlatan"] mat-icon');
+            const chip1Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Zlatan"]` }));
+
             const chip2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] span');
-            const chip2Icon = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-Lionel Messi"] mat-icon');
+            const chip2Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Lionel Messi"]` }));
 
             expect(chipListContainer).not.toBeNull();
             expect(chip1.innerText).toEqual('Zlatan');
-            expect(chip1Icon.innerText).toEqual('person');
+            expect(await chip1Icon.getName()).toBe('person');
             expect(chip2.innerText).toEqual('Lionel Messi');
-            expect(chip2Icon.innerText).toEqual('group');
+            expect(await chip2Icon.getName()).toBe('group');
         });
 
         it('should render defined icon if clickable set to true', () => {
@@ -147,41 +157,41 @@ describe('CardViewArrayItemComponent', () => {
             expect(editIcon.innerText).toBe('edit');
         });
 
-        it('should not render defined icon if clickable set to false', () => {
+        it('should not render defined icon if clickable set to false', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
                 clickable: false
             });
             fixture.detectChanges();
-            const editIcon = fixture.nativeElement.querySelector('[data-automation-id="card-array-item-clickable-icon-array"]');
-            expect(editIcon).toBeNull();
+            const editExists = await loader.hasHarness(
+                MatButtonHarness.with({ selector: `[data-automation-id="card-array-item-clickable-icon-array"]` })
+            );
+            expect(editExists).toBe(false);
         });
 
-        it('should render all values if noOfItemsToDisplay is not defined', () => {
+        it('should render all values if noOfItemsToDisplay is not defined', async () => {
             fixture.detectChanges();
 
-            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
-            const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
-            const chip = fixture.nativeElement.querySelectorAll('mat-chip');
+            const chipList = await loader.getHarness(MatChipListHarness);
+            const chips = await chipList.getChips();
 
-            expect(chipListContainer).not.toBeNull();
+            const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
             expect(moreElement).toBeNull();
-            expect(chip.length).toBe(4);
+            expect(chips.length).toBe(4);
         });
 
-        it('should render only two values along with more item chip if noOfItemsToDisplay is set to 2', () => {
+        it('should render only two values along with more item chip if noOfItemsToDisplay is set to 2', async () => {
             component.property = new CardViewArrayItemModel({
                 ...mockDefaultProps,
                 noOfItemsToDisplay: 2
             });
             fixture.detectChanges();
 
-            const chipListContainer = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-chip-list-container"]'));
-            const chip = fixture.debugElement.queryAll(By.css('mat-chip'));
+            const chipList = await loader.getHarness(MatChipListHarness);
+            const chips = await chipList.getChips();
 
-            expect(chipListContainer).not.toBeNull();
-            expect(chip.length).toBe(3);
-            expect(chip[2].nativeElement.innerText).toBe('2 CORE.CARDVIEW.MORE');
+            expect(chips.length).toBe(3);
+            expect(await chips[2].getText()).toBe('2 CORE.CARDVIEW.MORE');
         });
     });
 });
