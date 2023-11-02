@@ -26,8 +26,12 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('AddPermissionDialog', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<AddPermissionDialogComponent>;
     let component: AddPermissionDialogComponent;
     let element: HTMLElement;
@@ -70,6 +74,7 @@ describe('AddPermissionDialog', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -129,17 +134,12 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css('[id="adf-select-role-permission"] .mat-select-trigger'));
-        selectBox.nativeElement.dispatchEvent(new Event('click'));
-        fixture.detectChanges();
+        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        await select.open();
 
-        const options = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(options).not.toBeNull();
+        const options = await select.getOptions();
         expect(options.length).toBe(2);
-        options[0].triggerEventHandler('click', {});
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await options[0].click();
 
         expect(component.onMemberUpdate).toHaveBeenCalled();
 
@@ -174,19 +174,12 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css('[id="adf-bulk-select-role-permission"] .mat-select-trigger'));
-        selectBox.nativeElement.dispatchEvent(new Event('click'));
+        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-bulk-select-role-permission` }));
+        await select.open();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const options = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(options).not.toBeNull();
+        const options = await select.getOptions();
         expect(options.length).toBe(2);
-        options[0].triggerEventHandler('click', {});
-
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await options[0].click();
 
         expect(component.onBulkUpdate).toHaveBeenCalled();
 
@@ -218,18 +211,12 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const selectBox = fixture.debugElement.query(By.css('[id="adf-select-role-permission"] .mat-select-trigger'));
-        selectBox.nativeElement.dispatchEvent(new Event('click'));
+        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        await select.open();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        const options = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(options).not.toBeNull();
+        const options = await select.getOptions();
         expect(options.length).toBe(2);
-        options[0].triggerEventHandler('click', {});
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await options[0].click();
 
         expect(component.onMemberUpdate).toHaveBeenCalled();
 
