@@ -9,6 +9,11 @@
     <ng-template #tabLayout>
         <mat-tab-group [(selectedIndex)]="selectedIndex" class="adf-info-drawer-tabs" (selectedTabChange)="onTabChange($event)">
             <mat-tab *ngFor="let contentBlock of contentBlocks"
+                #tab
+                [labelClass]="[
+                    'adf-info-drawer-tab',
+                    tab.isActive ? 'adf-info-drawer-tab--active' : '',
+                ]"
                 [label]="contentBlock.label | translate"
                 class="adf-info-drawer-tab">
 

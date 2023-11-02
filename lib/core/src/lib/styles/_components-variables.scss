@@ -1,6 +1,10 @@
 @use './reference-variables' as *;
+@use '@angular/material' as mat;
 
-@mixin adf-components-variables() {
+@mixin adf-components-variables($theme) {
+    $accent: map-get($theme, accent);
+    $test: mat.get-color-from-palette($accent);
+
     $defaults: (
         --adf-card-view-background: $adf-ref-card-background,
         --adf-card-view-border: $adf-ref-card-border,
@@ -45,6 +49,19 @@
         --adf-identity-user-info-line-height: $adf-ref-line-height,
         --adf-identity-user-info-font-size: var(--theme-adf-picture-1-font-size),
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
+
+        --adf-info-drawer-tab-default-color: mat.get-color-from-palette($accent),
+        --adf-info-drawer-tab-default-background:unset,
+        --adf-info-drawer-tab-default-bottom-line:unset,
+        --adf-info-drawer-tab-hover-color:mat.get-color-from-palette($accent),
+        --adf-info-drawer-tab-hover-background:unset,
+        --adf-info-drawer-tab-hover-bottom-line:unset,
+        --adf-info-drawer-tab-active-unfocused-color: mat.get-color-from-palette($primary),
+        --adf-info-drawer-tab-active-unfocused-background:unset,
+        --adf-info-drawer-tab-active-unfocused-bottom-line:unset,
+        --adf-info-drawer-tab-active-focused-background: mat.get-color-from-palette($primary),
+        --adf-info-drawer-tab-active-focused-color:unset,
+        --adf-info-drawer-tab-active-focused-bottom-line:unset,
     );
 
     // propagates SCSS variables into the CSS variables scope
