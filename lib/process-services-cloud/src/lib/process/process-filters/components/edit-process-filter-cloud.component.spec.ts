@@ -1126,8 +1126,6 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             await clickExpansionPanel();
 
-            // clickPropertyStatus();
-
             await clickDeleteButton();
 
             expect(deleteFilterSpy).toHaveBeenCalled();
@@ -1147,9 +1145,6 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
 
             await clickExpansionPanel();
-            // clickPropertyStatus();
-
-            // fixture.detectChanges();
             await clickDeleteButton();
 
             expect(deleteFilterSpy).toHaveBeenCalled();
