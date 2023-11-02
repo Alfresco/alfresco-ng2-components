@@ -26,19 +26,19 @@ import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.m
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '@alfresco/adf-core';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('CardViewDateItemComponent', () => {
-
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewDateItemComponent>;
     let component: CardViewDateItemComponent;
     let appConfigService: AppConfigService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
@@ -57,6 +57,8 @@ describe('CardViewDateItemComponent', () => {
             format: '',
             editable: false
         });
+
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => fixture.destroy());
@@ -235,7 +237,9 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
-            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
+            const datePickerClearToggle = fixture.debugElement.query(
+                By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`)
+            );
             expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
         });
 
@@ -245,7 +249,9 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = null;
             fixture.detectChanges();
 
-            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
+            const datePickerClearToggle = fixture.debugElement.query(
+                By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`)
+            );
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
@@ -256,7 +262,9 @@ describe('CardViewDateItemComponent', () => {
             component.property.value = new Date('Jul 10 2017');
             fixture.detectChanges();
 
-            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
+            const datePickerClearToggle = fixture.debugElement.query(
+                By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`)
+            );
             expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
         });
 
@@ -341,12 +349,12 @@ describe('CardViewDateItemComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-        expect(valueChips).not.toBeNull();
-        expect(valueChips.length).toBe(3);
-        expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017');
-        expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017');
-        expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017');
+
+        const chips = await loader.getAllHarnesses(MatChipHarness);
+        expect(chips.length).toBe(3);
+        expect(await chips[0].getText()).toBe('Jul 10, 2017');
+        expect(await chips[1].getText()).toBe('Jul 11, 2017');
+        expect(await chips[2].getText()).toBe('Jul 12, 2017');
     });
 
     it('should render chips for multivalue datetimes when chips are enabled', async () => {
@@ -360,11 +368,11 @@ describe('CardViewDateItemComponent', () => {
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-        expect(valueChips).not.toBeNull();
-        expect(valueChips.length).toBe(3);
-        expect(valueChips[0].nativeElement.innerText.trim()).toBe('Jul 10, 2017, 0:01');
-        expect(valueChips[1].nativeElement.innerText.trim()).toBe('Jul 11, 2017, 0:01');
-        expect(valueChips[2].nativeElement.innerText.trim()).toBe('Jul 12, 2017, 0:01');
+
+        const chips = await loader.getAllHarnesses(MatChipHarness);
+        expect(chips.length).toBe(3);
+        expect(await chips[0].getText()).toBe('Jul 10, 2017, 0:01');
+        expect(await chips[1].getText()).toBe('Jul 11, 2017, 0:01');
+        expect(await chips[2].getText()).toBe('Jul 12, 2017, 0:01');
     });
 });
