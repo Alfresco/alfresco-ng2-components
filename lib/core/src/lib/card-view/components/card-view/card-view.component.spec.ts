@@ -27,9 +27,12 @@ import { of } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/card-view-item-dispatcher.component';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('CardViewComponent', () => {
-
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
 
@@ -40,6 +43,7 @@ describe('CardViewComponent', () => {
 
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -63,12 +67,14 @@ describe('CardViewComponent', () => {
 
     it('should pass through editable property to the items', () => {
         component.editable = true;
-        component.properties = [new CardViewDateItemModel({
-            label: 'My date label',
-            value: '2017-06-14',
-            key: 'some-key',
-            editable: true
-        })];
+        component.properties = [
+            new CardViewDateItemModel({
+                label: 'My date label',
+                value: '2017-06-14',
+                key: 'some-key',
+                editable: true
+            })
+        ];
 
         fixture.detectChanges();
 
@@ -77,12 +83,14 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the date in the correct format', async () => {
-        component.properties = [new CardViewDateItemModel({
-            label: 'My date label',
-            value: '2017-06-14',
-            key: 'some key',
-            format: 'short'
-        })];
+        component.properties = [
+            new CardViewDateItemModel({
+                label: 'My date label',
+                value: '2017-06-14',
+                key: 'some key',
+                format: 'short'
+            })
+        ];
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -97,13 +105,15 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the default value if the value is empty, not editable and displayEmpty is true', async () => {
-        component.properties = [new CardViewTextItemModel({
-            label: 'My default label',
-            value: null,
-            default: 'default value',
-            key: 'some-key',
-            editable: false
-        })];
+        component.properties = [
+            new CardViewTextItemModel({
+                label: 'My default label',
+                value: null,
+                default: 'default value',
+                key: 'some-key',
+                editable: false
+            })
+        ];
         component.editable = true;
         component.displayEmpty = true;
 
@@ -120,13 +130,15 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the default value if the value is empty and is editable', async () => {
-        component.properties = [new CardViewTextItemModel({
-            label: 'My default label',
-            value: null,
-            default: 'default value',
-            key: 'some-key',
-            editable: true
-        })];
+        component.properties = [
+            new CardViewTextItemModel({
+                label: 'My default label',
+                value: null,
+                default: 'default value',
+                key: 'some-key',
+                editable: true
+            })
+        ];
         component.editable = true;
         component.displayEmpty = false;
 
@@ -143,95 +155,104 @@ describe('CardViewComponent', () => {
     });
 
     it('should render the select element with the None option when not set in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
-        component.properties = [new CardViewSelectItemModel({
-            label: 'My default label',
-            value: '1',
-            default: 'default value',
-            key: 'some-key',
-            editable: true,
-            options$: of(options)
-        })];
+        const options: CardViewSelectItemOption<string>[] = [
+            { label: 'Option 1', key: '1' },
+            { label: 'Option 2', key: '2' }
+        ];
+        component.properties = [
+            new CardViewSelectItemModel({
+                label: 'My default label',
+                value: '1',
+                default: 'default value',
+                key: 'some-key',
+                editable: true,
+                options$: of(options)
+            })
+        ];
         component.editable = true;
         component.displayEmpty = false;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
-        labelValue.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const select = await loader.getHarness(MatSelectHarness);
+        await select.open();
 
-        const currentOptions = document.querySelectorAll('mat-option');
+        const currentOptions = await select.getOptions();
         expect(currentOptions.length).toBe(3);
-        expect(currentOptions[0].innerHTML).toContain('CORE.CARDVIEW.NONE');
-        expect(currentOptions[1].innerHTML).toContain(options[0].label);
-        expect(currentOptions[2].innerHTML).toContain(options[1].label);
+        expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
+        expect(await currentOptions[1].getText()).toContain(options[0].label);
+        expect(await currentOptions[2].getText()).toContain(options[1].label);
     });
 
     it('should render the select element with the None option when set true in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
-        component.properties = [new CardViewSelectItemModel({
-            label: 'My default label',
-            value: '1',
-            default: 'default value',
-            key: 'some-key',
-            editable: true,
-            displayNoneOption: true,
-            options$: of(options)
-        })];
+        const options: CardViewSelectItemOption<string>[] = [
+            { label: 'Option 1', key: '1' },
+            { label: 'Option 2', key: '2' }
+        ];
+        component.properties = [
+            new CardViewSelectItemModel({
+                label: 'My default label',
+                value: '1',
+                default: 'default value',
+                key: 'some-key',
+                editable: true,
+                displayNoneOption: true,
+                options$: of(options)
+            })
+        ];
         component.editable = true;
         component.displayEmpty = false;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
-        labelValue.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const select = await loader.getHarness(MatSelectHarness);
+        await select.open();
 
-        const currentOptions = document.querySelectorAll('mat-option');
+        const currentOptions = await select.getOptions();
         expect(currentOptions.length).toBe(3);
-        expect(currentOptions[0].innerHTML).toContain('CORE.CARDVIEW.NONE');
-        expect(currentOptions[1].innerHTML).toContain(options[0].label);
-        expect(currentOptions[2].innerHTML).toContain(options[1].label);
+        expect(await currentOptions[0].getText()).toContain('CORE.CARDVIEW.NONE');
+        expect(await currentOptions[1].getText()).toContain(options[0].label);
+        expect(await currentOptions[2].getText()).toContain(options[1].label);
     });
 
     it('should not render the select element with the None option when set false in the properties', async () => {
-        const options: CardViewSelectItemOption<string>[] = [{label : 'Option 1', key: '1'}, {label : 'Option 2', key: '2'}];
-        component.properties = [new CardViewSelectItemModel({
-            label: 'My default label',
-            value: '1',
-            default: 'default value',
-            key: 'some-key',
-            editable: true,
-            displayNoneOption: false,
-            options$: of(options)
-        })];
+        const options: CardViewSelectItemOption<string>[] = [
+            { label: 'Option 1', key: '1' },
+            { label: 'Option 2', key: '2' }
+        ];
+        component.properties = [
+            new CardViewSelectItemModel({
+                label: 'My default label',
+                value: '1',
+                default: 'default value',
+                key: 'some-key',
+                editable: true,
+                displayNoneOption: false,
+                options$: of(options)
+            })
+        ];
         component.editable = true;
         component.displayEmpty = false;
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const labelValue = fixture.debugElement.query(By.css('adf-card-view-selectitem .mat-select-trigger'));
-        labelValue.triggerEventHandler('click', null);
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const select = await loader.getHarness(MatSelectHarness);
+        await select.open();
 
-        const currentOptions = document.querySelectorAll('mat-option');
+        const currentOptions = await select.getOptions();
         expect(currentOptions.length).toBe(2);
-        expect(currentOptions[0].innerHTML).toContain(options[0].label);
-        expect(currentOptions[1].innerHTML).toContain(options[1].label);
+        expect(await currentOptions[0].getText()).toContain(options[0].label);
+        expect(await currentOptions[1].getText()).toContain(options[1].label);
     });
 
     it('should show/hide the label for multivalued chip property based on displayLabelForChips input', () => {
         const multiValueProperty: CardViewItem = new CardViewTextItemModel({
-          label: 'My Multivalue Label',
-          value: ['Value 1', 'Value 2', 'Value 3'],
-          key: 'multi-key'
+            label: 'My Multivalue Label',
+            value: ['Value 1', 'Value 2', 'Value 3'],
+            key: 'multi-key'
         });
 
         component.properties = [multiValueProperty];
@@ -256,5 +277,4 @@ describe('CardViewComponent', () => {
         const cardViewItemDispatcherDebugElement = fixture.debugElement.query(By.directive(CardViewItemDispatcherComponent));
         return cardViewItemDispatcherDebugElement.componentInstance as CardViewItemDispatcherComponent;
     }
-
 });
