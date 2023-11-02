@@ -54,6 +54,8 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     private setDefaultConfig(): void {
         if (!this.dateConfig) {
             this.config = this.defaultDateConfig;
+            this.config.format = this.column?.format ?? this.config.format;
+
             return;
         }
 
