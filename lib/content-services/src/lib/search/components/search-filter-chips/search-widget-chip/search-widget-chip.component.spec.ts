@@ -23,19 +23,20 @@ import { ContentTestingModule } from '../../../../testing/content.testing.module
 import { MatMenuModule } from '@angular/material/menu';
 import { By } from '@angular/platform-browser';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchWidgetChipComponent', () => {
+    let loader: HarnessLoader;
     let component: SearchWidgetChipComponent;
     let fixture: ComponentFixture<SearchWidgetChipComponent>;
     let queryBuilder: SearchQueryBuilderService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                MatMenuModule,
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [MatMenuModule, TranslateModule.forRoot(), ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);
@@ -44,35 +45,40 @@ describe('SearchWidgetChipComponent', () => {
 
         component.category = simpleCategories[1];
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('should update search query on apply click', () => {
-      const chip = fixture.debugElement.query(By.css('mat-chip'));
-      chip.triggerEventHandler('click', { stopPropagation: () => null });
-      fixture.detectChanges();
-      const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-      applyButton.triggerEventHandler('click', {});
-      expect(queryBuilder.update).toHaveBeenCalled();
+    it('should update search query on apply click', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
+        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
+        applyButton.triggerEventHandler('click', {});
+
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
-    it('should update search query on cancel click', () => {
-      const chip = fixture.debugElement.query(By.css('mat-chip'));
-      chip.triggerEventHandler('click', { stopPropagation: () => null });
-      fixture.detectChanges();
-      const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
-      applyButton.triggerEventHandler('click', {});
-      expect(queryBuilder.update).toHaveBeenCalled();
+    it('should update search query on cancel click', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
+        const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
+        applyButton.triggerEventHandler('click', {});
+        expect(queryBuilder.update).toHaveBeenCalled();
     });
 
-    it('should display arrow down icon', () => {
-      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-      expect(icon).toEqual('keyboard_arrow_down');
+    it('should display arrow down icon', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        const icon = await chip.getHarness(MatIconHarness);
+        expect(await icon.getName()).toBe('keyboard_arrow_down');
     });
 
-    it('should display arrow up icon when menu is opened', () => {
-      component.onMenuOpen();
-      fixture.detectChanges();
-      const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-      expect(icon).toEqual('keyboard_arrow_up');
+    it('should display arrow up icon when menu is opened', async () => {
+        component.onMenuOpen();
+        fixture.detectChanges();
+
+        const chip = await loader.getHarness(MatChipHarness);
+        const icon = await chip.getHarness(MatIconHarness);
+        expect(await icon.getName()).toBe('keyboard_arrow_up');
     });
 });
