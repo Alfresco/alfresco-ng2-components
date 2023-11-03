@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-event',
@@ -37,8 +37,6 @@ export class DiagramEventComponent implements OnInit {
     error = new EventEmitter();
 
     center: any = {};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
 

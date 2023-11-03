@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-icon-google-drive-publish-task',
@@ -33,8 +33,6 @@ export class DiagramIconGoogleDrivePublishTaskComponent implements OnInit {
     position: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 6, y: this.data.y + 6};

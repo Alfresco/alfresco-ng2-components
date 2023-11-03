@@ -15,22 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'adf-diagram-publish-task',
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
-export class DiagramAlfrescoPublishTaskComponent implements OnInit {
+export class DiagramAlfrescoPublishTaskComponent {
     @Input()
     data: any;
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {}
-
-    ngOnInit() {
-
-    }
 }

@@ -16,10 +16,9 @@
  */
 
 /* cSpell:disable */
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './../models/point';
 import { RaphaelBase } from './../raphael-base';
-import { RaphaelService } from './../raphael.service';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
@@ -49,11 +48,6 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
 
     @Input()
     fillOpacity: any;
-
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
 
     ngOnInit() {
         this.draw(this.position);

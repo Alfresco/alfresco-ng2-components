@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-pool',
@@ -38,8 +38,6 @@ export class DiagramPoolComponent implements OnInit {
     text: string;
     textTransform: string;
     options: any = {stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.rectLeftCorner = {x: this.pool.x, y: this.pool.y};

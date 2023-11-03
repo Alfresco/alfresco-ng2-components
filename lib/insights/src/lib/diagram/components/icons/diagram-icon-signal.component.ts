@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-icon-signal',
@@ -36,8 +36,6 @@ export class DiagramIconSignalComponent implements OnInit {
     position: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.position = {x: this.data.x - 1, y: this.data.y - 1};

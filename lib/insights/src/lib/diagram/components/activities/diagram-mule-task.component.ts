@@ -17,22 +17,16 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-mule-task',
     templateUrl: './diagram-mule-task.component.html'
 })
-export class DiagramMuleTaskComponent implements OnInit {
+export class DiagramMuleTaskComponent {
     @Input()
     data: any;
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {}
-
-    ngOnInit() {
-
-    }
 }

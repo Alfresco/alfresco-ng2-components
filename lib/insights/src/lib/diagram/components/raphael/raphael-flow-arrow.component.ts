@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Polyline } from './polyline';
 import { RaphaelBase } from './raphael-base';
-import { RaphaelService } from './raphael.service';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
@@ -39,11 +38,6 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
 
     ngOnInit() {
         this.draw(this.flow);

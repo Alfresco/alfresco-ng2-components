@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-icon-timer',
@@ -37,8 +37,6 @@ export class DiagramIconTimerComponent implements OnInit {
 
     circleOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
     timerOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

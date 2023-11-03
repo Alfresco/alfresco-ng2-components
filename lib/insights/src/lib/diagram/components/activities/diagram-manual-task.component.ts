@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-manual-task',
@@ -29,7 +29,4 @@ export class DiagramManualTaskComponent {
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {
-    }
 }

@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
@@ -38,8 +38,7 @@ export class DiagramIntermediateCatchingEventComponent implements OnInit {
     circleRadiusInner: number;
     circleRadiusOuter: number;
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+    constructor(private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

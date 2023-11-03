@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-receive-task',
@@ -29,6 +29,4 @@ export class DiagramReceiveTaskComponent {
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {}
 }

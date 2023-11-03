@@ -17,7 +17,7 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-container-icon-event',
@@ -35,6 +35,4 @@ export class DiagramContainerIconEventTaskComponent {
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {}
 }
