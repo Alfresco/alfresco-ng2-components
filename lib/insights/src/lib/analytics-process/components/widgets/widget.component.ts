@@ -26,7 +26,7 @@ export class WidgetComponent implements OnChanges {
 
     /** fieldChanged. */
     @Output()
-    fieldChanged: EventEmitter<any> = new EventEmitter<any>();
+    fieldChanged = new EventEmitter<any>();
 
     ngOnChanges(changes: SimpleChanges) {
         const field = changes['field'];

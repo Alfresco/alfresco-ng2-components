@@ -18,20 +18,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { AnalyticsService } from '../services/analytics.service';
+import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 
 @Component({
     selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
     templateUrl: './analytics-report-heat-map.component.html'
 })
-export class AnalyticsReportHeatMapComponent implements  OnInit {
-
+export class AnalyticsReportHeatMapComponent implements OnInit {
     /** reportId. */
     @Input()
     report: any;
 
     /** success. */
     @Output()
-    success = new EventEmitter();
+    success = new EventEmitter<ParameterValueModel[]>();
 
     /** error. */
     @Output()
@@ -44,21 +44,17 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: any;
     metricType: string;
 
-    constructor(private analyticsService: AnalyticsService,
-                private formBuilder: UntypedFormBuilder) {
-    }
+    constructor(private analyticsService: AnalyticsService, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         this.initForm();
         this.field.id = 'metrics';
         this.field.value = 'totalCount';
 
-        this.analyticsService.getMetricValues().subscribe(
-            (opts: any[]) => {
-                this.field.options = opts;
-                this.success.emit(opts);
-            }
-        );
+        this.analyticsService.getMetricValues().subscribe((opts) => {
+            this.field.options = opts;
+            this.success.emit(opts);
+        });
     }
 
     onMetricChanges(field: any) {
@@ -86,13 +82,10 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     }
 
     hasMetric(): boolean {
-        return !!(this.report.totalCountsPercentages ||
-            this.report.totalTimePercentages ||
-            this.report.avgTimePercentages);
+        return !!(this.report.totalCountsPercentages || this.report.totalTimePercentages || this.report.avgTimePercentages);
     }
 
     get metricGroup(): UntypedFormGroup {
         return this.metricForm.controls.metricGroup as UntypedFormGroup;
     }
-
 }

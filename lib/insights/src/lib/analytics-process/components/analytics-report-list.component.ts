@@ -41,7 +41,7 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /** selectFirst. */
     @Input()
-    selectFirst: boolean = false;
+    selectFirst = false;
 
     /** report Click. */
     @Output()
@@ -49,21 +49,20 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /** success. */
     @Output()
-    success = new EventEmitter();
+    success = new EventEmitter<ReportParametersModel[]>();
 
     /** error. */
     @Output()
     error = new EventEmitter();
 
     report$: Observable<ReportParametersModel>;
-    currentReport: any;
+    currentReport: ReportParametersModel;
     reports: ReportParametersModel[] = [];
 
     private reportObserver: Observer<any>;
 
     constructor(private analyticsService: AnalyticsService) {
-        this.report$ = new Observable<ReportParametersModel>((observer) => this.reportObserver = observer)
-            .pipe(share());
+        this.report$ = new Observable<ReportParametersModel>((observer) => (this.reportObserver = observer)).pipe(share());
     }
 
     ngOnInit() {
@@ -96,7 +95,7 @@ export class AnalyticsReportListComponent implements OnInit {
      */
     getReportList(appId: number, reportId?: number): void {
         this.analyticsService.getReportList(appId).subscribe(
-            (res: ReportParametersModel[]) => {
+            (res) => {
                 if (res && res.length === 0) {
                     this.createDefaultReports();
                 } else {
@@ -122,18 +121,14 @@ export class AnalyticsReportListComponent implements OnInit {
      * Create the default reports and return the report list
      */
     createDefaultReports() {
-        this.analyticsService.createDefaultReports().subscribe(
-            () => {
-                this.analyticsService.getReportList(this.appId).subscribe(
-                    (response: ReportParametersModel[]) => {
-                        response.forEach((report) => {
-                            this.reportObserver.next(report);
-                        });
-                        this.success.emit(response);
-                    }
-                );
-            }
-        );
+        this.analyticsService.createDefaultReports().subscribe(() => {
+            this.analyticsService.getReportList(this.appId).subscribe((response) => {
+                response.forEach((report) => {
+                    this.reportObserver.next(report);
+                });
+                this.success.emit(response);
+            });
+        });
     }
 
     /**
@@ -150,7 +145,7 @@ export class AnalyticsReportListComponent implements OnInit {
      *
      * @param report report model
      */
-    selectReport(report: any) {
+    selectReport(report: ReportParametersModel) {
         this.currentReport = report;
         this.reportClick.emit(report);
     }

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'analytics-dropdown-widget',
@@ -28,18 +28,11 @@ import { WidgetComponent } from './../widget.component';
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements OnInit {
-
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 
     @Input('controllerName')
     public controllerName: string;
-
-    @Output()
-    fieldChanged: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
     showDefaultOption: boolean = true;
@@ -49,10 +42,6 @@ export class DropdownWidgetAnalyticsComponent extends WidgetComponent implements
 
     @Input()
     defaultOptionText: string = 'Choose One';
-
-    constructor() {
-        super();
-    }
 
     ngOnInit() {
         if (this.required) {

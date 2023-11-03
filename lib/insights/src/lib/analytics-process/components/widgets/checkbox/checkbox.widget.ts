@@ -15,29 +15,21 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
- import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
- import { UntypedFormGroup } from '@angular/forms';
- import { WidgetComponent } from './../widget.component';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
+import { WidgetComponent } from '../widget.component';
 
- @Component({
+@Component({
     selector: 'analytics-checkbox-widget',
     templateUrl: './checkbox.widget.html',
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetAnalyticsComponent extends WidgetComponent {
-
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 
     @Input('controllerName')
     public controllerName: string;
-
-    constructor(public elementRef: ElementRef) {
-        super();
-    }
 }

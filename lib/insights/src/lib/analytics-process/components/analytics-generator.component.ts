@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
@@ -27,6 +27,7 @@ import { AnalyticsService } from '../services/analytics.service';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsGeneratorComponent implements OnChanges {
+    private analyticsService = inject(AnalyticsService);
 
     /** reportId. */
     @Input()
@@ -38,7 +39,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
 
     /** success. */
     @Output()
-    success = new EventEmitter();
+    success = new EventEmitter<Chart[]>();
 
     /** error. */
     @Output()
@@ -52,22 +53,22 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     public barChartOptions: any = {
         responsive: true,
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
                 }
-            }],
-            xAxes: [{
-                ticks: {
-                },
-                stacked: true
-            }]
+            ],
+            xAxes: [
+                {
+                    ticks: {},
+                    stacked: true
+                }
+            ]
         }
     };
-
-    constructor(private analyticsService: AnalyticsService) {
-    }
 
     ngOnChanges() {
         if (this.reportId && this.reportParamQuery) {
@@ -77,9 +78,9 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         }
     }
 
-    public generateReport(reportId: string, reportParamQuery: any) {
+    public generateReport(reportId: string, reportParamQuery: ReportQuery) {
         if (reportParamQuery === undefined || reportParamQuery === null) {
-            reportParamQuery = {};
+            reportParamQuery = new ReportQuery();
         }
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
             (res) => {
@@ -101,7 +102,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         }
     }
 
-    public refresh(report): void {
+    public refresh(report: Chart): void {
         /**
          * (My guess), for Angular to recognize the change in the dataset
          * it has to change the dataset variable directly,

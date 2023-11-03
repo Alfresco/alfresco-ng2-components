@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ParameterValueModel } from '../../../../diagram/models/report/parameter-value.model';
 import { ReportParameterDetailsModel } from '../../../../diagram/models/report/report-parameter-details.model';
-import { NumberWidgetAnalyticsComponent } from './../number/number.widget';
+import { NumberWidgetAnalyticsComponent } from '../number/number.widget';
 
 @Component({
     selector: 'duration-widget',
@@ -30,10 +30,6 @@ import { NumberWidgetAnalyticsComponent } from './../number/number.widget';
     encapsulation: ViewEncapsulation.None
 })
 export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent implements OnInit {
-
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 
@@ -48,10 +44,6 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
 
     public selectionGroup: UntypedFormGroup;
 
-    constructor(public elementRef: ElementRef) {
-        super(elementRef);
-    }
-
     ngOnInit() {
         const timeType = new UntypedFormControl();
         this.formGroup.addControl('timeType', timeType);
@@ -64,21 +56,20 @@ export class DurationWidgetComponent extends NumberWidgetAnalyticsComponent impl
         }
 
         const paramOptions: ParameterValueModel[] = [];
-        paramOptions.push(new ParameterValueModel({id: '1', name: 'Seconds'}));
-        paramOptions.push(new ParameterValueModel({id: '60', name: 'Minutes'}));
-        paramOptions.push(new ParameterValueModel({id: '3600', name: 'Hours'}));
-        paramOptions.push(new ParameterValueModel({id: '86400', name: 'Days', selected: true}));
+        paramOptions.push(new ParameterValueModel({ id: '1', name: 'Seconds' }));
+        paramOptions.push(new ParameterValueModel({ id: '60', name: 'Minutes' }));
+        paramOptions.push(new ParameterValueModel({ id: '3600', name: 'Hours' }));
+        paramOptions.push(new ParameterValueModel({ id: '86400', name: 'Days', selected: true }));
 
-        this.duration = new ReportParameterDetailsModel({id: 'duration', name: 'duration', options: paramOptions});
+        this.duration = new ReportParameterDetailsModel({ id: 'duration', name: 'duration', options: paramOptions });
         this.duration.value = paramOptions[0].id;
     }
 
     public calculateDuration() {
-        if (this.field && this.duration.value ) {
+        if (this.field && this.duration.value) {
             this.currentValue = parseInt(this.field.value, 10) * parseInt(this.duration.value, 10);
             this.formGroup.get(this.controllerName).setValue(this.currentValue);
-            this.fieldChanged.emit({value: this.currentValue});
+            this.fieldChanged.emit({ value: this.currentValue });
         }
     }
-
 }
