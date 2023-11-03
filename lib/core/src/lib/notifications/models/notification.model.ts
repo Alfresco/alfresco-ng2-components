@@ -39,4 +39,7 @@ export interface NotificationModel {
     icon?: string;
     clickCallBack?: any;
     args?: any;
+    read?: boolean;
 }
+
+export const NOTIFICATION_STORAGE = 'notification-history';

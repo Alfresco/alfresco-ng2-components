@@ -22,7 +22,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../common/services/storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationModel, NOTIFICATION_TYPE } from '../models/notification.model';
+import { NotificationModel, NOTIFICATION_TYPE, NOTIFICATION_STORAGE } from '../models/notification.model';
 
 describe('Notification History Component', () => {
 
@@ -32,11 +32,12 @@ describe('Notification History Component', () => {
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
     let storage: StorageService;
+    let testNotifications: NotificationModel[];
 
     const openNotification = () => {
         fixture.detectChanges();
         const button = element.querySelector<HTMLButtonElement>('#adf-notification-history-open-button');
-        button.click();
+        button?.click();
         fixture.detectChanges();
     };
 
@@ -54,6 +55,26 @@ describe('Notification History Component', () => {
         storage = TestBed.inject(StorageService);
         notificationService = TestBed.inject(NotificationService);
         component.notifications = [];
+        component.unreadNotifications = [];
+
+        testNotifications = [
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Moved 1 item.'],
+                read: false
+            },
+            {
+                type: NOTIFICATION_TYPE.INFO,
+                icon: 'info',
+                datetime: new Date(),
+                initiator: { key: '*', displayName: 'SYSTEM' },
+                messages: ['Copied 1 item.'],
+                read: false
+            }
+        ];
     });
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {
@@ -61,7 +82,7 @@ describe('Notification History Component', () => {
     }));
 
     afterEach(() => {
-        storage.removeItem(NotificationHistoryComponent.NOTIFICATION_STORAGE);
+        storage.removeItem(NOTIFICATION_STORAGE);
         fixture.destroy();
     });
 
@@ -83,12 +104,11 @@ describe('Notification History Component', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.notifications.length).toBe(1);
+                expect(component.unreadNotifications.length).toBe(1);
                 const markAllAsRead = overlayContainerElement.querySelector<HTMLButtonElement>('#adf-notification-history-mark-as-read');
-                markAllAsRead.click();
+                markAllAsRead?.click();
                 fixture.detectChanges();
-                expect(storage.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)).toBeNull();
-                expect(component.notifications.length).toBe(0);
+                expect(component.unreadNotifications).toEqual([]);
                 done();
             });
         });
@@ -101,7 +121,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(overlayContainerElement.querySelector('#adf-notification-history-component-no-message')).toBeNull();
-                expect(overlayContainerElement.querySelector('.adf-notification-history-list').innerHTML).toContain('Example Message');
+                expect(overlayContainerElement.querySelector('.adf-notification-history-list')?.innerHTML).toContain('Example Message');
                 done();
             });
         });
@@ -123,7 +143,7 @@ describe('Notification History Component', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const notification = overlayContainerElement.querySelector<HTMLButtonElement>('.adf-notification-history-menu-item');
-                notification.click();
+                notification?.click();
                 expect(callBackSpy).toHaveBeenCalled();
                 done();
             });
@@ -148,7 +168,7 @@ describe('Notification History Component', () => {
         });
 
         it('should read notifications from local storage', (done) => {
-            storage.setItem(NotificationHistoryComponent.NOTIFICATION_STORAGE, JSON.stringify([{
+            storage.setItem(NOTIFICATION_STORAGE, JSON.stringify([{
                 messages: ['My new message'],
                 datetime: new Date(),
                 type: NOTIFICATION_TYPE.RECURSIVE
@@ -181,5 +201,31 @@ describe('Notification History Component', () => {
                 done();
             });
         }, 45000);
+    });
+
+    it('should set unreadNotifications to an empty array when there are no notifications', () => {
+        component.notifications = [];
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications).toEqual([]);
+    });
+
+    it('should set unreadNotifications to an empty array when all notifications are read', () => {
+        testNotifications.forEach((notification: NotificationModel) => {
+            notification.read = true;
+        });
+        storage.setItem(NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications).toEqual([]);
+    });
+
+    it('should set unreadNotifications by filtering notifications where read is false', () => {
+        testNotifications[0].read = true;
+        storage.setItem(NOTIFICATION_STORAGE, JSON.stringify(testNotifications));
+        fixture.detectChanges();
+
+        expect(component.unreadNotifications.length).toEqual(1);
+        expect(component.unreadNotifications[0].read).toEqual(false);
     });
 });
