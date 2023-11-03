@@ -17,16 +17,11 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-rest-call-task',
     templateUrl: './diagram-rest-call-task.component.html'
 })
-export class DiagramRestCallTaskComponent {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-}
+export class DiagramRestCallTaskComponent extends DiagramElement {}

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 
-import { Component } from '@angular/core';
-import { DiagramElement } from '../diagram-element';
+@Directive()
+export abstract class DiagramElement {
+    @Input()
+    data: any;
 
-@Component({
-    selector: 'diagram-container-service-task',
-    templateUrl: './diagram-container-service-task.component.html'
-})
-export class DiagramContainerServiceTaskComponent extends DiagramElement {}
+    @Output()
+    error = new EventEmitter();
+}

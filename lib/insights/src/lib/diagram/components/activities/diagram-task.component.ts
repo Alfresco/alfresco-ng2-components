@@ -17,26 +17,21 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ACTIVITY_STROKE_COLOR } from '../../constants/diagram-colors';
 import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-task',
     templateUrl: './diagram-task.component.html'
 })
-export class DiagramTaskComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
+export class DiagramTaskComponent extends DiagramElement implements OnInit {
+    private diagramColorService = inject(DiagramColorService);
 
     rectLeftCorner: any;
     textPosition: any;
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
-
-    constructor(private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.rectLeftCorner = {x: this.data.x, y: this.data.y};

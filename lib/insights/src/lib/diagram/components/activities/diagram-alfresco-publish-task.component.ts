@@ -15,16 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'adf-diagram-publish-task',
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
-export class DiagramAlfrescoPublishTaskComponent {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-}
+export class DiagramAlfrescoPublishTaskComponent extends DiagramElement {}
