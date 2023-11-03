@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { DateConfig } from '../../data/data-column.model';
@@ -28,8 +28,7 @@ import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
     selector: 'adf-date-cell',
     templateUrl: './date-cell.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    host: { class: 'adf-datatable-content-cell' }
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
 
@@ -48,18 +47,15 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.setDefaultConfig();
+        this.setConfig();
     }
 
-    private setDefaultConfig(): void {
-        if (!this.dateConfig) {
-            this.config = this.defaultDateConfig;
-            this.config.format = this.column?.format ?? this.config.format;
+    get format(): string {
+        return this.column?.format ?? this.config.format;
+    }
 
-            return;
-        }
-
-        this.config.format = this.dateConfig?.format ?? (this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format));
+    private setConfig(): void {
+        this.config.format = this.dateConfig?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
         this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
         this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
     }

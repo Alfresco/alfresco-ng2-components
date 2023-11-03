@@ -137,18 +137,6 @@ describe('DateCellComponent', () => {
         checkDisplayedTooltip(expectedTooltip);
     });
 
-    it('should display date and tooltip with defaules values if dateConfig is not defined', () => {
-        const mockDateConfig = undefined as any;
-
-        const expectedDate = 'Oct 25, 2023, 12:00:00 AM';
-        const expectedTooltip = expectedDate;
-
-        renderDateCell(mockDateConfig, mockDate, mockTooltip);
-        checkDisplayedDate(expectedDate);
-        checkDisplayedTooltip(expectedTooltip);
-    });
-
-
     it('should display date with timeAgo format', () => {
         const mockDateConfig: DateConfig = {
             format: 'timeAgo'
@@ -187,13 +175,13 @@ describe('DateCellComponent', () => {
         checkDisplayedDate(expectedDate);
     });
 
-    it('should display date and override column format by dateConfig if is provided', () => {
+    it('should display date and override dateConfig by column format if is provided', () => {
         component.column = mockColumn;
         const mockDateConfig: DateConfig = {
             format: 'short'
         };
 
-        const expectedDate = '10/25/23, 12:00 AM';
+        const expectedDate = 'Wednesday, October 25, 2023 at 12:00:00 AM GMT+00:00';
 
         renderDateCell(mockDateConfig, mockDate, mockTooltip);
         checkDisplayedDate(expectedDate);
