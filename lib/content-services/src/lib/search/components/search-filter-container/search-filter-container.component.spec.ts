@@ -24,8 +24,13 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchCategory } from '../../models/search-category.interface';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatMenuHarness } from '@angular/material/menu/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatBadgeHarness } from '@angular/material/badge/testing';
 
 const mockCategory: SearchCategory = {
     id: 'queryName',
@@ -44,6 +49,7 @@ const mockCategory: SearchCategory = {
 };
 
 describe('SearchFilterContainerComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchFilterContainerComponent>;
     let component: SearchFilterContainerComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
@@ -54,10 +60,7 @@ describe('SearchFilterContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             providers: [
                 { provide: SearchService, useValue: searchMock },
                 { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
@@ -66,9 +69,10 @@ describe('SearchFilterContainerComponent', () => {
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
-        component.col = {key: '123', type: 'text'};
+        component.col = { key: '123', type: 'text' };
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -86,26 +90,23 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should set/update the active filter after the Apply button is clicked', async () => {
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
+
         component.widgetContainer.componentRef.instance.value = 'searchText';
-        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-        applyButton.triggerEventHandler('click', {});
-        fixture.detectChanges();
-        await fixture.whenStable();
+
+        const applyButton = await menu.getHarness(MatButtonHarness.with({ selector: '#apply-filter-button' }));
+        await applyButton.click();
+
         expect(queryBuilder.getActiveFilters().length).toBe(1);
         expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('searchText');
 
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        await menu.open();
+
         component.widgetContainer.componentRef.instance.value = 'updated text';
-        applyButton.triggerEventHandler('click', {});
-        fixture.detectChanges();
-        await fixture.whenStable();
+
+        await applyButton.click();
         expect(queryBuilder.getActiveFilters().length).toBe(1);
         expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
         expect(queryBuilder.getActiveFilters()[0].value).toBe('updated text');
@@ -113,16 +114,15 @@ describe('SearchFilterContainerComponent', () => {
 
     it('should remove active filter after the Clear button is clicked', async () => {
         queryBuilder.setActiveFilter('name', 'searchText');
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
+
         component.widgetContainer.componentRef.instance.value = 'searchText';
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-        clearButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
+
+        const clearButton = await menu.getHarness(MatButtonHarness.with({ selector: '#clear-filter-button' }));
+        await clearButton.click();
+
         expect(queryBuilder.getActiveFilters().length).toBe(0);
     });
 
@@ -133,15 +133,13 @@ describe('SearchFilterContainerComponent', () => {
         component.filterChange.subscribe(() => {
             eventRaised = true;
         });
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-        menuButton.click();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
+        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -150,39 +148,33 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should hide the red dot after the filter is cleared', async () => {
-        const badge: HTMLElement = fixture.nativeElement.querySelector(`[data-automation-id="filter-menu-button"] .mat-badge-content`);
-        expect(window.getComputedStyle(badge).display).toBe('none');
+        const badge = await loader.getHarness(MatBadgeHarness);
+        expect(await badge.isHidden()).toBe(true);
 
-        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
+
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
+        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(window.getComputedStyle(badge).display).not.toBe('none');
+        expect(await badge.isHidden()).toBe(false);
 
-        menuButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
-        clearButton.triggerEventHandler('click', fakeEvent);
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(window.getComputedStyle(badge).display).toBe('none');
+        await menu.open();
+
+        const clearButton = await menu.getHarness(MatButtonHarness.with({ selector: '#clear-filter-button' }));
+        await clearButton.click();
+
+        expect(await badge.isHidden()).toBe(true);
     });
 
     describe('Accessibility', () => {
-
         it('should set up a focus trap on the filter when the menu is opened', async () => {
             expect(component.focusTrap).toBeUndefined();
 
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-            menuButton.click();
-            fixture.detectChanges();
+            const menu = await loader.getHarness(MatMenuHarness);
+            await menu.open();
 
             expect(component.focusTrap).toBeDefined();
             // eslint-disable-next-line no-underscore-dangle
@@ -190,32 +182,19 @@ describe('SearchFilterContainerComponent', () => {
         });
 
         it('should focus the input element when the menu is opened', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-            menuButton.click();
+            const menu = await loader.getHarness(MatMenuHarness);
+            await menu.open();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const inputElement = fixture.debugElement.query(By.css('.mat-input-element'));
-            expect(document.activeElement).toBe(inputElement.nativeElement);
-
+            const input = await menu.getHarness(MatInputHarness);
+            expect(await input.isFocused()).toBe(true);
         });
 
         it('should focus the menu trigger when the menu is closed', async () => {
-            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('[data-automation-id="filter-menu-button"]');
-            menuButton.click();
+            const menu = await loader.getHarness(MatMenuHarness);
+            await menu.open();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const matMenuTrigger = fixture.debugElement.query(By.directive(MatMenuTrigger)).injector.get(MatMenuTrigger);
-            matMenuTrigger.closeMenu();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const matMenuButton = fixture.debugElement.query(By.css('[data-automation-id="filter-menu-button"]'));
-            expect(document.activeElement).toBe(matMenuButton.nativeElement);
+            await menu.close();
+            expect(await menu.isFocused()).toBe(true);
         });
     });
 });

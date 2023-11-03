@@ -16,23 +16,23 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { PermissionContainerComponent } from './permission-container.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('PermissionContainerComponent', () => {
-
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<PermissionContainerComponent>;
     let component: PermissionContainerComponent;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(PermissionContainerComponent);
         component = fixture.componentInstance;
@@ -60,6 +60,7 @@ describe('PermissionContainerComponent', () => {
         ];
 
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -72,26 +73,24 @@ describe('PermissionContainerComponent', () => {
         expect(element.querySelector('#adf-select-role-permission').textContent).toContain('consumer');
     });
 
-    it('should emit update event on  role change', () => {
+    it('should emit update event on  role change', async () => {
         spyOn(component.update, 'emit');
 
-        const selectBox = fixture.debugElement.query(By.css(('[id="adf-select-role-permission"] .mat-select-trigger')));
-        selectBox.triggerEventHandler('click', null);
-        fixture.detectChanges();
+        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        await select.open();
 
-        const options = fixture.debugElement.queryAll(By.css('mat-option'));
-        expect(options).not.toBeNull();
+        const options = await select.getOptions();
         expect(options.length).toBe(2);
-        options[0].triggerEventHandler('click', {});
-        fixture.detectChanges();
+        await options[0].click();
         expect(component.update.emit).toHaveBeenCalledWith({ role: 'Test', permission: component.permissions[0] });
     });
 
-    it('should delete update event on row delete', () => {
+    it('should delete update event on row delete', async () => {
         spyOn(component.delete, 'emit');
-        const deleteButton: HTMLButtonElement = element.querySelector('[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]');
-        deleteButton.click();
-        fixture.detectChanges();
+        const deleteButton = await loader.getHarness(
+            MatButtonHarness.with({ selector: `[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]` })
+        );
+        await deleteButton.click();
         expect(component.delete.emit).toHaveBeenCalledWith(component.permissions[0]);
     });
 });

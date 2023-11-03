@@ -37,7 +37,6 @@ import { PeopleProcessService } from '../../common/services/people-process.servi
 import { BpmUserModel } from '../../common/models/bpm-user.model';
 
 describe('TaskHeaderComponent', () => {
-
     let service: TaskListService;
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
@@ -60,10 +59,7 @@ describe('TaskHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
@@ -73,6 +69,11 @@ describe('TaskHeaderComponent', () => {
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
         appConfigService = TestBed.inject(AppConfigService);
     });
+
+    const getClaimButton = () => fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'))?.nativeElement as HTMLButtonElement;
+
+    const getUnclaimButton = () =>
+        fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'))?.nativeElement as HTMLButtonElement;
 
     it('should render empty component if no task details provided', async () => {
         component.taskDetails = undefined;
@@ -138,7 +139,6 @@ describe('TaskHeaderComponent', () => {
     });
 
     describe('Claiming', () => {
-
         it('should be able display the claim/release button if showClaimRelease set to true', async () => {
             component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
             component.showClaimRelease = true;
@@ -147,8 +147,8 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            const claimButton = getClaimButton();
+            expect(claimButton.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 
         it('should not be able display the claim/release button if showClaimRelease set to false', async () => {
@@ -159,8 +159,8 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(claimButton).toBeNull();
+            const claimButton = getClaimButton();
+            expect(claimButton).toBeUndefined();
         });
 
         it('should display the claim button if no assignee', async () => {
@@ -171,8 +171,8 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            const claimButton = getClaimButton();
+            expect(claimButton.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 
         it('should display the claim button if the task is claimable', async () => {
@@ -182,9 +182,9 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            const claimButton = getClaimButton();
             expect(component.isTaskClaimable()).toBeTruthy();
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            expect(claimButton.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 
         it('should not display the claim/requeue button if the task is not claimable ', async () => {
@@ -194,12 +194,12 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const unclaimButton = getUnclaimButton();
             expect(component.isTaskClaimable()).toBeFalsy();
             expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
-            expect(unclaimButton).toBeNull();
-            expect(claimButton).toBeNull();
+            expect(unclaimButton).toBeUndefined();
+            expect(claimButton).toBeUndefined();
         });
     });
 
@@ -210,9 +210,9 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        const unclaimButton = getUnclaimButton();
         expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
-        expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+        expect(unclaimButton.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
     });
 
     it('should not display the requeue button to logged in user if task is claimed by other candidate member', async () => {
@@ -222,9 +222,9 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+        const unclaimButton = getUnclaimButton();
         expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
-        expect(unclaimButton).toBeNull();
+        expect(unclaimButton).toBeUndefined();
     });
 
     it('should display the claim button if the task is claimable by candidates members', async () => {
@@ -234,10 +234,10 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+        const claimButton = getClaimButton();
         expect(component.isTaskClaimable()).toBeTruthy();
         expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
-        expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+        expect(claimButton.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
     });
 
     it('should not display the requeue button if the task is completed', async () => {
@@ -247,10 +247,10 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-        const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-        expect(claimButton).toBeNull();
-        expect(unclaimButton).toBeNull();
+        const claimButton = getClaimButton();
+        const unclaimButton = getUnclaimButton();
+        expect(claimButton).toBeUndefined();
+        expect(unclaimButton).toBeUndefined();
     });
 
     it('should emit claim event when task is claimed', (done) => {
@@ -367,7 +367,6 @@ describe('TaskHeaderComponent', () => {
     });
 
     describe('Config Filtering', () => {
-
         it('should show only the properties from the configuration file', async () => {
             spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
             component.taskDetails.processInstanceId = '1';

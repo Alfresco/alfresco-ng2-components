@@ -23,8 +23,13 @@ import { SearchFilterList } from '../../../models/search-filter-list.model';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed.component';
 import { FacetField } from '../../../models/facet-field.interface';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HarnessLoader, TestKey } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatIconHarness } from '@angular/material/icon/testing';
 
 describe('SearchFacetChipTabbedComponent', () => {
+    let loader: HarnessLoader;
     let component: SearchFacetChipTabbedComponent;
     let fixture: ComponentFixture<SearchFacetChipTabbedComponent>;
 
@@ -48,16 +53,8 @@ describe('SearchFacetChipTabbedComponent', () => {
             }
         };
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
-
-    /**
-     * Open the facet
-     */
-    function openFacet() {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        chip.triggerEventHandler('click', {});
-        fixture.detectChanges();
-    }
 
     /**
      * Get the filter display value
@@ -90,71 +87,92 @@ describe('SearchFacetChipTabbedComponent', () => {
         expect(displayValue).toBe('SEARCH.FILTER.ANY');
     });
 
-    it('should display remove icon and disable facet when no items are loaded', () => {
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeTrue();
-        expect(icon).toEqual('remove');
+    it('should display remove icon and disable facet when no items are loaded', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        const icon = await chip.getHarness(MatIconHarness);
+
+        expect(await chip.isDisabled()).toBe(true);
+        expect(await icon.getName()).toEqual('remove');
     });
 
-    it('should not open context menu when no items are loaded', () => {
+    it('should not open context menu when no items are loaded', async () => {
         spyOn(component.menuTrigger, 'openMenu');
-        const chip = fixture.debugElement.query(By.css('mat-chip')).nativeElement;
-        chip.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+
+        const chip = await loader.getHarness(MatChipHarness);
+        const host = await chip.host();
+        await host.sendKeys(TestKey.ENTER);
+
         expect(component.menuTrigger.openMenu).not.toHaveBeenCalled();
     });
 
-    it('should display correct title when facet is opened', () => {
-        openFacet();
+    it('should display correct title when facet is opened', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         const title = fixture.debugElement.query(By.css('.adf-search-filter-title')).nativeElement.innerText.split('\n')[0];
         expect(title).toBe(component.tabbedFacet.label);
     });
 
-    it('should display adf-search-facet-tabbed-content component', () => {
-        openFacet();
+    it('should display adf-search-facet-tabbed-content component', async () => {
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         const activeTabLabel = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         expect(activeTabLabel).toBeTruthy();
     });
 
-    it('should display arrow down icon and not disable the chip when items are loaded', () => {
+    it('should display arrow down icon and not disable the chip when items are loaded', async () => {
         component.isPopulated = true;
         fixture.detectChanges();
-        const chip = fixture.debugElement.query(By.css('mat-chip'));
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(chip.classes['mat-chip-disabled']).toBeUndefined();
-        expect(icon).toEqual('keyboard_arrow_down');
+        const chip = await loader.getHarness(MatChipHarness);
+        const icon = await chip.getHarness(MatIconHarness);
+
+        expect(await chip.isDisabled()).toBe(false);
+        expect(await icon.getName()).toBe('keyboard_arrow_down');
     });
 
     it('should display arrow up icon when menu is opened', async () => {
-        openFacet();
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         emitChildEvent('isPopulated', true);
         await fixture.whenStable();
-        const icon = fixture.debugElement.query(By.css('mat-chip mat-icon')).nativeElement.innerText;
-        expect(icon).toEqual('keyboard_arrow_up');
+
+        const icon = await chip.getHarness(MatIconHarness);
+
+        expect(await icon.getName()).toBe('keyboard_arrow_up');
     });
 
-    it('should update display value when new displayValue$ emitted', () => {
+    it('should update display value when new displayValue$ emitted', async () => {
         const displayValue = 'field_LABEL: test, test2';
-        openFacet();
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         emitChildEvent('displayValue$', displayValue);
         fixture.detectChanges();
         expect(getDisplayValue()).toBe(displayValue);
     });
 
-    it('should call onApply and close modal when apply btn is clicked', () => {
+    it('should call onApply and close modal when apply btn is clicked', async () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onApply').and.callThrough();
-        openFacet();
+
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
         expect(component.onApply).toHaveBeenCalled();
     });
 
-    it('should call onRemove and close modal when cancel btn is clicked', () => {
+    it('should call onRemove and close modal when cancel btn is clicked', async () => {
         spyOn(component.menuTrigger, 'closeMenu').and.callThrough();
         spyOn(component, 'onRemove').and.callThrough();
-        openFacet();
+
+        const chip = await loader.getHarness(MatChipHarness);
+        await (await chip.host()).click();
+
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
         applyButton.triggerEventHandler('click', {});
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();

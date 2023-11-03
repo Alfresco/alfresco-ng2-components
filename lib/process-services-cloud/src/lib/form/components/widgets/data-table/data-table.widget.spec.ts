@@ -47,12 +47,12 @@ describe('DataTableWidgetComponent', () => {
     const errorIcon: string = 'error_outline';
 
     const getDataVariable = (
-            variableConfig: VariableConfig,
-            schemaDefinition: DataColumn[],
-            processVariables?: TaskVariableCloud[],
-            variables?: TaskVariableCloud[]
-        ) => new FormFieldModel(
-        new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
+        variableConfig: VariableConfig,
+        schemaDefinition: DataColumn[],
+        processVariables?: TaskVariableCloud[],
+        variables?: TaskVariableCloud[]
+    ) =>
+        new FormFieldModel(new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
             id: 'fake-datatable-id',
             name: 'Data Table',
             type: FormFieldTypes.DATA_TABLE,
@@ -71,11 +71,11 @@ describe('DataTableWidgetComponent', () => {
         expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.DATA_TABLE_LOAD_FAILED'));
     };
 
+    const getPreview = () => fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DataTableWidgetComponent);
         widget = fixture.componentInstance;
@@ -83,7 +83,7 @@ describe('DataTableWidgetComponent', () => {
         formCloudService = TestBed.inject(FormCloudService);
         logService = TestBed.inject(LogService);
 
-        widget.field = new FormFieldModel( new FormModel({ taskId: 'fake-task-id' }), {
+        widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
             type: FormFieldTypes.DATA_TABLE,
             name: 'Data Table'
         });
@@ -104,7 +104,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const dataTable = fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget"]');
-        const dataTablePreview = fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
+        const dataTablePreview = getPreview();
 
         expect(dataTable).toBeTruthy();
         expect(dataTablePreview).toBeNull();
@@ -114,9 +114,7 @@ describe('DataTableWidgetComponent', () => {
         widget.field = getDataVariable(mockVariableConfig, mockSchemaDefinition, [], mockJsonFormVariable);
         fixture.detectChanges();
 
-        widget.dataSource.getColumns().forEach((column, index) =>
-            expect(column.key).toEqual(mockSchemaDefinition[index].key
-        ));
+        widget.dataSource.getColumns().forEach((column, index) => expect(column.key).toEqual(mockSchemaDefinition[index].key));
     });
 
     it('should properly initialize data source with priority on the field value if process and form variables are provided', () => {
@@ -125,7 +123,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -136,7 +134,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockAmericaCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -147,7 +145,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -157,7 +155,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -168,17 +166,22 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
-        widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'response.my-data' }, mockSchemaDefinition, [], mockJsonNestedResponseFormVariable);
+        widget.field = getDataVariable(
+            { ...mockVariableConfig, optionsPath: 'response.my-data' },
+            mockSchemaDefinition,
+            [],
+            mockJsonNestedResponseFormVariable
+        );
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -188,7 +191,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -198,7 +201,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const expectedData = new WidgetDataTableAdapter(mockEuropeCountriesData, mockSchemaDefinition);
-        expectedData.getRows().forEach(row => row.cssClass = '');
+        expectedData.getRows().forEach((row) => (row.cssClass = ''));
 
         expect(widget.dataSource.getRows()).toEqual(expectedData.getRows());
     });
@@ -209,7 +212,7 @@ describe('DataTableWidgetComponent', () => {
         fixture.detectChanges();
 
         const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-data-table-widget-failed-message'));
-        const previewDataTable = fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
+        const previewDataTable = getPreview();
 
         expect(failedErrorMsgElement).toBeNull();
         expect(previewDataTable).toBeTruthy();
@@ -220,7 +223,7 @@ describe('DataTableWidgetComponent', () => {
         spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
         fixture.detectChanges();
 
-        const previewDataTable = fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget-preview"]');
+        const previewDataTable = getPreview();
         const dataTable = fixture.nativeElement.querySelector('[data-automation-id="adf-data-table-widget"]');
 
         expect(previewDataTable).toBeTruthy();
@@ -255,7 +258,12 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should display and log error if path is incorrect', () => {
-        widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'wrong.path' }, mockSchemaDefinition, mockJsonNestedResponseFormVariable, []);
+        widget.field = getDataVariable(
+            { ...mockVariableConfig, optionsPath: 'wrong.path' },
+            mockSchemaDefinition,
+            mockJsonNestedResponseFormVariable,
+            []
+        );
         fixture.detectChanges();
 
         checkDataTableErrorMessage();
@@ -264,7 +272,12 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should display and log error if provided data by path is not an array', () => {
-        widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'response.no-array' }, mockSchemaDefinition, mockJsonNestedResponseFormVariable, []);
+        widget.field = getDataVariable(
+            { ...mockVariableConfig, optionsPath: 'response.no-array' },
+            mockSchemaDefinition,
+            mockJsonNestedResponseFormVariable,
+            []
+        );
         fixture.detectChanges();
 
         checkDataTableErrorMessage();

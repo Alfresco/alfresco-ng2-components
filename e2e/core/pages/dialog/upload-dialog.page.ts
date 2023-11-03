@@ -19,21 +19,19 @@ import { by, browser, ElementFinder, $, $$ } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
-
-    closeButton = $('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]');
+    closeButton = $('#adf-upload-dialog-close');
     dialog = $('div[id="upload-dialog"]');
     minimizedDialog = $('div[class*="upload-dialog--minimized"]');
-    uploadedStatusIcon = 'mat-icon[class*="status--done"]';
+    uploadedStatusIcon = '.adf-file-uploading-row__status--done';
     cancelledStatusIcon = 'div[class*="status--cancelled"]';
     errorStatusIcon = 'div[class*="status--error"] mat-icon';
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = $('span[class*="upload-dialog__title"]');
-    minimizeButton = $('mat-icon[title="Minimize"]');
-    maximizeButton = $('mat-icon[title="Maximize"]');
+    toggleMinimizeButton = $(`[data-automation-id='adf-upload-dialog__toggle-minimize']`);
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
-        await BrowserActions.clickExecuteScript('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]');
+        await BrowserActions.click(this.closeButton);
     }
 
     async checkCloseButtonIsDisplayed(): Promise<void> {
@@ -107,11 +105,11 @@ export class UploadDialogPage {
     }
 
     async minimizeUploadDialog(): Promise<void> {
-        await BrowserActions.click(this.minimizeButton);
+        await BrowserActions.click(this.toggleMinimizeButton);
     }
 
     async maximizeUploadDialog(): Promise<void> {
-        await BrowserActions.click(this.maximizeButton);
+        await BrowserActions.click(this.toggleMinimizeButton);
     }
 
     async displayTooltip(): Promise<void> {

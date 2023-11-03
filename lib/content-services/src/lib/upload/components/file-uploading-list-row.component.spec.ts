@@ -29,14 +29,14 @@ describe('FileUploadingListRowComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(FileUploadingListRowComponent);
         component = fixture.componentInstance;
     });
+
+    const getCancelButton = () =>
+        fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'))?.nativeElement as HTMLButtonElement;
 
     describe('events', () => {
         beforeEach(() => {
@@ -58,9 +58,7 @@ describe('FileUploadingListRowComponent', () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement.querySelector(
-            '.adf-file-uploading-row__version'
-        ).textContent).toContain('1');
+        expect(fixture.nativeElement.querySelector('.adf-file-uploading-row__version').textContent).toContain('1');
     });
 
     it('should show cancel button when upload is in progress', async () => {
@@ -71,7 +69,7 @@ describe('FileUploadingListRowComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
+        const cancelButton = getCancelButton();
         expect(cancelButton).not.toBeNull();
     });
 
@@ -83,7 +81,7 @@ describe('FileUploadingListRowComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
+        const cancelButton = getCancelButton();
         expect(cancelButton).not.toBeNull();
     });
 
@@ -95,8 +93,8 @@ describe('FileUploadingListRowComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const cancelButton = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]'));
-        expect(cancelButton).toBeNull();
+        const cancelButton = getCancelButton();
+        expect(cancelButton).toBeUndefined();
     });
 
     it('should provide tooltip for the cancel button', async () => {
@@ -107,7 +105,7 @@ describe('FileUploadingListRowComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const cancelButton: HTMLDivElement = fixture.debugElement.query(By.css('[data-automation-id="cancel-upload-progress"]')).nativeElement;
+        const cancelButton = getCancelButton();
         expect(cancelButton.title).toBe('ADF_FILE_UPLOAD.BUTTON.STOP_FILE');
     });
 });

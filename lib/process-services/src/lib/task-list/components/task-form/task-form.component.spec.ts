@@ -63,10 +63,7 @@ describe('TaskFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(TaskFormComponent);
@@ -92,8 +89,13 @@ describe('TaskFormComponent', () => {
         fixture.destroy();
     });
 
-    describe('Task with form', () => {
+    const getClaimButton = () =>
+        fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'))?.nativeElement as HTMLButtonElement;
 
+    const getUnclaimButton = () =>
+        fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'))?.nativeElement as HTMLButtonElement;
+
+    describe('Task with form', () => {
         beforeEach(async () => {
             await fixture.whenStable();
             getTaskDetailsSpy.calls.reset();
@@ -117,12 +119,14 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to complete assigned task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({
-                id: 1001,
-                firstName: 'Wilbur',
-                lastName: 'Adams',
-                email: 'wilbur@app.activiti.com'
-            }));
+            getBpmLoggedUserSpy.and.returnValue(
+                of({
+                    id: 1001,
+                    firstName: 'Wilbur',
+                    lastName: 'Adams',
+                    email: 'wilbur@app.activiti.com'
+                })
+            );
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
@@ -139,7 +143,7 @@ describe('TaskFormComponent', () => {
 
         it('Should emit error event in case form complete service fails', async () => {
             const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(throwError({message: 'servce failed'}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(throwError({ message: 'servce failed' }));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
             component.taskId = '123';
             fixture.detectChanges();
@@ -155,7 +159,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('change detection', () => {
-
         beforeEach(async () => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -165,14 +168,14 @@ describe('TaskFormComponent', () => {
 
         it('should fetch new task details when taskId changed', () => {
             const change = new SimpleChange('123', '456', true);
-            component.ngOnChanges({taskId: change});
+            component.ngOnChanges({ taskId: change });
             fixture.detectChanges();
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('123');
         });
 
         it('should NOT fetch new task details when taskId changed to null', async () => {
             const nullChange = new SimpleChange('123', null, true);
-            component.ngOnChanges({taskId: nullChange});
+            component.ngOnChanges({ taskId: nullChange });
             fixture.detectChanges();
             await fixture.whenStable();
             expect(getTaskDetailsSpy).not.toHaveBeenCalled();
@@ -180,7 +183,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Task assigned to candidates', () => {
-
         beforeEach(async () => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -204,7 +206,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Form events', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -259,7 +260,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Completed Process Task', () => {
-
         beforeEach(async () => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -307,7 +307,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Process Task with no form', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -348,7 +347,7 @@ describe('TaskFormComponent', () => {
 
         it('Should emit error event in case complete task service fails', async () => {
             const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            completeTaskSpy.and.returnValue(throwError({message: 'servce failed'}));
+            completeTaskSpy.and.returnValue(throwError({ message: 'servce failed' }));
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -403,7 +402,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Standalone Task with no form', () => {
-
         beforeEach(() => {
             component.taskId = '123';
             fixture.detectChanges();
@@ -470,7 +468,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Form with visibility', () => {
-
         beforeEach(async () => {
             component.taskId = '123';
             spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
@@ -548,14 +545,15 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Complete task', () => {
-
         it('Should be able to complete the assigned task in case process initiator not allowed to complete the task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({
-                id: 1002,
-                firstName: 'Wilbur',
-                lastName: 'Adams',
-                email: 'wilbur@app.activiti.com'
-            }));
+            getBpmLoggedUserSpy.and.returnValue(
+                of({
+                    id: 1002,
+                    firstName: 'Wilbur',
+                    lastName: 'Adams',
+                    email: 'wilbur@app.activiti.com'
+                })
+            );
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
 
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
@@ -578,12 +576,14 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to complete the task if process initiator allowed to complete the task', async () => {
-            getBpmLoggedUserSpy.and.returnValue(of({
-                id: 1001,
-                firstName: 'Wilbur',
-                lastName: 'Adams',
-                email: 'wilbur@app.activiti.com'
-            }));
+            getBpmLoggedUserSpy.and.returnValue(
+                of({
+                    id: 1001,
+                    firstName: 'Wilbur',
+                    lastName: 'Adams',
+                    email: 'wilbur@app.activiti.com'
+                })
+            );
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
@@ -625,12 +625,14 @@ describe('TaskFormComponent', () => {
 
         it('Should be able to complete a task with candidates users if process initiator not allowed to complete the task', async () => {
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            getBpmLoggedUserSpy.and.returnValue(of({
-                id: 1001,
-                firstName: 'Wilbur',
-                lastName: 'Adams',
-                email: 'wilbur@app.activiti.com'
-            }));
+            getBpmLoggedUserSpy.and.returnValue(
+                of({
+                    id: 1001,
+                    firstName: 'Wilbur',
+                    lastName: 'Adams',
+                    email: 'wilbur@app.activiti.com'
+                })
+            );
             const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 
@@ -654,7 +656,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Claim/Unclaim buttons', () => {
-
         it('should display the claim button if no assignee', async () => {
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
 
@@ -662,8 +663,8 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
+            const claimButton = getClaimButton();
+            expect(claimButton.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
         });
 
         it('should not display the claim/requeue button if the task is not claimable ', async () => {
@@ -673,13 +674,13 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
 
             await fixture.whenStable();
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const unclaimButton = getUnclaimButton();
 
             expect(component.isTaskClaimable()).toBe(false);
             expect(component.isTaskClaimedByCandidateMember()).toBe(false);
-            expect(unclaimButton).toBeNull();
-            expect(claimButton).toBeNull();
+            expect(unclaimButton).toBeUndefined();
+            expect(claimButton).toBeUndefined();
         });
 
         it('should display the claim button if the task is claimable', async () => {
@@ -689,10 +690,10 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
+            const claimButton = getClaimButton();
 
             expect(component.isTaskClaimable()).toBe(true);
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
+            expect(claimButton.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
         });
 
         it('should display the release button if task is claimed by the current logged-in user', async () => {
@@ -703,10 +704,10 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const unclaimButton = getUnclaimButton();
 
             expect(component.isTaskClaimedByCandidateMember()).toBe(true);
-            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM');
+            expect(unclaimButton.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM');
         });
 
         it('should not display the release button to logged in user if task is claimed by other candidate member', async () => {
@@ -716,10 +717,10 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const unclaimButton = getUnclaimButton();
 
             expect(component.isTaskClaimedByCandidateMember()).toBe(false);
-            expect(unclaimButton).toBeNull();
+            expect(unclaimButton).toBeUndefined();
         });
 
         it('should not display the release button if the task is completed', async () => {
@@ -729,11 +730,11 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const unclaimButton = getUnclaimButton();
 
-            expect(claimButton).toBeNull();
-            expect(unclaimButton).toBeNull();
+            expect(claimButton).toBeUndefined();
+            expect(unclaimButton).toBeUndefined();
         });
 
         it('should emit taskClaimed when task is claimed', (done) => {
@@ -755,7 +756,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit error event in case claim task api fails', (done) => {
-            const mockError = {message: 'Api Failed'};
+            const mockError = { message: 'Api Failed' };
             spyOn(taskListService, 'claimTask').and.returnValue(throwError(mockError));
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
 
@@ -793,7 +794,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('should emit error event in case unclaim task api fails', (done) => {
-            const mockError = {message: 'Api Failed'};
+            const mockError = { message: 'Api Failed' };
             spyOn(taskListService, 'unclaimTask').and.returnValue(throwError(mockError));
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
@@ -814,7 +815,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Involved user task', () => {
-
         beforeEach(() => {
             component.taskId = '20259';
             spyOn(taskFormService, 'saveTaskForm').and.returnValue(of({}));
@@ -857,7 +857,6 @@ describe('TaskFormComponent', () => {
     });
 
     describe('Task Form Fields Visibility', () => {
-
         it('Should task form fields be disabled when the form is readonly', async () => {
             fixture.detectChanges();
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
@@ -874,9 +873,9 @@ describe('TaskFormComponent', () => {
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
             expect(formSelector).toBeDefined();
-            expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
-            expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
-            expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldOne['disabled']).toEqual(true);
+            expect(inputFieldTwo['disabled']).toEqual(true);
+            expect(inputFieldThree['disabled']).toEqual(true);
         });
 
         it('Should task form fields be disabled when the task has not been claimed', async () => {
@@ -894,9 +893,9 @@ describe('TaskFormComponent', () => {
             const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
             expect(formSelector).toBeDefined();
-            expect(inputFieldOne['disabled']).toEqual(true, 'Task Form field is enabled');
-            expect(inputFieldTwo['disabled']).toEqual(true, 'Task Form field is enabled');
-            expect(inputFieldThree['disabled']).toEqual(true, 'Task Form field is enabled');
+            expect(inputFieldOne['disabled']).toEqual(true);
+            expect(inputFieldTwo['disabled']).toEqual(true);
+            expect(inputFieldThree['disabled']).toEqual(true);
         });
 
         it('Should task form fields be disabled when the task is completed', async () => {
@@ -935,14 +934,13 @@ describe('TaskFormComponent', () => {
             const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
 
             expect(formSelector).toBeDefined();
-            expect(inputFieldOne['disabled']).toEqual(false, 'Task Form field is disabled');
-            expect(inputFieldTwo['disabled']).toEqual(false, 'Task Form field is disabled');
-            expect(inputFieldThree['disabled']).toEqual(false, 'Task Form field is disabled');
+            expect(inputFieldOne['disabled']).toEqual(false);
+            expect(inputFieldTwo['disabled']).toEqual(false);
+            expect(inputFieldThree['disabled']).toEqual(false);
         });
     });
 
     describe('Task form action buttons', () => {
-
         it('Should disable Complete button when candidate user is not have a access to the task claimed by another candidate user', async () => {
             getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
             component.taskId = 'mock-task-id';
@@ -951,15 +949,15 @@ describe('TaskFormComponent', () => {
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const releaseButton = getUnclaimButton();
 
             expect(saveButton).not.toBeNull();
-            expect(saveButton['disabled']).toBe(false, 'Save button is disabled');
+            expect(saveButton['disabled']).toBe(false);
             expect(completeButton).not.toBeNull();
-            expect(completeButton['disabled']).toBe(true, 'Complete button is disabled');
-            expect(claimButton).toBeNull();
-            expect(releaseButton).toBeNull();
+            expect(completeButton['disabled']).toBe(true);
+            expect(claimButton).toBeUndefined();
+            expect(releaseButton).toBeUndefined();
         });
 
         it('Should show only the Claim button as enabled before claiming a task with form', async () => {
@@ -970,16 +968,16 @@ describe('TaskFormComponent', () => {
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const releaseButton = getUnclaimButton();
 
             expect(saveButton).not.toBeNull();
-            expect(saveButton['disabled']).toBe(true, 'Save button is enabled');
+            expect(saveButton['disabled']).toBe(true);
             expect(completeButton).not.toBeNull();
-            expect(completeButton['disabled']).toBe(true, 'Complete button is enabled');
+            expect(completeButton['disabled']).toBe(true);
             expect(claimButton).not.toBeNull();
-            expect(claimButton.nativeElement.disabled).toBe(false, 'Claim button is disabled');
-            expect(releaseButton).toBeNull();
+            expect(claimButton.disabled).toBe(false);
+            expect(releaseButton).toBeUndefined();
         });
 
         it('Should show only Save/Complete/Release buttons as enabled after claiming a task with form', async () => {
@@ -991,20 +989,20 @@ describe('TaskFormComponent', () => {
 
             const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const releaseButton = getUnclaimButton();
 
             expect(saveButton).not.toBeNull();
-            expect(saveButton['disabled']).toBe(false, 'Save button is disabled');
+            expect(saveButton['disabled']).toBe(false);
             expect(completeButton).not.toBeNull();
-            expect(completeButton['disabled']).toBe(false, 'Complete button is disabled');
+            expect(completeButton['disabled']).toBe(false);
             expect(releaseButton).not.toBeNull();
-            expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
-            expect(claimButton).toBeNull();
+            expect(releaseButton.disabled).toBe(false);
+            expect(claimButton).toBeUndefined();
         });
 
         it('Should show only the Claim button as enabled before claiming a task without form', async () => {
-            const claimableTaskDetailsWithoutFormMock = {...claimableTaskDetailsMock, formKey: null};
+            const claimableTaskDetailsWithoutFormMock = { ...claimableTaskDetailsMock, formKey: null };
             getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
             fixture.detectChanges();
@@ -1012,19 +1010,19 @@ describe('TaskFormComponent', () => {
 
             const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const releaseButton = getUnclaimButton();
 
             expect(cancelButton).not.toBeNull();
             expect(completeButton).not.toBeNull();
-            expect(completeButton['disabled']).toEqual(true, 'Complete button is enabled');
+            expect(completeButton['disabled']).toEqual(true);
             expect(claimButton).not.toBeNull();
-            expect(claimButton.nativeElement.disabled).toBe(false, 'Claim button is disabled');
-            expect(releaseButton).toBeNull();
+            expect(claimButton.disabled).toBe(false);
+            expect(releaseButton).toBeUndefined();
         });
 
         it('Should show only Complete/Release buttons as enabled after claiming a task without form', async () => {
-            const claimedTaskDetailsWithoutFormMock = {...claimedTaskDetailsMock, formKey: null};
+            const claimedTaskDetailsWithoutFormMock = { ...claimedTaskDetailsMock, formKey: null };
             getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock.assignee));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsWithoutFormMock));
             component.taskId = 'mock-task-id';
@@ -1033,15 +1031,15 @@ describe('TaskFormComponent', () => {
 
             const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            const releaseButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
+            const claimButton = getClaimButton();
+            const releaseButton = getUnclaimButton();
 
             expect(cancelButton).not.toBeNull();
             expect(completeButton).not.toBeNull();
-            expect(completeButton['disabled']).toEqual(false, 'Complete button is disabled');
+            expect(completeButton['disabled']).toEqual(false);
             expect(releaseButton).not.toBeNull();
-            expect(releaseButton.nativeElement.disabled).toBe(false, 'Release button is disabled');
-            expect(claimButton).toBeNull();
+            expect(releaseButton.disabled).toBe(false);
+            expect(claimButton).toBeUndefined();
         });
     });
 });

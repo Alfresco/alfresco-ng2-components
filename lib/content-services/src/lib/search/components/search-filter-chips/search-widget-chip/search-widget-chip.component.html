@@ -4,7 +4,7 @@
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
           tabIndex="0"
           [matMenuTriggerFor]="menu"
-          (onMenuOpen)="onMenuOpen()"
+          (menuOpened)="onMenuOpen()"
           (keydown.enter)="onEnterKeydown()"
           (keydown.escape)="onEscKeydown()"
           [attr.title]="widget.getDisplayValue() | async"

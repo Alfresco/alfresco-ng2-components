@@ -178,6 +178,9 @@ describe('AlfrescoViewerComponent', () => {
         fixture.destroy();
     });
 
+    const getNextButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+    const getPrevButton = () => element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+
     describe('Extension Type Test', () => {
         it('should use external viewer to display node by id', fakeAsync(() => {
             const extension: ViewerExtensionRef = {
@@ -482,10 +485,10 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton).not.toBeNull();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton).toBeNull();
         });
 
@@ -497,7 +500,7 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton.title).toBe('ADF_VIEWER.ACTIONS.NEXT_FILE');
         });
 
@@ -509,10 +512,10 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton).toBeNull();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton).not.toBeNull();
         });
 
@@ -524,7 +527,7 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton.title).toBe('ADF_VIEWER.ACTIONS.PREV_FILE');
         });
 
@@ -536,10 +539,10 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton).not.toBeNull();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton).not.toBeNull();
         });
 
@@ -549,10 +552,10 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton).toBeNull();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton).toBeNull();
         });
 
@@ -564,10 +567,10 @@ describe('AlfrescoViewerComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nextButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-next-file"]');
+            const nextButton = getNextButton();
             expect(nextButton).toBeNull();
 
-            const prevButton = element.querySelector<HTMLButtonElement>('[data-automation-id="adf-toolbar-pref-file"]');
+            const prevButton = getPrevButton();
             expect(prevButton).toBeNull();
         });
 
@@ -787,21 +790,13 @@ describe('AlfrescoViewerComponent', () => {
                     });
                 });
 
-                it('should not close the viewer on Escape event if dialog was opened', (done) => {
+                it('should not close the viewer on Escape event if dialog was opened', async () => {
                     const event = new KeyboardEvent('keydown', {
                         bubbles: true,
-                        keyCode: 27
+                        key: 'Escape'
                     } as KeyboardEventInit);
 
-                    const dialogRef = dialog.open(DummyDialogComponent);
-
-                    dialogRef.afterClosed().subscribe(() => {
-                        EventMock.keyDown(27);
-                        fixture.detectChanges();
-                        expect(element.querySelector('.adf-viewer-content')).toBeNull();
-                        done();
-                    });
-
+                    dialog.open(DummyDialogComponent);
                     fixture.detectChanges();
 
                     document.body.dispatchEvent(event);

@@ -22,32 +22,28 @@ import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('MultilineTextWidgetComponentComponent', () => {
-
+    let loader: HarnessLoader;
     let widget: MultilineTextWidgetComponentComponent;
     let fixture: ComponentFixture<MultilineTextWidgetComponentComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-    });
-
-    it('should exist', () => {
-        expect(widget).toBeDefined();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     describe('when tooltip is set', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.MULTILINE_TEXT,
@@ -57,57 +53,42 @@ describe('MultilineTextWidgetComponentComponent', () => {
         });
 
         it('should show tooltip', async () => {
-            const multilineTextarea = fixture.nativeElement.querySelector('textarea');
-            multilineTextarea.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
 
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-            expect(tooltipElement).toBeTruthy();
-            expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-          });
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
 
         it('should hide tooltip', async () => {
-            const multilineTextarea = fixture.nativeElement.querySelector('textarea');
-            multilineTextarea.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
 
-            multilineTextarea.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-            expect(tooltipElement).toBeFalsy();
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 
     describe('when is required', () => {
-
         beforeEach(() => {
-            widget.field = new FormFieldModel( new FormModel({ taskId: '<id>' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                 type: FormFieldTypes.MULTILINE_TEXT,
                 required: true
             });
+            fixture.detectChanges();
         });
 
         it('should be marked as invalid after interaction', async () => {
-            const multilineTextarea = fixture.nativeElement.querySelector('textarea');
+            const input = await loader.getHarness(MatInputHarness);
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
 
-            multilineTextarea.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
+            await (await input.host()).blur();
             expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
         });
 
         it('should be able to display label with asterisk', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = element.querySelector('.adf-asterisk');
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');

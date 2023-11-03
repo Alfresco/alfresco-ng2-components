@@ -23,21 +23,23 @@ import { SidenavLayoutModule } from '../../layout.module';
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatToolbarHarness } from '@angular/material/toolbar/testing';
 
 describe('HeaderLayoutComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
 
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule
-                ]
+                imports: [TranslateModule.forRoot(), CoreTestingModule]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             component = fixture.componentInstance;
+            loader = TestbedHarnessEnvironment.loader(fixture);
         });
 
         afterEach(() => {
@@ -57,13 +59,14 @@ describe('HeaderLayoutComponent', () => {
             expect(titleElement.innerText).toEqual('TEST TITLE');
         });
 
-        it('color attribute should be present on mat-toolbar', () => {
+        it('color attribute should be present on toolbar', async () => {
             component.color = 'primary';
             fixture.detectChanges();
 
-            const toolbar = fixture.nativeElement.querySelector('mat-toolbar');
-            expect(toolbar.getAttribute('ng-reflect-color') === null).toBeFalsy();
-            expect(toolbar.getAttribute('ng-reflect-color')).toEqual('primary');
+            const toolbar = await loader.getHarness(MatToolbarHarness);
+            const host = await toolbar.host();
+
+            expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
         });
 
         it('should display the img element with the expected src if a logo path is set', () => {
@@ -79,7 +82,7 @@ describe('HeaderLayoutComponent', () => {
             component.redirectUrl = '/customHomePage';
             fixture.detectChanges();
 
-            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            const logoAnchor = fixture.nativeElement.querySelector('a');
             expect(/\/customHomePage$/.test(logoAnchor.href)).toEqual(true);
         });
 
@@ -87,7 +90,7 @@ describe('HeaderLayoutComponent', () => {
             component.tooltip = 'logo title';
             fixture.detectChanges();
 
-            const logoAnchor = fixture.nativeElement.querySelector('mat-toolbar>a');
+            const logoAnchor = fixture.nativeElement.querySelector('a');
             expect(logoAnchor.title).toEqual('logo title');
         });
 
@@ -213,21 +216,18 @@ describe('HeaderLayoutComponent', () => {
     });
 
     describe('Template transclusion', () => {
-
         @Component({
             selector: 'adf-test-layout-header',
-            template: `<adf-layout-header title="test" color="primary"><p>Test text<p></adf-layout-header>`
+            template: `<adf-layout-header title="test" color="primary"
+                ><p>Test text</p>
+                <p></p
+            ></adf-layout-header>`
         })
         class HeaderLayoutTesterComponent {}
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    TranslateModule.forRoot(),
-                    CoreTestingModule,
-                    SidenavLayoutModule,
-                    MaterialModule
-                ],
+                imports: [TranslateModule.forRoot(), CoreTestingModule, SidenavLayoutModule, MaterialModule],
                 declarations: [HeaderLayoutTesterComponent]
             });
         });
@@ -235,7 +235,7 @@ describe('HeaderLayoutComponent', () => {
         it('should project the provided nodes into the component', () => {
             const hostFixture = TestBed.createComponent(HeaderLayoutTesterComponent);
             hostFixture.detectChanges();
-            const innerText = hostFixture.nativeElement.querySelector('mat-toolbar>p').innerText;
+            const innerText = hostFixture.nativeElement.querySelector('p').innerText;
             expect(innerText).toEqual('Test text');
         });
     });

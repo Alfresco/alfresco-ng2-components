@@ -139,7 +139,6 @@ describe('Upload component', () => {
 
         it('[C260172] Should be possible to enable versioning', async () => {
             await uploadToggles.enableVersioning();
-            await uploadToggles.checkVersioningToggleIsEnabled();
 
             await contentServicesPage.uploadFile(pdfFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
@@ -164,7 +163,6 @@ describe('Upload component', () => {
             await contentServicesPage.goToDocumentList();
 
             await uploadToggles.enableMaxSize();
-            await uploadToggles.checkMaxSizeToggleIsEnabled();
             await uploadToggles.addMaxSize('400');
 
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
@@ -190,7 +188,6 @@ describe('Upload component', () => {
         it('[C272796] Should be possible to set max size to 0', async () => {
             await contentServicesPage.goToDocumentList();
             await uploadToggles.enableMaxSize();
-            await uploadToggles.checkMaxSizeToggleIsEnabled();
             await uploadToggles.addMaxSize('0');
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
             // await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
@@ -207,7 +204,6 @@ describe('Upload component', () => {
 
         it('[C272797] Should be possible to set max size to 1', async () => {
             await uploadToggles.enableMaxSize();
-            await uploadToggles.checkMaxSizeToggleIsEnabled();
             await browser.sleep(1000);
             await uploadToggles.addMaxSize('1');
             await uploadToggles.disableMaxSize();

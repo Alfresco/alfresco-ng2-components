@@ -19,17 +19,19 @@ import { SearchTextComponent } from './search-text.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('SearchTextComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchTextComponent>;
     let component: SearchTextComponent;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;
@@ -44,6 +46,8 @@ describe('SearchTextComponent', () => {
             queryFragments: {},
             update: () => {}
         } as any;
+
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should parse value from the context at startup', () => {
@@ -100,16 +104,19 @@ describe('SearchTextComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(component.value).toEqual('secret.pdf');
-        const input = fixture.debugElement.nativeElement.querySelector('.mat-form-field-infix input');
-        expect(input.value).toEqual('secret.pdf');
+
+        const input = await loader.getHarness(MatInputHarness);
+        expect(await input.getValue()).toBe('secret.pdf');
     });
 
-    it('should be able to reset by clicking clear button',  async () => {
+    it('should be able to reset by clicking clear button', async () => {
         component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
         fixture.detectChanges();
         await fixture.whenStable();
-        const clearElement = fixture.debugElement.nativeElement.querySelector('button');
-        clearElement.click();
+
+        const clearButton = await loader.getHarness(MatButtonHarness);
+        await clearButton.click();
+
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
     });

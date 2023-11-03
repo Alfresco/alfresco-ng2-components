@@ -28,10 +28,7 @@ describe('SearchLogicalFilterComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [SearchLogicalFilterComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
 
         fixture = TestBed.createComponent(SearchLogicalFilterComponent);
@@ -62,7 +59,7 @@ describe('SearchLogicalFilterComponent', () => {
      * @returns list of labels
      */
     function getInputsLabels(): string[] {
-        return fixture.debugElement.queryAll(By.css('.adf-search-input mat-label')).map((label) => label.nativeElement.innerText);
+        return fixture.debugElement.queryAll(By.css(`[data-automation-id="adf-search-input-label"]`)).map((label) => label.nativeElement.innerText);
     }
 
     /**
@@ -164,7 +161,9 @@ describe('SearchLogicalFilterComponent', () => {
         enterNewPhrase('test5   test6  ', 2);
         component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
-        expect(component.context.queryFragments[component.id]).toBe('((NOT field1:"test5" AND NOT field1:"test6") AND (NOT field2:"test5" AND NOT field2:"test6"))');
+        expect(component.context.queryFragments[component.id]).toBe(
+            '((NOT field1:"test5" AND NOT field1:"test6") AND (NOT field2:"test5" AND NOT field2:"test6"))'
+        );
     });
 
     it('should form correct query from match exact field and trim it', () => {

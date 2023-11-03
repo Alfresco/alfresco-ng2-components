@@ -35,13 +35,8 @@ describe('FolderDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef }
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
@@ -54,7 +49,6 @@ describe('FolderDialogComponent', () => {
     });
 
     describe('Edit', () => {
-
         beforeEach(() => {
             component.data = {
                 folder: {
@@ -100,16 +94,13 @@ describe('FolderDialogComponent', () => {
 
             component.submit();
 
-            expect(nodesApi.updateNode).toHaveBeenCalledWith(
-                'node-id',
-                {
-                    name: 'folder-name-update',
-                    properties: {
-                        'cm:title': 'folder-title-update',
-                        'cm:description': 'folder-description-update'
-                    }
+            expect(nodesApi.updateNode).toHaveBeenCalledWith('node-id', {
+                name: 'folder-name-update',
+                properties: {
+                    'cm:title': 'folder-title-update',
+                    'cm:description': 'folder-description-update'
                 }
-            );
+            });
         });
 
         it('should call dialog to close with form data when submit is successfully', () => {
@@ -174,10 +165,10 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should have the proper title', () => {
-            const title = fixture.debugElement.query(By.css('[mat-dialog-title]'));
+            const title = fixture.debugElement.query(By.css(`[data-automation-id="adf-folder-dialog-title"]`));
             expect(title === null).toBe(false);
             expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE');
-         });
+        });
 
         it('should init form with empty inputs', () => {
             expect(component.name).toBe('');
@@ -201,17 +192,14 @@ describe('FolderDialogComponent', () => {
 
             component.submit();
 
-            expect(nodesApi.createFolder).toHaveBeenCalledWith(
-                'parentNodeId',
-                {
-                    name: 'folder-name-update',
-                    properties: {
-                        'cm:title': 'folder-title-update',
-                        'cm:description': 'folder-description-update'
-                    },
-                    nodeType: 'cm:folder'
-                }
-            );
+            expect(nodesApi.createFolder).toHaveBeenCalledWith('parentNodeId', {
+                name: 'folder-name-update',
+                properties: {
+                    'cm:title': 'folder-title-update',
+                    'cm:description': 'folder-description-update'
+                },
+                nodeType: 'cm:folder'
+            });
         });
 
         it('should submit updated values if form is valid (with custom nodeType)', () => {
@@ -224,17 +212,14 @@ describe('FolderDialogComponent', () => {
 
             component.submit();
 
-            expect(nodesApi.createFolder).toHaveBeenCalledWith(
-                'parentNodeId',
-                {
-                    name: 'folder-name-update',
-                    properties: {
-                        'cm:title': 'folder-title-update',
-                        'cm:description': 'folder-description-update'
-                    },
-                    nodeType: 'cm:sushi'
-                }
-            );
+            expect(nodesApi.createFolder).toHaveBeenCalledWith('parentNodeId', {
+                name: 'folder-name-update',
+                properties: {
+                    'cm:title': 'folder-title-update',
+                    'cm:description': 'folder-description-update'
+                },
+                nodeType: 'cm:sushi'
+            });
         });
 
         it('should call dialog to close with form data when submit is successfully', () => {
@@ -315,5 +300,5 @@ describe('FolderDialogComponent', () => {
                 component.submit();
             });
         });
-   });
+    });
 });

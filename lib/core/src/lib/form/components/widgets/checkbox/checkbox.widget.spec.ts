@@ -26,37 +26,33 @@ import { TranslateLoaderService } from '../../../../translation/translate-loader
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('CheckboxWidgetComponent', () => {
-
+    let loader: HarnessLoader;
     let widget: CheckboxWidgetComponent;
     let fixture: ComponentFixture<CheckboxWidgetComponent>;
     let element: HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                FormBaseModule,
-                MatCheckboxModule,
-                MatTooltipModule
-            ],
-            providers: [
-                { provide: TranslateLoader, useClass: TranslateLoaderService }
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, FormBaseModule, MatCheckboxModule, MatTooltipModule],
+            providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
 
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => fixture.destroy());
 
     describe('when template is ready', () => {
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'check-id',
@@ -69,14 +65,11 @@ describe('CheckboxWidgetComponent', () => {
         });
 
         it('should be marked as invalid when required after interaction', async () => {
-            const checkbox = element.querySelector('mat-checkbox');
+            const checkbox = await loader.getHarness(MatCheckboxHarness);
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            checkbox.dispatchEvent(new Event('click'));
-            checkbox.dispatchEvent(new Event('click'));
-
-            fixture.detectChanges();
-            await fixture.whenStable();
+            await checkbox.check();
+            await checkbox.uncheck();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
@@ -85,7 +78,7 @@ describe('CheckboxWidgetComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+            const asterisk = element.querySelector('.adf-asterisk');
 
             expect(asterisk).toBeTruthy();
             expect(asterisk.textContent).toEqual('*');
@@ -94,24 +87,20 @@ describe('CheckboxWidgetComponent', () => {
         it('should be checked if boolean true is passed', async () => {
             widget.field.value = true;
             fixture.detectChanges();
-            await fixture.whenStable();
-            fixture.detectChanges();
-            const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-            expect(checkbox.getAttribute('aria-checked')).toBe('true');
+
+            const checkbox = await loader.getHarness(MatCheckboxHarness);
+            expect(await checkbox.isChecked()).toBe(true);
         });
 
         it('should not be checked if false is passed', async () => {
             widget.field.value = false;
-
             fixture.detectChanges();
-            await fixture.whenStable();
 
-            const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-            expect(checkbox.getAttribute('aria-checked')).toBe('false');
+            const checkbox = await loader.getHarness(MatCheckboxHarness);
+            expect(await checkbox.isChecked()).toBe(false);
         });
 
         describe('when tooltip is set', () => {
-
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                     type: FormFieldTypes.BOOLEAN,
@@ -121,28 +110,20 @@ describe('CheckboxWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                const checkboxInput = fixture.nativeElement.querySelector('mat-checkbox');
-                checkboxInput.dispatchEvent(new Event('mouseenter'));
-                await fixture.whenStable();
-                fixture.detectChanges();
+                const checkbox = await loader.getHarness(MatCheckboxHarness);
+                await (await checkbox.host()).hover();
 
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-                expect(tooltipElement).toBeTruthy();
-                expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-              });
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+            });
 
             it('should hide tooltip', async () => {
-                const checkboxInput = fixture.nativeElement.querySelector('mat-checkbox');
-                checkboxInput.dispatchEvent(new Event('mouseenter'));
-                await fixture.whenStable();
-                fixture.detectChanges();
+                const checkbox = await loader.getHarness(MatCheckboxHarness);
+                await (await checkbox.host()).hover();
+                await (await checkbox.host()).mouseAway();
 
-                checkboxInput.dispatchEvent(new Event('mouseleave'));
-                await fixture.whenStable();
-                fixture.detectChanges();
-
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-                expect(tooltipElement).toBeFalsy();
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.isOpen()).toBe(false);
             });
         });
     });

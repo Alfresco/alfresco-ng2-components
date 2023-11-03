@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { $, browser } from 'protractor';
+import { $ } from 'protractor';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 
 export class UploadTogglesPage {
@@ -25,16 +25,14 @@ export class UploadTogglesPage {
     extensionFilterToggle = $('#adf-extension-filter-upload-switch');
     maxSizeToggle = $('#adf-max-size-filter-upload-switch');
     versioningToggle = $('#adf-version-upload-switch');
-    extensionAcceptedField = $('input[data-automation-id="accepted-files-type"]');
-    maxSizeField = $('input[data-automation-id="max-files-size"]');
+    extensionAcceptedField = $('[data-automation-id="accepted-files-type"]');
+    maxSizeField = $('[data-automation-id="max-files-size"]');
 
     async enableMultipleFileUpload(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         await this.togglePage.enableToggle(this.multipleFileUploadToggle);
     }
 
     async disableMultipleFileUpload(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
         await this.togglePage.disableToggle(this.multipleFileUploadToggle);
     }
 
@@ -42,23 +40,11 @@ export class UploadTogglesPage {
         await this.togglePage.enableToggle(this.uploadFolderToggle);
     }
 
-    async checkMaxSizeToggleIsEnabled(): Promise<void> {
-        const enabledToggle = $('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]');
-        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-    }
-
-    async checkVersioningToggleIsEnabled(): Promise<void> {
-        const enabledToggle = $('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]');
-        await BrowserVisibility.waitUntilElementIsVisible(enabledToggle);
-    }
-
     async enableExtensionFilter(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         await this.togglePage.enableToggle(this.extensionFilterToggle);
     }
 
     async disableExtensionFilter(): Promise<void> {
-        await browser.executeScript('arguments[0].scrollIntoView()', this.extensionFilterToggle);
         await this.togglePage.disableToggle(this.extensionFilterToggle);
     }
 

@@ -30,9 +30,12 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
 
 describe('CardViewTextItemComponent', () => {
-
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
 
@@ -63,7 +66,7 @@ describe('CardViewTextItemComponent', () => {
             ctrlKey: ctrlKeyValue,
             code: codeValue,
             metaKey: metaKeyValue
-        } as KeyboardEventInit );
+        } as KeyboardEventInit);
         component.undoText(event);
         if (flag) {
             expect(component.textInput.value).toBe('');
@@ -72,32 +75,35 @@ describe('CardViewTextItemComponent', () => {
         }
     };
 
-    const renderChipsForMultiValuedProperties = async (cardViewTextItemObject, flag: boolean, length: number,
-        param1: string, param2: string, param3: string) => {
+    const renderChipsForMultiValuedProperties = async (
+        cardViewTextItemObject,
+        flag: boolean,
+        length: number,
+        param1: string,
+        param2: string,
+        param3: string
+    ) => {
         component.property = new CardViewTextItemModel(cardViewTextItemObject);
         component.useChipsForMultiValueProperty = flag;
         component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
-        expect(valueChips).not.toBeNull();
+
+        const valueChips = await loader.getAllHarnesses(MatChipHarness);
         expect(valueChips.length).toBe(length);
-        expect(valueChips[0].nativeElement.innerText.trim()).toBe(param1);
-        expect(valueChips[1].nativeElement.innerText.trim()).toBe(param2);
-        expect(valueChips[2].nativeElement.innerText.trim()).toBe(param3);
+        expect(await valueChips[0].getText()).toBe(param1);
+        expect(await valueChips[1].getText()).toBe(param2);
+        expect(await valueChips[2].getText()).toBe(param3);
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatChipsModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatChipsModule]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -105,7 +111,6 @@ describe('CardViewTextItemComponent', () => {
     });
 
     describe('Rendering', () => {
-
         beforeEach(() => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
@@ -182,7 +187,6 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             const value = getTextFieldValue(component.property.key);
             expect(value).toBe('Lorem ipsum');
-
         });
 
         it('should render the edit icon in case of editable:true', () => {
@@ -211,7 +215,6 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
-
         });
 
         it('should render chips for multivalue properties when chips are enabled', async () => {
@@ -224,7 +227,6 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
             renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
-
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
@@ -236,7 +238,6 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
             renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
-
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
@@ -248,7 +249,6 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             };
             renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
-
         });
 
         it('should render string for multivalue properties when chips are disabled', async () => {
@@ -266,10 +266,9 @@ describe('CardViewTextItemComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenStable();
-            const valueChips = fixture.debugElement.query(By.css(`mat-chip-list`));
             const value = getTextFieldValue(component.property.key);
             expect(value).toBe('item1,item2,item3');
-            expect(valueChips).toBeNull();
+            expect(await loader.hasHarness(MatChipListHarness)).toBe(false);
         });
 
         it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
@@ -358,7 +357,6 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             const value = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
             expect(value).toBeNull();
-
         });
 
         it('should not render the clickable icon in case editable set to false', async () => {
@@ -372,7 +370,6 @@ describe('CardViewTextItemComponent', () => {
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value).toBeNull('icon should NOT be shown');
-
         });
 
         it('should render the defined clickable icon in case of clickable true and editable input set to true', async () => {
@@ -388,7 +385,6 @@ describe('CardViewTextItemComponent', () => {
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('FAKE_ICON');
-
         });
 
         it('should not render clickable icon in case of clickable true and icon undefined', async () => {
@@ -413,7 +409,6 @@ describe('CardViewTextItemComponent', () => {
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
-
         });
 
         it('should call back function when clickable property enabled', async () => {
@@ -490,7 +485,10 @@ describe('CardViewTextItemComponent', () => {
             doubleClickEl.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
 
             fixture.detectChanges();
-            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('myValueToCopy', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith(
+                'myValueToCopy',
+                'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE'
+            );
         });
 
         it('should clear value when clear value icon is clicked', async () => {
@@ -516,7 +514,6 @@ describe('CardViewTextItemComponent', () => {
     });
 
     describe('Update', () => {
-
         beforeEach(() => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
@@ -655,7 +652,6 @@ describe('CardViewTextItemComponent', () => {
             value = getTextFieldValue(component.property.key);
             expect(value).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
-
         });
 
         it('should render the default as value if the value is empty, clickable is true and displayEmpty is true', () => {
@@ -885,26 +881,20 @@ describe('CardViewTextItemComponent', () => {
     });
 
     describe('events', () => {
-
         it('should perform undo action by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
             checkCtrlZActions(true, 'KeyZ', false, 'UNDO TEST', true);
-
         });
-
 
         it('should not perform undo action when we hit any other shortcut instead of using undo keyboard shortcut', async () => {
             checkCtrlZActions(true, 'KeyH', false, 'DO NOT DO UNDO', false);
-
         });
 
         it('should not perform undo action when control key is not pressed even if the keycode is correct', async () => {
             checkCtrlZActions(false, 'KeyZ', false, 'DO NOT DO UNDO', false);
-
         });
 
         it('should perform undo action in MacOS by clearing the text that we enter in the text field using undo keyboard shortcut', async () => {
             checkCtrlZActions(false, 'KeyZ', true, 'UNDO TEST FOR MACOS', true);
-
         });
     });
 });

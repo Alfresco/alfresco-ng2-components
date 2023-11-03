@@ -23,8 +23,13 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
 import { By } from '@angular/platform-browser';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatMenuHarness } from '@angular/material/menu/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('SearchFormComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<SearchFormComponent>;
     let component: SearchFormComponent;
     let queryBuilder: SearchQueryBuilderService;
@@ -36,62 +41,62 @@ describe('SearchFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
-            providers: [
-                { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
+            providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }]
         });
         fixture = TestBed.createComponent(SearchFormComponent);
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject<SearchQueryBuilderService>(SEARCH_QUERY_SERVICE_TOKEN);
         queryBuilder.searchForms.next(mockSearchForms);
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
+
+    const getTitle = () => fixture.debugElement.query(By.css('.adf-search-form-title'))?.nativeElement as HTMLSpanElement;
 
     it('should show search forms', () => {
-        const title = fixture.debugElement.query(By.css('.adf-search-form-title'));
-        expect(title.nativeElement.innerText).toContain(mockSearchForms[1].name);
+        const title = getTitle();
+        expect(title.innerText).toContain(mockSearchForms[1].name);
     });
 
-    it('should emit on form change', (done) => {
+    it('should emit on form change', async () => {
         spyOn(queryBuilder, 'updateSelectedConfiguration').and.stub();
-        component.formChange.subscribe((form) => {
-            expect(form).toEqual(mockSearchForms[2]);
-            expect(queryBuilder.updateSelectedConfiguration).toHaveBeenCalled();
-            done();
-        });
 
-        const button = fixture.debugElement.query(By.css('.adf-search-form')).nativeElement;
-        button.click();
-        fixture.detectChanges();
+        let changedForm: SearchForm;
+        component.formChange.subscribe((form) => (changedForm = form));
 
-        const matOption = fixture.debugElement.queryAll(By.css('.mat-menu-item'))[2].nativeElement;
-        matOption.click();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
+
+        const menuItems = await menu.getItems();
+        expect(menuItems.length).toEqual(3);
+        await menuItems[2].click();
+
+        expect(changedForm).toEqual(mockSearchForms[2]);
+        expect(queryBuilder.updateSelectedConfiguration).toHaveBeenCalled();
     });
 
-    it('should not show menu if only one config found', () => {
+    it('should not show menu if only one config found', async () => {
         queryBuilder.searchForms.next([{ name: 'one', selected: true, default: true, index: 0 }]);
         fixture.detectChanges();
 
-        const button = fixture.debugElement.query(By.css('.adf-search-form')).nativeElement;
-        button.click();
+        const button = await loader.getHarness(MatButtonHarness.with({ selector: '.adf-search-form' }));
+        await button.click();
 
-        const title = fixture.debugElement.query(By.css('.adf-search-form-title'));
-        expect(title.nativeElement.innerText).toContain('one');
+        const title = getTitle();
+        expect(title.innerText).toContain('one');
 
         fixture.detectChanges();
-        const matOption = fixture.debugElement.query(By.css('.mat-menu-item'));
-        expect(matOption).toBe(null, 'should not show mat menu');
+
+        const hasMenu = await loader.hasHarness(MatMenuHarness);
+        expect(hasMenu).toBe(false);
     });
 
     it('should not display search form if no form configured', () => {
         queryBuilder.searchForms.next([]);
         fixture.detectChanges();
 
-        const field = fixture.debugElement.query(By.css('.adf-search-form-title'));
-        expect(field).toEqual(null, 'search form displayed for empty configuration');
+        const field = getTitle();
+        expect(field).toBeUndefined();
     });
 });

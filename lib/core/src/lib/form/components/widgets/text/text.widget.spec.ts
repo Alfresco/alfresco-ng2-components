@@ -25,15 +25,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { By } from '@angular/platform-browser';
-
-const enterValueInTextField = (element: HTMLInputElement, value: string) => {
-    element.value = value;
-    element.dispatchEvent(new Event('input'));
-};
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('TextWidgetComponent', () => {
+    const form = new FormModel({ taskId: 'fake-task-id' });
 
+    let loader: HarnessLoader;
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
     let element: HTMLElement;
@@ -41,25 +42,18 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                MatInputModule,
-                FormsModule,
-                MatIconModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatInputModule, FormsModule, MatIconModule]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     describe('when template is ready', () => {
-
         describe('and no mask is configured on text element', () => {
-
             it('should raise ngModelChange event', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -70,16 +64,14 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 expect(widget.field.value).toBe('');
 
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
-                await fixture.whenStable();
-                fixture.detectChanges();
-                expect(widget.field).not.toBeNull();
-                expect(widget.field.value).not.toBeNull();
+                const input = await loader.getHarness(MatInputHarness);
+                await input.setValue('TEXT');
+
                 expect(widget.field.value).toBe('TEXT');
             });
 
             it('should be able to set label property', () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -93,7 +85,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be able to set a placeholder for Text widget', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -104,12 +96,12 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Your name here');
+                const field = await loader.getHarness(MatFormFieldHarness);
+                expect(await field.getLabel()).toBe('Your name here');
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -119,30 +111,20 @@ describe('TextWidgetComponent', () => {
                     maxLength: 10
                 });
                 fixture.detectChanges();
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
-                fixture.detectChanges();
 
-                await fixture.whenStable();
+                const input = await loader.getHarness(MatInputHarness);
+                await input.setValue('TEXT');
+
                 errorWidget = element.querySelector('.adf-error-text');
-                expect(errorWidget).toBeDefined();
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
-
                 expect(widget.field.isValid).toBe(false);
 
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
-
-                await fixture.whenStable();
-                fixture.detectChanges();
+                await input.setValue('TEXT VALUE');
 
                 errorWidget = element.querySelector('.adf-error-text');
-
                 expect(widget.field.isValid).toBe(true);
 
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE TOO LONG');
-
-                fixture.detectChanges();
-                await fixture.whenStable();
-
+                await input.setValue('TEXT VALUE TOO LONG');
                 expect(widget.field.isValid).toBe(false);
 
                 errorWidget = element.querySelector('.adf-error-text');
@@ -150,7 +132,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be able to set regex pattern property for Text widget', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -159,25 +141,20 @@ describe('TextWidgetComponent', () => {
                     regexPattern: '[0-9]'
                 });
                 fixture.detectChanges();
-                enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
 
-                await fixture.whenStable();
+                const input = await loader.getHarness(MatInputHarness);
+                await input.setValue('TEXT');
                 expect(widget.field.isValid).toBe(false);
 
-                enterValueInTextField(element.querySelector('#text-id'), '8');
-
-                await fixture.whenStable();
+                await input.setValue('8');
                 expect(widget.field.isValid).toBe(true);
 
-                enterValueInTextField(element.querySelector('#text-id'), '8XYZ');
-
-                await fixture.whenStable();
+                await input.setValue('8XYZ');
                 expect(widget.field.isValid).toBe(false);
             });
         });
 
         describe('when tooltip is set', () => {
-
             beforeEach(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
                     type: FormFieldTypes.TEXT,
@@ -187,35 +164,26 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show tooltip', async () => {
-                const textInput = fixture.nativeElement.querySelector('input');
-                textInput.dispatchEvent(new Event('mouseenter'));
-                await fixture.whenStable();
-                fixture.detectChanges();
+                const input = await loader.getHarness(MatInputHarness);
+                await (await input.host()).hover();
 
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip')).nativeElement;
-                expect(tooltipElement).toBeTruthy();
-                expect(tooltipElement.textContent.trim()).toBe('my custom tooltip');
-              });
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+            });
 
             it('should hide tooltip', async () => {
-                const textInput = fixture.nativeElement.querySelector('input');
-                textInput.dispatchEvent(new Event('mouseenter'));
-                await fixture.whenStable();
-                fixture.detectChanges();
+                const input = await loader.getHarness(MatInputHarness);
+                await (await input.host()).hover();
+                await (await input.host()).mouseAway();
 
-                textInput.dispatchEvent(new Event('mouseleave'));
-                await fixture.whenStable();
-                fixture.detectChanges();
-
-                const tooltipElement = fixture.debugElement.query(By.css('.mat-tooltip'));
-                expect(tooltipElement).toBeFalsy();
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.isOpen()).toBe(false);
             });
         });
 
         describe('when is required', () => {
-
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -226,13 +194,10 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should be marked as invalid after interaction', async () => {
-                const textInput = fixture.nativeElement.querySelector('input');
+                const input = await loader.getHarness(MatInputHarness);
                 expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeFalsy();
 
-                textInput.dispatchEvent(new Event('blur'));
-
-                fixture.detectChanges();
-                await fixture.whenStable();
+                await (await input.host()).blur();
 
                 expect(fixture.nativeElement.querySelector('.adf-invalid')).toBeTruthy();
             });
@@ -241,7 +206,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
+                const asterisk = element.querySelector('.adf-asterisk');
 
                 expect(asterisk).toBeTruthy();
                 expect(asterisk.textContent).toEqual('*');
@@ -249,11 +214,8 @@ describe('TextWidgetComponent', () => {
         });
 
         describe('and no mask is configured on text element', () => {
-
-            let inputElement: HTMLInputElement;
-
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -262,26 +224,19 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
             it('should be disabled on readonly forms', async () => {
-                await fixture.whenStable();
-                fixture.detectChanges();
-
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.disabled).toBeTruthy();
+                const input = await loader.getHarness(MatInputHarness);
+                expect(await input.isDisabled()).toBe(true);
             });
-
         });
 
         describe('and mask is configured on text element', () => {
-
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -295,23 +250,21 @@ describe('TextWidgetComponent', () => {
                 inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
-            it('should show text widget', () => {
-                expect(element.querySelector('#text-id')).toBeDefined();
-                expect(element.querySelector('#text-id')).not.toBeNull();
+            it('should show text widget', async () => {
+                expect(await loader.hasHarness(MatInputHarness)).toBe(true);
             });
 
-            it('should show the field placeholder', () => {
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('simple placeholder');
+            it('should show the field placeholder', async () => {
+                const field = await loader.getHarness(MatFormFieldHarness);
+                expect(await field.getLabel()).toBe('simple placeholder');
             });
 
             it('should show the field placeholder when clicked', async () => {
-                inputElement.click();
-                fixture.detectChanges();
-                await fixture.whenStable();
+                const input = await loader.getHarness(MatInputHarness);
+                await (await input.host()).click();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('simple placeholder');
+                const field = await loader.getHarness(MatFormFieldHarness);
+                expect(await field.getLabel()).toBe('simple placeholder');
             });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async () => {
@@ -384,11 +337,10 @@ describe('TextWidgetComponent', () => {
         });
 
         describe('when the mask is reversed ', () => {
-
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -427,11 +379,8 @@ describe('TextWidgetComponent', () => {
         });
 
         describe('and a mask placeholder is configured', () => {
-
-            let inputElement: HTMLInputElement;
-
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -442,26 +391,23 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
-            it('should show the input mask placeholder', () => {
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Phone : (__) ___-___');
+            it('should show the input mask placeholder', async () => {
+                const field = await loader.getHarness(MatFormFieldHarness);
+                expect(await field.getLabel()).toBe('Phone : (__) ___-___');
             });
 
             it('should show the input mask placeholder when clicked', async () => {
-                inputElement.click();
-                fixture.detectChanges();
-                await fixture.whenStable();
+                const input = await loader.getHarness(MatInputHarness);
+                await (await input.host()).click();
 
-                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
-                expect(label.innerText).toBe('Phone : (__) ___-___');
+                const field = await loader.getHarness(MatFormFieldHarness);
+                expect(await field.getLabel()).toBe('Phone : (__) ___-___');
             });
         });
 
         describe('when form model has left labels', () => {
-
             it('should have left labels classes on leftLabels true', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                     id: 'text-id',
@@ -503,7 +449,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should not have left labels classes on leftLabels not present', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(form, {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',

@@ -21,15 +21,14 @@ import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class DateRangeFilterPage {
-
-    fromField = 'input[data-automation-id="date-range-from-input"]';
-    fromDateToggle = 'mat-datepicker-toggle[data-automation-id="date-range-from-date-toggle"]';
-    toField = 'input[data-automation-id="date-range-to-input"]';
-    toDateToggle = 'mat-datepicker-toggle[data-automation-id="date-range-to-date-toggle"]';
-    applyButton = 'button[data-automation-id="date-range-apply-btn"]';
-    clearButton = 'button[data-automation-id="date-range-clear-btn"]';
-    fromErrorMessage = 'mat-error[data-automation-id="date-range-from-error"]';
-    toErrorMessage = 'mat-error[data-automation-id="date-range-to-error"]';
+    fromField = '[data-automation-id="date-range-from-input"]';
+    fromDateToggle = '[data-automation-id="date-range-from-date-toggle"]';
+    toField = '[data-automation-id="date-range-to-input"]';
+    toDateToggle = '[data-automation-id="date-range-to-date-toggle"]';
+    applyButton = '[data-automation-id="date-range-apply-btn"]';
+    clearButton = '[data-automation-id="date-range-clear-btn"]';
+    fromErrorMessage = '[data-automation-id="date-range-from-error"]';
+    toErrorMessage = '[data-automation-id="date-range-to-error"]';
     filter: ElementFinder;
 
     constructor(filter: ElementFinder) {
@@ -139,5 +138,4 @@ export class DateRangeFilterPage {
     async checkClearButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter.$(this.clearButton));
     }
-
 }

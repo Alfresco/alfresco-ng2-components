@@ -26,7 +26,6 @@ import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('DropdownBreadcrumb', () => {
-
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
@@ -34,10 +33,7 @@ describe('DropdownBreadcrumb', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [{ provide: DocumentListService, useValue: documentListService }]
         });
@@ -64,7 +60,7 @@ describe('DropdownBreadcrumb', () => {
     };
 
     const clickOnTheFirstOption = () => {
-        const option: any = document.querySelector('[id^="mat-option"]');
+        const option: any = document.querySelector(`[data-automation-class="dropdown-breadcrumb-path-option"]`);
         option.click();
     };
 
@@ -75,7 +71,6 @@ describe('DropdownBreadcrumb', () => {
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
-
             openSelect();
 
             const currentFolder = fixture.debugElement.query(By.css('[data-automation-id="current-folder"]'));
@@ -99,7 +94,6 @@ describe('DropdownBreadcrumb', () => {
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         fixture.whenStable().then(() => {
-
             openSelect();
 
             const path = fixture.debugElement.query(By.css('[data-automation-id="dropdown-breadcrumb-path"]'));
@@ -109,7 +103,6 @@ describe('DropdownBreadcrumb', () => {
             done();
         });
     });
-
 
     it('should update document list when clicking on an option', async () => {
         component.target = documentList;

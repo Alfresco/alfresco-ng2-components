@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of, throwError } from 'rxjs';
 import { SearchService } from '../../../search/services/search.service';
@@ -36,8 +35,13 @@ import {
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { Node } from '@alfresco/js-api';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
+import { MatSelectHarness } from '@angular/material/select/testing';
 
 describe('PermissionListComponent', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<PermissionListComponent>;
     let component: PermissionListComponent;
     let element: HTMLElement;
@@ -64,6 +68,7 @@ describe('PermissionListComponent', () => {
         searchQuerySpy = spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeEmptyResponse));
         component.nodeId = 'fake-node-id';
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -117,7 +122,9 @@ describe('PermissionListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            const toggle = await loader.getHarness(MatSlideToggleHarness);
+            expect(await toggle.isChecked()).toBe(true);
+
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
@@ -127,10 +134,11 @@ describe('PermissionListComponent', () => {
         it('should toggle the inherited button', async () => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
             component.ngOnInit();
-
             fixture.detectChanges();
 
-            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            const toggle = await loader.getHarness(MatSlideToggleHarness);
+            expect(await toggle.isChecked()).toBe(true);
+
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
@@ -138,12 +146,8 @@ describe('PermissionListComponent', () => {
 
             spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
 
-            const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
-            slider.triggerEventHandler('change', { source: { checked: false } });
+            await toggle.uncheck();
 
-            fixture.detectChanges();
-
-            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBe(null);
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.OFF'
             );
@@ -157,7 +161,9 @@ describe('PermissionListComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
+            const toggle = await loader.getHarness(MatSlideToggleHarness);
+            expect(await toggle.isChecked()).toBe(true);
+
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
@@ -165,13 +171,8 @@ describe('PermissionListComponent', () => {
 
             spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
 
-            const slider = fixture.debugElement.query(By.css('mat-slide-toggle'));
-            slider.triggerEventHandler('change', { source: { checked: false } });
+            await toggle.uncheck();
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            expect(element.querySelector('.adf-inherit-container .mat-checked')).toBeDefined();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
@@ -206,17 +207,16 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const selectBox = fixture.debugElement.query(By.css('[id="adf-select-role-permission"] .mat-select-trigger'));
-            selectBox.triggerEventHandler('click', null);
-            fixture.detectChanges();
+            const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+            await select.open();
 
-            const options = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options).not.toBeNull();
+            const options = await select.getOptions();
             expect(options.length).toBe(4);
-            expect(options[0].nativeElement.innerText).toContain('ADF.ROLES.SITECOLLABORATOR');
-            expect(options[1].nativeElement.innerText).toContain('ADF.ROLES.SITECONSUMER');
-            expect(options[2].nativeElement.innerText).toContain('ADF.ROLES.SITECONTRIBUTOR');
-            expect(options[3].nativeElement.innerText).toContain('ADF.ROLES.SITEMANAGER');
+
+            expect(await options[0].getText()).toContain('ADF.ROLES.SITECOLLABORATOR');
+            expect(await options[1].getText()).toContain('ADF.ROLES.SITECONSUMER');
+            expect(await options[2].getText()).toContain('ADF.ROLES.SITECONTRIBUTOR');
+            expect(await options[3].getText()).toContain('ADF.ROLES.SITEMANAGER');
         });
 
         it('should show readonly member for site manager to toggle the inherit permission', async () => {
@@ -247,14 +247,12 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const selectBox = fixture.debugElement.query(By.css('[id="adf-select-role-permission"] .mat-select-trigger'));
-            selectBox.triggerEventHandler('click', null);
-            fixture.detectChanges();
-            const options = fixture.debugElement.queryAll(By.css('mat-option'));
-            expect(options).not.toBeNull();
+            const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+            await select.open();
+
+            const options = await select.getOptions();
             expect(options.length).toBe(5);
-            options[3].triggerEventHandler('click', {});
-            fixture.detectChanges();
+            await options[3].click();
             expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', {
                 permissions: { locallySet: [{ accessStatus: 'ALLOWED', name: 'Editor', authorityId: 'GROUP_EVERYONE' }] }
             });

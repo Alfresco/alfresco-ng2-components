@@ -22,35 +22,33 @@ import { UserIconColumnComponent } from './user-icon-column.component';
 import { NodeEntry } from '@alfresco/js-api';
 
 describe('UserIconColumnComponent', () => {
-
     let fixture: ComponentFixture<UserIconColumnComponent>;
     let component: UserIconColumnComponent;
     let element: HTMLElement;
-    const  person = {
+    const person = {
         firstName: 'fake',
         lastName: 'user',
         email: 'fake@test.com'
     };
 
-    const  group = {
+    const group = {
         id: 'fake-id',
         displayName: 'fake authority'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ContentTestingModule]
         });
-        fixture =  TestBed.createComponent(UserIconColumnComponent);
+        fixture = TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         fixture.detectChanges();
     });
 
     describe('person initial', () => {
+        const getInitials = () => element.querySelector('[data-automation-id="user-initials-image"]')?.textContent;
+
         it('should render person value from context', () => {
             component.context = {
                 row: {
@@ -61,7 +59,7 @@ describe('UserIconColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('fu');
+            expect(getInitials()).toContain('fu');
         });
 
         it('should render person value from node', () => {
@@ -69,8 +67,8 @@ describe('UserIconColumnComponent', () => {
                 entry: {
                     nodeType: 'cm:person',
                     properties: {
-                     'cm:firstName': 'Fake',
-                       'cm:lastName': 'User',
+                        'cm:firstName': 'Fake',
+                        'cm:lastName': 'User',
                         'cm:email': 'fake-user@test.com',
                         'cm:userName': 'fake-user'
                     }
@@ -78,11 +76,13 @@ describe('UserIconColumnComponent', () => {
             } as NodeEntry;
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[data-automation-id="user-initials-image"]').textContent).toContain('FU');
+            expect(getInitials()).toContain('FU');
         });
     });
 
     describe('group initial', () => {
+        const getGroupIcon = () => element.querySelector('[id="group-icon"] .adf-group-icon');
+
         it('should render group value from context', () => {
             component.context = {
                 row: {
@@ -93,8 +93,8 @@ describe('UserIconColumnComponent', () => {
             };
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[id="group-icon"] mat-icon')).toBeDefined();
-            expect(element.querySelector('[id="group-icon"] mat-icon').textContent).toContain('people_alt_outline');
+            expect(getGroupIcon()).toBeDefined();
+            expect(getGroupIcon().textContent).toContain('people_alt_outline');
         });
 
         it('should render person value from node', () => {
@@ -102,14 +102,14 @@ describe('UserIconColumnComponent', () => {
                 entry: {
                     nodeType: 'cm:authorityContainer',
                     properties: {
-                     'cm:authorityName': 'Fake authorityN'
+                        'cm:authorityName': 'Fake authorityN'
                     }
                 }
             } as NodeEntry;
             component.ngOnInit();
             fixture.detectChanges();
-            expect(element.querySelector('[id="group-icon"] mat-icon')).toBeDefined();
-            expect(element.querySelector('[id="group-icon"] mat-icon').textContent).toContain('people_alt_outline');
+            expect(getGroupIcon()).toBeDefined();
+            expect(getGroupIcon().textContent).toContain('people_alt_outline');
         });
     });
 

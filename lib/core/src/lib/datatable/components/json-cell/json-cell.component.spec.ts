@@ -21,8 +21,12 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { JsonCellComponent } from './json-cell.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('JsonCellComponent', () => {
+    let loader: HarnessLoader;
     let component: JsonCellComponent;
     let fixture: ComponentFixture<JsonCellComponent>;
     let dataTableAdapter: ObjectDataTableAdapter;
@@ -31,13 +35,11 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule]
         });
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     beforeEach(() => {
@@ -50,12 +52,9 @@ describe('JsonCellComponent', () => {
             }
         };
 
-        columnData = { format: '/somewhere', type: 'json', key: 'entity'};
+        columnData = { format: '/somewhere', type: 'json', key: 'entity' };
 
-        dataTableAdapter = new ObjectDataTableAdapter(
-            [rowData],
-            [new ObjectDataColumn(columnData)]
-        );
+        dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
 
         component.column = dataTableAdapter.getColumns()[0];
         component.data = dataTableAdapter;
@@ -68,21 +67,22 @@ describe('JsonCellComponent', () => {
 
     it('should set value', () => {
         fixture.detectChanges();
-        component.value$.subscribe( (result) => {
+        component.value$.subscribe((result) => {
             expect(result).toBe(rowData.entity);
         });
     });
 
-    it('should render json button inside cell', () => {
+    it('should render json button inside cell', async () => {
         fixture.detectChanges();
-        const button: HTMLElement = fixture.debugElement.nativeElement.querySelector('.mat-button');
-        expect(button).toBeDefined();
+
+        const buttonExists = await loader.hasHarness(MatButtonHarness);
+        expect(buttonExists).toBe(true);
     });
 
     it('should not setup cell when has no data', () => {
         rowData.entity = {};
         fixture.detectChanges();
-        component.value$.subscribe( (result) => {
+        component.value$.subscribe((result) => {
             expect(result).toEqual({});
         });
     });
