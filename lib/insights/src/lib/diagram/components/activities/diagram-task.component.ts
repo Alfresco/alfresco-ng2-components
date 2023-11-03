@@ -17,9 +17,8 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ACTIVITY_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
 import { DiagramElement } from '../diagram-element';
 
 @Component({
@@ -27,8 +26,6 @@ import { DiagramElement } from '../diagram-element';
     templateUrl: './diagram-task.component.html'
 })
 export class DiagramTaskComponent extends DiagramElement implements OnInit {
-    private diagramColorService = inject(DiagramColorService);
-
     rectLeftCorner: any;
     textPosition: any;
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};

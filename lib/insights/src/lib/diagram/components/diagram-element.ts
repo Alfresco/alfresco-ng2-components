@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, inject } from '@angular/core';
+import { DiagramColorService } from '../services/diagram-color.service';
 
 @Directive()
 export abstract class DiagramElement {
+    protected diagramColorService = inject(DiagramColorService);
+
     @Input()
     data: any;
 

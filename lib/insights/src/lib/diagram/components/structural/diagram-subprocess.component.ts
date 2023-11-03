@@ -17,28 +17,20 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-subprocess',
     templateUrl: './diagram-subprocess.component.html'
 })
-export class DiagramSubprocessComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramSubprocessComponent extends DiagramElement implements OnInit {
     rectLeftCorner: any;
     width: any;
     height: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
-
-    constructor(private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.rectLeftCorner = {x: this.data.x, y: this.data.y};

@@ -17,19 +17,14 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-icon-business-rule-task',
     templateUrl: './diagram-icon-business-rule-task.component.html'
 })
-export class DiagramIconBusinessRuleTaskComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramIconBusinessRuleTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};

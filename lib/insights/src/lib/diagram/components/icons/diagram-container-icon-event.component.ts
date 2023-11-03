@@ -17,22 +17,18 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-container-icon-event',
     templateUrl: './diagram-container-icon-event.component.html'
 })
-export class DiagramContainerIconEventTaskComponent {
-    @Input()
-    data: any;
-
+export class DiagramContainerIconEventTaskComponent extends DiagramElement {
     @Input()
     type: string;
 
     @Input()
     fillColor: string;
 
-    @Output()
-    error = new EventEmitter();
 }

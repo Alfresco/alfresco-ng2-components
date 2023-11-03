@@ -17,24 +17,19 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-event',
     templateUrl: './diagram-event.component.html'
 })
-export class DiagramEventComponent implements OnInit {
-    @Input()
-    data: any;
-
+export class DiagramEventComponent extends DiagramElement implements OnInit {
     @Input()
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
 
     @Input()
     iconFillColor: any;
-
-    @Output()
-    error = new EventEmitter();
 
     center: any = {};
 

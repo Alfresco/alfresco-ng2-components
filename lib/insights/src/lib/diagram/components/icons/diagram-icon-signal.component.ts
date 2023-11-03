@@ -17,21 +17,16 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-icon-signal',
     templateUrl: './diagram-icon-signal.component.html'
 })
-export class DiagramIconSignalComponent implements OnInit {
-    @Input()
-    data: any;
-
+export class DiagramIconSignalComponent extends DiagramElement implements OnInit {
     @Input()
     fillColor: string;
-
-    @Output()
-    error = new EventEmitter();
 
     position: any;
 

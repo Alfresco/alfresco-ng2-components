@@ -17,27 +17,19 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-gateway',
     templateUrl: './diagram-gateway.component.html'
 })
-export class DiagramGatewayComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     width: any;
     height: any;
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 2};
-
-    constructor(private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.center.x = this.data.x;

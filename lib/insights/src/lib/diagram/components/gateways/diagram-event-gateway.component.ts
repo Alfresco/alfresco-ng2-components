@@ -17,21 +17,15 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-event-gateway',
     templateUrl: './diagram-event-gateway.component.html'
 })
-export class DiagramEventGatewayComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramEventGatewayComponent extends DiagramElement implements OnInit {
     center: any = {};
     centerPentagon: any = {};
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 0.5};
@@ -40,8 +34,6 @@ export class DiagramEventGatewayComponent implements OnInit {
     circleRadiusOuter = 11.7;
 
     pentaStrokeWidth = 1.39999998;
-
-    constructor(private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);
