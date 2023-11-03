@@ -40,19 +40,19 @@ import { DateTimePipe } from './date-time.pipe';
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule
+        TranslateModule,
+        LocalizedDatePipe,
+        TimeAgoPipe
     ],
     declarations: [
         FileSizePipe,
         HighlightPipe,
-        TimeAgoPipe,
         MimeTypeIconPipe,
         InitialUsernamePipe,
         FullNamePipe,
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe,
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,
@@ -70,14 +70,14 @@ import { DateTimePipe } from './date-time.pipe';
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe,
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,
         MomentDateTimePipe,
         DateTimePipe,
         FilterStringPipe,
-        FilterOutArrayObjectsByPropPipe
+        FilterOutArrayObjectsByPropPipe,
+        LocalizedDatePipe
     ],
     exports: [
         FileSizePipe,
@@ -89,7 +89,6 @@ import { DateTimePipe } from './date-time.pipe';
         FormatSpacePipe,
         FileTypePipe,
         MultiValuePipe,
-        LocalizedDatePipe,
         DecimalNumberPipe,
         LocalizedRolePipe,
         MomentDatePipe,

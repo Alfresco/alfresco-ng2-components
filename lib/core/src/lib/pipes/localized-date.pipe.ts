@@ -23,6 +23,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
+    standalone: true,
     name: 'adfLocalizedDate',
     pure: false
 })

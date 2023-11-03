@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CommonModule } from '@angular/common';
-import { DataTableService } from '../../services/datatable.service';
 import { BooleanPipe } from '../../../pipes/boolean.pipe';
 
 @Component({
@@ -37,13 +36,8 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
-    constructor(@Optional() dataTableService: DataTableService) {
-        super(dataTableService);
-    }
 
     ngOnInit() {
-        if (this.column?.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
-        }
+        super.ngOnInit();
     }
 }

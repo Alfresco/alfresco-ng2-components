@@ -20,11 +20,9 @@ import {
     Component,
     ViewEncapsulation,
     Input,
-    Optional,
     OnInit
 } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { DataTableService } from '../../services/datatable.service';
 import { DecimalConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 
@@ -47,13 +45,7 @@ export class NumberCellComponent extends DataTableCellComponent implements OnIni
         locale: undefined
     };
 
-    constructor(@Optional() dataTableService: DataTableService) {
-        super(dataTableService);
-    }
-
     ngOnInit() {
-        if (this.column?.key && this.row && this.data) {
-            this.value$.next(this.data.getValue(this.row, this.column, this.resolverFn));
-        }
+        super.ngOnInit();
     }
 }

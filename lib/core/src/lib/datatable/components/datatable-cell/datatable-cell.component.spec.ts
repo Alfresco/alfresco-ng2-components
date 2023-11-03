@@ -15,58 +15,86 @@
  * limitations under the License.
  */
 
-import { UserPreferencesService } from '../../../common/services/user-preferences.service';
-import { AppConfigService } from '../../../app-config';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../testing';
-import { DateCellComponent } from '../date-cell/date-cell.component';
+import { DataTableCellComponent } from './datatable-cell.component';
+import { DataRow } from '../../data/data-row.model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { DataTableService } from '../../services/datatable.service';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock';
 
-describe('DateCellComponent', () => {
-    let appConfigService: AppConfigService;
-    let userPreferencesService: UserPreferencesService;
-    let fixture: ComponentFixture<DateCellComponent>;
-    let component: DateCellComponent;
-    let getLocaleSpy: jasmine.Spy;
+describe('DataTableCellComponent', () => {
+    let component: DataTableCellComponent;
+    let fixture: ComponentFixture<DataTableCellComponent>;
+    let dataTableService: DataTableService;
+
+    const renderTextCell = (value: string, tooltip: string) => {
+        component.value$ = new BehaviorSubject<string>(value);
+        component.tooltip = tooltip;
+
+        fixture.detectChanges();
+    };
+
+    const checkDisplayedText = (expectedText: string) => {
+        const displayedText = fixture.nativeElement.querySelector('span').textContent.trim();
+
+        expect(displayedText).toBeTruthy();
+        expect(displayedText).toBe(expectedText);
+    };
+
+    const checkDisplayedTooltip = (expectedTooltip: string) => {
+        const displayedTooltip = fixture.nativeElement.querySelector('span').title;
+
+        expect(displayedTooltip).toBeTruthy();
+        expect(displayedTooltip).toBe(expectedTooltip);
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ],
-            declarations: [DateCellComponent]
+            declarations: [DataTableCellComponent],
+            providers: [DataTableService]
         });
-        appConfigService = TestBed.inject(AppConfigService);
-        userPreferencesService = TestBed.inject(UserPreferencesService);
 
-        getLocaleSpy = spyOn(userPreferencesService, 'select').and.callThrough();
-        appConfigService.config = {
-            dateValues: {
-                defaultDateFormat: 'mediumDate',
-                defaultTooltipDateFormat: 'medium'
-            }
-        };
-        fixture = TestBed.createComponent(DateCellComponent);
+        fixture = TestBed.createComponent(DataTableCellComponent);
         component = fixture.componentInstance;
+        dataTableService = TestBed.inject(DataTableService);
     });
 
-    it('should read locale from user preferences service', () => {
-        expect(getLocaleSpy).toHaveBeenCalledWith('locale');
-        expect(component.currentLocale).toEqual('en');
+    it('should display text and tooltip', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => true,
+            getValue: () => 'hello world',
+            obj: 'Initial Value',
+            cache: []
+        };
+
+        component.row = row;
+
+        renderTextCell('hello world', 'hello world tooltip');
+
+        checkDisplayedText('hello world');
+        checkDisplayedTooltip('hello world tooltip');
     });
 
-    it('should read date format values from app config service', () => {
-        expect(component.format).toEqual('mediumDate');
-        expect(component.tooltipDateFormat).toEqual('medium');
-    });
+    it('should update row obj value on data changes', () => {
+        const row: DataRow = {
+            id: '1',
+            isSelected: false,
+            hasValue: () => true,
+            getValue: () => 'hello world',
+            obj: 'Initial Value',
+            cache: []
+        };
 
-    it('should date values be formatted based on the formats defined in the app config', () => {
-        component.value$.next('2022-07-14T11:50:45.973+0000');
-        component.tooltip = '2022-07-14T11:50:45.973+0000';
+        component.data = new ObjectDataTableAdapter(mockCarsData, mockCarsSchemaDefinition);
+        component.column = { key: 'car_name', type: 'text' };
+        component.row = row;
+
         fixture.detectChanges();
-        const dateCellValue = fixture.nativeElement.querySelector('.adf-datatable-cell-value');
-        const tooltipValue = dateCellValue.attributes['title'].value;
+        dataTableService.rowUpdate.next({ id: '1', obj: 'New Value' });
 
-        expect(dateCellValue.textContent.trim()).toEqual('Jul 14, 2022');
-        expect(tooltipValue).toEqual('Jul 14, 2022, 11:50:45 AM');
+        expect(component.row.obj).toBe('New Value');
     });
 });

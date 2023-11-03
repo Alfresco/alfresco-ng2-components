@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, OnDestroy, inject } from '@angular/core';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
@@ -58,8 +58,6 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     row: DataRow;
 
-    value$ = new BehaviorSubject<any>('');
-
     /** Enables/disables a Clipboard directive to allow copying of the cell's content. */
     @Input()
     copyContent: boolean;
@@ -73,8 +71,9 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
     protected onDestroy$ = new Subject<boolean>();
+    protected dataTableService = inject(DataTableService, { optional: true });
 
-    constructor(@Optional() protected dataTableService: DataTableService) {}
+    value$ = new BehaviorSubject<any>('');
 
     ngOnInit() {
         this.updateValue();
@@ -97,6 +96,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
         if (!this.dataTableService || !this.row.obj) {
             return;
         }
+
         this.dataTableService.rowUpdate.pipe(takeUntil(this.onDestroy$)).subscribe((data) => {
             if (data?.id === this.row?.id && data.obj) {
                 this.row.obj = data.obj;

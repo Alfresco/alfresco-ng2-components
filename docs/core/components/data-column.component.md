@@ -63,6 +63,7 @@ Defines column properties for DataTable, Tasklist, Document List and other compo
 | order | `number` |  | Sets position of column. |
 | currencyConfig | `CurrencyConfig` | [Default currency config](#default-currency-config) | Currency configuration to customize the formatting and display of currency values within the component. |
 | decimalConfig | `DecimalConfig` | [Default decimal config](#default-decimal-config) | Decimal configuration to customize the formatting and display of decimal values within the component. |
+| dateConfig | `DateConfig` | [Default date config](#default-date-config) | Date configuration to customize the formatting and localization of date values within the component. |
 
 ## Properties configuration
 
@@ -72,6 +73,7 @@ The `type` input allows us to specify the type of hosted values for a given colu
 
 - `text` - The given values are represented as a strings (default option).
 - `boolean` - The column expects true / false (boolean values) and in addition accepts two strings - 'false' and 'true'. Other values are not recognized by the column, and the cell remains empty.
+- `date` - This column is responsible for displaying dates. It expects date represented by a string, number or Date object. This type comes with [`dateConfig`](#default-date-config),
 - `amount` - This column is responsible for displaying currencies. It expects numerals represented by a string or a number. This type comes with [`currencyConfig`](#default-currency-config),
 - `number` - This column is responsible for displaying numbers (integers and decimals). It expects numerals represented by a string or a number. This type comes with [`decimalConfig`](#default-decimal-config)
 - `location` - This column displays a clickable location link pointing to the parent path of the node. **Note:** This type is strongly related to the document list component ([document-list.component.md](../../content-services/components/document-list.component.md)).
@@ -119,6 +121,28 @@ By default, the `decimalConfig` input is not required. If not provided, the comp
 These properties offer flexibility in customizing how decimal values are presented within the component.
 
 For more details on the possible use cases of the above properties, see the [official Angular documents](https://angular.io/api/common/DecimalPipe).
+
+### `dateConfig` Input
+
+The `dateConfig` input allows you to configure date formatting and localization for a component. It accepts an object of type `DateConfig` with optional properties for specifying the format of displayed date, tooltip and locale.
+
+#### Properties
+
+- `format` (optional): A string specifying the date format ([pre-defined formats](https://angular.io/api/common/DatePipe#pre-defined-format-options)).
+- `tooltipFormat` (optional): A string specifying the date format for tooltips.
+- `locale` (optional): A string indicating the locale or region-specific formatting to use for the currency.
+
+#### Default date config
+
+By default, the `dateConfig` object is not required. If not provided, the component will use the following default values:
+
+- `format`: "medium"
+- `tooltipFormat`: "medium"
+- `locale`: undefined
+
+These properties offer flexibility in customizing how date values are presented within the component.
+
+For more details on the possible use cases of the above properties, see the [official Angular documents](https://angular.io/api/common/DatePipe).
 
 ## Details
 

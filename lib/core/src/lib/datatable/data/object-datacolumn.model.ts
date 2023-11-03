@@ -17,7 +17,7 @@
 
 import { TemplateRef } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';
-import { CurrencyConfig, DataColumn, DecimalConfig } from './data-column.model';
+import { CurrencyConfig, DataColumn, DecimalConfig, DateConfig } from './data-column.model';
 
 // Simple implementation of the DataColumn interface.
 export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
@@ -41,6 +41,7 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
     order?: number;
     currencyConfig?: CurrencyConfig;
     decimalConfig?: DecimalConfig;
+    dateConfig?: DateConfig;
 
     constructor(input: any) {
         this.id = input.id ?? '';
@@ -63,5 +64,6 @@ export class ObjectDataColumn<T = unknown> implements DataColumn<T> {
         this.order = input.order;
         this.currencyConfig = input.currencyConfig;
         this.decimalConfig = input.decimalConfig;
+        this.dateConfig = input.dateConfig;
     }
 }

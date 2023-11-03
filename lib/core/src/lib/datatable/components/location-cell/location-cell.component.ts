@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, Optional, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { DataTableService } from '../../services/datatable.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PathInfo } from '@alfresco/js-api';
@@ -40,10 +39,6 @@ import { PathInfo } from '@alfresco/js-api';
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
     link: any[];
-
-    constructor(@Optional() dataTableService: DataTableService) {
-        super(dataTableService);
-    }
 
     ngOnInit() {
         super.ngOnInit();

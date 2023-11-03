@@ -15,67 +15,52 @@
  * limitations under the License.
  */
 
-import { Component, Optional, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import {
-    UserPreferencesService,
-    UserPreferenceValues
-} from '../../../common/services/user-preferences.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { takeUntil } from 'rxjs/operators';
-import { DataTableService } from '../../services/datatable.service';
+import { DateConfig } from '../../data/data-column.model';
+import { CommonModule } from '@angular/common';
+import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
     selector: 'adf-date-cell',
-    template: `
-        <ng-container>
-            <span
-                title="{{ tooltip | adfLocalizedDate: 'medium' }}"
-                class="adf-datatable-cell-value"
-                *ngIf="format === 'timeAgo'; else standard_date">
-                {{ value$ | async | adfTimeAgo: currentLocale }}
-            </span>
-        </ng-container>
-        <ng-template #standard_date>
-            <span
-                class="adf-datatable-cell-value"
-                title="{{ tooltip | adfLocalizedDate: tooltipDateFormat }}">
-                {{ value$ | async | adfLocalizedDate: format }}
-            </span>
-        </ng-template>
-    `,
+    templateUrl: './date-cell.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-date-cell adf-datatable-content-cell' }
+    host: { class: 'adf-datatable-content-cell' }
 })
-export class DateCellComponent extends DataTableCellComponent {
+export class DateCellComponent extends DataTableCellComponent implements OnInit {
 
-    static DATE_FORMAT = 'medium';
+    @Input()
+    dateConfig: DateConfig;
 
-    currentLocale: string;
-    dateFormat: string;
-    tooltipDateFormat: string;
+    config: DateConfig = {};
 
-    get format(): string {
-        if (this.column) {
-            return this.column.format || this.dateFormat;
-        }
-        return this.dateFormat;
+    private readonly appConfig: AppConfigService = inject(AppConfigService);
+
+    readonly defaultDateConfig: DateConfig = {
+        format: 'medium',
+        tooltipFormat: 'medium',
+        locale: undefined
+    };
+
+    ngOnInit(): void {
+        super.ngOnInit();
+        this.setConfig();
     }
 
-    constructor(
-        userPreferenceService: UserPreferencesService,
-        @Optional() dataTableService: DataTableService,
-        appConfig: AppConfigService
-    ) {
-        super(dataTableService);
+    get format(): string {
+        return this.column?.format ?? this.config.format;
+    }
 
-        this.dateFormat = appConfig.get('dateValues.defaultDateFormat', DateCellComponent.DATE_FORMAT);
-        this.tooltipDateFormat = appConfig.get('dateValues.defaultTooltipDateFormat', DateCellComponent.DATE_FORMAT);
-        if (userPreferenceService) {
-            userPreferenceService
-                .select(UserPreferenceValues.Locale)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(locale => this.currentLocale = locale);
-        }
+    private setConfig(): void {
+        this.config.format = this.dateConfig?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
+        this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
+        this.config.locale = this.dateConfig?.locale || this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
+    }
+
+    private getAppConfigPropertyValue(key: string, defaultValue: string): string {
+        return this.appConfig.get(key, defaultValue);
     }
 }

@@ -43,12 +43,23 @@ export interface DataColumn<T = unknown> {
     order?: number;
     currencyConfig?: CurrencyConfig;
     decimalConfig?: DecimalConfig;
+    dateConfig?: DateConfig;
 }
-export interface DecimalConfig {
-    digitsInfo?: string;
+
+export interface LocaleConfig {
     locale?: string;
 }
+
+export interface DecimalConfig extends LocaleConfig {
+    digitsInfo?: string;
+}
+
 export interface CurrencyConfig extends DecimalConfig {
     code?: string;
     display?: string;
+}
+
+export interface DateConfig extends LocaleConfig {
+    format?: string;
+    tooltipFormat?: string;
 }
