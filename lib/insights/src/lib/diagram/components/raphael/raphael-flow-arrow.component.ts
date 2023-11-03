@@ -28,7 +28,7 @@ const SEQUENCE_FLOW_STROKE = 1.5;
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-flow-arrow, raphael-flow-arrow'})
+@Directive({ selector: 'adf-raphael-flow-arrow, raphael-flow-arrow' })
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -51,19 +51,18 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     drawLine(flow: any) {
         const polyline = new Polyline(flow.id, flow.waypoints, SEQUENCE_FLOW_STROKE, this.paper);
         polyline.element = this.paper.path(polyline.path);
-        polyline.element.attr({'stroke-width': SEQUENCE_FLOW_STROKE});
-        polyline.element.attr({stroke: '#585858'});
+        polyline.element.attr({ 'stroke-width': SEQUENCE_FLOW_STROKE });
+        polyline.element.attr({ stroke: '#585858' });
 
         polyline.element.node.id = this.flow.id;
 
         const lastLineIndex = polyline.getLinesCount() - 1;
-        const line = polyline.getLine(lastLineIndex);
-        return line;
+        return polyline.getLine(lastLineIndex);
     }
 
     drawArrow(line: any) {
         const doubleArrowWidth = 2 * ARROW_WIDTH;
-        const width = ARROW_WIDTH / 2 + .5;
+        const width = ARROW_WIDTH / 2 + 0.5;
         const arrowHead: any = this.paper.path('M0 0L-' + width + '-' + doubleArrowWidth + 'L' + width + ' -' + doubleArrowWidth + 'z');
 
         arrowHead.transform('t' + line.x2 + ',' + line.y2);

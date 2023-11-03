@@ -16,13 +16,13 @@
  */
 
 import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Point } from './../models/point';
-import { RaphaelBase } from './../raphael-base';
+import { Point } from '../models/point';
+import { RaphaelBase } from '../raphael-base';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-icon-camel, raphael-icon-camel'})
+@Directive({ selector: 'adf-raphael-icon-camel, raphael-icon-camel' })
 export class RaphaelIconCamelDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -53,7 +53,9 @@ export class RaphaelIconCamelDirective extends RaphaelBase implements OnInit {
     }
 
     draw(position: Point) {
-        const path1 = this.paper.path(`m 8.1878027,15.383782 c -0.824818,-0.3427 0.375093,-1.1925 0.404055,-1.7743 0.230509,-0.8159
+        const path1 = this.paper
+            .path(
+                `m 8.1878027,15.383782 c -0.824818,-0.3427 0.375093,-1.1925 0.404055,-1.7743 0.230509,-0.8159
          -0.217173,-1.5329 -0.550642,-2.2283 -0.106244,-0.5273 -0.03299,-1.8886005 -0.747194,-1.7818005 -0.712355,0.3776 -0.9225,1.2309005
          -1.253911,1.9055005 -0.175574,1.0874 -0.630353,2.114 -0.775834,3.2123 -0.244009,0.4224 -1.741203,0.3888 -1.554386,-0.1397
          0.651324,-0.3302 1.13227,-0.9222 1.180246,-1.6705 0.0082,-0.7042 -0.133578,-1.3681 0.302178,-2.0083 0.08617,-0.3202
@@ -72,10 +74,12 @@ export class RaphaelIconCamelDirective extends RaphaelBase implements OnInit {
          -0.634619,-0.1004 -1.251945,0.6779 -1.956789,0.7408 -0.6065893,-0.038 -1.0354363,-0.06 -0.8495673,0.6969005 0.01681,0.711
          0.152396,1.3997 0.157345,2.1104 0.07947,0.7464 0.171287,1.4944 0.238271,2.2351 0.237411,1.0076 -0.687542,1.1488 -1.414811,0.8598
          z m 6.8675483,-1.8379 c 0.114364,-0.3658 0.206751,-1.2704 -0.114466,-1.3553 -0.152626,0.5835 -0.225018,1.1888 -0.227537,1.7919
-         0.147087,-0.1166 0.265559,-0.2643 0.342003,-0.4366 z`).attr({
-            stroke: this.stroke,
-            fill: this.fillColors
-        });
+         0.147087,-0.1166 0.265559,-0.2643 0.342003,-0.4366 z`
+            )
+            .attr({
+                stroke: this.stroke,
+                fill: this.fillColors
+            });
         return path1.transform('T' + position.x + ',' + position.y);
     }
 }

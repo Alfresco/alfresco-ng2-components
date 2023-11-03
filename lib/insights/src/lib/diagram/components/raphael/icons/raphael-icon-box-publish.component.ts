@@ -17,13 +17,13 @@
 
 /* cSpell:disable */
 import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Point } from './../models/point';
-import { RaphaelBase } from './../raphael-base';
+import { Point } from '../models/point';
+import { RaphaelBase } from '../raphael-base';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-icon-box-publish, raphael-icon-box-publish'})
+@Directive({ selector: 'adf-raphael-icon-box-publish, raphael-icon-box-publish' })
 export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -56,13 +56,14 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
     draw(position: Point) {
         const image = this.paper.image();
 
-        image.attr({x: position.x});
-        image.attr({y: position.y});
-        image.attr({id: 'image3398'});
-        image.attr({preserveAspectRatio: 'none'});
-        image.attr({height: '16'});
-        image.attr({width: '17'});
-        image.attr({src: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAjCAYAAADxG9hnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI WXMAAA7DAAAO
+        image.attr({ x: position.x });
+        image.attr({ y: position.y });
+        image.attr({ id: 'image3398' });
+        image.attr({ preserveAspectRatio: 'none' });
+        image.attr({ height: '16' });
+        image.attr({ width: '17' });
+        image.attr({
+            src: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAjCAYAAADxG9hnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI WXMAAA7DAAAO
         wwHHb6hkAAAAB3RJTUUH3wQXDxwCFNe28AAACsdJREFUWMOVmGmMXtV5x3/POfe+ y2yeGc/mwbMZG9tDMGBTKC5GCU4pbYmSRlmowlIFJWnUprSiy4dI/UA/9EsVifZDmy
         ZIxEpo1Cql UKICqbABG+x4X4M9iz2bxzOefXnfee+95zz9cN9Z7NqVeqSje3XPec/5n/Ns//8rAAd6xvj0lmYA VJWTI9fN2d5BikslrDEYY0ABIX0aUBUUUJS1TZB0HZS
         lUsz8fBHF09neKnFU0t964B5trcoqwA8O fsI3HtmW/u7Hx3p5+oHNqCr7DpzLX3dh1+xC4Z7p2dnGKE7UGmOsNTYFIuXtUlQqsgJkGSdrgBRL 8dLCYlRUUTa1NrYXiqWZ
@@ -91,6 +92,7 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
         s9bIsyC1dzTXpYuLsLyskbL2 Lj9FTDpuZGVsZW5ZKouk7+k/CZKaQiAwQmgt+UAIrGFgZJSPD//y9Lee/vL3gj0P7XRDV6/9zcGD B39obEBXexvWeJwX3HJNuNFJVo0js
         sJPV+XoKpsTkbJUNRj1ZeAGj/JJ/xAffvD+bPuGxn8TkUUB +MdX9mUix99fm5r7eldXV9jR3ka+IpdGg9eyxExt4ctJR8vMWVbASJmHKcYuy1NTHhdEPOphYXGR viuDjA
         4Nz9XlzasvfucPXwCQH+z7Kd949il6e3qCt97d/xdjUzNfyVTUbAyy2bwxqWwymBuqpV/z XMtlRTXVyUawYjDWrgDxeESdxHFpJi4sjqyvrXntxT/65ssAR06dSw/zzz/6
-        F7753O8D8NHHR9rO nL+wZ2pqYl0cxyoIoqsm0LK49ehKKLNGp3gE1JRF+9qoU3JBIDVVuZGvffWLZ2oa7rgCcPLMBe7f 0c3/APbD8KaWhlC3AAAAAElFTkSuQmCC`});
+        F7753O8D8NHHR9rO nL+wZ2pqYl0cxyoIoqsm0LK49ehKKLNGp3gE1JRF+9qoU3JBIDVVuZGvffWLZ2oa7rgCcPLMBe7f 0c3/APbD8KaWhlC3AAAAAElFTkSuQmCC`
+        });
     }
 }
