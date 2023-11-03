@@ -31,14 +31,13 @@ describe('HeaderLayoutComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
-    let loader: HarnessLoader;
 
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
                     TranslateModule.forRoot(),
-                    CoreTestingModule,
+                    CoreTestingModule
                 ]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
@@ -231,10 +230,11 @@ describe('HeaderLayoutComponent', () => {
     describe('Template transclusion', () => {
         @Component({
             selector: 'adf-test-layout-header',
-            template: `<adf-layout-header title="test" color="primary"
-                ><p>Test text</p>
-                <p></p
-            ></adf-layout-header>`
+            template: `
+            <adf-layout-header title="test" color="primary">
+                <p>Test text</p>
+                <p></p>
+            </adf-layout-header>`
         })
         class HeaderLayoutTesterComponent {}
 
