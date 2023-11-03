@@ -91,7 +91,7 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
-        it('should have custom url link set on logo when the redirectUrl is set', () => {
+        it('should have custom url link set on logo when the redirectUrl is set', async () => {
             component.redirectUrl = '/customHomePage';
             fixture.detectChanges();
 
