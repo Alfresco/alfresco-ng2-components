@@ -31,15 +31,19 @@ describe('HeaderLayoutComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<HeaderLayoutComponent>;
     let component: HeaderLayoutComponent;
+    let loader: HarnessLoader;
 
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [TranslateModule.forRoot(), CoreTestingModule]
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule,
+                ]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
-            component = fixture.componentInstance;
             loader = TestbedHarnessEnvironment.loader(fixture);
+            component = fixture.componentInstance;
         });
 
         afterEach(() => {
@@ -67,6 +71,15 @@ describe('HeaderLayoutComponent', () => {
             const host = await toolbar.host();
 
             expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
+        });
+
+        it('should change background image when provided', async () => {
+            component.backgroundImage = '/assets/someImage.png';
+            fixture.detectChanges();
+
+            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
+            const toolbar = await toolbarHarness.host();
+            expect(await toolbar.getAttribute('background')).toEqual('url(/assets/someImage.png)');
         });
 
         it('should display the img element with the expected src if a logo path is set', () => {
