@@ -48,6 +48,9 @@ export class HeaderLayoutComponent implements OnInit {
      */
     @Input() color: ThemePalette;
 
+    /** Path to a background image for the header. */
+    @Input() backgroundImage: string;
+
     /**
      * Toggles whether the sidenav button will be displayed in the header
      * or not.

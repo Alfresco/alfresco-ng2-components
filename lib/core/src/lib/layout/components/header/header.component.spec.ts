@@ -35,11 +35,14 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [TranslateModule.forRoot(), CoreTestingModule]
+                imports: [
+                    TranslateModule.forRoot(),
+                    CoreTestingModule
+                ]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
-            component = fixture.componentInstance;
             loader = TestbedHarnessEnvironment.loader(fixture);
+            component = fixture.componentInstance;
         });
 
         afterEach(() => {
@@ -69,6 +72,15 @@ describe('HeaderLayoutComponent', () => {
             expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
         });
 
+        it('should change background image when provided', async () => {
+            component.backgroundImage = '/assets/someImage.png';
+            fixture.detectChanges();
+
+            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
+            const toolbar = await toolbarHarness.host();
+            expect(await toolbar.getCssValue('background-image')).toContain('/assets/someImage.png');
+        });
+
         it('should display the img element with the expected src if a logo path is set', () => {
             component.logo = 'logo.png';
             fixture.detectChanges();
@@ -78,7 +90,7 @@ describe('HeaderLayoutComponent', () => {
             expect(src).toEqual('logo.png');
         });
 
-        it('should have custom url link set on logo when the redirectUrl is set', () => {
+        it('should have custom url link set on logo when the redirectUrl is set', async () => {
             component.redirectUrl = '/customHomePage';
             fixture.detectChanges();
 
@@ -218,10 +230,11 @@ describe('HeaderLayoutComponent', () => {
     describe('Template transclusion', () => {
         @Component({
             selector: 'adf-test-layout-header',
-            template: `<adf-layout-header title="test" color="primary"
-                ><p>Test text</p>
-                <p></p
-            ></adf-layout-header>`
+            template: `
+            <adf-layout-header title="test" color="primary">
+                <p>Test text</p>
+                <p></p>
+            </adf-layout-header>`
         })
         class HeaderLayoutTesterComponent {}
 
