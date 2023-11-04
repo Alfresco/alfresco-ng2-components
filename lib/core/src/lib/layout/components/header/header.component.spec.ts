@@ -78,7 +78,7 @@ describe('HeaderLayoutComponent', () => {
 
             const toolbarHarness = await loader.getHarness(MatToolbarHarness);
             const toolbar = await toolbarHarness.host();
-            expect(await toolbar.getAttribute('background')).toEqual('url(/assets/someImage.png)');
+            expect(await toolbar.getCssValue('background-image')).toContain('/assets/someImage.png');
         });
 
         it('should display the img element with the expected src if a logo path is set', () => {
