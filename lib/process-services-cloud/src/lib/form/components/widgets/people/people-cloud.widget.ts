@@ -69,8 +69,8 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.groupsRestriction = this.field.groupsRestriction;
             this.validate = this.field.readOnly ? false : true;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
+
+        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []);
 
         this.search.statusChanges
             .pipe(
