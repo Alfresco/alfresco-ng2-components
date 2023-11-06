@@ -320,7 +320,7 @@ export default {
                 amountMap: data.dataAmount,
                 jsonMap: data.dataJson,
                 dateMap: data.dataDate,
-                dateTimeAgoMap: data.dataDateTimeEgo
+                dateTimeAgoMap: data.dataDateTimeAgo
             },
             table: {
                 category: 'Components data',
@@ -448,7 +448,6 @@ dateColumn.args = {
 export const dateColumnTimeAgo: Story = template.bind({});
 dateColumnTimeAgo.argTypes = {
     copyContent: { control: { disable: true } },
-    format: { control: { disable: false } },
     dateConfig: { control: { disable: false } }
 };
 dateColumnTimeAgo.args = {
@@ -456,7 +455,7 @@ dateColumnTimeAgo.args = {
     key: 'modifiedOn',
     type: 'date',
     title: 'Date Column Time Ago',
-    format: 'timeAgo'
+    dateConfig: { format: 'timeAgo' }
 };
 
 // File Size Column

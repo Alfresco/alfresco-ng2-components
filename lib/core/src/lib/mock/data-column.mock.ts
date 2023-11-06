@@ -58,7 +58,7 @@ const aMinuteInMilliseconds = 60 * 1000;
 const anHourInMilliseconds = 60 * aMinuteInMilliseconds;
 const aDayInMilliseconds = 24 * anHourInMilliseconds;
 
-export const dataDateTimeEgo = new ObjectDataTableAdapter([
+export const dataDateTimeAgo = new ObjectDataTableAdapter([
     { modifiedOn: new Date() },
     { modifiedOn: new Date(Date.now() - 44 * aMinuteInMilliseconds) },
     { modifiedOn: new Date(Date.now() - 45 * aMinuteInMilliseconds) },
@@ -113,7 +113,7 @@ export const dataAmount = new ObjectDataTableAdapter([
 ]);
 
 export const dataJson = new ObjectDataTableAdapter([
-    { rowInfo: { id: 1, name: 'row1'} },
-    { rowInfo: { id: 2, name: 'row2'} },
-    { rowInfo: { id: 3, name: 'row3'} }
+    { rowInfo: { id: 1, name: 'row1' } },
+    { rowInfo: { id: 2, name: 'row2' } },
+    { rowInfo: { id: 3, name: 'row3' } }
 ]);

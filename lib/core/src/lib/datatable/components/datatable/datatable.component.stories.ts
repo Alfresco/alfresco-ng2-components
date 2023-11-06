@@ -153,7 +153,7 @@ export default {
                 { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'date', key: 'dateCol', title: 'Date Time Ago Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell', format: 'timeAgo' },
+                { type: 'date', key: 'dateCol', title: 'Date Time Ago Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell', dateConfig: { format: 'timeAgo' } },
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
