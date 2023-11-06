@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './analytics/analytics.service.mock';
 export * from './analytics/analytics-component.mock';
 export * from './analytics/analytics-params-report-component.mock';
 
