@@ -270,7 +270,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width !default;
         display: flex;
         flex-direction: column;
         background-color: inherit;
-        width: fit-content;
+        width: 100%;
         min-width: 100%;
 
         .adf-datatable-row {
