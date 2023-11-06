@@ -1509,7 +1509,6 @@
       "required": [
         "host",
         "clientId",
-        "secret",
         "scope"
       ],
       "properties": {
