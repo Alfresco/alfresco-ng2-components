@@ -113,7 +113,6 @@ export default {
             }
         },
         format: {
-            name: 'format (reload required)',
             description:
                 'Used for location type. Setups root path for router navigation.',
             control: { type: 'text', disable: true },
@@ -148,7 +147,6 @@ export default {
             }
         },
         isHidden: {
-            name: 'isHidden (reload required)',
             description: 'Hides columns',
             control: { type: 'boolean' },
             defaultValue: false,
@@ -262,7 +260,7 @@ export default {
                     summary: 'CurrencyConfig'
                 },
                 defaultValue: {
-                    summary: `{ code: "USD", display: "symbol" }`
+                    summary: `{ code: 'USD', display: 'symbol' }`
                 }
             },
             defaultValue: {
@@ -282,11 +280,30 @@ export default {
                     summary: 'DecimalConfig'
                 },
                 defaultValue: {
-                    summary: `{ digitsInfo: 'undefined', locale: 'undefined' }`
+                    summary: `{}`
                 }
             },
             defaultValue: {
                 digitsInfo: '2.4-5',
+                locale: undefined
+            }
+        },
+        dateConfig: {
+            description:
+                `The dateConfig input allows you to configure date formatting and localization for a component.`,
+            control: { type: 'object', disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'DateConfig'
+                },
+                defaultValue: {
+                    summary: `{ format: 'medium', tooltipFormat: 'medium' }`
+                }
+            },
+            defaultValue: {
+                format: 'medium',
+                tooltipFormat: 'medium',
                 locale: undefined
             }
         },
@@ -302,7 +319,8 @@ export default {
                 locationMap: data.dataLocation,
                 amountMap: data.dataAmount,
                 jsonMap: data.dataJson,
-                dateMap: data.dataDate
+                dateMap: data.dataDate,
+                dateTimeAgoMap: data.dataDateTimeEgo
             },
             table: {
                 category: 'Components data',
@@ -360,6 +378,7 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { colu
                 [sr-title]="srTitle"
                 [currencyConfig]="currencyConfig"
                 [decimalConfig]="decimalConfig"
+                [dateConfig]="dateConfig"
                 [formatTooltip]="formatTooltip">
             </data-column>
         </data-columns>
@@ -415,13 +434,29 @@ imageColumn.args = {
 // Date Column
 export const dateColumn: Story = template.bind({});
 dateColumn.argTypes = {
-    copyContent: { control: { disable: true } }
+    copyContent: { control: { disable: true } },
+    dateConfig: { control: { disable: false } }
 };
 dateColumn.args = {
     data: 'dateMap',
     key: 'createdOn',
     type: 'date',
     title: 'Date Column'
+};
+
+// Date Column Time Ago
+export const dateColumnTimeAgo: Story = template.bind({});
+dateColumnTimeAgo.argTypes = {
+    copyContent: { control: { disable: true } },
+    format: { control: { disable: false } },
+    dateConfig: { control: { disable: false } }
+};
+dateColumnTimeAgo.args = {
+    data: 'dateTimeAgoMap',
+    key: 'modifiedOn',
+    type: 'date',
+    title: 'Date Column Time Ago',
+    format: 'timeAgo'
 };
 
 // File Size Column

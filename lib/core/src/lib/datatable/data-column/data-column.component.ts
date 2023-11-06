@@ -19,7 +19,7 @@
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';
-import { CurrencyConfig, DecimalConfig } from '../data/data-column.model';
+import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.model';
 
 @Component({
     selector: 'data-column',
@@ -114,6 +114,10 @@ export class DataColumnComponent implements OnInit {
     /** The decimalConfig input allows you to customize the formatting and display of decimal values within the component. */
     @Input()
     decimalConfig?: DecimalConfig;
+
+    /** The decimalConfig input allows you to customize the formatting and display of decimal values within the component. */
+    @Input()
+    dateConfig?: DateConfig;
 
     /** Data column header template */
     header?: TemplateRef<any>;

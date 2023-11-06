@@ -54,6 +54,19 @@ export const dataDate = new ObjectDataTableAdapter([
     { createdOn: new Date(2021, 2, 3, 9, 8, 4) }
 ]);
 
+const aMinuteInMilliseconds = 60 * 1000;
+const anHourInMilliseconds = 60 * aMinuteInMilliseconds;
+const aDayInMilliseconds = 24 * anHourInMilliseconds;
+
+export const dataDateTimeEgo = new ObjectDataTableAdapter([
+    { modifiedOn: new Date() },
+    { modifiedOn: new Date(Date.now() - 44 * aMinuteInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 45 * aMinuteInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 23 * anHourInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 7 * aDayInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 8 * aDayInMilliseconds) }
+]);
+
 export const dataLocation = new ObjectDataTableAdapter([
     {
         path: mockPathInfos[0]
