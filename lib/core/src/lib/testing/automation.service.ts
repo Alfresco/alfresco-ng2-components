@@ -36,7 +36,8 @@ export class CoreAutomationService {
         private userPreferencesService: UserPreferencesService,
         private storageService: StorageService,
         private auth: AuthenticationService
-    ) {}
+    ) {
+    }
 
     setup() {
         const adfProxy = window['adf'] || {};

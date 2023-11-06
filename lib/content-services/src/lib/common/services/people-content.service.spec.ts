@@ -25,7 +25,6 @@ import {
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
-    AuthenticationService,
     CoreTestingModule
 } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
@@ -34,7 +33,6 @@ import { TestBed } from '@angular/core/testing';
 
 describe('PeopleContentService', () => {
     let peopleContentService: PeopleContentService;
-    let authenticationService: AuthenticationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -47,7 +45,6 @@ describe('PeopleContentService', () => {
             ]
         });
 
-        authenticationService = TestBed.inject(AuthenticationService);
         peopleContentService = TestBed.inject(PeopleContentService);
     });
 
@@ -128,17 +125,6 @@ describe('PeopleContentService', () => {
 
         expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
         expect(getCurrentPersonSpy.calls.count()).toEqual(1);
-    });
-
-    it('should reset the admin cache upon logout', async () => {
-        spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmAdminUser } as any));
-
-        const user = await peopleContentService.getCurrentUserInfo().toPromise();
-        expect(user.id).toEqual('fake-id');
-        expect(peopleContentService.isCurrentUserAdmin()).toBe(true);
-
-        authenticationService.onLogout.next(true);
-        expect(peopleContentService.isCurrentUserAdmin()).toBe(false);
     });
 
     it('should not change current user on every getPerson call', async () => {

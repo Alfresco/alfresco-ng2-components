@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import { createApiService, LoginPage, SnackbarPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
-import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { UploadDialogPage } from '../pages/upload-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');

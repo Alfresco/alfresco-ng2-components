@@ -15,6 +15,14 @@
  * limitations under the License.
  */
 
-export * from './activiti/activiti-client.types';
-export * from './alfresco-js-clients.module';
-export * from './discovery/discovery-client.types';
+export interface Authentication {
+    basicAuth?: BasicAuth;
+    cookie?: string;
+    type?: string;
+}
+
+export interface BasicAuth {
+    username?: string;
+    password?: string;
+    ticket?: string;
+}

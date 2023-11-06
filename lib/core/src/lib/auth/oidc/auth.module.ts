@@ -19,17 +19,12 @@ import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthModule, OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AlfrescoApiNoAuthService } from '../../api-factories/alfresco-api-no-auth.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AuthGuardBpm } from '../guard/auth-guard-bpm.service';
-import { AuthGuardEcm } from '../guard/auth-guard-ecm.service';
-import { AuthGuard } from '../guard/auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
-import { OidcAuthGuard } from './oidc-auth.guard';
-import { OIDCAuthenticationService } from './oidc-authentication.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 
@@ -51,10 +46,10 @@ export function loginFactory(oAuthService: OAuthService, storage: OAuthStorage, 
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthGuard, useClass: OidcAuthGuard },
-        { provide: AuthGuardEcm, useClass: OidcAuthGuard },
-        { provide: AuthGuardBpm, useClass: OidcAuthGuard },
-        { provide: AuthenticationService, useClass: OIDCAuthenticationService },
+        // { provide: AuthGuard, useClass: OidcAuthGuard },
+        // { provide: AuthGuardEcm, useClass: OidcAuthGuard },
+        // { provide: AuthGuardBpm, useClass: OidcAuthGuard },
+        { provide: AuthenticationService},
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
             provide: AUTH_CONFIG,

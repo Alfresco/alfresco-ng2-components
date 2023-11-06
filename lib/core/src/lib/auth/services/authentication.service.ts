@@ -15,184 +15,195 @@
  * limitations under the License.
  */
 
-import { Injectable, inject } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { AppConfigValues } from '../../app-config/app-config.service';
-import { map, catchError, tap } from 'rxjs/operators';
-import { JwtHelperService } from './jwt-helper.service';
-import { StorageService } from '../../common/services/storage.service';
-import { BaseAuthenticationService } from './base-authentication.service';
+import { Injectable, Injector } from '@angular/core';
+import { OidcAuthenticationService } from './oidc-authentication.service';
+import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { Observable, Subject, from } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { AuthenticationServiceInterface } from '../interfaces/authentication-service.interface';
+import ee from 'event-emitter';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService extends BaseAuthenticationService {
-    private storageService = inject(StorageService);
-    readonly supportCodeFlow = false;
+export class AuthenticationService implements AuthenticationServiceInterface, ee.Emitter {
 
-    constructor() {
-        super();
-        this.alfrescoApi.alfrescoApiInitialized.subscribe(() => {
-            this.alfrescoApi.getInstance().reply('logged-in', () => {
-                this.onLogin.next();
-            });
-        });
-    }
+    onLogin: Subject<any> = new Subject<any>();
+    onLogout: Subject<any> = new Subject<any>();
 
-    /**
-     * Checks if the user logged in.
-     *
-     * @returns True if logged in, false otherwise
-     */
-    isLoggedIn(): boolean {
-        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-            return false;
-        }
-        return this.alfrescoApi.getInstance().isLoggedIn();
-    }
+    constructor(
+        private injector: Injector,
+        private redirectAuthService: RedirectAuthService
+    ) {
+        this.redirectAuthService.onLogin.subscribe(
+            (value) => this.onLogin.next(value)
+        );
 
-    isLoggedInWith(provider: string): boolean {
-        if (provider === 'BPM') {
-            return this.isBpmLoggedIn();
-        } else if (provider === 'ECM') {
-            return this.isEcmLoggedIn();
+        this.basicAlfrescoAuthService.onLogin.subscribe(
+            (value) => this.onLogin.next(value)
+        );
+
+        if (this.isOauth()) {
+            this.oidcAuthenticationService.onLogout.subscribe(
+                (value) => this.onLogout.next(value)
+            );
         } else {
-            return this.isLoggedIn();
+            this.basicAlfrescoAuthService.onLogout.subscribe(
+                (value) => this.onLogout.next(value)
+            );
         }
     }
 
-    /**
-     * Does the provider support OAuth?
-     *
-     * @returns True if supported, false otherwise
-     */
-    isOauth(): boolean {
-        return this.alfrescoApi.getInstance().isOauthConfiguration();
+    get on(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.on : this.basicAlfrescoAuthService.on;
     }
 
-    /**
-     * Logs the user in.
-     *
-     * @param username Username for the login
-     * @param password Password for the login
-     * @param rememberMe Stores the user's login details if true
-     * @returns Object with auth type ("ECM", "BPM" or "ALL") and auth ticket
-     */
-    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string; ticket: any }> {
-        return from(this.alfrescoApi.getInstance().login(username, password)).pipe(
-            map((response: any) => {
-                this.saveRememberMeCookie(rememberMe);
-                this.onLogin.next(response);
-                return {
-                    type: this.appConfig.get(AppConfigValues.PROVIDERS),
-                    ticket: response
-                };
-            }),
-            catchError((err) => this.handleError(err))
-        );
+    get off(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.off : this.basicAlfrescoAuthService.off;
     }
 
-    /**
-     * Logs the user in with SSO
-     */
-    ssoImplicitLogin() {
-        this.alfrescoApi.getInstance().implicitLogin();
+    get once(): ee.EmitterMethod {
+        return this.isOauth() ? this.oidcAuthenticationService.once : this.basicAlfrescoAuthService.once;
     }
 
-
-    /**
-     * Logs the user out.
-     *
-     * @returns Response event called when logout is complete
-     */
-    logout() {
-        return from(this.callApiLogout()).pipe(
-            tap((response) => {
-                this.onLogout.next(response);
-                return response;
-            }),
-            catchError((err) => this.handleError(err))
-        );
+    get emit(): (type: string, ...args: any[]) => void {
+        return this.isOauth() ? this.oidcAuthenticationService.emit : this.basicAlfrescoAuthService.emit;
     }
 
-    private callApiLogout(): Promise<any> {
-        if (this.alfrescoApi.getInstance()) {
-            return this.alfrescoApi.getInstance().logout();
+    get onError(): Observable<any> {
+        return this.isOauth() ? this.oidcAuthenticationService.onError : this.basicAlfrescoAuthService.onError;
+    }
+
+    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
+        return this.isOauth() ? this.oidcAuthenticationService.addTokenToHeader(requestUrl, headersArg) : this.basicAlfrescoAuthService.addTokenToHeader(requestUrl, headersArg);
+    }
+
+    isECMProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isECMProvider() : this.basicAlfrescoAuthService.isECMProvider();
+    }
+
+    isBPMProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isBPMProvider() : this.basicAlfrescoAuthService.isBPMProvider();
+    }
+
+    isALLProvider(): boolean {
+        return this.isOauth() ? this.oidcAuthenticationService.isALLProvider() : this.basicAlfrescoAuthService.isALLProvider();
+    }
+
+    private get oidcAuthenticationService(): OidcAuthenticationService {
+        return this.injector.get(OidcAuthenticationService);
+    }
+
+    private get basicAlfrescoAuthService(): BasicAlfrescoAuthService {
+        return this.injector.get(BasicAlfrescoAuthService);
+    }
+
+    getToken(): string {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getToken();
+        } else {
+            return this.basicAlfrescoAuthService.getToken();
         }
-        return Promise.resolve();
     }
 
-    /**
-     * Checks if the user is logged in on an ECM provider.
-     *
-     * @returns True if logged in, false otherwise
-     */
+    isLoggedIn(): boolean {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.isLoggedIn();
+        } else {
+            return this.basicAlfrescoAuthService.isLoggedIn();
+        }
+    }
+
+    logout(): Observable<any> {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.logout();
+        } else {
+            return from(this.basicAlfrescoAuthService.logout());
+        }
+    }
+
     isEcmLoggedIn(): boolean {
-        if (this.isECMProvider() || this.isALLProvider()) {
-            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-                return false;
-            }
-            return this.alfrescoApi.getInstance().isEcmLoggedIn();
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.isEcmLoggedIn();
+        } else {
+            return this.basicAlfrescoAuthService.isEcmLoggedIn();
         }
-        return false;
     }
 
-    /**
-     * Checks if the user is logged in on a BPM provider.
-     *
-     * @returns True if logged in, false otherwise
-     */
     isBpmLoggedIn(): boolean {
-        if (this.isBPMProvider() || this.isALLProvider()) {
-            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-                return false;
-            }
-            return this.alfrescoApi.getInstance().isBpmLoggedIn();
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.isBpmLoggedIn();
+        } else {
+            return this.basicAlfrescoAuthService.isBpmLoggedIn();
         }
-        return false;
+    }
+
+    reset(): void {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.reset();
+        } else {
+            return this.basicAlfrescoAuthService.reset();
+        }
+    }
+
+    login(username: string, password: string, rememberMe?: boolean): Observable<{ type: string; ticket: any }> {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.loginWithPassword(username, password);
+        } else {
+            return this.basicAlfrescoAuthService.login(username, password, rememberMe);
+        }
     }
 
     /**
-     * Gets the ECM username.
-     *
-     * @returns The ECM username
+     * @returns the username of the authenticated user
+     */
+    getUsername(): string {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getUsername();
+        } else {
+            return this.basicAlfrescoAuthService.getUsername();
+        }
+    }
+
+    /**
+     * @deprecated
+     * @returns the logged username
      */
     getEcmUsername(): string {
-        return this.alfrescoApi.getInstance().getEcmUsername();
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getUsername();
+        } else {
+            return this.basicAlfrescoAuthService.getEcmUsername();
+        }
     }
 
     /**
-     * Gets the BPM username
-     *
-     * @returns The BPM username
+     * @deprecated
+     * @returns the logged username
      */
     getBpmUsername(): string {
-        return this.alfrescoApi.getInstance().getBpmUsername();
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getUsername();
+        } else {
+            return this.basicAlfrescoAuthService.getBpmUsername();
+        }
     }
 
-    isImplicitFlow(): boolean {
-        return !!this.appConfig.oauth2?.implicitFlow;
+    getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {
+        if (this.isOauth()) {
+            return this.oidcAuthenticationService.getAuthHeaders(requestUrl, headers);
+        } else {
+            return this.basicAlfrescoAuthService.getAuthHeaders(requestUrl, headers);
+        }
     }
 
-    isAuthCodeFlow(): boolean {
-        return false;
+    isOauth(): boolean {
+        return this.basicAlfrescoAuthService.isOauth();
     }
 
-    /**
-     * Gets the auth token.
-     *
-     * @returns Auth token string
-     */
-    getToken(): string {
-        return this.storageService.getItem(JwtHelperService.USER_ACCESS_TOKEN);
+    isKerberosEnabled(): boolean {
+        return !this.isOauth() ? this.basicAlfrescoAuthService.isKerberosEnabled() : false;
     }
 
-    reset() { }
-
-    once(event: string): Observable<any> {
-        const alfrescoApiEvent = event === 'token_received' ? 'token_issued' : event;
-        return new Observable((subscriber) => {
-            this.alfrescoApi.getInstance().oauth2Auth.once(alfrescoApiEvent, () => subscriber.next());
-        });
-    }
 }

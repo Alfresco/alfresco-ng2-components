@@ -16,11 +16,12 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationService } from '../../auth/services/authentication.service';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
@@ -28,19 +29,23 @@ describe('LoginDialogPanelComponent', () => {
     let element: HTMLElement;
     let usernameInput: HTMLInputElement;
     let passwordInput: HTMLInputElement;
-    let authService: AuthenticationService;
+    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule
+            ],
+            providers: [
+                { provide: OidcAuthenticationService, useValue: {}}
             ]
         });
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
+        basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
+
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        authService = TestBed.inject(AuthenticationService);
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -76,7 +81,7 @@ describe('LoginDialogPanelComponent', () => {
             expect(event.token.ticket).toBe('ticket');
             done();
         });
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
         loginWithCredentials('fake-username', 'fake-password');
     });
 

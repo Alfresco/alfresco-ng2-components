@@ -16,13 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule, provideTranslations } from '@alfresco/adf-core';
+import { AuthModule, CoreModule, provideTranslations } from '@alfresco/adf-core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 
 @NgModule({
     imports: [
+        AuthModule.forRoot(),
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),

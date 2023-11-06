@@ -29,6 +29,8 @@ import { AppConfigService, AppConfigValues } from '../../app-config/app-config.s
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { BasicAlfrescoAuthService } from '../../auth/basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from '../../auth/services/oidc-authentication.service';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -52,7 +54,7 @@ interface LoginFormValues {
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-login' }
+    host: {class: 'adf-login'}
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
@@ -129,6 +131,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     constructor(
         private _fb: UntypedFormBuilder,
         private authService: AuthenticationService,
+        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        private oidcAuthenticationService: OidcAuthenticationService,
         private translateService: TranslationService,
         private router: Router,
         private appConfig: AppConfigService,
@@ -160,7 +164,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 const url = params['redirectUrl'];
                 const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
 
-                this.authService.setRedirect({ provider, url });
+                this.basicAlfrescoAuthService.setRedirect({provider, url});
             });
         }
 
@@ -181,7 +185,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     redirectToImplicitLogin() {
-        this.authService.ssoImplicitLogin();
+        this.oidcAuthenticationService.ssoImplicitLogin();
     }
 
     /**
@@ -193,12 +197,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.disableError();
 
         const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
+            controls: {username: this.form.controls.username}
         });
         this.executeSubmit.emit(args);
 
         if (!args.defaultPrevented) {
             this.actualLoginStep = LoginSteps.Checking;
+
             this.performLogin(values);
         }
     }
@@ -207,7 +212,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         }
-        this.authService.ssoImplicitLogin();
+        this.oidcAuthenticationService.ssoImplicitLogin();
     }
 
     /**
@@ -237,30 +242,31 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    performLogin(values: LoginFormValues) {
-        this.authService.login(values.username, values.password, this.rememberMe).subscribe(
-            (token) => {
-                const redirectUrl = this.authService.getRedirect();
+    performLogin(values: { username: string; password: string }) {
+        this.authService.login(values.username, values.password, this.rememberMe)
+            .subscribe(
+                async (token: any) => {
+                    const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
 
-                this.actualLoginStep = LoginSteps.Welcome;
-                this.userPreferences.setStoragePrefix(values.username);
-                values.password = null;
-                this.success.emit(new LoginSuccessEvent(token, values.username, null));
+                    this.actualLoginStep = LoginSteps.Welcome;
+                    this.userPreferences.setStoragePrefix(values.username);
+                    values.password = null;
+                    this.success.emit(new LoginSuccessEvent(token, values.username, null));
 
-                if (redirectUrl) {
-                    this.authService.setRedirect(null);
-                    this.router.navigateByUrl(redirectUrl);
-                } else if (this.successRoute) {
-                    this.router.navigate([this.successRoute]);
+                    if (redirectUrl) {
+                        this.basicAlfrescoAuthService.setRedirect(null);
+                        await this.router.navigateByUrl(redirectUrl);
+                    } else if (this.successRoute) {
+                        await this.router.navigate([this.successRoute]);
+                    }
+                },
+                (err: any) => {
+                    this.actualLoginStep = LoginSteps.Landing;
+                    this.displayErrorMessage(err);
+                    this.isError = true;
+                    this.error.emit(new LoginErrorEvent(err));
                 }
-            },
-            (err: any) => {
-                this.actualLoginStep = LoginSteps.Landing;
-                this.displayErrorMessage(err);
-                this.isError = true;
-                this.error.emit(new LoginErrorEvent(err));
-            }
-        );
+            );
     }
 
     /**

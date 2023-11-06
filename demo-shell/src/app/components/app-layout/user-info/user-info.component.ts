@@ -17,7 +17,13 @@
 
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 import { BpmUserModel, PeopleProcessService } from '@alfresco/adf-process-services';
-import { AuthenticationService, IdentityUserModel, IdentityUserService, UserInfoMode } from '@alfresco/adf-core';
+import {
+    AuthenticationService,
+    BasicAlfrescoAuthService,
+    IdentityUserModel,
+    IdentityUserService,
+    UserInfoMode
+} from '@alfresco/adf-core';
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
@@ -46,6 +52,7 @@ export class UserInfoComponent implements OnInit {
     constructor(private peopleContentService: PeopleContentService,
                 private peopleProcessService: PeopleProcessService,
                 private identityUserService: IdentityUserService,
+                private basicAlfrescoAuthService: BasicAlfrescoAuthService,
                 private authService: AuthenticationService) {
     }
 
@@ -77,7 +84,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     get isLoggedIn(): boolean {
-        if (this.authService.isKerberosEnabled()) {
+        if (this.basicAlfrescoAuthService.isKerberosEnabled()) {
             return true;
         }
         return this.authService.isLoggedIn();
@@ -96,15 +103,15 @@ export class UserInfoComponent implements OnInit {
     }
 
     private isAllLoggedIn() {
-        return (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) || (this.authService.isALLProvider() && this.authService.isKerberosEnabled());
+        return (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) || (this.authService.isALLProvider() && this.basicAlfrescoAuthService.isKerberosEnabled());
     }
 
     private isBpmLoggedIn() {
-        return this.authService.isBpmLoggedIn() || (this.authService.isECMProvider() && this.authService.isKerberosEnabled());
+        return this.authService.isBpmLoggedIn() || (this.authService.isECMProvider() && this.basicAlfrescoAuthService.isKerberosEnabled());
     }
 
     private isEcmLoggedIn() {
-        return this.authService.isEcmLoggedIn() || (this.authService.isECMProvider() && this.authService.isKerberosEnabled());
+        return this.authService.isEcmLoggedIn() || (this.authService.isECMProvider() && this.basicAlfrescoAuthService.isKerberosEnabled());
     }
 }
 

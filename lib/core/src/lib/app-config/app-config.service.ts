@@ -18,13 +18,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { ExtensionConfig, ExtensionService, mergeObjects } from '@alfresco/adf-extensions';
 import { OpenidConfiguration } from '../auth/interfaces/openid-configuration.interface';
 import { OauthConfigModel } from '../auth/models/oauth-config.model';
 
 /* spellchecker: disable */
+
 // eslint-disable-next-line no-shadow
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
@@ -44,7 +45,9 @@ export enum AppConfigValues {
     AUTH_WITH_CREDENTIALS = 'auth.withCredentials',
     APPLICATION = 'application',
     STORAGE_PREFIX = 'application.storagePrefix',
-    NOTIFY_DURATION = 'notificationDefaultDuration'
+    NOTIFY_DURATION = 'notificationDefaultDuration',
+    CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM',
+    PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM'
 }
 
 // eslint-disable-next-line no-shadow
@@ -71,11 +74,15 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    protected onLoadSubject: Subject<any>;
+    protected onLoadSubject: ReplaySubject<any>;
     onLoad: Observable<any>;
 
+    get isLoaded() {
+        return this.status === Status.LOADED;
+    }
+
     constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
-        this.onLoadSubject = new Subject();
+        this.onLoadSubject = new ReplaySubject();
         this.onLoad = this.onLoadSubject.asObservable();
 
         extensionService.setup$.subscribe((config) => {
@@ -92,7 +99,7 @@ export class AppConfigService {
     select(property: string): Observable<any> {
         return this.onLoadSubject
             .pipe(
-                map((config) => config[property]),
+                map((config) => ObjectUtils.getValue(config, property)),
                 distinctUntilChanged()
             );
     }
@@ -160,8 +167,7 @@ export class AppConfigService {
         this.onLoadSubject.next(this.config);
     }
 
-    protected onDataLoaded(data: any) {
-        this.config = Object.assign({}, this.config, data || {});
+    protected onDataLoaded() {
         this.onLoadSubject.next(this.config);
 
         this.extensionService.setup$
@@ -182,9 +188,10 @@ export class AppConfigService {
     /**
      * Loads the config file.
      *
+     * @param callback an optional callback to execute when configuration is loaded
      * @returns Notification when loading is complete
      */
-    load(): Promise<any> {
+    load(callback?: (...args: any[]) => any): Promise<any> {
         return new Promise((resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
@@ -193,8 +200,10 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
+                        this.config = Object.assign({}, this.config, data || {});
+                        callback?.();
                         resolve(data);
-                        this.onDataLoaded(data);
+                        this.onDataLoaded();
                     },
                     () => {
                         // eslint-disable-next-line no-console
@@ -227,6 +236,8 @@ export class AppConfigService {
                         resolve(res);
                     },
                     error: (err: any) => {
+                        // eslint-disable-next-line no-console
+                        console.error('hostIdp not correctly configured or unreachable');
                         reject(err);
                     }
                 });
@@ -262,4 +273,5 @@ export class AppConfigService {
 
         return result;
     }
+
 }

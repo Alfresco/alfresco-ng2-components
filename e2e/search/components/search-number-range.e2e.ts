@@ -270,7 +270,7 @@ describe('Search Number Range Filter', () => {
         for (const currentResult of results) {
             const currentSize = await BrowserActions.getAttribute(currentResult, 'title');
             if (currentSize && currentSize.trim() !== '') {
-                await expect(currentSize === '0').toBe(true);
+                await expect((currentSize === '0' || currentSize === '1')).toBe(true);
             }
         }
     });

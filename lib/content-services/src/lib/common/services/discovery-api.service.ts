@@ -18,15 +18,26 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import { RepositoryInfo, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import {
+    RepositoryInfo,
+    SystemPropertiesRepresentation,
+    DiscoveryApi,
+    AboutApi,
+    SystemPropertiesApi
+} from '@alfresco/js-api';
 
-import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
-import { ApiClientsService } from '@alfresco/adf-core/api';
+import { AlfrescoApiService, BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DiscoveryApiService {
+
+    private _discoveryApi: DiscoveryApi;
+    get discoveryApi(): DiscoveryApi {
+        this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
+        return this._discoveryApi;
+    }
 
     /**
      * Gets product information for Content Services.
@@ -35,15 +46,17 @@ export class DiscoveryApiService {
 
     constructor(
         private authenticationService: AuthenticationService,
-        private apiClientsService: ApiClientsService
+        private alfrescoApiService: AlfrescoApiService
     ) {
-        this.authenticationService.onLogin
-            .pipe(
+        this.authenticationService.onLogin.subscribe(() => {
+            this.alfrescoApiService.alfrescoApiInitialized.pipe(
                 filter(() => this.authenticationService.isEcmLoggedIn()),
                 take(1),
                 switchMap(() => this.getEcmProductInfo())
             )
-            .subscribe((info) => this.ecmProductInfo$.next(info));
+                .subscribe((info) => this.ecmProductInfo$.next(info));
+
+        });
     }
 
 
@@ -53,9 +66,8 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-        const discoveryApi = this.apiClientsService.get('DiscoveryClient.discovery');
 
-        return from(discoveryApi.getRepositoryInformation())
+        return from(this.discoveryApi.getRepositoryInformation())
             .pipe(
                 map((res) => res.entry.repository),
                 catchError((err) => throwError(err))
@@ -68,7 +80,7 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
-        const aboutApi = this.apiClientsService.get('ActivitiClient.about');
+        const aboutApi = new AboutApi(this.alfrescoApiService.getInstance());
 
         return from(aboutApi.getAppVersion())
             .pipe(
@@ -78,7 +90,7 @@ export class DiscoveryApiService {
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
-        const systemPropertiesApi = this.apiClientsService.get('ActivitiClient.system-properties');
+        const systemPropertiesApi = new SystemPropertiesApi(this.alfrescoApiService.getInstance());
 
         return from(systemPropertiesApi.getProperties())
             .pipe(

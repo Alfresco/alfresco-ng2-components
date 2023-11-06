@@ -16,21 +16,23 @@
  */
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { OidcAuthenticationService } from './oidc-authentication.service';
 
 declare let jasmine: any;
 
 describe('AuthenticationService', () => {
-    let apiService: AlfrescoApiService;
     let authService: AuthenticationService;
+    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let appConfigService: AppConfigService;
     let cookie: CookieService;
+    let oidcAuthenticationService: OidcAuthenticationService;
 
     setupTestBed({
         imports: [
@@ -42,8 +44,9 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         sessionStorage.clear();
         localStorage.clear();
-        apiService = TestBed.inject(AlfrescoApiService);
         authService = TestBed.inject(AuthenticationService);
+        basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
+        oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
 
         cookie = TestBed.inject(CookieService);
         cookie.clear();
@@ -73,6 +76,23 @@ describe('AuthenticationService', () => {
             });
             appConfigService.load();
         });
+
+        it('should kerberos be disabled if is oauth', () => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            expect(authService.isKerberosEnabled()).toEqual(false);
+        });
+
+        it('should kerberos not enabled if is oauth is false and basic auth return false', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(false);
+            expect(authService.isKerberosEnabled()).toEqual(false);
+        });
+
+        it('should kerberos be enabled if is oauth is false and basic auth return true', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(true);
+            expect(authService.isKerberosEnabled()).toEqual(true);
+        });
     });
 
     describe('when the setting is ECM', () => {
@@ -83,40 +103,30 @@ describe('AuthenticationService', () => {
             appConfigService.config.auth = { withCredentials: false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('should not require cookie service enabled for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
-            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).toHaveBeenCalled();
-        });
-
-        it('should check if loggedin on ECM in case the provider is ECM', () => {
-            spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
-            expect(authService.isLoggedInWith('ECM')).toBe(true);
         });
 
         it('should require remember me set for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
-            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isECMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
         it('[ECM] should return an ECM ticket after the login done', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                expect(authService.getToken()).toEqual('fake-post-ticket');
                 expect(authService.isEcmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
                 done();
@@ -130,7 +140,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should login in the ECM if no provider are defined calling the login', fakeAsync(() => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe((loginResponse) => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe((loginResponse) => {
                 expect(loginResponse).toEqual(fakeECMLoginResponse);
                 disposableLogin.unsubscribe();
             });
@@ -143,10 +153,10 @@ describe('AuthenticationService', () => {
         }));
 
         it('[ECM] should return a ticket undefined after logout', fakeAsync(() => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     disposableLogout.unsubscribe();
@@ -170,21 +180,21 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirect({ provider: 'ECM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect()).toEqual('some-url');
+            expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirect({ provider: 'BPM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect()).toBeNull();
+            expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
 
         it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirect(null);
+            basicAlfrescoAuthService.setRedirect(null);
 
-            expect(authService.getRedirect()).toBeNull();
+            expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
 
         it('[ECM] should return isECMProvider true', () => {
@@ -209,40 +219,30 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('should require remember me set for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
-            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
             spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).not.toHaveBeenCalled();
-        });
-
-        it('should check if loggedin on BPM in case the provider is BPM', () => {
-            spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
-            expect(authService.isLoggedInWith('BPM')).toBe(true);
         });
 
         it('should not require cookie service enabled for BPM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(false);
-            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(basicAlfrescoAuthService, 'isRememberMeSet').and.returnValue(false);
             spyOn(authService, 'isBPMProvider').and.returnValue(true);
-            spyOn(apiService, 'getInstance').and.callThrough();
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).toHaveBeenCalled();
         });
 
         it('[BPM] should return an BPM ticket after the login done', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 // cspell: disable-next
-                expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(authService.getToken()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
                 done();
@@ -255,10 +255,10 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should return a ticket undefined after logout', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogout.unsubscribe();
                     disposableLogin.unsubscribe();
@@ -281,7 +281,7 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(authService.getTicketBpm()).toBe(undefined);
+                    expect(authService.getToken()).toBe(null);
                     done();
                 });
 
@@ -291,21 +291,21 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirect({ provider: 'BPM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect()).toEqual('some-url');
+            expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirect({ provider: 'ECM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect()).toBeNull();
+            expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
 
         it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirect(null);
+            basicAlfrescoAuthService.setRedirect(null);
 
-            expect(authService.getRedirect()).toBeNull();
+            expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
 
         it('[BPM] should return isECMProvider false', () => {
@@ -326,11 +326,10 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password', false).subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password', false).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
                 disposableLogin.unsubscribe();
@@ -345,7 +344,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password', true).subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password', true).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
                 disposableLogin.unsubscribe();
@@ -361,7 +360,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
                 () => {},
                 () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
@@ -390,15 +389,14 @@ describe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.load();
-            apiService.reset();
         });
 
         it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                expect(basicAlfrescoAuthService.getTicketEcm()).toEqual('fake-post-ticket');
                 // cspell: disable-next
-                expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(basicAlfrescoAuthService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 expect(authService.isEcmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
@@ -417,13 +415,13 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
                 () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
+                    expect(authService.getToken()).toBe(null, 'getTicketEcm');
                     // cspell: disable-next
-                    expect(authService.getTicketBpm()).toBe(null, 'getTicketBpm');
+                    expect(authService.getToken()).toBe(null, 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
@@ -439,12 +437,12 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
                 () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
@@ -462,12 +460,12 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
-            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
                 () => {},
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(null);
-                    expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
+                    expect(authService.getToken()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
@@ -483,30 +481,6 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ALL] should set/get redirectUrl when provider is ALL', () => {
-            authService.setRedirect({ provider: 'ALL', url: 'some-url' });
-
-            expect(authService.getRedirect()).toEqual('some-url');
-        });
-
-        it('[ALL] should set/get redirectUrl when provider is BPM', () => {
-            authService.setRedirect({ provider: 'BPM', url: 'some-url' });
-
-            expect(authService.getRedirect()).toEqual('some-url');
-        });
-
-        it('[ALL] should set/get redirectUrl when provider is ECM', () => {
-            authService.setRedirect({ provider: 'ECM', url: 'some-url' });
-
-            expect(authService.getRedirect()).toEqual('some-url');
-        });
-
-        it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
-            authService.setRedirect(null);
-
-            expect(authService.getRedirect()).toBeNull();
-        });
-
         it('[ALL] should return isECMProvider false', () => {
             expect(authService.isECMProvider()).toBe(false);
         });
@@ -518,5 +492,23 @@ describe('AuthenticationService', () => {
         it('[ALL] should return isALLProvider true', () => {
             expect(authService.isALLProvider()).toBe(true);
         });
+    });
+
+    describe('getUsername', () => {
+        it('should get the username of the authenticated user if isOAuth is true', () => {
+            spyOn(authService, 'isOauth').and.returnValue(true);
+            spyOn(oidcAuthenticationService, 'getUsername').and.returnValue('mike.portnoy');
+            const username = authService.getUsername();
+            expect(username).toEqual('mike.portnoy');
+        });
+
+        it('should get the username of the authenticated user if isOAuth is false', () => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(oidcAuthenticationService, 'getUsername').and.returnValue('mike.portnoy');
+            spyOn(basicAlfrescoAuthService, 'getUsername').and.returnValue('john.petrucci');
+            const username = authService.getUsername();
+            expect(username).toEqual('john.petrucci');
+        });
+
     });
 });

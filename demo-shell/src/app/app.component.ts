@@ -18,11 +18,11 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import {
     AuthenticationService,
-    AlfrescoApiService,
     PageTitleService
 } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Component({
     selector: 'app-root',
@@ -33,7 +33,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class AppComponent implements OnInit {
 
     constructor(private pageTitleService: PageTitleService,
-                private alfrescoApiService: AlfrescoApiService,
+                private adfHttpClient: AdfHttpClient,
                 private authenticationService: AuthenticationService,
                 private router: Router,
                 private dialogRef: MatDialog) {
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.pageTitleService.setTitle('title');
 
-        this.alfrescoApiService.getInstance().on('error', (error) => {
+        this.adfHttpClient.on('error', (error) => {
             if (error.status === 401) {
                 if (!this.authenticationService.isLoggedIn()) {
                     this.dialogRef.closeAll();

@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/api-client.factory';
-export * from './lib/api-clients.service';
-export * from './lib/clients';
 export * from './lib/types';
 export * from './lib/adf-http-client.service';
 export * from './lib/interfaces';
