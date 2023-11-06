@@ -17,22 +17,11 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-camel-task',
     templateUrl: './diagram-camel-task.component.html'
 })
-export class DiagramCamelTaskComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {}
-
-    ngOnInit() {
-
-    }
-}
+export class DiagramCamelTaskComponent extends DiagramElement {}

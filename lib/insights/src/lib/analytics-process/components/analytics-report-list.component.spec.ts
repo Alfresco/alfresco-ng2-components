@@ -24,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 declare let jasmine: any;
 
 describe('AnalyticsReportListComponent', () => {
-
     const reportList = [
         { id: 2002, name: 'Fake Test Process definition heat map' },
         { id: 2003, name: 'Fake Test Process definition overview' },
@@ -33,7 +32,7 @@ describe('AnalyticsReportListComponent', () => {
         { id: 2006, name: 'Fake Test Task service level agreement' }
     ];
 
-    const reportSelected = { id: 2003, name: 'Fake Test Process definition overview' };
+    const reportSelected = { id: 2003, name: 'Fake Test Process definition overview' } as ReportParametersModel;
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
@@ -41,10 +40,7 @@ describe('AnalyticsReportListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), InsightsTestingModule]
         });
         fixture = TestBed.createComponent(AnalyticsReportListComponent);
         component = fixture.componentInstance;
@@ -52,7 +48,6 @@ describe('AnalyticsReportListComponent', () => {
     });
 
     describe('Rendering tests', () => {
-
         beforeEach(() => {
             jasmine.Ajax.install();
         });
@@ -63,7 +58,6 @@ describe('AnalyticsReportListComponent', () => {
 
         it('Report return true with undefined reports', () => {
             expect(component.isReportsEmpty()).toBeTruthy();
-
         });
 
         it('Report return true with an empty reports', () => {
@@ -200,10 +194,9 @@ describe('AnalyticsReportListComponent', () => {
                 responseText: reportList
             });
         });
-   });
+    });
 
     describe('layout', () => {
-
         it('should display a list by default', () => {
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);

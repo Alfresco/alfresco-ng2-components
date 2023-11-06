@@ -26,7 +26,6 @@ import { AnalyticsGeneratorComponent } from './analytics-generator.component';
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsComponent implements OnChanges {
-
     /** appId ID of the target app. */
     @Input()
     appId: number;
@@ -37,19 +36,19 @@ export class AnalyticsComponent implements OnChanges {
 
     /** hideParameters. */
     @Input()
-    hideParameters: boolean = false;
+    hideParameters = false;
 
     /** emitted when editReport. */
     @Output()
-    editReport = new EventEmitter();
+    editReport = new EventEmitter<string>();
 
     /** emitted when reportSaved. */
     @Output()
-    reportSaved = new EventEmitter();
+    reportSaved = new EventEmitter<string>();
 
     /** emitted when reportDeleted. */
     @Output()
-    reportDeleted = new EventEmitter();
+    reportDeleted = new EventEmitter<string>();
 
     @ViewChild('analyticsGenerator', { static: true })
     analyticsGenerator: AnalyticsGeneratorComponent;
@@ -60,8 +59,8 @@ export class AnalyticsComponent implements OnChanges {
         this.analyticsGenerator.reset();
     }
 
-    public showReport($event: any) {
-        this.analyticsGenerator.generateReport(`${this.reportId}`, $event);
+    public showReport(reportQuery: ReportQuery) {
+        this.analyticsGenerator.generateReport(`${this.reportId}`, reportQuery);
     }
 
     public reset() {
@@ -72,12 +71,11 @@ export class AnalyticsComponent implements OnChanges {
         this.editReport.emit(name);
     }
 
-    public onSaveReportSuccess(reportId) {
+    public onSaveReportSuccess(reportId: string) {
         this.reportSaved.emit(reportId);
     }
 
-    public onDeleteReportSuccess() {
-        this.reportDeleted.emit();
+    public onDeleteReportSuccess(reportId: string) {
+        this.reportDeleted.emit(reportId);
     }
-
 }

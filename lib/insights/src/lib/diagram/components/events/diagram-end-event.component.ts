@@ -17,26 +17,17 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-end-event',
     templateUrl: './diagram-end-event.component.html'
 })
-export class DiagramEndEventComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramEndEventComponent extends DiagramElement implements OnInit {
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
     iconFillColor: any;
-
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
 

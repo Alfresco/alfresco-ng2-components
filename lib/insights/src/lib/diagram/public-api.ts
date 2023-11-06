@@ -18,6 +18,7 @@
 export * from './components/diagram-sequence-flow.component';
 export * from './components/diagram.component';
 
+export * from './components/diagram-element';
 export * from './components/activities/diagram-alfresco-publish-task.component';
 export * from './components/activities/diagram-box-publish-task.component';
 export * from './components/activities/diagram-business-rule-task.component';

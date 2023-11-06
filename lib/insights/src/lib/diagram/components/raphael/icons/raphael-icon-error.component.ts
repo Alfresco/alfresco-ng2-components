@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Point } from './../models/point';
-import { RaphaelBase } from './../raphael-base';
-import { RaphaelService } from './../raphael.service';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Point } from '../models/point';
+import { RaphaelBase } from '../raphael-base';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-icon-error, raphael-icon-error'})
+@Directive({ selector: 'adf-raphael-icon-error, raphael-icon-error' })
 export class RaphaelIconErrorDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -49,22 +48,21 @@ export class RaphaelIconErrorDirective extends RaphaelBase implements OnInit {
     @Input()
     fillOpacity: any;
 
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
-
     ngOnInit() {
         this.draw(this.position);
     }
 
     draw(position: Point) {
-        const path1 = this.paper.path(`M 22.820839,11.171502 L 19.36734,24.58992 L 13.54138,14.281819 L 9.3386512,20.071607
-        L 13.048949,6.8323057 L 18.996148,16.132659 L 22.820839,11.171502 z`).attr({
-            opacity: 1,
-            stroke: this.stroke,
-            fill: this.fillColors
-        });
+        const path1 = this.paper
+            .path(
+                `M 22.820839,11.171502 L 19.36734,24.58992 L 13.54138,14.281819 L 9.3386512,20.071607
+        L 13.048949,6.8323057 L 18.996148,16.132659 L 22.820839,11.171502 z`
+            )
+            .attr({
+                opacity: 1,
+                stroke: this.stroke,
+                fill: this.fillColors
+            });
         return path1.transform('T' + position.x + ',' + position.y);
     }
 }

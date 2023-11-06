@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable , OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare let Raphael: any;
@@ -39,8 +39,7 @@ export class RaphaelService implements OnDestroy {
         if (typeof Raphael === 'undefined') {
             throw new Error('insights configuration issue: Embedding Chart.js lib is mandatory');
         }
-        const paper = new Raphael(ctx, this.width, this.height);
-        return paper;
+        return new Raphael(ctx, this.width, this.height);
     }
 
     ngOnDestroy(): any {

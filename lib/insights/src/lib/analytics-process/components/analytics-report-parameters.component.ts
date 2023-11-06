@@ -113,7 +113,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     /** hideComponent. */
     @Input()
-    hideComponent: boolean = false;
+    hideComponent = false;
 
     /** success. */
     @Output()
@@ -125,7 +125,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     /** edit. */
     @Output()
-    edit = new EventEmitter();
+    edit = new EventEmitter<string>();
 
     /** form Value Changed. */
     @Output()
@@ -133,11 +133,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     /** save Report Success. */
     @Output()
-    saveReportSuccess = new EventEmitter();
+    saveReportSuccess = new EventEmitter<string>();
 
     /** delete Report Success. */
     @Output()
-    deleteReportSuccess = new EventEmitter();
+    deleteReportSuccess = new EventEmitter<string>();
 
     @ViewChild('reportNameDialog')
     reportNameDialog: any;

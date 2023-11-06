@@ -29,6 +29,7 @@ import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map } from 'rxjs/operators';
 import { ProcessDefinitionsApi, ReportApi } from '@alfresco/js-api';
+import { ReportQuery } from '../../diagram/models/report/report-query.model';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
@@ -158,7 +159,7 @@ export class AnalyticsService {
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<ParameterValueModel[]> {
         return from(this.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId)).pipe(
-            map((res) => {
+            map((res: string[]) => {
                 const paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
@@ -168,7 +169,7 @@ export class AnalyticsService {
         );
     }
 
-    getReportsByParams(reportId: string, paramsQuery: any): Observable<Chart[]> {
+    getReportsByParams(reportId: string, paramsQuery: ReportQuery): Observable<Chart[]> {
         return from(this.reportApi.getReportsByParams(reportId, paramsQuery)).pipe(
             map((res: any) => {
                 const elements: Chart[] = [];
@@ -201,11 +202,11 @@ export class AnalyticsService {
         return from(this.reportApi.updateReport(reportId, name));
     }
 
-    exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
+    exportReportToCsv(reportId: string, paramsQuery: ReportQuery): Observable<any> {
         return from(this.reportApi.exportToCsv(reportId, paramsQuery));
     }
 
-    saveReport(reportId: string, paramsQuery: any): Observable<any> {
+    saveReport(reportId: string, paramsQuery: ReportQuery): Observable<any> {
         return from(this.reportApi.saveReport(reportId, paramsQuery));
     }
 

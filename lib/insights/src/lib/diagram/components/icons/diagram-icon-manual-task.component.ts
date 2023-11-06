@@ -17,24 +17,17 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-icon-manual-task',
     templateUrl: './diagram-icon-manual-task.component.html'
 })
-export class DiagramIconManualTaskComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramIconManualTaskComponent extends DiagramElement implements OnInit {
     position: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 4, y: this.data.y + 4};

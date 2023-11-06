@@ -27,16 +27,12 @@ import { TranslateModule } from '@ngx-translate/core';
 declare let jasmine: any;
 
 describe('AnalyticsGeneratorComponent', () => {
-
     let component: any;
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                InsightsTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), InsightsTestingModule]
         });
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);
         component = fixture.componentInstance;
@@ -59,13 +55,21 @@ describe('AnalyticsGeneratorComponent', () => {
             expect(res[0].type).toEqual('table');
             expect(res[0].datasets).toBeDefined();
             expect(res[0].datasets.length).toEqual(4);
-            expect(res[0].datasets[0][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS');
+            expect(res[0].datasets[0][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS'
+            );
             expect(res[0].datasets[0][1]).toEqual('9');
-            expect(res[0].datasets[1][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-INSTANCES');
+            expect(res[0].datasets[1][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[1][1]).toEqual('41');
-            expect(res[0].datasets[2][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES');
+            expect(res[0].datasets[2][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[2][1]).toEqual('3');
-            expect(res[0].datasets[3][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES');
+            expect(res[0].datasets[3][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[3][1]).toEqual('38');
 
             expect(res[1]).toBeDefined();
@@ -78,7 +82,7 @@ describe('AnalyticsGeneratorComponent', () => {
         });
 
         component.reportId = 1001;
-        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
 
         fixture.detectChanges();
@@ -101,13 +105,21 @@ describe('AnalyticsGeneratorComponent', () => {
             expect(res[0].type).toEqual('table');
             expect(res[0].datasets).toBeDefined();
             expect(res[0].datasets.length).toEqual(4);
-            expect(res[0].datasets[0][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS');
+            expect(res[0].datasets[0][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS'
+            );
             expect(res[0].datasets[0][1]).toEqual('9');
-            expect(res[0].datasets[1][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-INSTANCES');
+            expect(res[0].datasets[1][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[1][1]).toEqual('41');
-            expect(res[0].datasets[2][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES');
+            expect(res[0].datasets[2][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[2][1]).toEqual('3');
-            expect(res[0].datasets[3][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES');
+            expect(res[0].datasets[3][0]).toEqual(
+                '__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES'
+            );
             expect(res[0].datasets[3][1]).toEqual('38');
 
             expect(res[1]).toBeDefined();
@@ -120,7 +132,7 @@ describe('AnalyticsGeneratorComponent', () => {
         });
 
         component.reportId = 1001;
-        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
 
         fixture.detectChanges();
@@ -192,7 +204,7 @@ describe('AnalyticsGeneratorComponent', () => {
         });
 
         component.reportId = 1;
-        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
 
         fixture.detectChanges();
@@ -206,16 +218,15 @@ describe('AnalyticsGeneratorComponent', () => {
         });
     });
 
-    it('Should reset the reports when the onChanged is call', () => {
-        component.reports = [new Chart({id: 'fake', type: 'fake-type'})];
+    it('Should reset the reports when the onChanged is call', async () => {
+        component.reports = [new Chart({ id: 'fake', type: 'fake-type' })];
         component.reportId = 1;
         component.ngOnChanges();
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        fixture.whenStable().then(() => {
-            expect(component.reports).toBeUndefined();
-        });
+        expect(component.reports).toBeUndefined();
     });
 
     it('Should emit onError event with a 404 response ', (done) => {
@@ -225,7 +236,7 @@ describe('AnalyticsGeneratorComponent', () => {
         });
 
         component.reportId = 1;
-        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
 
         fixture.detectChanges();

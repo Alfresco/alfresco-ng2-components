@@ -17,27 +17,20 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-icon-error',
     templateUrl: './diagram-icon-error.component.html'
 })
-export class DiagramIconErrorComponent implements OnInit {
-    @Input()
-    data: any;
-
+export class DiagramIconErrorComponent extends DiagramElement implements OnInit {
     @Input()
     fillColor: string;
-
-    @Output()
-    error = new EventEmitter();
 
     position: any;
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.position = {x: this.data.x - 1, y: this.data.y - 1};

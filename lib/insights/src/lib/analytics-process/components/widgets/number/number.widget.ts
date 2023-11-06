@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntypedFormGroup, Validators } from '@angular/forms';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent } from '../widget.component';
 
 @Component({
     selector: 'analytics-number-widget',
@@ -28,10 +28,6 @@ import { WidgetComponent } from './../widget.component';
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetAnalyticsComponent extends WidgetComponent implements OnInit {
-
-    @Input()
-    field: any;
-
     @Input('group')
     public formGroup: UntypedFormGroup;
 
@@ -40,10 +36,6 @@ export class NumberWidgetAnalyticsComponent extends WidgetComponent implements O
 
     @Input()
     required: boolean = false;
-
-    constructor(public elementRef: ElementRef) {
-        super();
-    }
 
     ngOnInit() {
         if (this.required) {

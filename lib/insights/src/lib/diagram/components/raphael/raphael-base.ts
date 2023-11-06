@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
+import { Directive, ElementRef, inject } from '@angular/core';
 import { RaphaelService } from './raphael.service';
 
+@Directive()
 export class RaphaelBase {
+    private raphaelService = inject(RaphaelService);
+    private element = inject(ElementRef);
 
     paper: any;
 
-    public element: ElementRef;
-
-    public constructor(element: ElementRef,
-                       private raphaelService: RaphaelService) {
-        this.element = element;
-        this.paper = this.raphaelService.getInstance(element);
+    constructor() {
+        this.paper = this.raphaelService.getInstance(this.element);
     }
 }

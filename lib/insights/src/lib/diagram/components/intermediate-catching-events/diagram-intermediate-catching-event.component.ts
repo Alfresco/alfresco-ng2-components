@@ -17,29 +17,20 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-intermediate-catching-event',
     templateUrl: './diagram-intermediate-catching-event.component.html'
 })
-export class DiagramIntermediateCatchingEventComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramIntermediateCatchingEventComponent extends DiagramElement implements OnInit {
     center: any = {};
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
 
     circleRadiusInner: number;
     circleRadiusOuter: number;
-
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

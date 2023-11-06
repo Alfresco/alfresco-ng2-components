@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
-import { RaphaelService } from './raphael.service';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-circle, raphael-circle'})
+@Directive({ selector: 'adf-raphael-circle, raphael-circle' })
 export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -52,11 +51,6 @@ export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     @Output()
     error = new EventEmitter();
 
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
-
     ngOnInit() {
         const opts = {
             'stroke-width': this.strokeWidth,
@@ -69,7 +63,6 @@ export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     }
 
     draw(center: Point, radius: number, opts: any) {
-        const circle = this.paper.circle(center.x, center.y, radius).attr(opts);
-        return circle;
+        return this.paper.circle(center.x, center.y, radius).attr(opts);
     }
 }

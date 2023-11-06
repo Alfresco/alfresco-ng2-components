@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
-import { RaphaelService } from './raphael.service';
 
 const TEXT_PADDING = 3;
 
@@ -44,11 +43,6 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
 
     @Output()
     error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
 
     ngOnInit() {
         if (this.text === null || this.text === undefined) {

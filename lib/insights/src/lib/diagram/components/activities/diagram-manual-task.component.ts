@@ -17,19 +17,11 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-manual-task',
     templateUrl: './diagram-manual-task.component.html'
 })
-export class DiagramManualTaskComponent {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
-    constructor(public elementRef: ElementRef) {
-    }
-}
+export class DiagramManualTaskComponent extends DiagramElement {}

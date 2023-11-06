@@ -17,19 +17,14 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-icon-timer',
     templateUrl: './diagram-icon-timer.component.html'
 })
-export class DiagramIconTimerComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramIconTimerComponent extends DiagramElement implements OnInit {
     center: any = {};
     position: any;
 
@@ -37,8 +32,6 @@ export class DiagramIconTimerComponent implements OnInit {
 
     circleOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
     timerOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
-
-    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Point } from './../models/point';
-import { RaphaelBase } from './../raphael-base';
-import { RaphaelService } from './../raphael.service';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Point } from '../models/point';
+import { RaphaelBase } from '../raphael-base';
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({selector: 'adf-raphael-icon-signal, raphael-icon-signal'})
+@Directive({ selector: 'adf-raphael-icon-signal, raphael-icon-signal' })
 export class RaphaelIconSignalDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -49,13 +48,7 @@ export class RaphaelIconSignalDirective extends RaphaelBase implements OnInit {
     @Input()
     fillOpacity: any;
 
-    constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
-        super(elementRef, raphaelService);
-    }
-
     ngOnInit() {
-
         this.draw(this.position);
     }
 

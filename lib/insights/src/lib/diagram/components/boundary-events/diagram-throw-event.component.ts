@@ -17,21 +17,15 @@
 
  /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MAIN_STROKE_COLOR } from '../../constants/diagram-colors';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { DiagramElement } from '../diagram-element';
 
 @Component({
     selector: 'diagram-throw-event',
     templateUrl: './diagram-throw-event.component.html'
 })
-export class DiagramThrowEventComponent implements OnInit {
-    @Input()
-    data: any;
-
-    @Output()
-    error = new EventEmitter();
-
+export class DiagramThrowEventComponent extends DiagramElement implements OnInit {
     center: any = {};
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
 
@@ -39,10 +33,6 @@ export class DiagramThrowEventComponent implements OnInit {
 
     circleRadiusInner: number;
     circleRadiusOuter: number;
-
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {
-    }
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

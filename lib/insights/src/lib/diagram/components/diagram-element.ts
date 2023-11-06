@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-export const fakeReportList = [
-    {
-        id: '1',
-        name: 'Fake Report 1'
-    },
-    {
-        id: '2',
-        name: 'Fake Report 2'
-    }
-];
+import { Directive, EventEmitter, Input, Output, inject } from '@angular/core';
+import { DiagramColorService } from '../services/diagram-color.service';
+
+@Directive()
+export abstract class DiagramElement {
+    protected diagramColorService = inject(DiagramColorService);
+
+    @Input()
+    data: any;
+
+    @Output()
+    error = new EventEmitter();
+}
