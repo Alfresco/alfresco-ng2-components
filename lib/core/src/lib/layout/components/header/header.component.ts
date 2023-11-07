@@ -46,7 +46,7 @@ export class HeaderLayoutComponent implements OnInit {
      * Background color for the header. It can be any hex color code or one
      * of the Material theme colors: 'primary', 'accent' or 'warn'.
      */
-    @Input() color: ThemePalette;
+    @Input() color: ThemePalette | string;
 
     /** Path to a background image for the header. */
     @Input() backgroundImage: string;
