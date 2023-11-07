@@ -41,7 +41,7 @@ export default {
     argTypes: {
         color: {
             control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
+            options: ['primary', 'accent', 'warn', '#42f57e', undefined],
             defaultValue: undefined,
             description: `Background color for the header.
                 It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
