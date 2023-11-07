@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
 import { DataTableModule } from '../datatable.module';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import * as data from '../../mock/data-column.mock';
+import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
 
@@ -307,43 +307,11 @@ export default {
                 locale: undefined
             }
         },
-        data: {
-            description: 'Provides data for DataTable component',
-            control: { disable: true },
-            mapping: {
-                textMap: data.dataText,
-                iconMap: data.dataIcon,
-                imageMap: data.dataImage,
-                fileSizeMap: data.dataSizeInBytes,
-                booleanMap: data.dataBoolean,
-                locationMap: data.dataLocation,
-                amountMap: data.dataAmount,
-                jsonMap: data.dataJson,
-                dateMap: data.dataDate,
-                dateTimeAgoMap: data.dataDateTimeAgo
-            },
-            table: {
-                category: 'Components data',
-                type: {
-                    summary: 'ObjectDataTableAdapter'
-                }
-            }
-        },
-        columns: {
-            description: 'Provides columns for DataTable component',
-            control: { disable: true },
-            table: {
-                category: 'Components data',
-                type: {
-                    summary: 'array'
-                }
-            }
-        },
         rows: {
             description: 'Provides rows for DataTable component',
-            control: { disable: true },
+            control: { disable: false },
             table: {
-                category: 'Components data',
+                category: 'Component data',
                 type: {
                     summary: 'array'
                 }
@@ -353,43 +321,40 @@ export default {
 } as Meta;
 
 const formatCustomTooltip = (row: DataRow): string =>
-    row ? row.getValue('id') + ' by formatCustomTooltip' : null;
+    row ? 'This is ' + row.getValue('firstname') : null;
 
-const template: Story<DataColumnComponent> = (args: DataColumnComponent & { columns: any; rows: any; data: any }) => ({
+const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     props: args,
     template: `
-        ${
-            args.columns && args.rows
-                ? '<adf-datatable [columns]="columns" [rows]="rows">'
-                : '<adf-datatable [data]="data">'
-        }
-        <data-columns>
-            <data-column 
-                [key]="key" 
-                [type]="type"
-                [title]="title"
-                [editable]="editable"
-                [sortable]="sortable"
-                [draggable]="draggable"
-                [copyContent]="copyContent"
-                [format]="format"
-                [isHidden]="isHidden"
-                [class]="cssClass"
-                [sr-title]="srTitle"
-                [currencyConfig]="currencyConfig"
-                [decimalConfig]="decimalConfig"
-                [dateConfig]="dateConfig"
-                [formatTooltip]="formatTooltip">
-            </data-column>
-        </data-columns>
-    </adf-datatable>`
+        <adf-datatable [rows]="rows">
+            <data-columns>
+                <data-column 
+                    [key]="key" 
+                    [type]="type"
+                    [title]="title"
+                    [editable]="editable"
+                    [sortable]="sortable"
+                    [draggable]="draggable"
+                    [copyContent]="copyContent"
+                    [format]="format"
+                    [isHidden]="isHidden"
+                    [class]="cssClass"
+                    [sr-title]="srTitle"
+                    [currencyConfig]="currencyConfig"
+                    [decimalConfig]="decimalConfig"
+                    [dateConfig]="dateConfig"
+                    [formatTooltip]="formatTooltip">
+                </data-column>
+            </data-columns>
+        </adf-datatable>
+    `
 });
 
 // Text Column
 export const textColumn: Story = template.bind({});
 textColumn.args = {
-    data: 'textMap',
-    key: 'id',
+    rows: mockData.textColumnRows,
+    key: 'firstname',
     type: 'text',
     title: 'Text Column'
 };
@@ -400,8 +365,8 @@ textColumnWithCustomTooltip.argTypes = {
     formatTooltip: { control: { disable: false } }
 };
 textColumnWithCustomTooltip.args = {
-    data: 'textMap',
-    key: 'id',
+    rows: mockData.textColumnRows,
+    key: 'firstname',
     type: 'text',
     title: 'Custom Tooltip Column',
     formatTooltip: formatCustomTooltip
@@ -413,7 +378,7 @@ iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 iconColumn.args = {
-    data: 'iconMap',
+    rows: mockData.iconColumnRows,
     key: 'icon',
     type: 'icon',
     title: 'Icon Column'
@@ -425,7 +390,7 @@ imageColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 imageColumn.args = {
-    data: 'imageMap',
+    rows: mockData.imageColumnRows,
     key: 'image',
     type: 'image',
     title: 'Image Column'
@@ -438,7 +403,7 @@ dateColumn.argTypes = {
     dateConfig: { control: { disable: false } }
 };
 dateColumn.args = {
-    data: 'dateMap',
+    rows: mockData.dateColumnRows,
     key: 'createdOn',
     type: 'date',
     title: 'Date Column'
@@ -451,7 +416,7 @@ dateColumnTimeAgo.argTypes = {
     dateConfig: { control: { disable: false } }
 };
 dateColumnTimeAgo.args = {
-    data: 'dateTimeAgoMap',
+    rows: mockData.dateColumnTimeAgoRows,
     key: 'modifiedOn',
     type: 'date',
     title: 'Date Column Time Ago',
@@ -464,7 +429,7 @@ fileSizeColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 fileSizeColumn.args = {
-    data: 'fileSizeMap',
+    rows: mockData.fileSizeColumnRows,
     key: 'size',
     type: 'fileSize',
     title: 'File Size Column'
@@ -478,7 +443,7 @@ locationColumn.argTypes = {
     sortable: { control: { disable: true }}
 };
 locationColumn.args = {
-    data: 'locationMap',
+    rows: mockData.locationColumnRows,
     format: '/files',
     key: 'path',
     type: 'location',
@@ -491,7 +456,7 @@ booleanColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 booleanColumn.args = {
-    data: 'booleanMap',
+    rows: mockData.booleanColumnRows,
     key: 'bool',
     type: 'boolean',
     title: 'Boolean Column'
@@ -504,7 +469,7 @@ jsonColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 jsonColumn.args = {
-    data: 'jsonMap',
+    rows: mockData.jsonColumnRows,
     key: 'rowInfo',
     type: 'json',
     title: 'JSON Column'
@@ -517,7 +482,7 @@ amountColumn.argTypes = {
     currencyConfig: { control: { disable: false } }
 };
 amountColumn.args = {
-    data: 'amountMap',
+    rows: mockData.amountColumnRows,
     key: 'price',
     type: 'amount',
     title: 'Amount Column'
@@ -530,7 +495,7 @@ numberColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 numberColumn.args = {
-    data: 'amountMap',
+    rows: mockData.amountColumnRows,
     key: 'price',
     type: 'number',
     title: 'Number Column'
