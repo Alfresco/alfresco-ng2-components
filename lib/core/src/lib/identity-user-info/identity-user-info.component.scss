@@ -36,7 +36,7 @@
         display: inline-block;
     }
 
-    &-userinfo-menu_button.mat-button {
+    &-userinfo-menu_button.mat-mdc-button {
         margin-right: 0;
         border-radius: 90%;
         padding: 0;
@@ -44,12 +44,12 @@
         height: 40px;
     }
 
-    &-userinfo-tab .mat-tab-header {
+    &-userinfo-tab .mat-mdc-tab-header {
         align-self: center;
         width: 100%;
         min-width: 250px;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     &-userinfo-tab .mat-tab-label {
         flex: auto;
         font-weight: 500;
@@ -68,7 +68,7 @@
         box-sizing: border-box;
     }
 
-    &-userinfo-card.mat-card {
+    &-userinfo-card.mat-mdc-card {
         padding: 0;
     }
 
@@ -103,14 +103,14 @@
         border: 0;
         vertical-align: middle;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
     &-hide-tab .mat-tab-label-active {
         display: none;
     }
 }
 
 @media only screen and (min-device-width: 480px) {
-    .mat-menu-panel.adf-userinfo-menu {
+    .mat-mdc-menu-panel.adf-userinfo-menu {
         max-height: 450px;
         min-width: 450px;
         overflow: auto;
@@ -118,6 +118,6 @@
     }
 }
 
-.mat-menu-panel.adf-userinfo-menu .mat-menu-content {
+.mat-mdc-menu-panel.adf-userinfo-menu .mat-mdc-menu-content {
     padding: 0;
 }

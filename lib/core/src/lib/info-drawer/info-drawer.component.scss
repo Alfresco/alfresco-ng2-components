@@ -1,7 +1,7 @@
 .adf {
     &-info-drawer {
         display: block;
-
+        /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
         .mat-tab-label {
             min-width: 0;
         }
@@ -20,15 +20,16 @@
                 }
 
                 .adf-info-drawer-tabs {
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                     & .mat-tab-body-content > * {
                         margin-bottom: 20px;
                         display: block;
                     }
-
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                     & .mat-tab-body-content > *:last-child {
                         margin-bottom: 0;
                     }
-
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                     .mat-tab-label {
                         flex-grow: 1;
 
@@ -41,10 +42,10 @@
                         height: 4px;
                     }
 
-                    .mat-tab-body {
+                    .mat-mdc-tab-body {
                         padding: 10px;
                     }
-
+                    /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
                     .mat-tab-body-content {
                         /* stylelint-disable */
                         overflow: initial;

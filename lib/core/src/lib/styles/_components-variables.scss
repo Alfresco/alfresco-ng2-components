@@ -64,10 +64,10 @@
         --adf-info-drawer-tab-active-focused-bottom-line:unset,
     );
 
-    // propagates SCSS variables into the CSS variables scope
-    :root {
-        @each $name, $value in $defaults {
-            #{$name}: #{$value};
-        }
+// propagates SCSS variables into the CSS variables scope
+:root {
+    @each $name, $value in $defaults {
+        #{$name}: #{$value};
     }
+}
 }

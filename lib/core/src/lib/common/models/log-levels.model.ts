@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-export class LogLevelsEnum extends Number {
-    static TRACE: number = 5;
-    static DEBUG: number = 4;
-    static INFO: number = 3;
-    static WARN: number = 2;
-    static ERROR: number = 1;
-    static SILENT: number = 0;
+export enum LogLevelsEnum {
+    TRACE = 5,
+    DEBUG = 4,
+    INFO = 3,
+    WARN = 2,
+    ERROR = 1,
+    SILENT = 0
 }
 
 export const logLevels: any[] = [

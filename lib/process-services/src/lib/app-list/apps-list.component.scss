@@ -48,7 +48,7 @@ $tile-themes: (
     flex-direction: column;
     height: 85vh;
 
-    .mat-spinner {
+    .mat-mdc-progress-spinner {
         margin: 0 auto;
     }
 }
@@ -159,7 +159,7 @@ $tile-themes: (
                         color: #e9f1f3;
                     }
 
-                    &.mat-card-actions {
+                    &.mat-mdc-card-actions {
                         margin-left: 0;
                         margin-right: 0;
 
