@@ -30,7 +30,7 @@ describe('AuthConfigService', () => {
 
     const mockAuthConfigImplicitFlow: OauthConfigModel = {
         host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'alfresco',
+        clientId: 'fakeClientId',
         scope: 'openid profile email',
         secret: '',
         implicitFlow: true,
@@ -45,15 +45,15 @@ describe('AuthConfigService', () => {
         ]
     };
 
-    const mockAuthConfigModelingRedirectUri: OauthConfigModel = {
+    const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
         host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'alfresco',
+        clientId: 'fakeClientId',
         scope: 'openid profile email',
         secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/modeling',
+        redirectUri: '/subfolder',
         redirectUriLogout: '#/logout',
         publicUrls: [
             '**/preview/s/*',
@@ -62,15 +62,15 @@ describe('AuthConfigService', () => {
         ]
     };
 
-    const mockAuthConfigAdminRedirectUri: OauthConfigModel = {
+    const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
         host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'alfresco',
+        clientId: 'fakeClientId',
         scope: 'openid profile email',
         secret: '',
         implicitFlow: true,
         silentLogin: true,
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/admin',
+        redirectUri: '/subfolder2',
         redirectUriLogout: '#/logout',
         publicUrls: [
             '**/preview/s/*',
@@ -81,7 +81,7 @@ describe('AuthConfigService', () => {
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
         host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'alfresco',
+        clientId: 'fakeClientId',
         scope: 'openid profile email',
         secret: '',
         implicitFlow: true,
@@ -98,7 +98,7 @@ describe('AuthConfigService', () => {
 
     const mockAuthConfigCodeFlow: OauthConfigModel = {
         host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'alfresco',
+        clientId: 'fakeClientId',
         scope: 'openid profile email',
         secret: '',
         implicitFlow: false,
@@ -137,7 +137,7 @@ describe('AuthConfigService', () => {
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
                 silentRefreshRedirectUri: 'http://localhost:3000/silent-refresh.html',
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'alfresco',
+                clientId: 'fakeClientId',
                 scope: 'openid profile email',
                 dummyClientSecret: ''
             };
@@ -153,7 +153,7 @@ describe('AuthConfigService', () => {
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation',
                 silentRefreshRedirectUri: 'http://localhost:3000/silent-refresh.html',
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'alfresco',
+                clientId: 'fakeClientId',
                 scope: 'openid profile email',
                 responseType: 'code',
                 dummyClientSecret: ''
@@ -164,15 +164,15 @@ describe('AuthConfigService', () => {
     });
 
     describe('getRedirectUri', () => {
-        it('should return redirect uri with admin path', () => {
-            const expectedUri = 'http://localhost:3000/admin/#/view/authentication-confirmation/?';
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigAdminRedirectUri);
+        it('should return redirect uri with subfolder path', () => {
+            const expectedUri = 'http://localhost:3000/subfolder/#/view/authentication-confirmation/?';
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolderRedirectUri);
             expect(service.getRedirectUri()).toBe(expectedUri);
         });
 
-        it('should return redirect uri with modeling path', () => {
-            const expectedUri = 'http://localhost:3000/modeling/#/view/authentication-confirmation/?';
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigModelingRedirectUri);
+        it('should return redirect uri with subfolder2 path', () => {
+            const expectedUri = 'http://localhost:3000/subfolder2/#/view/authentication-confirmation/?';
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolder2RedirectUri);
             expect(service.getRedirectUri()).toBe(expectedUri);
         });
 
