@@ -16,7 +16,6 @@
  */
 
 import { Category, CategoryPaging, ResultNode, ResultSetPaging } from '@alfresco/js-api';
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
@@ -28,8 +27,12 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CategoriesManagementComponent } from './categories-management.component';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('CategoriesManagementComponent', () => {
+    let loader: HarnessLoader;
     let component: CategoriesManagementComponent;
     let fixture: ComponentFixture<CategoriesManagementComponent>;
     let categoryService: CategoryService;
@@ -38,18 +41,15 @@ describe('CategoriesManagementComponent', () => {
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
     const category3 = new Category({ id: 'test3', name: 'testCat3' });
     const category4 = new Category({ id: 'test4', name: 'testCat4' });
-    const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' }});
-    const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' }});
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [ { entry: category1 }, { entry: category2 }]}};
-    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [ { entry: resultCat1 }, { entry: resultCat2 }]}};
+    const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' } });
+    const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' } });
+    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
+    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [{ entry: resultCat1 }, { entry: resultCat2 }] } };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [CategoriesManagementComponent],
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             providers: [
                 {
                     provide: CategoryService,
@@ -65,6 +65,7 @@ describe('CategoriesManagementComponent', () => {
         fixture = TestBed.createComponent(CategoriesManagementComponent);
         component = fixture.componentInstance;
         categoryService = TestBed.inject(CategoryService);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     /**
@@ -138,7 +139,9 @@ describe('CategoriesManagementComponent', () => {
      * @returns list of native elements
      */
     function getRemoveCategoryButtons(): HTMLButtonElement[] {
-        return fixture.debugElement.queryAll(By.css(`[data-automation-id="categories-remove-category-button"]`)).map((debugElem) => debugElem.nativeElement);
+        return fixture.debugElement
+            .queryAll(By.css(`[data-automation-id="categories-remove-category-button"]`))
+            .map((debugElem) => debugElem.nativeElement);
     }
 
     /**
@@ -261,39 +264,28 @@ describe('CategoriesManagementComponent', () => {
         });
 
         describe('Spinner', () => {
-            /**
-             * Get the spinner element
-             *
-             * @returns debug element
-             */
-            function getSpinner(): DebugElement {
-                return fixture.debugElement.query(By.css(`.mat-progress-spinner`));
-            }
+            it('should not be displayed when existing categories stopped loading', async () => {
+                component.categoryNameControlVisible = true;
+                fixture.detectChanges();
 
-            it('should be displayed with correct diameter when existing categories are loading', fakeAsync(() => {
-                typeCategory('Category 1', 0);
+                const categoryControlInput = getCategoryControlInput();
+                categoryControlInput.value = 'Category 1';
+                categoryControlInput.dispatchEvent(new InputEvent('input'));
 
-                const spinner = getSpinner();
-                expect(spinner).toBeTruthy();
-                expect(spinner.componentInstance.diameter).toBe(50);
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-                discardPeriodicTasks();
-                flush();
-            }));
-
-            it('should not be displayed when existing categories stopped loading', fakeAsync(() => {
-                typeCategory('Category 1');
-
-                const spinner = getSpinner();
-                expect(spinner).toBeFalsy();
-            }));
+                expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
+            });
         });
 
         it('should display correct message when there are no existing categories', fakeAsync(() => {
-            spyOn(categoryService, 'getSubcategories').and.returnValue(of({list: { pagination: {}, entries: []}}));
+            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ list: { pagination: {}, entries: [] } }));
             typeCategory('test');
 
-            const noExistingCategoriesMsg = fixture.debugElement.query(By.css('mat-selection-list p'))?.nativeElement.textContent.trim();
+            const noExistingCategoriesMsg = fixture.debugElement
+                .query(By.css(`[data-automation-id="no-categories-message"]`))
+                ?.nativeElement.textContent.trim();
             expect(noExistingCategoriesMsg).toBe('CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES');
         }));
     });
@@ -328,7 +320,9 @@ describe('CategoriesManagementComponent', () => {
 
         it('should have correct remove category title', () => {
             const removeButtons = getRemoveCategoryButtons();
-            const isTitleCorrect = removeButtons.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY');
+            const isTitleCorrect = removeButtons.every(
+                (removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.UNASSIGN_CATEGORY'
+            );
             expect(isTitleCorrect).toBeTrue();
         });
 
@@ -434,7 +428,9 @@ describe('CategoriesManagementComponent', () => {
 
         it('should have correct remove category title', () => {
             const removeButtons = getRemoveCategoryButtons();
-            const isTitleCorrect = removeButtons.every((removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY');
+            const isTitleCorrect = removeButtons.every(
+                (removeBtn) => removeBtn.attributes.getNamedItem('title').textContent === 'CATEGORIES_MANAGEMENT.DELETE_CATEGORY'
+            );
             expect(isTitleCorrect).toBeTrue();
         });
 
