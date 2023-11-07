@@ -72,6 +72,15 @@ describe('HeaderLayoutComponent', () => {
             expect(await host.getAttribute('ng-reflect-color')).toBe('primary');
         });
 
+        it('should change background color when custom is provided', async () => {
+            component.color = '#42f57e';
+            fixture.detectChanges();
+
+            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
+            const toolbar = await toolbarHarness.host();
+            expect(await toolbar.getCssValue('background-color')).toBe('rgb(66, 245, 126)');
+        });
+
         it('should change background image when provided', async () => {
             component.backgroundImage = '/assets/someImage.png';
             fixture.detectChanges();
