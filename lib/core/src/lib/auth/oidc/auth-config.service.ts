@@ -74,11 +74,14 @@ export class AuthConfigService {
         const viewUrl = `view/authentication-confirmation`;
         const useHash = this.authModuleConfig.useHash;
 
-        const redirectUri = useHash
-            ? `${this.getLocationOrigin()}/#/${viewUrl}`
-            : `${this.getLocationOrigin()}/${viewUrl}`;
-
         const oauth2 = this.appConfigService.oauth2;
+
+        const locationOrigin = oauth2.redirectUri && oauth2.redirectUri !== '/' ? this.getLocationOrigin() + '' + oauth2.redirectUri : this.getLocationOrigin();
+
+        const redirectUri = useHash
+            ? `${locationOrigin}/#/${viewUrl}`
+            : `${locationOrigin}/${viewUrl}`;
+
 
         // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
         // `cannot match any routes`, and displaying the wildcard ** error page
