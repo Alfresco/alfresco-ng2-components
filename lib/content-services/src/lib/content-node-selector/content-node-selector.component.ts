@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService} from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -48,13 +48,15 @@ export class ContentNodeSelectorComponent implements OnInit {
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
-    constructor(private translation: TranslationService,
-                private contentService: ContentService,
-                private notificationService: NotificationService,
-                private uploadService: UploadService,
-                private dialog: MatDialogRef<ContentNodeSelectorComponent>,
-                private overlayContainer: OverlayContainer,
-                @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
+    constructor(
+        private translation: TranslationService,
+        private contentService: ContentService,
+        private notificationService: NotificationService,
+        private uploadService: UploadService,
+        private dialog: MatDialogRef<ContentNodeSelectorComponent>,
+        private overlayContainer: OverlayContainer,
+        @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData
+    ) {
         this.action = data.actionName ?? NodeAction.CHOOSE;
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
@@ -62,9 +64,9 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dialog.keydownEvents().subscribe(event => {
+        this.dialog.keydownEvents().subscribe((event) => {
             // Esc
-            if (event.keyCode === 27) {
+            if (event && event.code === 'Escape') {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 this.close();
@@ -72,7 +74,7 @@ export class ContentNodeSelectorComponent implements OnInit {
         });
 
         this.dialog.backdropClick().subscribe(() => {
-           this.close();
+            this.close();
         });
 
         this.dialog.afterOpened().subscribe(() => {
@@ -179,16 +181,18 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     getWarningMessage(): string {
-        return this.showingSearch ? 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' :
-            (this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '');
+        return this.showingSearch
+            ? 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE'
+            : this.hasNoPermissionToUpload()
+            ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE'
+            : '';
     }
 
     hasNoPermissionToUpload(): boolean {
-        return (!this.hasAllowableOperations && !this.showingSearch) && !this.isLoading;
+        return !this.hasAllowableOperations && !this.showingSearch && !this.isLoading;
     }
 
     hasUploadError(): boolean {
         return this.showingSearch || this.hasNoPermissionToUpload();
     }
-
 }
