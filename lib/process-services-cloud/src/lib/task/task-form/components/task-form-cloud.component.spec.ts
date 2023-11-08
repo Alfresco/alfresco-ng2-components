@@ -33,6 +33,9 @@ import {
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -50,7 +53,7 @@ const taskDetails: TaskDetailsCloudModel = {
 };
 
 describe('TaskFormCloudComponent', () => {
-
+    let loader: HarnessLoader;
     let taskCloudService: TaskCloudService;
     let identityUserService: IdentityUserService;
 
@@ -63,10 +66,7 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];
@@ -82,6 +82,7 @@ describe('TaskFormCloudComponent', () => {
         fixture = TestBed.createComponent(TaskFormCloudComponent);
         debugElement = fixture.debugElement;
         component = fixture.componentInstance;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -89,7 +90,6 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Complete button', () => {
-
         beforeEach(() => {
             component.taskId = 'task1';
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
@@ -120,7 +120,6 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Claim/Unclaim buttons', () => {
-
         beforeEach(() => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             getTaskSpy.and.returnValue(of(taskDetails));
@@ -213,7 +212,6 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Cancel button', () => {
-
         it('should show cancel button by default', () => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -238,7 +236,6 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Inputs', () => {
-
         it('should not show complete/claim/unclaim buttons when readOnly=true', () => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -284,7 +281,6 @@ describe('TaskFormCloudComponent', () => {
     });
 
     describe('Events', () => {
-
         beforeEach(() => {
             component.appName = 'app1';
             component.taskId = 'task1';
@@ -292,7 +288,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should emit cancelClick when cancel button is clicked', async () => {
-            spyOn(component.cancelClick,'emit').and.stub();
+            spyOn(component.cancelClick, 'emit').and.stub();
 
             fixture.detectChanges();
 
@@ -395,22 +391,18 @@ describe('TaskFormCloudComponent', () => {
             expect(reloadSpy).toHaveBeenCalled();
         });
 
-        it('should show loading template while task data is being loaded', () => {
+        it('should show loading template while task data is being loaded', async () => {
             component.loading = true;
             fixture.detectChanges();
 
-            const loadingTemplate = debugElement.query(By.css('mat-progress-spinner'));
-
-            expect(loadingTemplate).toBeDefined();
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
         });
 
-        it('should not show loading template while task data is not being loaded', () => {
+        it('should not show loading template while task data is not being loaded', async () => {
             component.loading = false;
             fixture.detectChanges();
 
-            const loadingTemplate = debugElement.query(By.css('mat-progress-spinner'));
-
-            expect(loadingTemplate).toBeNull();
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
         });
 
         it('should emit an executeOutcome event when form outcome executed', () => {
