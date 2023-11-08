@@ -26,9 +26,12 @@ import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from '.
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppDefinitionRepresentationModel } from '../task-list';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 describe('AppsListComponent', () => {
-
+    let loader: HarnessLoader;
     let component: AppsListComponent;
     let fixture: ComponentFixture<AppsListComponent>;
     let debugElement: DebugElement;
@@ -37,22 +40,18 @@ describe('AppsListComponent', () => {
 
     @Component({
         template: `
-        <adf-apps>
-            <adf-custom-empty-content-template>
-                <p id="custom-id">No Apps</p>
-            </adf-custom-empty-content-template>
-        </adf-apps>
+            <adf-apps>
+                <adf-custom-empty-content-template>
+                    <p id="custom-id">No Apps</p>
+                </adf-custom-empty-content-template>
+            </adf-apps>
         `
     })
-    class CustomEmptyAppListTemplateComponent {
-    }
+    class CustomEmptyAppListTemplateComponent {}
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             declarations: [CustomEmptyAppListTemplateComponent]
         });
         fixture = TestBed.createComponent(AppsListComponent);
@@ -61,6 +60,7 @@ describe('AppsListComponent', () => {
 
         service = TestBed.inject(AppsProcessService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(of(deployedApps));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should define layoutType with the default value', () => {
@@ -84,12 +84,11 @@ describe('AppsListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const loadingSpinner = fixture.nativeElement.querySelector('mat-progress-spinner');
-        expect(loadingSpinner).toBeDefined();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
     });
 
     it('should show the apps filtered by defaultAppId', () => {
-        component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
+        component.filtersAppId = [{ defaultAppId: 'fake-app-1' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -97,7 +96,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by deploymentId', () => {
-        component.filtersAppId = [{deploymentId: '4'}];
+        component.filtersAppId = [{ deploymentId: '4' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -106,7 +105,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by name', () => {
-        component.filtersAppId = [{name: 'App5'}];
+        component.filtersAppId = [{ name: 'App5' }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -115,7 +114,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by id', () => {
-        component.filtersAppId = [{id: 6}];
+        component.filtersAppId = [{ id: 6 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -124,7 +123,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by modelId', () => {
-        component.filtersAppId = [{modelId: 66}];
+        component.filtersAppId = [{ modelId: 66 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -133,7 +132,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by tenantId', () => {
-        component.filtersAppId = [{tenantId: 9}];
+        component.filtersAppId = [{ tenantId: 9 }];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
         expect(component.appList).toBeDefined();
@@ -149,7 +148,6 @@ describe('AppsListComponent', () => {
     });
 
     describe('internationalization', () => {
-
         it('should provide a translation for the default application name, when app name is not provided', () => {
             const appDataMock = {
                 defaultAppId: 'tasks',
@@ -173,7 +171,6 @@ describe('AppsListComponent', () => {
     });
 
     describe('layout', () => {
-
         it('should display a grid by default', () => {
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
@@ -201,7 +198,6 @@ describe('AppsListComponent', () => {
     });
 
     describe('display apps', () => {
-
         it('should display all deployed apps', () => {
             getAppsSpy.and.returnValue(of(deployedApps));
             fixture.detectChanges();
@@ -219,10 +215,9 @@ describe('AppsListComponent', () => {
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(1);
         });
-   });
+    });
 
     describe('select apps', () => {
-
         beforeEach(() => {
             getAppsSpy.and.returnValue(of(deployedApps));
             fixture.detectChanges();
@@ -252,7 +247,7 @@ describe('AppsListComponent', () => {
             const appEls = debugElement.queryAll(By.css('.adf-app-listgrid > div'));
             expect(appEls[1].query(By.css('.adf-app-listgrid-item-card-actions-icon'))).not.toBeNull();
         });
-   });
+    });
 
     describe('Custom CustomEmptyAppListTemplateComponent', () => {
         let customFixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
