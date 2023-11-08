@@ -200,9 +200,10 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     private filterApps(apps: AppDefinitionRepresentation[]): AppDefinitionRepresentation[] {
-        const filteredApps: AppDefinitionRepresentation[] = [];
         if (this.filtersAppId) {
-            apps.filter((app) => {
+            const filteredApps: AppDefinitionRepresentation[] = [];
+
+            apps.forEach((app) => {
                 this.filtersAppId.forEach((filter) => {
                     if (
                         app.defaultAppId === filter.defaultAppId ||
@@ -216,9 +217,10 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
                     }
                 });
             });
-        } else {
-            return apps;
+
+            return filteredApps;
         }
-        return filteredApps;
+
+        return apps;
     }
 }
