@@ -230,7 +230,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 renderingQueue: this.renderingQueueServices,
                 eventBus: this.eventBus
             });
-            this.isPanelDisabled = true;
 
             // cspell: disable-next
             this.eventBus.on('pagechanging', this.onPageChange);
