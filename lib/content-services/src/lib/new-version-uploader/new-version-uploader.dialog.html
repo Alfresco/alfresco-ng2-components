@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ title | translate }}</h1>
+<h1 mat-dialog-title data-automation-id="new-version-uploader-dialog-title">{{ title | translate }}</h1>
 <section mat-dialog-content *ngIf="!data.showVersionsOnly">
   <adf-version-comparison id="adf-version-comparison" [newFileVersion]="data.file" [node]="data.node"></adf-version-comparison>
   <adf-version-upload
