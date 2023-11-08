@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const mockProcessAttachments = {
+export const mockProcessAttachments: any = {
     size: 2,
     total: 2,
     start: 0,

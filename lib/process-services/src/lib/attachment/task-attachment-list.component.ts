@@ -205,7 +205,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
             this.reset();
             const isRelatedContent = 'true';
             this.activitiContentService.getTaskRelatedContent(taskId, { isRelatedContent }).subscribe(
-                (res: any) => {
+                (res) => {
                     const attachList = [];
                     res.data.forEach((content) => {
                         attachList.push({
