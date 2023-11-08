@@ -70,7 +70,7 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should have the proper title', () => {
-            const title = fixture.debugElement.query(By.css('[mat-dialog-title]'));
+            const title = fixture.debugElement.query(By.css('[data-automation-id="adf-folder-dialog-title"]'));
             expect(title === null).toBe(false);
             expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
         });
