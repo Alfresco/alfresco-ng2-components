@@ -26,31 +26,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
-import {
-    mockFoodUsers,
-    mockKielbasaSausage,
-    mockShepherdsPie,
-    mockYorkshirePudding,
-    mockPreselectedFoodUsers
-} from '../mock/people-cloud.mock';
+import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('PeopleCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityUserService: IdentityUserServiceInterface;
     let searchSpy: jasmine.Spy;
-
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    /**
-     * get the native element by selector
-     *
-     * @param selector selector
-     * @returns native element
-     */
-    function getElement<T = HTMLElement>(selector: string): T {
-        return fixture.nativeElement.querySelector(selector);
-    }
 
     /**
      * Search users by value
@@ -58,14 +46,9 @@ describe('PeopleCloudComponent', () => {
      * @param value value
      */
     async function searchUsers(value: string) {
-        const input = getElement<HTMLInputElement>('input');
-        input.focus();
-        input.value = value;
-        input.dispatchEvent(new Event('keyup'));
-        input.dispatchEvent(new Event('input'));
-
-        await fixture.whenStable();
-        fixture.detectChanges();
+        const input = await loader.getHarness(MatInputHarness);
+        await input.focus();
+        await input.setValue(value);
     }
 
     /**
@@ -74,17 +57,10 @@ describe('PeopleCloudComponent', () => {
      * @param value value
      */
     async function searchUsersAndBlur(value: string) {
-        const input = getElement<HTMLInputElement>('input');
-        input.focus();
-        input.value = value;
-        input.dispatchEvent(new Event('keyup'));
-        input.dispatchEvent(new Event('input'));
-
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        input.blur();
-        fixture.detectChanges();
+        const input = await loader.getHarness(MatInputHarness);
+        await input.focus();
+        await input.setValue(value);
+        await input.blur();
     }
 
     /**
@@ -94,15 +70,6 @@ describe('PeopleCloudComponent', () => {
      */
     function getUsersListUI(): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]'));
-    }
-
-    /**
-     * Get users chip list UI
-     *
-     * @returns list of debug elements
-     */
-    function getUsersChipsUI(): DebugElement[] {
-        return fixture.debugElement.queryAll(By.css('mat-chip'));
     }
 
     /**
@@ -116,32 +83,29 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                ProcessServiceCloudTestingModule,
-                PeopleCloudModule
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
+        element = fixture.nativeElement;
 
         identityUserService = TestBed.inject(IDENTITY_USER_SERVICE_TOKEN);
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should populate placeholder when title is present', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
-        const matLabel = getElement<HTMLInputElement>('#adf-people-cloud-title-id');
+        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
 
         expect(matLabel.textContent).toEqual('TITLE_KEY');
     });
 
-    it('should not populate placeholder when title is not present',  () => {
+    it('should not populate placeholder when title is not present', () => {
         fixture.detectChanges();
 
-        const matLabel = getElement<HTMLInputElement>('#adf-people-cloud-title-id');
+        const matLabel = element.querySelector<HTMLInputElement>('#adf-people-cloud-title-id');
 
         expect(matLabel.textContent).toEqual('');
     });
@@ -196,7 +160,9 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should not be able to search for a user that his email matches one of the excluded users email', async () => {
-            component.excludedUsers = [{ email: mockKielbasaSausage.email, username: 'new-username', firstName: 'new-first-name', lastName: 'new-last-name' }];
+            component.excludedUsers = [
+                { email: mockKielbasaSausage.email, username: 'new-username', firstName: 'new-first-name', lastName: 'new-last-name' }
+            ];
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -205,7 +171,15 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should not be able to search for a user that his id matches one of the excluded users id', async () => {
-            component.excludedUsers = [{ id: mockKielbasaSausage.id, username: 'new-username', firstName: 'new-first-name', lastName: 'new-last-name', email: 'new-email@food.com' }];
+            component.excludedUsers = [
+                {
+                    id: mockKielbasaSausage.id,
+                    username: 'new-username',
+                    firstName: 'new-first-name',
+                    lastName: 'new-last-name',
+                    email: 'new-email@food.com'
+                }
+            ];
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -214,7 +188,9 @@ describe('PeopleCloudComponent', () => {
         });
 
         it('should not be able to search for a user that his username matches one of the excluded users username', async () => {
-            component.excludedUsers = [{ username: mockKielbasaSausage.username, firstName: 'new-first-name', lastName: 'new-last-name', email: 'new-email@food.com' }];
+            component.excludedUsers = [
+                { username: mockKielbasaSausage.username, firstName: 'new-first-name', lastName: 'new-last-name', email: 'new-email@food.com' }
+            ];
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -301,17 +277,20 @@ describe('PeopleCloudComponent', () => {
     });
 
     describe('No preselected users', () => {
-
-        it('should not pre-select any user when preSelectUsers is empty - single mode', () => {
+        it('should not pre-select any user when preSelectUsers is empty - single mode', async () => {
             component.mode = 'single';
             fixture.detectChanges();
-            expect(getUsersChipsUI().length).toEqual(0);
+
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(0);
         });
 
-        it('should not pre-select any users when preSelectUsers is empty - multiple mode', () => {
+        it('should not pre-select any users when preSelectUsers is empty - multiple mode', async () => {
             component.mode = 'multiple';
             fixture.detectChanges();
-            expect(getUsersChipsUI().length).toEqual(0);
+
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toEqual(0);
         });
     });
 
@@ -327,14 +306,16 @@ describe('PeopleCloudComponent', () => {
             element = fixture.nativeElement;
         });
 
-        it('should show only one mat chip with the first preSelectedUser', () => {
-            expect(getUsersChipsUI().length).toEqual(1);
-            expect(getUsersChipsUI()[0].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[0].username}`);
+        it('should show only one mat chip with the first preSelectedUser', async () => {
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toEqual(1);
+
+            const testId = await (await chips[0].host()).getAttribute('data-automation-id');
+            expect(testId).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[0].username}`);
         });
     });
 
     describe('Multiple Mode with Pre-selected Users', () => {
-
         beforeEach(() => {
             component.mode = 'multiple';
         });
@@ -347,9 +328,15 @@ describe('PeopleCloudComponent', () => {
 
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(getUsersChipsUI().length).toEqual(2);
-            expect(getUsersChipsUI()[0].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[0].username}`);
-            expect(getUsersChipsUI()[1].attributes['data-automation-id']).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[1].username}`);
+
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toEqual(2);
+
+            const testId1 = await (await chips[0].host()).getAttribute('data-automation-id');
+            const testId2 = await (await chips[1].host()).getAttribute('data-automation-id');
+
+            expect(testId1).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[0].username}`);
+            expect(testId2).toEqual(`adf-people-cloud-chip-${mockPreselectedFoodUsers[1].username}`);
         });
 
         it('Should not show remove icon for pre-selected users if readonly property set to true', async () => {
@@ -361,12 +348,16 @@ describe('PeopleCloudComponent', () => {
             const change = new SimpleChange(null, component.preSelectUsers, false);
             component.ngOnChanges({ preSelectUsers: change });
 
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const removeIcon = getElement(`[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedFoodUsers[0].username}"]`);
+            const removeIcon = element.querySelector(
+                `[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedFoodUsers[0].username}"]`
+            );
 
-            expect(getUsersChipsUI().length).toBe(2);
+            const chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(2);
+
             expect(component.preSelectUsers[0].readonly).toBeTruthy();
             expect(component.preSelectUsers[1].readonly).toBeTruthy();
             expect(removeIcon).toBeNull();
@@ -380,27 +371,32 @@ describe('PeopleCloudComponent', () => {
 
             const removeUserSpy = spyOn(component.removeUser, 'emit');
 
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const removeIcon = getElement(`[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedFoodUsers[0].username}"]`);
+            const removeIcon = element.querySelector<HTMLElement>(
+                `[data-automation-id="adf-people-cloud-chip-remove-icon-${mockPreselectedFoodUsers[0].username}"]`
+            );
 
-            expect(getUsersChipsUI().length).toBe(2);
-            expect(component.preSelectUsers[0].readonly).toBe(false, 'Removable');
-            expect(component.preSelectUsers[1].readonly).toBe(false, 'Removable');
+            let chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(2);
+
+            expect(component.preSelectUsers[0].readonly).toBe(false);
+            expect(component.preSelectUsers[1].readonly).toBe(false);
 
             removeIcon.click();
             fixture.detectChanges();
 
             expect(removeUserSpy).toHaveBeenCalled();
-            expect(getUsersChipsUI().length).toBe(1);
 
+            chips = await loader.getAllHarnesses(MatChipHarness);
+            expect(chips.length).toBe(1);
         });
 
         describe('Component readonly mode', () => {
             const change = new SimpleChange(null, mockPreselectedFoodUsers, false);
 
-            it('should chip list be disabled and show one single chip - single mode', () => {
+            it('should chip list be disabled and show one single chip - single mode', async () => {
                 component.mode = 'single';
                 component.readOnly = true;
                 component.preSelectUsers = mockPreselectedFoodUsers;
@@ -408,15 +404,14 @@ describe('PeopleCloudComponent', () => {
 
                 fixture.detectChanges();
 
-                const chipList = getElement('mat-chip-list');
+                const chips = await loader.getAllHarnesses(MatChipHarness);
+                expect(chips.length).toBe(1);
 
-                expect(getUsersChipsUI()).toBeDefined();
-                expect(chipList).toBeDefined();
-                expect(getUsersChipsUI().length).toBe(1);
-                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
+                const chipList = await loader.getHarness(MatChipListHarness);
+                expect(await chipList.isDisabled()).toBe(true);
             });
 
-            it('should chip list be disabled and show mat chips for all the preselected users - multiple mode', () => {
+            it('should chip list be disabled and show mat chips for all the preselected users - multiple mode', async () => {
                 component.mode = 'multiple';
                 component.readOnly = true;
                 component.preSelectUsers = mockPreselectedFoodUsers;
@@ -424,18 +419,16 @@ describe('PeopleCloudComponent', () => {
 
                 fixture.detectChanges();
 
-                const chipList = getElement('mat-chip-list');
+                const chips = await loader.getAllHarnesses(MatChipHarness);
+                expect(chips.length).toBe(2);
 
-                expect(getUsersChipsUI()).toBeDefined();
-                expect(chipList).toBeDefined();
-                expect(getUsersChipsUI().length).toBe(2);
-                expect(chipList.attributes['ng-reflect-disabled'].value).toEqual('true');
+                const chipList = await loader.getHarness(MatChipListHarness);
+                expect(await chipList.isDisabled()).toBe(true);
             });
         });
     });
 
     describe('Preselected users and validation enabled', () => {
-
         beforeEach(() => {
             spyOn(identityUserService, 'search').and.throwError('Invalid user');
             component.validate = true;
