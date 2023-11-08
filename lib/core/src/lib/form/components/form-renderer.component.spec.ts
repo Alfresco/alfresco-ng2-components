@@ -422,6 +422,29 @@ describe('Form Renderer Component', () => {
             expect(fullWidthElement.style['width']).toBe('100%');
         });
 
+        it('[C309872] - Should display Text widget spans on 2 columns when colspan is set to 2', () => {
+            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null, false, false);
+            fixture.detectChanges();
+
+            const twoSpanTextWidgetContainerId = '#field-1ff21afc-7df4-4607-8363-1dc8576e1c8e-container';
+            const oneSpanTextWidgetContainerId = '#field-f4285ad-g123-1a73-521d-7nm4a7231aul0-container';
+
+            const formSizedElement = fixture.nativeElement.querySelector(
+                `${oneSpanTextWidgetContainerId} section.adf-grid-list-column-view`
+            );
+            expectElementToBeVisible(formSizedElement);
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll(
+                `${oneSpanTextWidgetContainerId} section .adf-grid-list-single-column`
+            );
+            sectionGridElement.forEach((element) => {
+                expect(element.style['width']).toBe('50%', 'Elemens is wrong sized for this section');
+            });
+            const fullWidthElement = fixture.nativeElement.querySelector(
+                `${twoSpanTextWidgetContainerId} section.adf-grid-list-column-view .adf-grid-list-single-column`
+            );
+            expect(fullWidthElement.style['width']).toBe('100%');
+        });
+
         it('[C309655] - Should display validation error message when Number widget has invalid value', async () => {
             formRendererComponent.formDefinition = formService.parseForm(numberNotRequiredForm.formRepresentation.formDefinition);
             fixture.detectChanges();
