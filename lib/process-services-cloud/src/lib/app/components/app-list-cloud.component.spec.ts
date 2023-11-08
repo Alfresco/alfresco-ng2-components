@@ -27,7 +27,6 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppListCloudComponent', () => {
-
     let component: AppListCloudComponent;
     let fixture: ComponentFixture<AppListCloudComponent>;
     let appsProcessCloudService: AppsProcessCloudService;
@@ -35,32 +34,28 @@ describe('AppListCloudComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     const mock: any = {
-            oauth2Auth: {
-                callCustomApi: () => Promise.resolve(fakeApplicationInstance)
-            },
-            isEcmLoggedIn: () => false,
-            reply: jasmine.createSpy('reply')
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+        },
+        isEcmLoggedIn: () => false,
+        reply: jasmine.createSpy('reply')
     };
 
     @Component({
         template: `
-        <adf-cloud-app-list>
-            <adf-custom-empty-content-template>
-                <mat-icon>apps</mat-icon>
-                <p id="custom-id">No Apps Found</p>
-            </adf-custom-empty-content-template>
-        </adf-cloud-app-list>
-           `
+            <adf-cloud-app-list>
+                <adf-custom-empty-content-template>
+                    <mat-icon>apps</mat-icon>
+                    <p id="custom-id">No Apps Found</p>
+                </adf-custom-empty-content-template>
+            </adf-cloud-app-list>
+        `
     })
-    class CustomEmptyAppListCloudTemplateComponent {
-    }
+    class CustomEmptyAppListCloudTemplateComponent {}
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
             declarations: [CustomEmptyAppListCloudTemplateComponent]
         });
         fixture = TestBed.createComponent(AppListCloudComponent);
@@ -127,10 +122,9 @@ describe('AppListCloudComponent', () => {
             expect(getAppsSpy).toHaveBeenCalled();
             done();
         });
-   });
+    });
 
     describe('Grid Layout ', () => {
-
         it('should display a grid by default', () => {
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
@@ -165,7 +159,6 @@ describe('AppListCloudComponent', () => {
     });
 
     describe('List Layout ', () => {
-
         beforeEach(() => {
             component.layoutType = LAYOUT_LIST;
         });
@@ -176,11 +169,11 @@ describe('AppListCloudComponent', () => {
             expect(component.isList()).toBe(true);
         });
 
-        it('should defined mat-list when layout type is LIST', () => {
+        it('should display list when layout type is LIST', () => {
             fixture.detectChanges();
-            const appListElement = fixture.nativeElement.querySelectorAll('mat-list');
-            const appListItemElement = fixture.nativeElement.querySelectorAll('mat-list-item');
-            const appName = fixture.nativeElement.querySelector('.mat-list-text');
+            const appListElement = fixture.nativeElement.querySelectorAll('.adf-app-list');
+            const appListItemElement = fixture.nativeElement.querySelectorAll('.adf-app-list-item');
+            const appName = fixture.nativeElement.querySelector('.adf-app-list-item-text');
             expect(appListElement).toBeDefined();
             expect(appListElement).not.toBeNull();
 
@@ -200,7 +193,7 @@ describe('AppListCloudComponent', () => {
     it('should emit a click event when app selected', () => {
         spyOn(component.appClick, 'emit');
         fixture.detectChanges();
-        const onAppClick = fixture.nativeElement.querySelector('.mat-card');
+        const onAppClick = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card');
         onAppClick.click();
         expect(component.appClick.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });
@@ -221,7 +214,7 @@ describe('AppListCloudComponent', () => {
             customFixture.detectChanges();
             await customFixture.whenStable();
 
-            const title: any =  customFixture.nativeElement.querySelector('#custom-id');
+            const title: any = customFixture.nativeElement.querySelector('#custom-id');
             expect(title.innerText).toBe('No Apps Found');
         });
     });
