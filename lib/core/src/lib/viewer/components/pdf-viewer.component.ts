@@ -205,6 +205,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.loadingPercent = Math.round(level * 100);
         };
 
+        this.isPanelDisabled = true;
         this.loadingTask.promise
             .then((pdfDocument: PDFDocumentProxy) => {
                 this.totalPages = pdfDocument.numPages;
