@@ -36,7 +36,7 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
-    private onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<void>();
 
     title: string;
     action: NodeAction;
@@ -72,7 +72,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
             .keydownEvents()
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((event) => {
-                if (event && event.key === 'Escape') {
+                if (event?.key === 'Escape') {
                     event.preventDefault();
                     event.stopImmediatePropagation();
                     this.close();
@@ -99,7 +99,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next(true);
+        this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
@@ -198,11 +198,11 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     }
 
     getWarningMessage(): string {
-        return this.showingSearch
-            ? 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE'
-            : this.hasNoPermissionToUpload()
-            ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE'
-            : '';
+        if (this.showingSearch) {
+            return 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
+        } else {
+            return this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '';
+        }
     }
 
     hasNoPermissionToUpload(): boolean {

@@ -192,12 +192,12 @@ describe('AspectListComponent', () => {
 
             const table = await panel.getHarness(MatTableHarness);
             const [row1, row2] = await table.getRows();
-            let [r1c1, r1c2, r1c3] = await row1.getCells();
+            const [r1c1, r1c2, r1c3] = await row1.getCells();
             expect(await r1c1.getText()).toBe('channelPassword');
             expect(await r1c2.getText()).toBe('The authenticated channel password');
             expect(await r1c3.getText()).toBe('d:propA');
 
-            let [r2c1, r2c2, r2c3] = await row2.getCells();
+            const [r2c1, r2c2, r2c3] = await row2.getCells();
             expect(await r2c1.getText()).toBe('channelUsername');
             expect(await r2c2.getText()).toBe('The authenticated channel username');
             expect(await r2c3.getText()).toBe('d:propB');
