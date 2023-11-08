@@ -200,9 +200,8 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     getWarningMessage(): string {
         if (this.showingSearch) {
             return 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
-        } else {
-            return this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '';
         }
+        return this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '';
     }
 
     hasNoPermissionToUpload(): boolean {

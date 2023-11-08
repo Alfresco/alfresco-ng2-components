@@ -38,6 +38,8 @@ describe('AppDetailsCloudComponent', () => {
         component.applicationInstance = fakeApplicationInstance[0];
     });
 
+    const getAppCard = () => host.querySelector<HTMLElement>('.adf-app-listgrid-item-card');
+
     it('should display application name', () => {
         fixture.detectChanges();
         const appName = host.querySelector<HTMLDivElement>('.adf-app-listgrid-item-card-title');
@@ -47,7 +49,7 @@ describe('AppDetailsCloudComponent', () => {
     it('should emit a click event when app selected', () => {
         spyOn(component.selectedApp, 'emit');
         fixture.detectChanges();
-        const app = host.querySelector<HTMLElement>('.adf-app-listgrid-item-card');
+        const app = getAppCard();
         app.click();
         expect(component.selectedApp.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });
@@ -56,7 +58,7 @@ describe('AppDetailsCloudComponent', () => {
         component.applicationInstance = fakeApplicationInstance[2];
         fixture.detectChanges();
 
-        const card = host.querySelector('.adf-app-listgrid-item-card') as HTMLElement;
+        const card = getAppCard();
         expect(card.classList.contains(DEFAULT_APP_INSTANCE_THEME));
 
         const icon = host.querySelector('.adf-app-listgrid-item-card-logo-icon');
@@ -66,7 +68,7 @@ describe('AppDetailsCloudComponent', () => {
     it('should render card with a non ApplicationInstanceModel input object', () => {
         component.applicationInstance = { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' };
         fixture.detectChanges();
-        const app = host.querySelector('.adf-app-listgrid-item-card');
+        const app = getAppCard();
         expect(app).toBeTruthy();
     });
 });

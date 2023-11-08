@@ -48,6 +48,8 @@ describe('FolderDialogComponent', () => {
         fixture.destroy();
     });
 
+    const getTitle = () => fixture.debugElement.query(By.css('[data-automation-id="adf-folder-dialog-title"]'));
+
     describe('Edit', () => {
         beforeEach(() => {
             component.data = {
@@ -70,8 +72,8 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should have the proper title', () => {
-            const title = fixture.debugElement.query(By.css('[data-automation-id="adf-folder-dialog-title"]'));
-            expect(title === null).toBe(false);
+            const title = getTitle();
+            expect(title).not.toBeNull();
             expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE');
         });
 
@@ -165,8 +167,8 @@ describe('FolderDialogComponent', () => {
         });
 
         it('should have the proper title', () => {
-            const title = fixture.debugElement.query(By.css(`[data-automation-id="adf-folder-dialog-title"]`));
-            expect(title === null).toBe(false);
+            const title = getTitle();
+            expect(title).not.toBeNull();
             expect(title.nativeElement.innerText.trim()).toBe('CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE');
         });
 
