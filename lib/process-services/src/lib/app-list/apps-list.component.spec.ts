@@ -20,7 +20,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService } from './services/apps-process.service';
 import { of, throwError } from 'rxjs';
-
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent, APP_LIST_LAYOUT_GRID, APP_LIST_LAYOUT_LIST } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
@@ -60,7 +59,7 @@ describe('AppsListComponent', () => {
 
         service = TestBed.inject(AppsProcessService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(of(deployedApps));
-        loader = TestbedHarnessEnvironment.loader(fixture);
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
     it('should define layoutType with the default value', () => {
@@ -79,7 +78,7 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the loading spinner when the apps are loading', async () => {
-        component.loading = true;
+        spyOn(component, 'isLoading').and.returnValue(true);
 
         fixture.detectChanges();
         await fixture.whenStable();
