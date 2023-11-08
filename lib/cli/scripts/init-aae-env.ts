@@ -568,6 +568,7 @@ async function deployWithPayload(currentAbsentApp: any, projectRelease: any, env
         security: currentAbsentApp.security,
         infrastructure: currentAbsentApp.infrastructure,
         variables: currentAbsentApp.variables,
+        enableLocalDevelopment: currentAbsentApp.enableLocalDevelopment,
         environmentId: envId
     };
 
