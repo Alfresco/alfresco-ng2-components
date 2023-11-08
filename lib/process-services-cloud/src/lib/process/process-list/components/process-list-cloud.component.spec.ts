@@ -44,6 +44,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
     template: ` <adf-cloud-process-list #processListCloud>
@@ -68,6 +71,7 @@ class CustomTaskListComponent {
 }
 
 describe('ProcessListCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
     let appConfig: AppConfigService;
@@ -118,6 +122,7 @@ describe('ProcessListCloudComponent', () => {
         });
 
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -132,41 +137,39 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns.length).toEqual(10);
     });
 
-    it('should display empty content when process list is empty', () => {
+    it('should display empty content when process list is empty', async () => {
         const emptyList = { list: { entries: [] } };
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
         expect(component.isLoading).toBe(true);
-        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent.nativeElement).toBeDefined();
+
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent.nativeElement).toBeDefined();
     });
 
-    it('should load spinner and show the content', () => {
+    it('should load spinner and show the content', async () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
         fixture.detectChanges();
         expect(component.isLoading).toBe(true);
-        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent.nativeElement).toBeDefined();
+
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
 
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);
-        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent).toBeFalsy();
