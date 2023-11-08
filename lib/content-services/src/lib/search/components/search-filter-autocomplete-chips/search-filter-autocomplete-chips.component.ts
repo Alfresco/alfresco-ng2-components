@@ -110,7 +110,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             if (this.settings.field === AutocompleteField.CATEGORIES) {
                 queryFragments = this.selectedOptions.map(val => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
             } else {
-                queryFragments = this.selectedOptions.map(val => `${this.settings.field}:"${val.value}"`);
+                queryFragments = this.selectedOptions.map(val => val.query ?? `${this.settings.field}:"${val.value}"`);
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
             this.context.update();
