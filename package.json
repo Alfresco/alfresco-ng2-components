@@ -167,7 +167,6 @@
     "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^2.7.6",
     "moment": "^2.29.4",
-    "nconf": "^0.12.0",
     "ng-packagr": "14.0.3",
     "nx": "14.4.2",
     "postcss": "^8.4.31",
