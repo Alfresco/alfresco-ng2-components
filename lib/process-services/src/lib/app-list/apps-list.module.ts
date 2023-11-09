@@ -22,21 +22,11 @@ import { CoreModule } from '@alfresco/adf-core';
 
 import { AppsListComponent } from './apps-list.component';
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule
-    ],
-    declarations: [
-        AppsListComponent,
-        SelectAppsDialogComponent
-    ],
-    exports: [
-        AppsListComponent,
-        SelectAppsDialogComponent
-    ]
+    imports: [CommonModule, MaterialModule, CoreModule, MatProgressSpinnerModule],
+    declarations: [AppsListComponent, SelectAppsDialogComponent],
+    exports: [AppsListComponent, SelectAppsDialogComponent]
 })
-export class AppsListModule {
-}
+export class AppsListModule {}

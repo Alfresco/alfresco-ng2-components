@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, DebugElement } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormModel } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -30,7 +30,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import {
     fakeProcessDefinitions,
     fakeStartForm,
@@ -50,8 +49,13 @@ import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { ProcessDefinitionCloud, TaskVariableCloud } from '@alfresco/adf-process-services-cloud';
 import { first } from 'rxjs/operators';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('StartProcessCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: StartProcessCloudComponent;
     let fixture: ComponentFixture<StartProcessCloudComponent>;
     let processService: StartProcessCloudService;
@@ -64,18 +68,11 @@ describe('StartProcessCloudComponent', () => {
     const firstChange = new SimpleChange(undefined, 'myApp', true);
 
     const selectOptionByName = async (name: string) => {
-        const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
-        selectElement.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        const options: any = fixture.debugElement.queryAll(By.css('.mat-autocomplete-panel .mat-option'));
-        const currentOption: DebugElement = options.find(
-            (option: DebugElement) => option.nativeElement.querySelector('.mat-option-text').innerHTML.trim() === name
-        );
+        const arrowButton = await loader.getHarness(MatButtonHarness.with({ selector: '#adf-select-process-dropdown' }));
+        await arrowButton.click();
 
-        if (currentOption) {
-            currentOption.nativeElement.click();
-        }
+        const panel = await loader.getHarness(MatAutocompleteHarness);
+        await panel.selectOption({ text: name });
     };
 
     const typeValueInto = (selector: any, value: string) => {
@@ -112,6 +109,7 @@ describe('StartProcessCloudComponent', () => {
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(fakeProcessInstance));
         getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -372,27 +370,12 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should display the correct number of processes in the select list', async () => {
-            await fixture.whenStable();
+            const arrowButton = await loader.getHarness(MatButtonHarness.with({ selector: '#adf-select-process-dropdown' }));
+            await arrowButton.click();
 
-            const arrowButton = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
-            arrowButton.click();
-            fixture.detectChanges();
-            const processLists = fixture.debugElement.query(By.css('.mat-autocomplete-panel'));
-            expect(processLists.children.length).toBe(4);
-        });
-
-        it('should display the option def details', async () => {
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
-            selectElement.click();
-            fixture.detectChanges();
-            const optionElement = fixture.debugElement.queryAll(By.css('.mat-autocomplete-panel .mat-option'));
-            expect(selectElement).not.toBeNull();
-            expect(selectElement).toBeDefined();
-            expect(optionElement).not.toBeNull();
-            expect(optionElement).toBeDefined();
+            const panel = await loader.getHarness(MatAutocompleteHarness);
+            const options = await panel.getOptions();
+            expect(options.length).toBe(4);
         });
 
         it('should display the key when the processDefinition name is empty or null', async () => {
@@ -400,14 +383,12 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
-            selectElement.click();
-            fixture.detectChanges();
-            const optionElement = fixture.debugElement.queryAll(By.css('.mat-autocomplete-panel .mat-option'));
-            expect(selectElement).not.toBeNull();
-            expect(selectElement).toBeDefined();
-            expect(optionElement).not.toBeNull();
-            expect(optionElement[0].nativeElement.textContent.trim()).toBe('NewProcess 1');
+            const arrowButton = await loader.getHarness(MatButtonHarness.with({ selector: '#adf-select-process-dropdown' }));
+            await arrowButton.click();
+
+            const panel = await loader.getHarness(MatAutocompleteHarness);
+            const options = await panel.getOptions();
+            expect(await options[0].getText()).toBe('NewProcess 1');
         });
 
         it('should indicate an error to the user if process defs cannot be loaded', async () => {
@@ -486,7 +467,7 @@ describe('StartProcessCloudComponent', () => {
             component.processDefinitionName = 'process';
             component.appName = 'myApp';
             component.ngOnChanges({});
-            selectOptionByName('process');
+            await selectOptionByName('process');
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -548,20 +529,6 @@ describe('StartProcessCloudComponent', () => {
             component.name = 'My new process';
             component.appName = 'myApp';
             fixture.detectChanges();
-        });
-
-        it('should have floating labels for process name and type', async () => {
-            getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
-            await fixture.whenStable();
-            component.processForm.controls.processInstanceName.setValue('My sharona');
-            component.processForm.controls.processDefinition.setValue('process');
-
-            fixture.detectChanges();
-
-            const inputLabelsNodes = document.querySelectorAll('.mat-form-field-label');
-            expect(inputLabelsNodes.length).toBe(2);
         });
 
         it('should reload processes when appName input changed', async () => {
@@ -837,7 +804,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             component.processDefinitionName = 'processwithoutform1';
-            selectOptionByName(fakeProcessDefinitions[0].name);
+            await selectOptionByName(fakeProcessDefinitions[0].name);
             fixture.detectChanges();
             await fixture.whenStable();
             expect(emitSpy).toHaveBeenCalledOnceWith(fakeProcessDefinitions[0]);

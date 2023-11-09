@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { ActivitiContentApi, RelatedContentRepresentation, ResultListDataRepresentationRelatedProcessTask } from '@alfresco/js-api';
+import {
+    ActivitiContentApi,
+    RelatedContentRepresentation,
+    ResultListDataRepresentationRelatedProcessTask,
+    ResultListDataRepresentationRelatedContentRepresentation
+} from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -25,7 +30,6 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ProcessContentService {
-
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
@@ -35,9 +39,7 @@ export class ProcessContentService {
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Create temporary related content from an uploaded file.
@@ -46,8 +48,7 @@ export class ProcessContentService {
      * @returns The created content data
      */
     createTemporaryRawRelatedContent(file: any): Observable<RelatedContentRepresentation> {
-        return from(this.contentApi.createTemporaryRawRelatedContent(file))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.contentApi.createTemporaryRawRelatedContent(file)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -57,8 +58,7 @@ export class ProcessContentService {
      * @returns Metadata for the content
      */
     getFileContent(contentId: number): Observable<RelatedContentRepresentation> {
-        return from(this.contentApi.getContent(contentId))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.contentApi.getContent(contentId)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -68,8 +68,7 @@ export class ProcessContentService {
      * @returns Binary data of the related content
      */
     getFileRawContent(contentId: number): Observable<Blob> {
-        return from(this.contentApi.getRawContent(contentId))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.contentApi.getRawContent(contentId)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -118,8 +117,7 @@ export class ProcessContentService {
      * @returns Binary data of the thumbnail image
      */
     getContentThumbnail(contentId: number): Observable<Blob> {
-        return from(this.contentApi.getRawContent(contentId, 'thumbnail'))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.contentApi.getRawContent(contentId, 'thumbnail')).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -129,9 +127,8 @@ export class ProcessContentService {
      * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getTaskRelatedContent(taskId: string, opts?: any): Observable<any> {
-        return from(this.contentApi.getRelatedContentForTask(taskId, opts))
-            .pipe(catchError((err) => this.handleError(err)));
+    getTaskRelatedContent(taskId: string, opts?: any): Observable<ResultListDataRepresentationRelatedContentRepresentation> {
+        return from(this.contentApi.getRelatedContentForTask(taskId, opts)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -141,9 +138,8 @@ export class ProcessContentService {
      * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getProcessRelatedContent(processId: string, opts?: any): Observable<any> {
-        return from(this.contentApi.getRelatedContentForProcessInstance(processId, opts))
-            .pipe(catchError((err) => this.handleError(err)));
+    getProcessRelatedContent(processId: string, opts?: any): Observable<ResultListDataRepresentationRelatedContentRepresentation> {
+        return from(this.contentApi.getRelatedContentForProcessInstance(processId, opts)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -153,8 +149,7 @@ export class ProcessContentService {
      * @returns Null response that notifies when the deletion is complete
      */
     deleteRelatedContent(contentId: number): Observable<any> {
-        return from(this.contentApi.deleteContent(contentId))
-            .pipe(catchError((err) => this.handleError(err)));
+        return from(this.contentApi.deleteContent(contentId)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -165,9 +160,10 @@ export class ProcessContentService {
      * @param opts Options supported by JS-API
      * @returns Details of created content
      */
-    createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
-        return from(this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
-            .pipe(catchError((err) => this.handleError(err)));
+    createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<RelatedContentRepresentation> {
+        return from(this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts)).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -178,9 +174,8 @@ export class ProcessContentService {
      * @param opts Options supported by JS-API
      * @returns Details of created content
      */
-    createTaskRelatedContent(taskId: string, file: any, opts?: any) {
-        return from(this.contentApi.createRelatedContentOnTask(taskId, file, opts))
-            .pipe(catchError((err) => this.handleError(err)));
+    createTaskRelatedContent(taskId: string, file: any, opts?: any): Observable<RelatedContentRepresentation> {
+        return from(this.contentApi.createRelatedContentOnTask(taskId, file, opts)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -192,7 +187,12 @@ export class ProcessContentService {
      * @param page - page number
      * @returns Promise<ResultListDataRepresentationRelatedProcessTask>
      */
-    getProcessesAndTasksOnContent(sourceId: string, source: string, size?: number, page?: number): Observable<ResultListDataRepresentationRelatedProcessTask> {
+    getProcessesAndTasksOnContent(
+        sourceId: string,
+        source: string,
+        size?: number,
+        page?: number
+    ): Observable<ResultListDataRepresentationRelatedProcessTask> {
         return from(this.contentApi.getProcessesAndTasksOnContent(sourceId, source, size, page)).pipe(catchError((err) => this.handleError(err)));
     }
 
@@ -231,11 +231,12 @@ export class ProcessContentService {
     handleError(error: any): Observable<any> {
         let errMsg = ProcessContentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : ProcessContentService.GENERIC_ERROR_MESSAGE;
+            errMsg = error.message
+                ? error.message
+                : error.status
+                ? `${error.status} - ${error.statusText}`
+                : ProcessContentService.GENERIC_ERROR_MESSAGE;
         }
-        this.logService.error(errMsg);
         return throwError(errMsg);
     }
-
 }

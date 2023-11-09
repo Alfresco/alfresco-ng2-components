@@ -8,7 +8,7 @@
                                   (click)="onCheckBoxClick($event)"
                                   (change)="onChange($event, aspect?.entry?.id)">
                                   <p class="adf-aspect-list-element-title">{{getTitle(aspect)}}</p>
-                    </mat-checkbox>                    
+                    </mat-checkbox>
                 </mat-panel-title>
                 <mat-panel-description [id]="'aspect-list-'+colIndex+'-title'"
                                         [matTooltip]="getTitle(aspect)">
@@ -39,6 +39,6 @@
 
 <ng-template #loading>
     <div class="adf-aspect-list-spinner">
-       <mat-spinner id="adf-aspect-spinner"></mat-spinner>
+       <mat-progress-spinner mode="indeterminate" id="adf-aspect-spinner"></mat-progress-spinner>
     </div>
 </ng-template>

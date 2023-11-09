@@ -28,13 +28,13 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
     let fixture: ComponentFixture<NewVersionUploaderDialogComponent>;
-    let nativeElement;
+    let nativeElement: HTMLElement;
 
     const cssSelectors = {
         adfVersionUploadButton: '#adf-version-upload-button',
         adfVersionComparison: '#adf-version-comparison',
         adfVersionList: '.adf-version-list',
-        matDialogTitle: '.mat-dialog-title'
+        title: '[data-automation-id="new-version-uploader-dialog-title"]'
     };
 
     const mockDialogRef = {
@@ -45,10 +45,7 @@ describe('NewVersionUploaderDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ContentTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ContentTestingModule],
             declarations: [
                 NewVersionUploaderDialogComponent,
                 VersionListComponent,
@@ -59,7 +56,8 @@ describe('NewVersionUploaderDialog', () => {
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
                 {
-                    provide: MatDialogRef, useValue: mockDialogRef
+                    provide: MatDialogRef,
+                    useValue: mockDialogRef
                 }
             ]
         });
@@ -72,12 +70,7 @@ describe('NewVersionUploaderDialog', () => {
         fixture.destroy();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     describe('Upload New Version', () => {
-
         const expectedUploadNewVersionTitle = 'ADF-NEW-VERSION-UPLOADER.DIALOG_UPLOAD.TITLE';
 
         it('should display adf version upload button if showVersionsOnly is passed as false from parent component', () => {
@@ -104,7 +97,7 @@ describe('NewVersionUploaderDialog', () => {
         it('should show default title if title is not provided from parent component', () => {
             component.data.showVersionsOnly = false;
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
         });
 
@@ -112,7 +105,7 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = false;
             component.data.title = '';
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual(expectedUploadNewVersionTitle);
         });
 
@@ -120,7 +113,7 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = false;
             component.data.title = 'TEST_TITLE';
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
         });
 
@@ -150,11 +143,9 @@ describe('NewVersionUploaderDialog', () => {
             component.handleCancel();
             expect(mockDialogRef.close).toHaveBeenCalled();
         });
-
     });
 
     describe('Manage Versions', () => {
-
         const expectedManageVersionsTitle = 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE';
 
         it('should display adf version list if showVersionsOnly is passed as true from parent component', () => {
@@ -182,7 +173,7 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = true;
             component.data.title = undefined;
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual(expectedManageVersionsTitle);
         });
 
@@ -190,7 +181,7 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = true;
             component.data.title = '';
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual(expectedManageVersionsTitle);
         });
 
@@ -198,10 +189,8 @@ describe('NewVersionUploaderDialog', () => {
             component.data.showVersionsOnly = true;
             component.data.title = 'TEST_TITLE';
             fixture.detectChanges();
-            const matDialogTitle = nativeElement.querySelector(cssSelectors.matDialogTitle);
+            const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
         });
-
     });
-
 });

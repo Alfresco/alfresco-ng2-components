@@ -24,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessContentService } from '../form/services/process-content.service';
 
 describe('AttachmentComponent', () => {
-
     let service: ProcessContentService;
     let component: AttachmentComponent;
     let fixture: ComponentFixture<AttachmentComponent>;
@@ -32,30 +31,28 @@ describe('AttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         fixture = TestBed.createComponent(AttachmentComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ProcessContentService);
 
-        createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(of(
-            {
+        createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(
+            of({
                 status: true
-            }));
+            } as any)
+        );
     });
 
     it('should not call createTaskRelatedContent service when taskId changed', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({ taskId: change });
         expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
     it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({ taskId: change });
         const customEvent: any = {
             detail: {
                 files: []
@@ -67,13 +64,11 @@ describe('AttachmentComponent', () => {
 
     it('should call createTaskRelatedContent service when there is a file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({taskId: change});
+        component.ngOnChanges({ taskId: change });
         const file = new File([new Blob()], 'Test');
         const customEvent = {
             detail: {
-                files: [
-                    file
-                ]
+                files: [file]
             }
         };
         component.onFileUpload(customEvent);

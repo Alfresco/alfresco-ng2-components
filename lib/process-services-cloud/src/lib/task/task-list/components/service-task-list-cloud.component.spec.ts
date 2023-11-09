@@ -27,12 +27,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    template: `
-    <adf-cloud-service-task-list #taskListCloud>
+    template: ` <adf-cloud-service-task-list #taskListCloud>
         <data-columns>
-            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="2"></data-column>
+            <data-column
+                key="activityName"
+                title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"
+                class="adf-full-width adf-name-column"
+                [order]="2"
+            ></data-column>
             <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
         </data-columns>
     </adf-cloud-service-task-list>`
@@ -43,18 +50,16 @@ class CustomTaskListComponent {
 }
 @Component({
     template: `
-    <adf-cloud-service-task-list>
-        <adf-custom-empty-content-template>
-            <p id="custom-id"></p>
-        </adf-custom-empty-content-template>
-    </adf-cloud-service-task-list>
-       `
+        <adf-cloud-service-task-list>
+            <adf-custom-empty-content-template>
+                <p id="custom-id"></p>
+            </adf-custom-empty-content-template>
+        </adf-cloud-service-task-list>
+    `
 })
-class EmptyTemplateComponent {
-}
+class EmptyTemplateComponent {}
 @Component({
-    template: `
-    <adf-cloud-service-task-list>
+    template: ` <adf-cloud-service-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
             <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
@@ -67,6 +72,7 @@ class CustomCopyContentTaskListComponent {
 }
 
 describe('ServiceTaskListCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: ServiceTaskListCloudComponent;
     let fixture: ComponentFixture<ServiceTaskListCloudComponent>;
     let appConfig: AppConfigService;
@@ -74,13 +80,8 @@ describe('ServiceTaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                EmptyTemplateComponent
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            declarations: [EmptyTemplateComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
@@ -108,6 +109,7 @@ describe('ServiceTaskListCloudComponent', () => {
         });
 
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -120,19 +122,18 @@ describe('ServiceTaskListCloudComponent', () => {
         expect(component.columns.length).toEqual(3);
     });
 
-    it('should display empty content when process list is empty', () => {
+    it('should display empty content when process list is empty', async () => {
         const emptyList = { list: { entries: [] } };
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(emptyList));
         fixture.detectChanges();
 
-        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent.nativeElement).toBeDefined();
     });
 
-    it('should load spinner and show the content', () => {
+    it('should load spinner and show the content', async () => {
         spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
@@ -140,8 +141,7 @@ describe('ServiceTaskListCloudComponent', () => {
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent).toBeFalsy();
@@ -235,7 +235,6 @@ describe('ServiceTaskListCloudComponent', () => {
     });
 
     describe('component changes', () => {
-
         beforeEach(() => {
             component.rows = fakeServiceTask.list.entries;
             fixture.detectChanges();
@@ -283,13 +282,15 @@ describe('ServiceTaskListCloudComponent', () => {
 
         it('should reload task list when sorting on a column changes', () => {
             const getServiceTaskByRequestSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-            component.onSortingChanged(new CustomEvent('sorting-changed', {
-                detail: {
-                    key: 'fakeName',
-                    direction: 'asc'
-                },
-                bubbles: true
-            }));
+            component.onSortingChanged(
+                new CustomEvent('sorting-changed', {
+                    detail: {
+                        key: 'fakeName',
+                        direction: 'asc'
+                    },
+                    bubbles: true
+                })
+            );
             fixture.detectChanges();
             expect(component.sorting).toEqual([
                 new TaskListCloudSortingModel({
@@ -307,15 +308,14 @@ describe('ServiceTaskListCloudComponent', () => {
 
             const size = component.size;
             const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3))
-                .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(size);
-                    expect(component.skipCount).toBe(skipCount);
-                    expect(updatedPagination.maxItems).toEqual(size);
-                    expect(updatedPagination.skipCount).toEqual(skipCount);
-                    done();
-                });
+            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
+                fixture.detectChanges();
+                expect(component.size).toBe(size);
+                expect(component.skipCount).toBe(skipCount);
+                expect(updatedPagination.maxItems).toEqual(size);
+                expect(updatedPagination.skipCount).toEqual(skipCount);
+                done();
+            });
 
             const pagination = {
                 maxItems: 250,
@@ -334,15 +334,14 @@ describe('ServiceTaskListCloudComponent', () => {
                 maxItems: 250,
                 skipCount: 200
             };
-            component.pagination.pipe(skip(1))
-                .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(pagination.maxItems);
-                    expect(component.skipCount).toBe(pagination.skipCount);
-                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
-                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                    done();
-                });
+            component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
+                fixture.detectChanges();
+                expect(component.size).toBe(pagination.maxItems);
+                expect(component.skipCount).toBe(pagination.skipCount);
+                expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                done();
+            });
 
             component.updatePagination(pagination);
         });
@@ -358,14 +357,8 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                CustomTaskListComponent,
-                CustomCopyContentTaskListComponent
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
 
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
@@ -396,9 +389,7 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement
-            .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'))
-            .triggerEventHandler('mouseenter');
+        copyFixture.debugElement.query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]')).triggerEventHandler('mouseenter');
 
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
@@ -408,9 +399,7 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement
-            .query(By.css('span[title="serviceTaskName"]'))
-            .triggerEventHandler('mouseenter');
+        copyFixture.debugElement.query(By.css('span[title="serviceTaskName"]')).triggerEventHandler('mouseenter');
 
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
@@ -426,10 +415,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
@@ -457,7 +443,6 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         fixture = TestBed.createComponent(ServiceTaskListCloudComponent);
         component = fixture.componentInstance;
         taskSpy = spyOn(serviceTaskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
-
     });
     afterEach(() => {
         fixture.destroy();
@@ -470,8 +455,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         component.reload();
         fixture.detectChanges();
 
-        const columnWithCopyContentFlagTrue = fixture.debugElement
-            .query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'));
+        const columnWithCopyContentFlagTrue = fixture.debugElement.query(By.css('span[title="04fdf69f-4ddd-48ab-9563-da776c9b163c"]'));
 
         columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
@@ -486,8 +470,7 @@ describe('ServiceTaskListCloudComponent: Copy cell content directive from app.co
         component.reload();
         fixture.detectChanges();
 
-        const columnWithCopyContentFlagNotTrue = fixture.debugElement
-            .query(By.css('span[title="serviceTaskName"]'));
+        const columnWithCopyContentFlagNotTrue = fixture.debugElement.query(By.css('span[title="serviceTaskName"]'));
 
         columnWithCopyContentFlagNotTrue.triggerEventHandler('mouseenter');
 

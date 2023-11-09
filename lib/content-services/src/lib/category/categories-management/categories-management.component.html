@@ -71,7 +71,8 @@
                     [value]="category">
                     {{ category.name }}
                 </mat-list-option>
-                <p *ngIf="!existingCategories?.length && !existingCategoriesLoading">
+                <p *ngIf="!existingCategories?.length && !existingCategoriesLoading"
+                   data-automation-id="no-categories-message">
                     {{ 'CATEGORIES_MANAGEMENT.NO_EXISTING_CATEGORIES' | translate }}
                 </p>
             </mat-selection-list>

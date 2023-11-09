@@ -62,12 +62,16 @@ import { domSanitizerMock } from '../../testing/dom-sanitizer-mock';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
 };
 
 describe('DocumentList', () => {
+    let loader: HarnessLoader;
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
     let customResourcesService: CustomResourcesService;
@@ -116,6 +120,8 @@ describe('DocumentList', () => {
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
             Promise.resolve(new FavoritePaging({ list: new FavoritePagingList({ entries: [] }) }))
         );
+
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -219,7 +225,7 @@ describe('DocumentList', () => {
 
     it('should show the header when there are no records in the table but filter is active', () => {
         documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, []);
-        documentList.filterValue =  { $thumbnail: 'TYPE:"cm:folder"' };
+        documentList.filterValue = { $thumbnail: 'TYPE:"cm:folder"' };
 
         fixture.detectChanges();
 
@@ -1075,10 +1081,11 @@ describe('DocumentList', () => {
         expect(fixture.debugElement.query(By.css('.adf-no-permission__template'))).not.toBeNull();
     });
 
-    it('should display loading template when data is loading', () => {
+    it('should display loading template when data is loading', async () => {
         documentList.loading = true;
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('mat-progress-spinner'))).not.toBeNull();
+
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
     });
 
     it('should empty folder NOT show the pagination', () => {
@@ -1406,14 +1413,16 @@ describe('DocumentList', () => {
         expect(documentList.reload).toHaveBeenCalled();
     });
 
-    it('should not show loading state if pagination is updated with merge setting as true', fakeAsync (() => {
+    it('should not show loading state if pagination is updated with merge setting as true', fakeAsync(() => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
-            of(new DocumentLoaderNode(null, {
-                list: {
-                    pagination: {},
-                    entries: mockPreselectedNodes
-                }
-            }))
+            of(
+                new DocumentLoaderNode(null, {
+                    list: {
+                        pagination: {},
+                        entries: mockPreselectedNodes
+                    }
+                })
+            )
         );
         fixture.detectChanges();
         const fakeDatatableRows = [

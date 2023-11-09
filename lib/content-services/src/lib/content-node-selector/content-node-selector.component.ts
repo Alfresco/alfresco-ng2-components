@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService} from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -26,6 +26,8 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeEntryEvent } from '../document-list/components/node.event';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -33,7 +35,9 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent implements OnInit {
+export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
+    private onDestroy$ = new Subject<void>();
+
     title: string;
     action: NodeAction;
     buttonActionName: string;
@@ -48,13 +52,15 @@ export class ContentNodeSelectorComponent implements OnInit {
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
-    constructor(private translation: TranslationService,
-                private contentService: ContentService,
-                private notificationService: NotificationService,
-                private uploadService: UploadService,
-                private dialog: MatDialogRef<ContentNodeSelectorComponent>,
-                private overlayContainer: OverlayContainer,
-                @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
+    constructor(
+        private translation: TranslationService,
+        private contentService: ContentService,
+        private notificationService: NotificationService,
+        private uploadService: UploadService,
+        private dialog: MatDialogRef<ContentNodeSelectorComponent>,
+        private overlayContainer: OverlayContainer,
+        @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData
+    ) {
         this.action = data.actionName ?? NodeAction.CHOOSE;
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
@@ -62,26 +68,39 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dialog.keydownEvents().subscribe(event => {
-            // Esc
-            if (event.keyCode === 27) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
+        this.dialog
+            .keydownEvents()
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((event) => {
+                if (event?.key === 'Escape') {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    this.close();
+                }
+            });
+
+        this.dialog
+            .backdropClick()
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
                 this.close();
-            }
-        });
+            });
 
-        this.dialog.backdropClick().subscribe(() => {
-           this.close();
-        });
+        this.dialog
+            .afterOpened()
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                this.overlayContainer.getContainerElement().setAttribute('role', 'main');
+            });
 
-        this.dialog.afterOpened().subscribe(() => {
-            this.overlayContainer.getContainerElement().setAttribute('role', 'main');
-        });
-
-        this.uploadService.fileUploadStarting.subscribe(() => {
+        this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.uploadStarted = true;
         });
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     close() {
@@ -179,16 +198,17 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     getWarningMessage(): string {
-        return this.showingSearch ? 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE' :
-            (this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '');
+        if (this.showingSearch) {
+            return 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
+        }
+        return this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '';
     }
 
     hasNoPermissionToUpload(): boolean {
-        return (!this.hasAllowableOperations && !this.showingSearch) && !this.isLoading;
+        return !this.hasAllowableOperations && !this.showingSearch && !this.isLoading;
     }
 
     hasUploadError(): boolean {
         return this.showingSearch || this.hasNoPermissionToUpload();
     }
-
 }

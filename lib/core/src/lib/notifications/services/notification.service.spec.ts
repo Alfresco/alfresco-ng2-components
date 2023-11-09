@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../translation/translation.service';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatIconHarness } from '@angular/material/icon/testing';
+import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 
 @Component({
     template: '',
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
-
-    constructor(public notificationService: NotificationService) {
-
-    }
+    constructor(public notificationService: NotificationService) {}
 
     sendMessageWithoutConfig() {
         return this.notificationService.openSnackMessage('Test notification', 1000);
@@ -44,7 +43,7 @@ class ProvidesNotificationServiceComponent {
     }
 
     sendMessageWithArgs() {
-        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, {arg: 'arg'});
+        return this.notificationService.openSnackMessage('Test notification {{ arg }}', 1000, { arg: 'arg' });
     }
 
     sendCustomMessage() {
@@ -72,7 +71,7 @@ class ProvidesNotificationServiceComponent {
     sendMessageWithDecorativeIcon() {
         const notificationConfig = new MatSnackBarConfig();
         notificationConfig.duration = 1000;
-        notificationConfig.data = {decorativeIcon: 'info'};
+        notificationConfig.data = { decorativeIcon: 'info' };
 
         return this.notificationService.openSnackMessage('with decorative icon', notificationConfig);
     }
@@ -84,154 +83,97 @@ class ProvidesNotificationServiceComponent {
 
         return this.notificationService.openSnackMessageAction('with decorative icon', 'TestWarn', notificationConfig);
     }
-
 }
 
 describe('NotificationService', () => {
+    let loader: HarnessLoader;
     let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
     let translationService: TranslationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                CoreTestingModule,
-                OverlayModule,
-                MatSnackBarModule
-            ],
-            declarations: [ProvidesNotificationServiceComponent],
-            providers: [
-                MatSnackBar,
-                LiveAnnouncer
-            ]
+            imports: [TranslateModule.forRoot(), CoreTestingModule, MatSnackBarModule],
+            declarations: [ProvidesNotificationServiceComponent]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();
+        loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
-    it('should translate messages', (done) => {
+    it('should translate messages', () => {
         spyOn(translationService, 'instant').and.callThrough();
 
-        const promise = fixture.componentInstance.sendMessage();
-        promise.afterDismissed().subscribe(() => {
-            expect(translationService.instant).toHaveBeenCalled();
-            done();
-        });
-
+        fixture.componentInstance.sendMessage();
         fixture.detectChanges();
+
+        expect(translationService.instant).toHaveBeenCalled();
     });
 
-    it('should translate messages with args', (done) => {
+    it('should translate messages with args', () => {
         spyOn(translationService, 'instant').and.callThrough();
 
-        const promise = fixture.componentInstance.sendMessageWithArgs();
-        promise.afterDismissed().subscribe(() => {
-            expect(translationService.instant).toHaveBeenCalledWith('Test notification {{ arg }}', {arg: 'arg'});
-            done();
-        });
-
+        fixture.componentInstance.sendMessageWithArgs();
         fixture.detectChanges();
+
+        expect(translationService.instant).toHaveBeenCalledWith('Test notification {{ arg }}', { arg: 'arg' });
     });
 
-    it('should translate the action', (done) => {
+    it('should translate the action', () => {
         spyOn(translationService, 'instant').and.callThrough();
 
-        const promise = fixture.componentInstance.sendMessageAction();
-        promise.afterDismissed().subscribe(() => {
-            expect(translationService.instant).toHaveBeenCalledTimes(2);
-            done();
-        });
-
+        fixture.componentInstance.sendMessageAction();
         fixture.detectChanges();
+        expect(translationService.instant).toHaveBeenCalledTimes(2);
     });
 
-    it('should open a message notification bar', (done) => {
-        const promise = fixture.componentInstance.sendMessage();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
+    it('should open a message notification bar', async () => {
+        fixture.componentInstance.sendMessage();
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar without custom configuration', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithoutConfig();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
+    it('should open a message notification bar without custom configuration', async () => {
+        fixture.componentInstance.sendMessageWithoutConfig();
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar with custom configuration', (done) => {
-        const promise = fixture.componentInstance.sendCustomMessage();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
+    it('should open a message notification bar with custom configuration', async () => {
+        fixture.componentInstance.sendCustomMessage();
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar with action', (done) => {
-        const promise = fixture.componentInstance.sendMessageAction();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
-        fixture.detectChanges();
-
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+    it('should open a message notification bar with action', async () => {
+        fixture.componentInstance.sendMessageAction();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar with action and custom configuration', (done) => {
-        const promise = fixture.componentInstance.sendCustomMessageAction();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
+    it('should open a message notification bar with action and custom configuration', async () => {
+        fixture.componentInstance.sendCustomMessageAction();
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar with action and no custom configuration', (done) => {
-        const promise = fixture.componentInstance.sendMessageActionWithoutConfig();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
+    it('should open a message notification bar with action and no custom configuration', async () => {
+        fixture.componentInstance.sendMessageActionWithoutConfig();
         fixture.detectChanges();
 
-        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(await loader.hasHarness(MatSnackBarHarness)).toBe(true);
     });
 
-    it('should open a message notification bar with a decorative icon', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithDecorativeIcon();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
-        fixture.detectChanges();
-
-        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
+    it('should open a message notification bar with a decorative icon', async () => {
+        fixture.componentInstance.sendMessageWithDecorativeIcon();
+        expect(await loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
     });
 
-    it('should open a message notification bar with action and a decorative icon', (done) => {
-        const promise = fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
-        promise.afterDismissed().subscribe(() => {
-            done();
-        });
-
-        fixture.detectChanges();
-
-        expect(document.querySelector('[data-automation-id="adf-snackbar-message-content"] mat-icon')).not.toBeNull();
-     });
-
+    it('should open a message notification bar with action and a decorative icon', async () => {
+        fixture.componentInstance.sendMessageWithDecorativeIconAndAction();
+        expect(await loader.hasHarness(MatIconHarness.with({ ancestor: `[data-automation-id="adf-snackbar-message-content"]` }))).toBe(true);
+    });
 });

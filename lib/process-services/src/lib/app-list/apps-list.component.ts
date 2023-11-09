@@ -22,6 +22,7 @@ import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
 import { share, takeUntil, finalize } from 'rxjs/operators';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 
 const DEFAULT_TASKS_APP: string = 'tasks';
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
@@ -39,7 +40,6 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
     host: { class: 'adf-apps' }
 })
 export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
-
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -64,19 +64,16 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     apps$: Observable<AppDefinitionRepresentationModel>;
     currentApp: AppDefinitionRepresentationModel;
-    appList: AppDefinitionRepresentationModel [] = [];
+    appList: AppDefinitionRepresentationModel[] = [];
     loading: boolean = false;
     hasEmptyCustomContentTemplate: boolean = false;
 
-    private appsObserver: Observer<AppDefinitionRepresentationModel>;
+    private appsObserver: Observer<AppDefinitionRepresentation>;
     private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private appsProcessService: AppsProcessService,
-        private translationService: TranslationService) {
-            this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => this.appsObserver = observer)
-                .pipe(share());
+    constructor(private appsProcessService: AppsProcessService, private translationService: TranslationService) {
+        this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => (this.appsObserver = observer)).pipe(share());
     }
 
     ngOnInit() {
@@ -84,9 +81,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
             this.setDefaultLayoutType();
         }
 
-        this.apps$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((app: any) => this.appList.push(app));
+        this.apps$.pipe(takeUntil(this.onDestroy$)).subscribe((app) => this.appList.push(app));
 
         this.iconsMDL = new IconModel();
         this.load();
@@ -103,14 +98,12 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         }
     }
 
-    isDefaultApp(app: AppDefinitionRepresentationModel) {
+    isDefaultApp(app: AppDefinitionRepresentation): boolean {
         return app.defaultAppId === DEFAULT_TASKS_APP;
     }
 
-    getAppName(app: AppDefinitionRepresentationModel) {
-        return this.isDefaultApp(app)
-            ? this.translationService.get(DEFAULT_TASKS_APP_NAME)
-            : of(app.name);
+    getAppName(app: AppDefinitionRepresentationModel): Observable<string> {
+        return this.isDefaultApp(app) ? this.translationService.get(DEFAULT_TASKS_APP_NAME) : of(app.name);
     }
 
     /**
@@ -130,7 +123,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      * @returns `true` if application is selected, otherwise `false`
      */
     isSelected(appId: number): boolean {
-        return (this.currentApp !== undefined && appId === this.currentApp.id);
+        return this.currentApp !== undefined && appId === this.currentApp.id;
     }
 
     /**
@@ -187,9 +180,9 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         this.loading = true;
         this.appsProcessService
             .getDeployedApplications()
-            .pipe(finalize(() => this.loading = false))
+            .pipe(finalize(() => (this.loading = false)))
             .subscribe(
-                (res: AppDefinitionRepresentationModel[]) => {
+                (res) => {
                     this.filterApps(res).forEach((app) => {
                         if (this.isDefaultApp(app)) {
                             app.theme = DEFAULT_TASKS_APP_THEME;
@@ -206,24 +199,28 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
             );
     }
 
-    private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
-        const filteredApps: AppDefinitionRepresentationModel[] = [];
+    private filterApps(apps: AppDefinitionRepresentation[]): AppDefinitionRepresentation[] {
         if (this.filtersAppId) {
-            apps.filter((app: AppDefinitionRepresentationModel) => {
+            const filteredApps: AppDefinitionRepresentation[] = [];
+
+            apps.forEach((app) => {
                 this.filtersAppId.forEach((filter) => {
-                    if (app.defaultAppId === filter.defaultAppId ||
+                    if (
+                        app.defaultAppId === filter.defaultAppId ||
                         app.deploymentId === filter.deploymentId ||
                         app.name === filter.name ||
                         app.id === filter.id ||
                         app.modelId === filter.modelId ||
-                        app.tenantId === filter.tenantId) {
+                        app.tenantId === filter.tenantId
+                    ) {
                         filteredApps.push(app);
                     }
                 });
             });
-        } else {
-            return apps;
+
+            return filteredApps;
         }
-        return filteredApps;
+
+        return apps;
     }
 }

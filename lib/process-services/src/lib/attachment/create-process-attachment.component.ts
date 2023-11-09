@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessContentService } from '../form/services/process-content.service';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-create-process-attachment',
@@ -40,7 +41,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
      * from within the component.
      */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<RelatedContentRepresentation>();
 
     constructor(private activitiContentService: ProcessContentService) {}
 

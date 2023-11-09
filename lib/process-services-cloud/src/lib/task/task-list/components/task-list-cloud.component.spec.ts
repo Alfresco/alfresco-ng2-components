@@ -18,17 +18,19 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService,
-         DataRowEvent,
-         ObjectDataRow,
-         User,
-         DataColumn,
-         ColumnsSelectorComponent,
-         AlfrescoApiService,
-         AlfrescoApiServiceMock,
-         AppConfigServiceMock,
-         TranslationService,
-         TranslationMock } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    User,
+    DataColumn,
+    ColumnsSelectorComponent,
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    AppConfigServiceMock,
+    TranslationService,
+    TranslationMock
+} from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
@@ -43,16 +45,29 @@ import { TaskListCloudModule } from '../task-list-cloud.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    template: `
-    <adf-cloud-task-list #taskListCloud>
+    template: ` <adf-cloud-task-list #taskListCloud>
         <data-columns>
-            <data-column id="name" key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
+            <data-column
+                id="name"
+                key="name"
+                title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"
+                class="adf-full-width adf-name-column"
+                [order]="3"
+            ></data-column>
             <data-column id="created" key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
-            <data-column id="startedBy" key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
+            <data-column
+                id="startedBy"
+                key="startedBy"
+                title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED"
+                class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell"
+            >
                 <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row?.obj?.startedBy)}}</div>
+                    <div>{{ getFullName(entry.row?.obj?.startedBy) }}</div>
                 </ng-template>
             </data-column>
         </data-columns>
@@ -68,18 +83,16 @@ class CustomTaskListComponent {
 }
 @Component({
     template: `
-    <adf-cloud-task-list>
-        <adf-custom-empty-content-template>
-            <p id="custom-id"></p>
-        </adf-custom-empty-content-template>
-    </adf-cloud-task-list>
-       `
+        <adf-cloud-task-list>
+            <adf-custom-empty-content-template>
+                <p id="custom-id"></p>
+            </adf-custom-empty-content-template>
+        </adf-cloud-task-list>
+    `
 })
-class EmptyTemplateComponent {
-}
+class EmptyTemplateComponent {}
 @Component({
-    template: `
-    <adf-cloud-task-list>
+    template: ` <adf-cloud-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
@@ -92,6 +105,7 @@ class CustomCopyContentTaskListComponent {
 }
 
 describe('TaskListCloudComponent', () => {
+    let loader: HarnessLoader;
     let component: TaskListCloudComponent;
     let fixture: ComponentFixture<TaskListCloudComponent>;
     let appConfig: AppConfigService;
@@ -103,10 +117,7 @@ describe('TaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
             providers: [
                 {
                     provide: TASK_LIST_CLOUD_TOKEN,
@@ -144,6 +155,7 @@ describe('TaskListCloudComponent', () => {
         });
 
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -162,7 +174,7 @@ describe('TaskListCloudComponent', () => {
         expect(component.columns.length).toEqual(3);
     });
 
-    it('should display empty content when process list is empty', () => {
+    it('should display empty content when process list is empty', async () => {
         const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
         fixture.detectChanges();
@@ -171,14 +183,13 @@ describe('TaskListCloudComponent', () => {
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent.nativeElement).toBeDefined();
     });
 
-    it('should load spinner and show the content', () => {
+    it('should load spinner and show the content', async () => {
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
@@ -186,8 +197,7 @@ describe('TaskListCloudComponent', () => {
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        const loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
-        expect(loadingContent).toBeFalsy();
+        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent).toBeFalsy();
@@ -374,7 +384,6 @@ describe('TaskListCloudComponent', () => {
     });
 
     describe('component changes', () => {
-
         beforeEach(() => {
             component.rows = fakeGlobalTasks.list.entries;
             fixture.detectChanges();
@@ -431,13 +440,15 @@ describe('TaskListCloudComponent', () => {
 
         it('should reload task list when sorting on a column changes', () => {
             const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-            component.onSortingChanged(new CustomEvent('sorting-changed', {
-                detail: {
-                    key: 'fakeName',
-                    direction: 'asc'
-                },
-                bubbles: true
-            }));
+            component.onSortingChanged(
+                new CustomEvent('sorting-changed', {
+                    detail: {
+                        key: 'fakeName',
+                        direction: 'asc'
+                    },
+                    bubbles: true
+                })
+            );
             fixture.detectChanges();
             expect(component.sorting).toEqual([
                 new TaskListCloudSortingModel({
@@ -455,15 +466,14 @@ describe('TaskListCloudComponent', () => {
 
             const size = component.size;
             const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3))
-                .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(size);
-                    expect(component.skipCount).toBe(skipCount);
-                    expect(updatedPagination.maxItems).toEqual(size);
-                    expect(updatedPagination.skipCount).toEqual(skipCount);
-                    done();
-                });
+            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
+                fixture.detectChanges();
+                expect(component.size).toBe(size);
+                expect(component.skipCount).toBe(skipCount);
+                expect(updatedPagination.maxItems).toEqual(size);
+                expect(updatedPagination.skipCount).toEqual(skipCount);
+                done();
+            });
 
             const pagination = {
                 maxItems: 250,
@@ -482,15 +492,14 @@ describe('TaskListCloudComponent', () => {
                 maxItems: 250,
                 skipCount: 200
             };
-            component.pagination.pipe(skip(1))
-                .subscribe((updatedPagination) => {
-                    fixture.detectChanges();
-                    expect(component.size).toBe(pagination.maxItems);
-                    expect(component.skipCount).toBe(pagination.skipCount);
-                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
-                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                    done();
-                });
+            component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
+                fixture.detectChanges();
+                expect(component.size).toBe(pagination.maxItems);
+                expect(component.skipCount).toBe(pagination.skipCount);
+                expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                done();
+            });
 
             component.updatePagination(pagination);
         });
@@ -506,14 +515,8 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ],
-            declarations: [
-                CustomTaskListComponent,
-                CustomCopyContentTaskListComponent
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule],
+            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
@@ -543,9 +546,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement
-                .query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'))
-                .triggerEventHandler('mouseenter');
+        copyFixture.debugElement.query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]')).triggerEventHandler('mouseenter');
 
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
@@ -555,9 +556,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
-        copyFixture.debugElement
-            .query(By.css('span[title="standalone-subtask"]'))
-            .triggerEventHandler('mouseenter');
+        copyFixture.debugElement.query(By.css('span[title="standalone-subtask"]')).triggerEventHandler('mouseenter');
 
         copyFixture.detectChanges();
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).toBeNull();
@@ -570,12 +569,7 @@ describe('TaskListCloudComponent: Creating an empty custom template - EmptyTempl
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                NoopAnimationsModule,
-                TranslateModule.forRoot(),
-                TaskListCloudModule
-            ],
+            imports: [HttpClientModule, NoopAnimationsModule, TranslateModule.forRoot(), TaskListCloudModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
@@ -612,10 +606,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
@@ -663,8 +654,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         component.reload();
         fixture.detectChanges();
 
-        const columnWithCopyContentFlagTrue = fixture.debugElement
-            .query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'));
+        const columnWithCopyContentFlagTrue = fixture.debugElement.query(By.css('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]'));
 
         columnWithCopyContentFlagTrue.triggerEventHandler('mouseenter');
 
@@ -679,8 +669,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         component.reload();
         fixture.detectChanges();
 
-        const cell = fixture.debugElement
-            .query(By.css('[data-automation-id="text_ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE"]'));
+        const cell = fixture.debugElement.query(By.css('[data-automation-id="text_ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE"]'));
         expect(cell.nativeElement.textContent).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
     });
 
@@ -695,15 +684,20 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
 
         const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
         expect(emptyContent.nativeElement).toBeDefined();
-        expect(component.replacePriorityValues({
-            obj: {},
-            isSelected: false,
-            hasValue: () => false,
-            getValue: () => undefined
-        }, {
-            type: 'text',
-            key: 'priority'
-        })).toEqual(undefined);
+        expect(
+            component.replacePriorityValues(
+                {
+                    obj: {},
+                    isSelected: false,
+                    hasValue: () => false,
+                    getValue: () => undefined
+                },
+                {
+                    type: 'text',
+                    key: 'priority'
+                }
+            )
+        ).toEqual(undefined);
     });
 
     it('replacePriorityValues should return replaced value when rows are defined', () => {
@@ -714,17 +708,21 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         component.ngOnChanges({ appName });
         fixture.detectChanges();
 
-        expect(component.replacePriorityValues({
-            obj: {
-                priority: 1
-            },
-            isSelected: false,
-            hasValue: () => false,
-            getValue: () => undefined
-        }, {
-            type: 'text',
-            key: 'priority'
-        })).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
+        expect(
+            component.replacePriorityValues(
+                {
+                    obj: {
+                        priority: 1
+                    },
+                    isSelected: false,
+                    hasValue: () => false,
+                    getValue: () => undefined
+                },
+                {
+                    type: 'text',
+                    key: 'priority'
+                }
+            )
+        ).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.LOW');
     });
 });
-

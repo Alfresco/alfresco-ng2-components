@@ -24,9 +24,12 @@ import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { mockEmittedProcessAttachments, mockProcessAttachments } from '../mock/process/process-attachments.mock';
 import { ProcessContentService } from '../form/services/process-content.service';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatMenuHarness } from '@angular/material/menu/testing';
 
 describe('ProcessAttachmentListComponent', () => {
-
+    let loader: HarnessLoader;
     let service: ProcessContentService;
     let component: ProcessAttachmentListComponent;
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
@@ -34,10 +37,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ]
+            imports: [TranslateModule.forRoot(), ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessAttachmentListComponent);
         component = fixture.componentInstance;
@@ -48,6 +48,7 @@ describe('ProcessAttachmentListComponent', () => {
 
         const blobObj = new Blob();
         spyOn(service, 'getFileRawContent').and.returnValue(of(blobObj));
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     afterEach(() => {
@@ -101,17 +102,15 @@ describe('ProcessAttachmentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
-        actionButton.click();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
 
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const menuItems = await menu.getItems();
+        expect(menuItems.length).toBe(3);
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).not.toBeNull();
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-        expect(actionMenu).toBe(3);
+        expect(await menuItems[0].getText()).toBe('ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT');
+        expect(await menuItems[1].getText()).toBe('ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT');
+        expect(await menuItems[2].getText()).toBe('ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT');
     });
 
     it('should not display remove action if attachments are read only', async () => {
@@ -122,39 +121,43 @@ describe('ProcessAttachmentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const actionButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="action_menu_0"]');
-        actionButton.click();
-        fixture.detectChanges();
-        await fixture.whenStable();
+        const menu = await loader.getHarness(MatMenuHarness);
+        await menu.open();
 
-        const actionMenu = window.document.querySelectorAll('button.mat-menu-item').length;
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT"]')).not.toBeNull();
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT"]')).not.toBeNull();
-        expect(window.document.querySelector('[data-automation-id="ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT"]')).toBeNull();
-        expect(actionMenu).toBe(2);
+        const menuItems = await menu.getItems();
+        expect(menuItems.length).toBe(2);
+
+        expect(await menuItems[0].getText()).toBe('ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT');
+        expect(await menuItems[1].getText()).toBe('ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT');
     });
 
     it('should show the empty list component when the attachments list is empty', async () => {
-        getProcessRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getProcessRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
+            'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER'
+        );
     });
 
     it('should not show the empty list drag and drop component when is disabled', async () => {
-        getProcessRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getProcessRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
@@ -162,16 +165,20 @@ describe('ProcessAttachmentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
         expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
-        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
+            'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER'
+        );
     });
 
     it('should show the empty list component when the attachments list is empty for completed process', async () => {
-        getProcessRelatedContentSpy.and.returnValue(of({
-            size: 0,
-            total: 0,
-            start: 0,
-            data: []
-        }));
+        getProcessRelatedContentSpy.and.returnValue(
+            of({
+                size: 0,
+                total: 0,
+                start: 0,
+                data: []
+            })
+        );
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
         component.disabled = true;
@@ -179,8 +186,9 @@ describe('ProcessAttachmentListComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim())
-            .toEqual('ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER');
+        expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual(
+            'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER'
+        );
     });
 
     it('should not show the empty list component when the attachments list is not empty for completed process', async () => {
@@ -204,7 +212,6 @@ describe('ProcessAttachmentListComponent', () => {
     });
 
     describe('change detection', () => {
-
         const change = new SimpleChange('123', '456', true);
         const nullChange = new SimpleChange('123', null, true);
 
@@ -241,18 +248,14 @@ describe('ProcessAttachmentListComponent', () => {
         </adf-process-attachment-list>
     `
 })
-class CustomEmptyTemplateComponent {
-}
+class CustomEmptyTemplateComponent {}
 
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                ProcessTestingModule
-            ],
+            imports: [TranslateModule.forRoot(), ProcessTestingModule],
             declarations: [CustomEmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

@@ -16,7 +16,6 @@
  */
 
 import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter, OnInit } from '@angular/core';
-import { ESCAPE, TAB } from '@angular/cdk/keycodes';
 import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -43,46 +42,40 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.change
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((val: string) => this.term = val );
+        this.change.pipe(takeUntil(this.onDestroy$)).subscribe((val: string) => (this.term = val));
 
-        this.matSelect.openedChange
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((isOpened: boolean) => {
-                if (isOpened) {
-                    this.selectFilterInput.nativeElement.focus();
-                } else {
-                    this.change.next('');
-                }
-            });
+        this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((isOpened: boolean) => {
+            if (isOpened) {
+                this.selectFilterInput.nativeElement.focus();
+            } else {
+                this.change.next('');
+            }
+        });
 
         if (this.matSelect.ngControl) {
             this.previousSelected = this.matSelect.ngControl.value;
-            this.matSelect.ngControl.valueChanges
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((values) => {
-                    let restoreSelection = false;
-                    if (this.matSelect.multiple && Array.isArray(this.previousSelected)) {
-                        if (!Array.isArray(values)) {
-                            values = [];
+            this.matSelect.ngControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((values) => {
+                let restoreSelection = false;
+                if (this.matSelect.multiple && Array.isArray(this.previousSelected)) {
+                    if (!Array.isArray(values)) {
+                        values = [];
+                    }
+                    const options = this.matSelect.options.map((option) => option.value);
+                    this.previousSelected.forEach((previous) => {
+                        const isSelected = [...values, ...options].some((current) => this.matSelect.compareWith(current, previous));
+                        if (!isSelected) {
+                            values.push(previous);
+                            restoreSelection = true;
                         }
-                        const options = this.matSelect.options.map(option => option.value);
-                        this.previousSelected.forEach((previous) => {
-                            const isSelected = [...values, ...options].some(current => this.matSelect.compareWith(current, previous));
-                            if (!isSelected) {
-                                values.push(previous);
-                                restoreSelection = true;
-                            }
-                        });
-                    }
+                    });
+                }
 
-                    this.previousSelected = values;
-                    if (restoreSelection) {
-                        // eslint-disable-next-line no-underscore-dangle
-                        this.matSelect._onChange(values);
-                    }
-                });
+                this.previousSelected = values;
+                if (restoreSelection) {
+                    // eslint-disable-next-line no-underscore-dangle
+                    this.matSelect._onChange(values);
+                }
+            });
         }
     }
 
@@ -97,13 +90,13 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
 
     handleKeydown($event: KeyboardEvent) {
         if (this.term) {
-            if ($event.keyCode === ESCAPE) {
-                event.stopPropagation();
+            if ($event.code === 'Escape') {
+                $event.stopPropagation();
                 this.change.next('');
             }
 
-            if (($event.target as HTMLInputElement).tagName === 'INPUT' && $event.keyCode === TAB) {
-                event.stopPropagation();
+            if (($event.target as HTMLInputElement).tagName === 'INPUT' && $event.code === 'Tab') {
+                $event.stopPropagation();
             }
         }
     }
