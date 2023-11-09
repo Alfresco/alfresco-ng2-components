@@ -58,7 +58,7 @@ export class AuthConfigService {
             oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
             issuer: oauth2.host,
             redirectUri,
-            silentRefreshRedirectUri: `${origin}/silent-refresh.html`,
+            silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
             postLogoutRedirectUri: `${origin}/${oauth2.redirectUriLogout}`,
             clientId: oauth2.clientId,
             scope: oauth2.scope,
