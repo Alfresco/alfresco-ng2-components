@@ -77,7 +77,7 @@
     "@storybook/core-server": "^6.5.16",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^15.0.1",
-    "apollo-angular": "^4.2.1",
+    "apollo-angular": "^5.0.2",
     "chart.js": "^4.3.0",
     "cropperjs": "1.5.13",
     "date-fns": "^2.30.0",
