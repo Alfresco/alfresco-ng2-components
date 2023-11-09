@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
 import { DataColumn } from '../datatable/data/data-column.model';
+import { mockPathInfos } from '../datatable/components/mocks/datatable.mock';
 
 export const getDataColumnMock = <T = unknown>(
     column: Partial<DataColumn<T>> = {}
@@ -41,49 +41,79 @@ export const getDataColumnMock = <T = unknown>(
     ...column
 });
 
-export const dataText = new ObjectDataTableAdapter([
-    { id: '1 first' },
-    { id: '2 second' },
-    { id: '3 third' }
-]);
+export const textColumnRows = [
+    { firstname: 'John' },
+    { firstname: 'Henry' },
+    { firstname: 'David' },
+    { firstname: 'Thomas' }
+];
 
-export const dateRows = [
+export const dateColumnRows = [
     { createdOn: new Date(2016, 6, 1, 11, 8, 4) },
     { createdOn: new Date(2018, 4, 3, 12, 8, 4) },
     { createdOn: new Date(2021, 2, 3, 9, 8, 4) }
 ];
 
-export const dateColumns = {
-    type: 'date',
-    key: 'createdOn',
-    title: 'Created On'
-};
+const aMinuteInMilliseconds = 60 * 1000;
+const anHourInMilliseconds = 60 * aMinuteInMilliseconds;
+const aDayInMilliseconds = 24 * anHourInMilliseconds;
 
-export const locationRows = [
+export const dateColumnTimeAgoRows = [
+    { modifiedOn: new Date() },
+    { modifiedOn: new Date(Date.now() - 44 * aMinuteInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 45 * aMinuteInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 23 * anHourInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 7 * aDayInMilliseconds) },
+    { modifiedOn: new Date(Date.now() - 8 * aDayInMilliseconds) }
+];
+
+export const locationColumnRows = [
     {
-        path: {
-            elements: [
-                { id: '1', name: 'path' },
-                { id: '2', name: 'to' },
-                { id: '3', name: 'location' }
-            ],
-            name: '/path/to/location-link'
-        }
+        path: mockPathInfos[0]
+    },
+    {
+        path: mockPathInfos[1]
+    },
+    {
+        path: mockPathInfos[2]
     }
 ];
 
-export const locationColumns = [
-    { format: '/somewhere', type: 'location', key: 'path', title: 'Location' }
+export const booleanColumnRows = [
+    { bool: 'true' },
+    { bool: 'false' },
+    { bool: true },
+    { bool: false }
 ];
 
-export const dataIcon = new ObjectDataTableAdapter([
+export const iconColumnRows = [
     { icon: 'alarm' },
     { icon: 'folder_open' },
     { icon: 'accessibility' }
-]);
+];
 
-export const dataSizeInBytes = new ObjectDataTableAdapter([
+export const imageColumnRows = [
+    { image: 'material-icons://image' },
+    { image: 'material-icons://image' },
+    { image: 'material-icons://image' }
+];
+
+export const fileSizeColumnRows = [
     { size: 12313 },
     { size: 23 },
     { size: 42421412421 }
-]);
+];
+
+export const amountColumnRows = [
+    { price: 1230 },
+    { price: 422.55 },
+    { price: 50000.7855332 },
+    { price: 0.123 },
+    { price: -2022.3321 }
+];
+
+export const jsonColumnRows = [
+    { rowInfo: { id: 1, name: 'row1' } },
+    { rowInfo: { id: 2, name: 'row2' } },
+    { rowInfo: { id: 3, name: 'row3' } }
+];

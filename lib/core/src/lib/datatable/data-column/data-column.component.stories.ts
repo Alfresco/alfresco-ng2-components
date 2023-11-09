@@ -19,7 +19,7 @@ import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
 import { DataTableModule } from '../datatable.module';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import * as data from '../../mock/data-column.mock';
+import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
 
@@ -114,23 +114,8 @@ export default {
         },
         format: {
             description:
-                'Value format (if supported by the parent component), for example format of the date.',
-            control: { type: 'select', disable: true },
-            options: [
-                'medium',
-                'short',
-                'long',
-                'full',
-                'shortDate',
-                'mediumDate',
-                'longDate',
-                'fullDate',
-                'shortTime',
-                'mediumTime',
-                'longTime',
-                'fullTime',
-                'timeAgo'
-            ],
+                'Used for location type. Setups root path for router navigation.',
+            control: { type: 'text', disable: true },
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -240,12 +225,24 @@ export default {
         },
         type: {
             description:
-                'Value type for the column. Possible settings are `text`, `image`, `date`, `fileSize`, `location`, and `json`.',
-            control: { disable: true },
+                'Value type for the column. Possible settings are: `text`, `icon`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
+            control: { type: 'select', disable: false },
+            options: [
+                'text',
+                'icon',
+                'image',
+                'date',
+                'fileSize',
+                'location',
+                'boolean',
+                'amount',
+                'number',
+                'json'
+            ],
             table: {
                 category: 'Component Inputs',
                 type: {
-                    summary: 'string'
+                    summary: 'DataColumnType'
                 },
                 defaultValue: {
                     summary: 'text'
@@ -253,36 +250,68 @@ export default {
             },
             defaultValue: 'text'
         },
-        data: {
-            description: 'Provides data for DataTable component',
-            control: { disable: true },
-            mapping: {
-                text: data.dataText,
-                icon: data.dataIcon,
-                file: data.dataSizeInBytes
-            },
+        currencyConfig: {
+            description:
+                `The currencyConfig input allows you to customize the formatting and display of currency values within the component.`,
+            control: { type: 'object', disable: true },
             table: {
-                category: 'Components data',
+                category: 'Component Inputs',
                 type: {
-                    summary: 'ObjectDataTableAdapter'
+                    summary: 'CurrencyConfig'
+                },
+                defaultValue: {
+                    summary: `{ code: 'USD', display: 'symbol' }`
                 }
+            },
+            defaultValue: {
+                code: 'USD',
+                display: 'symbol',
+                digitsInfo: undefined,
+                locale: undefined
             }
         },
-        columns: {
-            description: 'Provides columns for DataTable component',
-            control: { disable: true },
+        decimalConfig: {
+            description:
+                `The decimalConfig input allows you to customize the formatting and display of decimal values within the component.`,
+            control: { type: 'object', disable: true },
             table: {
-                category: 'Components data',
+                category: 'Component Inputs',
                 type: {
-                    summary: 'array'
+                    summary: 'DecimalConfig'
+                },
+                defaultValue: {
+                    summary: `{}`
                 }
+            },
+            defaultValue: {
+                digitsInfo: '2.4-5',
+                locale: undefined
+            }
+        },
+        dateConfig: {
+            description:
+                `The dateConfig input allows you to configure date formatting and localization for a component.`,
+            control: { type: 'object', disable: true },
+            table: {
+                category: 'Component Inputs',
+                type: {
+                    summary: 'DateConfig'
+                },
+                defaultValue: {
+                    summary: `{ format: 'medium', tooltipFormat: 'medium' }`
+                }
+            },
+            defaultValue: {
+                format: 'medium',
+                tooltipFormat: 'medium',
+                locale: undefined
             }
         },
         rows: {
             description: 'Provides rows for DataTable component',
-            control: { disable: true },
+            control: { disable: false },
             table: {
-                category: 'Components data',
+                category: 'Component data',
                 type: {
                     summary: 'array'
                 }
@@ -292,116 +321,183 @@ export default {
 } as Meta;
 
 const formatCustomTooltip = (row: DataRow): string =>
-    row ? row.getValue('id') + ' by formatCustomTooltip' : null;
+    row ? 'This is ' + row.getValue('firstname') : null;
 
-const template: Story<DataColumnComponent> = (
-    args: DataColumnComponent & { columns: any; rows: any; data: any }
-) => ({
+const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     props: args,
     template: `
-        ${
-            args.columns && args.rows
-                ? '<adf-datatable [columns]="columns' +
-                  (args.type === 'date' ? '()' : '') +
-                  '" [rows]="rows">'
-                : '<adf-datatable [data]="data">'
-        }
-        <data-columns>
-            <data-column [key]="key" [type]="type"
-            title="${args.title}"
-            [editable]="${args.editable}"
-            [sortable]="${args.sortable}"
-            [draggable]="${args.draggable}"
-            [copyContent]="${args.copyContent}"
-            format="${args.format}"
-            [isHidden]="${args.isHidden}"
-            class="${args.cssClass}"
-            sr-title="${args.srTitle}"
-            [formatTooltip]="formatTooltip">
-            </data-column>
-        </data-columns>
-    </adf-datatable>`
+        <adf-datatable [rows]="rows">
+            <data-columns>
+                <data-column 
+                    [key]="key" 
+                    [type]="type"
+                    [title]="title"
+                    [editable]="editable"
+                    [sortable]="sortable"
+                    [draggable]="draggable"
+                    [copyContent]="copyContent"
+                    [format]="format"
+                    [isHidden]="isHidden"
+                    [class]="cssClass"
+                    [sr-title]="srTitle"
+                    [currencyConfig]="currencyConfig"
+                    [decimalConfig]="decimalConfig"
+                    [dateConfig]="dateConfig"
+                    [formatTooltip]="formatTooltip">
+                </data-column>
+            </data-columns>
+        </adf-datatable>
+    `
 });
 
-export const textColumn = template.bind({});
+// Text Column
+export const textColumn: Story = template.bind({});
 textColumn.args = {
-    data: 'text',
-    key: 'id',
+    rows: mockData.textColumnRows,
+    key: 'firstname',
     type: 'text',
     title: 'Text Column'
 };
 
-export const iconColumn = template.bind({});
+// Text Column With Custom Tooltip
+export const textColumnWithCustomTooltip: Story = template.bind({});
+textColumnWithCustomTooltip.argTypes = {
+    formatTooltip: { control: { disable: false } }
+};
+textColumnWithCustomTooltip.args = {
+    rows: mockData.textColumnRows,
+    key: 'firstname',
+    type: 'text',
+    title: 'Custom Tooltip Column',
+    formatTooltip: formatCustomTooltip
+};
+
+// Icon Column
+export const iconColumn: Story = template.bind({});
 iconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
 iconColumn.args = {
-    data: 'icon',
+    rows: mockData.iconColumnRows,
     key: 'icon',
     type: 'icon',
     title: 'Icon Column'
 };
 
-export const dateColumn = template.bind({});
+// Image Column
+export const imageColumn: Story = template.bind({});
+imageColumn.argTypes = {
+    copyContent: { control: { disable: true } }
+};
+imageColumn.args = {
+    rows: mockData.imageColumnRows,
+    key: 'image',
+    type: 'image',
+    title: 'Image Column'
+};
+
+// Date Column
+export const dateColumn: Story = template.bind({});
 dateColumn.argTypes = {
-    format: { control: { disable: false } },
-    title: { control: { disable: true } },
     copyContent: { control: { disable: true } },
-    sortable: { control: { disable: true } },
-    draggable: { control: { disable: true } },
-    isHidden: { control: { disable: true } }
+    dateConfig: { control: { disable: false } }
 };
 dateColumn.args = {
-    data: undefined,
-    format: 'medium',
-    columns() {
-        return [{ ...data.dateColumns, format: this.format }];
-    },
-    rows: data.dateRows,
-    key: 'id',
-    type: 'date'
+    rows: mockData.dateColumnRows,
+    key: 'createdOn',
+    type: 'date',
+    title: 'Date Column'
 };
 
-export const fileColumn = template.bind({});
-fileColumn.argTypes = {
+// Date Column Time Ago
+export const dateColumnTimeAgo: Story = template.bind({});
+dateColumnTimeAgo.argTypes = {
+    copyContent: { control: { disable: true } },
+    dateConfig: { control: { disable: false } }
+};
+dateColumnTimeAgo.args = {
+    rows: mockData.dateColumnTimeAgoRows,
+    key: 'modifiedOn',
+    type: 'date',
+    title: 'Date Column Time Ago',
+    dateConfig: { format: 'timeAgo' }
+};
+
+// File Size Column
+export const fileSizeColumn: Story = template.bind({});
+fileSizeColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-fileColumn.args = {
-    data: 'file',
+fileSizeColumn.args = {
+    rows: mockData.fileSizeColumnRows,
     key: 'size',
     type: 'fileSize',
-    title: 'File Column'
+    title: 'File Size Column'
 };
 
-export const locationColumn = template.bind({});
+// Location Column
+export const locationColumn: Story = template.bind({});
 locationColumn.argTypes = {
-    copyContent: { control: { disable: true } }
+    copyContent: { control: { disable: true } },
+    format: { control: { disable: false }},
+    sortable: { control: { disable: true }}
 };
 locationColumn.args = {
-    columns: data.locationColumns,
-    rows: data.locationRows,
-    key: 'id',
+    rows: mockData.locationColumnRows,
+    format: '/files',
+    key: 'path',
     type: 'location',
     title: 'Location Column'
 };
 
-export const jsonColumn = template.bind({});
+// Boolean Column
+export const booleanColumn: Story = template.bind({});
+booleanColumn.argTypes = {
+    copyContent: { control: { disable: true } }
+};
+booleanColumn.args = {
+    rows: mockData.booleanColumnRows,
+    key: 'bool',
+    type: 'boolean',
+    title: 'Boolean Column'
+};
+
+// Json Column
+export const jsonColumn: Story = template.bind({});
 jsonColumn.argTypes = {
     editable: { control: { disable: false } },
     copyContent: { control: { disable: true } }
 };
 jsonColumn.args = {
-    data: 'text',
-    key: 'id',
+    rows: mockData.jsonColumnRows,
+    key: 'rowInfo',
     type: 'json',
     title: 'JSON Column'
 };
 
-export const customTooltipColumn = template.bind({});
-customTooltipColumn.args = {
-    data: 'text',
-    key: 'id',
-    type: 'text',
-    title: 'Custom Tooltip Column',
-    formatTooltip: formatCustomTooltip
+// Amount Column
+export const amountColumn: Story = template.bind({});
+amountColumn.argTypes = {
+    copyContent: { control: { disable: true } },
+    currencyConfig: { control: { disable: false } }
 };
+amountColumn.args = {
+    rows: mockData.amountColumnRows,
+    key: 'price',
+    type: 'amount',
+    title: 'Amount Column'
+};
+
+// Number Column
+export const numberColumn: Story = template.bind({});
+numberColumn.argTypes = {
+    decimalConfig: { control: { disable: false } },
+    copyContent: { control: { disable: true } }
+};
+numberColumn.args = {
+    rows: mockData.amountColumnRows,
+    key: 'price',
+    type: 'number',
+    title: 'Number Column'
+};
+

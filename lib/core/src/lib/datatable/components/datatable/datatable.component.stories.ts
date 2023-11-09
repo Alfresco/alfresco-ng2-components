@@ -22,6 +22,7 @@ import { DataTableModule } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { mockPathInfos } from '../mocks/datatable.mock';
 
 export default {
     component: DataTableComponent,
@@ -67,88 +68,63 @@ export default {
                     iconCol: 'folder_open',
                     dateCol: new Date(),
                     fileSizeCol: '536870912',
-                    locationCol: '/path/to/location-link',
-                    jsonCol: {
-                        id: 1,
-                        textCol: 'Text 1',
-                        imageCol: 'material-icons://folder_open',
-                        iconCol: 'folder_open',
-                        dateCol: new Date(),
-                        fileSizeCol: '536870912',
-                        locationCol: '/path/to/location-link'
-                    }
+                    locationCol: mockPathInfos[0],
+                    booleanCol: true,
+                    amountCol: 100.55,
+                    numberCol: 10000.31,
+                    jsonCol: mockPathInfos[0]
                 },
                 {
                     id: 2,
                     textCol: 'Text 2',
                     imageCol: 'material-icons://cloud_outline',
                     iconCol: 'cloud_outline',
-                    dateCol: new Date(),
+                    dateCol: new Date().setDate(new Date().getDate() - 1),
                     fileSizeCol: '524288',
-                    locationCol: { name: '/path/to/location-link' },
-                    jsonCol: {
-                        id: 2,
-                        textCol: 'Text 2',
-                        imageCol: 'material-icons://cloud_outline',
-                        iconCol: 'cloud_outline',
-                        dateCol: new Date(),
-                        fileSizeCol: '524288',
-                        locationCol: '/path/to/location-link'
-                    }
+                    locationCol: mockPathInfos[1],
+                    booleanCol: false,
+                    amountCol: 1020.123,
+                    numberCol: 240.3,
+                    jsonCol: mockPathInfos[1]
                 },
                 {
                     id: 3,
                     textCol: 'Text 3',
                     imageCol: 'material-icons://save',
                     iconCol: 'save',
-                    dateCol: new Date(),
+                    dateCol: new Date().setDate(new Date().getDate() - 5),
                     fileSizeCol: '10737418240B',
-                    locationCol: '/path/to/location-link',
-                    jsonCol: {
-                        id: 3,
-                        textCol: 'Text 3',
-                        imageCol: 'material-icons://save',
-                        iconCol: 'save',
-                        dateCol: new Date(),
-                        fileSizeCol: '10737418240B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    locationCol: mockPathInfos[1],
+                    booleanCol: 'true',
+                    amountCol: -2020,
+                    numberCol: 120,
+                    jsonCol: mockPathInfos[1]
                 },
                 {
                     id: 4,
                     textCol: 'Text 4',
                     imageCol: 'material-icons://delete',
                     iconCol: 'delete',
-                    dateCol: new Date(),
+                    dateCol: new Date().setDate(new Date().getDate() - 6),
                     fileSizeCol: '512B',
-                    locationCol: '/path/to/location-link',
-                    jsonCol: {
-                        id: 4,
-                        textCol: 'Text 4',
-                        imageCol: 'material-icons://delete',
-                        iconCol: 'delete',
-                        dateCol: new Date(),
-                        fileSizeCol: '512B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    locationCol: mockPathInfos[2],
+                    booleanCol: 'false',
+                    amountCol: 230.76,
+                    numberCol: 3.032,
+                    jsonCol: mockPathInfos[2]
                 },
                 {
                     id: 5,
                     textCol: 'Text 5',
                     imageCol: 'material-icons://person_outline',
                     iconCol: 'person_outline',
-                    dateCol: new Date(),
+                    dateCol: new Date().setDate(new Date().getDate() - 7),
                     fileSizeCol: '1073741824B',
-                    locationCol: '/path/to/location-link',
-                    jsonCol: {
-                        id: 5,
-                        textCol: 'Text 5',
-                        imageCol: 'material-icons://person_outline',
-                        iconCol: 'person_outline',
-                        dateCol: new Date(),
-                        fileSizeCol: '1073741824B',
-                        locationCol: '/path/to/location-link'
-                    }
+                    locationCol: mockPathInfos[0],
+                    booleanCol: 'false',
+                    amountCol: 0.444,
+                    numberCol: 2000,
+                    jsonCol: mockPathInfos[0]
                 }
             ],
             table: {
@@ -177,8 +153,12 @@ export default {
                 { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'date', key: 'dateCol', title: 'Date Time Ago Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell', dateConfig: { format: 'timeAgo' } },
                 { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'location', format: '/somewhere', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'number', key: 'numberCol', title: 'Number Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
             table: {
@@ -383,7 +363,7 @@ export default {
             table: { category: 'Actions' }
         }
     }
-} as Meta;
+} as Meta<DataTableComponent>;
 
 const insertContentToTemplate = (content: string): string => (
     `<adf-datatable
