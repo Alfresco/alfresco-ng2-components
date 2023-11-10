@@ -52,7 +52,7 @@ describe('AuthConfigService', () => {
         secret: '',
         implicitFlow: true,
         silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
+        redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
         redirectUri: '/subfolder',
         redirectUriLogout: '#/logout',
         publicUrls: [
@@ -69,7 +69,7 @@ describe('AuthConfigService', () => {
         secret: '',
         implicitFlow: true,
         silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
+        redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
         redirectUri: '/subfolder2',
         redirectUriLogout: '#/logout',
         publicUrls: [
@@ -135,7 +135,7 @@ describe('AuthConfigService', () => {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
-                silentRefreshRedirectUri: 'http://localhost:3000/silent-refresh.html',
+                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
@@ -151,7 +151,7 @@ describe('AuthConfigService', () => {
                 oidc: true,
                 issuer: 'http://localhost:3000/auth/realms/alfresco',
                 redirectUri: 'http://localhost:3000/#/view/authentication-confirmation',
-                silentRefreshRedirectUri: 'http://localhost:3000/silent-refresh.html',
+                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
                 postLogoutRedirectUri: 'http://localhost:3000/#/logout',
                 clientId: 'fakeClientId',
                 scope: 'openid profile email',
@@ -180,6 +180,20 @@ describe('AuthConfigService', () => {
             const expectedUri = 'http://localhost:3000/#/view/authentication-confirmation/?';
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSlashRedirectUri);
             expect(service.getRedirectUri()).toBe(expectedUri);
+        });
+    });
+
+    describe('silentRefreshRedirectUri', () => {
+        it('should return the silentRefreshRedirectUri with subfolder path', () => {
+            const expectedUri = 'http://localhost:3000/subfolder/assets/silent-refresh.html';
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolderRedirectUri);
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBe(expectedUri);
+        });
+
+        it('should return the silentRefreshRedirectUri with subfolder2 path', () => {
+            const expectedUri = 'http://localhost:3000/subfolder2/assets/silent-refresh.html';
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolder2RedirectUri);
+            expect(service.loadAppConfig().silentRefreshRedirectUri).toBe(expectedUri);
         });
     });
 });
