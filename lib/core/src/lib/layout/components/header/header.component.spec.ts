@@ -81,6 +81,24 @@ describe('HeaderLayoutComponent', () => {
             expect(await toolbar.getCssValue('background-color')).toBe('rgb(66, 245, 126)');
         });
 
+        it('should background image be set to none if is not provided', async () => {
+            fixture.detectChanges();
+
+            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
+            const toolbar = await toolbarHarness.host();
+            expect(await toolbar.getCssValue('background-image')).toEqual('none');
+        });
+
+        it('should background image be set to none if is provided as empty string', async () => {
+            component.backgroundImage = '';
+
+            fixture.detectChanges();
+
+            const toolbarHarness = await loader.getHarness(MatToolbarHarness);
+            const toolbar = await toolbarHarness.host();
+            expect(await toolbar.getCssValue('background-image')).toEqual('none');
+        });
+
         it('should change background image when provided', async () => {
             component.backgroundImage = '/assets/someImage.png';
             fixture.detectChanges();
