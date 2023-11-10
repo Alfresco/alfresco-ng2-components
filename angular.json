@@ -238,6 +238,44 @@
         }
       }
     },
+    "js-api": {
+      "projectType": "library",
+      "root": "lib/js-api/src",
+      "sourceRoot": "lib/js-api/src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "lib/js-api/src/tsconfig.lib.json",
+            "project": "lib/js-api/src/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "lib/js-api/src/ng-package.json",
+              "tsConfig": "lib/js-api/src/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "lib/js-api/src/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "executor": "nx:run-commands",
+          "options": {
+            "commands": ["TS_NODE_PROJECT=lib/js-api/test/tsconfig.json mocha --full-trace --config lib/js-api/.mocharc.json"]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "lib/js-api/**/*.ts"
+            ]
+          }
+        }
+      }
+    },
     "core": {
       "projectType": "library",
       "root": "lib/core",

@@ -1,0 +1,20 @@
+{
+  "name": "@alfresco/js-api",
+  "version": "7.2.0",
+  "license": "Apache-2.0",
+  "description": "JavaScript client library for the Alfresco REST API",
+  "author": "Hyland Software, Inc. and its affiliates",
+  "keywords": ["alfresco"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-js-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-js-api/issues"
+  },
+  "dependencies": {
+    "event-emitter": "^0.3.5",
+    "superagent": "^8.0.9",
+    "tslib": "^2.6.1"
+  }
+}

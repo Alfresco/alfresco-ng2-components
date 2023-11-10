@@ -1,0 +1,40 @@
+# TaskRepresentation
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**adhocTaskCanBeReassigned** | **boolean** |  | [optional] [default to null]
+**assignee** | [**LightUserRepresentation**](LightUserRepresentation.md) |  | [optional] [default to null]
+**category** | **string** |  | [optional] [default to null]
+**created** | [**Date**](Date.md) |  | [optional] [default to null]
+**description** | **string** |  | [optional] [default to null]
+**dueDate** | [**Date**](Date.md) |  | [optional] [default to null]
+**duration** | **number** |  | [optional] [default to null]
+**endDate** | [**Date**](Date.md) |  | [optional] [default to null]
+**executionId** | **string** |  | [optional] [default to null]
+**formKey** | **string** |  | [optional] [default to null]
+**id** | **string** |  | [optional] [default to null]
+**initiatorCanCompleteTask** | **boolean** |  | [optional] [default to null]
+**involvedGroups** | [**LightGroupRepresentation[]**](LightGroupRepresentation.md) |  | [optional] [default to null]
+**involvedPeople** | [**LightUserRepresentation[]**](LightUserRepresentation.md) |  | [optional] [default to null]
+**managerOfCandidateGroup** | **boolean** |  | [optional] [default to null]
+**memberOfCandidateGroup** | **boolean** |  | [optional] [default to null]
+**memberOfCandidateUsers** | **boolean** |  | [optional] [default to null]
+**name** | **string** |  | [optional] [default to null]
+**parentTaskId** | **string** |  | [optional] [default to null]
+**parentTaskName** | **string** |  | [optional] [default to null]
+**priority** | **number** |  | [optional] [default to null]
+**processDefinitionCategory** | **string** |  | [optional] [default to null]
+**processDefinitionDeploymentId** | **string** |  | [optional] [default to null]
+**processDefinitionDescription** | **string** |  | [optional] [default to null]
+**processDefinitionId** | **string** |  | [optional] [default to null]
+**processDefinitionKey** | **string** |  | [optional] [default to null]
+**processDefinitionName** | **string** |  | [optional] [default to null]
+**processDefinitionVersion** | **number** |  | [optional] [default to null]
+**processInstanceId** | **string** |  | [optional] [default to null]
+**processInstanceName** | **string** |  | [optional] [default to null]
+**processInstanceStartUserId** | **string** |  | [optional] [default to null]
+**taskDefinitionKey** | **string** |  | [optional] [default to null]
+**variables** | [**RestVariable[]**](RestVariable.md) |  | [optional] [default to null]
+
+
