@@ -27,9 +27,7 @@ export class FavoritePagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new FavoriteEntry(item);
-                });
+                this.entries = input.entries.map((item) => new FavoriteEntry(item));
             }
         }
     }

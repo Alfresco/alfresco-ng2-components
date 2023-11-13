@@ -35,9 +35,7 @@ export class RequestFacetIntervalsIntervals {
         if (input) {
             Object.assign(this, input);
             if (input.sets) {
-                this.sets = input.sets.map((item) => {
-                    return new RequestFacetSet(item);
-                });
+                this.sets = input.sets.map((item) => new RequestFacetSet(item));
             }
         }
     }

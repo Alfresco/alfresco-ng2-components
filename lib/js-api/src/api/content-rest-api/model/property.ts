@@ -60,9 +60,7 @@ export class Property {
         if (input) {
             Object.assign(this, input);
             if (input.constraints) {
-                this.constraints = input.constraints.map((item) => {
-                    return new Constraint(item);
-                });
+                this.constraints = input.constraints.map((item) => new Constraint(item));
             }
         }
     }

@@ -26,9 +26,7 @@ export class AuditDecisionRuleInfoRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.expressions) {
-                this.expressions = input.expressions.map((item) => {
-                    return new AuditDecisionExpressionInfoRepresentation(item);
-                });
+                this.expressions = input.expressions.map((item) => new AuditDecisionExpressionInfoRepresentation(item));
             }
         }
     }

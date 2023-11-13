@@ -36,14 +36,9 @@ describe('Custom Model Api', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(
-            () => {
-                done();
-            },
-            (error) => {
-                console.log('error ' + JSON.stringify(error));
-            }
-        );
+        alfrescoJsApi.login('admin', 'admin').then(() => {
+            done();
+        });
 
         customModelApi = new CustomModelApi(alfrescoJsApi);
     });

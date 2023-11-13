@@ -29,9 +29,7 @@ export class RecordFolderAssociationPagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new RecordFolderChildAssociationEntry(item);
-                });
+                this.entries = input.entries.map((item) => new RecordFolderChildAssociationEntry(item));
             }
             this.source = input.source ? new RecordFolder(input.source) : undefined;
         }

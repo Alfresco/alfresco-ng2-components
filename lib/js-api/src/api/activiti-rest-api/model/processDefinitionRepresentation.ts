@@ -33,9 +33,7 @@ export class ProcessDefinitionRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.metaDataValues) {
-                this.metaDataValues = input.metaDataValues.map((item) => {
-                    return new ProcessDefinitionMetaDataRepresentation(item);
-                });
+                this.metaDataValues = input.metaDataValues.map((item) => new ProcessDefinitionMetaDataRepresentation(item));
             }
         }
     }

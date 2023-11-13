@@ -30,9 +30,7 @@ export class CreateProcessInstanceRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.variables) {
-                this.variables = input.variables.map((item) => {
-                    return new RestVariable(item);
-                });
+                this.variables = input.variables.map((item) => new RestVariable(item));
             }
         }
     }

@@ -29,9 +29,7 @@ export class RequestPivot {
         if (input) {
             Object.assign(this, input);
             if (input.pivots) {
-                this.pivots = input.pivots.map((item) => {
-                    return new RequestPivot(item);
-                });
+                this.pivots = input.pivots.map((item) => new RequestPivot(item));
             }
         }
     }

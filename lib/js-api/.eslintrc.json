@@ -35,8 +35,6 @@
         "unicorn/filename-case": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/consistent-type-assertions": "off",
-        "arrow-body-style": "off",
-        "no-console": "off",
         "jsdoc/require-jsdoc": "off",
         "jsdoc/check-alignment": "off",
         "jsdoc/tag-lines": "off",

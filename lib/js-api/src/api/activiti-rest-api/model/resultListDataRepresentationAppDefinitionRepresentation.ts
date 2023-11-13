@@ -27,9 +27,7 @@ export class ResultListDataRepresentationAppDefinitionRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AppDefinitionRepresentation(item);
-                });
+                this.data = input.data.map((item) => new AppDefinitionRepresentation(item));
             }
         }
     }

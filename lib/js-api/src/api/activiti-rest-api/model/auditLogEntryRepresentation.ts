@@ -36,9 +36,7 @@ export class AuditLogEntryRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.formData) {
-                this.formData = input.formData.map((item) => {
-                    return new AuditLogFormDataRepresentation(item);
-                });
+                this.formData = input.formData.map((item) => new AuditLogFormDataRepresentation(item));
             }
         }
     }

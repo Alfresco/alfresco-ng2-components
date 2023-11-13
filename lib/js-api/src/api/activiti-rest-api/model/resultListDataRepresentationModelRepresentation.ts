@@ -27,9 +27,7 @@ export class ResultListDataRepresentationModelRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new ModelRepresentation(item);
-                });
+                this.data = input.data.map((item) => new ModelRepresentation(item));
             }
         }
     }

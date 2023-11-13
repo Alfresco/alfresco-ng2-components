@@ -26,9 +26,7 @@ export class ProcessContentRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.content) {
-                this.content = input.content.map((item) => {
-                    return new RelatedContentRepresentation(item);
-                });
+                this.content = input.content.map((item) => new RelatedContentRepresentation(item));
             }
             this.field = input.field ? new NamedObject(input.field) : undefined;
         }

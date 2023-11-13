@@ -48,9 +48,7 @@ export class ActionDefinition {
         if (input) {
             Object.assign(this, input);
             if (input.parameterDefinitions) {
-                this.parameterDefinitions = input.parameterDefinitions.map((item) => {
-                    return new ActionParameterDefinition(item);
-                });
+                this.parameterDefinitions = input.parameterDefinitions.map((item) => new ActionParameterDefinition(item));
             }
         }
     }

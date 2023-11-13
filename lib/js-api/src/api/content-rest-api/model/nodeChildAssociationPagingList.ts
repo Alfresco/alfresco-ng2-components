@@ -29,9 +29,7 @@ export class NodeChildAssociationPagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new NodeChildAssociationEntry(item);
-                });
+                this.entries = input.entries.map((item) => new NodeChildAssociationEntry(item));
             }
             this.source = input.source ? new Node(input.source) : undefined;
         }

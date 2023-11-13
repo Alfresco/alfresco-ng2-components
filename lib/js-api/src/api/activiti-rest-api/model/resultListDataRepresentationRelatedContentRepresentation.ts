@@ -27,9 +27,7 @@ export class ResultListDataRepresentationRelatedContentRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new RelatedContentRepresentation(item);
-                });
+                this.data = input.data.map((item) => new RelatedContentRepresentation(item));
             }
         }
     }

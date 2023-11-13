@@ -49,45 +49,30 @@ describe('WebScript', () => {
     it('execute webScript return 400 error if is not present on the server should be handled by reject promise', (done) => {
         webScriptMock.get404Response();
 
-        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(
-            () => {
-                console.log('success');
-            },
-            (error: any) => {
-                expect(error.status).to.be.equal(404);
-                done();
-            }
-        );
+        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).catch((error: any) => {
+            expect(error.status).to.be.equal(404);
+            done();
+        });
     });
 
     it('execute webScript GET return 200 if all is ok  should be handled by resolve promise', (done) => {
         webScriptMock.get200Response();
 
-        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(
-            () => {
-                done();
-            },
-            (error: any) => {
-                console.log('error' + JSON.stringify(error));
-            }
-        );
+        webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath).then(() => {
+            done();
+        });
     });
 
     it('execute webScript that return HTML should not return it as Object', (done) => {
         webScriptMock.get200ResponseHTMLFormat();
 
-        webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home').then(
-            (data) => {
-                try {
-                    JSON.parse(data);
-                } catch (e) {
-                    done();
-                }
-            },
-            () => {
-                console.log('error');
+        webscriptApi.executeWebScript('GET', 'sample/folder/Company%20Home').then((data) => {
+            try {
+                JSON.parse(data);
+            } catch (e) {
+                done();
             }
-        );
+        });
     });
 
     describe('Events', () => {

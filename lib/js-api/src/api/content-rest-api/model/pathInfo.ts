@@ -26,9 +26,7 @@ export class PathInfo {
         if (input) {
             Object.assign(this, input);
             if (input.elements) {
-                this.elements = input.elements.map((item) => {
-                    return new PathElement(item);
-                });
+                this.elements = input.elements.map((item) => new PathElement(item));
             }
         }
     }

@@ -27,9 +27,7 @@ export class ResultListDataRepresentationAbstractUserRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AbstractUserRepresentation(item);
-                });
+                this.data = input.data.map((item) => new AbstractUserRepresentation(item));
             }
         }
     }

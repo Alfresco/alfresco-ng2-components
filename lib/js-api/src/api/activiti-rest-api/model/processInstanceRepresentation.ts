@@ -46,9 +46,7 @@ export class ProcessInstanceRepresentation {
             this.started = input.started ? DateAlfresco.parseDate(input.started) : undefined;
             this.startedBy = input.startedBy ? new LightUserRepresentation(input.startedBy) : undefined;
             if (input.variables) {
-                this.variables = input.variables.map((item) => {
-                    return new RestVariable(item);
-                });
+                this.variables = input.variables.map((item) => new RestVariable(item));
             }
         }
     }

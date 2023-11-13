@@ -30,9 +30,7 @@ export class ResultSetPagingList {
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             this.context = input.context ? new ResultSetContext(input.context) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new ResultSetRowEntry(item);
-                });
+                this.entries = input.entries.map((item) => new ResultSetRowEntry(item));
             }
         }
     }

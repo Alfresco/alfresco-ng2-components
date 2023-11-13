@@ -37,14 +37,9 @@ describe('Node', () => {
             hostEcm
         });
 
-        alfrescoJsApi.login('admin', 'admin').then(
-            () => {
-                done();
-            },
-            (error: any) => {
-                console.log('error ' + JSON.stringify(error));
-            }
-        );
+        alfrescoJsApi.login('admin', 'admin').then(() => {
+            done();
+        });
 
         nodesApi = new NodesApi(alfrescoJsApi);
     });
@@ -86,17 +81,12 @@ describe('Node', () => {
 
             const equalTime = (actual: Date, expected: Date) => actual.getTime() === expected.getTime();
 
-            nodesApi.listNodeChildren('b4cff62a-664d-4d45-9302-98723eac1320').then(
-                (data) => {
-                    expect(data.list.entries.length).to.be.equal(1);
-                    const isEqual = equalTime(data.list.entries[0].entry.createdAt, new Date(Date.UTC(2011, 2, 15, 17, 4, 54, 290)));
-                    expect(isEqual).to.equal(true);
-                    done();
-                },
-                (error: any) => {
-                    console.log('error' + JSON.stringify(error));
-                }
-            );
+            nodesApi.listNodeChildren('b4cff62a-664d-4d45-9302-98723eac1320').then((data) => {
+                expect(data.list.entries.length).to.be.equal(1);
+                const isEqual = equalTime(data.list.entries[0].entry.createdAt, new Date(Date.UTC(2011, 2, 15, 17, 4, 54, 290)));
+                expect(isEqual).to.equal(true);
+                done();
+            });
         });
     });
 

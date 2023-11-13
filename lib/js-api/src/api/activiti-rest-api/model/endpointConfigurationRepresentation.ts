@@ -33,9 +33,7 @@ export class EndpointConfigurationRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.requestHeaders) {
-                this.requestHeaders = input.requestHeaders.map((item) => {
-                    return new EndpointRequestHeaderRepresentation(item);
-                });
+                this.requestHeaders = input.requestHeaders.map((item) => new EndpointRequestHeaderRepresentation(item));
             }
         }
     }

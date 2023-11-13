@@ -27,9 +27,7 @@ export class ResultListDataRepresentationSubmittedFormRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new SubmittedFormRepresentation(item);
-                });
+                this.data = input.data.map((item) => new SubmittedFormRepresentation(item));
             }
         }
     }

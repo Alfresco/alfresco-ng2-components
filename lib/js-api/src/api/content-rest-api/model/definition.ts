@@ -27,9 +27,7 @@ export class Definition {
         if (input) {
             Object.assign(this, input);
             if (input.properties) {
-                this.properties = input.properties.map((item) => {
-                    return new Property(item);
-                });
+                this.properties = input.properties.map((item) => new Property(item));
             }
         }
     }

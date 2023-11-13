@@ -29,9 +29,7 @@ export class TransferAssociationPagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new TransferChildAssociationEntry(item);
-                });
+                this.entries = input.entries.map((item) => new TransferChildAssociationEntry(item));
             }
             this.source = input.source ? new Transfer(input.source) : undefined;
         }

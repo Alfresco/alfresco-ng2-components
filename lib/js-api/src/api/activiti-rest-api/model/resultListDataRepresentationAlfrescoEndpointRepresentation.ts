@@ -27,9 +27,7 @@ export class ResultListDataRepresentationAlfrescoEndpointRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AlfrescoEndpointRepresentation(item);
-                });
+                this.data = input.data.map((item) => new AlfrescoEndpointRepresentation(item));
             }
         }
     }

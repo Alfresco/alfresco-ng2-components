@@ -35,14 +35,10 @@ export class TaskAuditInfoRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.comments) {
-                this.comments = input.comments.map((item) => {
-                    return new CommentAuditInfo(item);
-                });
+                this.comments = input.comments.map((item) => new CommentAuditInfo(item));
             }
             if (input.formData) {
-                this.formData = input.formData.map((item) => {
-                    return new AuditLogFormDataRepresentation(item);
-                });
+                this.formData = input.formData.map((item) => new AuditLogFormDataRepresentation(item));
             }
         }
     }

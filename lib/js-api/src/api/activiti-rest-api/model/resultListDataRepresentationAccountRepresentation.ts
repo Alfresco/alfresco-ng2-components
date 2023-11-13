@@ -27,9 +27,7 @@ export class ResultListDataRepresentationAccountRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AccountRepresentation(item);
-                });
+                this.data = input.data.map((item) => new AccountRepresentation(item));
             }
         }
     }

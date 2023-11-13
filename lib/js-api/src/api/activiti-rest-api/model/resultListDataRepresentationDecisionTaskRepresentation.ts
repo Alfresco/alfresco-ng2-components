@@ -27,9 +27,7 @@ export class ResultListDataRepresentationDecisionTaskRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new DecisionTaskRepresentation(item);
-                });
+                this.data = input.data.map((item) => new DecisionTaskRepresentation(item));
             }
         }
     }

@@ -35,9 +35,7 @@ export class ProcessInstanceAuditInfoRepresentation {
             Object.assign(this, input);
             this.decisionInfo = input.decisionInfo ? new AuditDecisionInfoRepresentation(input.decisionInfo) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new AuditLogEntryRepresentation(item);
-                });
+                this.entries = input.entries.map((item) => new AuditLogEntryRepresentation(item));
             }
         }
     }

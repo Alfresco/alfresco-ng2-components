@@ -27,9 +27,7 @@ export class ResultListDataRepresentationDecisionAuditRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new DecisionAuditRepresentation(item);
-                });
+                this.data = input.data.map((item) => new DecisionAuditRepresentation(item));
             }
         }
     }

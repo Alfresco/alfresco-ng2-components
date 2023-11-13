@@ -27,9 +27,7 @@ export class LightGroupRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.groups) {
-                this.groups = input.groups.map((item) => {
-                    return new LightGroupRepresentation(item);
-                });
+                this.groups = input.groups.map((item) => new LightGroupRepresentation(item));
             }
         }
     }

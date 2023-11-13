@@ -44,9 +44,7 @@ export class PersonNetwork {
             Object.assign(this, input);
             this.createdAt = input.createdAt ? DateAlfresco.parseDate(input.createdAt) : undefined;
             if (input.quotas) {
-                this.quotas = input.quotas.map((item) => {
-                    return new NetworkQuota(item);
-                });
+                this.quotas = input.quotas.map((item) => new NetworkQuota(item));
             }
         }
     }

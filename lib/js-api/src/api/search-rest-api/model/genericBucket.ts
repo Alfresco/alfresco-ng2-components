@@ -49,9 +49,7 @@ export class GenericBucket {
         if (input) {
             Object.assign(this, input);
             if (input.metrics) {
-                this.metrics = input.metrics.map((item) => {
-                    return new GenericMetric(item);
-                });
+                this.metrics = input.metrics.map((item) => new GenericMetric(item));
             }
             this.bucketInfo = input.bucketInfo ? new GenericBucketBucketInfo(input.bucketInfo) : undefined;
         }

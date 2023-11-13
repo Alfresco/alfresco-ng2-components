@@ -59,15 +59,10 @@ describe('Ecm Auth test', () => {
 
         authEcmMock.get204ResponseLogout();
 
-        auth.logout().then(
-            () => {
-                expect(auth.authentications.basicAuth.username).to.be.equal(null);
-                done();
-            },
-            (error) => {
-                console.log(JSON.stringify(error));
-            }
-        );
+        auth.logout().then(() => {
+            expect(auth.authentications.basicAuth.username).to.be.equal(null);
+            done();
+        });
     });
 
     describe('With Authentication', () => {

@@ -35,9 +35,7 @@ export class GenericFacetResponse {
         if (input) {
             Object.assign(this, input);
             if (input.buckets) {
-                this.buckets = input.buckets.map((item) => {
-                    return new GenericBucket(item);
-                });
+                this.buckets = input.buckets.map((item) => new GenericBucket(item));
             }
         }
     }

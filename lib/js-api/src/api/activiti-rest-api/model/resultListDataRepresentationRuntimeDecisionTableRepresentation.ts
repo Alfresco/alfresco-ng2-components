@@ -27,9 +27,7 @@ export class ResultListDataRepresentationRuntimeDecisionTableRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new RuntimeDecisionTableRepresentation(item);
-                });
+                this.data = input.data.map((item) => new RuntimeDecisionTableRepresentation(item));
             }
         }
     }

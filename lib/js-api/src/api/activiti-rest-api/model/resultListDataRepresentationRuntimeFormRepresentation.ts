@@ -27,9 +27,7 @@ export class ResultListDataRepresentationRuntimeFormRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new RuntimeFormRepresentation(item);
-                });
+                this.data = input.data.map((item) => new RuntimeFormRepresentation(item));
             }
         }
     }

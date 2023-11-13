@@ -50,29 +50,19 @@ export class FormDefinitionRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.fields) {
-                this.fields = input.fields.map((item) => {
-                    return new FormFieldRepresentation(item);
-                });
+                this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
             }
             if (input.javascriptEvents) {
-                this.javascriptEvents = input.javascriptEvents.map((item) => {
-                    return new FormJavascriptEventRepresentation(item);
-                });
+                this.javascriptEvents = input.javascriptEvents.map((item) => new FormJavascriptEventRepresentation(item));
             }
             if (input.outcomes) {
-                this.outcomes = input.outcomes.map((item) => {
-                    return new FormOutcomeRepresentation(item);
-                });
+                this.outcomes = input.outcomes.map((item) => new FormOutcomeRepresentation(item));
             }
             if (input.tabs) {
-                this.tabs = input.tabs.map((item) => {
-                    return new FormTabRepresentation(item);
-                });
+                this.tabs = input.tabs.map((item) => new FormTabRepresentation(item));
             }
             if (input.variables) {
-                this.variables = input.variables.map((item) => {
-                    return new FormVariableRepresentation(item);
-                });
+                this.variables = input.variables.map((item) => new FormVariableRepresentation(item));
             }
         }
     }

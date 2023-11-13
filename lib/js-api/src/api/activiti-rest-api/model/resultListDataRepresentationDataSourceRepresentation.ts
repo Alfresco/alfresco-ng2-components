@@ -27,9 +27,7 @@ export class ResultListDataRepresentationDataSourceRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new DataSourceRepresentation(item);
-                });
+                this.data = input.data.map((item) => new DataSourceRepresentation(item));
             }
         }
     }

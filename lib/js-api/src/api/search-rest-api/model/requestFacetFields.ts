@@ -34,9 +34,7 @@ export class RequestFacetFields {
         if (input) {
             Object.assign(this, input);
             if (input.facets) {
-                this.facets = input.facets.map((item) => {
-                    return new RequestFacetField(item);
-                });
+                this.facets = input.facets.map((item) => new RequestFacetField(item));
             }
         }
     }

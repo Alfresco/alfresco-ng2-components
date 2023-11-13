@@ -143,7 +143,9 @@ describe('Auth', () => {
                         hostEcm: ECM_HOST
                     });
 
-                    expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(alfrescoJsApi.contentClient.authentications.basicAuth.password);
+                    expect('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1').to.be.equal(
+                        alfrescoJsApi.contentClient.authentications.basicAuth.password
+                    );
                 });
 
                 it('should Ticket login be validate against the server if is valid', (done) => {
@@ -256,15 +258,10 @@ describe('Auth', () => {
                 it('should return the Ticket if all is ok', (done) => {
                     authResponseBpmMock.get200Response();
 
-                    alfrescoJsApi.login('admin', 'admin').then(
-                        (data: string) => {
-                            expect(data).to.be.equal('Basic YWRtaW46YWRtaW4=');
-                            done();
-                        },
-                        (error: any) => {
-                            console.log('error' + JSON.stringify(error));
-                        }
-                    );
+                    alfrescoJsApi.login('admin', 'admin').then((data: string) => {
+                        expect(data).to.be.equal('Basic YWRtaW46YWRtaW4=');
+                        done();
+                    });
                 });
 
                 it('should return an error if wrong credential are used 401 the login fails', (done) => {

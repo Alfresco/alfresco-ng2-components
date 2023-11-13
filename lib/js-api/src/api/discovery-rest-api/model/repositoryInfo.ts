@@ -34,9 +34,7 @@ export class RepositoryInfo {
             this.status = input.status ? new StatusInfo(input.status) : undefined;
             this.license = input.license ? new LicenseInfo(input.license) : undefined;
             if (input.modules) {
-                this.modules = input.modules.map((item) => {
-                    return new ModuleInfo(item);
-                });
+                this.modules = input.modules.map((item) => new ModuleInfo(item));
             }
         }
     }

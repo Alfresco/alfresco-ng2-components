@@ -32,9 +32,7 @@ export class SearchEntry {
         if (input) {
             Object.assign(this, input);
             if (input.highlight) {
-                this.highlight = input.highlight.map((item) => {
-                    return new SearchEntryHighlight(item);
-                });
+                this.highlight = input.highlight.map((item) => new SearchEntryHighlight(item));
             }
         }
     }

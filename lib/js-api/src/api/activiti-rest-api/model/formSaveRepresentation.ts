@@ -31,9 +31,7 @@ export class FormSaveRepresentation {
             Object.assign(this, input);
             this.formRepresentation = input.formRepresentation ? new FormRepresentation(input.formRepresentation) : undefined;
             if (input.processScopeIdentifiers) {
-                this.processScopeIdentifiers = input.processScopeIdentifiers.map((item) => {
-                    return new ProcessScopeIdentifierRepresentation(item);
-                });
+                this.processScopeIdentifiers = input.processScopeIdentifiers.map((item) => new ProcessScopeIdentifierRepresentation(item));
             }
         }
     }

@@ -45,14 +45,10 @@ The character . must not be used at the end of the name.
             this.definition = input.definition ? new Definition(input.definition) : undefined;
             this.association = input.association ? new NodeBodyCreateAssociation(input.association) : undefined;
             if (input.secondaryChildren) {
-                this.secondaryChildren = input.secondaryChildren.map((item) => {
-                    return new ChildAssociationBody(item);
-                });
+                this.secondaryChildren = input.secondaryChildren.map((item) => new ChildAssociationBody(item));
             }
             if (input.targets) {
-                this.targets = input.targets.map((item) => {
-                    return new AssociationBody(item);
-                });
+                this.targets = input.targets.map((item) => new AssociationBody(item));
             }
         }
     }

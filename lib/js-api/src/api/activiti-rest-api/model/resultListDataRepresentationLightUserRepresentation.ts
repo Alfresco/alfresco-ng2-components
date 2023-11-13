@@ -27,9 +27,7 @@ export class ResultListDataRepresentationLightUserRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new LightUserRepresentation(item);
-                });
+                this.data = input.data.map((item) => new LightUserRepresentation(item));
             }
         }
     }

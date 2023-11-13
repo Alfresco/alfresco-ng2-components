@@ -60,9 +60,7 @@ export class RequestHighlight {
         if (input) {
             Object.assign(this, input);
             if (input.fields) {
-                this.fields = input.fields.map((item) => {
-                    return new RequestHighlightFields(item);
-                });
+                this.fields = input.fields.map((item) => new RequestHighlightFields(item));
             }
         }
     }

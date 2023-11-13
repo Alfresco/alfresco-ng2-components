@@ -38,21 +38,15 @@ export class GroupRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.capabilities) {
-                this.capabilities = input.capabilities.map((item) => {
-                    return new GroupCapabilityRepresentation(item);
-                });
+                this.capabilities = input.capabilities.map((item) => new GroupCapabilityRepresentation(item));
             }
             if (input.groups) {
-                this.groups = input.groups.map((item) => {
-                    return new GroupRepresentation(item);
-                });
+                this.groups = input.groups.map((item) => new GroupRepresentation(item));
             }
             this.lastSyncTimeStamp = input.lastSyncTimeStamp ? DateAlfresco.parseDate(input.lastSyncTimeStamp) : undefined;
             this.manager = input.manager ? new UserRepresentationGroup(input.manager) : undefined;
             if (input.users) {
-                this.users = input.users.map((item) => {
-                    return new UserRepresentationGroup(item);
-                });
+                this.users = input.users.map((item) => new UserRepresentationGroup(item));
             }
         }
     }

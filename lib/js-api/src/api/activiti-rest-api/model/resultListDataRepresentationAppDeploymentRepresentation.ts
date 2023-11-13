@@ -28,9 +28,7 @@ export class ResultListDataRepresentationAppDeploymentRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AppDeploymentRepresentation(item);
-                });
+                this.data = input.data.map((item) => new AppDeploymentRepresentation(item));
             }
         }
     }

@@ -27,9 +27,7 @@ export class ResultListDataRepresentationFormRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new FormRepresentation(item);
-                });
+                this.data = input.data.map((item) => new FormRepresentation(item));
             }
         }
     }

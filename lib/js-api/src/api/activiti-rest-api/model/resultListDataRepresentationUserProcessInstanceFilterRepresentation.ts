@@ -27,9 +27,7 @@ export class ResultListDataRepresentationUserProcessInstanceFilterRepresentation
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new UserProcessInstanceFilterRepresentation(item);
-                });
+                this.data = input.data.map((item) => new UserProcessInstanceFilterRepresentation(item));
             }
         }
     }

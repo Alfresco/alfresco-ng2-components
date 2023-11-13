@@ -31,9 +31,7 @@ export class ResultBuckets {
         if (input) {
             Object.assign(this, input);
             if (input.buckets) {
-                this.buckets = input.buckets.map((item) => {
-                    return new ResultBucketsBuckets(item);
-                });
+                this.buckets = input.buckets.map((item) => new ResultBucketsBuckets(item));
             }
         }
     }

@@ -54,9 +54,6 @@ describe('Bpm Auth test', () => {
                     expect(processAuth.authentications.basicAuth.username).to.be.equal(null);
                     done();
                 });
-            },
-            (error) => {
-                console.log('error' + JSON.stringify(error));
             }
         );
     });

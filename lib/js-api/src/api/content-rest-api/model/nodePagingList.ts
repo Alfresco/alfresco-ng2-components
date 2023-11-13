@@ -29,9 +29,7 @@ export class NodePagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new NodeEntry(item);
-                });
+                this.entries = input.entries.map((item) => new NodeEntry(item));
             }
             this.source = input.source ? new Node(input.source) : undefined;
         }

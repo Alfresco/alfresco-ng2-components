@@ -311,9 +311,7 @@ export class SuperagentHttpClient implements HttpClient {
             } else if (returnType === 'blob' && !isBrowser()) {
                 data = new Buffer.from(data, 'binary');
             } else if (Array.isArray(data)) {
-                data = data.map((element) => {
-                    return new returnType(element);
-                });
+                data = data.map((element) => new returnType(element));
             } else {
                 data = new returnType(data);
             }

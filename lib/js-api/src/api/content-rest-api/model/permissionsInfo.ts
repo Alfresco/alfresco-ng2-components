@@ -27,14 +27,10 @@ export class PermissionsInfo {
         if (input) {
             Object.assign(this, input);
             if (input.inherited) {
-                this.inherited = input.inherited.map((item) => {
-                    return new PermissionElement(item);
-                });
+                this.inherited = input.inherited.map((item) => new PermissionElement(item));
             }
             if (input.locallySet) {
-                this.locallySet = input.locallySet.map((item) => {
-                    return new PermissionElement(item);
-                });
+                this.locallySet = input.locallySet.map((item) => new PermissionElement(item));
             }
         }
     }

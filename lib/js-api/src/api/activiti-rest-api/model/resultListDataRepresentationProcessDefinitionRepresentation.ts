@@ -27,9 +27,7 @@ export class ResultListDataRepresentationProcessDefinitionRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new ProcessDefinitionRepresentation(item);
-                });
+                this.data = input.data.map((item) => new ProcessDefinitionRepresentation(item));
             }
         }
     }

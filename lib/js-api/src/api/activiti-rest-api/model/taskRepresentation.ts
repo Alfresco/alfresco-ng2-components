@@ -64,19 +64,13 @@ export class TaskRepresentation {
             this.dueDate = input.dueDate ? DateAlfresco.parseDate(input.dueDate) : undefined;
             this.endDate = input.endDate ? DateAlfresco.parseDate(input.endDate) : undefined;
             if (input.involvedGroups) {
-                this.involvedGroups = input.involvedGroups.map((item) => {
-                    return new LightGroupRepresentation(item);
-                });
+                this.involvedGroups = input.involvedGroups.map((item) => new LightGroupRepresentation(item));
             }
             if (input.involvedPeople) {
-                this.involvedPeople = input.involvedPeople.map((item) => {
-                    return new LightUserRepresentation(item);
-                });
+                this.involvedPeople = input.involvedPeople.map((item) => new LightUserRepresentation(item));
             }
             if (input.variables) {
-                this.variables = input.variables.map((item) => {
-                    return new RestVariable(item);
-                });
+                this.variables = input.variables.map((item) => new RestVariable(item));
             }
         }
     }

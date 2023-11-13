@@ -46,15 +46,11 @@ export class UserRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.apps) {
-                this.apps = input.apps.map((item) => {
-                    return new LightAppRepresentation(item);
-                });
+                this.apps = input.apps.map((item) => new LightAppRepresentation(item));
             }
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             if (input.groups) {
-                this.groups = input.groups.map((item) => {
-                    return new GroupRepresentation(item);
-                });
+                this.groups = input.groups.map((item) => new GroupRepresentation(item));
             }
             this.lastUpdate = input.lastUpdate ? DateAlfresco.parseDate(input.lastUpdate) : undefined;
             this.latestSyncTimeStamp = input.latestSyncTimeStamp ? DateAlfresco.parseDate(input.latestSyncTimeStamp) : undefined;

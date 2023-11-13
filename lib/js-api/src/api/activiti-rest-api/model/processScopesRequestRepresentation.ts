@@ -25,9 +25,7 @@ export class ProcessScopesRequestRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.identifiers) {
-                this.identifiers = input.identifiers.map((item) => {
-                    return new ProcessScopeIdentifierRepresentation(item);
-                });
+                this.identifiers = input.identifiers.map((item) => new ProcessScopeIdentifierRepresentation(item));
             }
         }
     }

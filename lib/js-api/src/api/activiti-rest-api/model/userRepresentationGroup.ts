@@ -45,9 +45,7 @@ export class UserRepresentationGroup {
         if (input) {
             Object.assign(this, input);
             if (input.apps) {
-                this.apps = input.apps.map((item) => {
-                    return new LightAppRepresentation(item);
-                });
+                this.apps = input.apps.map((item) => new LightAppRepresentation(item));
             }
             this.created = input.created ? DateAlfresco.parseDate(input.created) : undefined;
             this.lastUpdate = input.lastUpdate ? DateAlfresco.parseDate(input.lastUpdate) : undefined;

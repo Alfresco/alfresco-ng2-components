@@ -27,9 +27,7 @@ export class ResultListDataRepresentationAlfrescoNetworkRepresenation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new AlfrescoNetworkRepresenation(item);
-                });
+                this.data = input.data.map((item) => new AlfrescoNetworkRepresenation(item));
             }
         }
     }

@@ -36,14 +36,10 @@ export class AbstractClass {
         if (input) {
             Object.assign(this, input);
             if (input.properties) {
-                this.properties = input.properties.map((item) => {
-                    return new Property(item);
-                });
+                this.properties = input.properties.map((item) => new Property(item));
             }
             if (input.associations) {
-                this.associations = input.associations.map((item: any) => {
-                    return new AbstractClassAssociation(item);
-                });
+                this.associations = input.associations.map((item: any) => new AbstractClassAssociation(item));
             }
             this.model = input.model ? new Model(input.model) : undefined;
         }

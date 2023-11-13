@@ -24,9 +24,7 @@ export class RuntimeAppDefinitionSaveRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.appDefinitions) {
-                this.appDefinitions = input.appDefinitions.map((item) => {
-                    return new AppDefinitionRepresentation(item);
-                });
+                this.appDefinitions = input.appDefinitions.map((item) => new AppDefinitionRepresentation(item));
             }
         }
     }

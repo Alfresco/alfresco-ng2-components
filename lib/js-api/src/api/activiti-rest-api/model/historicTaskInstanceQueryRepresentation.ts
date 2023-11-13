@@ -78,9 +78,7 @@ export class HistoricTaskInstanceQueryRepresentation {
             this.dueDateAfter = input.dueDateAfter ? DateAlfresco.parseDate(input.dueDateAfter) : undefined;
             this.dueDateBefore = input.dueDateBefore ? DateAlfresco.parseDate(input.dueDateBefore) : undefined;
             if (input.processVariables) {
-                this.processVariables = input.processVariables.map((item) => {
-                    return new QueryVariable(item);
-                });
+                this.processVariables = input.processVariables.map((item) => new QueryVariable(item));
             }
             this.taskCompletedAfter = input.taskCompletedAfter ? DateAlfresco.parseDate(input.taskCompletedAfter) : undefined;
             this.taskCompletedBefore = input.taskCompletedBefore ? DateAlfresco.parseDate(input.taskCompletedBefore) : undefined;
@@ -89,9 +87,7 @@ export class HistoricTaskInstanceQueryRepresentation {
             this.taskCreatedBefore = input.taskCreatedBefore ? DateAlfresco.parseDate(input.taskCreatedBefore) : undefined;
             this.taskCreatedOn = input.taskCreatedOn ? DateAlfresco.parseDate(input.taskCreatedOn) : undefined;
             if (input.taskVariables) {
-                this.taskVariables = input.taskVariables.map((item) => {
-                    return new QueryVariable(item);
-                });
+                this.taskVariables = input.taskVariables.map((item) => new QueryVariable(item));
             }
         }
     }

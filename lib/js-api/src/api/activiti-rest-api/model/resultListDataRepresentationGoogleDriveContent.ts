@@ -27,9 +27,7 @@ export class ResultListDataRepresentationGoogleDriveContent {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new GoogleDriveContent(item);
-                });
+                this.data = input.data.map((item) => new GoogleDriveContent(item));
             }
         }
     }

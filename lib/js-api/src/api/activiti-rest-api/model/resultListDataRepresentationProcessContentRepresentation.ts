@@ -27,9 +27,7 @@ export class ResultListDataRepresentationProcessContentRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.data) {
-                this.data = input.data.map((item) => {
-                    return new ProcessContentRepresentation(item);
-                });
+                this.data = input.data.map((item) => new ProcessContentRepresentation(item));
             }
         }
     }

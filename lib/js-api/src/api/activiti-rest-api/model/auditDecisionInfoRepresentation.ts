@@ -27,14 +27,10 @@ export class AuditDecisionInfoRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.appliedRules) {
-                this.appliedRules = input.appliedRules.map((item) => {
-                    return new AuditDecisionRuleInfoRepresentation(item);
-                });
+                this.appliedRules = input.appliedRules.map((item) => new AuditDecisionRuleInfoRepresentation(item));
             }
             if (input.calculatedValues) {
-                this.calculatedValues = input.calculatedValues.map((item) => {
-                    return new AuditCalculatedValueRepresentation(item);
-                });
+                this.calculatedValues = input.calculatedValues.map((item) => new AuditCalculatedValueRepresentation(item));
             }
         }
     }

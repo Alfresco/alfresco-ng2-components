@@ -65,9 +65,7 @@ describe('Oauth2 Implicit flow test', () => {
     it('should redirect to login if access token is not valid', (done) => {
         window = globalAny.window = { location: {} };
         globalAny.document = {
-            getElementById: () => {
-                return '';
-            }
+            getElementById: () => ''
         };
 
         oauth2Auth = new Oauth2Auth(
@@ -95,9 +93,7 @@ describe('Oauth2 Implicit flow test', () => {
     it('should not loop over redirection when redirectUri contains hash and token is not valid ', (done) => {
         window = globalAny.window = { location: {} };
         globalAny.document = {
-            getElementById: () => {
-                return '';
-            }
+            getElementById: () => ''
         };
         oauth2Auth = new Oauth2Auth(
             {
@@ -125,9 +121,7 @@ describe('Oauth2 Implicit flow test', () => {
     it('should not redirect to login if access token is valid', (done) => {
         window = globalAny.window = { location: {} };
         globalAny.document = {
-            getElementById: () => {
-                return '';
-            }
+            getElementById: () => ''
         };
         oauth2Auth = new Oauth2Auth(
             {
@@ -143,12 +137,8 @@ describe('Oauth2 Implicit flow test', () => {
             alfrescoJsApi
         );
 
-        oauth2Auth.isValidAccessToken = () => {
-            return true;
-        };
-        oauth2Auth.isValidToken = () => {
-            return true;
-        };
+        oauth2Auth.isValidAccessToken = () => true;
+        oauth2Auth.isValidToken = () => true;
 
         oauth2Auth.on('token_issued', () => {
             expect(window.location.url).to.be.equal(undefined);
@@ -163,9 +153,7 @@ describe('Oauth2 Implicit flow test', () => {
     it('should set the loginFragment to redirect after the login if it is present', (done) => {
         window = globalAny.window = {};
         globalAny.document = {
-            getElementById: () => {
-                return '';
-            }
+            getElementById: () => ''
         };
         window.location = <Location>{ hash: 'asfasfasfa' };
 

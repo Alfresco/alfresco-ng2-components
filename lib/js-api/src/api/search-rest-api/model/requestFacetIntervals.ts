@@ -35,14 +35,10 @@ export class RequestFacetIntervals {
         if (input) {
             Object.assign(this, input);
             if (input.sets) {
-                this.sets = input.sets.map((item) => {
-                    return new RequestFacetSet(item);
-                });
+                this.sets = input.sets.map((item) => new RequestFacetSet(item));
             }
             if (input.intervals) {
-                this.intervals = input.intervals.map((item) => {
-                    return new RequestFacetIntervalsIntervals(item);
-                });
+                this.intervals = input.intervals.map((item) => new RequestFacetIntervalsIntervals(item));
             }
         }
     }

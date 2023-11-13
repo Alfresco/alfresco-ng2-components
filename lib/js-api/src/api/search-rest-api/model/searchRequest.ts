@@ -76,23 +76,17 @@ export class SearchRequest {
             this.facetFields = input.facetFields ? new RequestFacetFields(input.facetFields) : undefined;
             this.facetIntervals = input.facetIntervals ? new RequestFacetIntervals(input.facetIntervals) : undefined;
             if (input.pivots) {
-                this.pivots = input.pivots.map((item) => {
-                    return new RequestPivot(item);
-                });
+                this.pivots = input.pivots.map((item) => new RequestPivot(item));
             }
             if (input.stats) {
-                this.stats = input.stats.map((item) => {
-                    return new RequestStats(item);
-                });
+                this.stats = input.stats.map((item) => new RequestStats(item));
             }
             this.spellcheck = input.spellcheck ? new RequestSpellcheck(input.spellcheck) : undefined;
             this.scope = input.scope ? new RequestScope(input.scope) : undefined;
             this.limits = input.limits ? new RequestLimits(input.limits) : undefined;
             this.highlight = input.highlight ? new RequestHighlight(input.highlight) : undefined;
             if (input.ranges) {
-                this.ranges = input.ranges.map((item) => {
-                    return new RequestRange(item);
-                });
+                this.ranges = input.ranges.map((item) => new RequestRange(item));
             }
         }
     }

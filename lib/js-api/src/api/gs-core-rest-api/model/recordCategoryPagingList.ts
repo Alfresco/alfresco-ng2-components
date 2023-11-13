@@ -29,9 +29,7 @@ export class RecordCategoryPagingList {
             Object.assign(this, input);
             this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
             if (input.entries) {
-                this.entries = input.entries.map((item) => {
-                    return new RecordCategoryEntry(item);
-                });
+                this.entries = input.entries.map((item) => new RecordCategoryEntry(item));
             }
             this.source = input.source ? new FilePlan(input.source) : undefined;
         }

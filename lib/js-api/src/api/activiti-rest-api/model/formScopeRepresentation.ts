@@ -31,19 +31,13 @@ export class FormScopeRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.fieldVariables) {
-                this.fieldVariables = input.fieldVariables.map((item) => {
-                    return new FormFieldRepresentation(item);
-                });
+                this.fieldVariables = input.fieldVariables.map((item) => new FormFieldRepresentation(item));
             }
             if (input.fields) {
-                this.fields = input.fields.map((item) => {
-                    return new FormFieldRepresentation(item);
-                });
+                this.fields = input.fields.map((item) => new FormFieldRepresentation(item));
             }
             if (input.outcomes) {
-                this.outcomes = input.outcomes.map((item) => {
-                    return new FormOutcomeRepresentation(item);
-                });
+                this.outcomes = input.outcomes.map((item) => new FormOutcomeRepresentation(item));
             }
         }
     }

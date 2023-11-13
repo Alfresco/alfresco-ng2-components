@@ -139,14 +139,7 @@ xdescribe('Upload', () => {
             const file = fs.createReadStream('./test/mockObjects/assets/testFile.txt');
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.catch((error: any) => {
-                console.log('error' + error);
-            });
-            uploadPromise.once(
-                'progress',
-                () => done(),
-                (error: any) => console.log('error' + error)
-            );
+            uploadPromise.once('progress', () => done());
         });
 
         it('Multiple Upload should fire progress events on the right promise during the upload', (done) => {

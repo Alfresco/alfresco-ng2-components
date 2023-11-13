@@ -28,9 +28,7 @@ export class EntityVariableScopeRepresentation {
         if (input) {
             Object.assign(this, input);
             if (input.attributes) {
-                this.attributes = input.attributes.map((item) => {
-                    return new EntityAttributeScopeRepresentation(item);
-                });
+                this.attributes = input.attributes.map((item) => new EntityAttributeScopeRepresentation(item));
             }
         }
     }
