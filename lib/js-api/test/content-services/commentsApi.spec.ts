@@ -27,10 +27,10 @@ describe('Comments', () => {
     let commentsApi: CommentsApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        commentMock = new CommentMock();
+        commentMock = new CommentMock(hostEcm);
 
         authResponseMock.get201Response();
 

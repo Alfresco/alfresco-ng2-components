@@ -30,10 +30,10 @@ describe('Versions', () => {
     let versionsApi: VersionsApi;
 
     beforeEach(async () => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        versionMock = new VersionMock();
+        versionMock = new VersionMock(hostEcm);
         authResponseMock.get201Response();
 
         const alfrescoJsApi = new AlfrescoApi({ hostEcm });

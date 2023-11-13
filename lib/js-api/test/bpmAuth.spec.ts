@@ -23,7 +23,7 @@ import spies from 'chai-spies';
 chai.use(spies);
 
 describe('Bpm Auth test', () => {
-    const hostBpm = 'http://127.0.0.1:9999';
+    const hostBpm = 'https://127.0.0.1:9999';
     let authBpmMock: BpmAuthMock;
 
     beforeEach(() => {

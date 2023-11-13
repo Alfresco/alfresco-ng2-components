@@ -25,12 +25,13 @@ describe('PeopleApi', () => {
     let peopleApi: PeopleApi;
 
     beforeEach(() => {
-        peopleMock = new PeopleMock();
+        const hostEcm = 'https://127.0.0.1:8080';
 
         const alfrescoApi = new AlfrescoApi({
-            hostEcm: 'http://127.0.0.1:8080'
+            hostEcm
         });
 
+        peopleMock = new PeopleMock(hostEcm);
         peopleApi = new PeopleApi(alfrescoApi);
     });
 

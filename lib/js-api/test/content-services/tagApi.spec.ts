@@ -25,10 +25,10 @@ describe('Tags', () => {
     let tagsApi: TagsApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        tagMock = new TagMock();
+        tagMock = new TagMock(hostEcm);
 
         authResponseMock.get201Response();
 

@@ -26,10 +26,10 @@ describe('Queries', () => {
     let queriesApi: QueriesApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        nodesMock = new FindNodesMock();
+        nodesMock = new FindNodesMock(hostEcm);
 
         authResponseMock.get201Response();
 

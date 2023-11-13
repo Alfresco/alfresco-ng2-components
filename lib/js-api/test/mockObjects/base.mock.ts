@@ -21,7 +21,7 @@ export class BaseMock {
     host: string;
 
     constructor(host?: string) {
-        this.host = host || 'http://127.0.0.1:8080';
+        this.host = host || 'https://127.0.0.1:8080';
     }
 
     put200GenericResponse(scriptSlug: string): void {

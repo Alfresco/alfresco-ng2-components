@@ -51,7 +51,7 @@ describe('Security Mark API test', () => {
     ];
 
     beforeEach(async () => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
         authResponseMock = new EcmAuthMock(hostEcm);
         authResponseMock.get201Response();
         securityGroupMock = new SecurityGroupApiMock(hostEcm);

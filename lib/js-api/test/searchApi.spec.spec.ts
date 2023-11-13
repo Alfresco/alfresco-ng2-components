@@ -26,12 +26,12 @@ describe('Search', () => {
     let searchApi: SearchApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
         authResponseMock.get201Response();
 
-        searchMock = new SearchMock();
+        searchMock = new SearchMock(hostEcm);
 
         const alfrescoJsApi = new AlfrescoApi({
             hostEcm

@@ -26,10 +26,10 @@ describe('Rendition', () => {
     let renditionsApi: RenditionsApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        renditionMock = new RenditionMock();
+        renditionMock = new RenditionMock(hostEcm);
 
         authResponseMock.get201Response();
 

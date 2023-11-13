@@ -30,10 +30,10 @@ describe('Categories', () => {
     let categoriesApi: CategoriesApi;
 
     beforeEach((done) => {
-        const hostEcm = 'http://127.0.0.1:8080';
+        const hostEcm = 'https://127.0.0.1:8080';
 
         authResponseMock = new EcmAuthMock(hostEcm);
-        categoriesMock = new CategoriesMock();
+        categoriesMock = new CategoriesMock(hostEcm);
 
         authResponseMock.get201Response();
         const alfrescoJsApi = new AlfrescoApi({
